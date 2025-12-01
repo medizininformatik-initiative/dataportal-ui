@@ -12,6 +12,7 @@
       (selectedFilterChanged)="setValueSet($event)"
     ></num-search-filter>
     <num-concept-filter-table-copy
+      style="overflow: auto"
       *ngIf="searchResults$ | async as searchResults"
       [valueSetUrl]="valueSetUrl"
       [conceptFilterId]="conceptFilterId"
