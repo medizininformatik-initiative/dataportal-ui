@@ -9,6 +9,7 @@
 .attribute-filter-container {
   overflow: auto;
   height: 100%;
+  flex: 1;
 }
 
 ::ng-deep .mat-mdc-tab-body-content {
@@ -36,4 +37,5 @@ mat-tab-group {
 .termcode-container {
   height: 30%;
   overflow: auto;
+  flex: 1;
 }

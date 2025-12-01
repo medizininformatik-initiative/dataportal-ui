@@ -34,7 +34,7 @@ export class CreateBulkCriterionService {
   }
 
   private extractTermcodes(foudnEntries: CriteriaBulkEntry[]): TerminologyCode[] {
-    return foudnEntries.map((entry: CriteriaBulkEntry) => entry.getTermcodes()[0]);
+    return foudnEntries.map((entry: CriteriaBulkEntry) => entry.getTermCodes()[0]);
   }
 
   /**
@@ -74,7 +74,7 @@ export class CreateBulkCriterionService {
     termCodes: Array<TerminologyCode>
   } {
     const context = response.getContext();
-    const termcode = response.getTermcodes()[0];
+    const termcode = response.getTermCodes()[0];
     const hash = this.hashService.createCriterionHash(context, termcode);
     const display = response.getDisplay();
     return {

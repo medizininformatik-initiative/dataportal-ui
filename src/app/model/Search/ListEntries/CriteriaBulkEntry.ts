@@ -62,7 +62,7 @@ export class CriteriaBulkEntry extends AbstractListEntry {
   public setTerminology(terminology: string): void {
     this.terminology = terminology;
   }
-  public getTermcodes(): TerminologyCode[] {
+  public getTermCodes(): TerminologyCode[] {
     return this.termcodes;
   }
 

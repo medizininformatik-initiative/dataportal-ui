@@ -18,9 +18,9 @@
 
   <mat-tab label="{{ 'FEASIBILITY.EDITOR.TERMCODE.HEADER' | translate }}">
     <div class="selected-concept-list">
-      <div *ngFor="let termCode of termCodes" class="concept-item">
-        <span style="width: 60%">{{ termCode.getDisplay() }}</span>
-        <span>{{ termCode.getCode() }}</span>
+      <div *ngFor="let bulkEntry of bulkEntries" class="concept-item">
+        <span style="width: 60%">{{ bulkEntry.getDisplay() | displayTranslation }}</span>
+        <span>{{ bulkEntry.getTermCodes()[0].getCode() }}</span>
 
         <button
           [disabled]="termCodes.length === 1"
