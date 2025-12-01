@@ -27,7 +27,7 @@ export class CriteriaBulkListEntryAdapter {
       data: [
         entry.getDisplay(),
         TerminologySystemDictionary.getNameByUrl(entry.getTerminology()),
-        entry.getTermcodes()[0].getCode(),
+        entry.getTermCodes()[0].getCode(),
       ],
       hasCheckbox: true,
       isCheckboxSelected,

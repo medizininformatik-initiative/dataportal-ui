@@ -41,6 +41,7 @@
         <num-edit-termcode
           class="height-100"
           [termCodes]="criterion.getTermCodes()"
+          [context]="criterion.getContext()"
           (changedTermCodes)="updateTermCodes($event)"
         >
         </num-edit-termcode>

@@ -135,7 +135,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    */
   private initializeSelectedEntriesSubscription(): void {
     const selectedSub = this.selectedBulkCriteriaService
-      .getFoundEntries()
+      .getSelectedFoundEntries()
       .pipe(
         map((entries: CriteriaBulkEntry[]) => {
           this.updateRowSelectionStatus(entries);

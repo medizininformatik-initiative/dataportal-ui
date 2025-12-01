@@ -17,6 +17,7 @@ export class SelectedBulkCriteriaService {
   private uiProfileId: string;
 
   private foundEntries: Subject<CriteriaBulkEntry[]> = new Subject<CriteriaBulkEntry[]>();
+  private allFoundEntries: Map<string, CriteriaBulkEntry> = new Map();
   constructor() {}
 
   /**
@@ -33,16 +34,25 @@ export class SelectedBulkCriteriaService {
    */
   public setFoundEntries(entries: CriteriaBulkEntry[]): void {
     this.foundEntries.next(entries);
+    entries.forEach((entry) => {
+      this.allFoundEntries.set(entry.getId(), entry);
+    });
   }
 
   /**
    * Gets the found entries as an Observable.
    * @returns Observable that emits arrays of found CriteriaBulkEntry objects
    */
-  public getFoundEntries(): Observable<CriteriaBulkEntry[]> {
+  public getSelectedFoundEntries(): Observable<CriteriaBulkEntry[]> {
     return this.foundEntries.asObservable();
   }
 
+  public getAllFoundEntries(): Map<string, CriteriaBulkEntry> {
+    return this.allFoundEntries;
+  }
+  public getFoundEntry(id: string): CriteriaBulkEntry {
+    return this.allFoundEntries.get(id);
+  }
   /**
    * Gets the current UI profile ID.
    * @returns The UI profile ID string
