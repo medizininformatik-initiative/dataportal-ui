@@ -1,5 +1,5 @@
 <num-searchbar
-  label="{{ 'SHARED_FILTER.CONCEPT_FILTER.SEARCH_PLACEHOLDER' | translate }}"
+  [label]="'SHARED_FILTER.CONCEPT_FILTER.SEARCH_PLACEHOLDER' | translate"
   icon="search"
   (searchTextChange)="startElasticSearch($event)"
 >

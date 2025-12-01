@@ -4,7 +4,7 @@ import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData
 import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { CriterionMetadataService } from '../../Criterion/Builder/CriterionMetadata.service';
+import { CriterionMetadataService } from '../../Criterion/CriterionMetadata.service';
 import { HashService } from '../../Hash.service';
 import { Injectable } from '@angular/core';
 import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData';
@@ -34,9 +34,21 @@ export class CriterionTranslatorService {
   public translate(structuredQueryCriterion: StructuredQueryCriterionData): Criterion {
     const criteriaProfileData = this.getCriteriaProfileData(structuredQueryCriterion);
     const criterionId = uuidv4();
-    const criterionBuilder = this.createCriterionBuilder(criteriaProfileData, criterionId);
+    const termCodes = structuredQueryCriterion.termCodes.map((termCode) =>
+      TerminologyCode.fromJson(termCode)
+    );
+    const criterionBuilder = this.createCriterionBuilder(
+      criteriaProfileData,
+      criterionId,
+      termCodes
+    );
     const uiProfile = this.uiProfileProviderService.getUiProfileById(
       criteriaProfileData.uiProfileId
+    );
+    this.applyValueFilters(
+      criterionBuilder,
+      structuredQueryCriterion,
+      uiProfile.valueDefinition
     );
 
     this.applyValueFilters(criterionBuilder, structuredQueryCriterion, uiProfile.valueDefinition);
@@ -57,19 +69,23 @@ export class CriterionTranslatorService {
   private getCriteriaProfileData(
     structuredQueryCriterion: StructuredQueryCriterionData
   ): CriteriaProfileData {
-    const termCode = TerminologyCode.fromJson(structuredQueryCriterion.termCodes[0]);
+    const termCodes = structuredQueryCriterion.termCodes.map((termCodeData) =>
+      TerminologyCode.fromJson(termCodeData)
+    );
     const context = TerminologyCode.fromJson(structuredQueryCriterion.context);
-    const hash = this.hashService.createCriterionHash(context, termCode);
+    const hash = this.hashService.createCriterionHash(context, termCodes[0]);
     return this.criteriaProfileProviderService.getCriteriaProfileByHash(hash);
   }
 
   private createCriterionBuilder(
     criteriaProfileData: CriteriaProfileData,
-    criterionId: string
+    criterionId: string,
+    termCodes: TerminologyCode[]
   ): CriterionBuilder {
     const criterionMetadata = this.criterionMetadataService.createMandatoryFieldsFromData(
       criteriaProfileData,
-      criterionId
+      criterionId,
+      termCodes
     );
     return new CriterionBuilder(criterionMetadata);
   }

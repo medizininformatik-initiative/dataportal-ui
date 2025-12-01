@@ -94,13 +94,7 @@
       "PROFILE": {
         "FIELDS": {
           "HEADER": "Select features for ",
-          "REQUIRED": "Required"
-        },
-        "FILTER": {
-          "TAB_LABEL": {
-            "TIMERESTRICTION": "Time restriction",
-            "TOKEN": "Token filter"
-          }
+          "REQUIRED": "Mark as required"
         },
         "REFERENCE": {
           "ADD": "Add new reference",
@@ -111,10 +105,15 @@
           "SAVING_ERROR": "Error saving profile"
         },
         "TAB_LABEL": {
+          "BULK": "Bulk search",
           "FIELD": "Fields",
           "FILTER": "Filter",
+          "INFORMATION": "Information",
           "REFERENCE": "References",
-          "TIMERESTRICTION": "Time restriction"
+          "SELECTED_CONCEPTS": "Selected concepts ({{count}})",
+          "SINGLE_SEARCH": "Single search",
+          "TIMERESTRICTION": "Time restriction",
+          "TOKEN": "Concepts"
         }
       }
     },
@@ -135,9 +134,20 @@
     "VAL-20001": "The combination of context and term code(s) was not found."
   },
   "FEASIBILITY": {
+    "BULK_SEARCH": {
+      "ACTION_BAR": {
+        "ADD_TO_STAGE": "Add group criteria",
+        "VIEW_STAGE": "View cohort selection"
+      },
+      "HEADER": "Bulk Search",
+      "HEADER_INFO": "Define your cohort using the bulk search mode by setting two required filters: Context and Terminology. Then provide a list of comma-separated terminology codes (e.g., ICD-10, LOINC, OPS) to narrow down the search.The bulk cohort search allows you to process large sets of codes at once",
+      "INPUT_PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them.",
+      "PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them."
+    },
     "EDITOR": {
       "ACTION_BAR": {
-        "BACK_TO_SEARCH": "Add criteria",
+        "BACK_TO_SEARCH": "To single search",
+        "BULK_SEARCH": "To bulk search",
         "DATA_REQUEST": "Data definition",
         "SAVE_DATAQUERY": "Save data definition",
         "SEND_QUERY": "Feasibility query"
@@ -244,6 +254,7 @@
         "ADD_TO_STAGE": "Add to cohort selection",
         "VIEW_STAGE": "Show cohort selection"
       },
+      "BULK_SEARCH": "Bulk Search",
       "BUTTON": {
         "RESET": "Reset filter"
       },
@@ -254,11 +265,41 @@
       "LABEL": "Enter code or search term",
       "SEARCHBAR": "Search for term or terminology code",
       "SEARCH_BUTTON": "Search",
+      "SINGLE_SEARCH": "Single Search",
       "SNACKBAR": {
         "ADDED_TO_COHORT": "Criteria added to cohort selection",
         "ADDED_TO_STAGE": "Criterion {{criterium}} was selected ",
         "REMOVED_FROM_STAGE": "Criterion {{criterium}} was removed"
       }
+    }
+  },
+  "INFORMATION": {
+    "CONCEPTS": {
+      "DESCRIPTION": "Concepts are standardized medical terms that originate as codes from terminology systems such as ICD-10, SNOMED CT, or LOINC. They describe diagnoses, findings, or laboratory values in a clear and machine-readable manner. A FHIR profile defines which codes may be used at which location - for example, that a diagnosis must contain an ICD-10 code. This keeps medical data clearly defined, comparable, and interoperable.",
+      "TITLE": "Concepts"
+    },
+    "FIELD": {
+      "DESCRIPTION": "Fields represent the various data elements of a FHIR profile. You can select which fields should be considered in your search, e.g., only specific laboratory values, demographic information, or clinical parameters. Selecting the right fields helps to limit search results to relevant information. Required fields are marked with a checkbox and must be present in the search results. Optional fields can be removed using the X symbol.",
+      "TITLE": "Fields"
+    },
+    "REFERENCES": {
+      "DESCRIPTION": "References link different FHIR resources together. For example, an Observation (laboratory value) can reference a Patient or a Condition (diagnosis). By selecting reference fields, you can map complex relationships between different medical data and thus create multi-level search queries.",
+      "EXTENDED_DESCRIPTION": "References enable relationships between different resources in FHIR profiles. They serve to establish links to other profiles or resources to map complex data structures. Reference fields can be defined in a FHIR profile that point to other profiles. This ensures that the referenced resources comply with defined standards and requirements. References are essential for the interoperability and consistency of medical data in FHIR-based systems.",
+      "TAB_TITLE": "What are References?",
+      "TITLE": "References"
+    },
+    "TERMCODE": {
+      "TITLE": "What are Term Codes?",
+      "DESCRIPTION": "Term codes are standardized codes from terminology systems that represent specific medical concepts. Examples include ICD-10 codes for diagnoses, LOINC codes for laboratory tests, and SNOMED CT codes for clinical findings. Each term code uniquely identifies a medical concept and ensures consistent communication across healthcare systems.",
+      "MULTIPLE_DESCRIPTION": "When an element has multiple term codes, it means that the element can be represented by different coding standards or that there are equivalent codes across different terminology systems. For example, a diagnosis might have both an ICD-10 code and a SNOMED CT code that represent the same clinical concept. This allows flexibility in data exchange and ensures interoperability across different healthcare systems and organizations."
+    },
+    "TIME_RESTRICTION": {
+      "DESCRIPTION": "Time restrictions allow you to filter data to a specific time period. For example, you can only consider diagnoses that were documented within the last 12 months, or select laboratory values from a specific date or date range. This is particularly important to distinguish current patient data from historical information.",
+      "TITLE": "Time Restriction"
+    },
+    "TOKEN_FILTER": {
+      "DESCRIPTION": "Token filters enable the selection of standardized medical terms (concepts) from terminology systems such as ICD-10, SNOMED CT, or LOINC. These codes describe diagnoses, findings, or laboratory values in a clear and machine-readable manner. You can search for individual codes, add multiple codes simultaneously (bulk search), or select from predefined value sets. This makes search queries precise and interoperable.",
+      "TITLE": "Token Filter (Concepts)"
     }
   },
   "LANGUAGE": {
@@ -380,6 +421,10 @@
   },
   "SHARED_FILTER": {
     "CONCEPT_FILTER": {
+      "BULK": {
+        "FOUND": "Found ({{count}})",
+        "NOTFOUND": "Not found ({{count}})"
+      },
       "SEARCH_PLACEHOLDER": "Enter concept or term code"
     },
     "TIMERESTRICTION": {

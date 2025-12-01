@@ -3,6 +3,7 @@ import { AttributeFilterComponent } from './components/editor/criterion-modal/at
 import { BeforeFilterComponent } from './components/editor/criterion-modal/time-restriction/before-filter/before-filter.component';
 import { BetweenFilterComponent } from './components/editor/criterion-modal/time-restriction/between-filter/between-filter.component';
 import { BoolLogicSwitchComponent } from './components/editor/display/bool-logic-switch/bool-logic-switch.component';
+import { BulkSearchActionBarComponent } from './components/search/action-bar/bulk-search/bulk-search-action-bar.component';
 import { CommonModule } from '@angular/common';
 import { ConceptComponent } from './components/editor/criterion-modal/concept/concept.component';
 import { ConsentSwitchesComponent } from './components/editor/stage/consent-switches/consent-switches.component';
@@ -15,9 +16,11 @@ import { EditFeasibilityQueryComponent } from './components/editor/edit.componen
 import { EditorActionBarComponent } from './components/editor/action-bar/editor-action-bar.component';
 import { EditReferenceCriteriaModalComponent } from './components/editor/reference-criteria-modal/edit-reference-criteria-modal.component';
 import { EditTimeRestrictionComponent } from './components/editor/criterion-modal/time-restriction/edit-time-restriction.component';
+import { FeasibilityQueryBulkSearchComponent } from './components/search/bulk/bulk-search.component';
 import { FeasibilityQueryRoutingModule } from './feasibility-query-routing.module';
 import { FeasibilityQuerySearchComponent } from './components/search/search.component';
 import { FileSaverModule } from 'ngx-filesaver';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -28,21 +31,21 @@ import { QuantityComparisionSelectComponent } from './components/editor/criterio
 import { QuantityComponent } from './components/editor/criterion-modal/quantity/quantity.component';
 import { QuantityRangeComponent } from './components/editor/criterion-modal/quantity/quantity-range/quantity-range.component';
 import { ReferenceComponent } from './components/editor/reference-criteria-modal/reference/reference.component';
+import { ResultActionBarComponent } from './components/result/action-bar/result-action-bar.component';
 import { ResultComponent } from './components/result/result.component';
 import { ResultDetailModalComponent } from './components/result/result-detail-modal/result-detail-modal.component';
 import { SaveQueryModalComponent } from './components/result/save-dialog/save-dialog.component';
-import { SearchActionBarComponent } from './components/search/action-bar/search-action-bar.component';
+import { SearchActionBarComponent } from './components/search/action-bar/search/search-action-bar.component';
 import { SharedFilterModule } from '../shared-filter/shared-filter.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SimpleResultComponent } from './components/result/simple-result/simple-result.component';
+import { TermcodeComponent } from './components/editor/criterion-modal/termCode/termcode.component';
 import { TimerestrictionTypeSelectorComponent } from './components/editor/criterion-modal/time-restriction/timerestriction-type-selector/timerestriction-type-selector.component';
 import { ValueFilterComponent } from './components/editor/criterion-modal/value-filter/value-filter.component';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
-import { ResultActionBarComponent } from './components/result/action-bar/result-action-bar.component';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -87,6 +90,9 @@ export const FORMATS_GERMAN = {
     SearchActionBarComponent,
     DisplayCriteriaComponent,
     ResultActionBarComponent,
+    FeasibilityQueryBulkSearchComponent,
+    BulkSearchActionBarComponent,
+    TermcodeComponent,
   ],
   imports: [
     CommonModule,

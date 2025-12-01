@@ -20,12 +20,20 @@
     ></num-edit-fields>
   </ng-template>
 
-  <ng-template #filter>
-    <num-profile-filter
-      [profile]="profile"
-      [profileFilter]="profile.getFilters()"
-      (profileFiltersChanged)="updateProfileFilter($event)"
-    ></num-profile-filter>
+  <ng-template #timeRestriction>
+    <div *ngFor="let profileTimeFilter of timeRestrictionFilters">
+      <num-profile-time-filter
+        [profileTimeRestrictionFilter]="profileTimeFilter"
+        (changedProfileTimeRestrictionFilter)="updateProfileFilter($event)"
+      ></num-profile-time-filter>
+    </div>
+  </ng-template>
+
+  <ng-template #token>
+    <num-token-filter
+      [tokenFilter]="tokenFilter"
+      (tokenFilterChanged)="updateProfileFilter($event)"
+    ></num-token-filter>
   </ng-template>
 
   <ng-template #reference>
@@ -36,5 +44,29 @@
       [profileId]="profile.getId()"
       (updatedSelectedReferenceFields)="updateSelectedReferenceFields($event)"
     ></num-profile-reference>
+  </ng-template>
+
+  <ng-template #information>
+    <div class="information-templates">
+      <num-information-section>
+        <span slot="title">{{ 'INFORMATION.TIME_RESTRICTION.TITLE' | translate }}</span>
+        {{ 'INFORMATION.TIME_RESTRICTION.DESCRIPTION' | translate }}
+      </num-information-section>
+
+      <num-information-section>
+        <span slot="title">{{ 'INFORMATION.TOKEN_FILTER.TITLE' | translate }}</span>
+        {{ 'INFORMATION.TOKEN_FILTER.DESCRIPTION' | translate }}
+      </num-information-section>
+
+      <num-information-section>
+        <span slot="title">{{ 'INFORMATION.FIELD.TITLE' | translate }}</span>
+        {{ 'INFORMATION.FIELD.DESCRIPTION' | translate }}
+      </num-information-section>
+
+      <num-information-section>
+        <span slot="title">{{ 'INFORMATION.REFERENCES.TITLE' | translate }}</span>
+        {{ 'INFORMATION.REFERENCES.DESCRIPTION' | translate }}
+      </num-information-section>
+    </div>
   </ng-template>
 </div>

@@ -3,6 +3,7 @@ import { ConceptFilter } from './Concept/ConceptFilter';
 import { ReferenceFilter } from './Concept/ReferenceFilter';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 
 export abstract class AbstractAttributeFilters {
   private display: Display;

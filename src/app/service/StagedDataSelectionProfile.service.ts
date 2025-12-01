@@ -8,6 +8,8 @@ import { ProfileProviderService } from '../modules/data-selection/services/Profi
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
+import { ProfileTimeRestrictionFilter } from '../model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter';
 
 /**
  * Service for managing staged profile changes before committing to data selection.
@@ -47,6 +49,14 @@ export class StagedProfileService {
    * Gets an observable of the staged profile.
    * @returns Observable of the staged profile
    */
+  public getProfile(): DataSelectionProfile {
+    return this.stagedProfileSubject.getValue();
+  }
+
+  /**
+   * Gets an observable of the staged profile.
+   * @returns Observable of the staged profile
+   */
   public getProfileObservable(): Observable<DataSelectionProfile | null> {
     return this.stagedProfileSubject.asObservable();
   }
@@ -73,30 +83,23 @@ export class StagedProfileService {
   }
 
   /**
-   * Updates the filters in the staged profile.
-   * @param filters - The filters to set
-   * @returns
-   */
-  public updateFilters(filters: AbstractProfileFilter[]): void {
-    const profile = this.stagedProfileSubject.value;
-    if (profile) {
-      profile.setFilters(filters);
-      this.buildProfile();
-    }
-  }
-
-  /**
    * Updates the selected reference fields in the staged profile.
    * @param selectedReferenceFields - The selected reference fields to set
    * @returns
    */
   public updateSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {
-    console.log('Updating selected reference fields:', selectedReferenceFields);
     const profile = this.stagedProfileSubject.value;
-    console.log('Current staged profile before update:', profile);
     if (profile) {
       profile.getProfileFields().setSelectedReferenceFields(selectedReferenceFields);
       this.setLinkedProfillesInDataSelectionProvdier();
+      this.buildProfile();
+    }
+  }
+
+  public updateProfileFilter(filter: ProfileTokenFilter | ProfileTimeRestrictionFilter): void {
+    const profile = this.stagedProfileSubject.value;
+    if (profile) {
+      profile.setFilter(filter);
       this.buildProfile();
     }
   }

@@ -1,0 +1,19 @@
+<num-action-bar class="bottom">
+  <num-button
+    icon="arrow-down"
+    type="green"
+    (click)="navigateToEditor()"
+    matBadgePosition="above after"
+  >
+    {{ 'FEASIBILITY.BULK_SEARCH.ACTION_BAR.VIEW_STAGE' | translate }}
+  </num-button>
+  <num-button
+    type="green"
+    (click)="addItemsToStage()"
+    matBadgePosition="above after"
+    class="margin-right-20"
+    [isDisabled]="(disabledAddToStageButton | async) || resultType === 'NOTFOUND'"
+  >
+    {{ 'FEASIBILITY.BULK_SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
+  </num-button>
+</num-action-bar>

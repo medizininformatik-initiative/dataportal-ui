@@ -10,8 +10,9 @@
 
 .staged-concepts-item {
   flex: 1 1 40%;
+  height: fit-content;
 }
 
 .overflow {
-  overflow: hidden;
+  overflow: auto;
 }

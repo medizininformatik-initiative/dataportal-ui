@@ -74,6 +74,10 @@ export class SelectedConceptFilterProviderService {
     return this.selectedConcepts$;
   }
 
+  public getSelectedConceptsValue(): Array<Concept> {
+    return this.selectedConceptsSubject.getValue();
+  }
+
   public getTerminologyCodeDetails(code: string): TerminologyCode | undefined {
     return this.terminologyCodeService.getTerminologyCode(code);
   }

@@ -94,13 +94,8 @@
       "PROFILE": {
         "FIELDS": {
           "HEADER": "Selektieren Sie Merkmale für ",
-          "REQUIRED": "Erforderlich"
-        },
-        "FILTER": {
-          "TAB_LABEL": {
-            "TIMERESTRICTION": "Zeiteinschränkung",
-            "TOKEN": "Token-Filter"
-          }
+          "REQUIRED": "Als erforderlich setzen",
+          "TITLE": "Felder"
         },
         "REFERENCE": {
           "ADD": "Neues Merkmal hinzufügen",
@@ -111,10 +106,15 @@
           "SAVING_ERROR": "Fehler beim Speichern des Profils"
         },
         "TAB_LABEL": {
+          "BULK": "Bulksuche",
           "FIELD": "Felder",
           "FILTER": "Filter",
+          "INFORMATION": "Informationen",
           "REFERENCE": "Referenzen",
-          "TIMERESTRICTION": "Zeiteinschränkung"
+          "SELECTED_CONCEPTS": "Selektierte Konzepte ({{count}})",
+          "SINGLE_SEARCH": "Einzelsuche",
+          "TIMERESTRICTION": "Zeiteinschränkung",
+          "TOKEN": "Konzepte"
         }
       }
     },
@@ -135,9 +135,20 @@
     "VAL-20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden."
   },
   "FEASIBILITY": {
+    "BULK_SEARCH": {
+      "ACTION_BAR": {
+        "ADD_TO_STAGE": "Gruppenkriterium hinzufügen",
+        "VIEW_STAGE": "Kohortenselektion anzeigen"
+      },
+      "HEADER": "Bulk Suche",
+      "HEADER_INFO": "Definieren Sie Ihre Kohorte, indem Sie im Bulk-Modus zwei Filter festlegen: Context und Terminology. Geben Sie anschließend eine Liste von kommaseparierten Terminologie-Codes (z. B. ICD-10, LOINC, OPS) ein, um die Suche gezielt einzuschränken.Die Bulk-Kohortensuche ermöglicht es Ihnen, große Mengen an Codes auf einmal zu verarbeiten",
+      "INPUT_PLACEHOLDER": "Geben Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
+      "PLACEHOLDER": "Fügen Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung."
+    },
     "EDITOR": {
       "ACTION_BAR": {
-        "BACK_TO_SEARCH": "Kriterien hinzufügen",
+        "BACK_TO_SEARCH": "Zur Einzelsuche",
+        "BULK_SEARCH": "Zur Bulk Suche",
         "DATA_REQUEST": "Datendefinition",
         "SAVE_DATAQUERY": "Datendefinition speichern",
         "SEND_QUERY": "Machbarkeitsabfrage"
@@ -206,6 +217,9 @@
       "SWITCH": {
         "LABEL_AND": "UND",
         "LABEL_OR": "ODER"
+      },
+      "TERMCODE": {
+        "HEADER": "Enthaltene Terminologie-Codes"
       }
     },
     "HINT": {
@@ -244,6 +258,7 @@
         "ADD_TO_STAGE": "Zur Kohortenselektion hinzufügen",
         "VIEW_STAGE": "Kohortenselektion anzeigen"
       },
+      "BULK_SEARCH": "Bulk Suche",
       "BUTTON": {
         "RESET": "Filter zurücksetzen"
       },
@@ -254,11 +269,41 @@
       "LABEL": "Code oder Suchbegriff eingeben",
       "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
       "SEARCH_BUTTON": "Suchen",
+      "SINGLE_SEARCH": "Einzelsuche",
       "SNACKBAR": {
         "ADDED_TO_COHORT": "Kriterien wurden zur Kohortenselektion hinzugefügt",
         "ADDED_TO_STAGE": "Kriterium wurde ausgewählt",
         "REMOVED_FROM_STAGE": "Kriterium wurde entfernt"
       }
+    }
+  },
+  "INFORMATION": {
+    "CONCEPTS": {
+      "DESCRIPTION": "Konzepte sind standardisierte medizinische Begriffe, die als Codes aus Terminologiesystemen wie ICD-10, SNOMED CT oder LOINC stammen. Sie beschreiben Diagnosen, Befunde oder Laborwerte eindeutig und maschinenlesbar. In einem FHIR-Profil wird festgelegt, welche Codes an welcher Stelle verwendet werden dürfen - z. B. dass eine Diagnose einen ICD-10-Code enthalten muss. Dadurch bleiben medizinische Daten klar definiert, vergleichbar und interoperabel.",
+      "TITLE": "Was sind Konzepte?"
+    },
+    "FIELD": {
+      "DESCRIPTION": "Felder repräsentieren die verschiedenen Datenelemente eines FHIR-Profils. Sie können auswählen, welche Felder in Ihrer Suche berücksichtigt werden sollen, z. B. nur bestimmte Laborwerte, demographische Informationen oder klinische Parameter. Die Auswahl der richtigen Felder hilft dabei, die Suchergebnisse auf relevante Informationen zu beschränken. Pflichtfelder sind mit einem Häkchen markiert und müssen in den Suchergebnissen vorhanden sein. Optionale Felder können Sie über das X-Symbol entfernen.",
+      "TITLE": "Was sind Felder?"
+    },
+    "REFERENCES": {
+      "DESCRIPTION": "Referenzen verknüpfen verschiedene FHIR-Ressourcen miteinander. Beispielsweise kann eine Observation (Laborwert) auf einen Patient oder eine Condition (Diagnose) referenzieren. Durch die Auswahl von Referenzfeldern können Sie komplexe Beziehungen zwischen verschiedenen medizinischen Daten abbilden und so mehrstufige Suchanfragen erstellen.",
+      "EXTENDED_DESCRIPTION": "Referenzen ermöglichen es, Beziehungen zwischen verschiedenen Ressourcen in FHIR-Profilen herzustellen. Sie dienen dazu, Verknüpfungen zu anderen Profilen oder Ressourcen herzustellen, um komplexe Datenstrukturen abzubilden. In einem FHIR-Profil können Referenzfelder definiert werden, die auf andere Profile verweisen. Dadurch wird sichergestellt, dass die referenzierten Ressourcen den definierten Standards und Anforderungen entsprechen. Referenzen sind essenziell für die Interoperabilität und Konsistenz medizinischer Daten in FHIR-basierten Systemen.",
+      "TAB_TITLE": "Was sind Referenzen?",
+      "TITLE": "Was sind Referenzen?"
+    },
+    "TERMCODE": {
+      "DESCRIPTION": "Termcodes sind standardisierte Codes aus Terminologiesystemen, die spezifische medizinische Konzepte repräsentieren. Beispiele sind ICD-10-Codes für Diagnosen, LOINC-Codes für Labortests und SNOMED CT-Codes für klinische Befunde. Jeder Termcode identifiziert eindeutig ein medizinisches Konzept und gewährleistet eine konsistente Kommunikation zwischen Gesundheitssystemen.",
+      "MULTIPLE_DESCRIPTION": "Wenn ein Element mehrere Termcodes hat, bedeutet dies, dass das Element durch unterschiedliche Kodierungsstandards repräsentiert werden kann oder dass es äquivalente Codes zwischen verschiedenen Terminologiesystemen gibt. Zum Beispiel kann eine Diagnose sowohl einen ICD-10-Code als auch einen SNOMED CT-Code haben, die das gleiche klinische Konzept darstellen. Dies ermöglicht Flexibilität beim Datenaustausch und gewährleistet die Interoperabilität zwischen verschiedenen Gesundheitssystemen und Organisationen.",
+      "TITLE": "Was sind Termcodes?"
+    },
+    "TIME_RESTRICTION": {
+      "DESCRIPTION": "Zeitliche Einschränkungen ermöglichen es, Daten auf einen bestimmten Zeitraum zu filtern. Sie können beispielsweise nur Diagnosen berücksichtigen, die innerhalb der letzten 12 Monate dokumentiert wurden, oder Laborwerte aus einem bestimmten Datum oder Datumsbereich auswählen. Dies ist besonders wichtig, um aktuelle Patientendaten von historischen Informationen zu unterscheiden.",
+      "TITLE": "Was ist eine zeitliche Einschränkung?"
+    },
+    "TOKEN_FILTER": {
+      "DESCRIPTION": "Token-Filter ermöglichen die Auswahl standardisierter medizinischer Begriffe (Konzepte) aus Terminologiesystemen wie ICD-10, SNOMED CT oder LOINC. Diese Codes beschreiben Diagnosen, Befunde oder Laborwerte eindeutig und maschinenlesbar. Sie können einzelne Codes suchen, mehrere Codes gleichzeitig hinzufügen (Bulk-Search) oder aus vordefinierten ValueSets auswählen. Dadurch werden Suchanfragen präzise und interoperabel.",
+      "TITLE": "Was ist ein Konzepte?"
     }
   },
   "LANGUAGE": {
@@ -380,6 +425,10 @@
   },
   "SHARED_FILTER": {
     "CONCEPT_FILTER": {
+      "BULK": {
+        "FOUND": "Gefunden ({{count}})",
+        "NOTFOUND": "Nicht gefunden ({{count}})"
+      },
       "SEARCH_PLACEHOLDER": "Begriff oder Termcode eingeben"
     },
     "TIMERESTRICTION": {

@@ -84,4 +84,78 @@ export const routeAnimations = trigger('routeAnimations', [
       ]),
     ]
   ),
+
+  transition('Feasibility_Bulk_Search => Feasibility_Search', [
+    style({ position: 'relative', overflow: 'hidden' }),
+    query(
+      ':enter, :leave',
+      [
+        style({
+          position: 'absolute',
+          height: '100%',
+          top: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+        }),
+      ],
+      { optional: true }
+    ),
+
+    group([
+      query(
+        ':leave',
+        [animate('600ms ease-in-out', style({ transform: 'translateX(100%)', opacity: 0 }))],
+        {
+          optional: true,
+        }
+      ),
+
+      query(
+        ':enter',
+        [
+          style({ transform: 'translateX(-100%)', opacity: 0 }),
+          animate('600ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 })),
+        ],
+        { optional: true }
+      ),
+    ]),
+  ]),
+
+  transition('Feasibility_Search => Feasibility_Bulk_Search', [
+    style({ position: 'relative', overflow: 'hidden' }),
+    query(
+      ':enter, :leave',
+      [
+        style({
+          position: 'absolute',
+          height: '100%',
+          top: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+        }),
+      ],
+      { optional: true }
+    ),
+
+    group([
+      query(
+        ':leave',
+        [animate('600ms ease-in-out', style({ transform: 'translateX(-100%)', opacity: 0 }))],
+        {
+          optional: true,
+        }
+      ),
+
+      query(
+        ':enter',
+        [
+          style({ transform: 'translateX(100%)', opacity: 0 }),
+          animate('600ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 })),
+        ],
+        { optional: true }
+      ),
+    ]),
+  ]),
 ]);

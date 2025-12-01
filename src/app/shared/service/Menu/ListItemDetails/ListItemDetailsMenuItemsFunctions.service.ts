@@ -1,4 +1,4 @@
-import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
+import { CreateCriterionService } from 'src/app/service/Criterion/CreateCriterionService';
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
@@ -34,7 +34,7 @@ export class ListItemDetailsMenuItemsFunctionsService {
 
   public addToStage(id: string) {
     this.criterionService
-      .createCriteriaFromHashes([id])
+      .createCriteriaFromHashes([id], false)
       .pipe(
         map((criteria: Criterion[]) => {
           this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria);

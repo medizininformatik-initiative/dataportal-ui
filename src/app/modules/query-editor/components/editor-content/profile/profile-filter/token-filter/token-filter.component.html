@@ -1,9 +1,47 @@
-<div class="token-filter">
-  <num-shared-concept-filter-copy
-    [conceptFilterId]="tokenFilter.getId()"
-    [valueSetUrl]="tokenFilter.getValueSetUrls()"
-    [preSelectedConcepts]="tokenFilter.getSelectedTokens()"
-    (changedSelectedConcepts)="updateSelectedConcepts($event)"
+<mat-tab-group
+  animationDuration="0ms"
+  class="token-filter-container"
+  disableRipple="true"
+  mat-stretch-tabs="false"
+  [selectedIndex]="1"
+  (selectedTabChange)="onTabChange()"
+>
+  <mat-tab label="{{ 'INFORMATION.CONCEPTS.TITLE' | translate }}">
+    <num-information-section>
+      <span slot="title">{{ 'INFORMATION.CONCEPTS.TITLE' | translate }}</span>
+      {{ 'INFORMATION.CONCEPTS.DESCRIPTION' | translate }}
+    </num-information-section>
+  </mat-tab>
+  <mat-tab
+    *ngIf="tokenFilter"
+    label="{{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.SINGLE_SEARCH' | translate }}"
   >
-  </num-shared-concept-filter-copy>
-</div>
+    <num-shared-concept-filter-copy
+      [conceptFilterId]="tokenFilter.getId()"
+      [valueSetUrl]="tokenFilter.getValueSetUrls()"
+      [preSelectedConcepts]="tokenFilter.getSelectedTokens()"
+      (changedSelectedConcepts)="updateSelectedConcepts($event)"
+    >
+    </num-shared-concept-filter-copy>
+  </mat-tab>
+  <mat-tab *ngIf="tokenFilter" label="{{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.BULK' | translate }}">
+    <num-concept-bulk-search
+      [valueSetUrl]="tokenFilter.getValueSetUrls()"
+      [preSelectedConcepts]="tokenFilter.getSelectedTokens()"
+      [tabChanged]="tabChanged"
+      (changedSelectedConcepts)="updateSelectedConcepts($event)"
+    ></num-concept-bulk-search>
+  </mat-tab>
+  <mat-tab
+    [label]="
+      'EDITOR.CONTENT.PROFILE.TAB_LABEL.SELECTED_CONCEPTS'
+        | translate : { count: selectedConcepts.length }
+    "
+    [disabled]="selectedConcepts.length === 0"
+  >
+    <num-selected-concept-list
+      [selectedConcepts]="selectedConcepts"
+      (changedSelectedConcepts)="updateSelectedConcepts($event)"
+    ></num-selected-concept-list>
+  </mat-tab>
+</mat-tab-group>

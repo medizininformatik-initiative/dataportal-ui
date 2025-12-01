@@ -71,6 +71,7 @@ $spacing-scale: (
   5: 32px,
   6: 40px,
   7: 48px,
+  auto: auto,
 );
 
 @mixin generate-spacing($property) {

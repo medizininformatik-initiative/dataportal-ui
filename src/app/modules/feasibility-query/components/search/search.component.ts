@@ -8,11 +8,13 @@ import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvid
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { map, Observable, of, Subscription } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import {
   AfterViewInit,
@@ -25,7 +27,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -73,7 +75,8 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     private searchTermDetailsService: SearchTermDetailsService,
     private searchTermDetailsProviderService: SearchTermDetailsProviderService,
     private criteriaSearchService: CriteriaSearchService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private navigationHelperService: NavigationHelperService
   ) {
     this.subscription = this.criteriaSearchService
       .getSearchResults()
@@ -229,5 +232,13 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
       .subscribe((result: CriteriaResultList) => {
         this.handleSearchResults(result.getResults());
       });
+  }
+
+  public searchModeChange(mode: SearchMode): void {
+    if (mode === 'bulk-search') {
+      this.navigationHelperService.navigateToFeasibilityQueryBulkSearch();
+    } else if (mode === 'search') {
+      this.navigationHelperService.navigateToFeasibilityQuerySearch();
+    }
   }
 }

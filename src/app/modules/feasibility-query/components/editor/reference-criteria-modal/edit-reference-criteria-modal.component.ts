@@ -1,6 +1,6 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
+import { CreateCriterionService } from 'src/app/service/Criterion/CreateCriterionService';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.deprecated.service';

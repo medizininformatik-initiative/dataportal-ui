@@ -1,154 +1,171 @@
+// CSS Variables
+:host {
+  --primary-color: #5a79af;
+  --primary-light: rgba(90, 121, 175, 0.1);
+  --border-color: #c3c7ce;
+  --background-white: #ffffff;
+  --background-focus: #eff2f7;
+  --text-primary: #333;
+  --text-secondary: #6a7483;
+  --text-muted: #c2c2c2;
+  --text-dark: black;
+  --shadow-color: #bdbdbd;
+  --transition-duration: 0.5s;
+}
+
+// Layout Containers
 .selection-box {
   width: 100%;
-  margin-bottom: 8px;
   height: 100%;
+  margin-bottom: 8px;
+  padding-top: 16px;
 }
 
-.display-container {
-  border-right: 4px solid rgba(90, 121, 175, 0.1);
-  font-size: larger;
-  width: 100%;
-  color: black;
-}
-.display-container > span {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 6; /* number of lines to show */
-  line-clamp: 6;
-  -webkit-box-orient: vertical;
-}
+.display-container,
 .selected-fields-container {
-  border-right: 4px solid rgba(90, 121, 175, 0.1);
-  padding: 0 1% 0 1%;
-  font-size: larger;
   width: 100%;
-  color: black;
+  padding: 0 1%;
+  font-size: larger;
+  color: var(--text-dark);
+  border-right: 4px solid var(--primary-light);
 }
+
+.display-container > span {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  line-clamp: 6;
+  overflow: hidden;
+}
+
 .filter-container,
 .reference-container {
-  font-size: larger;
   width: 100%;
-  color: black;
+  font-size: larger;
+  color: var(--text-dark);
 }
 
+// Menu Section
 .menu-container {
   align-self: self-start;
-  padding-top: 20px;
   margin-left: 20px;
+  padding-top: 20px;
 }
 
+// Filter Chips
 .filter-chips-container {
-  padding-top: 20px;
   height: 80%;
+  padding-top: 20px;
   overflow-y: auto;
 }
 
 .filterChipsInfo {
-  color: red;
   margin-top: 10px;
   font-size: 15px;
+  color: red;
+}
+
+// Block Chip Styles
+.block {
+  position: relative;
+  display: inline-block;
+  min-width: 100px;
+  width: fit-content;
+  height: 26px;
+  padding: 2px 10px 2px 4px;
+  background-color: var(--primary-color);
+  color: var(--background-white);
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: width 0.3s ease;
 }
 
 .block-triangle {
-  color: #5a79af;
-  border-left: 13px solid;
+  display: inline-block;
+  border-left: 13px solid var(--primary-color);
   border-top: 13px solid transparent;
   border-bottom: 13px solid transparent;
-  display: inline-block;
   content: '';
-  /*position: absolute;
-    right: -13px;
-    top: 0;*/
-}
-.block {
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-
-  color: #fff;
-  background-color: #5a79af;
-  width: fit-content;
-  min-width: 100px;
-  height: 26px;
-  display: inline-block;
-  position: relative;
-  padding-left: 4px;
-  padding-right: 10px;
-  padding-top: 2px;
-  cursor: pointer;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide overflow text */
-  text-overflow: ellipsis; /* Show ellipsis for overflow text */
-  transition: width 0.3s ease; /* Transition for width change */
 }
 
+// Spacing Utilities
 .reference-chip-padding-30 {
   padding-top: 30px;
 }
 
-.input-style {
-  height: 32px;
-  background-color: #ffffff;
-  border: 0px 0px 1px 0px;
-  //border-bottom-color: rgb(90 121 175);
-  box-shadow: -3px 2px 1px 0px #bdbdbd;
+.padding-left-right-1 {
+  padding: 0 1%;
 }
 
+// Form Styles
 .form-design {
-  border: 1px solid #c3c7ce;
-  border-radius: 4px;
-  background-color: white;
   margin-bottom: 10px;
+  background-color: var(--background-white);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+
+  &:focus-within {
+    border-width: 2px;
+    border-color: var(--primary-color);
+    background-color: var(--background-focus);
+    box-shadow: 0 0 10px -5px var(--primary-color);
+    outline: none;
+    font-weight: 600;
+    transition: background-color var(--transition-duration);
+  }
 }
-.form-design:focus-within {
-  outline: none !important;
-  font-weight: 600;
-  border-width: 2px;
-  border-color: #5a79ae;
-  background-color: #eff2f7;
-  box-shadow: 0 0 10px -5px #5a79ae;
-  transition: 0.5s;
-  transition-property: background-color;
-}
+
 .input-design {
   height: 42px;
-  color: #333;
   padding: 0 10px;
+  margin-right: 20px;
   font-size: 18px;
+  font-family: Titillium Web, serif;
+  color: var(--text-primary);
+  border: none;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-family: Titillium Web, serif;
-  border: none;
-  margin-right: 20px;
+
+  &:focus {
+    padding: 0 20px;
+    background-color: var(--background-focus);
+    outline: none;
+    font-weight: 600;
+    transition: background-color var(--transition-duration);
+
+    + fa-icon {
+      color: #828282;
+    }
+  }
 }
 
-.input-design:focus {
-  outline: none !important;
-  padding: 0 20px;
-  font-weight: 600;
-  background-color: #eff2f7;
-  transition: 0.5s;
-  transition-property: background-color;
-}
 .icon-design {
+  min-width: 40px;
   padding-top: 12px;
   padding-left: 10px;
-  min-width: 40px;
-  color: #c2c2c2;
   font-size: medium;
-}
-.input-design:focus + fa-icon {
-  color: #828282;
-}
-.profile-display {
-  border: 1px solid #c3c7ce;
-  border-radius: 4px;
-  font-size: small;
-  color: #6a7483;
-  padding: 3px 4px;
-  width: fit-content;
+  color: var(--text-muted);
 }
 
-.padding-left-right-1 {
-  padding: 0 1% 0 1%;
+// Legacy Input Style (consider removing if unused)
+.input-style {
+  height: 32px;
+  background-color: var(--background-white);
+  border: 0;
+  box-shadow: -3px 2px 1px 0 var(--shadow-color);
+}
+
+// Profile Display
+.profile-display {
+  width: fit-content;
+  padding: 3px 4px;
+  font-size: small;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
 }

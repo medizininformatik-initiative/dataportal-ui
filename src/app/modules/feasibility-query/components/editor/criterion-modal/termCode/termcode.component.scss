@@ -1,0 +1,42 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+  font-weight: 500;
+  font-size: medium;
+  color: rgba(90, 121, 175, 1);
+}
+.selected-concept-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-top: 16px;
+  height: 100%;
+  overflow: auto;
+}
+
+.concept-item {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-size: 14px;
+  color: #2a3a4b;
+  justify-content: space-between;
+  height: 48px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.delete-button {
+  width: auto;
+  align-self: end;
+  background-color: white;
+  border: 0px;
+  text-decoration: underline #5170a8;
+  padding-bottom: 10px;
+}

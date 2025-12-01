@@ -1,20 +1,20 @@
 <div class="container" *ngIf="content && content.length > 0">
-  <mat-tab-group
-    color="primary"
-    animationDuration="0ms"
-    class="height-100 width-100"
-    [(selectedIndex)]="selectedIndex"
-  >
-    <mat-tab
+  <div class="tabs-container">
+    <div
+      class="tab"
       *ngFor="let item of content; let i = index"
-      id="item.name"
-      label="{{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.' + item.name | translate }}"
+      [class.active]="selectedIndex === i"
+      (click)="selectedIndex = i"
     >
-      <ng-template matTabContent>
-        <ng-container *ngIf="selectedIndex === i">
-          <ng-container [ngTemplateOutlet]="item.template"></ng-container>
-        </ng-container>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+      {{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.' + item.name | translate }}
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <ng-container *ngFor="let item of content; let i = index">
+      <ng-container *ngIf="selectedIndex === i">
+        <ng-container [ngTemplateOutlet]="item.template"></ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
 </div>

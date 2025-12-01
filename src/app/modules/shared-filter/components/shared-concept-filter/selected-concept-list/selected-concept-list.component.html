@@ -1,0 +1,9 @@
+<div class="selected-concept-list">
+  <div *ngFor="let concept of selectedConcepts" class="concept-item">
+    <span style="width: 60%">{{ concept.getDisplay() | displayTranslation }}</span>
+    <span>{{ concept.getTerminologyCode().getCode() }}</span>
+    <button (click)="removeSelectedConcept(concept)" class="delete-button">
+      {{ 'FEASIBILITY.EDITOR.MODAL.REMOVE' | translate }}
+    </button>
+  </div>
+</div>

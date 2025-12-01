@@ -20,4 +20,6 @@ export interface ConceptData {
    * Terminology code data containing system, code, version, and display information
    */
   terminologyCode: TerminologyCodeData
+
+  termCode?: TerminologyCodeData
 }

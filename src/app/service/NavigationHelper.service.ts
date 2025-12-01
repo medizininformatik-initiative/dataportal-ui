@@ -48,6 +48,10 @@ export class NavigationHelperService {
     this.router.navigate([UrlPaths.feasibilityQuery.search]);
   }
 
+  public navigateToFeasibilityQueryBulkSearch(): void {
+    this.router.navigate([UrlPaths.feasibilityQuery.bulkSearch]);
+  }
+
   /**
    * Navigates to the data selection editor page.
    * @returns

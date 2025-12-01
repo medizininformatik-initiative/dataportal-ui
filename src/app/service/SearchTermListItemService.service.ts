@@ -21,6 +21,15 @@ export class SelectedTableItemsService<C extends AbstractListEntry> {
   }
 
   /**
+   * Sets the current selected table item.
+   *
+   * @param item The table row data to be set as selected.
+   */
+  public setSelectedTableItems(items: C[]): void {
+    items.forEach((item) => this.addToSelection(item));
+  }
+
+  /**
    * Gets the currently selected table item as an observable.
    *
    * @returns An Observable of the currently selected table row data.
