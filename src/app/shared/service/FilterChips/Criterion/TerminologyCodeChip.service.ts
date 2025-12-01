@@ -21,7 +21,7 @@ export class TerminologyCodeChipService {
     const chips: InterfaceFilterChip[] = [];
 
     const chip: InterfaceFilterChip = {
-      type: 'GroupedTerminologyCode',
+      type: 'SHARED_COMPONENTS.CHIPS.TERMINOLOGY_CODE',
       typeExpanded: false,
       twoLineDisplay: false,
       data: termcodeFilters.map((termcodeFilter) => this.createChipData(termcodeFilter)),

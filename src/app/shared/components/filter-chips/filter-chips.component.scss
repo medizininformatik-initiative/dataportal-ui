@@ -28,6 +28,16 @@
   height: auto;
   min-height: 26px;
 }
+
+.chip-container.count-badge {
+  background-color: rgba(90, 121, 175, 0.3);
+  color: #5a79af;
+  font-weight: bold;
+  padding: 0 8px;
+  min-width: auto;
+  max-width: none;
+}
+
 .block.expanded.twoLine {
   margin-bottom: 3px;
   min-height: 42px;

@@ -289,9 +289,9 @@
       "TITLE": "References"
     },
     "TERMCODE": {
-      "TITLE": "What are Term Codes?",
       "DESCRIPTION": "Term codes are standardized codes from terminology systems that represent specific medical concepts. Examples include ICD-10 codes for diagnoses, LOINC codes for laboratory tests, and SNOMED CT codes for clinical findings. Each term code uniquely identifies a medical concept and ensures consistent communication across healthcare systems.",
-      "MULTIPLE_DESCRIPTION": "When an element has multiple term codes, it means that the element can be represented by different coding standards or that there are equivalent codes across different terminology systems. For example, a diagnosis might have both an ICD-10 code and a SNOMED CT code that represent the same clinical concept. This allows flexibility in data exchange and ensures interoperability across different healthcare systems and organizations."
+      "MULTIPLE_DESCRIPTION": "When an element has multiple term codes, it means that the element can be represented by different coding standards or that there are equivalent codes across different terminology systems. For example, a diagnosis might have both an ICD-10 code and a SNOMED CT code that represent the same clinical concept. This allows flexibility in data exchange and ensures interoperability across different healthcare systems and organizations.",
+      "TITLE": "What are Term Codes?"
     },
     "TIME_RESTRICTION": {
       "DESCRIPTION": "Time restrictions allow you to filter data to a specific time period. For example, you can only consider diagnoses that were documented within the last 12 months, or select laboratory values from a specific date or date range. This is particularly important to distinguish current patient data from historical information.",
@@ -352,6 +352,13 @@
         "PLURAL": "You have selected {{amount}} criteria",
         "SINGULAR": "You have selected {{amount}} criterion"
       }
+    },
+    "CHIPS": {
+      "CONTEXT": "Context",
+      "FIELD": "Field",
+      "REFERENCE": "Reference",
+      "TERMINOLOGY_CODE": "Terminology Codes",
+      "TIMERESTRICTION": "Time Restriction"
     },
     "DELETE_MODAL": {
       "CANCEL": "Cancel",

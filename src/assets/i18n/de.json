@@ -357,6 +357,13 @@
         "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt"
       }
     },
+    "CHIPS": {
+      "CONTEXT": "Kontext",
+      "FIELD": "Feld",
+      "REFERENCE": "Referenz",
+      "TERMINOLOGY_CODE": "Terminologie-Codes",
+      "TIMERESTRICTION": "Zeiteinschränkung"
+    },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",
       "DELETE": "Löschen",

@@ -44,7 +44,7 @@ export class FilterChipQuantityAdapter {
   ): InterfaceFilterChip {
     const minValue = quantity.getMinValue();
     const maxValue = quantity.getMaxValue();
-    const text = `Between ${minValue} - ${maxValue} ${unitDisplay}`;
+    const text = `${minValue} - ${maxValue} ${unitDisplay}`;
 
     return this.createFilterChip(display, text);
   }
