@@ -1,6 +1,4 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { DownloadCCDLService } from 'src/app/service/Download/DownloadCCDL.service';
-import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
 import { Subscription } from 'rxjs';
@@ -18,9 +16,7 @@ export class ResultActionBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private navigationHelperService: NavigationHelperService,
-    private downloadCCDLService: DownloadCCDLService,
-    private saveDataQueryModalService: SaveDataQueryModalService,
-    private feasibilityQueryProvider: FeasibilityQueryProviderService
+    private saveDataQueryModalService: SaveDataQueryModalService
   ) {}
 
   ngOnInit() {}
@@ -34,10 +30,6 @@ export class ResultActionBarComponent implements OnInit, OnDestroy {
     this.saveDataQueryModalSubscription = this.saveDataQueryModalService
       .openSaveDataQueryModal()
       .subscribe();
-  }
-
-  public doDownloadQuery() {
-    this.downloadCCDLService.downloadActiveFeasibilityQueryAsFile();
   }
 
   public editStage(): void {

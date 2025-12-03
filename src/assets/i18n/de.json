@@ -451,6 +451,15 @@
       "WARNING": "Das Anfangsdatum muss kleiner sein als das Enddatum"
     }
   },
+  "SNACKBAR": {
+    "ERROR": {
+      "GENERIC": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+    },
+    "SUCCESS": {
+      "DOWNLOAD": "Datenanfrage wurde heruntergeladen.",
+      "SAVED_DATAQUERY": "Datenanfrage wurde gespeichert."
+    }
+  },
   "TAB_TITLE": {
     "DATA_QUERY": {
       "COHORT_DEFINITION": "Datendefinition - Kohortenselektion",

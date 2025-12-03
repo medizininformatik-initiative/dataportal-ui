@@ -41,10 +41,10 @@ export class SavedDataQueryService {
 
   private createCrtdlJson(crtdl: CRTDL) {
     return {
-      display: crtdl.display,
-      version: crtdl.version,
-      cohortDefinition: crtdl.cohortDefinition,
-      dataExtraction: crtdl.dataExtraction,
+      display: crtdl.getDisplay(),
+      version: crtdl.getVersion(),
+      cohortDefinition: crtdl.getCohortDefinition(),
+      dataExtraction: crtdl.getDataExtraction(),
     };
   }
 

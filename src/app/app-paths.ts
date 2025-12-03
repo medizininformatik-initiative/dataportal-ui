@@ -3,7 +3,6 @@ export const BasePaths = {
   dataSelection: 'data-selection',
   dataQuery: 'data-query',
   savedQueries: 'saved-queries',
-  options: 'options',
   queryEditor: 'query-editor',
   home: 'dashboard',
 };

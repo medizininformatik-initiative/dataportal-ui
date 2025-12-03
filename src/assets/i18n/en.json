@@ -447,6 +447,15 @@
       "WARNING": "The start date must be earlier than the end date"
     }
   },
+  "SNACKBAR": {
+    "ERROR": {
+      "GENERIC": "An error occurred. Please try again later."
+    },
+    "SUCCESS": {
+      "DOWNLOAD": "Data selection downloaded successfully.",
+      "SAVED_DATAQUERY": "Data query saved successfully."
+    }
+  },
   "TAB_TITLE": {
     "DATA_QUERY": {
       "COHORT_DEFINITION": "Data Definition - Cohort Selection",

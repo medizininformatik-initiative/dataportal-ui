@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
+import { MatDialogRef } from '@angular/material/dialog';
 import { SaveFileDataModal } from '../../../../../shared/models/SaveDataModal/SaveFileDataModal';
 
 @Component({
@@ -14,8 +14,8 @@ export class DownloadDataSelectionComponent {
     private downloadCRDTLService: DownloadCRDTLService
   ) {}
 
-  public saveDataSelection(data: SaveFileDataModal) {
-    this.downloadCRDTLService.downloadActiveDataSelectionAsFile(data.title);
+  public downloadDataSelection(data: SaveFileDataModal) {
+    this.downloadCRDTLService.download(data.title);
     this.doDiscard(false);
   }
 

@@ -2,7 +2,6 @@ import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { DataSelectionFactoryService } from 'src/app/service/DataSelection/DataSelection.factory.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { DownloadCRDTLService } from 'src/app/service/Download/DownloadCRDTL.service';
 import { DownloadDataSelectionComponent } from '../download-data-selection/download-data-selection.component';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { map, take } from 'rxjs/operators';

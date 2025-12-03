@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
@@ -11,8 +11,6 @@ import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.s
   styleUrls: ['./cohort-definition.component.scss'],
 })
 export class CohortDefinitionComponent implements OnInit {
-  @Input() showActionBar;
-  @Output() scrollClick = new EventEmitter();
   fileName: string;
   isFeasibilityExistent$: Observable<boolean>;
   totalNumberOfPatients: number;

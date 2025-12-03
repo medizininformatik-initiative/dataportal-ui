@@ -57,10 +57,7 @@ export class CreateCRDTLService {
   }
 
   public buildCRDTL(structuredQuery: StructuredQuery, dataExtraction: DataExtraction): CRTDL {
-    const version = 'http://json-schema.org/to-be-done/schema#';
-    const display = '';
-
-    return new CRTDL(display, version, structuredQuery, dataExtraction);
+    return new CRTDL(structuredQuery, dataExtraction);
   }
 
   private getStructuredQuery(): Observable<StructuredQuery> {

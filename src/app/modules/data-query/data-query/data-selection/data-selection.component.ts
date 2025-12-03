@@ -23,15 +23,9 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   @Output()
   scrollClick = new EventEmitter();
 
-  saveDataQueryModalSubscription: Subscription;
-
   isDataSelectionExistent$: Observable<boolean>;
   isCohortExistent$: Observable<boolean>;
 
-  downloadSubscription: Subscription;
-  translatedCRTLDSubscription: Subscription;
-  fileName: string;
-  createDSSubscription: Subscription;
   emailLink: string;
   constructor(
     public elementRef: ElementRef,
@@ -50,11 +44,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     this.emailLink = this.appSettingsProviderService.getEmail();
   }
 
-  ngOnDestroy(): void {
-    this.downloadSubscription?.unsubscribe();
-    this.translatedCRTLDSubscription?.unsubscribe();
-    this.createDSSubscription?.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   public navigateToDataQueryCohortDefinition() {
     this.navigationHelperService.navigateToDataQueryCohortDefinition();
