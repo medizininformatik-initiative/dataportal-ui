@@ -57,12 +57,12 @@ table {
 }
 
 .font-size-small {
-  font-size: 14px; /* consistent with info-column */
+  font-size: 14px;
   color: #6a7483;
 }
 
 td {
-  padding: 0.25rem 0.5rem; /* snapped from 4px → 8px */
+  padding: 0.5rem 0.5rem;
 }
 
 th {
@@ -70,4 +70,12 @@ th {
   font-size: 16px;
   color: rgba(197, 202, 207, 1);
   font-weight: 500;
+}
+
+.row-container {
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 }

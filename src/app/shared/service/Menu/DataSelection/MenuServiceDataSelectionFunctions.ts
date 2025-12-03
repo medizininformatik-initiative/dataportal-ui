@@ -2,11 +2,11 @@ import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataS
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
-import { v4 as uuidv4 } from 'uuid';
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service';
+import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
 import { RemoveReferenceService } from '../../../../service/RemoveReference.service';
 import { StagedProfileService } from '../../../../service/StagedDataSelectionProfile.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +26,6 @@ export class MenuServiceDataSelectionFunctions {
     this.navigationHelperService.navigateToEditProfile(id);
   }
   /**
-   * Wont work as we need a unique id for the DataSelectionProfile
-   *
    * @param id
    */
   public cloneDataSelectionObject(url: string) {
@@ -48,9 +46,5 @@ export class MenuServiceDataSelectionFunctions {
 
   public deleteDataSelectionObject(id: string) {
     this.removeReferenceService.delete(id);
-
-    /*const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
-    this.dataSelectionProvider.removeProfileFromDataSelection(dataSelectionId, id);
-    this.profileProvider.removeProfileById(id);*/
   }
 }

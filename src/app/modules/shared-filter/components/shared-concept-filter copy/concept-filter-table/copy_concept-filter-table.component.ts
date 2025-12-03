@@ -4,19 +4,20 @@ import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { map, Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription, tap } from 'rxjs';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { ConceptSelectionHelperService } from '../../../service/ConceptSelection/ConceptSelectionHelper.service';
 
 @Component({
   selector: 'num-concept-filter-table-copy',
   templateUrl: './copy_concept-filter-table.component.html',
   styleUrls: ['./copy_concept-filter-table.component.scss'],
 })
-export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
+export class CopyConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy {
   codeableConceptResultList: CodeableConceptResultList;
 
   @Input()
@@ -40,14 +41,36 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
 
   constructor(
     private activeSearchTermService: ActiveSearchTermService,
-    private conceptElasticSearchService: CodeableConceptSearchService,
-    private selectedConceptProviderService: SelectedConceptFilterProviderService
+    private conceptSearchService: CodeableConceptSearchService,
+    private selectedConceptProviderService: SelectedConceptFilterProviderService,
+    private conceptSelectionHelperService: ConceptSelectionHelperService
   ) {}
 
+  ngOnChanges() {
+    const selectedConcepts = this.selectedConceptProviderService.getSelectedConceptsValue();
+    this.adaptedData?.body.rows.forEach((row) => {
+      const entry = row.originalEntry as CodeableConceptResultListEntry;
+      row.isCheckboxSelected = this.conceptSelectionHelperService.isConceptSelected(
+        entry.getConcept(),
+        selectedConcepts
+      );
+    });
+  }
+
   ngOnInit() {
-    this.conceptElasticSearchService
+    this.conceptSearchService
       .getSearchResults(this.valueSetUrl)
       .pipe(
+        map((results) => {
+          results.getResults().find((entry) => {
+            entry.setIsSelected(
+              this.selectedConceptProviderService.isConceptSelected(
+                entry.getConcept().getTerminologyCode()
+              )
+            );
+          });
+          return results;
+        }),
         map((results) => {
           this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
         })
@@ -100,5 +123,9 @@ export class CopyConceptFilterTableComponent implements OnInit, OnDestroy {
 
   private clearSelectedConceptArray() {
     this.selectedConcepts = [];
+  }
+
+  public loadMoreSearchResults(): void {
+    this.conceptSearchService.loadNextPage(' ', this.valueSetUrl).subscribe();
   }
 }

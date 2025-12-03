@@ -1,12 +1,8 @@
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipBuilder } from '../FilterChipBuilder';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { InterfaceFilterChip } from '../InterfaceFilterChip';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 
 export class FilterChipConceptAdapter {
   public static conceptFilterChips: InterfaceFilterChip[] = [];
@@ -41,27 +37,6 @@ export class FilterChipConceptAdapter {
   }
 
   /**
-   * Determines the filter type.
-   *
-   * @param attributeCode Optional TerminologyCode
-   * @returns The filter type as a string
-   */
-  private static getFilterType(attributeCode?: TerminologyCode): string {
-    return attributeCode?.getDisplay() || FilterTypes.CONCEPT;
-  }
-
-  /**
-   * @todo AttributeCode will be extended in the future by displayData --> Need to fix this
-   * Retrieves the selected concepts from the ConceptFilter.
-   *
-   * @param conceptFilter The ConceptFilter to retrieve concepts from
-   * @returns A Set of TerminologyCode or null
-   */
-  private static getSelectedConcepts(conceptFilter: ConceptFilter): Concept[] | null {
-    return conceptFilter?.getSelectedConcepts() || null;
-  }
-
-  /**
    * Builds filter chips and adds them to the conceptFilterChips array.
    *
    * @param selectedConcepts A Set of TerminologyCode
@@ -82,18 +57,6 @@ export class FilterChipConceptAdapter {
    * @param builder The FilterChipBuilder instance
    */
   private static createFilterChip(concept: Concept, builder: FilterChipBuilder): void {
-    /*const displayText = new DisplayData(
-      [concept.getDisplay()],
-      [
-        new Translation('de-DE', [concept.getDisplay()]),
-        new Translation('en-US', [concept.getDisplay()]),
-      ]
-    );
-
-    if (!displayText) {
-      console.warn('Concept display text is undefined or null', concept);
-      return;
-    }*/
     builder.addData(uuidv4(), concept.getDisplay());
   }
 }

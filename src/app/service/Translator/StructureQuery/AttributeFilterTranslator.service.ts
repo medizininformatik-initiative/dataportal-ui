@@ -13,6 +13,7 @@ import { TerminologyCodeBaseData } from 'src/app/model/Interface/TerminologyBase
 import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { ValueFilterData } from 'src/app/model/Interface/ValueFilterData';
+import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,8 @@ export class AttributeFilterTranslatorService {
   constructor(
     private quantityFilterTranslatorService: QuantityFilterTranslatorService,
     private conceptFilterTranslatorService: ConceptFilterTranslatorService,
-    private referenceFilterTranslatorService: ReferenceFilterTranslatorService
+    private referenceFilterTranslatorService: ReferenceFilterTranslatorService,
+    private attributeFilterFactoryService: AttributeFilterFactoryService
   ) {}
 
   /**
@@ -53,13 +55,11 @@ export class AttributeFilterTranslatorService {
     structuredQueryAttributeFilters: AttributeFilterData[],
     parentId: string
   ): AttributeFilter[] {
-    return structuredQueryAttributeFilters
-      .map((attributeFilter: AttributeFilterData) =>
-        this.translateAttributeFilter(attributeDefinitionData, attributeFilter, parentId)
-      )
-      .filter((filter: AttributeFilter): filter is AttributeFilter => !!filter);
+    return attributeDefinitionData.map((attributeFilter) =>
+      this.translateAttributeFilter(attributeFilter, structuredQueryAttributeFilters, parentId)
+    );
+    //.filter((filter: AttributeFilter): filter is AttributeFilter => !!filter);
   }
-
   /**
    * Translates a single attribute filter from the structured query format to the internal format.
    * @param uiProfile
@@ -68,21 +68,22 @@ export class AttributeFilterTranslatorService {
    * @returns
    */
   private translateAttributeFilter(
-    attributeDefinitionData: AttributeDefinitionData[],
-    attributeFilterData: AttributeFilterData,
+    attributeFilter: AttributeDefinitionData,
+    SQData: AttributeFilterData[],
     parentId: string
   ): AttributeFilter {
-    const foundAttributeDefinition: AttributeDefinitionData | undefined =
-      this.findAttributeFilterInProfile(attributeDefinitionData, attributeFilterData.attributeCode);
+    const foundAttributeDefinition: AttributeFilterData | undefined =
+      this.findAttributeFilterInProfile(SQData ? SQData : [], attributeFilter.attributeCode);
 
     if (!foundAttributeDefinition) {
-      return;
+      return this.attributeFilterFactoryService.createAttributeFilter(attributeFilter);
     }
     const attributeFilterBuilder = this.applyFilter(
-      attributeFilterData,
       foundAttributeDefinition,
+      attributeFilter,
       parentId
     );
+
     attributeFilterBuilder.withAttributeCode(
       TerminologyCode.fromJson(foundAttributeDefinition.attributeCode)
     );
@@ -153,10 +154,10 @@ export class AttributeFilterTranslatorService {
    * @returns
    */
   public findAttributeFilterInProfile(
-    attributeDefinitions: AttributeDefinitionData[],
+    sq: AttributeFilterData[],
     attributeCode: TerminologyCodeBaseData
-  ): AttributeDefinitionData | undefined {
-    return attributeDefinitions.find((attributeDefinition: AttributeDefinitionData) => {
+  ): AttributeFilterData | undefined {
+    return sq.find((attributeDefinition: AttributeFilterData) => {
       const attributeCodeData = attributeDefinition.attributeCode;
       return (
         attributeCode.code === attributeCodeData.code &&

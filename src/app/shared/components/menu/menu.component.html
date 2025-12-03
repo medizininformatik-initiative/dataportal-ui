@@ -1,9 +1,8 @@
 <num-button data-cy="openMenu" type="blue" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
-  {{ 'SHARED_COMPONENTS.MENU.EDIT' | translate }}
+  {{ 'SHARED_COMPONENTS.MENU.OPTIONS' | translate }}
 </num-button>
 
 <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
-  <div class="divider options">{{ 'SHARED_COMPONENTS.MENU.OPTIONS' | translate }}</div>
   <div *ngFor="let item of menuItems; let isLast = last" data-cy="{{ item.label | translate }}">
     <button
       [ngClass]="{ divider: !isLast, 'last-item': isLast }"

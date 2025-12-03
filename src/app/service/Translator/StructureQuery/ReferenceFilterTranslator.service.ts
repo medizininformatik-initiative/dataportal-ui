@@ -9,6 +9,8 @@ import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCrite
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
+import { TimeRestrictionNotSet } from '../../../model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet';
+import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +19,8 @@ export class ReferenceFilterTranslatorService {
   constructor(
     private hashService: HashService,
     private criteriaProfileProviderService: CriteriaProfileProviderService,
-    private referenceCriterionProviderService: ReferenceCriterionProviderService
+    private referenceCriterionProviderService: ReferenceCriterionProviderService,
+    private uiTimeRestrictionFactoryService: UITimeRestrictionFactoryService
   ) {}
 
   /**
@@ -80,6 +83,12 @@ export class ReferenceFilterTranslatorService {
     const contextCode = TerminologyCode.fromJson(referenceCriterion.context);
     const hash = this.hashService.createCriterionHash(contextCode, termCode);
     const uiProfile = this.criteriaProfileProviderService.getCriteriaProfileByHash(hash);
+    const timeRestriction = !referenceCriterion.timeRestriction
+      ? new TimeRestrictionNotSet()
+      : this.uiTimeRestrictionFactoryService.createTimeRestrictionForFeasibilityQuery(
+          referenceCriterion.timeRestriction
+        );
+
     return new ReferenceCriterion(
       parentId,
       true,
@@ -91,7 +100,7 @@ export class ReferenceFilterTranslatorService {
       false,
       new CritGroupPosition(),
       [termCode],
-      undefined,
+      timeRestriction,
       uuidv4(),
       []
     );

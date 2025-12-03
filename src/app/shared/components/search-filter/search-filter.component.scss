@@ -39,7 +39,8 @@
 
 /* Select panel adjustments */
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .mat-mdc-select-panel {
-  max-height: max-content;
+  max-height: 50%;
+  overflow: auto;
   padding: 8px 0; // add small 8px spacing
 }
 

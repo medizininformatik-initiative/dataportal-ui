@@ -1,8 +1,13 @@
-<div class="profile-tab-group-container full">
-  <mat-tab-group class="full" animationDuration="0ms">
+<div class="full">
+  <mat-tab-group [selectedIndex]="1" animationDuration="0ms">
+    <mat-tab label="{{ 'INFORMATION.REFERENCES.TAB_TITLE' | translate }}">
+      <num-information-section>
+        <span slot="title">{{ 'INFORMATION.REFERENCES.TITLE' | translate }}</span>
+        {{ 'INFORMATION.REFERENCES.EXTENDED_DESCRIPTION' | translate }}
+      </num-information-section>
+    </mat-tab>
     <mat-tab
       *ngFor="let reference of referenceFields"
-      class="inner-tab-group"
       label="{{ reference.getDisplay() | displayTranslation }}"
     >
       <num-reference-field-tab

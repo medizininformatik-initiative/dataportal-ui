@@ -1,4 +1,4 @@
-<mat-form-field appearance="fill" style="padding-right: 20px">
+<mat-form-field appearance="fill" class="padding-right-3">
   <div fxLayout="row" fxLayoutAlign="center center">
     <mat-select
       disableOptionCentering
@@ -6,10 +6,10 @@
       panelClass="example-panel"
       [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter?.filterType | translate"
       [(value)]="selectedValues"
-      multiple
+      [multiple]="multiSelect"
     >
       <mat-option *ngFor="let value of filter.data" [value]="value.label">
-        {{ value.display }} ({{ value.count }})
+        {{ value.display | displayTranslation }} ({{ value.count }})
       </mat-option>
     </mat-select>
   </div>

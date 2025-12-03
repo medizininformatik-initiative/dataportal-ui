@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { BasePaths, UrlPaths } from '../app-paths';
 import { Router } from '@angular/router';
 
+/**
+ * Service for handling navigation throughout the application.
+ * Provides centralized navigation methods for different features.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -36,6 +40,7 @@ export class NavigationHelperService {
   }
 
   /**
+
    * Navigates to {@link UrlPaths.feasibilityQuery.search | /feasibility-query/search}
    * @returns void
    */
@@ -43,9 +48,18 @@ export class NavigationHelperService {
     this.router.navigate([UrlPaths.feasibilityQuery.search]);
   }
 
+
   /**
    * Navigates to {@link UrlPaths.dataSelection.editor | /data-selection/editor}
    * @returns void
+
+  public navigateToFeasibilityQueryBulkSearch(): void {
+    this.router.navigate([UrlPaths.feasibilityQuery.bulkSearch]);
+  }
+
+  /**
+   * Navigates to the data selection editor page.
+   * @returns
    */
   public navigateToDataSelectionEditor(): void {
     this.router.navigate([UrlPaths.dataSelection.editor]);

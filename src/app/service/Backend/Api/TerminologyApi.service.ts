@@ -4,6 +4,7 @@ import { CodeableConceptPaths } from '../Paths/CodeableConceptPaths';
 import { ConceptData } from 'src/app/model/Interface/ConceptData';
 import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
+import { CriteriaSearchFilterData } from 'src/app/model/Interface/Search/CriteriaSearchFilterData';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
@@ -11,6 +12,8 @@ import { Observable } from 'rxjs';
 import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
 import { TerminologyPaths } from '../Paths/TerminologyPaths';
 import { UiProfileResponseData } from '../../../model/Interface/UiProfileResponseData';
+import { BulkSearchPostData } from 'src/app/model/Interface/BulkSearchPostData';
+import { BulkSearchResponseData } from 'src/app/model/Interface/BulkSearchResponseData';
 
 @Injectable({
   providedIn: 'root',
@@ -27,8 +30,8 @@ export class TerminologyApiService {
    * Retrieves the search filter options.
    * @returns - An observable containing the search filter options.
    */
-  public getSearchFilter(): Observable<Array<any>> {
-    return this.http.get<any>(
+  public getSearchFilter(): Observable<Array<CriteriaSearchFilterData>> {
+    return this.http.get<Array<CriteriaSearchFilterData>>(
       this.backendService.createUrl(TerminologyPaths.SEARCH_FILTER_ENDPOINT)
     );
   }
@@ -69,18 +72,6 @@ export class TerminologyApiService {
   }
 
   /**
-   * Retrieves codeable concepts by their IDs.
-   * @param ids - The IDs of the codeable concepts.
-   * @returns - An observable containing the codeable concepts.
-   */
-  public getCodeableConceptsByIds(ids: string[]): Observable<Array<ConceptData>> {
-    return this.chunkedRequestService.getChunkedRequest(
-      ids,
-      CodeableConceptPaths.ENTRY_CONCEPT_ENDPOINT
-    );
-  }
-
-  /**
    * Retrieves a specific entry by its ID.
    * @param id - The ID of the entry to retrieve.
    * @returns - An observable containing the entry data.
@@ -106,6 +97,18 @@ export class TerminologyApiService {
   public getUiProfileData(): Observable<UiProfileResponseData[]> {
     return this.http.get<UiProfileResponseData[]>(
       this.backendService.createUrl(TerminologyPaths.UIPROFILE_ENDPOINT)
+    );
+  }
+
+  /**
+   * Posts a bulk search request to the terminology endpoint.
+   * @param body - The request body for the bulk search.
+   * @returns
+   */
+  public postTerminologyBulkSearch(body: BulkSearchPostData): Observable<BulkSearchResponseData> {
+    return this.http.post<BulkSearchResponseData>(
+      this.backendService.createUrl(TerminologyPaths.BULK_SEARCH_ENDPOINT),
+      body
     );
   }
 }

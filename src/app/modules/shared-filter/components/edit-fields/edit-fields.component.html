@@ -1,60 +1,71 @@
-<div class="container">
-  <div class="header-container">
-    <num-section-name style="flex: 0 0 70%">
-      {{ 'EDITOR.CONTENT.PROFILE.FIELDS.HEADER' | translate }}
-    </num-section-name>
-    <num-section-name>
-      {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED' | translate }}
-    </num-section-name>
-  </div>
-  <div class="main-content">
-    <div class="field-box">
-      <div *ngFor="let singleTree of tree">
-        <num-tree
-          [treeData]="singleTree"
-          (selectedCheckbox)="setSelectedFieldElement($event)"
-        ></num-tree>
-      </div>
-    </div>
-    <div class="sidebar" *ngIf="selectedBasicFields">
-      <div class="selected-fields-box">
-        <div
-          *ngFor="let selectedField of selectedBasicFields; let index = index"
-          fxLayout="row"
-          fxLayoutAlign="start center"
-          class="selected-filter-container"
-        >
-          <div>
-            <mat-checkbox
-              [checked]="selectedField.getMustHave()"
-              (change)="setFieldAsRequired(selectedField)"
-            >
-            </mat-checkbox>
+<mat-tab-group
+  animationDuration="0ms"
+  disableRipple="true"
+  mat-stretch-tabs="false"
+  [selectedIndex]="1"
+>
+  <mat-tab label="{{ 'INFORMATION.FIELD.TITLE' | translate }}">
+    <num-information-section>
+      <span slot="title">{{ 'INFORMATION.FIELD.TITLE' | translate }}</span>
+      {{ 'INFORMATION.FIELD.DESCRIPTION' | translate }}
+    </num-information-section>
+  </mat-tab>
+
+  <mat-tab label="{{ 'EDITOR.CONTENT.PROFILE.FIELDS.TITLE' | translate }}">
+    <div class="container">
+      <div class="main-content">
+        <div class="field-box">
+          <div *ngFor="let singleTree of tree">
+            <num-tree
+              [treeData]="singleTree"
+              (selectedCheckbox)="setSelectedFieldElement($event)"
+            ></num-tree>
           </div>
-          <div class="display-part">
-            <span
-              matTooltipPosition="below"
-              matTooltipShowDelay="300"
-              [matTooltip]="selectedField.getDisplay() | displayTranslation"
+        </div>
+        <div class="sidebar" *ngIf="selectedBasicFields">
+          <num-section-name>
+            {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED' | translate }}
+          </num-section-name>
+          <div class="selected-fields-box">
+            <div
+              *ngFor="let selectedField of selectedBasicFields; let index = index"
+              fxLayout="row"
+              fxLayoutAlign="start center"
+              class="selected-filter-container"
             >
-              {{ selectedField.getDisplay() | displayTranslation }}
-            </span>
-          </div>
-          <div
-            *ngIf="!selectedField.getIsRequired()"
-            fxLayout="row"
-            fxFlex="10"
-            fxLayoutAlign="end center"
-          >
-            <fa-icon
-              [icon]="'times'"
-              size="1x"
-              (click)="removeSelectedField(selectedField)"
-              class="delete-button"
-            ></fa-icon>
+              <div>
+                <mat-checkbox
+                  [checked]="selectedField.getMustHave()"
+                  (change)="setFieldAsRequired(selectedField)"
+                >
+                </mat-checkbox>
+              </div>
+              <div class="display-part">
+                <span
+                  matTooltipPosition="below"
+                  matTooltipShowDelay="300"
+                  [matTooltip]="selectedField.getDisplay() | displayTranslation"
+                >
+                  {{ selectedField.getDisplay() | displayTranslation }}
+                </span>
+              </div>
+              <div
+                *ngIf="!selectedField.getIsRequired()"
+                fxLayout="row"
+                fxFlex="10"
+                fxLayoutAlign="end center"
+              >
+                <fa-icon
+                  [icon]="'times'"
+                  size="1x"
+                  (click)="removeSelectedField(selectedField)"
+                  class="delete-button"
+                ></fa-icon>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </mat-tab>
+</mat-tab-group>

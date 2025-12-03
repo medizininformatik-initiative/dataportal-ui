@@ -1,18 +1,10 @@
-import { AbstractAttributeDefinition } from '../../Utilities/AttributeDefinition.ts/AbstractAttributeDefinition';
-import { AbstractAttributeFilters } from './AttributeFilter/AbstractAttributeFilters';
 import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
-import { AttributeDefinitions } from '../../Utilities/AttributeDefinition.ts/AttributeDefinitions';
 import { AttributeFilter } from './AttributeFilter/AttributeFilter';
-import { AttributeFiltersBuilder } from './AttributeFilter/AttributeFiltersBuilder';
-import { BetweenFilter } from './TimeRestriction/BetweenFilter';
 import { Criterion } from './Criterion';
 import { CritGroupPosition } from '../CritGroupPosition';
-import { FilterTypes } from '../../Utilities/FilterTypes';
 import { ReferenceCriterion } from './ReferenceCriterion';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { TimeRestrictionNotSet } from './TimeRestriction/TimeRestrictionNotSet';
-import { v4 as uuidv4 } from 'uuid';
-import { ValueDefinition } from '../../Utilities/AttributeDefinition.ts/ValueDefnition';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
 import { Display } from '../../DataSelection/Profile/Display';
 
@@ -188,94 +180,7 @@ export class CriterionBuilder {
     );
   }
 
-  /**
-   * Builds an instance of AttributeFilter using the AttributeFiltersBuilder.
-   *
-   * @param display - The display name for the filter.
-   * @param attributeCode - The attribute code.
-   * @param filterType - The filter type.
-   * @param filterParams - The parameters required to create the specific filter.
-   * @returns The created AttributeFilter instance.
-   */
-  buildAttributeFilter(
-    display: Display,
-    filterType: FilterTypes,
-    attributeDefinition: AttributeDefinitions,
-    attributeCode?: TerminologyCode
-  ): AbstractAttributeFilters {
-    const attributeFilterBuilder = new AttributeFiltersBuilder(
-      display,
-      attributeDefinition.getOptional(),
-      filterType
-    );
-
-    switch (filterType) {
-      case FilterTypes.CONCEPT:
-        attributeFilterBuilder.withConceptFilter(
-          attributeFilterBuilder.buildConceptFilter(
-            uuidv4(),
-            attributeDefinition.getReferencedValueSet()
-          )
-        );
-        break;
-      case FilterTypes.QUANTITY:
-      case FilterTypes.QUANTITY_COMPARATOR:
-      case FilterTypes.QUANTITY_RANGE:
-        attributeFilterBuilder.withQuantityFilter(
-          attributeFilterBuilder.buildQuantityFilter(
-            attributeDefinition.getAllowedUnits(),
-            attributeDefinition.getPrecision()
-          )
-        );
-        break;
-      case FilterTypes.REFERENCE:
-        attributeFilterBuilder.withReferenceFilter(
-          attributeFilterBuilder.buildReferenceFilter(
-            uuidv4(),
-            attributeDefinition.getReferenceCriteriaSet()
-          )
-        );
-        break;
-      default:
-        throw new Error(`Unsupported filter type: ${filterType}`);
-    }
-    this.buildTimeRestriction();
-    return attributeFilterBuilder.withAttributeCode(attributeCode).buildAttributeFilter();
-  }
-
-  buildValueFilter(
-    valueDefinition: ValueDefinition,
-    display: Display,
-    filterType: FilterTypes
-  ): ValueFilter {
-    const valueFilterBuilder = new AttributeFiltersBuilder(
-      display,
-      valueDefinition.getOptional(),
-      filterType
-    );
-    switch (filterType) {
-      case FilterTypes.CONCEPT:
-        valueFilterBuilder.withConceptFilter(
-          valueFilterBuilder.buildConceptFilter(uuidv4(), valueDefinition.getReferencedValueSet())
-        );
-        break;
-      case FilterTypes.QUANTITY:
-      case FilterTypes.QUANTITY_COMPARATOR:
-      case FilterTypes.QUANTITY_RANGE:
-        valueFilterBuilder.withQuantityFilter(
-          valueFilterBuilder.buildQuantityFilter(
-            valueDefinition.getAllowedUnits(),
-            valueDefinition.getPrecision()
-          )
-        );
-        break;
-      default:
-        throw new Error(`Unsupported filter type: ${filterType}`);
-    }
-    return valueFilterBuilder.buildValueFilter();
-  }
-
-  buildTimeRestriction() {
+  buildEmptyTimeRestriction() {
     return new TimeRestrictionNotSet();
   }
 }

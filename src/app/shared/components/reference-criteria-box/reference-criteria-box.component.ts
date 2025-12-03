@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
-import { Observable, of } from 'rxjs';
 import { MenuItemInterface } from '../../models/Menu/MenuItemInterface';
+import { Observable, of } from 'rxjs';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { ReferenceCriterionMenuItems } from '../../service/Menu/RefrenceCriterion/ReferenceCriterionMenuItems.service';
 import { TerminologySystemDictionary } from '../../../model/Utilities/TerminologySystemDictionary';
 
@@ -24,7 +25,7 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
 
   $filterChips: Observable<InterfaceFilterChip[]> = of([]);
 
-  translatedSystem: string;
+  translatedSystem: Display;
 
   constructor(
     private menuService: ReferenceCriterionMenuItems,

@@ -80,6 +80,15 @@ export class DataSelectionProfile {
     this.filters = value;
   }
 
+  public setFilter(filter: AbstractProfileFilter): void {
+    const index = this.filters.findIndex((f) => f.getName() === filter.getName());
+    if (index !== -1) {
+      this.filters[index] = filter;
+    } else {
+      this.filters.push(filter);
+    }
+  }
+
   public getReference(): ProfileReference {
     return this.reference;
   }

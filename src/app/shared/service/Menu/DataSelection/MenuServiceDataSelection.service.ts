@@ -28,7 +28,7 @@ export class MenuServiceDataSelection {
           this.menuServiceDataSelectionFunctions.deleteDataSelectionObject(url),
       },
       {
-        disabled: true,
+        disabled: isMainProfile,
         icon: 'clone',
         label: 'DUPLICATE',
         action: (id: string) => this.menuServiceDataSelectionFunctions.cloneDataSelectionObject(id),

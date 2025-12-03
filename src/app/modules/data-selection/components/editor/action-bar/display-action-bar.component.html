@@ -1,0 +1,16 @@
+<num-action-bar>
+  <num-button (click)="onNavigateToDataRequest()" type="green" style="order: 3">
+    {{ 'DATASELECTION.EDITOR.ACTION_BAR.DATA_REQUEST' | translate }}
+  </num-button>
+  <num-button (click)="onSaveDataQuery()" type="green" style="order: 2">
+    {{ 'DATASELECTION.EDITOR.ACTION_BAR.SAVE_DATAQUERY' | translate }}
+  </num-button>
+  <num-button
+    [icon]="'arrow-up'"
+    (click)="onNavigateToDataSelectionSearch()"
+    type="green"
+    style="order: 1"
+  >
+    {{ 'DATASELECTION.EDITOR.ACTION_BAR.JUMP_TO_DATASELECTION_TREE' | translate }}
+  </num-button>
+</num-action-bar>

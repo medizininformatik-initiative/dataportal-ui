@@ -1,6 +1,5 @@
 <num-modal-window (saveButtonSelected)="saveCriterion()" (cancelButtonSelected)="closeDialog()">
   <div class="container">
-    <num-section-name>Filter anwenden</num-section-name>
     <ng-container *ngIf="criterion.getTimeRestriction()">
       <div class="background">
         <num-edit-time-restriction
@@ -35,6 +34,17 @@
           (valueFilterChange)="updateValueFilter($event)"
         >
         </num-value-filter>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="criterion.getTermCodes().length > 1">
+      <div class="termcode-container background">
+        <num-edit-termcode
+          class="height-100"
+          [termCodes]="criterion.getTermCodes()"
+          [context]="criterion.getContext()"
+          (changedTermCodes)="updateTermCodes($event)"
+        >
+        </num-edit-termcode>
       </div>
     </ng-container>
   </div>

@@ -1,11 +1,10 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipConceptAdapter } from '../../../models/FilterChips/Adapter/FilterChipConceptAdapter';
 import { Injectable } from '@angular/core';
 import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',

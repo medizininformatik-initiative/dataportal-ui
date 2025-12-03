@@ -1,5 +1,32 @@
 # Changelog
 
+## v6.4.0 (2025-11-24)
+
+### Changed
+* Removed unused and outdated configuration entries; Data Portal settings are now retrieved from the backend settings endpoint during application initialization. [#432](https://github.com/medizininformatik-initiative/feasibility-gui/issues/432)
+* CRTDL display objects are now loaded from the backend at startup. [#455](https://github.com/medizininformatik-initiative/feasibility-gui/issues/455)
+* Improved display of terminology titles. [#465](https://github.com/medizininformatik-initiative/feasibility-gui/issues/465)
+* Renamed the URL of the profile editing page to use the “feature” segment. [#467](https://github.com/medizininformatik-initiative/feasibility-gui/issues/467)
+
+### Features
+* Implemented auto-save functionality in the data selection editor; profile changes are now saved automatically.
+  [#468](https://github.com/medizininformatik-initiative/feasibility-gui/issues/468)
+* Added a selectable boolean to criteria-relative data to prevent adding elements to the cohort when not allowed.
+  [#482](https://github.com/medizininformatik-initiative/feasibility-gui/issues/482)
+* Outsourced the action bar from the data-selection display component.
+  [#479](https://github.com/medizininformatik-initiative/feasibility-gui/issues/479)
+
+### Fixed
+* Fixed UI crashes occurring when linking a reference in the data selection.
+  [#478](https://github.com/medizininformatik-initiative/feasibility-gui/issues/478)
+* Prevented flickering of route animations.
+  [#483](https://github.com/medizininformatik-initiative/feasibility-gui/issues/483)
+* Prevented accidental deletion of selected concepts in the criterion editor during scrolling and enabled automatic addition to stage.
+  [#486](https://github.com/medizininformatik-initiative/feasibility-gui/issues/486)
+* Ensured that the criterion filter is loaded correctly when not set in CRTDL by using the value-attribute definition.
+  [#488](https://github.com/medizininformatik-initiative/feasibility-gui/issues/488)
+
+
 ## v6.3.7 (2025-10-08)
 
 ### Features

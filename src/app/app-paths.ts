@@ -4,6 +4,7 @@ export const BasePaths = {
   dataQuery: 'data-query',
   savedQueries: 'saved-queries',
   queryEditor: 'query-editor',
+  home: 'dashboard',
 };
 
 export const PathSegments = {
@@ -14,6 +15,7 @@ export const PathSegments = {
   cohortDefinition: 'cohort-definition',
   dataSelection: 'data-selection',
   criterion: 'criterion',
+  bulkSearch: 'bulk-search',
   feature: 'feature',
 };
 
@@ -22,6 +24,7 @@ export const UrlPaths = {
     result: `${BasePaths.feasibilityQuery}/${PathSegments.result}`,
     editor: `${BasePaths.feasibilityQuery}/${PathSegments.editor}`,
     search: `${BasePaths.feasibilityQuery}/${PathSegments.search}`,
+    bulkSearch: `${BasePaths.feasibilityQuery}/${PathSegments.bulkSearch}`,
   },
   dataSelection: {
     editor: `${BasePaths.dataSelection}/${PathSegments.editor}`,

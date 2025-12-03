@@ -1,12 +1,15 @@
+import { Display } from '../DataSelection/Profile/Display';
+import { DisplayData } from '../Interface/DisplayData';
+
 export type CodeSystemEntry = {
   url: string
-  name: string
+  display: DisplayData
 };
 
 export class TerminologySystemDictionary {
   private static instance: TerminologySystemDictionary;
-  private static urlToNameMap: Map<string, string> = new Map();
-  private static nameToUrlMap: Record<string, string> = {};
+  private static urlToNameMap: Map<string, Display> = new Map();
+  private static nameToUrlMap: Record<string, Display> = {};
 
   private constructor(entries: CodeSystemEntry[]) {
     TerminologySystemDictionary.nameToUrlMap = this.createDictionary(entries);
@@ -21,30 +24,30 @@ export class TerminologySystemDictionary {
     }
   }
 
-  private createDictionary(entries: CodeSystemEntry[]): Record<string, string> {
+  private createDictionary(entries: CodeSystemEntry[]): Record<string, Display> {
     return entries.reduce((acc, entry) => {
-      const key = entry.name.toUpperCase().replace(/[-\s]/g, '_');
-      acc[key] = entry.url;
+      const key = entry.url;
+      acc[key] = Display.fromJson(entry.display);
       return acc;
-    }, {} as Record<string, string>);
+    }, {} as Record<string, Display>);
   }
 
-  private createReverseLookup(dict: Record<string, string>): Map<string, string> {
-    const reverseMap = new Map<string, string>();
+  private createReverseLookup(dict: Record<string, Display>): Map<string, Display> {
+    const reverseMap = new Map<string, Display>();
     Object.entries(dict).forEach(([key, value]) => {
-      reverseMap.set(value, key);
+      reverseMap.set(key, value);
     });
     return reverseMap;
   }
 
-  public static getDictionary(): Record<string, string> {
+  public static getDictionary(): Record<string, Display> {
     if (!TerminologySystemDictionary.instance) {
       throw new Error('CodeSystemDictionary is not initialized. Please call initialize() first.');
     }
     return TerminologySystemDictionary.nameToUrlMap;
   }
 
-  public static getNameByUrl(url: string): string | undefined {
+  public static getNameByUrl(url: string): Display | undefined {
     if (!TerminologySystemDictionary.instance) {
       throw new Error('CodeSystemDictionary is not initialized. Please call initialize() first.');
     }

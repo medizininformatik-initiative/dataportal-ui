@@ -5,7 +5,6 @@ import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/Codea
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { Observable, Subscription, switchMap } from 'rxjs';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
@@ -28,8 +27,6 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   adaptedData: TableData;
 
   searchText = '';
-
-  selectedConcepts: Concept[] = [];
 
   private subscription: Subscription = new Subscription();
 
@@ -63,7 +60,6 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
     this.adaptedData?.body.rows.forEach((row) => {
       const listEntry = row.originalEntry as CodeableConceptResultListEntry;
       const concept = CloneConcept.deepCopyConcept(listEntry.getConcept());
-      this.clearSelectedConceptArray();
       row.isCheckboxSelected = this.selectedConceptProviderService.findConcept(concept)
         ? true
         : false;
@@ -78,32 +74,7 @@ export class ConceptFilterTableComponent implements OnInit, OnDestroy {
   public addSelectedRow(item: InterfaceTableDataRow) {
     const entry = item.originalEntry as CodeableConceptResultListEntry;
     const concept = CloneConcept.deepCopyConcept(entry.getConcept());
-
-    if (this.selectedConceptProviderService.findConcept(concept)) {
-      this.selectedConceptProviderService.removeConcept(concept);
-      this.clearSelectedConceptArray();
-    } else {
-      const foundConcept = this.selectedConcepts.find(
-        (c) => c.getTerminologyCode().getCode() === concept.getTerminologyCode().getCode()
-      );
-
-      if (foundConcept) {
-        this.selectedConcepts = this.selectedConcepts.filter(
-          (c) => c.getTerminologyCode().getCode() !== concept.getTerminologyCode().getCode()
-        );
-      } else {
-        this.selectedConcepts.push(concept);
-      }
-    }
-  }
-
-  public addSelectedConceptsToStage() {
-    this.selectedConceptProviderService.addConcepts(this.selectedConcepts);
-    this.clearSelectedConceptArray();
-  }
-
-  private clearSelectedConceptArray() {
-    this.selectedConcepts = [];
+    this.selectedConceptProviderService.addConcept(concept);
   }
 
   public loadMoreSearchResults(): void {

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
+import { CreateCriterionService } from 'src/app/service/Criterion/CreateCriterionService';
 import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
 
 @Component({

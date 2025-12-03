@@ -22,3 +22,10 @@
   overflow: hidden;
   flex: 0 1 16%;
 }
+
+.information-templates {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+}

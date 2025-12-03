@@ -1,0 +1,12 @@
+<div class="container">
+  <num-button type="blue" [isDisabled]="selectedMode === 'search'" (click)="onModeChange('search')">
+    {{ 'FEASIBILITY.SEARCH.SINGLE_SEARCH' | translate }}
+  </num-button>
+  <num-button
+    type="blue"
+    [isDisabled]="selectedMode === 'bulk-search'"
+    (click)="onModeChange('bulk-search')"
+  >
+    {{ 'FEASIBILITY.SEARCH.BULK_SEARCH' | translate }}
+  </num-button>
+</div>

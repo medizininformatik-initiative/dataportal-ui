@@ -4,7 +4,7 @@
     {{ 'DASHBOARD.INFO.TEXT' | translate }}
   </num-header-description>
 
-  <div class="link-boxes" fxLayout="row wrap" fxLayoutAlign="start" *numUserHasRole="roles">
+  <div class="link-boxes" fxLayout="row wrap" fxLayoutAlign="start">
     <div
       fxFlex="30"
       fxLayout="column"
@@ -19,7 +19,7 @@
 
     <div fxFlex="30" fxLayout="column" fxLayoutAlign="start start" class="linkBox newQueryBox">
       <div class="queryBoxHeader">{{ 'DASHBOARD.NEWQUERY.HEADER' | translate }}</div>
-      <num-button (click)="navigateToFEASIBILITYEditor()" type="blue">
+      <num-button (click)="navigateToFeasibilityEditor()" type="blue">
         {{ 'DASHBOARD.NEWQUERY.BUTTON' | translate }}
       </num-button>
     </div>
@@ -44,33 +44,5 @@
         'DASHBOARD.PREPOSALPORTAL.HEADER' | translate
       }}</num-button>
     </div>
-  </div>
-
-  <div class="paragraphBox">
-    <p>{{ 'DASHBOARD.PARAGRAPH1' | translate }}</p>
-    <p *ngIf="translate.currentLang === 'de'">
-      {{ 'DASHBOARD.PARAGRAPH2' | translate }}
-    </p>
-    <p>
-      {{ 'DASHBOARD.PARAGRAPH3_1' | translate }}
-      <b>{{ 'DASHBOARD.PARAGRAPH3_2' | translate }}</b>
-      {{ 'DASHBOARD.PARAGRAPH3_3' | translate }}
-      <a
-        class="dashboard-link"
-        href="https://www.medizininformatik-initiative.de/de/der-kerndatensatz-der-medizininformatik-initiative"
-        target="_blank"
-        >{{ 'DASHBOARD.PARAGRAPH3_LINK' | translate }}</a
-      >{{ 'DASHBOARD.PARAGRAPH3_4' | translate }}
-    </p>
-    <p>
-      {{ 'DASHBOARD.PARAGRAPH4_1' | translate }}
-      <b>{{ 'DASHBOARD.PARAGRAPH4_2' | translate }}</b
-      >{{ 'DASHBOARD.PARAGRAPH4_3' | translate }}
-    </p>
-    <p>
-      {{ 'DASHBOARD.PARAGRAPH5_1' | translate }}
-      <b>{{ 'DASHBOARD.PARAGRAPH5_2' | translate }}</b
-      >{{ 'DASHBOARD.PARAGRAPH5_3' | translate }}
-    </p>
   </div>
 </div>

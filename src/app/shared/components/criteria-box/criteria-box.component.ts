@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 @Component({
   selector: 'num-criteria-box',
@@ -24,7 +25,7 @@ export class CriteriaBoxComponent implements OnInit {
 
   $filterChips: Observable<InterfaceFilterChip[]> = of([]);
 
-  system: string;
+  system: Display;
 
   isFilterRequired: boolean;
 

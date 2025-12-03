@@ -11,7 +11,7 @@
       <div class="info-item">
         {{ referenceCriterion.getDisplay() | displayTranslation }},
         {{ referenceCriterion.getTermCodes()[0].getCode() }},
-        {{ translatedSystem }}
+        {{ translatedSystem | displayTranslation }}
       </div>
     </div>
     <div class="filter-chips-container">

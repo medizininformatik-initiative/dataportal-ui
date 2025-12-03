@@ -29,6 +29,7 @@ import { SavedQueryTileComponent } from './saved-query-tile/saved-query-tile.com
 import { SaveFileModalComponent } from './save-file-modal/save-file-modal.component';
 import { SearchbarComponent } from './search/searchbar.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { SearchModeToggleComponent } from './search-mode-toggle/search-mode-toggle.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { SectionNameComponent } from './section-name/section-name.component';
 import { SelectableReferenceTileComponent } from './selectable-reference-tile/selectable-reference-tile.component';
@@ -39,6 +40,7 @@ import { TableComponent } from './table/table.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
+import { InformationSectionComponent } from './information-section/information-section.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -72,6 +74,8 @@ const SHARED_DECLARATIONS = [
   ProfileReferenceTileComponent,
   LinkedBadgeComponent,
   SelectableReferenceTileComponent,
+  SearchModeToggleComponent,
+  InformationSectionComponent,
 ];
 
 @NgModule({
@@ -103,6 +107,8 @@ const SHARED_DECLARATIONS = [
     LinkedBadgeComponent,
     SelectableReferenceTileComponent,
     ListItemDetailsComponent,
+    SearchModeToggleComponent,
+    InformationSectionComponent,
   ],
   imports: [
     CommonModule,

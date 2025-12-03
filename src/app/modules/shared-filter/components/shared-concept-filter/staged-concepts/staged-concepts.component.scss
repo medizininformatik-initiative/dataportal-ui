@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: column;
   border-radius: 4px;
+  margin-top: 24px;
+  padding: 16px 0 16px 0;
 }
 
 .result-list-container {
@@ -16,10 +18,10 @@
   height: 40px;
   background-color: white;
   border-radius: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .selected-filter-box {
-  overflow: auto;
+  height: 100%;
 }
 .display-part {
   padding-left: 8px;

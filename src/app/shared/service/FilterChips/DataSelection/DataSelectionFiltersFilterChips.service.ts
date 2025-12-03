@@ -42,7 +42,7 @@ export class DataSelectionFiltersFilterChips {
   private getCodeFilterChips(filter: ProfileTokenFilter): InterfaceFilterChip[] {
     return FilterChipConceptAdapter.adaptCodeableConcept(
       filter.getSelectedTokens(),
-      'EDITOR.CONTENT.PROFILE.FILTER.TAB_LABEL.' + filter.getType().toUpperCase()
+      'EDITOR.CONTENT.PROFILE.TAB_LABEL.' + filter.getType().toUpperCase()
     );
   }
 }

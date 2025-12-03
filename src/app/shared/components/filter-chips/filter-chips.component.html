@@ -13,8 +13,9 @@
         <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
       </ng-container>
 
-      <ng-container *ngFor="let chip of filterChip.data">
+      <ng-container *ngFor="let chip of filterChip.data; let i = index">
         <div
+          *ngIf="i < 3"
           [attr.data-cy]="chip.text | displayTranslation"
           class="chip-container margin-left-1"
           [ngClass]="{ expanded: chip.expanded }"
@@ -23,6 +24,10 @@
           {{ chip.text | displayTranslation }}
         </div>
       </ng-container>
+
+      <div *ngIf="filterChip.data.length > 3" class="chip-container margin-left-1 count-badge">
+        +{{ filterChip.data.length - 3 }}
+      </div>
     </ng-container>
   </div>
 </ng-container>

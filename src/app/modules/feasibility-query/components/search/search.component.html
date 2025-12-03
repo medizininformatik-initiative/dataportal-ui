@@ -1,22 +1,24 @@
 <div fxFlexFill fxLayout="column" fxLayoutAlign="start">
   <div>
-    <num-header>{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
+    <div class="header-container">
+      <num-header>{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
+      <div class="margin-left-auto">
+        <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
+      </div>
+    </div>
     <num-header-description>
       {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
   <div class="search-container width-100">
     <num-searchbar
-      style="flex: 0 1 50%"
+      style="flex: 0 1 70%"
       icon="search"
       [searchText]="searchText$ | async"
       [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
       (searchTextChange)="startSearch($event)"
     >
     </num-searchbar>
-    <num-button [isDisabled]="!searchText" type="blue" (click)="startSearch()">
-      {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
-    </num-button>
   </div>
   <div class="filter-container">
     <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
@@ -29,6 +31,9 @@
     </ng-template>
     <num-button [isDisabled]="resetFilterEnabled$ | async" type="blue" (click)="resetFilter()">
       {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
+    </num-button>
+    <num-button [isDisabled]="!searchText" type="blue" (click)="startSearch()">
+      {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
     </num-button>
   </div>
   <mat-drawer-container *ngIf="searchResultsFound" class="height-100 margin-bottom-3 width-100">
@@ -64,7 +69,6 @@
         (selectedRow)="setSelectedRowItem($event)"
         (rowClicked)="setClickedRow($event)"
         [tableData]="adaptedData"
-        fxFlexFill
       ></num-table>
     </mat-drawer-content>
   </mat-drawer-container>

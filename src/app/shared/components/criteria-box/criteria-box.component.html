@@ -17,7 +17,7 @@
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="info-section">
       <div class="info-item">
         {{ criterion.getContext().getDisplay() }}, {{ criterion.getTermCodes()[0].getCode() }},
-        {{ system }}
+        {{ system | displayTranslation }}
       </div>
     </div>
     <div class="filter-chips-container">

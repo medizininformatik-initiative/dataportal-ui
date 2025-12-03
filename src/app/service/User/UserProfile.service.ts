@@ -1,8 +1,8 @@
+import { BehaviorSubject, from, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
 import { IUserProfile } from '../../shared/models/user/user-profile.interface';
+import { map, take, tap } from 'rxjs/operators';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 /**
  * Provides centralized access to user profile loaded by OAuth service.

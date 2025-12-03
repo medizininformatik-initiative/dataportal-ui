@@ -1,3 +1,4 @@
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 
 export interface SearchFilter {
@@ -9,5 +10,5 @@ export interface SearchFilter {
 export interface SearchFilterValues {
   count: number
   label: string
-  display: string
+  display: Display | string
 }

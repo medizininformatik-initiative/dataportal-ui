@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { UserHasRoleDirective } from './user-has-role.directive';
 import { DropGroupDirective } from './drop-group/drop-group.directive';
+import { NgModule } from '@angular/core';
 
 @NgModule({
-  declarations: [UserHasRoleDirective, DropGroupDirective],
+  declarations: [DropGroupDirective],
   imports: [CommonModule],
-  exports: [UserHasRoleDirective, DropGroupDirective],
+  exports: [DropGroupDirective],
 })
 export class DirectivesModule {}

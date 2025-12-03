@@ -19,7 +19,7 @@
         (click)="onRowClick(row)"
         [ngClass]="{ 'table-row-text-color': columnsToDisplay[j] !== 'name' }"
       >
-        <div fxLayout="row" fxLayoutAlign="start center">
+        <div class="row-container">
           <mat-checkbox
             *ngIf="row.hasCheckbox && row.checkboxColumnIndex === j"
             color="primary"

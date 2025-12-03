@@ -28,8 +28,6 @@ import {
   providers: [DataSelectionFieldsChipsService, DataSelectionFiltersFilterChips],
 })
 export class ProfileHeaderComponent implements OnInit, OnChanges {
-  profile$: Observable<DataSelectionProfile>;
-
   @Input()
   profile: DataSelectionProfile;
 

@@ -15,8 +15,7 @@ export class ReferenceCriteriaListEntryAdapter {
       id: listEntry.getId(),
       data: [
         listEntry.getDisplay(),
-        listEntry.getTerminology(),
-        TerminologySystemDictionary.getNameByUrl(listEntry.getSystem()),
+        TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology()),
       ],
       hasCheckbox: true,
       isCheckboxSelected: false,
