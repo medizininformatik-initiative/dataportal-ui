@@ -40,7 +40,6 @@ export class NavigationHelperService {
   }
 
   /**
-
    * Navigates to {@link UrlPaths.feasibilityQuery.search | /feasibility-query/search}
    * @returns void
    */
@@ -48,11 +47,10 @@ export class NavigationHelperService {
     this.router.navigate([UrlPaths.feasibilityQuery.search]);
   }
 
-
   /**
    * Navigates to {@link UrlPaths.dataSelection.editor | /data-selection/editor}
    * @returns void
-
+   */
   public navigateToFeasibilityQueryBulkSearch(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.bulkSearch]);
   }
