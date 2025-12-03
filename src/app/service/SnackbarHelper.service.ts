@@ -7,6 +7,10 @@ import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
 export class SnackbarHelperService {
   constructor(private snackbarService: SnackbarService) {}
 
+  public displayAddedToDataSelection(): void {
+    this.snackbarService.displayInfoMessage('DATASELECTION.SNACKBAR.ADDED');
+  }
+
   /**
    * Displays message when item is added to stage
    */

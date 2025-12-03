@@ -82,6 +82,9 @@
       "HEADER_INFO2": ". Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: ",
       "HEADER_INFO3": "Achten Sie bei der Bearbeitung darauf, dass alle Zwischenergebnisse durch Klick auf \"Speichern\" in der Bearbeitungsansicht der Module zwischengespeichert werden müssen.",
       "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie erforschen möchten, und laden Sie die Datendefinition herunter. Sie können die Datei dann als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen. Diese Datei ist maschinenlesbar und darf nicht verändert werden."
+    },
+    "SNACKBAR": {
+      "ADDED": "Zur Datenselektion erfolgreich hinzugefügt"
     }
   },
   "EDITOR": {

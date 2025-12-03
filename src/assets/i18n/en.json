@@ -82,6 +82,9 @@
       "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
       "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
       "INFOTEXT": "Select criteria to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
+    },
+    "SNACKBAR": {
+      "ADDED": "Successfully added to data selection"
     }
   },
   "EDITOR": {
