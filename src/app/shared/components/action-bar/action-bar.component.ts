@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { DownloadDataSelectionComponent } from 'src/app/modules/data-query/data-query/data-selection/download-data-selection/download-data-selection.component';
 import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
 import { SnackbarHelperService } from 'src/app/service/SnackbarHelper.service';
 import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
+import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component';
 
 @Component({
   selector: 'num-action-bar',
@@ -36,7 +36,7 @@ export class ActionBarComponent {
     dialogConfig.autoFocus = true;
     this.downloadSubscription?.unsubscribe();
     this.downloadSubscription = this.dialog
-      .open(DownloadDataSelectionComponent, dialogConfig)
+      .open(DownloadCRTDLComponent, dialogConfig)
       .afterClosed()
       .subscribe((isCancelled: boolean) => {});
   }

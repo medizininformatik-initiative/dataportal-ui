@@ -1,6 +1,5 @@
 import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { combineLatest, map, Observable, of, take, tap } from 'rxjs';
-import { CreateCRDTLService } from './CreateCRDTL.service';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service';
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';

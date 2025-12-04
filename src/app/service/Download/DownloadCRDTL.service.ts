@@ -1,4 +1,4 @@
-import { CreateCRDTLService } from '../Translator/CRTDL/CreateCRDTL.service';
+import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRDTL.service';
 import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
 import { FileSaverService } from 'ngx-filesaver';
 import { Injectable } from '@angular/core';
@@ -11,25 +11,25 @@ import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.servic
 @Injectable({
   providedIn: 'root',
 })
-export class DownloadCRDTLService {
+export class DownloadCRTDLService {
   constructor(
-    private createCRDTLService: CreateCRDTLService,
+    private createCRTDLService: CreateCRTDLService,
     private fileSaverService: FileSaverService,
     private snackbarService: SnackbarService
   ) {}
 
   /**
-   * Downloads the CRDTL as a JSON file.
-   * Creates the CRDTL, formats it as JSON, and triggers a file download.
+   * Downloads the CRTDL as a JSON file.
+   * Creates the CRTDL, formats it as JSON, and triggers a file download.
    * @param [filename] - Optional custom filename (without extension)
    * @returns
    */
   public download(filename?: string, displaySnackbar: boolean = true): void {
-    this.createCRDTLService
-      .createCRDTL()
-      .subscribe((crdtl) => {
+    this.createCRTDLService
+      .createCRTDL()
+      .subscribe((crtdl) => {
         this.fileSaverService.save(
-          this.createFileData(crdtl),
+          this.createFileData(crtdl),
           this.createFilename(filename) + '.json'
         );
         if (displaySnackbar) {
