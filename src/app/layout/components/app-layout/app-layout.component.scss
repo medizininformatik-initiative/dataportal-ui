@@ -24,10 +24,6 @@
   border-right: none !important;
 }
 
-.padding-right-20 {
-  padding-right: 10rem;
-}
-
 .side-menu {
   border-right: 2px solid #f1f2f3;
   height: 100%;
@@ -48,7 +44,7 @@
 
 mat-sidenav {
   &.expanded {
-    width: 256px !important;
+    width: 292px !important;
   }
 
   &.collapsed {

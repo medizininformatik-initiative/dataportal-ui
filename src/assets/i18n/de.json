@@ -344,7 +344,7 @@
     "DATASELECTION": "Merkmalselektion",
     "OPTIONS": "Einstellungen",
     "QUERYBUILDER_EDITOR": "Kohortenselektion",
-    "QUERYBUILDER_OVERVIEW": "Gespeicherte Abfragen",
+    "QUERYBUILDER_OVERVIEW": "Gespeicherte Datendefinitionen",
     "QUERYBUILDER_RESULT": "Machbarkeitsabfrage senden",
     "SIGNOUT": "Abmelden"
   },
@@ -362,8 +362,8 @@
   "SAVED_QUERIES": {
     "COMMENT": "Kommentar",
     "CREATED_AT": "Erstellt am",
-    "HEADER": "Gespeicherte Abfragen",
-    "LOAD": "Kohortenselektion laden",
+    "HEADER": "Gespeicherte Datendefinitionen",
+    "LOAD": "Datendefinition laden",
     "PATIENTS": "Anzahl der Patienten:",
     "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen",
     "TITLE": "Titel"

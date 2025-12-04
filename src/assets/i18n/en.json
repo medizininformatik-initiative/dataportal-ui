@@ -340,7 +340,7 @@
     "DATASELECTION": "Feature Selection",
     "OPTIONS": "Settings",
     "QUERYBUILDER_EDITOR": "Cohort Selection",
-    "QUERYBUILDER_OVERVIEW": "Saved Queries",
+    "QUERYBUILDER_OVERVIEW": "Saved data definitions",
     "QUERYBUILDER_RESULT": "Send Feasibility Query",
     "SIGNOUT": "Sign Out"
   },
@@ -358,8 +358,8 @@
   "SAVED_QUERIES": {
     "COMMENT": "Comment",
     "CREATED_AT": "Created at",
-    "HEADER": "Saved Queries",
-    "LOAD": "Load Cohort Selection",
+    "HEADER": "Saved Data Definitions",
+    "LOAD": "Load Data Definition",
     "PATIENTS": "Number of patients:",
     "SAVED_FEASIBILITY": "Saved Feasibility Queries",
     "TITLE": "Title"
