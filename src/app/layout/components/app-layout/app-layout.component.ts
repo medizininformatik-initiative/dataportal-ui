@@ -31,4 +31,8 @@ export class AppLayoutComponent implements OnInit {
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
+
+  toggleSideMenu(): void {
+    this.isSideMenuExpanded = !this.isSideMenuExpanded;
+  }
 }

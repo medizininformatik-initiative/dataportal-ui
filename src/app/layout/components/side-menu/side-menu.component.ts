@@ -1,6 +1,6 @@
 import INavItem from '../../models/nav-item.interface';
 import { mainNavItems } from '../../../core/constants/navigation';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'num-side-menu',
@@ -10,6 +10,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SideMenuComponent implements OnInit {
   mainNavItems = mainNavItems;
   @Input() isSideMenuExpanded = true;
+
+  @Output() toggleSideMenu = new EventEmitter<boolean>();
 
   constructor() {}
 
@@ -22,5 +24,6 @@ export class SideMenuComponent implements OnInit {
 
   public toggleMenu(): void {
     this.isSideMenuExpanded = !this.isSideMenuExpanded;
+    this.toggleSideMenu.emit(this.isSideMenuExpanded);
   }
 }

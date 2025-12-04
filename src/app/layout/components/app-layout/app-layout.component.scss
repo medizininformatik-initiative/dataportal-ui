@@ -45,3 +45,13 @@
   height: 100%;
   width: 100%;
 }
+
+mat-sidenav {
+  &.expanded {
+    width: 256px !important;
+  }
+
+  &.collapsed {
+    width: 64px !important;
+  }
+}
