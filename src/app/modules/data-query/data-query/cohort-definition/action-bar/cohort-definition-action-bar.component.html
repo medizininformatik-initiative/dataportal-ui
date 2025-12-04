@@ -7,14 +7,6 @@
     {{ 'DATAQUERY.COHORT.ACTION_BAR.NEW_COHORT' | translate }}
   </num-button>
   <num-button
-    [isDisabled]="(isFeasibilityExistent | async) === false"
-    type="green"
-    (click)="editFeasibilityQuery()"
-    tooltip="{{ 'DATAQUERY.COHORT.ACTION_BAR.EDIT_TOOLTIP' | translate }}"
-  >
-    {{ 'DATAQUERY.COHORT.ACTION_BAR.EDIT' | translate }}
-  </num-button>
-  <num-button
     type="green"
     [isDisabled]="(isFeasibilityQueryValid | async) === false"
     (click)="sendQuery()"

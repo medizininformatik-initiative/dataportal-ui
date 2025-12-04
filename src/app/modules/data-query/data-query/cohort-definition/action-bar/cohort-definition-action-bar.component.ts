@@ -45,10 +45,6 @@ export class CohortDefinitionActionBarComponent implements OnInit {
     this.routerHelperService.navigateToFeasibilityQueryResult();
   }
 
-  public editFeasibilityQuery(): void {
-    this.routerHelperService.navigateToFeasibilityQueryEditor();
-  }
-
   public createNewCohort(): void {
     this.feasibilityQueryFactoryService.instantiate();
     this.routerHelperService.navigateToFeasibilityQuerySearch();

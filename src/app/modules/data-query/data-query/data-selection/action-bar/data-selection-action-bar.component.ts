@@ -42,10 +42,6 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
     this.subscription?.unsubscribe();
   }
 
-  public editDataSelection() {
-    this.navigationHelperService.navigateToDataSelectionEditor();
-  }
-
   public createNewDataSelection() {
     this.mainProfileSubscription?.unsubscribe();
     this.dataSelectionFactoryService.instantiate().subscribe();
