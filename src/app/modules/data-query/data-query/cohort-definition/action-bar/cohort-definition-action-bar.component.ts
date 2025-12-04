@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable, Subscription } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
@@ -25,7 +25,7 @@ export class CohortDefinitionActionBarComponent implements OnInit {
     private resultProviderService: ResultProviderService,
     private navigationHelperService: NavigationHelperService,
     private feasibilityQueryFactoryService: FeasibilityQueryFactoryService,
-    private feasibilityQueryValidation: FeasibilityQueryValidation
+    private feasibilityQueryValidation: FeasibilityQueryValidationService
   ) {}
 
   ngOnInit() {

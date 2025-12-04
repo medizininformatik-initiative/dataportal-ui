@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { DataSelectionFactoryService } from 'src/app/service/DataSelection/DataSelection.factory.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { map } from 'rxjs/operators';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable, Subscription } from 'rxjs';
@@ -25,7 +25,7 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
-    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private feasibilityQueryValidation: FeasibilityQueryValidationService,
     private dataSelectionFactoryService: DataSelectionFactoryService
   ) {}
 

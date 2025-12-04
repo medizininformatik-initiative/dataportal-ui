@@ -1,7 +1,7 @@
 import { combineLatest, map, Observable } from 'rxjs';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { FeasibilityQueryValidation } from '../Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from '../Criterion/FeasibilityQueryValidation.service';
 import { Injectable } from '@angular/core';
 import { ValidDataQuery } from 'src/app/model/Types/ValidDataQuery';
 
@@ -11,7 +11,7 @@ import { ValidDataQuery } from 'src/app/model/Types/ValidDataQuery';
 export class DataQueryValidationService {
   constructor(
     private dataSelectionProviderService: DataSelectionProviderService,
-    private criterionValidationService: FeasibilityQueryValidation
+    private criterionValidationService: FeasibilityQueryValidationService
   ) {}
 
   public validateDataQuery(): Observable<ValidDataQuery> {
