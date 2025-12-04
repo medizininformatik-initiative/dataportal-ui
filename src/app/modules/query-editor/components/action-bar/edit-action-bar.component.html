@@ -1,5 +1,10 @@
 <num-action-bar [showUpload]="false" [showDownload]="false" [showSave]="false">
-  <num-button (click)="onCancel()" class="margin-right-3" type="blue">
+  <num-button
+    (click)="onCancel()"
+    class="margin-right-3"
+    type="blue"
+    tooltip="{{ 'EDITOR.ACTION_BAR.CANCEL_TOOLTIP' | translate }}"
+  >
     {{ 'EDITOR.ACTION_BAR.CANCEL' | translate }}
   </num-button>
 </num-action-bar>

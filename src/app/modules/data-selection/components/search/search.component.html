@@ -21,11 +21,13 @@
 
   <num-action-bar>
     <num-button
+      class="margin-right-2"
       [isDisabled]="($dataSelectionProfileTreeNodeArray | async)?.length === 0"
       type="green"
       (click)="getDataSelectionProfileData()"
       [matBadge]="($dataSelectionProfileTreeNodeArray | async)?.length"
       matBadgePosition="above after"
+      matTooltip="{{ 'DATASELECTION.SEARCH.ACTION_BAR.ADD_TOOLTIP' | translate }}"
     >
       {{ 'DATASELECTION.SEARCH.ACTION_BAR.ADD' | translate }}
     </num-button>
@@ -36,6 +38,7 @@
       type="green"
       [matBadge]="($dataSelectionProfileArray | async)?.length"
       matBadgePosition="above after"
+      matTooltip="{{ 'DATASELECTION.SEARCH.ACTION_BAR.JUMP_TO_DATASELECTION_TOOLTIP' | translate }}"
     >
       {{ 'DATASELECTION.SEARCH.ACTION_BAR.JUMP_TO_DATASELECTION' | translate }}
     </num-button>

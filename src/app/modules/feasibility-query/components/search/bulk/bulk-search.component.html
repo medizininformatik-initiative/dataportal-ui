@@ -32,6 +32,7 @@
     <num-button
       (click)="submitSearch()"
       [isDisabled]="!(filterAreSet && bulkSearchTermInput?.length > 0)"
+      matTooltip="{{ 'FEASIBILITY.BULK_SEARCH.SEARCH_BUTTON_TOOLTIP' | translate }}"
     >
       {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
     </num-button>

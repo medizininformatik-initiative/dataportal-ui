@@ -6,7 +6,8 @@
       [isDisabled]="!listItemArray.length"
       [matBadge]="listItemArray.length"
       matBadgePosition="above after"
-      class="margin-right-20"
+      matTooltip="{{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE_TOOLTIP' | translate }}"
+      class="margin-right-3"
     >
       {{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
     </num-button>
@@ -19,6 +20,7 @@
       (click)="navigateToEditor()"
       [matBadge]="(stageArray$ | async)?.length"
       matBadgePosition="above after"
+      matTooltip="{{ 'FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE_TOOLTIP' | translate }}"
     >
       {{ 'FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE' | translate }}
     </num-button>

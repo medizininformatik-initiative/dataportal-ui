@@ -1,15 +1,27 @@
 <num-action-bar class="bottom">
-  <num-button (click)="createNewDataSelection()" type="green">
+  <num-button
+    (click)="createNewDataSelection()"
+    type="green"
+    tooltip="{{ 'DATAQUERY.DATASELECTION.ACTION_BAR.NEW_DATASELECTION_TOOLTIP' | translate }}"
+  >
     {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.NEW_DATASELECTION' | translate }}
   </num-button>
   <num-button
     type="green"
     (click)="editDataSelection()"
     [isDisabled]="(isDataSelectionExistent$ | async) === false"
+    tooltip="{{ 'DATAQUERY.DATASELECTION.ACTION_BAR.EDIT_TOOLTIP' | translate }}"
   >
     {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.EDIT' | translate }}
   </num-button>
-  <num-button [icon]="'arrow-up'" (click)="navigateToDataQueryCohortDefinition()" type="green">
+  <num-button
+    [icon]="'arrow-up'"
+    (click)="navigateToDataQueryCohortDefinition()"
+    type="green"
+    tooltip="{{
+      'DATAQUERY.DATASELECTION.ACTION_BAR.JUMP_TO_COHORT_SELECTION_TOOLTIP' | translate
+    }}"
+  >
     {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.JUMP_TO_COHORT_SELECTION' | translate }}
   </num-button>
 </num-action-bar>

@@ -9,7 +9,7 @@
     />
     <button
       (click)="fileUpload.click()"
-      matTooltip="{{ 'DATAQUERY.DATASELECTION.ACTION_BAR.UPLOAD' | translate }}"
+      matTooltip="{{ 'SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate }}"
       type="button"
       class="num-button green icon"
       [disabled]="uploadDisabled"
@@ -21,7 +21,7 @@
   <button
     *ngIf="showDownload"
     (click)="downloadCRDTL()"
-    matTooltip="Download"
+    matTooltip="{{ 'SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate }}"
     type="button"
     class="num-button green icon"
     [disabled]="downloadDisabled"
@@ -32,7 +32,7 @@
   <button
     *ngIf="showSave"
     (click)="onSaveDataQuery()"
-    matTooltip="Save"
+    matTooltip="{{ 'SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate }}"
     type="button"
     class="num-button green icon"
     [disabled]="saveDisabled"

@@ -4,6 +4,7 @@
     type="green"
     (click)="navigateToBulkCriteriaSearch()"
     style="order: 5"
+    matTooltip="{{ 'FEASIBILITY.EDITOR.ACTION_BAR.BULK_SEARCH_TOOLTIP' | translate }}"
   >
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.BULK_SEARCH' | translate }}
   </num-button>
@@ -11,6 +12,7 @@
     type="green"
     (click)="doSendRequest()"
     [isDisabled]="(isFeasibilityQueryValid$ | async) === false"
+    matTooltip="{{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate }}"
   >
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY' | translate }}
   </num-button>
@@ -19,6 +21,7 @@
     type="green"
     (click)="navigateToSearch()"
     matBadgePosition="above after"
+    matTooltip="{{ 'FEASIBILITY.EDITOR.ACTION_BAR.BACK_TO_SEARCH_TOOLTIP' | translate }}"
   >
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.BACK_TO_SEARCH' | translate }}
   </num-button>
