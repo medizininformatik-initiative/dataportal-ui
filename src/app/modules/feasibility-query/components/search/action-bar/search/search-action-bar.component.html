@@ -1,6 +1,16 @@
 <num-action-bar class="bottom">
   <ng-container *ngIf="listItemArray$ | async as listItemArray">
     <num-button
+      type="green"
+      (click)="addItemsToStage()"
+      [isDisabled]="!listItemArray.length"
+      [matBadge]="listItemArray.length"
+      matBadgePosition="above after"
+      class="margin-right-20"
+    >
+      {{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
+    </num-button>
+    <num-button
       icon="arrow-down"
       type="green"
       [isDisabled]="
@@ -11,16 +21,6 @@
       matBadgePosition="above after"
     >
       {{ 'FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE' | translate }}
-    </num-button>
-    <num-button
-      type="green"
-      (click)="addItemsToStage()"
-      [isDisabled]="!listItemArray.length"
-      [matBadge]="listItemArray.length"
-      matBadgePosition="above after"
-      class="margin-right-20"
-    >
-      {{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
     </num-button>
   </ng-container>
 </num-action-bar>
