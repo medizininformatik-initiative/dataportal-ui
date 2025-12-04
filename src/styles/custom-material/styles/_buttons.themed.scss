@@ -105,6 +105,13 @@
         fa-icon {
           margin: 0;
         }
+
+        &.disabled {
+          background-color: mat.get-color-from-palette($primary, 50);
+          color: mat.get-color-from-palette($primary, 'green');
+          box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'green');
+          cursor: not-allowed;
+        }
       }
     }
 
