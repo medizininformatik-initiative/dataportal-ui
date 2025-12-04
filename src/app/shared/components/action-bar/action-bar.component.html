@@ -9,9 +9,14 @@
     />
     <button
       (click)="fileUpload.click()"
-      matTooltip="{{ 'SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate }}"
+      [matTooltip]="
+        uploadDisabled
+          ? ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD_DISABLED' | translate)
+          : ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate)
+      "
       type="button"
       class="num-button green icon"
+      [class.disabled]="uploadDisabled"
       [disabled]="uploadDisabled"
     >
       <fa-icon size="lg" [icon]="'upload'"></fa-icon>
@@ -21,10 +26,15 @@
   <button
     *ngIf="showDownload"
     (click)="downloadCRDTL()"
-    matTooltip="{{ 'SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate }}"
+    [matTooltip]="
+      (downloadAllowed$ | async)
+        ? ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate)
+        : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
+    "
     type="button"
     class="num-button green icon"
-    [disabled]="downloadDisabled"
+    [class.disabled]="!(downloadAllowed$ | async)"
+    [disabled]="!(downloadAllowed$ | async)"
   >
     <fa-icon size="lg" [icon]="'download'"></fa-icon>
   </button>
@@ -32,10 +42,15 @@
   <button
     *ngIf="showSave"
     (click)="onSaveDataQuery()"
-    matTooltip="{{ 'SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate }}"
+    [matTooltip]="
+      (downloadAllowed$ | async)
+        ? ('SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate)
+        : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
+    "
     type="button"
     class="num-button green icon"
-    [disabled]="saveDisabled"
+    [class.disabled]="!(downloadAllowed$ | async)"
+    [disabled]="!(downloadAllowed$ | async)"
   >
     <fa-icon size="lg" [icon]="'save'"></fa-icon>
   </button>

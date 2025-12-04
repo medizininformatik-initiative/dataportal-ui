@@ -1,20 +1,23 @@
-import { Component, Input } from '@angular/core';
+import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component';
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
 import { SnackbarHelperService } from 'src/app/service/SnackbarHelper.service';
-import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
-import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component';
+import { map, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'num-action-bar',
   templateUrl: './action-bar.component.html',
   styleUrls: ['./action-bar.component.scss'],
 })
-export class ActionBarComponent {
+export class ActionBarComponent implements OnInit {
   @Input() showUpload = true;
   @Input() showDownload = true;
   @Input() showSave = true;
+
+  downloadAllowed$: Observable<boolean>;
 
   downloadSubscription: Subscription;
   saveDataQueryModalSubscription: Subscription;
@@ -23,12 +26,24 @@ export class ActionBarComponent {
     private dialog: MatDialog,
     private saveDataQueryModalService: SaveDataQueryModalService,
     private snackbarHelperService: SnackbarHelperService,
-    private ccdlUploadService: CCDLUploadService
+    private ccdlUploadService: CCDLUploadService,
+    private feasibilityQueryValidationService: FeasibilityQueryValidationService
   ) {}
+
+  ngOnInit(): void {
+    this.canDownload();
+  }
 
   public upload(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];
     this.ccdlUploadService.uploadCRTDL(file);
+  }
+
+  private canDownload(): void {
+    this.downloadAllowed$ = this.feasibilityQueryValidationService
+      .getIsFeasibilityQueryValid()
+      .pipe(map((isValid) => isValid && this.showDownload));
+    this.downloadAllowed$.subscribe((bla) => console.log(bla));
   }
 
   public downloadCRDTL(): void {
