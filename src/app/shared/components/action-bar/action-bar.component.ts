@@ -43,7 +43,6 @@ export class ActionBarComponent implements OnInit {
     this.downloadAllowed$ = this.feasibilityQueryValidationService
       .getIsFeasibilityQueryValid()
       .pipe(map((isValid) => isValid && this.showDownload));
-    this.downloadAllowed$.subscribe((bla) => console.log(bla));
   }
 
   public downloadCRDTL(): void {
