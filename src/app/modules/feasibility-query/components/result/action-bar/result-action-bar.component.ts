@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,22 +13,12 @@ export class ResultActionBarComponent implements OnInit, OnDestroy {
 
   saveDataQueryModalSubscription: Subscription;
 
-  constructor(
-    private navigationHelperService: NavigationHelperService,
-    private saveDataQueryModalService: SaveDataQueryModalService
-  ) {}
+  constructor(private navigationHelperService: NavigationHelperService) {}
 
   ngOnInit() {}
 
   ngOnDestroy(): void {
     this.saveDataQueryModalSubscription?.unsubscribe();
-  }
-
-  public saveQuery() {
-    this.saveDataQueryModalSubscription?.unsubscribe();
-    this.saveDataQueryModalSubscription = this.saveDataQueryModalService
-      .openSaveDataQueryModal()
-      .subscribe();
   }
 
   public editStage(): void {

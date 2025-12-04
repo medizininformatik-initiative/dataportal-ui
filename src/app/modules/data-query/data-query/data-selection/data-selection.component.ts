@@ -1,5 +1,5 @@
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { map, Observable, Subscription } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import {
@@ -31,7 +31,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
-    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private feasibilityQueryValidation: FeasibilityQueryValidationService,
     private appSettingsProviderService: AppSettingsProviderService
   ) {}
 

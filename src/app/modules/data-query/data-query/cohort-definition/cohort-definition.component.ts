@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
@@ -18,7 +18,7 @@ export class CohortDefinitionComponent implements OnInit {
   constructor(
     private routerHelperService: NavigationHelperService,
     private feasibilityQueryService: FeasibilityQueryProviderService,
-    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private feasibilityQueryValidation: FeasibilityQueryValidationService,
     private resultProviderService: ResultProviderService,
     private navigationHelperService: NavigationHelperService
   ) {}

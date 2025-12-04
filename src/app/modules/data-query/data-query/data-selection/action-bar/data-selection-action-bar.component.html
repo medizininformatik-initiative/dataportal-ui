@@ -1,43 +1,18 @@
 <num-action-bar class="bottom">
-  <num-button (click)="createNewDataSelection()" type="green" style="order: 5">
+  <num-button
+    (click)="createNewDataSelection()"
+    type="green"
+    tooltip="{{ 'DATAQUERY.DATASELECTION.ACTION_BAR.NEW_DATASELECTION_TOOLTIP' | translate }}"
+  >
     {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.NEW_DATASELECTION' | translate }}
-  </num-button>
-  <num-button
-    type="green"
-    (click)="editDataSelection()"
-    [isDisabled]="(isDataSelectionExistent$ | async) === false"
-    style="order: 4"
-  >
-    {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.EDIT' | translate }}
-  </num-button>
-  <div style="order: 3">
-    <input
-      type="file"
-      class="file-input"
-      (change)="uploadCCDL($event)"
-      #fileUpload
-      style="display: none"
-    />
-    <num-button type="green" (click)="fileUpload.click()">
-      {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.UPLOAD' | translate }}
-    </num-button>
-  </div>
-  <num-button
-    [attr.data-cy]="'download-crdtl'"
-    (click)="downloadCRDTL()"
-    [isDisabled]="
-      (isDataSelectionExistent$ | async) === false || (isCohortExistent$ | async) === false
-    "
-    type="green"
-    style="order: 2"
-  >
-    {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.DOWNLOAD' | translate }}
   </num-button>
   <num-button
     [icon]="'arrow-up'"
     (click)="navigateToDataQueryCohortDefinition()"
     type="green"
-    style="order: 1"
+    tooltip="{{
+      'DATAQUERY.DATASELECTION.ACTION_BAR.JUMP_TO_COHORT_SELECTION_TOOLTIP' | translate
+    }}"
   >
     {{ 'DATAQUERY.DATASELECTION.ACTION_BAR.JUMP_TO_COHORT_SELECTION' | translate }}
   </num-button>

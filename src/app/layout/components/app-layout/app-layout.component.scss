@@ -24,10 +24,6 @@
   border-right: none !important;
 }
 
-.padding-right-20 {
-  padding-right: 10rem;
-}
-
 .side-menu {
   border-right: 2px solid #f1f2f3;
   height: 100%;
@@ -44,4 +40,14 @@
 .fullscreen {
   height: 100%;
   width: 100%;
+}
+
+mat-sidenav {
+  &.expanded {
+    width: 292px !important;
+  }
+
+  &.collapsed {
+    width: 64px !important;
+  }
 }

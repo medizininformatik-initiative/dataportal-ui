@@ -1,4 +1,6 @@
+import { AttributeDefinitionData } from '../../../model/Interface/AttributeDefinitionData';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service';
 import { AttributeFilterTranslatorService } from './AttributeFilterTranslator.service';
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
 import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service';
@@ -11,11 +13,9 @@ import { StructuredQueryCriterionData } from 'src/app/model/Interface/Structured
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { UiProfileProviderService } from '../../Provider/UiProfileProvider.service';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import { v4 as uuidv4 } from 'uuid';
-import { AttributeDefinitionData } from '../../../model/Interface/AttributeDefinitionData';
 import { ValueDefinitionData } from '../../../model/Interface/ValueDefinition';
-import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -45,11 +45,7 @@ export class CriterionTranslatorService {
     const uiProfile = this.uiProfileProviderService.getUiProfileById(
       criteriaProfileData.uiProfileId
     );
-    this.applyValueFilters(
-      criterionBuilder,
-      structuredQueryCriterion,
-      uiProfile.valueDefinition
-    );
+    this.applyValueFilters(criterionBuilder, structuredQueryCriterion, uiProfile.valueDefinition);
 
     this.applyValueFilters(criterionBuilder, structuredQueryCriterion, uiProfile.valueDefinition);
     this.applyAttributeFilters(
