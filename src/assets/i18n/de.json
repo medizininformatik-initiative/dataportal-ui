@@ -375,12 +375,11 @@
         "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohortenselektion hinzugefügt"
       },
       "DOWNLOAD": "Herunterladen",
+      "DOWNLOAD_DISABLED": "Keine Machbarkeitsabfrage wurde definiert",
       "SAVE": "Speichern",
-      "SELECTED_CRITERIA": {
-        "PLURAL": "Sie haben {{amount}} Kriterien ausgewählt",
-        "SINGULAR": "Sie haben {{amount}} Kriterium ausgewählt"
-      },
-      "UPLOAD": "Hochladen"
+      "SAVE_DISABLED": "Keine Daten zum Speichern",
+      "UPLOAD": "Hochladen",
+      "UPLOAD_DISABLED": "Hochladen nicht verfügbar"
     },
     "CHIPS": {
       "CONTEXT": "Kontext",

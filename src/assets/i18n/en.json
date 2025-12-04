@@ -371,12 +371,11 @@
         "SINGULAR": "You have added {{amount}} criterion to the cohort selection"
       },
       "DOWNLOAD": "Download",
+      "DOWNLOAD_DISABLED": "No feasibility query was defined",
       "SAVE": "Save",
-      "SELECTED_CRITERIA": {
-        "PLURAL": "You have selected {{amount}} criteria",
-        "SINGULAR": "You have selected {{amount}} criterion"
-      },
-      "UPLOAD": "Upload"
+      "SAVE_DISABLED": "No data to save",
+      "UPLOAD": "Upload",
+      "UPLOAD_DISABLED": "Upload not available"
     },
     "CHIPS": {
       "CONTEXT": "Context",
