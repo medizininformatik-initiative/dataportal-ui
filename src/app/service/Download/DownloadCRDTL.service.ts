@@ -32,9 +32,6 @@ export class DownloadCRTDLService {
           this.createFileData(crtdl),
           this.createFilename(filename) + '.json'
         );
-        if (displaySnackbar) {
-          this.snackbarService.displayInfoMessage('SNACKBAR.SUCCESS.DOWNLOAD_DATAQUERY');
-        }
       })
       .unsubscribe();
   }

@@ -18,7 +18,6 @@ export class DownloadCRTDLComponent {
   ) {}
 
   public downloadCRTDL(data: SaveFileDataModal) {
-    console.log('downloadCRTDL', data);
     this.downloadCRTDLService.download(data.title);
     this.doDiscard();
   }
