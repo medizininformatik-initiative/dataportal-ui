@@ -17,13 +17,13 @@ export class CCDLUploadService {
     private fileUploadService: FileUploadService
   ) {}
 
-  public uploadCCDL(file: File): void {
+  public uploadCRTDL(file: File): void {
     if (file) {
       this.fileUploadService.readFile(file, this.onReaderLoad.bind(this));
     }
   }
 
-  public onReaderLoad(result: string | ArrayBuffer | null): void {
+  private onReaderLoad(result: string | ArrayBuffer | null): void {
     try {
       const importedQuery = JSON.parse(result as string);
       this.uploadDataSelection(importedQuery);
@@ -32,7 +32,7 @@ export class CCDLUploadService {
     }
   }
 
-  public uploadDataSelection(crtdl: CRTDLData) {
+  private uploadDataSelection(crtdl: CRTDLData) {
     this.profileProviderService.resetProfileMap();
     const isDataSelectionExistent = this.crdtlTranslatorService.createCRDTLFromJson(crtdl);
     isDataSelectionExistent.pipe(take(1)).subscribe();

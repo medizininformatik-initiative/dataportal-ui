@@ -1,4 +1,10 @@
-import { faAngleDoubleRight, faExternalLinkAlt, faSitemap } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleDoubleRight,
+  faDownload,
+  faExternalLinkAlt,
+  faSitemap,
+  faUpload,
+} from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -136,4 +142,6 @@ export const FONT_AWESOME_ICONS = [
   faLink,
   faExternalLinkAlt,
   faSitemap,
+  faUpload,
+  faDownload,
 ];

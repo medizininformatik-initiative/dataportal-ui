@@ -55,4 +55,8 @@ export class SnackbarHelperService {
   public dataDefinitionUploadSuccess(): void {
     this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD');
   }
+
+  public dataDefinitionDownloadSuccess(): void {
+    this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
+  }
 }
