@@ -3,7 +3,7 @@ import { CreateCriterionService } from 'src/app/service/Criterion/CreateCriterio
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
 import { FeasibilityQueryProviderService } from '../../../../../../service/Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { map, Observable, of } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
@@ -28,7 +28,7 @@ export class SearchActionBarComponent implements OnInit {
     private navigationHelperService: NavigationHelperService,
     private listItemService: SelectedTableItemsService<CriteriaListEntry>,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
-    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private feasibilityQueryValidation: FeasibilityQueryValidationService,
     private snackbarService: SnackbarService
   ) {}
 

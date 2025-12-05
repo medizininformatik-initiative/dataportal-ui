@@ -46,7 +46,7 @@ export class CriterionMetadataService {
   }
 
   /**
-   * Creates the mandatory fields (metadata) for a criterion.
+   * Creates the mandatory fields (metadata) for a criterion when translating.
    *
    * @param criteriaProfileData The criteria profile data.
    * @returns An object containing the mandatory fields for the criterion.

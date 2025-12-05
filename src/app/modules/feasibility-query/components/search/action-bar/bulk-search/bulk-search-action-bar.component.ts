@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service';
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry';
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
-import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { map, Observable, of, Subscription, take } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SelectedBulkCriteriaService } from 'src/app/service/SelectedBulkCriteria.service';
@@ -27,7 +27,7 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
-    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private feasibilityQueryValidation: FeasibilityQueryValidationService,
     private createBulkCriterionService: CreateBulkCriterionService
   ) {}
 

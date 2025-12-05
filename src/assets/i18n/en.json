@@ -15,10 +15,14 @@
   "DATAQUERY": {
     "COHORT": {
       "ACTION_BAR": {
-        "EDIT": "Edit cohort selection",
-        "JUMP_TO_DATASELECTION": "Go to feature selection",
-        "NEW_COHORT": "New cohort",
-        "SEND_QUERY": "Feasibility query"
+        "EDIT": "Edit Cohort Selection",
+        "EDIT_TOOLTIP": "Edit existing cohort selection",
+        "JUMP_TO_DATASELECTION": "To Feature Selection",
+        "JUMP_TO_DATASELECTION_TOOLTIP": "Navigate to feature selection",
+        "NEW_COHORT": "New Cohort",
+        "NEW_COHORT_TOOLTIP": "Create new cohort selection",
+        "SEND_QUERY": "Feasibility Query",
+        "SEND_QUERY_TOOLTIP": "Execute feasibility query for this cohort"
       },
       "EMPTY": "You have not defined a cohort yet. Upload an existing cohort selection or create a new one.",
       "HEADER": "Cohort Selection",
@@ -26,11 +30,14 @@
     },
     "DATASELECTION": {
       "ACTION_BAR": {
-        "DOWNLOAD": "Download data definition",
-        "EDIT": "Edit feature selection",
-        "JUMP_TO_COHORT_SELECTION": "Go to cohort selection",
-        "NEW_DATASELECTION": "New feature selection",
-        "UPLOAD": "Upload data definition"
+        "DOWNLOAD": "Download Data Definition",
+        "EDIT": "Edit Feature Selection",
+        "EDIT_TOOLTIP": "Edit existing feature selection",
+        "JUMP_TO_COHORT_SELECTION": "To Cohort Selection",
+        "JUMP_TO_COHORT_SELECTION_TOOLTIP": "Return to cohort selection",
+        "NEW_DATASELECTION": "New Feature Selection",
+        "NEW_DATASELECTION_TOOLTIP": "Create new feature selection",
+        "UPLOAD": "Upload Data Definition"
       },
       "EDITOR": {
         "EMPTY": "You have not defined a feature selection yet. Upload an existing feature selection or create a new one."
@@ -52,9 +59,10 @@
   "DATASELECTION": {
     "EDITOR": {
       "ACTION_BAR": {
-        "DATA_REQUEST": "Request data",
-        "JUMP_TO_DATASELECTION_TREE": "Add feature",
-        "SAVE_DATAQUERY": "Save data query"
+        "DATA_REQUEST": "Request Data",
+        "JUMP_TO_DATASELECTION_TREE": "Add Feature",
+        "JUMP_TO_DATASELECTION_TREE_TOOLTIP": "Return to search view to add more features",
+        "SAVE_DATAQUERY": "Save Data Query"
       },
       "DISPLAY": {
         "APPLIED_FILTER": "Applied filters",
@@ -74,11 +82,13 @@
     },
     "SEARCH": {
       "ACTION_BAR": {
-        "ADD": "Add to feature selection",
-        "JUMP_TO_DATASELECTION": "Show selection"
+        "ADD": "Add to Selection",
+        "ADD_TOOLTIP": "Add selected profiles to feature selection",
+        "JUMP_TO_DATASELECTION": "Show Selection",
+        "JUMP_TO_DATASELECTION_TOOLTIP": "Navigate to editor to edit selected features"
       },
       "HEADER": "Feature Selection",
-      "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
+      "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do, please register at ",
       "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
       "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
       "INFOTEXT": "Select criteria to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
@@ -90,6 +100,7 @@
   "EDITOR": {
     "ACTION_BAR": {
       "CANCEL": "Close",
+      "CANCEL_TOOLTIP": "Close editing",
       "SAVE": "Save"
     },
     "CONTENT": {
@@ -140,20 +151,26 @@
     "BULK_SEARCH": {
       "ACTION_BAR": {
         "ADD_TO_STAGE": "Add group criteria",
-        "VIEW_STAGE": "View cohort selection"
+        "ADD_TO_STAGE_TOOLTIP": "Add found items to the staging area",
+        "VIEW_STAGE": "View cohort selection",
+        "VIEW_STAGE_TOOLTIP": "Navigate to the editor to view staged items"
       },
       "HEADER": "Bulk Search",
       "HEADER_INFO": "Define your cohort using the bulk search mode by setting two required filters: Context and Terminology. Then provide a list of comma-separated terminology codes (e.g., ICD-10, LOINC, OPS) to narrow down the search.The bulk cohort search allows you to process large sets of codes at once",
       "INPUT_PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them.",
-      "PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them."
+      "PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them.",
+      "SEARCH_BUTTON_TOOLTIP": "Search for all entered terms with selected filters"
     },
     "EDITOR": {
       "ACTION_BAR": {
         "BACK_TO_SEARCH": "To single search",
+        "BACK_TO_SEARCH_TOOLTIP": "Return to the search view",
         "BULK_SEARCH": "To bulk search",
+        "BULK_SEARCH_TOOLTIP": "Navigate to bulk search to add multiple criteria at once",
         "DATA_REQUEST": "Data definition",
         "SAVE_DATAQUERY": "Save data definition",
-        "SEND_QUERY": "Feasibility query"
+        "SEND_QUERY": "Send Feasibility query",
+        "SEND_QUERY_TOOLTIP": "Execute the feasibility query"
       },
       "CONSENT": {
         "CENTRAL": "Central",
@@ -255,7 +272,9 @@
     "SEARCH": {
       "ACTION_BAR": {
         "ADD_TO_STAGE": "Add to cohort selection",
-        "VIEW_STAGE": "Show cohort selection"
+        "ADD_TO_STAGE_TOOLTIP": "Add selected items to the staging area",
+        "VIEW_STAGE": "Show cohort selection",
+        "VIEW_STAGE_TOOLTIP": "Navigate to the editor to view staged items"
       },
       "BULK_SEARCH": "Bulk Search",
       "BUTTON": {
@@ -271,8 +290,8 @@
       "SINGLE_SEARCH": "Single Search",
       "SNACKBAR": {
         "ADDED_TO_COHORT": "Criteria added to cohort selection",
-        "ADDED_TO_STAGE": "Criterion {{criterium}} was selected ",
-        "REMOVED_FROM_STAGE": "Criterion {{criterium}} was removed"
+        "ADDED_TO_STAGE": "Criterion was selected ",
+        "REMOVED_FROM_STAGE": "Criterion was removed"
       }
     }
   },
@@ -321,8 +340,8 @@
     "DATASELECTION": "Feature Selection",
     "OPTIONS": "Settings",
     "QUERYBUILDER_EDITOR": "Cohort Selection",
-    "QUERYBUILDER_OVERVIEW": "Saved Queries",
-    "QUERYBUILDER_RESULT": "Feasibility Query",
+    "QUERYBUILDER_OVERVIEW": "Saved data definitions",
+    "QUERYBUILDER_RESULT": "Send Feasibility Query",
     "SIGNOUT": "Sign Out"
   },
   "OPTIONSPAGE": {
@@ -339,22 +358,24 @@
   "SAVED_QUERIES": {
     "COMMENT": "Comment",
     "CREATED_AT": "Created at",
-    "HEADER": "Saved Queries",
-    "LOAD": "Load Cohort Selection",
+    "HEADER": "Saved Data Definitions",
+    "LOAD": "Load Data Definition",
     "PATIENTS": "Number of patients:",
     "SAVED_FEASIBILITY": "Saved Feasibility Queries",
     "TITLE": "Title"
   },
   "SHARED_COMPONENTS": {
-    "ACTIONBAR": {
+    "ACTION_BAR": {
       "ADDED_CRITERIA": {
         "PLURAL": "You have added {{amount}} criteria to the cohort selection",
         "SINGULAR": "You have added {{amount}} criterion to the cohort selection"
       },
-      "SELECTED_CRITERIA": {
-        "PLURAL": "You have selected {{amount}} criteria",
-        "SINGULAR": "You have selected {{amount}} criterion"
-      }
+      "DOWNLOAD": "Download",
+      "DOWNLOAD_DISABLED": "No feasibility query was defined",
+      "SAVE": "Save",
+      "SAVE_DISABLED": "No data to save",
+      "UPLOAD": "Upload",
+      "UPLOAD_DISABLED": "Upload not available"
     },
     "CHIPS": {
       "CONTEXT": "Context",

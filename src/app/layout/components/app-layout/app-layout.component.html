@@ -7,8 +7,17 @@
     [attr.aria-label]="'APPLAYOUT.SIDENAV.LABEL' | translate"
     [mode]="isHandset ? 'over' : 'side'"
     [opened]="true"
+    [class.expanded]="isSideMenuExpanded"
+    [class.collapsed]="!isSideMenuExpanded"
   >
-    <num-side-menu class="side-menu" fxFlex="100"></num-side-menu>
+    <num-side-menu
+      class="side-menu"
+      fxFlex="100"
+      class="side-menu"
+      fxFlex="100"
+      [isSideMenuExpanded]="isSideMenuExpanded"
+      (toggleSideMenu)="isSideMenuExpanded = $event"
+    ></num-side-menu>
   </mat-sidenav>
 
   <mat-sidenav-content fxLayout="column" class="fix-overlay padding-left-4">
@@ -19,7 +28,7 @@
       role="presentation"
       fxFlexFill
     >
-      <main fxFlexFill fxLayout="column" fxLayoutAlign="start start" fxFlex="90%">
+      <main fxFlexFill fxLayout="column" fxLayoutAlign="start start" fxFlex="95%">
         <div [@routeAnimations]="prepareRoute(outlet)" class="fullscreen">
           <router-outlet #outlet="outlet"></router-outlet>
         </div>

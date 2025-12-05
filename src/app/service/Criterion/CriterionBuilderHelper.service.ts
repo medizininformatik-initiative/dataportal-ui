@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { UiProfileProviderService } from 'src/app/service/Provider/UiProfileProvider.service';
 import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,20 @@ export class CriterionBuilderHelperService {
     }
     builder.withValueFilters(valueFilter);
     builder.withAttributeFilters(attributeFilter);
+    builder.withRequiredFilter(this.setIsRequiredFilterSet(uiProfile));
     return builder;
+  }
+
+  private setIsRequiredFilterSet(uiProfile: UiProfileData): boolean {
+    if (uiProfile.attributeDefinitions.length > 0) {
+      return !uiProfile.attributeDefinitions.some(
+        (attributeDefinition: AttributeDefinitionData) => !attributeDefinition.optional
+      );
+    } else if (uiProfile.valueDefinition) {
+      return uiProfile.valueDefinition.optional;
+    } else {
+      return true;
+    }
   }
 
   /**
