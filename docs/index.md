@@ -12,13 +12,16 @@ hero:
       link: /getting-started
     - theme: alt
       text: Usage Overview
-      link: /usage/feasibility
+      link: /feasibility
     - theme: alt
       text: Configuration
       link: /configuration
     - theme: alt
       text: Backend & Auth
-      link: /integration
+      link: /backend
+    - theme: alt
+      text: FAQ & Examples
+      link: /faq
 
 features:
   - title: Feasibility Query Builder
@@ -33,4 +36,5 @@ features:
     details: Keycloak authentication, backend-driven settings, feature flags, and About page with version info.
   - title: Internationalization & Theming
     details: ngx-translate (EN/DE), theme hooks, and branded styles.
-
+  - title: Elastic Search
+    details: Pre-configured ElasticSearch integration for terminology search with easy customization options.
