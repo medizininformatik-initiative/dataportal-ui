@@ -33,8 +33,8 @@
     "
     type="button"
     class="num-button green icon"
-    [class.disabled]="!(downloadAllowed$ | async)"
-    [disabled]="!(downloadAllowed$ | async)"
+    [class.disabled]="(downloadAllowed$ | async) === false"
+    [disabled]="(downloadAllowed$ | async) === false"
   >
     <fa-icon size="lg" [icon]="'download'"></fa-icon>
   </button>
@@ -49,8 +49,8 @@
     "
     type="button"
     class="num-button green icon"
-    [class.disabled]="!(downloadAllowed$ | async)"
-    [disabled]="!(downloadAllowed$ | async)"
+    [class.disabled]="(downloadAllowed$ | async) === false"
+    [disabled]="(downloadAllowed$ | async) === false"
   >
     <fa-icon size="lg" [icon]="'save'"></fa-icon>
   </button>
