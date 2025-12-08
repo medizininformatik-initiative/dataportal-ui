@@ -226,8 +226,6 @@ For production deployments, create `config.prod.json` with appropriate values:
 ## Best Practices
 
 1. **Never commit sensitive credentials** to version control
-2. **Use environment variables** for deployment-specific values
-3. **Keep mock flags disabled** in production
 4. **Set appropriate polling times** based on backend performance
 5. **Configure obfuscation thresholds** according to privacy requirements
 6. **Test configuration changes** in development before production deployment
@@ -238,7 +236,6 @@ For production deployments, create `config.prod.json` with appropriate values:
 
 **Backend Connection Fails**
 - Verify `uiBackendApi.baseUrl` is correct
-- Check CORS settings on the backend
 - Ensure backend service is running
 
 **Authentication Errors**
@@ -254,7 +251,6 @@ For production deployments, create `config.prod.json` with appropriate values:
 **Results Not Displayed**
 - Verify `lowerboundarypatientresult` threshold
 - Check if counts are below obfuscation threshold
-- Review backend result format
 
 ## Related Documentation
 

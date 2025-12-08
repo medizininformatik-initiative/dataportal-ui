@@ -1,40 +1,29 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
-  name: "Feasibility GUI"
-  text: "Build, run, and review feasibility queries with a terminology-aware UI"
-  tagline: "Angular app with ElasticSearch-powered search, DSE editing, and resilient results workflow"
+  name: "Dataportal GUI"
+  tagline: "Build, run, and review feasibility queries and reate your custom data selections."
+
   actions:
     - theme: brand
-      text: Getting Started
-      link: /getting-started
-    - theme: alt
-      text: Usage Overview
-      link: /feasibility
-    - theme: alt
-      text: Configuration
-      link: /configuration
+      text: Usage
+      link: /usage/feasibility
     - theme: alt
       text: Backend & Auth
       link: /backend
     - theme: alt
-      text: FAQ & Examples
+      text: Configuration
+      link: /configuration
+    - theme: alt
+      text: FAQ
       link: /faq
 
 features:
   - title: Feasibility Query Builder
-    details: Author queries with inclusion/exclusion groups, dependencies, multi-value & date/time restrictions.
-  - title: Terminology Search
-    details: ElasticSearch-backed search with infinite scroll, list/tree views, and ValueSet scoping.
+    details: Author queries with inclusion/exclusion groups, dependencies, numeric/date restrictions, and execution review.
+    link: /usage/feasibility
   - title: Data Selection (DSE)
-    details: Profile-based editor with required/recommended/optional fields and referenced profiles handling.
-  - title: Resilient Execution & Results
-    details: Robust polling, synchronized summary/detail, obfuscation thresholds, and downloadable artifacts.
-  - title: Operations & Security
-    details: Keycloak authentication, backend-driven settings, feature flags, and About page with version info.
-  - title: Internationalization & Theming
-    details: ngx-translate (EN/DE), theme hooks, and branded styles.
-  - title: Elastic Search
-    details: Pre-configured ElasticSearch integration for terminology search with easy customization options.
+    details: Profile-based DSE editor with required/recommended/optional fields and nested profile reference handling.
+    link: /usage/data-selection
+---
