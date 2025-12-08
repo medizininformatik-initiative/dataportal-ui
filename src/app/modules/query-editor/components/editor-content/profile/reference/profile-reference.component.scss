@@ -12,3 +12,6 @@
   font-size: medium;
   color: rgba(90, 121, 175, 1);
 }
+::ng-deep .mat-mdc-tab-body.mat-mdc-tab-body-active {
+  height: 100%;
+}
