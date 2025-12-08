@@ -24,6 +24,10 @@ export class TermcodeComponent implements OnInit {
     private selectedBulkCriteriaService: SelectedBulkCriteriaService
   ) {}
   ngOnInit(): void {
+    this.createBulkEntries();
+  }
+
+  private createBulkEntries(): void {
     this.bulkEntries = this.termCodes.map((termCode) => {
       const hash = this.hashService.createCriterionHash(this.context, termCode);
       return this.selectedBulkCriteriaService.getFoundEntry(hash);
@@ -33,9 +37,12 @@ export class TermcodeComponent implements OnInit {
   public removeTermCode(termCodeToRemove: TerminologyCode): void {
     this.termCodes = this.termCodes.filter(
       (termCode: TerminologyCode) =>
-        termCode.getCode() !== termCodeToRemove.getCode() ||
-        termCode.getSystem() !== termCodeToRemove.getSystem()
+        !(
+          termCode.getCode() === termCodeToRemove.getCode() &&
+          termCode.getSystem() === termCodeToRemove.getSystem()
+        )
     );
+    this.createBulkEntries();
     this.changedTermCodes.emit(this.termCodes);
   }
 

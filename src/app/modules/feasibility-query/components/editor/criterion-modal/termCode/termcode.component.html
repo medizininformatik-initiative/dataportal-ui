@@ -24,7 +24,7 @@
 
         <button
           [disabled]="termCodes.length === 1"
-          (click)="removeTermCode(termCode)"
+          (click)="removeTermCode(bulkEntry.getTermCodes()[0])"
           class="delete-button"
         >
           {{ 'FEASIBILITY.EDITOR.MODAL.REMOVE' | translate }}
