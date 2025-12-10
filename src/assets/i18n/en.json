@@ -124,10 +124,10 @@
           "FILTER": "Filter",
           "INFORMATION": "Information",
           "REFERENCE": "References",
-          "SELECTED_CONCEPTS": "Selected concepts ({{count}})",
+          "SELECTED_CONCEPTS": "Selected code filter ({{count}})",
           "SINGLE_SEARCH": "Single search",
           "TIMERESTRICTION": "Time restriction",
-          "TOKEN": "Concepts"
+          "TOKEN": "Code Filter"
         }
       }
     },
@@ -322,7 +322,8 @@
     "TOKEN_FILTER": {
       "DESCRIPTION": "Token filters enable the selection of standardized medical terms (concepts) from terminology systems such as ICD-10, SNOMED CT, or LOINC. These codes describe diagnoses, findings, or laboratory values in a clear and machine-readable manner. You can search for individual codes, add multiple codes simultaneously (bulk search), or select from predefined value sets. This makes search queries precise and interoperable.",
       "TITLE": "Token Filter (Concepts)"
-    }
+    },
+    "TAB_LABEL": "Information"
   },
   "LANGUAGE": {
     "ENGLISH": "English",

@@ -125,10 +125,10 @@
           "FILTER": "Filter",
           "INFORMATION": "Informationen",
           "REFERENCE": "Referenzen",
-          "SELECTED_CONCEPTS": "Selektierte Konzepte ({{count}})",
+          "SELECTED_CONCEPTS": "Selektierte Code Filter ({{count}})",
           "SINGLE_SEARCH": "Einzelsuche",
           "TIMERESTRICTION": "Zeiteinschränkung",
-          "TOKEN": "Konzepte"
+          "TOKEN": "Code Filter"
         }
       }
     },
@@ -326,7 +326,8 @@
     "TOKEN_FILTER": {
       "DESCRIPTION": "Token-Filter ermöglichen die Auswahl standardisierter medizinischer Begriffe (Konzepte) aus Terminologiesystemen wie ICD-10, SNOMED CT oder LOINC. Diese Codes beschreiben Diagnosen, Befunde oder Laborwerte eindeutig und maschinenlesbar. Sie können einzelne Codes suchen, mehrere Codes gleichzeitig hinzufügen (Bulk-Search) oder aus vordefinierten ValueSets auswählen. Dadurch werden Suchanfragen präzise und interoperabel.",
       "TITLE": "Was ist ein Konzepte?"
-    }
+    },
+    "TAB_LABEL": "Information"
   },
   "LANGUAGE": {
     "ENGLISH": "Englisch",

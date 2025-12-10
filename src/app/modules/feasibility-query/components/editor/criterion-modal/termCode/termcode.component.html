@@ -5,7 +5,11 @@
   mat-stretch-tabs="false"
   [selectedIndex]="1"
 >
-  <mat-tab label="{{ 'INFORMATION.TERMCODE.TITLE' | translate }}">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <fa-icon icon="info" class="information-icon"></fa-icon>
+      {{ 'INFORMATION.TAB_LABEL' | translate }}
+    </ng-template>
     <num-information-section>
       <span slot="title">{{ 'INFORMATION.TERMCODE.TITLE' | translate }}</span>
       {{ 'INFORMATION.TERMCODE.DESCRIPTION' | translate }}
@@ -15,8 +19,7 @@
       {{ 'INFORMATION.TERMCODE.MULTIPLE_DESCRIPTION' | translate }}
     </num-information-section>
   </mat-tab>
-
-  <mat-tab label="{{ 'FEASIBILITY.EDITOR.TERMCODE.HEADER' | translate }}">
+  <mat-tab label="{{ 'INFORMATION.TERMCODE.TITLE' | translate }}">
     <div class="selected-concept-list">
       <div *ngFor="let bulkEntry of bulkEntries" class="concept-item">
         <span style="width: 60%">{{ bulkEntry.getDisplay() | displayTranslation }}</span>

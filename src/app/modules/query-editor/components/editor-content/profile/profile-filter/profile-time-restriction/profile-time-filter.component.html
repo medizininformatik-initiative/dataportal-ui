@@ -4,7 +4,11 @@
   mat-stretch-tabs="false"
   [selectedIndex]="1"
 >
-  <mat-tab label="{{ 'INFORMATION.TIME_RESTRICTION.TITLE' | translate }}">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <fa-icon icon="info" class="information-icon"></fa-icon>
+      {{ 'INFORMATION.TAB_LABEL' | translate }}
+    </ng-template>
     <num-information-section>
       <span slot="title">{{ 'INFORMATION.TIME_RESTRICTION.TITLE' | translate }}</span>
       {{ 'INFORMATION.TIME_RESTRICTION.DESCRIPTION' | translate }}

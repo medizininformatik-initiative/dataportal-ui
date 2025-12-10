@@ -6,7 +6,12 @@
   [selectedIndex]="1"
   (selectedTabChange)="onTabChange()"
 >
-  <mat-tab label="{{ 'INFORMATION.CONCEPTS.TITLE' | translate }}">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <fa-icon icon="info" class="information-icon"></fa-icon>
+      {{ 'INFORMATION.TAB_LABEL' | translate }}
+    </ng-template>
+
     <num-information-section>
       <span slot="title">{{ 'INFORMATION.CONCEPTS.TITLE' | translate }}</span>
       {{ 'INFORMATION.CONCEPTS.DESCRIPTION' | translate }}

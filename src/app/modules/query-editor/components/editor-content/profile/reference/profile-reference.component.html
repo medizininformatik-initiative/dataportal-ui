@@ -1,6 +1,10 @@
 <div class="full">
   <mat-tab-group [selectedIndex]="1" animationDuration="0ms">
-    <mat-tab label="{{ 'INFORMATION.REFERENCES.TAB_TITLE' | translate }}">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <fa-icon icon="info" class="information-icon"></fa-icon>
+        {{ 'INFORMATION.TAB_LABEL' | translate }}
+      </ng-template>
       <num-information-section>
         <span slot="title">{{ 'INFORMATION.REFERENCES.TITLE' | translate }}</span>
         {{ 'INFORMATION.REFERENCES.EXTENDED_DESCRIPTION' | translate }}
