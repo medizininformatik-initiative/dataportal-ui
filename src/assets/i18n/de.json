@@ -349,17 +349,6 @@
     "QUERYBUILDER_RESULT": "Machbarkeitsabfrage senden",
     "SIGNOUT": "Abmelden"
   },
-  "OPTIONSPAGE": {
-    "CONTEXT_IN_SQ": "Kontext in die SQ einbinden",
-    "DEPENDENTGROUPS": "Abhängige Gruppen",
-    "DISPLAYVALUEFILTERICON": "Icons für Vergleichsoperatoren nutzen",
-    "FHIRPORT": "FHIR-Port",
-    "MULTIPLEGROUPS": "Mehrere Gruppen",
-    "MULTIPLEVALUEDEFINITIONS": "Mehrere Einschränkungen pro Kriterium",
-    "POLLINGINTERVALL": "Polling-Intervall",
-    "POLLINGTIME": "Polling-Zeit",
-    "TIMERESTRICTION": "Zeitabhängige Kriterien"
-  },
   "SAVED_QUERIES": {
     "COMMENT": "Kommentar",
     "CREATED_AT": "Erstellt am",

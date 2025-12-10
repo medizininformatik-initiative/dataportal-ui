@@ -11,7 +11,6 @@ import { MaterialModule } from 'src/app/layout/material/material.module';
 import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ProfileComponent } from './components/editor-content/profile/profile.component';
-import { ProfileFilterComponent } from './components/editor-content/profile/profile-filter/profile-filter.component';
 import { ProfileHeaderComponent } from './components/editor-content/profile/header/profile-header.component';
 import { QueryEditorComponent } from './components/query-editor.component';
 import { QueryEditorRoutingModule } from './query-editor.routing.module';
@@ -65,7 +64,6 @@ export const FORMATS_GERMAN = {
     ProfileHeaderComponent,
     QueryEditorComponent,
     TokenFilterComponent,
-    ProfileFilterComponent,
     ProfileTimeFilterComponent,
     ProfileReferenceComponent,
     ProfileReferenceModalComponent,

@@ -345,17 +345,6 @@
     "QUERYBUILDER_RESULT": "Send Feasibility Query",
     "SIGNOUT": "Sign Out"
   },
-  "OPTIONSPAGE": {
-    "CONTEXT_IN_SQ": "Include context in SQ",
-    "DEPENDENTGROUPS": "Dependent groups",
-    "DISPLAYVALUEFILTERICON": "Use icons for comparison operators",
-    "FHIRPORT": "FHIR Port",
-    "MULTIPLEGROUPS": "Multiple groups",
-    "MULTIPLEVALUEDEFINITIONS": "Multiple restrictions per criterion",
-    "POLLINGINTERVAL": "Polling interval",
-    "POLLINGTIME": "Polling time",
-    "TIMERESTRICTION": "Time-dependent criteria"
-  },
   "SAVED_QUERIES": {
     "COMMENT": "Comment",
     "CREATED_AT": "Created at",

@@ -200,3 +200,6 @@
 .table-container {
   overflow-y: auto;
 }
+::ng-deep .mat-mdc-tab-body-wrapper {
+  height: 100%;
+}
