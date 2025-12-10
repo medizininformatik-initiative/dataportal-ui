@@ -136,6 +136,10 @@ export class EditCriterionModalComponent implements OnInit {
     this.criterionBuilder.withTimeRestriction(timeRestriction);
   }
 
+  public updateTermCodes(termCodes: TerminologyCode[]) {
+    this.criterionBuilder.withTermCodes(termCodes);
+  }
+
   public saveCriterion() {
     if (this.criterion instanceof ReferenceCriterion) {
       const criterion = this.criterionProvider.getCriterionByUID(this.criterion.getParentId());

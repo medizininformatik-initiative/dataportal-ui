@@ -1,0 +1,74 @@
+<div fxLayout="row" class="height-100 width-100">
+  <div fxLayout="column" class="container width-100">
+    <div class="margin-top-3 search-container width-100" fxLayout="row" fxLayoutAlign="start start">
+      <textarea
+        class="input-field-area"
+        matNativeControl
+        type="text"
+        name="searchText"
+        rows="5"
+        cols="100"
+        placeholder="{{ 'FEASIBILITY.BULK_SEARCH.INPUT_PLACEHOLDER' | translate }}"
+        [(ngModel)]="bulkSearchTermInput"
+      ></textarea>
+      <div class="bulk-search-container">
+        <div class="filter-section" *ngIf="searchFilter">
+          <num-search-filter
+            [multiSelect]="false"
+            [filter]="searchFilter"
+            (selectedFilterChanged)="setValueSet($event)"
+          ></num-search-filter>
+        </div>
+        <num-button
+          [isDisabled]="!selectedValueSet || bulkSearchTermInput.length === 0"
+          type="blue"
+          (click)="bulkSearch()"
+          >Suchen</num-button
+        >
+      </div>
+    </div>
+    <mat-tab-group
+      *ngIf="foundTableData || notFoundTableData"
+      animationDuration="0ms"
+      class="inner-tab-group margin-top-4"
+      disableRipple="true"
+      mat-stretch-tabs="true"
+    >
+      <mat-tab
+        [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.FOUND' | translate : { count: foundCount }"
+      >
+        <div
+          *ngIf="foundTableData?.body.rows.length > 0"
+          fxLayout="column"
+          class="height-100 width-100 table-container"
+        >
+          <num-table
+            *ngIf="foundTableData?.body.rows.length > 0"
+            class="result-list-container"
+            [tableData]="foundTableData"
+            (selectedRow)="addSelectedRow($event)"
+          >
+          </num-table>
+        </div>
+      </mat-tab>
+      <mat-tab
+        [label]="
+          'SHARED_FILTER.CONCEPT_FILTER.BULK.NOTFOUND' | translate : { count: notFoundCount }
+        "
+      >
+        <div
+          *ngIf="notFoundTableData?.body.rows.length > 0"
+          fxLayout="column"
+          class="height-100 width-100"
+        >
+          <num-table
+            *ngIf="notFoundTableData?.body.rows.length > 0"
+            class="result-list-container"
+            [tableData]="notFoundTableData"
+          >
+          </num-table>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

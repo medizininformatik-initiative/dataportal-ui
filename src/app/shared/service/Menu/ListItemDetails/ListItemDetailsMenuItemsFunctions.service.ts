@@ -1,13 +1,14 @@
-import { CreateCriterionService } from 'src/app/service/Criterion/Builder/Create/CreateCriterionService';
+import { CreateCriterionService } from 'src/app/service/Criterion/CreateCriterionService';
+import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service';
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
 import { Injectable } from '@angular/core';
 import { map, switchMap, take } from 'rxjs';
-import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service';
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
+import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
+import { SnackbarHelperService } from 'src/app/service/SnackbarHelper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,8 @@ export class ListItemDetailsMenuItemsFunctionsService {
     private criterionService: CreateCriterionService,
     private searchTermDetailsService: SearchTermDetailsService,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
-    private searchTermDetailsProviderService: SearchTermDetailsProviderService
+    private searchTermDetailsProviderService: SearchTermDetailsProviderService,
+    private snackbarHelperService: SnackbarHelperService
   ) {}
 
   public showCriteriaInResultList(id: string) {
@@ -34,14 +36,14 @@ export class ListItemDetailsMenuItemsFunctionsService {
 
   public addToStage(id: string) {
     this.criterionService
-      .createCriteriaFromHashes([id])
+      .createCriteriaFromHashes([id], false)
       .pipe(
         map((criteria: Criterion[]) => {
           this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria);
           this.feasibilityQueryProviderHub.addCriteriaToStage(criteria);
         })
       )
-      .subscribe();
+      .subscribe(() => this.snackbarHelperService.displayAddedToCriteriaStage());
   }
 
   public searchCriteria(id: string) {

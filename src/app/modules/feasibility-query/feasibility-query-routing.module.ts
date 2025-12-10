@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { PathSegments } from 'src/app/app-paths';
 import { ResultComponent } from './components/result/result.component';
 import { RouterModule, Routes } from '@angular/router';
+import { FeasibilityQueryBulkSearchComponent } from './components/search/bulk/bulk-search.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,14 @@ const routes: Routes = [
     component: FeasibilityQuerySearchComponent,
     data: {
       animation: 'Feasibility_Search',
+      title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
+    },
+  },
+  {
+    path: PathSegments.bulkSearch,
+    component: FeasibilityQueryBulkSearchComponent,
+    data: {
+      animation: 'Feasibility_Bulk_Search',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
     },
   },

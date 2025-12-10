@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
-import { FilterChipQuantityAdapter } from '../../../models/FilterChips/Adapter/FilterChipQuantityAdapter';
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { FilterChipQuantityAdapter } from '../../../models/FilterChips/Adapter/FilterChipQuantityAdapter';
+import { Injectable } from '@angular/core';
+import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -21,21 +20,11 @@ export class QuantityFilterChipService {
   public generateQuantityChipsFromAttributeFilters(
     attributeFilters: AttributeFilter[]
   ): InterfaceFilterChip[] {
-    const chips: InterfaceFilterChip[] = [];
+    const chips = attributeFilters.map((attributeFilter: AttributeFilter) =>
+      this.createQuantityChips(attributeFilter)
+    );
 
-    attributeFilters.forEach((attributeFilter) => {
-      const quantityFilter = attributeFilter.getQuantity();
-      if (quantityFilter) {
-        chips.push(
-          ...this.generateQuantityChipsFromAttributeFilter(
-            quantityFilter,
-            attributeFilter.getDisplay()
-          )
-        );
-      }
-    });
-
-    return chips;
+    return chips.filter((chip) => chip !== undefined);
   }
 
   /**
@@ -45,18 +34,11 @@ export class QuantityFilterChipService {
    * @returns Array of InterfaceFilterChip
    */
   public generateQuantityChipsFromValueFilters(valueFilters: ValueFilter[]): InterfaceFilterChip[] {
-    const chips: InterfaceFilterChip[] = [];
+    const chips = valueFilters.map((valueFilter: ValueFilter) =>
+      this.createQuantityChips(valueFilter)
+    );
 
-    valueFilters.forEach((valueFilter) => {
-      const quantityFilter = valueFilter?.getQuantity();
-      if (quantityFilter) {
-        chips.push(
-          ...this.generateQuantityChipsFromValueFilter(quantityFilter, valueFilter.getDisplay())
-        );
-      }
-    });
-
-    return chips;
+    return chips.filter((chip) => chip !== undefined);
   }
 
   /**
@@ -65,42 +47,11 @@ export class QuantityFilterChipService {
    * @param quantityFilter The AbstractQuantityFilter object
    * @returns Array of InterfaceFilterChip
    */
-  private generateQuantityChipsFromAttributeFilter(
-    quantityFilter: AbstractQuantityFilter,
-    display: Display
-  ): InterfaceFilterChip[] {
-    if (quantityFilter?.getComparator()) {
-      return this.generateQuantityChips(quantityFilter, display);
+  private createQuantityChips(filter: AttributeFilter | ValueFilter): InterfaceFilterChip {
+    const quantityFilter = filter?.getQuantity();
+    const display: Display = filter.getDisplay();
+    if (quantityFilter && quantityFilter.getComparator()) {
+      return FilterChipQuantityAdapter.adaptQuantity(quantityFilter, display);
     }
-    return [];
-  }
-
-  /**
-   * Generates quantity filter chips obtained from ValueFilter.
-   *
-   * @param quantityFilter The AbstractQuantityFilter object
-   * @returns Array of InterfaceFilterChip
-   */
-  private generateQuantityChipsFromValueFilter(
-    quantityFilter: AbstractQuantityFilter,
-    display: Display
-  ): InterfaceFilterChip[] {
-    if (quantityFilter?.getComparator()) {
-      return this.generateQuantityChips(quantityFilter, display);
-    }
-    return [];
-  }
-
-  /**
-   * Adapts the AbstractQuantityFilter into an array of InterfaceFilterChip.
-   *
-   * @param quantityFilter The AbstractQuantityFilter object
-   * @returns Array of InterfaceFilterChip
-   */
-  private generateQuantityChips(
-    quantityFilter: AbstractQuantityFilter,
-    display: Display
-  ): InterfaceFilterChip[] {
-    return FilterChipQuantityAdapter.adaptQuantity(quantityFilter, display);
   }
 }

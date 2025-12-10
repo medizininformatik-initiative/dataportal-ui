@@ -9,12 +9,11 @@ import { DataSelectionProviderService } from 'src/app/modules/data-selection/ser
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
 import { ActiveDataSelectionService } from '../../Provider/ActiveDataSelection.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CreateCRDTLService {
+export class CreateCRTDLService {
   constructor(
     private dataExtractionTranslator: DataSelection2DataExtraction,
     private feasibilityQueryProvider: FeasibilityQueryProviderService,
@@ -24,7 +23,7 @@ export class CreateCRDTLService {
     private snackBarService: SnackbarService
   ) {}
 
-  public createCRDTLForSave(getFeasibility: boolean, getDataSelection: boolean): Observable<CRTDL> {
+  public createCRTDLForSave(getFeasibility: boolean, getDataSelection: boolean): Observable<CRTDL> {
     const structuredQuery$ = this.getStructuredQuery();
     const dataExtraction$ = this.getDataExtraction();
 
@@ -42,7 +41,7 @@ export class CreateCRDTLService {
     return of(this.buildCRDTL(null, null));
   }
 
-  public createCRDTL(): Observable<CRTDL> {
+  public createCRTDL(): Observable<CRTDL> {
     return combineLatest([this.getStructuredQuery(), this.getDataExtraction()]).pipe(
       map(([structuredQuery, dataExtraction]) => {
         if (structuredQuery.getInclusionCriteria()?.length > 0) {
@@ -57,10 +56,7 @@ export class CreateCRDTLService {
   }
 
   public buildCRDTL(structuredQuery: StructuredQuery, dataExtraction: DataExtraction): CRTDL {
-    const version = 'http://json-schema.org/to-be-done/schema#';
-    const display = '';
-
-    return new CRTDL(display, version, structuredQuery, dataExtraction);
+    return new CRTDL(structuredQuery, dataExtraction);
   }
 
   private getStructuredQuery(): Observable<StructuredQuery> {

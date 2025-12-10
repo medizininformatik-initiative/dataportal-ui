@@ -5,8 +5,6 @@ import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData
   providedIn: 'root',
 })
 export class CriteriaProfileProviderService {
-  // Implementierung des Services
-
   criteriaProfilesCache: Map<string, CriteriaProfileData> = new Map();
   constructor() {}
 

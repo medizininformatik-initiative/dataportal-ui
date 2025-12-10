@@ -23,6 +23,7 @@ import {
   ElementRef,
   EventEmitter,
 } from '@angular/core';
+import { SnackbarHelperService } from 'src/app/service/SnackbarHelper.service';
 
 @Component({
   selector: 'num-search-data-selection',
@@ -58,7 +59,8 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
     private selectedDataSelectionProfileService: SelectedDataSelectionProfileService,
     private navigationHelperService: NavigationHelperService,
     private activeRoute: ActivatedRoute,
-    private appSettingsProviderService: AppSettingsProviderService
+    private appSettingsProviderService: AppSettingsProviderService,
+    private snackbarHelperService: SnackbarHelperService
   ) {}
 
   ngOnInit(): void {
@@ -148,6 +150,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
           );
           this.downloadDisabled = false;
         });
+        this.snackbarHelperService.displayAddedToDataSelection();
       });
   }
 

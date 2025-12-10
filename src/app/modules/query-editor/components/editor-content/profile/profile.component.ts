@@ -14,7 +14,11 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   OnDestroy,
+  SimpleChanges,
 } from '@angular/core';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 @Component({
   selector: 'num-profile',
   templateUrl: './profile.component.html',
@@ -30,6 +34,10 @@ import {
 export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   profile: DataSelectionProfile;
 
+  timeRestrictionFilters: ProfileTimeRestrictionFilter[] = [];
+
+  tokenFilter: ProfileTokenFilter;
+
   stagedProfileServiceSubscription: Subscription;
 
   possibleReferencesServiceSubscription: Subscription;
@@ -38,10 +46,14 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @ViewChild('fields', { static: false, read: TemplateRef })
   readonly fieldsTemplate: TemplateRef<any>;
-  @ViewChild('filter', { static: false, read: TemplateRef })
-  readonly filterTemplate: TemplateRef<any>;
+  @ViewChild('timeRestriction', { static: false, read: TemplateRef })
+  readonly timeRestrictionTemplate: TemplateRef<any>;
   @ViewChild('reference', { static: false, read: TemplateRef })
   readonly referenceTemplate: TemplateRef<any>;
+  @ViewChild('token', { static: false, read: TemplateRef })
+  readonly tokenFilterTemplate: TemplateRef<any>;
+  @ViewChild('information', { static: false, read: TemplateRef })
+  readonly informationTemplate: TemplateRef<any>;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -63,35 +75,60 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   ngAfterViewInit(): void {
     this.stagedProfileServiceSubscription?.unsubscribe();
+    this.templates = [];
     this.stagedProfileServiceSubscription = this.stagedProfileService
       .getProfileObservable()
       .pipe(
         tap((profile) => (this.profile = profile)),
-        distinctUntilChanged((prev: DataSelectionProfile, next: DataSelectionProfile) => prev.getId() === next.getId())
+        tap(() => {
+          this.tokenFilter = this.profile
+            .getFilters()
+            .find((filter) => filter.getUiType() === DataSelectionUIType.CODE) as ProfileTokenFilter;
+          this.cdr.detectChanges();
+        })
       )
       .subscribe(() => {
-        this.templates = [];
-        this.updateTemplatesArray();
+        if (this.templates.length === 0) {
+          this.updateTemplatesArray();
+        }
       });
   }
 
   private updateTemplatesArray(): void {
     this.setFieldsTemplate();
-    this.setFilterTemplate();
     this.setReferencesTemplate();
+    this.setTimeRestrictionTemplate();
+    this.setTokenFilterTemplate();
+    this.setInformationTemplate();
     this.cdr.detectChanges();
+  }
+
+  private setInformationTemplate(): void {
+    this.templates.push({ template: this.informationTemplate, name: 'INFORMATION' });
+  }
+
+  private setTimeRestrictionTemplate(): void {
+    this.profile.getFilters().forEach((filter) => {
+      if (filter.getUiType() === DataSelectionUIType.TIMERESTRICTION) {
+        this.timeRestrictionFilters.push(filter as ProfileTimeRestrictionFilter);
+        this.templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' });
+      }
+    });
+  }
+
+  private setTokenFilterTemplate(): void {
+    this.profile.getFilters().forEach((filter: AbstractProfileFilter) => {
+      if (filter.getUiType() === DataSelectionUIType.CODE) {
+        this.tokenFilter = filter as ProfileTokenFilter;
+        this.templates.push({ template: this.tokenFilterTemplate, name: 'TOKEN' });
+      }
+    });
   }
 
   private setFieldsTemplate(): void {
     const fields = this.profile.getProfileFields().getFieldTree();
     if (fields.length > 0) {
       this.templates.push({ template: this.fieldsTemplate, name: 'FIELD' });
-    }
-  }
-
-  private setFilterTemplate(): void {
-    if (this.profile.getFilters().length > 0) {
-      this.templates.push({ template: this.filterTemplate, name: 'FILTER' });
     }
   }
 
@@ -107,8 +144,10 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     this.stagedProfileService.updateSelectedBasicFields(updatedSelectedBasicFields);
   }
 
-  public updateProfileFilter(profileFilter: AbstractProfileFilter[]) {
-    this.stagedProfileService.updateFilters(profileFilter);
+  public updateProfileFilter(
+    timeRestrictionFilter: ProfileTimeRestrictionFilter | ProfileTokenFilter
+  ): void {
+    this.stagedProfileService.updateProfileFilter(timeRestrictionFilter);
   }
 
   public updateSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {

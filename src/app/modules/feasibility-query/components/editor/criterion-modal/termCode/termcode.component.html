@@ -1,0 +1,38 @@
+<mat-tab-group
+  class="height-100 padding-top-3"
+  animationDuration="0ms"
+  disableRipple="true"
+  mat-stretch-tabs="false"
+  [selectedIndex]="1"
+>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <fa-icon icon="info" class="information-icon"></fa-icon>
+      {{ 'INFORMATION.TAB_LABEL' | translate }}
+    </ng-template>
+    <num-information-section>
+      <span slot="title">{{ 'INFORMATION.TERMCODE.TITLE' | translate }}</span>
+      {{ 'INFORMATION.TERMCODE.DESCRIPTION' | translate }}
+      <br /><br />
+      <strong>{{ 'INFORMATION.TERMCODE.TITLE' | translate }} - Multiple Codes</strong>
+      <br />
+      {{ 'INFORMATION.TERMCODE.MULTIPLE_DESCRIPTION' | translate }}
+    </num-information-section>
+  </mat-tab>
+  <mat-tab label="{{ 'INFORMATION.TERMCODE.TITLE' | translate }}">
+    <div class="selected-concept-list">
+      <div *ngFor="let bulkEntry of bulkEntries" class="concept-item">
+        <span style="width: 60%">{{ bulkEntry.getDisplay() | displayTranslation }}</span>
+        <span>{{ bulkEntry.getTermCodes()[0].getCode() }}</span>
+
+        <button
+          [disabled]="termCodes.length === 1"
+          (click)="removeTermCode(bulkEntry.getTermCodes()[0])"
+          class="delete-button"
+        >
+          {{ 'FEASIBILITY.EDITOR.MODAL.REMOVE' | translate }}
+        </button>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

@@ -1,3 +1,4 @@
+import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service';
 import { CollectCRTDLHashesService } from './HashCollector/CollectCRTDLHashes.service';
 import { ConceptData } from 'src/app/model/Interface/ConceptData';
 import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service';
@@ -17,6 +18,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 export class StructuredQuery2UIQueryTranslatorService {
   constructor(
     private terminologyApiService: TerminologyApiService,
+    private codeableConceptApiService: CodeableConceptApiService,
     private conceptTranslationCache: ConceptTranslationCacheService,
     private consentService: ConsentService,
     private collectCRTDLHashesService: CollectCRTDLHashesService,
@@ -33,7 +35,7 @@ export class StructuredQuery2UIQueryTranslatorService {
       tap((criteriaProfileData: CriteriaProfileData[]) =>
         this.criteriaProfileProviderService.setCachedCriteriaProfiles(criteriaProfileData)
       ),
-      switchMap(() => this.terminologyApiService.getCodeableConceptsByIds(conceptHahes)),
+      switchMap(() => this.codeableConceptApiService.getCodeableConceptsByIds(conceptHahes)),
       tap((conceptsData: ConceptData[]) =>
         this.conceptTranslationCache.setConceptsByHash(conceptsData)
       ),

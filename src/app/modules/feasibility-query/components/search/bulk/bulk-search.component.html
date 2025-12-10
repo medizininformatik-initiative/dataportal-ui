@@ -1,0 +1,75 @@
+<div fxFlexFill fxLayout="column" fxLayoutAlign="start">
+  <div>
+    <div class="header-container">
+      <num-header>{{ 'FEASIBILITY.BULK_SEARCH.HEADER' | translate }}</num-header>
+      <div class="margin-left-auto">
+        <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
+      </div>
+    </div>
+    <num-header-description>
+      {{ 'FEASIBILITY.BULK_SEARCH.HEADER_INFO' | translate }}
+    </num-header-description>
+  </div>
+  <div class="search-container width-100" fxLayout="row" fxLayoutAlign="start center">
+    <textarea
+      class="input-field-area"
+      matNativeControl
+      type="text"
+      name="searchText"
+      rows="8"
+      cols="100"
+      placeholder="{{ 'FEASIBILITY.BULK_SEARCH.INPUT_PLACEHOLDER' | translate }}"
+      [(ngModel)]="bulkSearchTermInput"
+    ></textarea>
+  </div>
+  <div class="filter-container">
+    <num-search-filter
+      *ngFor="let searchFilter of searchFilters$ | async"
+      [filter]="searchFilter"
+      (selectedFilterChanged)="setElasticSearchFilter($event)"
+      [multiSelect]="false"
+    ></num-search-filter>
+    <num-button
+      (click)="submitSearch()"
+      [isDisabled]="!(filterAreSet && bulkSearchTermInput?.length > 0)"
+      matTooltip="{{ 'FEASIBILITY.BULK_SEARCH.SEARCH_BUTTON_TOOLTIP' | translate }}"
+    >
+      {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
+    </num-button>
+  </div>
+
+  <mat-tab-group
+    (selectedTabChange)="tabChange($event)"
+    *ngIf="searchResultsFound"
+    style="width: 100%; flex: 1; overflow: auto"
+  >
+    <mat-tab
+      position="2"
+      [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.FOUND' | translate : { count: foundCount }"
+    >
+      <num-table
+        *ngIf="searchResultsFound"
+        (selectedRow)="setSelectedRowItem($event)"
+        [tableData]="foundCriteriaTableData"
+      ></num-table>
+    </mat-tab>
+    <mat-tab
+      [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.NOTFOUND' | translate : { count: notFoundCount }"
+    >
+      <num-table
+        *ngIf="searchResultsFound"
+        (selectedRow)="setSelectedRowItem($event)"
+        [tableData]="notFoundCriteriaTableData"
+      ></num-table>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div *ngIf="!searchResultsFound" class="no-results-box">
+    <num-placeholder-box class="no-results-text">{{
+      'FEASIBILITY.BULK_SEARCH.PLACEHOLDER' | translate
+    }}</num-placeholder-box>
+  </div>
+  <div>
+    <num-bulk-search-action-bar [resultType]="searchtype"></num-bulk-search-action-bar>
+  </div>
+</div>

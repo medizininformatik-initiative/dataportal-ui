@@ -13,36 +13,28 @@ export class FilterChipQuantityAdapter {
   public static adaptQuantity(
     quantity: AbstractQuantityFilter,
     display: Display
-  ): InterfaceFilterChip[] {
-    const chips: InterfaceFilterChip[] = [];
-
-    if (quantity && quantity.getType() !== FilterTypes.QUANTITY_NOT_SET) {
+  ): InterfaceFilterChip {
+    const type = quantity.getType();
+    if (type !== FilterTypes.QUANTITY_NOT_SET) {
       const unitDisplay = quantity.getSelectedUnit().getDisplay();
       const comparator = quantity.getComparator();
       const symbol = getArithmeticSymbol(comparator);
       switch (comparator) {
         case QuantityComparisonOption.BETWEEN:
-          chips.push(
-            this.createQuantityRangeChip(display, quantity as QuantityRangeFilter, unitDisplay)
-          );
-          break;
+          return this.createQuantityRangeChip(display, quantity as QuantityRangeFilter, unitDisplay);
         case QuantityComparisonOption.EQUAL:
         case QuantityComparisonOption.GREATER_THAN:
         case QuantityComparisonOption.LESS_THAN:
-          chips.push(
-            this.createQuantityComparatorChip(
-              display,
-              quantity as QuantityComparatorFilter,
-              unitDisplay,
-              symbol
-            )
+          return this.createQuantityComparatorChip(
+            display,
+            quantity as QuantityComparatorFilter,
+            unitDisplay,
+            symbol
           );
-          break;
         default:
           break;
       }
     }
-    return chips;
   }
 
   private static createQuantityRangeChip(
@@ -52,7 +44,7 @@ export class FilterChipQuantityAdapter {
   ): InterfaceFilterChip {
     const minValue = quantity.getMinValue();
     const maxValue = quantity.getMaxValue();
-    const text = `Between ${minValue} - ${maxValue} ${unitDisplay}`;
+    const text = `${minValue} - ${maxValue} ${unitDisplay}`;
 
     return this.createFilterChip(display, text);
   }

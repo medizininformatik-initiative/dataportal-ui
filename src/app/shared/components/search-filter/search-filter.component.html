@@ -6,7 +6,7 @@
       panelClass="example-panel"
       [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter?.filterType | translate"
       [(value)]="selectedValues"
-      multiple
+      [multiple]="multiSelect"
     >
       <mat-option *ngFor="let value of filter.data" [value]="value.label">
         {{ value.display | displayTranslation }} ({{ value.count }})

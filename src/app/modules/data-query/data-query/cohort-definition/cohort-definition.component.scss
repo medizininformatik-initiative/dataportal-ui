@@ -11,53 +11,11 @@
   overflow: auto;
 }
 
-.file-input {
-  display: none;
-}
-.button-import {
-  margin: 0 1em 0 2em;
-}
-
-.div-import-from-file {
-  margin-top: 1em;
-  margin-bottom: 5em;
-}
-.file-upload {
-  text-transform: none !important;
-  width: 160px;
-  font-size: 13px;
-  color: var(--num-color--primary-900);
-  display: flex;
-}
-.file-upload-text {
-  margin: 8px 5px;
-}
-.file-upload:hover {
-  font-weight: bold;
-}
-.file-name {
-  color: var(--num-color--accent-300);
-  margin: 5px;
-  height: 20px;
-}
-::ng-deep .file-upload fa-icon svg {
-  width: 30px !important;
-  height: 30px !important;
-  color: var(--num-color--primary-900);
-}
-
 .empty-cohort-box {
   width: 100%;
   flex: 1;
 }
 
-num-button {
-  margin-right: 10px;
-}
-
-.margin-top-5 {
-  margin-top: 5px;
-}
 .feasibility-container {
   overflow-y: auto;
   flex: 1;

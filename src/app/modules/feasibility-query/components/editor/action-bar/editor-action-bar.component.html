@@ -1,32 +1,27 @@
 <num-action-bar>
   <num-button
+    icon="arrow-up"
     type="green"
-    (click)="doSendRequest()"
-    [isDisabled]="(isFeasibilityQueryValid$ | async) === false"
-    style="order: 4"
+    (click)="navigateToBulkCriteriaSearch()"
+    style="order: 5"
+    matTooltip="{{ 'FEASIBILITY.EDITOR.ACTION_BAR.BULK_SEARCH_TOOLTIP' | translate }}"
   >
-    {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY' | translate }}
-  </num-button>
-  <num-button type="green" (click)="navigateToDataRequestCohortDefinition()" style="order: 3">
-    {{ 'FEASIBILITY.EDITOR.ACTION_BAR.DATA_REQUEST' | translate }}
+    {{ 'FEASIBILITY.EDITOR.ACTION_BAR.BULK_SEARCH' | translate }}
   </num-button>
   <num-button
     type="green"
-    (click)="saveDataQuery()"
-    [isDisabled]="
-      !((validDataQuery$ | async).feasibilityQuery || (validDataQuery$ | async).dataSelection)
-    "
-    style="order: 2"
+    (click)="doSendRequest()"
+    [isDisabled]="(isFeasibilityQueryValid$ | async) === false"
+    matTooltip="{{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate }}"
   >
-    {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SAVE_DATAQUERY' | translate }}
+    {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY' | translate }}
   </num-button>
   <num-button
     icon="arrow-up"
     type="green"
     (click)="navigateToSearch()"
-    [matBadge]="(stageArray$ | async)?.length"
     matBadgePosition="above after"
-    style="order: 1"
+    matTooltip="{{ 'FEASIBILITY.EDITOR.ACTION_BAR.BACK_TO_SEARCH_TOOLTIP' | translate }}"
   >
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.BACK_TO_SEARCH' | translate }}
   </num-button>

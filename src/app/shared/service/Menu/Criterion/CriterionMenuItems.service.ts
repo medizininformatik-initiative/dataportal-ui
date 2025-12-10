@@ -15,9 +15,9 @@ export class CriterionMenuItems {
     return [
       {
         disabled: false,
-        icon: 'trash',
-        label: 'DELETE',
-        action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
+        icon: 'pencil-alt',
+        label: 'EDIT',
+        action: (id: string) => this.menuServiceCriterionFunctions.editCriterionFilter(id),
       },
       {
         disabled: false,
@@ -33,9 +33,9 @@ export class CriterionMenuItems {
       },
       {
         disabled: false,
-        icon: 'filter',
-        label: 'APPLY_FILTERS',
-        action: (id: string) => this.menuServiceCriterionFunctions.editCriterionFilter(id),
+        icon: 'trash',
+        label: 'DELETE',
+        action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
       },
     ];
   }

@@ -8,7 +8,9 @@
       (click)="menuItemClicked($event, navItem)"
     >
       <fa-icon size="lg" [fixedWidth]="true" [icon]="navItem.icon"></fa-icon>
-      <div *ngIf="isSideMenuExpanded">{{ navItem.translationKey | translate }}</div>
+      <div class="navItem-font" *ngIf="isSideMenuExpanded">
+        {{ navItem.translationKey | translate }}
+      </div>
     </a>
   </ng-container>
 

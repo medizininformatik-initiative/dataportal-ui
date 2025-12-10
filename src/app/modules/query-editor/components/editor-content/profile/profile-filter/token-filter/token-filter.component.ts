@@ -5,6 +5,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
 } from '@angular/core';
@@ -15,13 +16,20 @@ import {
   templateUrl: './token-filter.component.html',
   styleUrls: ['./token-filter.component.scss'],
 })
-export class TokenFilterComponent implements OnInit {
+export class TokenFilterComponent implements OnInit, OnChanges {
   @Input() tokenFilter: ProfileTokenFilter;
   @Output() tokenFilterChanged = new EventEmitter<ProfileTokenFilter>();
-
+  tabChanged = false;
+  selectedConcepts: Concept[] = [];
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnChanges(): void {
+    this.selectedConcepts = this.tokenFilter.getSelectedTokens();
+  }
+
+  ngOnInit(): void {
+    this.selectedConcepts = this.tokenFilter.getSelectedTokens();
+  }
 
   /**
    * Updates the selected concepts in the token filter and emits the updated token filter instance.
@@ -40,5 +48,9 @@ export class TokenFilterComponent implements OnInit {
       this.tokenFilter.getValueSetUrls(),
       concepts
     );
+  }
+
+  public onTabChange(): void {
+    this.tabChanged = !this.tabChanged;
   }
 }

@@ -111,14 +111,18 @@ export class AttributeFiltersBuilder {
    * @returns An instance of QuantityFilter.
    */
   public buildQuantityFilter(
-    allowedUnits?: QuantityUnit[],
-    precision?: number,
+    allowedUnits: QuantityUnit[],
+    precision: number,
     selectedUnit?: QuantityUnit
   ): QuantityNotSet {
     return new QuantityNotSet(allowedUnits, selectedUnit, precision);
   }
 
-  public buildConceptFilter(id: string, allowedConceptUri: string[], selectedConcepts?: Concept[]) {
+  public buildConceptFilter(
+    id: string,
+    allowedConceptUri: string[],
+    selectedConcepts: Concept[] = []
+  ) {
     return new ConceptFilter(id, allowedConceptUri, selectedConcepts);
   }
 
@@ -130,7 +134,7 @@ export class AttributeFiltersBuilder {
   public buildReferenceFilter(
     id: string,
     allowedReferenceUri: string[],
-    selectedReference?: ReferenceCriterion[]
+    selectedReference: ReferenceCriterion[] = []
   ): ReferenceFilter {
     return new ReferenceFilter(id, allowedReferenceUri, selectedReference);
   }

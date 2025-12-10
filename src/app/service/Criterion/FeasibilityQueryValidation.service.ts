@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class FeasibilityQueryValidation {
+export class FeasibilityQueryValidationService {
   constructor(
     private feasibilityQueryProvider: FeasibilityQueryProviderService,
     private criterionValidationManagerService: CriterionValidationManagerService
@@ -19,9 +19,9 @@ export class FeasibilityQueryValidation {
    */
   public getMissingRequiredFilterCriteria(): Observable<string[]> {
     return this.getActiveFeasibilityQuery().pipe(
-      switchMap((feasibilityQuery) => this.criterionValidationManagerService.getMissingRequiredFilterCriteria(
-          feasibilityQuery
-        ))
+      switchMap((feasibilityQuery) =>
+        this.criterionValidationManagerService.getMissingRequiredFilterCriteria(feasibilityQuery)
+      )
     );
   }
 
@@ -73,7 +73,10 @@ export class FeasibilityQueryValidation {
       this.getInvalidCriteria().pipe(map((invalidCriteria) => invalidCriteria.length === 0)),
       this.getIsInclusionSet(),
     ]).pipe(
-      map(([noMissingCriteria, noInvalidCriteria, isInclusionSet]) => noMissingCriteria && noInvalidCriteria && isInclusionSet)
+      map(
+        ([noMissingCriteria, noInvalidCriteria, isInclusionSet]) =>
+          noMissingCriteria && noInvalidCriteria && isInclusionSet
+      )
     );
   }
 

@@ -1,3 +1,18 @@
 .token-filter {
   height: 100%;
 }
+
+.token-filter-container {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+  font-weight: 500;
+  font-size: medium;
+  color: rgba(90, 121, 175, 1);
+}
+.information-icon {
+  margin-right: 8px;
+}

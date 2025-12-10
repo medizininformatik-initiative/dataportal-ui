@@ -3,7 +3,7 @@ import { CodeableConceptResultListEntryData } from '../../Interface/Search/Codea
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
 
 export class CodeableConceptResultListEntry extends AbstractListEntry {
-  private readonly isSelected: boolean;
+  private isSelected: boolean;
   private concept: Concept;
 
   /**
@@ -13,6 +13,10 @@ export class CodeableConceptResultListEntry extends AbstractListEntry {
   constructor(concept: Concept, id: string, isSelected: boolean = false) {
     super(id);
     this.concept = concept;
+    this.isSelected = isSelected;
+  }
+
+  public setIsSelected(isSelected: boolean) {
     this.isSelected = isSelected;
   }
 

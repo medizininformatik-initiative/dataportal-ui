@@ -1,0 +1,205 @@
+.padding-right-1 {
+  padding-right: 1rem;
+}
+
+.search-container {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.filter-container {
+  display: flex;
+  align-content: space-around;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.mat-mdc-icon-button {
+  height: 44px;
+  width: 44px;
+  line-height: unset;
+  color: var(--num-color--primary);
+}
+
+.mat-drawer {
+  width: 50%;
+}
+
+.scrollbar {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.padding-left-2 {
+  padding-left: 2rem;
+}
+
+.cancel-button {
+  background-color: white;
+  height: 4%;
+  align-self: flex-end;
+  border: 0px;
+  text-decoration: underline #5170a8;
+}
+
+.cancel-button:hover {
+  transform: translateY(-3px);
+  color: #5288b7;
+}
+
+.reset-button {
+  background-color: white;
+  box-shadow: none;
+  color: #9bb923;
+  height: 42px;
+  margin-right: 10px;
+  font-size: medium;
+  border: 2px solid rgba(155, 184, 35, 1);
+  align-self: baseline;
+}
+
+.close-icon {
+  font-size: medium;
+  color: #5170a8;
+  padding-left: 10px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.content-height-100 {
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+/* Scrollbar design */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5cacf;
+}
+
+::-webkit-scrollbar-track-piece {
+  color: red;
+}
+
+.drawer-container {
+  height: 100%;
+  background-color: white;
+}
+
+.search-warning {
+  color: red;
+}
+
+.no-results-box {
+  height: 50%;
+  width: 100%;
+  flex: 1;
+}
+
+.icon-design {
+  padding-top: 12px;
+  padding-left: 10px;
+  min-width: 40px;
+  color: #c2c2c2;
+  font-size: medium;
+}
+
+.width-1000 {
+  width: 100%;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  overflow: hidden;
+  height: 100%;
+}
+
+.orginal-item {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.input-field {
+  width: 90%;
+  margin: 0.5em 0;
+}
+
+.table-container {
+  display: flex;
+  overflow: auto;
+  gap: 3rem;
+}
+
+.input-field-area {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Titillium Web', sans-serif;
+
+  width: 100%;
+  height: 100%;
+  padding: 0.65rem 0.9rem;
+
+  border: 1px solid #9ca1a8;
+  border-radius: 8px;
+  resize: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.input-field-area::placeholder {
+  color: #9aa7c3;
+  opacity: 1;
+}
+
+.input-field-area:hover {
+  border-color: #8da4cf;
+}
+
+.input-field-area:focus {
+  outline: none;
+  border-color: #5a79af;
+  box-shadow: 0 0 0 4px rgba(90, 121, 175, 0.25);
+}
+
+.header-container {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: start;
+}
+
+.bulk-search-container {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+}
+
+.inner-tab-group {
+  height: 100%;
+  overflow: auto;
+}
+.table-container {
+  overflow-y: auto;
+}
+::ng-deep .mat-mdc-tab-body-wrapper {
+  height: 100%;
+}

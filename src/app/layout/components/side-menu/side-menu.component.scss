@@ -15,7 +15,7 @@ mat-nav-list button {
 
 /* Icons */
 fa-icon {
-  margin-right: 16px; // snapped 1.3em → 16px (closest multiple of 8)
+  margin-right: 8px; // snapped 1.3em → 16px (closest multiple of 8)
   color: rgba(106, 116, 131, 1);
 }
 
@@ -32,4 +32,11 @@ fa-icon svg {
   width: auto;
   background: transparent !important;
   padding: 0; // remove default padding for clean alignment
+}
+
+.navItem-font {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Titillium Web', sans-serif;
+  color: rgb(106, 116, 131);
 }

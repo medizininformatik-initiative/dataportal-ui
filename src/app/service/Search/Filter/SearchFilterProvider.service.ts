@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class FilterProvider {
-  private CriteriaSearchFiltersSubject = new BehaviorSubject<CriteriaSearchFilter[]>([]);
+  private criteriaSearchFiltersSubject = new BehaviorSubject<CriteriaSearchFilter[]>([]);
 
   /**
    * Gets the current list of CriteriaSearchFilter objects as an Observable.
@@ -15,7 +15,7 @@ export class FilterProvider {
    * @returns An Observable emitting the current list of CriteriaSearchFilter objects.
    */
   public getCriteriaSearchFilters(): Observable<CriteriaSearchFilter[]> {
-    return this.CriteriaSearchFiltersSubject.asObservable();
+    return this.criteriaSearchFiltersSubject.asObservable();
   }
 
   /**
@@ -24,7 +24,7 @@ export class FilterProvider {
    * @param filters An array of CriteriaSearchFilter objects to set.
    */
   public setCriteriaSearchFilters(filters: CriteriaSearchFilter[]): void {
-    this.CriteriaSearchFiltersSubject.next(filters);
+    this.criteriaSearchFiltersSubject.next(filters);
   }
 
   /**
@@ -34,7 +34,7 @@ export class FilterProvider {
    * @returns An array of selected values for the specified filter type, or an empty array if the filter is not found.
    */
   public getSelectedValuesOfType(type: ElasticSearchFilterTypes): string[] {
-    const filters = this.CriteriaSearchFiltersSubject.getValue();
+    const filters = this.criteriaSearchFiltersSubject.getValue();
     const filter = filters.find((f) => f.getName() === type);
     return filter ? filter.getSelectedValues() : [];
   }
@@ -43,20 +43,20 @@ export class FilterProvider {
    * Emits `true` if any filters have selected values, otherwise `false`.
    */
   public filtersNotSet(): Observable<boolean> {
-    return this.CriteriaSearchFiltersSubject.asObservable().pipe(
-      map((filters) => filters.every((filter) => filter.getSelectedValues().length === 0))
-    );
+    return this.criteriaSearchFiltersSubject
+      .asObservable()
+      .pipe(map((filters) => filters.every((filter) => filter.getSelectedValues().length === 0)));
   }
 
   /**
    * Resets all selected values for all filters.
    */
   public resetSelectedValues(): void {
-    const updatedFilters = this.CriteriaSearchFiltersSubject.getValue().map((filter) => {
+    const updatedFilters = this.criteriaSearchFiltersSubject.getValue().map((filter) => {
       filter.setSelectedValues([]);
       return filter;
     });
-    this.CriteriaSearchFiltersSubject.next(updatedFilters);
+    this.criteriaSearchFiltersSubject.next(updatedFilters);
   }
 
   /**
@@ -75,12 +75,12 @@ export class FilterProvider {
    * @param updatedFilter The updated CriteriaSearchFilter object.
    */
   public updateCriteriaSearchFilter(updatedFilter: CriteriaSearchFilter): void {
-    const filters = this.CriteriaSearchFiltersSubject.getValue();
+    const filters = this.criteriaSearchFiltersSubject.getValue();
     const index = filters.findIndex((filter) => filter.getName() === updatedFilter.getName());
 
     if (index !== -1) {
       filters[index] = updatedFilter;
-      this.CriteriaSearchFiltersSubject.next([...filters]);
+      this.criteriaSearchFiltersSubject.next([...filters]);
     }
   }
 
@@ -94,13 +94,13 @@ export class FilterProvider {
     filterType: ElasticSearchFilterTypes,
     selectedValues: string[]
   ): void {
-    const filters = this.CriteriaSearchFiltersSubject.getValue();
+    const filters = this.criteriaSearchFiltersSubject.getValue();
     const filter = filters.find(
       (f) => f.getName() === (filterType.toLocaleLowerCase() as ElasticSearchFilterTypes)
     );
     if (filter) {
       filter.setSelectedValues(selectedValues);
-      this.CriteriaSearchFiltersSubject.next([...filters]);
+      this.criteriaSearchFiltersSubject.next([...filters]);
     }
   }
 }

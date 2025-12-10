@@ -1,5 +1,5 @@
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { FeasibilityQueryValidation } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { map, Observable, Subscription } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import {
@@ -23,21 +23,15 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   @Output()
   scrollClick = new EventEmitter();
 
-  saveDataQueryModalSubscription: Subscription;
-
   isDataSelectionExistent$: Observable<boolean>;
   isCohortExistent$: Observable<boolean>;
 
-  downloadSubscription: Subscription;
-  translatedCRTLDSubscription: Subscription;
-  fileName: string;
-  createDSSubscription: Subscription;
   emailLink: string;
   constructor(
     public elementRef: ElementRef,
     private dataSelectionProviderService: DataSelectionProviderService,
     private navigationHelperService: NavigationHelperService,
-    private feasibilityQueryValidation: FeasibilityQueryValidation,
+    private feasibilityQueryValidation: FeasibilityQueryValidationService,
     private appSettingsProviderService: AppSettingsProviderService
   ) {}
 
@@ -50,11 +44,7 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
     this.emailLink = this.appSettingsProviderService.getEmail();
   }
 
-  ngOnDestroy(): void {
-    this.downloadSubscription?.unsubscribe();
-    this.translatedCRTLDSubscription?.unsubscribe();
-    this.createDSSubscription?.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   public navigateToDataQueryCohortDefinition() {
     this.navigationHelperService.navigateToDataQueryCohortDefinition();

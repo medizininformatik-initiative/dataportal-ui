@@ -11,24 +11,29 @@ export class SearchFilterComponent implements OnInit {
   @Input()
   filter: SearchFilter;
 
+  @Input()
+  multiSelect = true;
+
   @Output()
   selectedFilterChanged = new EventEmitter<SearchFilter>();
 
-  selectedValues: string[];
+  selectedValues: string[] | string;
 
   translatedLabel: { translatedSystem: string; count: number; url: string }[] = [];
   constructor() {}
 
   ngOnInit(): void {
-    this.selectedValues = this.filter.selectedValues;
+    this.selectedValues = this.multiSelect
+      ? this.filter.selectedValues
+      : this.filter.selectedValues[0];
   }
 
   public onSelectionChange(): void {
-    const filterType =
-      ElasticSearchFilterTypes[
-        this.filter.filterType.toUpperCase() as keyof typeof ElasticSearchFilterTypes
-      ];
-    this.filter.selectedValues = this.selectedValues;
+    const normalizedValues = Array.isArray(this.selectedValues)
+      ? this.selectedValues
+      : [this.selectedValues];
+
+    this.filter.selectedValues = normalizedValues;
     this.selectedFilterChanged.emit(this.filter);
   }
 }
