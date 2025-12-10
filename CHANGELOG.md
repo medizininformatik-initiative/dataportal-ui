@@ -1,5 +1,28 @@
 # Changelog
 
+## v6.5.0 (2025-12-10)
+
+### Features
+* Added bulk search functionality for criteria [#460](https://github.com/medizininformatik-initiative/feasibility-gui/issues/460)
+* Added bulk search support for `CodeableConcept` [#461](https://github.com/medizininformatik-initiative/feasibility-gui/issues/461)
+* Introduced explanation tabs providing information about concepts, fields, references, terminology codes, time restrictions and token filters [#495](https://github.com/medizininformatik-initiative/feasibility-gui/issues/495)
+* Snackbar notifications now display across the UI on user interaction [#470](https://github.com/medizininformatik-initiative/feasibility-gui/issues/470), [#476](https://github.com/medizininformatik-initiative/feasibility-gui/issues/476)
+* Updated button naming convention to be action-oriented [#469](https://github.com/medizininformatik-initiative/feasibility-gui/issues/469)
+
+### Changed
+* Redesigned tab component and query editor for improved usability and responsiveness [#388](https://github.com/medizininformatik-initiative/feasibility-gui/issues/388)
+* Added dedicated tab to display and manage selected concepts [#477](https://github.com/medizininformatik-initiative/feasibility-gui/issues/477)
+* Changed repository name from "feasibility-gui" to "dataportal-gui" to reflect broader functionality [#502](https://github.com/medizininformatik-initiative/feasibility-gui/issues/502)
+* Added save, upload, and download functionality to the action bar by default across the UI [#463](https://github.com/medizininformatik-initiative/feasibility-gui/issues/463)
+* Renamed data selection tab names in the query editor view [#501](https://github.com/medizininformatik-initiative/feasibility-gui/issues/501)
+* Refactored the CRTDL translator to allow bulk upload of criteria and codeable concepts [#472](https://github.com/medizininformatik-initiative/feasibility-gui/issues/472)
+
+### Fixed
+* Resolved issue where table elements were unintentionally removed when adding children or parents to the criterion stage [#490](https://github.com/medizininformatik-initiative/feasibility-gui/issues/490)
+* Resolved issue where codes could not be removed from bulk criteria [#503](https://github.com/medizininformatik-initiative/feasibility-gui/issues/503)
+* Fixed display of "add new reference" button in query editor [#500](https://github.com/medizininformatik-initiative/feasibility-gui/issues/500)
+
+
 ## v6.4.0 (2025-11-24)
 
 ### Changed
