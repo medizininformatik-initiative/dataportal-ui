@@ -175,7 +175,6 @@ export class StagedProfileService {
     this.triggerUpdate(profile);
     this.profileProviderService.setProfileById(profile.getId(), profile);
     this.setProfileInDataSelectionProvider(profile);
-    this.snackbarService.displayInfoMessage('EDITOR.CONTENT.PROFILE.SNACKBAR.SAVED');
     return this.setLinkedProfillesInDataSelectionProvdier();
   }
 
