@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
       this.profile = this.userProfileService.getCurrentProfile();
     }
   }
+
   public logout() {
     this.oauthService.logOut();
   }
@@ -51,9 +52,11 @@ export class HeaderComponent implements OnInit {
 
   public displayErrorLog() {
     this.validationResult$ = this.errorLogProvider.getValidationResult$();
-    this.matDialog.open(ErrorLogComponent, {
-      data: this.validationResult$,
-    });
+    if (this.hasErrorsToDisplay()) {
+      this.matDialog.open(ErrorLogComponent, {
+        data: this.validationResult$,
+      });
+    }
   }
 
   public navigateToProposalPortal() {
@@ -63,7 +66,6 @@ export class HeaderComponent implements OnInit {
 
   public hasErrorsToDisplay(): boolean {
     const result = this.errorLogProvider.getCurrentValidationResult();
-    const t = result !== null && result.getErrorCount() > 0;
-    return t;
+    return result !== null && result.getErrorCount() > 0;
   }
 }
