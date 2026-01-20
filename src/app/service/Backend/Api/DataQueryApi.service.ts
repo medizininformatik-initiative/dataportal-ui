@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItemData } from 'src/app/model/Interface/SavedDataQueryListItemData';
+import { ValidationResponseData } from 'src/app/model/Interface/Validation/BackendValidationError';
 
 @Injectable({
   providedIn: 'root',
@@ -74,9 +75,16 @@ export class DataQueryApiService {
     );
   }
 
-  public validateDataQuery(crtdl: CRTDLData): Observable<HttpResponse<AnnotatedCRTDLData>> {
+  public validateDataQuery(crtdl: any): Observable<HttpResponse<ValidationResponseData>> {
+    console.log(DataqueryPaths.VALIDATE);
+    const dataquery = {
+      label: 'test',
+      comment: 'test comment',
+      content: crtdl,
+    };
+    console.log('Dataquery for validation:', dataquery);
     const url = this.backendService.createUrl(DataqueryPaths.VALIDATE);
-    return this.http.post<AnnotatedCRTDLData>(url, crtdl, {
+    return this.http.post<ValidationResponseData>(url, dataquery, {
       headers: this.backendService.getHeaders(),
       observe: 'response',
     });
