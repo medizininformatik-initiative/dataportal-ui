@@ -12,6 +12,10 @@
           <fa-icon class="circle" size="lg" [fixedWidth]="true" [icon]="'info'"></fa-icon>
           {{ 'APPLAYOUT.HEADER.ABOUT' | translate }}
         </mat-option>
+        <mat-option (click)="displayErrorLog()" [disabled]="!hasErrorsToDisplay()">
+          <fa-icon class="circle" size="lg" [fixedWidth]="true" [icon]="'bug'"></fa-icon>
+          {{ 'APPLAYOUT.HEADER.ERROR_LOG.LABEL' | translate }}
+        </mat-option>
         <mat-option (click)="logout()">
           <fa-icon class="circle" size="lg" [fixedWidth]="true" [icon]="'sign-out-alt'"></fa-icon>
           {{ 'APPLAYOUT.HEADER.LOGOUT' | translate }}
