@@ -1,33 +1,77 @@
-<div class="modal-box">
-  <div class="header">UI</div>
-  <div>
-    <span class="label">Version: </span><span>{{ legalVersion }}</span>
+<num-modal-window [displaySaveButtons]="false">
+  <div class="about-modal-header">
+    {{ 'APPLAYOUT.HEADER.ABOUT' | translate }}
   </div>
-  <div>
-    <span class="label">Copyright: </span
-    ><span>{{ legalCopyrightOwner }} @{{ legalCopyrightYear }}</span>
+
+  <div class="about-modal-content">
+    <!--UI-->
+    <div class="info-section">
+      <div class="section-header">{{ 'APPLAYOUT.HEADER.ABOUT_MODAL.UI' | translate }}</div>
+
+      <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION" [value]="legalVersion">
+      </num-info-tile>
+
+      <num-info-tile
+        label="APPLAYOUT.HEADER.ABOUT_MODAL.COPYRIGHT"
+        [value]="legalCopyrightOwner + ' @' + legalCopyrightYear"
+      >
+      </num-info-tile>
+
+      <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.EMAIL">
+        <a [href]="'mailto:' + legalEmail" target="_blank">{{ legalEmail }}</a>
+      </num-info-tile>
+    </div>
+
+    <!--Backend-->
+    <div class="info-section">
+      <div class="section-header">{{ 'APPLAYOUT.HEADER.ABOUT_MODAL.BACKEND' | translate }}</div>
+
+      <num-info-tile
+        label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION"
+        [value]="text?.git?.build?.version"
+      >
+      </num-info-tile>
+
+      <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.BUILD_TIME" [value]="backendBuildTime">
+      </num-info-tile>
+
+      <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.BRANCH" [value]="text?.git?.branch">
+      </num-info-tile>
+
+      <num-info-tile
+        label="APPLAYOUT.HEADER.ABOUT_MODAL.COMMIT"
+        [value]="text?.git?.commit?.id?.abbrev"
+      >
+      </num-info-tile>
+    </div>
+
+    <!--Ontology-->
+    <div class="info-section">
+      <div class="section-header">{{ 'APPLAYOUT.HEADER.ABOUT_MODAL.ONTOLOGY' | translate }}</div>
+
+      <num-info-tile
+        label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION"
+        [value]="text?.terminology?.ontologyTag"
+      >
+      </num-info-tile>
+    </div>
   </div>
-  <div>
-    <span class="label">Email: </span
-    ><a href="{{ 'mailto: ' + legalEmail }}" target="_blank">{{ legalEmail }}</a>
+
+  <!--Buttons-->
+  <div class="action-buttons">
+    <num-button
+      [matTooltip]="'APPLAYOUT.HEADER.ABOUT_MODAL.DOWNLOAD' | translate"
+      type="blue"
+      (click)="downloadAboutInfo()"
+    >
+      {{ 'APPLAYOUT.HEADER.ABOUT_MODAL.DOWNLOAD' | translate }}
+    </num-button>
+    <num-button
+      [matTooltip]="'APPLAYOUT.HEADER.CLOSE' | translate"
+      type="blue"
+      (click)="closeModal()"
+    >
+      {{ 'APPLAYOUT.HEADER.CLOSE' | translate }}
+    </num-button>
   </div>
-  <div class="spacer"></div>
-  <div class="header">Backend</div>
-  <div>
-    <span class="label">Version: </span><span>{{ text?.git?.build?.version }}</span>
-  </div>
-  <div>
-    <span class="label">Build time: </span><span>{{ backendBuildTime }}</span>
-  </div>
-  <div>
-    <span class="label">Branch: </span><span>{{ text?.git?.branch }}</span>
-  </div>
-  <div>
-    <span class="label">Commit: </span><span>{{ text?.git?.commit?.id?.abbrev }}</span>
-  </div>
-  <div class="spacer"></div>
-  <div class="header">Ontology</div>
-  <div>
-    <span class="label">Version: </span><span>{{ text?.terminology?.ontologyTag }}</span>
-  </div>
-</div>
+</num-modal-window>
