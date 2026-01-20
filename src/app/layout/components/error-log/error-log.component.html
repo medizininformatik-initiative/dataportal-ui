@@ -1,0 +1,73 @@
+<num-modal-window [displaySaveButtons]="false">
+  <div class="error-log-header">
+    <span class="icon"></span> {{ 'APPLAYOUT.HEADER.ERROR_LOG.LABEL' | translate }}
+  </div>
+
+  <div class="error-log-content">
+    <div class="error-summary">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DESCRIPTION' | translate }}
+    </div>
+
+    <div class="error-list">
+      <div class="error-item" *ngFor="let error of errors; let i = index">
+        <div class="error-number">{{ i + 1 }}</div>
+        <div class="error-details">
+          <div class="error-location">
+            Location: <code>{{ error.getLocation() }}</code>
+          </div>
+          <div class="error-location">
+            Code: <code>{{ error.getCode() }}</code>
+          </div>
+          <div class="error-location">
+            Details <code>{{ error.getMessage() }}</code>
+          </div>
+          <div class="error-extra" *ngIf="error.getDetails()">
+            Details: {{ error.getDetails() | json }}
+          </div>
+          <div class="error-extra" *ngIf="error.getTermcode()">
+            Termcode: <code>{{ error.getTermcode() | json }}</code>
+          </div>
+          <div class="error-extra" *ngIf="error.getValueSets()">
+            Value Sets: <code>{{ error.getValueSets() | json }}</code>
+          </div>
+          <div class="error-extra" *ngIf="error.getCriteriaSets()">
+            Criteria Sets: <code>{{ error.getCriteriaSets() | json }}</code>
+          </div>
+          <div class="error-extra" *ngIf="error.getQuantityValidationError()">
+            <div>
+              Selected: <code>{{ error.getQuantityValidationError()?.selected }}</code>
+            </div>
+            <div>
+              Allowed: <code>{{ error.getQuantityValidationError()?.allowed | json }}</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="action-buttons">
+    <num-button
+      [matTooltip]="'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DOWNLOAD' | translate"
+      class="download-btn"
+      type="blue"
+      (click)="downloadErrorLog()"
+    >
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DOWNLOAD' | translate }}
+    </num-button>
+    <num-button
+      [matTooltip]="'APPLAYOUT.HEADER.ERROR_LOG.MODAL.CLEAR' | translate"
+      class="clear-btn"
+      type="blue"
+      (click)="clearErrors()"
+    >
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.CLEAR' | translate }}
+    </num-button>
+    <num-button
+      [matTooltip]="'APPLAYOUT.HEADER.CLOSE' | translate"
+      type="blue"
+      (click)="closeModal()"
+    >
+      {{ 'APPLAYOUT.HEADER.CLOSE' | translate }}
+    </num-button>
+  </div>
+</num-modal-window>
