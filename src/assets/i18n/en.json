@@ -2,6 +2,19 @@
   "APPLAYOUT": {
     "HEADER": {
       "ABOUT": "About the Portal",
+      "ABOUT_MODAL": {
+        "BACKEND": "Backend",
+        "BRANCH": "Branch",
+        "BUILD_TIME": "Build time",
+        "COMMIT": "Commit",
+        "COPYRIGHT": "Copyright",
+        "DOWNLOAD": "Download Information",
+        "EMAIL": "Email",
+        "ONTOLOGY": "Ontology",
+        "UI": "UI",
+        "VERSION": "Version"
+      },
+      "ERROR_LOG": "Error Log",
       "LOGOUT": "Log Out",
       "PROPOSAL_PORTAL": "Proposal Portal"
     },
@@ -310,6 +323,7 @@
       "TAB_TITLE": "What are References?",
       "TITLE": "References"
     },
+    "TAB_LABEL": "Information",
     "TERMCODE": {
       "DESCRIPTION": "Term codes are standardized codes from terminology systems that represent specific medical concepts. Examples include ICD-10 codes for diagnoses, LOINC codes for laboratory tests, and SNOMED CT codes for clinical findings. Each term code uniquely identifies a medical concept and ensures consistent communication across healthcare systems.",
       "MULTIPLE_DESCRIPTION": "When an element has multiple term codes, it means that the element can be represented by different coding standards or that there are equivalent codes across different terminology systems. For example, a diagnosis might have both an ICD-10 code and a SNOMED CT code that represent the same clinical concept. This allows flexibility in data exchange and ensures interoperability across different healthcare systems and organizations.",
@@ -322,8 +336,7 @@
     "TOKEN_FILTER": {
       "DESCRIPTION": "Token filters enable the selection of standardized medical terms (concepts) from terminology systems such as ICD-10, SNOMED CT, or LOINC. These codes describe diagnoses, findings, or laboratory values in a clear and machine-readable manner. You can search for individual codes, add multiple codes simultaneously (bulk search), or select from predefined value sets. This makes search queries precise and interoperable.",
       "TITLE": "Token Filter (Concepts)"
-    },
-    "TAB_LABEL": "Information"
+    }
   },
   "LANGUAGE": {
     "ENGLISH": "English",
