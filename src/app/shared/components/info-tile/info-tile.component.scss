@@ -1,0 +1,41 @@
+.info-item {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background-color: rgba(90, 121, 175, 0.1);
+  border-left: 4px solid #9bb823;
+  border-radius: 4px;
+  align-items: center;
+}
+
+.info-label {
+  flex-shrink: 0;
+  min-width: 100px;
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.info-value {
+  flex: 1;
+  color: #212529;
+  font-size: 0.9rem;
+
+  code {
+    background: #e9ecef;
+    padding: 0.125rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    color: #495057;
+  }
+
+  a {
+    color: #5a79af;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
