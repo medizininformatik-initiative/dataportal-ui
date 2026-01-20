@@ -8,17 +8,17 @@
     <div class="info-section">
       <div class="section-header">{{ 'APPLAYOUT.HEADER.ABOUT_MODAL.UI' | translate }}</div>
 
-      <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION" [value]="legalVersion">
+      <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION" [value]="aboutInfo?.ui?.version">
       </num-info-tile>
 
       <num-info-tile
         label="APPLAYOUT.HEADER.ABOUT_MODAL.COPYRIGHT"
-        [value]="legalCopyrightOwner + ' @' + legalCopyrightYear"
+        [value]="aboutInfo?.ui?.copyright"
       >
       </num-info-tile>
 
       <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.EMAIL">
-        <a [href]="'mailto:' + legalEmail" target="_blank">{{ legalEmail }}</a>
+        <a [href]="'mailto:' + aboutInfo?.ui?.email" target="_blank">{{ aboutInfo?.ui?.email }}</a>
       </num-info-tile>
     </div>
 
@@ -28,19 +28,25 @@
 
       <num-info-tile
         label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION"
-        [value]="text?.git?.build?.version"
+        [value]="aboutInfo?.backend?.version"
       >
       </num-info-tile>
 
-      <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.BUILD_TIME" [value]="backendBuildTime">
+      <num-info-tile
+        label="APPLAYOUT.HEADER.ABOUT_MODAL.BUILD_TIME"
+        [value]="aboutInfo?.backend?.buildTime"
+      >
       </num-info-tile>
 
-      <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.BRANCH" [value]="text?.git?.branch">
+      <num-info-tile
+        label="APPLAYOUT.HEADER.ABOUT_MODAL.BRANCH"
+        [value]="aboutInfo?.backend?.branch"
+      >
       </num-info-tile>
 
       <num-info-tile
         label="APPLAYOUT.HEADER.ABOUT_MODAL.COMMIT"
-        [value]="text?.git?.commit?.id?.abbrev"
+        [value]="aboutInfo?.backend?.commit"
       >
       </num-info-tile>
     </div>
@@ -51,7 +57,7 @@
 
       <num-info-tile
         label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION"
-        [value]="text?.terminology?.ontologyTag"
+        [value]="aboutInfo?.ontology?.version"
       >
       </num-info-tile>
     </div>
