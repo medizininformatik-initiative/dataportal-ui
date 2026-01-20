@@ -1,36 +1,32 @@
 import { Injectable } from '@angular/core';
 import { FileSaverService } from 'ngx-filesaver';
 import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
+import { AbstractDownloadService } from './AbstractDownload.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DownloadAnnotatedCRDTLService {
-  constructor(private fileSaverService: FileSaverService) {}
+export class DownloadAnnotatedCRDTLService extends AbstractDownloadService {
+  constructor(private fileSaverService: FileSaverService) {
+    super();
+  }
 
-  public downloadAnnoatedCRDTLAsFile(
+  /**
+   * Downloads annotated CRDTL as a JSON file.
+   * @param annotatedStructuredQuery - The annotated query to download
+   * @param filename - Optional custom filename (without extension)
+   */
+  public download(filename?: string): void {
+    // Not implemented - requires annotatedStructuredQuery parameter
+    throw new Error('Use downloadAnnotatedCRDTLAsFile instead');
+  }
+
+  public downloadAnnotatedCRDTLAsFile(
     annotatedStructuredQuery: AnnotatedStructuredQuery,
     filename?: string
-  ) {
-    const fileData = this.createFileData(annotatedStructuredQuery);
-    this.fileSaverService.save(fileData, this.createFilename(filename) + '.json');
-  }
-
-  private createFilename(fileName?: string): string {
-    if (fileName?.length > 0) {
-      return fileName;
-    } else {
-      const filename =
-        'CCDL_' +
-        new Date().toLocaleDateString('de-DE') +
-        '_' +
-        new Date().toLocaleTimeString('de-DE');
-      return filename;
-    }
-  }
-
-  private createFileData(annotatedStructuredQuery: AnnotatedStructuredQuery) {
-    const queryString = JSON.stringify(annotatedStructuredQuery);
-    return new Blob([queryString], { type: 'text/plain;charset=utf-8' });
+  ): void {
+    const finalFilename = super.createFilename(filename, 'CCDL');
+    const blob = super.createTextBlob(JSON.stringify(annotatedStructuredQuery));
+    this.fileSaverService.save(blob, `${finalFilename}.json`);
   }
 }
