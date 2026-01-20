@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '../shared/components/shared-components.module';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { ErrorLogComponent } from './components/error-log/error-log.component';
 
 const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
 
@@ -23,6 +24,7 @@ const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
     SideMenuComponent,
     LanguageComponent,
     AboutModalComponent,
+    ErrorLogComponent,
   ],
   imports: [
     ...SHARED_MODULES,
