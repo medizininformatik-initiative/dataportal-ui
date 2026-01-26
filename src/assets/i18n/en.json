@@ -14,7 +14,27 @@
         "UI": "UI",
         "VERSION": "Version"
       },
-      "ERROR_LOG": "Error Log",
+      "CLOSE": "Close",
+      "ERROR_LOG": {
+        "LABEL": "Error Log",
+        "MODAL": {
+          "CLEAR": "Clear Error Log",
+          "DESCRIPTION": "The following validation issues were found:",
+          "DOWNLOAD": "Download Error Log",
+          "HEADER": "Error Log",
+          "ITEM": {
+            "ALLOWED": "Allowed:",
+            "CODE": "Code:",
+            "CRITERIA_SETS": "Criteria Sets:",
+            "DETAILS": "Details:",
+            "LOCATION": "Location:",
+            "MESSAGE": "Message:",
+            "SELECTED": "Selected:",
+            "TERMCODE": "Termcode:",
+            "VALUE_SETS": "Value Sets:"
+          }
+        }
+      },
       "LOGOUT": "Log Out",
       "PROPOSAL_PORTAL": "Proposal Portal"
     },
@@ -497,5 +517,24 @@
       "RESULT": "Feasibility Query - Result",
       "SEARCH": "Feasibility Query - Search"
     }
+  },
+  "VALIDATION": {
+    "10001": "Context missing.",
+    "20001": "The combination of context and termcode(s) is not found.",
+    "20002": "The termcode does not exist in the system.",
+    "20003": "The TimeRestriction is invalid. beforeDate must not be before afterDate.",
+    "20004": "The selected unit is invalid.",
+    "20005": "The selected value is not inside the defined limits.",
+    "20006": "The selected code is not part of the referenced criteria sets.",
+    "20007": "The selected code is not part of the referenced value sets.",
+    "50001": "UiProfile not found.",
+    "1000001": "Code filter not found in value set.",
+    "2000001": "Attribute group groupReference not found.",
+    "2000002": "attributeRef not found in ontology profile of attribute group.",
+    "2000003": "Code filter not found in value set.",
+    "2000004": "Code filter not found in value set.",
+    "2000005": "Linked group missing for attribute of type reference.",
+    "2000006": "Linked group not found in CRTDL.",
+    "00001": "Could not process JSON."
   }
 }

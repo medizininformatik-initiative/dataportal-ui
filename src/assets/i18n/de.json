@@ -1,7 +1,6 @@
 {
   "APPLAYOUT": {
     "HEADER": {
-      "CLOSE": "Schließen",
       "ABOUT": "Über das Portal",
       "ABOUT_MODAL": {
         "BACKEND": "Backend",
@@ -15,13 +14,25 @@
         "UI": "UI",
         "VERSION": "Version"
       },
+      "CLOSE": "Schließen",
       "ERROR_LOG": {
         "LABEL": "Fehlerprotokoll",
         "MODAL": {
           "CLEAR": "Fehlerprotokoll löschen",
           "DESCRIPTION": "Folgende Validierungsprobleme wurden gefunden:",
           "DOWNLOAD": "Fehlerprotokoll herunterladen",
-          "HEADER": "Fehlerprotokoll"
+          "HEADER": "Fehlerprotokoll",
+          "ITEM": {
+            "ALLOWED": "Erlaubt:",
+            "CODE": "Code:",
+            "CRITERIA_SETS": "Criteria Sets:",
+            "DETAILS": "Details:",
+            "LOCATION": "Ort:",
+            "MESSAGE": "Nachricht:",
+            "SELECTED": "Ausgewählt:",
+            "TERMCODE": "Termcode:",
+            "VALUE_SETS": "Value Sets:"
+          }
         }
       },
       "LOGOUT": "Abmelden",
@@ -489,7 +500,8 @@
   },
   "SNACKBAR": {
     "ERROR": {
-      "GENERIC": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+      "GENERIC": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "UPLOAD": "Fehler beim Hochladen der Datendefinition. Bitte überprüfen Sie das Fehlerprotokoll in der Kopfzeile für weitere Informationen."
     },
     "SUCCESS": {
       "DOWNLOAD": "Datenanfrage wurde heruntergeladen.",
@@ -510,5 +522,24 @@
       "RESULT": "Machbarkeitsabfrage - Ergebnis",
       "SEARCH": "Machbarkeitsabfrage - Suche"
     }
+  },
+  "VALIDATION": {
+    "10001": "Kontext fehlt.",
+    "20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden.",
+    "20002": "Der Termcode existiert nicht im System.",
+    "20003": "Die Zeitbeschränkung ist ungültig. beforeDate darf nicht vor afterDate liegen.",
+    "20004": "Die ausgewählte Einheit ist ungültig.",
+    "20005": "Der ausgewählte Wert liegt nicht innerhalb der definierten Grenzen.",
+    "20006": "Der ausgewählte Code ist nicht Teil der referenzierten criteria sets.",
+    "20007": "Der ausgewählte Code ist nicht Teil der referenzierten value sets.",
+    "50001": "UiProfil wurde nicht gefunden.",
+    "1000001": "Code-Filter wurde im value set nicht gefunden.",
+    "2000001": "Attributgruppe mit groupReference wurde nicht gefunden.",
+    "2000002": "attributeRef wurde im Ontologieprofil der Attributgruppe nicht gefunden.",
+    "2000003": "Code-Filter wurde im value set nicht gefunden.",
+    "2000004": "Code-Filter wurde im value set nicht gefunden.",
+    "2000005": "Verknüpfte Gruppe fehlt für Attribut vom Typ Referenz.",
+    "2000006": "Verknüpfte Gruppe wurde in CRTDL nicht gefunden.",
+    "00001": "JSON konnte nicht verarbeitet werden."
   }
 }
