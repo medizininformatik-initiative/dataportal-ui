@@ -1,4 +1,4 @@
-import { TerminologyCodeData } from '../TerminologyCodeData';
+import { TerminologyCodeData } from '../../../model/Interface/TerminologyCodeData';
 
 /**
  * Represents the value object of a validation error from the backend.
