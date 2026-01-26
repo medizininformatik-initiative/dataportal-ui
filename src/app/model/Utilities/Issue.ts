@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { IssueData } from '../Interface/IssueData'
+import { IssueData } from '../../core/model/Feasibility/IssueData'
 
 export class Issue {
   private message: string
