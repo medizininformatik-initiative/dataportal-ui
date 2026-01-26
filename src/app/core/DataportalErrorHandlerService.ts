@@ -1,15 +1,10 @@
-import { ErrorHandler, Injectable, NgZone } from '@angular/core';
-import { SnackbarHelperService } from '../service/SnackbarHelper.service';
-import { ErrorDisplayService } from '../shared/service/ErrorDisplay/error-display.service';
 import { DataportalErrorPayloadType } from './model/DataportalErrorPayloadType';
+import { ErrorDisplayService } from '../shared/service/ErrorDisplay/error-display.service';
+import { ErrorHandler, Injectable, NgZone } from '@angular/core';
 
 @Injectable()
 export class DataportalErrorHandlerService implements ErrorHandler {
-  constructor(
-    private zone: NgZone,
-    private snackBarService: SnackbarHelperService,
-    private errorDisplayService: ErrorDisplayService
-  ) {}
+  constructor(private zone: NgZone, private errorDisplayService: ErrorDisplayService) {}
 
   public handleError(error: unknown): void {
     this.zone.run(() => {
