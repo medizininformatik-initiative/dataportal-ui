@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class InfoTileComponent implements OnInit {
   @Input() value = '';
   @Input() label: string;
+  @Input() color: 'default' | 'red' = 'default';
 
   constructor() {}
 
