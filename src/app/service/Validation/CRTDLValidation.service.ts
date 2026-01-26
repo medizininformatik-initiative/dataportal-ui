@@ -1,14 +1,18 @@
-import { ValidationResponseData } from 'src/app/model/Interface/Validation/BackendValidationError';
 import { catchError, map } from 'rxjs/operators';
-import { DataQueryApiService } from '../Backend/Api/DataQueryApi.service';
-import { ErrorLogProviderService } from './ErrorLogProvider.service';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
+import { DataportalErrorType } from 'src/app/core/model/DataportalErrorTypes';
 import { ErrorLog } from 'src/app/model/Validation/ErrorLog';
-import { ValidationError } from 'src/app/model/Validation/ValidationError';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { ErrorLogProviderService } from './ErrorLogProvider.service';
+import { Injectable } from '@angular/core';
+import { Observable, of, throwError } from 'rxjs';
 import { QuantityValidationError } from 'src/app/model/Validation/QuantityValidationError';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { ValidationApiService } from '../Backend/Api/ValidationApi.service';
+import { ValidationError } from 'src/app/model/Validation/ValidationError';
+import { ValidationResponseData } from 'src/app/core/model/Validation/ValidationResponseData';
+import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorLogModalComponent } from 'src/app/layout/components/error-log/error-log-modal.component';
 
 const VALIDATION_STATUS = {
   SUCCESS: 'validation_success',
@@ -23,38 +27,40 @@ const NUMERIC_SEGMENT = /^\d+$/;
 })
 export class CRTDLValidationService {
   constructor(
-    private readonly dataQueryApiService: DataQueryApiService,
-    private readonly errorLogProvider: ErrorLogProviderService
+    private readonly validationApiService: ValidationApiService,
+    private readonly errorLogProvider: ErrorLogProviderService,
+    private matDialog: MatDialog
   ) {}
 
-  public validateCRTDL(crtdl: unknown): any {
-    return this.dataQueryApiService.validateDataQuery(crtdl).pipe(
-      map((validationReport: HttpResponse<ValidationResponseData>) => {
-        console.log('Validation report received:', validationReport);
-      }),
-      catchError((error: HttpErrorResponse) => this.handleValidationError(error))
+  public validate(crtdl: CRTDLData): Observable<boolean> {
+    return this.validationApiService.validateCRTDL(crtdl).pipe(
+      map(() => true),
+      catchError((error: DataportalErrorData) => this.handleValidationError(error))
     );
   }
 
-  private handleValidationError(error: HttpErrorResponse): Observable<ValidationResponseData> {
-    if (Array.isArray(error.error)) {
-      const errorLog = this.buildErrorLog(error.error);
+  private handleValidationError(error: DataportalErrorData): Observable<boolean> {
+    if (error.type === 'VALIDATION_ERROR') {
+      const payload = error.payload as ValidationResponseData[];
+      const errorLog = this.buildErrorLog(payload);
       this.errorLogProvider.setValidationResult(errorLog);
-      return throwError(() => errorLog);
+      this.matDialog.open(ErrorLogModalComponent, {
+        data: errorLog,
+      });
+      return of(false);
     }
+    return throwError(() => error);
   }
 
   public buildErrorLog(errors: ValidationResponseData[]): ErrorLog {
     const validationErrors: ValidationError[] = errors.map(
       this.transformToValidationError.bind(this)
     );
-    console.log('Transformed validation errors:', validationErrors);
     return new ErrorLog(VALIDATION_STATUS.FAILED, validationErrors);
   }
 
   private transformToValidationError(error: ValidationResponseData): ValidationError {
     const location = this.pathToLocation(error.path);
-    console.log(error.value.termcode);
     const termcode = error.value.termcode
       ? TerminologyCode.fromJson(error.value.termcode)
       : undefined;
