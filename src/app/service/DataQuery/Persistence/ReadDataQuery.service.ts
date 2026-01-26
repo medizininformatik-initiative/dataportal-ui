@@ -9,6 +9,7 @@ import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQu
 import { SavedDataQueryListItemData } from 'src/app/model/Interface/SavedDataQueryListItemData';
 import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTile/SavedFeasibilityQueryAdapter';
 import { TypeAssertion } from '../../TypeGuard/TypeAssersations';
+import { CRTDLValidationService } from '../../Validation/CRTDLValidation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ import { TypeAssertion } from '../../TypeGuard/TypeAssersations';
 export class ReadDataQueryService {
   constructor(
     private dataQueryApiService: DataQueryApiService,
-    private crtdl2UIModelService: CRTDL2UIModelService
+    private crtdl2UIModelService: CRTDL2UIModelService,
+    private validationService: CRTDLValidationService
   ) {}
 
   public readSavedQueries(): Observable<InterfaceSavedQueryTile[]> {
@@ -49,6 +51,7 @@ export class ReadDataQueryService {
       switchMap((data: SavedDataQueryData) => {
         try {
           TypeAssertion.assertSavedDataQueryData(data);
+          this.validationService.validate(data.content);
           return this.transformDataQuery(data);
         } catch (error) {
           console.error(error);
@@ -60,7 +63,7 @@ export class ReadDataQueryService {
 
   private transformDataQuery(data: SavedDataQueryData): Observable<SavedDataQuery> {
     return this.crtdl2UIModelService
-      .createCRDTLFromJson(data.content)
+      .createCRTDLFromJson(data.content)
       .pipe(map((uiCRTDL) => SavedDataQuery.fromJson(data, uiCRTDL)));
   }
 }
