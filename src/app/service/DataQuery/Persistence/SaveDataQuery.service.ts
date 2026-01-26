@@ -1,4 +1,4 @@
-import { CreateCRTDLService } from '../../Translator/CRTDL/CreateCRDTL.service';
+import { CreateCRTDLService } from '../../Translator/CRTDL/CreateCRTDL.service';
 import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service';
 import { Injectable } from '@angular/core';
