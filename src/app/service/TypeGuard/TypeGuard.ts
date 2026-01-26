@@ -17,7 +17,7 @@ import { CRTDLData } from '../../model/Interface/CRTDLData';
 import { DataExtractionData } from '../../model/Interface/DataExtractionData';
 import { DisplayData } from '../../model/Interface/DisplayData';
 import { FilterData } from '../../model/Interface/FilterData';
-import { IssueData } from '../../model/Interface/IssueData';
+import { IssueData } from '../../core/model/Feasibility/IssueData';
 import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
 import { QuantityUnitData } from '../../model/Interface/Unit';
 import { QueryResultData } from '../../model/Interface/QueryResultData';

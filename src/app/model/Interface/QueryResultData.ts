@@ -1,4 +1,4 @@
-import { IssueData } from '../Interface/IssueData';
+import { IssueData } from '../../core/model/Feasibility/IssueData';
 import { QueryResultLineData } from './QueryResultLineData';
 
 export interface QueryResultData {
