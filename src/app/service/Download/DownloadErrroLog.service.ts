@@ -1,12 +1,16 @@
-import { Injectable } from '@angular/core';
-import { ErrorLogProviderService } from '../Validation/ErrorLogProvider.service';
+import { AboutInfoBuilderService } from '../AboutInfo/AboutInfoBuilder.service';
 import { AbstractDownloadService } from './AbstractDownload.service';
+import { ErrorLogProviderService } from '../Validation/ErrorLogProvider.service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DownloadErrorLogService extends AbstractDownloadService {
-  constructor(private readonly errorLogProvider: ErrorLogProviderService) {
+  constructor(
+    private readonly aboutInfoBuilder: AboutInfoBuilderService,
+    private readonly errorLogProvider: ErrorLogProviderService
+  ) {
     super();
   }
 
@@ -35,6 +39,7 @@ export class DownloadErrorLogService extends AbstractDownloadService {
       status: errorLog.getStatus(),
       totalErrors: errorLog.getErrorCount(),
       errors,
+      dataportal: this.aboutInfoBuilder.buildAboutInfo(),
     };
 
     const finalFilename = this.createFilename(filename, 'validation-errors', 'iso');
