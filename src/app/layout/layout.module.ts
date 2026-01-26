@@ -2,6 +2,10 @@ import { AboutModalComponent } from './components/about-modal/about-modal.compon
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { CommonModule } from '@angular/common';
 import { DirectivesModule } from '../shared/directives/directives.module';
+import { ErrorLogModalComponent } from './components/error-log/error-log-modal.component';
+import { ErrorLogHeaderComponent } from './components/error-log/error-log-header/error-log-header.component';
+import { ErrorLogItemComponent } from './components/error-log/error-log-item/error-log-item.component';
+import { ErrorLogActionsComponent } from './components/error-log/error-log-actions/error-log-actions.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FONT_AWESOME_ICONS } from './font-awesome-icons';
@@ -13,7 +17,6 @@ import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '../shared/components/shared-components.module';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { ErrorLogComponent } from './components/error-log/error-log.component';
 
 const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
 
@@ -24,7 +27,10 @@ const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
     SideMenuComponent,
     LanguageComponent,
     AboutModalComponent,
-    ErrorLogComponent,
+    ErrorLogModalComponent,
+    ErrorLogHeaderComponent,
+    ErrorLogItemComponent,
+    ErrorLogActionsComponent,
   ],
   imports: [
     ...SHARED_MODULES,

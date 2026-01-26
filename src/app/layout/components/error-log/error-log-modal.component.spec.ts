@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ErroLogComponent } from './error-log.component';
+import { ErroLogComponent } from './error-log-modal.component';
 
 describe('ErroLogComponent', () => {
   let component: ErroLogComponent;

@@ -1,0 +1,21 @@
+.error-log-content {
+  background: white;
+  padding: 1.5rem 0;
+  margin: 1rem;
+  flex: 1;
+  overflow: auto;
+}
+
+.error-summary {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  border-radius: 4px;
+}
+
+.error-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

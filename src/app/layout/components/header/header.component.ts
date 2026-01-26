@@ -2,7 +2,7 @@ import { AboutModalComponent } from '../about-modal/about-modal.component';
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 import { Component, OnInit } from '@angular/core';
 import { ErrorLog } from 'src/app/model/Validation/ErrorLog';
-import { ErrorLogComponent } from '../error-log/error-log.component';
+import { ErrorLogModalComponent } from '../error-log/error-log-modal.component';
 import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,6 +22,8 @@ export class HeaderComponent implements OnInit {
   urlAlt: string;
   proposalPortalLink: string;
   validationResult$: Observable<ErrorLog>;
+  imagePath = 'assets/img/FDPG-Logo.svg';
+  errorCount = 0;
 
   constructor(
     private oauthService: OAuthService,
@@ -53,7 +55,7 @@ export class HeaderComponent implements OnInit {
   public displayErrorLog() {
     this.validationResult$ = this.errorLogProvider.getValidationResult$();
     if (this.hasErrorsToDisplay()) {
-      this.matDialog.open(ErrorLogComponent, {
+      this.matDialog.open(ErrorLogModalComponent, {
         data: this.validationResult$,
       });
     }

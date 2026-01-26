@@ -1,0 +1,44 @@
+<div class="error-item">
+  <div class="error-details">
+    <div class="error-location">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.LOCATION' | translate }}
+      <code>{{ error.getLocation() }}</code>
+    </div>
+    <div class="error-location">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.CODE' | translate }}
+      <code>{{ error.getCode() }}</code>
+    </div>
+    <div class="error-location">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MESSAGE' | translate }}
+      <code>{{ error.getMessage() }}</code>
+    </div>
+    <div class="error-extra">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
+      <code>
+        {{ 'VALIDATION.' + code | translate }}
+      </code>
+    </div>
+    <div class="error-extra" *ngIf="error.getTermcode()">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.TERMCODE' | translate }}
+      <code>{{ error.getTermcode() | json }}</code>
+    </div>
+    <div class="error-extra" *ngIf="error.getValueSets()">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.VALUE_SETS' | translate }}
+      <code>{{ error.getValueSets() | json }}</code>
+    </div>
+    <div class="error-extra" *ngIf="error.getCriteriaSets()">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.CRITERIA_SETS' | translate }}
+      <code>{{ error.getCriteriaSets() | json }}</code>
+    </div>
+    <div class="error-extra" *ngIf="error.getQuantityValidationError()">
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.SELECTED' | translate }}
+        <code>{{ error.getQuantityValidationError()?.getSelected() }}</code>
+      </div>
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.ALLOWED' | translate }}
+        <code>{{ error.getQuantityValidationError()?.getAllowed() | json }}</code>
+      </div>
+    </div>
+  </div>
+</div>
