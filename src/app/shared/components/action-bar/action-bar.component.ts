@@ -1,11 +1,10 @@
-import { CCDLUploadService } from 'src/app/service/Upload/CCDLUpload.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component';
 import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
-import { SnackbarHelperService } from 'src/app/service/SnackbarHelper.service';
 import { map, Observable, Subscription } from 'rxjs';
+import { UploadService } from 'src/app/service/Upload/Upload.service';
 
 @Component({
   selector: 'num-action-bar',
@@ -25,8 +24,7 @@ export class ActionBarComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private saveDataQueryModalService: SaveDataQueryModalService,
-    private snackbarHelperService: SnackbarHelperService,
-    private ccdlUploadService: CCDLUploadService,
+    private uploadService: UploadService,
     private feasibilityQueryValidationService: FeasibilityQueryValidationService
   ) {}
 
@@ -36,7 +34,7 @@ export class ActionBarComponent implements OnInit {
 
   public upload(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];
-    this.ccdlUploadService.uploadCRTDL(file);
+    this.uploadService.uploadCRTDL(file);
   }
 
   private canDownload(): void {
@@ -45,7 +43,7 @@ export class ActionBarComponent implements OnInit {
       .pipe(map((isValid) => isValid && this.showDownload));
   }
 
-  public downloadCRDTL(): void {
+  public downloadCRTDL(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     this.downloadSubscription?.unsubscribe();

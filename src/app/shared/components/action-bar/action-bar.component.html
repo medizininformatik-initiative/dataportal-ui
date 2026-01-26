@@ -25,7 +25,7 @@
 
   <button
     *ngIf="showDownload"
-    (click)="downloadCRDTL()"
+    (click)="downloadCRTDL()"
     [matTooltip]="
       (downloadAllowed$ | async)
         ? ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate)

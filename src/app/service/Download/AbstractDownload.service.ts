@@ -17,7 +17,7 @@ export abstract class AbstractDownloadService {
    * Generates a filename with timestamp.
    * If a custom filename is provided, returns it; otherwise generates a default filename.
    * @param customFilename - Optional custom filename
-   * @param prefix - Prefix for the default filename (e.g., 'CRDTL', 'validation-errors')
+   * @param prefix - Prefix for the default filename (e.g., 'CRTDL', 'validation-errors')
    * @param locale - Locale for date formatting (default: 'de-DE')
    * @returns The filename without extension
    * @protected

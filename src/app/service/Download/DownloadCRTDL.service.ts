@@ -1,11 +1,11 @@
 import { AbstractDownloadService } from './AbstractDownload.service';
-import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRDTL.service';
+import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRTDL.service';
 import { FileSaverService } from 'ngx-filesaver';
 import { Injectable } from '@angular/core';
 
 /**
- * Service for downloading CRDTL (Common Research Data Transfer Language) files.
- * Handles creation and file saving of CRDTL data extraction definitions.
+ * Service for downloading CRTDL (Common Research Data Transfer Language) files.
+ * Handles creation and file saving of CRTDL data extraction definitions.
  */
 @Injectable({
   providedIn: 'root',

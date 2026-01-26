@@ -1,14 +1,13 @@
+import { ActiveDataSelectionService } from '../../Provider/ActiveDataSelection.service';
+import { combineLatest, map, Observable, of } from 'rxjs';
 import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
+import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
 import { DataSelection2DataExtraction } from './DataSelection2DataExtraction.service';
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
-import { combineLatest, map, Observable, of } from 'rxjs';
-import { UIQuery2StructuredQueryService } from '../StructureQuery/UIQuery2StructuredQuery.service';
 import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction';
-import { ActiveDataSelectionService } from '../../Provider/ActiveDataSelection.service';
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { UIQuery2StructuredQueryService } from '../StructureQuery/UIQuery2StructuredQuery.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +18,7 @@ export class CreateCRTDLService {
     private feasibilityQueryProvider: FeasibilityQueryProviderService,
     private uiQueryTranslator: UIQuery2StructuredQueryService,
     private dataSelectionProvider: DataSelectionProviderService,
-    private activeDataSelectionService: ActiveDataSelectionService,
-    private snackBarService: SnackbarService
+    private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
   public createCRTDLForSave(getFeasibility: boolean, getDataSelection: boolean): Observable<CRTDL> {
@@ -29,33 +27,29 @@ export class CreateCRTDLService {
 
     if (getFeasibility && getDataSelection) {
       return combineLatest([structuredQuery$, dataExtraction$]).pipe(
-        map(([structuredQuery, dataExtraction]) => this.buildCRDTL(structuredQuery, dataExtraction))
+        map(([structuredQuery, dataExtraction]) => this.buildCRTDL(structuredQuery, dataExtraction))
       );
     }
     if (getDataSelection) {
-      return dataExtraction$.pipe(map((dataExtraction) => this.buildCRDTL(null, dataExtraction)));
+      return dataExtraction$.pipe(map((dataExtraction) => this.buildCRTDL(null, dataExtraction)));
     }
     if (getFeasibility) {
-      return structuredQuery$.pipe(map((structuredQuery) => this.buildCRDTL(structuredQuery, null)));
+      return structuredQuery$.pipe(map((structuredQuery) => this.buildCRTDL(structuredQuery, null)));
     }
-    return of(this.buildCRDTL(null, null));
+    return of(this.buildCRTDL(null, null));
   }
 
   public createCRTDL(): Observable<CRTDL> {
     return combineLatest([this.getStructuredQuery(), this.getDataExtraction()]).pipe(
       map(([structuredQuery, dataExtraction]) => {
         if (structuredQuery.getInclusionCriteria()?.length > 0) {
-          return this.buildCRDTL(structuredQuery, dataExtraction);
-        } else {
-          this.snackBarService.displayErrorMessageWithNoCode(
-            'Keine Kohorte definiert, download nicht möglich'
-          );
+          return this.buildCRTDL(structuredQuery, dataExtraction);
         }
       })
     );
   }
 
-  public buildCRDTL(structuredQuery: StructuredQuery, dataExtraction: DataExtraction): CRTDL {
+  public buildCRTDL(structuredQuery: StructuredQuery, dataExtraction: DataExtraction): CRTDL {
     return new CRTDL(structuredQuery, dataExtraction);
   }
 
