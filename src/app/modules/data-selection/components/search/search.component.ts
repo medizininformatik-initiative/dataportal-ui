@@ -36,7 +36,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   @Output() scrollClick = new EventEmitter();
   trees: TreeNode[];
 
-  crdtlSubscription: Subscription;
+  crtdlSubscription: Subscription;
 
   dataSelectionProfileSubscription: Subscription;
 
@@ -92,7 +92,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   }
 
   ngOnDestroy() {
-    this.crdtlSubscription?.unsubscribe();
+    this.crtdlSubscription?.unsubscribe();
     this.dataSelectionProfileSubscription?.unsubscribe();
     this.dataSelectionProfileTreeSubscription?.unsubscribe();
   }
