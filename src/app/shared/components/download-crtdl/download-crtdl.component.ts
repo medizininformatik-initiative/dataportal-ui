@@ -1,6 +1,6 @@
 import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { Component, Inject } from '@angular/core';
-import { DownloadCRTDLService } from 'src/app/service/Download/DownloadCRDTL.service';
+import { DownloadCRTDLService } from 'src/app/service/Download/DownloadCRTDL.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SaveFileDataModal } from '../../models/SaveDataModal/SaveFileDataModal';
 import { SaveQueryModalComponent } from 'src/app/modules/feasibility-query/components/result/save-dialog/save-dialog.component';
