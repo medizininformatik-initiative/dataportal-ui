@@ -1,4 +1,3 @@
-import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery';
 import { combineLatest, map, Observable, of, take, tap } from 'rxjs';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service';
@@ -16,7 +15,6 @@ import { TypeAssertion } from '../../TypeGuard/TypeAssersations';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { UiCRTDL } from 'src/app/model/UiCRTDL';
 import { v4 as uuidv4 } from 'uuid';
-import { ValidationService } from '../../Validation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,11 +26,10 @@ export class CRTDL2UIModelService {
     private feasibilityQueryService: FeasibilityQueryProviderService,
     private structuredQuery2FeasibilityQueryService: StructuredQuery2FeasibilityQueryService,
     private profileProviderService: ProfileProviderService,
-    private dataSelectionFactoryService: DataSelectionFactoryService,
-    private validationService: ValidationService
+    private dataSelectionFactoryService: DataSelectionFactoryService
   ) {}
 
-  public createCRDTLFromJson(crtdl: CRTDLData): Observable<UiCRTDL> {
+  public createCRTDLFromJson(crtdl: CRTDLData): Observable<UiCRTDL> {
     const cohortDefinition = crtdl.cohortDefinition;
     const dataExtraction = crtdl.dataExtraction;
     const translatedCohort = this.assertCohortAndTranslate(cohortDefinition);
@@ -43,6 +40,7 @@ export class CRTDL2UIModelService {
   private assertCohortAndTranslate(
     cohortDefinition: StructuredQueryData
   ): Observable<FeasibilityQuery> {
+    ;(({}) as any).someMethod();
     if (cohortDefinition !== undefined) {
       try {
         TypeAssertion.assertStructuredQueryData(cohortDefinition);
@@ -101,27 +99,6 @@ export class CRTDL2UIModelService {
     return combineLatest([cohortDefinition, dataExtraction]).pipe(
       map(([cohort, data]) => new UiCRTDL(uuidv4(), cohort, data))
     );
-  }
-
-  private doValidate(importedQuery): void {
-    this.validationService.validateStructuredQuery(importedQuery).subscribe(
-      (validatedStructuredQuery) => {
-        this.translateValidatedStructuredQuery(validatedStructuredQuery);
-      },
-      (error) => {
-        console.error('Validation error:', error);
-      }
-    );
-  }
-
-  private translateValidatedStructuredQuery(
-    validatedStructuredQuery: AnnotatedStructuredQuery
-  ): void {
-    this.structuredQuery2FeasibilityQueryService
-      .translate(validatedStructuredQuery)
-      .subscribe((feasibilityQuery) => {
-        this.setFeasibilityQueryProvider(feasibilityQuery);
-      });
   }
 
   private setFeasibilityQueryProvider(feasibilityQuery: FeasibilityQuery): void {
