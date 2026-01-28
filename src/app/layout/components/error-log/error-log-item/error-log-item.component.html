@@ -27,8 +27,11 @@
       <code>{{ error.getValueSetValidationIssue().getValueSets() | json }}</code>
     </div>
     <div class="error-extra" *ngIf="error.getTimeRestrictionValidationIssue()">
-      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.CRITERIA_SETS' | translate }}
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.AFTER_DATE' | translate }}
       <code>{{ error.getTimeRestrictionValidationIssue().getAfterDate() | json }}</code>
+      <br />
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.BEFORE_DATE' | translate }}
+      <code>{{ error.getTimeRestrictionValidationIssue().getBeforeDate() | json }}</code>
     </div>
     <div class="error-extra" *ngIf="error.getQuantityValidationIssue()">
       <div>
