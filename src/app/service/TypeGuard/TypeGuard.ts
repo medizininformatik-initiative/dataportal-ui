@@ -13,13 +13,6 @@ import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaLi
 import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData';
 import { CriteriaRelationsData } from 'src/app/model/Interface/CriteriaRelationsData';
 import { CriteriaRelativeData } from '../../model/Interface/CriteriaRelativesData';
-import {
-  CriteriaSetValidationIssueData,
-  QuantityValidationIssueData,
-  TimeRestrictionValidationIssueData,
-  ValidationIssueData,
-  ValueSetValidationIssueData,
-} from 'src/app/core/model/Validation/ValidationIssueData';
 import { CRTDLData } from '../../model/Interface/CRTDLData';
 import { DataExtractionData } from '../../model/Interface/DataExtractionData';
 import { DisplayData } from '../../model/Interface/DisplayData';
@@ -43,6 +36,14 @@ import { TranslationData } from '../../model/Interface/TranslationData';
 import { UiProfileData } from '../../model/Interface/UiProfileData';
 import { ValueDefinitionData } from '../../model/Interface/ValueDefinition';
 import { ValueFilterData } from '../../model/Interface/ValueFilterData';
+import {
+  CriteriaSetValidationIssueData,
+  QuantityRangeValidationIssueData,
+  QuantityUnitValidationIssueData,
+  TimeRestrictionValidationIssueData,
+  ValidationIssueData,
+  ValueSetValidationIssueData,
+} from 'src/app/core/model/Validation/ValidationIssueData';
 
 /**
  * Utility class for type guards to ensure objects conform to their respective interfaces.
@@ -824,9 +825,9 @@ export class TypeGuard {
     return 'criteriaSets' in details && 'termCode' in details;
   }
 
-  public static isQuantityValidationIssueData(
+  public static isQuantityUnitValidationIssueData(
     details: ValidationIssueData
-  ): details is QuantityValidationIssueData {
+  ): details is QuantityUnitValidationIssueData {
     return 'selected' in details && 'allowed' in details;
   }
 
@@ -837,7 +838,7 @@ export class TypeGuard {
   }
 
   public static isTimeRestrictionValidationIssueData(
-    details: ValidationIssueData
+    details: unknown
   ): details is TimeRestrictionValidationIssueData {
     const timeRestrictionDetails = details as TimeRestrictionValidationIssueData;
     return (
@@ -845,6 +846,33 @@ export class TypeGuard {
       TypeGuard.isObject(timeRestrictionDetails.timeRestriction) &&
       TypeGuard.isString(timeRestrictionDetails.timeRestriction.afterDate) &&
       TypeGuard.isString(timeRestrictionDetails.timeRestriction.beforeDate)
+    );
+  }
+
+  public static isQuantityRangeValidationIssueData(
+    details: unknown
+  ): details is QuantityRangeValidationIssueData {
+    const quantityRangeDetails = details as QuantityRangeValidationIssueData;
+    return (
+      TypeGuard.isObject(quantityRangeDetails) &&
+      TypeGuard.isObject(quantityRangeDetails.valueFilter) &&
+      TypeGuard.isOptionalNumber(quantityRangeDetails.valueFilter.minValue) &&
+      TypeGuard.isOptionalNumber(quantityRangeDetails.valueFilter.maxValue)
+    );
+  }
+
+  /**
+   * Checks if the object is a ValidationIssueData (any type of validation issue).
+   * @param obj
+   * @returns boolean
+   */
+  public static isValidationIssueData(obj: unknown): obj is ValidationIssueData {
+    return (
+      TypeGuard.isCriteriaSetValidationIssueData(obj as ValidationIssueData) ||
+      TypeGuard.isQuantityUnitValidationIssueData(obj as ValidationIssueData) ||
+      TypeGuard.isValueSetValidationIssueData(obj as ValidationIssueData) ||
+      TypeGuard.isTimeRestrictionValidationIssueData(obj) ||
+      TypeGuard.isQuantityRangeValidationIssueData(obj)
     );
   }
 }
