@@ -2,7 +2,7 @@ import { DataportalErrorPayloadType } from '../model/DataportalErrorPayloadType'
 import { DataportalErrorType } from '../model/DataportalErrorTypes';
 import { FeasibilityQueryPaths } from 'src/app/service/Backend/Paths/FeasibilityQueryPaths';
 import { HttpErrorResponse } from '@angular/common/http';
-import { HttpStatusCode } from './HttpStatusCode';
+import { HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IssueData } from 'src/app/core/model/Feasibility/IssueData';
 import { Observable, throwError } from 'rxjs';
@@ -13,37 +13,41 @@ import { ValidationResponseData } from 'src/app/core/model/Validation/Validation
   providedIn: 'root',
 })
 export class HttpErrorHandlerService {
+  /**
+   * Handles HTTP errors and throws appropriate DataportalErrorObjects
+   * @param error
+   * @param requestUrl
+   * @returns
+   */
   public handleError(error: HttpErrorResponse, requestUrl: string): Observable<never> {
     const status: number = error.status;
     const errorPayload: DataportalErrorPayloadType = error.error;
 
     switch (status) {
-      case HttpStatusCode.BAD_REQUEST:
+      case HttpStatusCode.BadRequest:
         if (Array.isArray(errorPayload) && this.isValidationEndpoint(requestUrl)) {
           const payload = errorPayload as ValidationResponseData[];
           return this.throwValidationErrorObject(payload, requestUrl);
         }
         break;
 
-      case HttpStatusCode.UNAUTHORIZED:
+      case HttpStatusCode.Unauthorized:
         return this.throwFeasibilityErrorObject(errorPayload as IssueData[], requestUrl);
 
-      case HttpStatusCode.FORBIDDEN:
+      case HttpStatusCode.NotFound:
         /** Not implemented */
         break;
-
-      case HttpStatusCode.NOT_FOUND:
+      case HttpStatusCode.Forbidden:
         /** Not implemented */
         break;
-
-      case HttpStatusCode.TOO_MANY_REQUESTS:
+      case HttpStatusCode.TooManyRequests:
         if (Array.isArray(errorPayload) && this.isFeasibilityEndpoint(requestUrl)) {
           const payload = errorPayload as IssueData[];
           return this.throwFeasibilityErrorObject(payload, requestUrl);
         }
         break;
 
-      case HttpStatusCode.INTERNAL_SERVER_ERROR:
+      case HttpStatusCode.InternalServerError:
         return throwError(() => new Error('Something bad happened; please try again later.'));
 
       default:
