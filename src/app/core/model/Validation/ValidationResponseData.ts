@@ -1,9 +1,11 @@
-import { ValidationErrorValue } from './ValidationErrorValue';
+import { ValidationIssueData } from './ValidationIssueData';
+import { ValidationValueData } from './ValidationErrorValue';
 
 /**
  * Represents a validation error returned from the backend.
  */
 export interface ValidationResponseData {
-  value: ValidationErrorValue
+  details?: ValidationIssueData
   path: string
+  value: ValidationValueData
 }
