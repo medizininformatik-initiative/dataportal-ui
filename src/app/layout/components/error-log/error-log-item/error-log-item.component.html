@@ -43,6 +43,16 @@
         <code>{{ error.getQuantityUnitValidationIssue()?.getAllowed() | json }}</code>
       </div>
     </div>
+    <div class="error-extra" *ngIf="error.getDataExtractionValidationIssue()">
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.BEFORE_DATE' | translate }}
+        <code>{{ error.getDataExtractionValidationIssue()?.getStart() }}</code>
+      </div>
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.AFTER_DATE' | translate }}
+        <code>{{ error.getDataExtractionValidationIssue()?.getEnd() }}</code>
+      </div>
+    </div>
     <div class="error-extra" *ngIf="error.getQuantityRangeValidationIssue()">
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MIN_VALUE' | translate }}

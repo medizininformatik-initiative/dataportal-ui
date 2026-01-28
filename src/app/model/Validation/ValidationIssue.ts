@@ -1,4 +1,6 @@
+import { data } from 'cypress/types/jquery';
 import { CriteriaSetValidationIssue } from './Issues/CriteriaSetValidationIssue';
+import { DataExtractionValidationIssue } from './Issues/DataExtractionValidationIssue';
 import { QuantityRangeValidationIssue } from './Issues/QuantityRangeValidationIssue';
 import { QuantityUnitValidationIssue } from './Issues/QuantityUnitValidationIssue';
 import { TimeRestrictionValidationIssue } from './Issues/TimeRestrictionValidationIssue';
@@ -27,6 +29,12 @@ export class ValidationIssue {
   private quantityUnitValidationIssue?: QuantityUnitValidationIssue;
 
   /**
+   * Optional detailed information about the data extraction validation issue.
+   * @see DataExtractionValidationIssueData
+   */
+  private dataExtractionValidationIssue?: DataExtractionValidationIssue;
+
+  /**
    * Optional detailed information about the time restriction validation issue.
    * @see TimeRestrictionValidationIssueData
    */
@@ -46,7 +54,8 @@ export class ValidationIssue {
     quantityRangeValidationIssue?: QuantityRangeValidationIssue,
     quantityUnitValidationIssue?: QuantityUnitValidationIssue,
     timeRestrictionValidationIssue?: TimeRestrictionValidationIssue,
-    valueSetValidationIssue?: ValueSetValidationIssue
+    valueSetValidationIssue?: ValueSetValidationIssue,
+    dataExtractionValidationIssue?: DataExtractionValidationIssue
   ) {
     this.location = location;
     this.code = code;
@@ -100,6 +109,14 @@ export class ValidationIssue {
 
   public getQuantityRangeValidationIssue(): QuantityRangeValidationIssue | undefined {
     return this.quantityRangeValidationIssue;
+  }
+
+  public setDataExtractionValidationIssue(issue: DataExtractionValidationIssue): void {
+    this.dataExtractionValidationIssue = issue;
+  }
+
+  public getDataExtractionValidationIssue(): DataExtractionValidationIssue | undefined {
+    return this.dataExtractionValidationIssue;
   }
 
   public getCode(): string {

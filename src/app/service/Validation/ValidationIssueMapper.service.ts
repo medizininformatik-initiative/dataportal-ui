@@ -7,6 +7,7 @@ import { TypeGuard } from '../TypeGuard/TypeGuard';
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue';
 import { ValidationResponseData } from 'src/app/core/model/Validation/ValidationResponseData';
 import { ValueSetValidationIssue } from 'src/app/model/Validation/Issues/ValueSetValidationIssue';
+import { DataExtractionValidationIssue } from 'src/app/model/Validation/Issues/DataExtractionValidationIssue';
 
 const PATH_PREFIX = /^content\//;
 const NUMERIC_SEGMENT = /^\d+$/;
@@ -49,6 +50,10 @@ export class ValidationIssueMapperService {
     } else if (TypeGuard.isQuantityRangeValidationIssueData(details)) {
       validationIssue.setQuantityRangeValidationIssue(
         QuantityRangeValidationIssue.fromJson(details)
+      );
+    } else if (TypeGuard.isDataExtractionValidationIssueData(details)) {
+      validationIssue.setDataExtractionValidationIssue(
+        DataExtractionValidationIssue.fromJson(details)
       );
     }
   }

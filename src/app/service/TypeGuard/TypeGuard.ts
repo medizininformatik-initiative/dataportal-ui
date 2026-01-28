@@ -38,6 +38,7 @@ import { ValueDefinitionData } from '../../model/Interface/ValueDefinition';
 import { ValueFilterData } from '../../model/Interface/ValueFilterData';
 import {
   CriteriaSetValidationIssueData,
+  DataExtractionValidationIssueData,
   QuantityRangeValidationIssueData,
   QuantityUnitValidationIssueData,
   TimeRestrictionValidationIssueData,
@@ -858,6 +859,19 @@ export class TypeGuard {
       TypeGuard.isObject(quantityRangeDetails.valueFilter) &&
       TypeGuard.isOptionalNumber(quantityRangeDetails.valueFilter.minValue) &&
       TypeGuard.isOptionalNumber(quantityRangeDetails.valueFilter.maxValue)
+    );
+  }
+
+  public static isDataExtractionValidationIssueData(
+    details: unknown
+  ): details is DataExtractionValidationIssueData {
+    const dataExtractionDetails = details as DataExtractionValidationIssueData;
+    return (
+      TypeGuard.isObject(dataExtractionDetails) &&
+      TypeGuard.isString(dataExtractionDetails.end) &&
+      TypeGuard.isString(dataExtractionDetails.name) &&
+      TypeGuard.isString(dataExtractionDetails.start) &&
+      TypeGuard.isString(dataExtractionDetails.end)
     );
   }
 

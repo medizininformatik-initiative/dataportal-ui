@@ -29,6 +29,13 @@ export interface CriteriaSetValidationIssueData {
   termCode: TerminologyCodeData
 }
 
+export interface DataExtractionValidationIssueData {
+  type: string
+  name: string
+  start: string
+  end: string
+}
+
 export interface ValueSetValidationIssueData {
   selectedConcepts: TerminologyCodeData
   valueSets: string[]
@@ -38,4 +45,6 @@ export type ValidationIssueData =
   | TimeRestrictionValidationIssueData
   | QuantityUnitValidationIssueData
   | CriteriaSetValidationIssueData
-  | ValueSetValidationIssueData;
+  | ValueSetValidationIssueData
+  | QuantityRangeValidationIssueData
+  | DataExtractionValidationIssueData;
