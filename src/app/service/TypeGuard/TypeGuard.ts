@@ -13,6 +13,13 @@ import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaLi
 import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData';
 import { CriteriaRelationsData } from 'src/app/model/Interface/CriteriaRelationsData';
 import { CriteriaRelativeData } from '../../model/Interface/CriteriaRelativesData';
+import {
+  CriteriaSetValidationIssueData,
+  QuantityValidationIssueData,
+  TimeRestrictionValidationIssueData,
+  ValidationIssueData,
+  ValueSetValidationIssueData,
+} from 'src/app/core/model/Validation/ValidationIssueData';
 import { CRTDLData } from '../../model/Interface/CRTDLData';
 import { DataExtractionData } from '../../model/Interface/DataExtractionData';
 import { DisplayData } from '../../model/Interface/DisplayData';
@@ -808,6 +815,36 @@ export class TypeGuard {
       TypeGuard.isString(criteriaListEntry.termcode) &&
       TypeGuard.isString(criteriaListEntry.kdsModule) &&
       TypeGuard.isString(criteriaListEntry.context)
+    );
+  }
+
+  public static isCriteriaSetValidationIssueData(
+    details: ValidationIssueData
+  ): details is CriteriaSetValidationIssueData {
+    return 'criteriaSets' in details && 'termCode' in details;
+  }
+
+  public static isQuantityValidationIssueData(
+    details: ValidationIssueData
+  ): details is QuantityValidationIssueData {
+    return 'selected' in details && 'allowed' in details;
+  }
+
+  public static isValueSetValidationIssueData(
+    details: ValidationIssueData
+  ): details is ValueSetValidationIssueData {
+    return 'valueSets' in details && 'selectedConcepts' in details;
+  }
+
+  public static isTimeRestrictionValidationIssueData(
+    details: ValidationIssueData
+  ): details is TimeRestrictionValidationIssueData {
+    const timeRestrictionDetails = details as TimeRestrictionValidationIssueData;
+    return (
+      TypeGuard.isObject(timeRestrictionDetails) &&
+      TypeGuard.isObject(timeRestrictionDetails.timeRestriction) &&
+      TypeGuard.isString(timeRestrictionDetails.timeRestriction.afterDate) &&
+      TypeGuard.isString(timeRestrictionDetails.timeRestriction.beforeDate)
     );
   }
 }
