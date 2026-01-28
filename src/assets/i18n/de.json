@@ -546,6 +546,7 @@
     "2000004": "Code-Filter wurde im value set nicht gefunden.",
     "2000005": "Verknüpfte Gruppe fehlt für Attribut vom Typ Referenz.",
     "2000006": "Verknüpfte Gruppe wurde in CRTDL nicht gefunden.",
+    "2000007": "Das Enddatum muss nach dem Startdatum liegen.",
     "00001": "JSON konnte nicht verarbeitet werden."
   }
 }
