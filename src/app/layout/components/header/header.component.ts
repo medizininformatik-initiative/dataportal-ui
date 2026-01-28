@@ -1,7 +1,6 @@
 import { AboutModalComponent } from '../about-modal/about-modal.component';
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 import { Component, OnInit } from '@angular/core';
-import { ErrorLog } from 'src/app/model/Validation/ErrorLog';
 import { ErrorLogModalComponent } from '../error-log/error-log-modal.component';
 import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
@@ -9,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
 import { UserProfileService } from 'src/app/service/User/UserProfile.service';
+import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
 
 @Component({
   selector: 'num-dataportal-header',
@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
   urlSrc: string;
   urlAlt: string;
   proposalPortalLink: string;
-  validationResult$: Observable<ErrorLog>;
+  validationResult$: Observable<ValidationReport>;
   imagePath = 'assets/img/FDPG-Logo.svg';
   errorCount = 0;
 

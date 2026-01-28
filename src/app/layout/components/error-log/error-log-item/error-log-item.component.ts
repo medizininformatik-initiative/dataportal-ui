@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ValidationError } from 'src/app/model/Validation/ValidationError';
+import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue';
 
 @Component({
   selector: 'num-error-log-item',
@@ -7,14 +7,12 @@ import { ValidationError } from 'src/app/model/Validation/ValidationError';
   styleUrls: ['./error-log-item.component.scss'],
 })
 export class ErrorLogItemComponent implements OnInit {
-  @Input() error!: ValidationError;
+  @Input() error!: ValidationIssue;
 
   code = '';
 
   ngOnInit(): void {
     const validationCode = this.error.getCode();
     this.code = validationCode.replace(/\D+/g, '');
-
-    console.log(this.code);
   }
 }

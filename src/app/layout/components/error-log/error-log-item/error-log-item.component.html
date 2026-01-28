@@ -18,26 +18,26 @@
         {{ 'VALIDATION.' + code | translate }}
       </code>
     </div>
-    <div class="error-extra" *ngIf="error.getTermcode()">
+    <div class="error-extra" *ngIf="error.getCriteriaSetValidationIssue()">
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.TERMCODE' | translate }}
-      <code>{{ error.getTermcode() | json }}</code>
+      <code>{{ error.getCriteriaSetValidationIssue().getCriteriaSet() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error.getValueSets()">
+    <div class="error-extra" *ngIf="error.getValueSetValidationIssue()">
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.VALUE_SETS' | translate }}
-      <code>{{ error.getValueSets() | json }}</code>
+      <code>{{ error.getValueSetValidationIssue().getValueSets() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error.getCriteriaSets()">
+    <div class="error-extra" *ngIf="error.getTimeRestrictionValidationIssue()">
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.CRITERIA_SETS' | translate }}
-      <code>{{ error.getCriteriaSets() | json }}</code>
+      <code>{{ error.getTimeRestrictionValidationIssue().getAfterDate() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error.getQuantityValidationError()">
+    <div class="error-extra" *ngIf="error.getQuantityValidationIssue()">
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.SELECTED' | translate }}
-        <code>{{ error.getQuantityValidationError()?.getSelected() }}</code>
+        <code>{{ error.getQuantityValidationIssue()?.getSelected() }}</code>
       </div>
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.ALLOWED' | translate }}
-        <code>{{ error.getQuantityValidationError()?.getAllowed() | json }}</code>
+        <code>{{ error.getQuantityValidationIssue()?.getAllowed() | json }}</code>
       </div>
     </div>
   </div>

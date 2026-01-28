@@ -1,8 +1,8 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { ErrorLog } from 'src/app/model/Validation/ErrorLog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { ValidationError } from 'src/app/model/Validation/ValidationError';
+import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue';
+import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
 
 @Component({
   selector: 'num-error-log-modal',
@@ -10,15 +10,14 @@ import { ValidationError } from 'src/app/model/Validation/ValidationError';
   styleUrls: ['./error-log-modal.component.scss'],
 })
 export class ErrorLogModalComponent implements OnInit, OnDestroy {
-  validationResult: ErrorLog | null = null;
-  errors: ValidationError[] = [];
+  validationReport: ValidationReport | null = null;
+  errors: ValidationIssue[] = [];
   private destroy$ = new Subject<void>();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ErrorLog) {}
-
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ValidationReport) {}
   ngOnInit(): void {
-    this.validationResult = this.data;
-    this.errors = this.data?.getErrors() || [];
+    this.validationReport = this.data;
+    this.errors = this.data?.getIssues() || [];
   }
 
   ngOnDestroy(): void {
