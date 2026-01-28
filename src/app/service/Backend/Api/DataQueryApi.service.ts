@@ -51,9 +51,9 @@ export class DataQueryApiService {
     });
   }
 
-  public deleteDataQueryById(dataQueryId: number): Observable<SavedDataQueryData> {
+  public deleteDataQueryById(dataQueryId: number): Observable<void> {
     const url = this.backendService.createUrl(DataqueryPaths.DATA) + '/' + dataQueryId;
-    return this.http.delete<SavedDataQueryData>(url, {
+    return this.http.delete<void>(url, {
       headers: this.backendService.getHeaders(),
     });
   }

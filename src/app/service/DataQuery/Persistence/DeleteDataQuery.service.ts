@@ -8,7 +8,12 @@ import { Observable } from 'rxjs';
 export class DeleteDataQueryService {
   constructor(private dataQueryApiService: DataQueryApiService) {}
 
-  public deleteDataQueryById(id: number): Observable<any> {
+  /**
+   * deletes a saved data query by its ID.
+   * @param id
+   * @returns
+   */
+  public deleteDataQueryById(id: number): Observable<void> {
     return this.dataQueryApiService.deleteDataQueryById(id);
   }
 }
