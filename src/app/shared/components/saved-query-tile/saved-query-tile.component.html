@@ -17,9 +17,14 @@
   <div class="width-20">
     {{ 'SAVED_QUERIES.PATIENTS' | translate }} {{ savedQuery.totalNumberOfPatients }}
   </div>
-  <div>
+  <div *ngIf="crtdlIsValid">
     <num-button type="blue" (click)="onNavigate(savedQuery?.id)">
       {{ 'SAVED_QUERIES.LOAD' | translate }}
+    </num-button>
+  </div>
+  <div *ngIf="!crtdlIsValid">
+    <num-button type="red" (click)="onLoadValidationReport(savedQuery?.id)">
+      {{ 'SAVED_QUERIES.VALIDATION_REPORT' | translate }}
     </num-button>
   </div>
   <div class="height-100" fxFlex="row" fxLayoutAlign="end start" fxFlex="4">
