@@ -3,6 +3,7 @@
     class="width-100"
     [savedQuery]="query"
     (navigate)="loadQueryIntoEditor($event)"
+    (loadValidationReport)="loadValidationReport($event)"
     (deleteQuery)="deleteSavedFeasibility($event)"
   ></num-saved-query-tile>
 </div>

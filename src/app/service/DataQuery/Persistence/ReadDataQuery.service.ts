@@ -1,15 +1,15 @@
 import { CRTDL2UIModelService } from '../../Translator/CRTDL/CRTDL2UIModel.service';
+import { CRTDLValidationService } from '../../Validation/CRTDLValidation.service';
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service';
+import { map, Observable, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
-import { map, Observable, switchMap } from 'rxjs';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQueryListItem';
 import { SavedDataQueryListItemData } from 'src/app/model/Interface/SavedDataQueryListItemData';
 import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTile/SavedFeasibilityQueryAdapter';
 import { TypeAssertion } from '../../TypeGuard/TypeAssersations';
-import { CRTDLValidationService } from '../../Validation/CRTDLValidation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -49,16 +49,16 @@ export class ReadDataQueryService {
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
       switchMap((data: SavedDataQueryData) => {
-        try {
-          TypeAssertion.assertSavedDataQueryData(data);
-          this.validationService.validate(data.content);
-          return this.transformDataQuery(data);
-        } catch (error) {
-          console.error(error);
-          throw error;
-        }
+        TypeAssertion.assertSavedDataQueryData(data);
+        return this.transformDataQuery(data);
       })
     );
+  }
+
+  public getValidationReportForDataquery(id: number): Observable<boolean> {
+    return this.dataQueryApiService
+      .getDataQueryById(id)
+      .pipe(switchMap((data: SavedDataQueryData) => this.validationService.validate(data.content)));
   }
 
   private transformDataQuery(data: SavedDataQueryData): Observable<SavedDataQuery> {
