@@ -1,6 +1,5 @@
-import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { AboutInfoData } from '../AboutInfo/AboutInfoData';
-import { TerminologyCodeData } from '../TerminologyCodeData';
+import { CRTDLData } from '../CRTDLData';
 
 /**
  * Represents the result of a validation operation.
@@ -8,15 +7,7 @@ import { TerminologyCodeData } from '../TerminologyCodeData';
 export interface ValidationReportData {
   timestamp: string
   totalErrors: number
-  issues: {
-    criteriaSets?: string[]
-    termcode?: TerminologyCodeData
-    selected?: string
-    allowed?: string[]
-    afterdate?: string
-    beforedate?: string
-    selectedConcepts?: TerminologyCodeData
-    valueSets?: string[]
-  }
+  issues: any
   dataportal: AboutInfoData
+  crtdl: CRTDLData
 }
