@@ -33,14 +33,24 @@
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.BEFORE_DATE' | translate }}
       <code>{{ error.getTimeRestrictionValidationIssue().getBeforeDate() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error.getQuantityValidationIssue()">
+    <div class="error-extra" *ngIf="error.getQuantityUnitValidationIssue()">
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.SELECTED' | translate }}
-        <code>{{ error.getQuantityValidationIssue()?.getSelected() }}</code>
+        <code>{{ error.getQuantityUnitValidationIssue()?.getSelected() }}</code>
       </div>
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.ALLOWED' | translate }}
-        <code>{{ error.getQuantityValidationIssue()?.getAllowed() | json }}</code>
+        <code>{{ error.getQuantityUnitValidationIssue()?.getAllowed() | json }}</code>
+      </div>
+    </div>
+    <div class="error-extra" *ngIf="error.getQuantityRangeValidationIssue()">
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MIN_VALUE' | translate }}
+        <code>{{ error.getQuantityRangeValidationIssue()?.getMinValue() }}</code>
+      </div>
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MAX_VALUE' | translate }}
+        <code>{{ error.getQuantityRangeValidationIssue()?.getMaxValue() }}</code>
       </div>
     </div>
   </div>
