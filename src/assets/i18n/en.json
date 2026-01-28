@@ -23,12 +23,16 @@
           "DOWNLOAD": "Download Error Log",
           "HEADER": "Error Log",
           "ITEM": {
+            "AFTER_DATE": "After:",
             "ALLOWED": "Allowed:",
+            "BEFORE_DATE": "Before:",
             "CODE": "Code:",
             "CRITERIA_SETS": "Criteria Sets:",
             "DETAILS": "Details:",
             "LOCATION": "Location:",
+            "MAX_VALUE": "Max Value:",
             "MESSAGE": "Message:",
+            "MIN_VALUE": "Min Value:",
             "SELECTED": "Selected:",
             "TERMCODE": "Termcode:",
             "VALUE_SETS": "Value Sets:"
@@ -385,7 +389,8 @@
     "LOAD": "Load Data Definition",
     "PATIENTS": "Number of patients:",
     "SAVED_FEASIBILITY": "Saved Feasibility Queries",
-    "TITLE": "Title"
+    "TITLE": "Title",
+    "VALIDATION_REPORT": "Load Validation Report"
   },
   "SHARED_COMPONENTS": {
     "ACTION_BAR": {
@@ -527,6 +532,7 @@
     "20005": "The selected value is not inside the defined limits.",
     "20006": "The selected code is not part of the referenced criteria sets.",
     "20007": "The selected code is not part of the referenced value sets.",
+    "20008": "The min value cannot be greater than the max value.",
     "50001": "UiProfile not found.",
     "1000001": "Code filter not found in value set.",
     "2000001": "Attribute group groupReference not found.",

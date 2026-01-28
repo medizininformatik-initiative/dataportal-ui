@@ -23,12 +23,16 @@
           "DOWNLOAD": "Fehlerprotokoll herunterladen",
           "HEADER": "Fehlerprotokoll",
           "ITEM": {
+            "AFTER_DATE": "Nach",
             "ALLOWED": "Erlaubt:",
+            "BEFORE_DATE": "Vor",
             "CODE": "Code:",
             "CRITERIA_SETS": "Criteria Sets:",
             "DETAILS": "Details:",
             "LOCATION": "Ort:",
+            "MAX_VALUE": "Maximalwert:",
             "MESSAGE": "Nachricht:",
+            "MIN_VALUE": "Minimalwert:",
             "SELECTED": "Ausgewählt:",
             "TERMCODE": "Termcode:",
             "VALUE_SETS": "Value Sets:"
@@ -389,7 +393,8 @@
     "LOAD": "Datendefinition laden",
     "PATIENTS": "Anzahl der Patienten:",
     "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen",
-    "TITLE": "Titel"
+    "TITLE": "Titel",
+    "VALIDATION_REPORT": "Fehlerprotokoll laden"
   },
   "SHARED_COMPONENTS": {
     "ACTION_BAR": {
@@ -532,6 +537,7 @@
     "20005": "Der ausgewählte Wert liegt nicht innerhalb der definierten Grenzen.",
     "20006": "Der ausgewählte Code ist nicht Teil der referenzierten criteria sets.",
     "20007": "Der ausgewählte Code ist nicht Teil der referenzierten value sets.",
+    "20008": "Der minimale Wert muss kleiner als der maximale Wert sein.",
     "50001": "UiProfil wurde nicht gefunden.",
     "1000001": "Code-Filter wurde im value set nicht gefunden.",
     "2000001": "Attributgruppe mit groupReference wurde nicht gefunden.",
