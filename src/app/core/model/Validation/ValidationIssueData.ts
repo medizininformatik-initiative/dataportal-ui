@@ -6,9 +6,22 @@ export interface TimeRestrictionValidationIssueData {
   }
 }
 
-export interface QuantityValidationIssueData {
+export interface QuantityUnitValidationIssueData {
   selected: string
   allowed: string[]
+}
+
+export interface QuantityRangeValidationIssueData {
+  valueFilter: {
+    type: 'quantity-range'
+    selectedConcepts: []
+    unit: {
+      code: string
+      display: string
+    }
+    minValue: number
+    maxValue: number
+  }
 }
 
 export interface CriteriaSetValidationIssueData {
@@ -23,6 +36,6 @@ export interface ValueSetValidationIssueData {
 
 export type ValidationIssueData =
   | TimeRestrictionValidationIssueData
-  | QuantityValidationIssueData
+  | QuantityUnitValidationIssueData
   | CriteriaSetValidationIssueData
   | ValueSetValidationIssueData;
