@@ -1,7 +1,9 @@
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
 export interface TimeRestrictionValidationIssueData {
-  afterdate: string
-  beforedate: string
+  timeRestriction: {
+    afterDate: string
+    beforeDate: string
+  }
 }
 
 export interface QuantityValidationIssueData {
