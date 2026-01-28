@@ -1,12 +1,12 @@
 import { AboutModalComponent } from '../about-modal/about-modal.component';
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ErrorLogModalComponent } from '../error-log/error-log-modal.component';
 import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { UserProfileService } from 'src/app/service/User/UserProfile.service';
 import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
 
@@ -15,13 +15,13 @@ import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   profile: IUserProfile;
   stylesheet: string;
   urlSrc: string;
   urlAlt: string;
   proposalPortalLink: string;
-  validationResult$: Observable<ValidationReport>;
+  validationResultSubscription$: Subscription;
   imagePath = 'assets/img/FDPG-Logo.svg';
   errorCount = 0;
 
@@ -35,6 +35,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.initProfile();
+  }
+
+  ngOnDestroy(): void {
+    this.validationResultSubscription$?.unsubscribe();
   }
 
   async initProfile(): Promise<void> {
@@ -53,12 +57,19 @@ export class HeaderComponent implements OnInit {
   }
 
   public displayErrorLog() {
-    this.validationResult$ = this.errorLogProvider.getValidationResult$();
-    if (this.hasErrorsToDisplay()) {
-      this.matDialog.open(ErrorLogModalComponent, {
-        data: this.validationResult$,
-      });
-    }
+    this.validationResultSubscription$?.unsubscribe();
+    this.validationResultSubscription$ = this.errorLogProvider
+      .getValidationResult$()
+      .pipe(
+        tap((report) => {
+          if (this.hasErrorsToDisplay()) {
+            this.matDialog.open(ErrorLogModalComponent, {
+              data: report,
+            });
+          }
+        })
+      )
+      .subscribe();
   }
 
   public navigateToProposalPortal() {
