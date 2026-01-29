@@ -79,6 +79,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public hasErrorsToDisplay(): boolean {
     const result = this.errorLogProvider.getCurrentValidationResult();
-    return result !== null && result.length > 0;
+    return result !== null && result.getIssues().length > 0;
   }
 }

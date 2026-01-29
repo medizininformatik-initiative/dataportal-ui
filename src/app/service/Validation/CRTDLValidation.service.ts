@@ -36,7 +36,8 @@ export class CRTDLValidationService {
     if (error.type === 'VALIDATION_ERROR' && Array.isArray(error.payload)) {
       const payload = error.payload as ValidationResponseData[];
       const validationReport = this.buildValidationReport(payload);
-      this.errorLogProvider.setValidationResult(payload);
+      this.errorLogProvider.setValidationResponseData(payload);
+      this.errorLogProvider.setValidationResult(validationReport);
       this.opeValidationReportModal(validationReport);
       return of(false);
     }

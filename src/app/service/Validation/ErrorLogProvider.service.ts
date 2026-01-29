@@ -8,20 +8,22 @@ import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
   providedIn: 'root',
 })
 export class ErrorLogProviderService {
-  private readonly validationResult$ = new BehaviorSubject<ValidationResponseData[] | null>(null);
-  private readonly validationResultData$ = new BehaviorSubject<ValidationResponseData | null>(null);
+  private readonly validationResult$ = new BehaviorSubject<ValidationReport | null>(null);
+  private readonly validationResultData$ = new BehaviorSubject<ValidationResponseData[] | null>(
+    null
+  );
   private validatedCRTDLData$: BehaviorSubject<CRTDLData | null> =
     new BehaviorSubject<CRTDLData | null>(null);
 
-  public setValidationResult(result: ValidationResponseData[]): void {
+  public setValidationResult(result: ValidationReport): void {
     this.validationResult$.next(result);
   }
 
-  public getValidationResult$(): Observable<ValidationResponseData[] | null> {
+  public getValidationResult$(): Observable<ValidationReport | null> {
     return this.validationResult$.asObservable();
   }
 
-  public getCurrentValidationResult(): ValidationResponseData[] | null {
+  public getCurrentValidationResult(): ValidationReport | null {
     return this.validationResult$.value;
   }
 
@@ -29,16 +31,16 @@ export class ErrorLogProviderService {
     this.validationResult$.next(null);
   }
 
-  public setValidationResponseData(data: ValidationResponseData): void {
+  public setValidationResponseData(data: ValidationResponseData[]): void {
     console.log('Setting validation response data in ErrorLogProviderService:', data);
     this.validationResultData$.next(data);
   }
 
-  public getValidationResponseData$(): Observable<ValidationResponseData | null> {
+  public getValidationResponseData$(): Observable<ValidationResponseData[] | null> {
     return this.validationResultData$.asObservable();
   }
 
-  public getCurrentValidationResponseData(): ValidationResponseData | null {
+  public getCurrentValidationResponseData(): ValidationResponseData[] | null {
     return this.validationResultData$.value;
   }
 
