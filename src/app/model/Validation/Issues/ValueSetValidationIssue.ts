@@ -1,5 +1,5 @@
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { ValueSetValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
+import { ValueSetValidationIssueData } from 'src/app/core/model/Validation/ValueSetValidationIssueData';
 
 export class ValueSetValidationIssue {
   private readonly selectedConcepts: TerminologyCode;

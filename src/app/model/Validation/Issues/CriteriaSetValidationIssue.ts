@@ -1,4 +1,4 @@
-import { CriteriaSetValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
+import { CriteriaSetValidationIssueData } from 'src/app/core/model/Validation/CriteriaSetValidationIssueData';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 
 export class CriteriaSetValidationIssue {

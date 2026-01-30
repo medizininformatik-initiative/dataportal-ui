@@ -1,4 +1,4 @@
-import { QuantityUnitValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
+import { QuantityUnitValidationIssueData } from 'src/app/core/model/Validation/QuantityUnitValidationIssueData';
 
 export class QuantityUnitValidationIssue {
   private readonly selected: string;

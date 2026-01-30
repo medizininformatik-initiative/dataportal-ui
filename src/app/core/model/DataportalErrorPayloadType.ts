@@ -1,4 +1,4 @@
 import { IssueData } from 'src/app/core/model/Feasibility/IssueData';
-import { ValidationResponseData } from 'src/app/core/model/Validation/ValidationResponseData';
+import { ValidationIssueData } from './Validation/ValidationIssueData';
 
-export type DataportalErrorPayloadType = IssueData[] | ValidationResponseData[];
+export type DataportalErrorPayloadType = IssueData[] | ValidationIssueData[];

@@ -1,7 +1,7 @@
-import { ValidationResponseData } from 'src/app/core/model/Validation/ValidationResponseData';
+import { ValidationIssueData } from './ValidationIssueData';
 
 export interface ValidationErrorData {
   type: 'VALIDATION_ERROR'
-  payload: ValidationResponseData[]
+  payload: ValidationIssueData[]
   url?: string
 }

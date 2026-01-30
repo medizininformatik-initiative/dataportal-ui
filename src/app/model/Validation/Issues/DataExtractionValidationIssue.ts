@@ -1,4 +1,4 @@
-import { DataExtractionValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
+import { DataExtractionValidationIssueData } from 'src/app/core/model/Validation/DataExtractionValidationIssueData';
 
 export class DataExtractionValidationIssue {
   private readonly type: string;

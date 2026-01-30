@@ -1,4 +1,4 @@
-import { TimeRestrictionValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
+import { TimeRestrictionValidationIssueData } from 'src/app/core/model/Validation/TimeRestrictionValidationIssueData';
 
 export class TimeRestrictionValidationIssue {
   private readonly afterDate: string;

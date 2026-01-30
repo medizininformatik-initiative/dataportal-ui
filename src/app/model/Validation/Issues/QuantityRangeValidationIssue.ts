@@ -1,6 +1,6 @@
 import { OperatorOptions } from '../../Utilities/Quantity/OperatorOptions';
 import { QuantityUnit } from '../../FeasibilityQuery/QuantityUnit';
-import { QuantityRangeValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
+import { QuantityRangeValidationIssueData } from 'src/app/core/model/Validation/QuantityRangeValidationIssueData';
 
 export class QuantityRangeValidationIssue {
   private readonly type: OperatorOptions.QUANTITY_RANGE;
