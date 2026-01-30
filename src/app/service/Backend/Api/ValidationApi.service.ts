@@ -5,7 +5,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ValidationPaths } from '../Paths/ValidationPaths';
-import { ValidationResponseData } from 'src/app/core/model/Validation/ValidationResponseData';
+import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +15,9 @@ export class ValidationApiService {
 
   public validateDataQuery(
     dataquery: DataqueryData
-  ): Observable<HttpResponse<ValidationResponseData>> {
+  ): Observable<HttpResponse<ValidationIssueData[]>> {
     const url = this.backendService.createUrl(ValidationPaths.VALIDATE_DATAQUERY);
-    return this.http.post<ValidationResponseData>(url, dataquery, {
+    return this.http.post<ValidationIssueData[]>(url, dataquery, {
       headers: this.backendService.getHeaders(),
       observe: 'response',
     });

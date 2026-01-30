@@ -1,17 +1,15 @@
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
-import { ValidationResponseData } from 'src/app/core/model/Validation/ValidationResponseData';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
+import { Injectable } from '@angular/core';
+import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
+import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorLogProviderService {
   private readonly validationResult$ = new BehaviorSubject<ValidationReport | null>(null);
-  private readonly validationResultData$ = new BehaviorSubject<ValidationResponseData[] | null>(
-    null
-  );
+  private readonly validationResultData$ = new BehaviorSubject<ValidationIssueData[] | null>(null);
   private validatedCRTDLData$: BehaviorSubject<CRTDLData | null> =
     new BehaviorSubject<CRTDLData | null>(null);
 
@@ -31,16 +29,15 @@ export class ErrorLogProviderService {
     this.validationResult$.next(null);
   }
 
-  public setValidationResponseData(data: ValidationResponseData[]): void {
-    console.log('Setting validation response data in ErrorLogProviderService:', data);
+  public setValidationResponseData(data: ValidationIssueData[]): void {
     this.validationResultData$.next(data);
   }
 
-  public getValidationResponseData$(): Observable<ValidationResponseData[] | null> {
+  public getValidationResponseData$(): Observable<ValidationIssueData[] | null> {
     return this.validationResultData$.asObservable();
   }
 
-  public getCurrentValidationResponseData(): ValidationResponseData[] | null {
+  public getCurrentValidationResponseData(): ValidationIssueData[] | null {
     return this.validationResultData$.value;
   }
 

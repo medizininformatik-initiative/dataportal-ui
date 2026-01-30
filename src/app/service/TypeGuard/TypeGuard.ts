@@ -13,13 +13,18 @@ import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaLi
 import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData';
 import { CriteriaRelationsData } from 'src/app/model/Interface/CriteriaRelationsData';
 import { CriteriaRelativeData } from '../../model/Interface/CriteriaRelativesData';
+import { CriteriaSetValidationIssueData } from 'src/app/core/model/Validation/CriteriaSetValidationIssueData';
 import { CRTDLData } from '../../model/Interface/CRTDLData';
 import { DataExtractionData } from '../../model/Interface/DataExtractionData';
+import { DataExtractionValidationIssueData } from 'src/app/core/model/Validation/DataExtractionValidationIssueData';
+import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData';
 import { DisplayData } from '../../model/Interface/DisplayData';
 import { FilterData } from '../../model/Interface/FilterData';
 import { IssueData } from '../../core/model/Feasibility/IssueData';
 import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
+import { QuantityRangeValidationIssueData } from 'src/app/core/model/Validation/QuantityRangeValidationIssueData';
 import { QuantityUnitData } from '../../model/Interface/Unit';
+import { QuantityUnitValidationIssueData } from 'src/app/core/model/Validation/QuantityUnitValidationIssueData';
 import { QueryResultData } from '../../model/Interface/QueryResultData';
 import { QueryResultLineData } from '../../model/Interface/QueryResultLineData';
 import { ReferenceCriteriaListEntryData } from 'src/app/model/Interface/Search/ReferenceCriteriaListEntryData';
@@ -32,19 +37,15 @@ import { StructuredQueryData } from '../../model/Interface/StructuredQueryData';
 import { TerminologyCodeBaseData } from '../../model/Interface/TerminologyBaseData';
 import { TerminologyCodeData } from '../../model/Interface/TerminologyCodeData';
 import { TimeRestrictionData } from '../../model/Interface/TimeRestrictionData';
+import { TimeRestrictionValidationIssueData } from 'src/app/core/model/Validation/TimeRestrictionValidationIssueData';
 import { TranslationData } from '../../model/Interface/TranslationData';
 import { UiProfileData } from '../../model/Interface/UiProfileData';
+import { ValidationErrorData } from 'src/app/core/model/Validation/ValidationErrorData';
+import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
+import { ValidationIssueType } from 'src/app/core/model/Validation/ValidationIssueType';
 import { ValueDefinitionData } from '../../model/Interface/ValueDefinition';
 import { ValueFilterData } from '../../model/Interface/ValueFilterData';
-import {
-  CriteriaSetValidationIssueData,
-  DataExtractionValidationIssueData,
-  QuantityRangeValidationIssueData,
-  QuantityUnitValidationIssueData,
-  TimeRestrictionValidationIssueData,
-  ValidationIssueData,
-  ValueSetValidationIssueData,
-} from 'src/app/core/model/Validation/ValidationIssueData';
+import { ValueSetValidationIssueData } from 'src/app/core/model/Validation/ValueSetValidationIssueData';
 
 /**
  * Utility class for type guards to ensure objects conform to their respective interfaces.
@@ -821,25 +822,25 @@ export class TypeGuard {
   }
 
   public static isCriteriaSetValidationIssueData(
-    details: ValidationIssueData
+    details: ValidationIssueType
   ): details is CriteriaSetValidationIssueData {
     return 'criteriaSets' in details && 'termCode' in details;
   }
 
   public static isQuantityUnitValidationIssueData(
-    details: ValidationIssueData
+    details: ValidationIssueType
   ): details is QuantityUnitValidationIssueData {
     return 'selected' in details && 'allowed' in details;
   }
 
   public static isValueSetValidationIssueData(
-    details: ValidationIssueData
+    details: ValidationIssueType
   ): details is ValueSetValidationIssueData {
     return 'valueSets' in details && 'selectedConcepts' in details;
   }
 
   public static isTimeRestrictionValidationIssueData(
-    details: unknown
+    details: ValidationIssueType
   ): details is TimeRestrictionValidationIssueData {
     const timeRestrictionDetails = details as TimeRestrictionValidationIssueData;
     return (
@@ -863,7 +864,7 @@ export class TypeGuard {
   }
 
   public static isDataExtractionValidationIssueData(
-    details: unknown
+    details: ValidationIssueType
   ): details is DataExtractionValidationIssueData {
     const dataExtractionDetails = details as DataExtractionValidationIssueData;
     return (
@@ -880,13 +881,30 @@ export class TypeGuard {
    * @param obj
    * @returns boolean
    */
-  public static isValidationIssueData(obj: unknown): obj is ValidationIssueData {
+  public static isValidationIssueData(obj: unknown): obj is ValidationIssueType {
     return (
-      TypeGuard.isCriteriaSetValidationIssueData(obj as ValidationIssueData) ||
-      TypeGuard.isQuantityUnitValidationIssueData(obj as ValidationIssueData) ||
-      TypeGuard.isValueSetValidationIssueData(obj as ValidationIssueData) ||
-      TypeGuard.isTimeRestrictionValidationIssueData(obj) ||
-      TypeGuard.isQuantityRangeValidationIssueData(obj)
+      TypeGuard.isCriteriaSetValidationIssueData(obj as CriteriaSetValidationIssueData) ||
+      TypeGuard.isQuantityUnitValidationIssueData(obj as QuantityUnitValidationIssueData) ||
+      TypeGuard.isValueSetValidationIssueData(obj as ValueSetValidationIssueData) ||
+      TypeGuard.isTimeRestrictionValidationIssueData(obj as TimeRestrictionValidationIssueData) ||
+      TypeGuard.isQuantityRangeValidationIssueData(obj as QuantityRangeValidationIssueData)
     );
+  }
+
+  public static isValidationError(error: DataportalErrorData): error is ValidationErrorData {
+    return (
+      TypeGuard.isObject(error.payload) &&
+      TypeGuard.isString(error.type) &&
+      error.type === 'VALIDATION_ERROR' &&
+      Array.isArray(error.payload)
+    );
+  }
+
+  public static isValidationPayload(payload: unknown): payload is ValidationIssueData[] {
+    return Array.isArray(payload) && payload.length > 0;
+  }
+
+  public static isFeasibilityPayload(payload: unknown): payload is { issues: IssueData[] } {
+    return typeof payload === 'object' && payload !== null && 'issues' in payload;
   }
 }

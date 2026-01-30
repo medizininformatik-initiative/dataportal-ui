@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
 import { CriteriaSetValidationIssue } from 'src/app/model/Validation/Issues/CriteriaSetValidationIssue';
+import { DataExtractionValidationIssue } from 'src/app/model/Validation/Issues/DataExtractionValidationIssue';
+import { Injectable } from '@angular/core';
 import { QuantityRangeValidationIssue } from 'src/app/model/Validation/Issues/QuantityRangeValidationIssue';
 import { QuantityUnitValidationIssue } from 'src/app/model/Validation/Issues/QuantityUnitValidationIssue';
 import { TimeRestrictionValidationIssue } from 'src/app/model/Validation/Issues/TimeRestrictionValidationIssue';
 import { TypeGuard } from '../TypeGuard/TypeGuard';
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue';
-import { ValidationResponseData } from 'src/app/core/model/Validation/ValidationResponseData';
 import { ValueSetValidationIssue } from 'src/app/model/Validation/Issues/ValueSetValidationIssue';
-import { DataExtractionValidationIssue } from 'src/app/model/Validation/Issues/DataExtractionValidationIssue';
+import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
 
 const PATH_PREFIX = /^content\//;
 const NUMERIC_SEGMENT = /^\d+$/;
@@ -21,7 +21,7 @@ export class ValidationIssueMapperService {
    * @param validationData - The validation response data from the backend
    * @returns ValidationIssue instance with attached details
    */
-  public mapToValidationIssue(validationData: ValidationResponseData): ValidationIssue {
+  public mapToValidationIssue(validationData: ValidationIssueData): ValidationIssue {
     const validationIssue = this.createValidationIssue(validationData);
     this.attachIssueDetails(validationIssue, validationData.details);
     return validationIssue;
@@ -63,7 +63,7 @@ export class ValidationIssueMapperService {
    * @param validationData - The validation response data from the backend
    * @returns Base ValidationIssue with location, code, and message
    */
-  private createValidationIssue(validationData: ValidationResponseData): ValidationIssue {
+  private createValidationIssue(validationData: ValidationIssueData): ValidationIssue {
     const location = this.pathToLocation(validationData.path);
     const code = validationData.value.code;
     const message = validationData.value.message;

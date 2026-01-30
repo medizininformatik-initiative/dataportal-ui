@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, throwError } from 'rxjs';
 import { ValidationApiService } from '../Backend/Api/ValidationApi.service';
 import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
-import { ValidationResponseData } from 'src/app/core/model/Validation/ValidationResponseData';
+import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue';
 import { ValidationIssueMapperService } from './ValidationIssueMapper.service';
 import { TypeGuard } from '../TypeGuard/TypeGuard';
@@ -33,8 +33,8 @@ export class CRTDLValidationService {
   }
 
   private handleValidationError(error: DataportalErrorData): Observable<boolean> {
-    if (error.type === 'VALIDATION_ERROR' && Array.isArray(error.payload)) {
-      const payload = error.payload as ValidationResponseData[];
+    if (TypeGuard.isValidationError(error)) {
+      const payload = error.payload;
       const validationReport = this.buildValidationReport(payload);
       this.errorLogProvider.setValidationResponseData(payload);
       this.errorLogProvider.setValidationResult(validationReport);
@@ -44,8 +44,8 @@ export class CRTDLValidationService {
     return throwError(() => error);
   }
 
-  public buildValidationReport(errors: ValidationResponseData[]): ValidationReport {
-    const validationErrors: ValidationIssue[] = errors.map((error: ValidationResponseData) =>
+  public buildValidationReport(errors: ValidationIssueData[]): ValidationReport {
+    const validationErrors: ValidationIssue[] = errors.map((error: ValidationIssueData) =>
       this.validationIssueMapper.mapToValidationIssue(error)
     );
     return new ValidationReport(validationErrors);
