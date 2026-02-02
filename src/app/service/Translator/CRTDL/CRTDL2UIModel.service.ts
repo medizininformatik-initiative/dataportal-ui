@@ -40,7 +40,6 @@ export class CRTDL2UIModelService {
   private assertCohortAndTranslate(
     cohortDefinition: StructuredQueryData
   ): Observable<FeasibilityQuery> {
-    ;(({}) as any).someMethod();
     if (cohortDefinition !== undefined) {
       try {
         TypeAssertion.assertStructuredQueryData(cohortDefinition);
