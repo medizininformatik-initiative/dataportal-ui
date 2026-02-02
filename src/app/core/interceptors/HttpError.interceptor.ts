@@ -23,6 +23,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next
       .handle(req)
-      .pipe(catchError((error: HttpErrorResponse) => this.errorHandler.handleError(error, req.url)));
+      .pipe(catchError((error: HttpErrorResponse) => this.errorHandler.handleError(error, req)));
   }
 }

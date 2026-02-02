@@ -20,7 +20,9 @@ export class FeasibilityQueryResultApiService {
       '/' +
       feasibilityQueryResultId +
       FeasibilityQueryResultPaths.SUMMARY_RESULT;
-    const result = this.http.get<any>(this.backendService.createUrl(url));
+    const result = this.http.get<any>(this.backendService.createUrl(url), {
+      context: BackendService.getFeasibilityRequestContextToken(),
+    });
     return this.createReplySubject(result);
   }
 
@@ -29,7 +31,9 @@ export class FeasibilityQueryResultApiService {
       return this.resultObservable;
     }
 
-    const result = this.http.get<any>(resultUrl);
+    const result = this.http.get<any>(resultUrl, {
+      context: BackendService.getFeasibilityRequestContextToken(),
+    });
 
     return Observable.create((obs: any) => {
       result.subscribe(
@@ -54,12 +58,12 @@ export class FeasibilityQueryResultApiService {
   }
 
   public getDetailedResultRateLimit(): Observable<any> {
-    return this.http.get<QueryResultRateLimit>(
-      this.backendService.createUrl(
-        FeasibilityQueryResultPaths.getBaseUrl() +
-          FeasibilityQueryResultPaths.DETAILED_OBFUSCATED_RESULT_RATE_LIMIT
-      )
-    );
+    const url =
+      FeasibilityQueryResultPaths.getBaseUrl() +
+      FeasibilityQueryResultPaths.DETAILED_OBFUSCATED_RESULT_RATE_LIMIT;
+    return this.http.get<QueryResultRateLimit>(this.backendService.createUrl(url), {
+      context: BackendService.getFeasibilityRequestContextToken(),
+    });
   }
 
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<any> {
@@ -68,8 +72,9 @@ export class FeasibilityQueryResultApiService {
       '/' +
       feasibilityQueryResultId +
       FeasibilityQueryResultPaths.DETAILED_OBFUSCATED_RESULT;
-    const result = this.http.get<any>(this.backendService.createUrl(url));
-    return this.createReplySubject(result);
+    return this.http.get<any>(this.backendService.createUrl(url), {
+      context: BackendService.getFeasibilityRequestContextToken(),
+    });
   }
 
   private createReplySubject(result: any): Observable<any> {
