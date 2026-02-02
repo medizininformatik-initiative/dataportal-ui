@@ -25,14 +25,14 @@ export class UploadService {
 
   private onReaderLoad(result: string | ArrayBuffer | null): void {
     const importedQuery = JSON.parse(result as string);
-    this.upload(importedQuery);
+    this.uploadAndTranslate(importedQuery);
   }
 
   /**
    * Uploads the CRTDL after successful validation
    * @param crtdl
    */
-  private upload(crtdl: CRTDLData): void {
+  private uploadAndTranslate(crtdl: CRTDLData): void {
     this.crtdlValidationService
       .validate(crtdl)
       .pipe(
