@@ -205,6 +205,7 @@
         "BULK_SEARCH": "To bulk search",
         "BULK_SEARCH_TOOLTIP": "Navigate to bulk search to add multiple criteria at once",
         "DATA_REQUEST": "Data definition",
+        "RETRY_AFTER": "Please wait {{seconds}} seconds",
         "SAVE_DATAQUERY": "Save data definition",
         "SEND_QUERY": "Send Feasibility query",
         "SEND_QUERY_TOOLTIP": "Execute the feasibility query"
@@ -524,6 +525,7 @@
     }
   },
   "VALIDATION": {
+    "10000": "invalid schema",
     "10001": "Context is missing.",
     "20001": "The combination of context and term code(s) was not found.",
     "20002": "The term code does not exist in the system.",

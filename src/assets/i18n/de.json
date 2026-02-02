@@ -208,7 +208,8 @@
         "DATA_REQUEST": "Datendefinition",
         "SAVE_DATAQUERY": "Datendefinition speichern",
         "SEND_QUERY": "Machbarkeitsabfrage senden",
-        "SEND_QUERY_TOOLTIP": "Machbarkeitsabfrage ausführen"
+        "SEND_QUERY_TOOLTIP": "Machbarkeitsabfrage ausführen",
+        "RETRY_AFTER": "Bitte warten {{seconds}} Sekunden"
       },
       "CONSENT": {
         "CENTRAL": "Zentral",
@@ -529,6 +530,7 @@
     }
   },
   "VALIDATION": {
+    "10000": "Schema ist ungültig",
     "10001": "Kontext fehlt.",
     "20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden.",
     "20002": "Der Termcode existiert nicht im System.",
