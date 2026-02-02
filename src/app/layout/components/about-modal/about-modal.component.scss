@@ -1,27 +1,48 @@
-label {
-  font-size: 0.8rem;
-  letter-spacing: 1px;
+.about-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #5a79af 0%, #9bb823 100%);
+  color: white;
+  font-size: 1.25rem;
+  border-radius: 4px;
+
+  .icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 }
 
-.text {
-  padding: 10px;
-  max-width: 100%;
-  line-height: 1.5;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px #999;
+.about-modal-content {
+  background: white;
+  padding: 1.5rem;
+  flex: 1;
 }
-.header {
-  margin-top: 1rem;
-  margin-bottom: 5px;
-  font-weight: bold;
-  text-decoration: underline;
+
+.info-section {
+  margin-bottom: 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
-.modal-box {
-  padding: 1em 2em 3em 2em;
-  min-width: 400px;
-  background-color: rgb(90, 121, 175, 0.1);
+
+.section-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #5a79af;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #9bb823;
+  margin-left: -1rem;
 }
-.spacer {
-  height: 10px;
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem;
+  background: white;
+  border-top: 1px solid #e9ecef;
 }

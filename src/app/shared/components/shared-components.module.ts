@@ -42,6 +42,8 @@ import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
 import { InformationSectionComponent } from './information-section/information-section.component';
 import { DownloadCRTDLComponent } from './download-crtdl/download-crtdl.component';
+import { InfoTileComponent } from './info-tile/info-tile.component';
+import { ErrorDisplayComponent } from './error-display/error-display.component';
 
 const SHARED_DECLARATIONS = [
   ActionBarComponent,
@@ -78,6 +80,8 @@ const SHARED_DECLARATIONS = [
   SearchModeToggleComponent,
   InformationSectionComponent,
   DownloadCRTDLComponent,
+  InfoTileComponent,
+  ErrorDisplayComponent,
 ];
 
 @NgModule({

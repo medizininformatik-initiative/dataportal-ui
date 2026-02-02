@@ -2,6 +2,43 @@
   "APPLAYOUT": {
     "HEADER": {
       "ABOUT": "About the Portal",
+      "ABOUT_MODAL": {
+        "BACKEND": "Backend",
+        "BRANCH": "Branch",
+        "BUILD_TIME": "Build time",
+        "COMMIT": "Commit",
+        "COPYRIGHT": "Copyright",
+        "DOWNLOAD": "Download Information",
+        "EMAIL": "Email",
+        "ONTOLOGY": "Ontology",
+        "UI": "UI",
+        "VERSION": "Version"
+      },
+      "CLOSE": "Close",
+      "ERROR_LOG": {
+        "LABEL": "Error Log",
+        "MODAL": {
+          "CLEAR": "Clear Error Log",
+          "DESCRIPTION": "The following validation issues were found:",
+          "DOWNLOAD": "Download Error Log",
+          "HEADER": "Error Log",
+          "ITEM": {
+            "AFTER_DATE": "After:",
+            "ALLOWED": "Allowed:",
+            "BEFORE_DATE": "Before:",
+            "CODE": "Code:",
+            "CRITERIA_SETS": "Criteria Sets:",
+            "DETAILS": "Details:",
+            "LOCATION": "Location:",
+            "MAX_VALUE": "Max Value:",
+            "MESSAGE": "Message:",
+            "MIN_VALUE": "Min Value:",
+            "SELECTED": "Selected:",
+            "TERMCODE": "Termcode:",
+            "VALUE_SETS": "Value Sets:"
+          }
+        }
+      },
       "LOGOUT": "Log Out",
       "PROPOSAL_PORTAL": "Proposal Portal"
     },
@@ -168,6 +205,7 @@
         "BULK_SEARCH": "To bulk search",
         "BULK_SEARCH_TOOLTIP": "Navigate to bulk search to add multiple criteria at once",
         "DATA_REQUEST": "Data definition",
+        "RETRY_AFTER": "Please wait {{seconds}} seconds",
         "SAVE_DATAQUERY": "Save data definition",
         "SEND_QUERY": "Send Feasibility query",
         "SEND_QUERY_TOOLTIP": "Execute the feasibility query"
@@ -310,6 +348,7 @@
       "TAB_TITLE": "What are References?",
       "TITLE": "References"
     },
+    "TAB_LABEL": "Information",
     "TERMCODE": {
       "DESCRIPTION": "Term codes are standardized codes from terminology systems that represent specific medical concepts. Examples include ICD-10 codes for diagnoses, LOINC codes for laboratory tests, and SNOMED CT codes for clinical findings. Each term code uniquely identifies a medical concept and ensures consistent communication across healthcare systems.",
       "MULTIPLE_DESCRIPTION": "When an element has multiple term codes, it means that the element can be represented by different coding standards or that there are equivalent codes across different terminology systems. For example, a diagnosis might have both an ICD-10 code and a SNOMED CT code that represent the same clinical concept. This allows flexibility in data exchange and ensures interoperability across different healthcare systems and organizations.",
@@ -322,8 +361,7 @@
     "TOKEN_FILTER": {
       "DESCRIPTION": "Token filters enable the selection of standardized medical terms (concepts) from terminology systems such as ICD-10, SNOMED CT, or LOINC. These codes describe diagnoses, findings, or laboratory values in a clear and machine-readable manner. You can search for individual codes, add multiple codes simultaneously (bulk search), or select from predefined value sets. This makes search queries precise and interoperable.",
       "TITLE": "Token Filter (Concepts)"
-    },
-    "TAB_LABEL": "Information"
+    }
   },
   "LANGUAGE": {
     "ENGLISH": "English",
@@ -352,7 +390,8 @@
     "LOAD": "Load Data Definition",
     "PATIENTS": "Number of patients:",
     "SAVED_FEASIBILITY": "Saved Feasibility Queries",
-    "TITLE": "Title"
+    "TITLE": "Title",
+    "VALIDATION_REPORT": "Load Validation Report"
   },
   "SHARED_COMPONENTS": {
     "ACTION_BAR": {
@@ -484,5 +523,27 @@
       "RESULT": "Feasibility Query - Result",
       "SEARCH": "Feasibility Query - Search"
     }
+  },
+  "VALIDATION": {
+    "10000": "invalid schema",
+    "10001": "Context is missing.",
+    "20001": "The combination of context and term code(s) was not found.",
+    "20002": "The term code does not exist in the system.",
+    "20003": "The time restriction is invalid. beforeDate must not be earlier than afterDate.",
+    "20004": "The selected unit is invalid.",
+    "20005": "The selected value is outside the defined range.",
+    "20006": "The selected code is not part of the referenced criteria sets.",
+    "20007": "The selected code is not part of the referenced value sets.",
+    "20008": "The minimum value must be smaller than the maximum value.",
+    "50001": "UI profile was not found.",
+    "1000001": "Code filter was not found in the value set.",
+    "2000001": "Attribute group with the specified groupReference was not found.",
+    "2000002": "attributeRef was not found in the attribute group's ontology profile.",
+    "2000003": "Code filter was not found in the value set.",
+    "2000004": "Code filter was not found in the value set.",
+    "2000005": "Linked group is missing for an attribute of type reference.",
+    "2000006": "Linked group was not found in CRTDL.",
+    "2000007": "The end date must be after the start date.",
+    "00001": "JSON could not be processed."
   }
 }

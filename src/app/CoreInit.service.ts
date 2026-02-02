@@ -14,6 +14,7 @@ import { TerminologySystemProvider } from './service/Provider/TerminologySystemP
 import { UiProfileProviderService } from './service/Provider/UiProfileProvider.service';
 import { UiProfileResponseData } from './model/Interface/UiProfileResponseData';
 import { UserProfileService } from './service/User/UserProfile.service';
+import { ActuatorInformationService } from './service/Actuator/ActuatorInformation.service';
 @Injectable({ providedIn: 'root' })
 export class CoreInitService {
   constructor(
@@ -26,7 +27,8 @@ export class CoreInitService {
     private actuatorApiService: ActuatorApiService,
     private userProfileService: UserProfileService,
     private terminologyApiService: TerminologyApiService,
-    private uiProfileProviderService: UiProfileProviderService
+    private uiProfileProviderService: UiProfileProviderService,
+    private actuatorInformationService: ActuatorInformationService
   ) {}
 
   /**
@@ -43,6 +45,7 @@ export class CoreInitService {
       concatMap(() => this.initUserProfile()),
       concatMap(() => this.checkBackendHealth()),
       concatMap(() => this.getUiProfilesData()),
+      concatMap(() => this.loadActuatorInformation()),
       concatMap(() => this.initTerminologySystems()),
       concatMap(() =>
         this.initPatientProfile().pipe(map((patientProfileResult) => ({ patientProfileResult })))
@@ -139,6 +142,17 @@ export class CoreInitService {
       catchError((err) => {
         console.error('Failed to retrieve UiProfiles data:', err);
         return throwError(() => err);
+      })
+    );
+  }
+
+  private loadActuatorInformation(): Observable<boolean> {
+    return this.actuatorInformationService.getActuatorInfo().pipe(
+      tap((info) => console.log('Actuator information loaded:', !!info)),
+      map(() => true),
+      catchError((err) => {
+        console.error('Failed to load Actuator information:', err);
+        return of(false);
       })
     );
   }

@@ -1,7 +1,7 @@
 import { Issue } from '../Utilities/Issue';
 import { QueryResultLine } from './QueryResultLine';
 import { QueryResultLineData } from '../Interface/QueryResultLineData';
-import { IssueData } from '../Interface/IssueData';
+import { IssueData } from '../../core/model/Feasibility/IssueData';
 import { QueryResultData } from '../Interface/QueryResultData';
 
 export class QueryResult {

@@ -1,9 +1,10 @@
+import { ActuatorData } from 'src/app/model/Interface/ActuatorInfoData/ActuatorData';
+import { ActuatorPaths } from '../Paths/ActuatorPath';
+import { BackendService } from '../Backend.service';
+import { BuildInformationData } from 'src/app/model/Interface/ActuatorInfoData/BuildInformationData';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BackendService } from '../Backend.service';
-import { ActuatorPaths } from '../Paths/ActuatorPath';
 import { Observable } from 'rxjs';
-import { BuildInformationData } from 'src/app/model/Interface/ActuatorInfoData/BuildInformationData';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,8 @@ import { BuildInformationData } from 'src/app/model/Interface/ActuatorInfoData/B
 export class ActuatorApiService {
   constructor(private http: HttpClient, private backendService: BackendService) {}
 
-  public getActuatorInfo(): Observable<any> {
-    return this.http.get<any>(this.backendService.createUrl(ActuatorPaths.INFO_ENDPOINT), {
+  public getActuatorInfo(): Observable<ActuatorData> {
+    return this.http.get<ActuatorData>(this.backendService.createUrl(ActuatorPaths.INFO_ENDPOINT), {
       headers: this.backendService.getHeaders(),
     });
   }

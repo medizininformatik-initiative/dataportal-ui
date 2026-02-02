@@ -5,5 +5,5 @@ import { GitCommitData } from './GitCommitData';
 export interface GitInformationData {
   build: BuildDetailsData
   commit: GitCommitData
-  branch: GitBranchData
+  branch: string
 }

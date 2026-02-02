@@ -1,7 +1,6 @@
 import { catchError, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -9,31 +8,21 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { ErrorCodes, SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { HttpErrorHandlerService } from './HttpErrorHandler.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private snackbar: SnackbarService) {}
+  constructor(private errorHandler: HttpErrorHandlerService) {}
 
+  /**
+   * Intercepts HTTP responses to handle errors globally.
+   * @param req
+   * @param next
+   * @returns
+   */
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 404) {
-          this.handleErrorCodes(error.status);
-        }
-        if (error.error?.issue) {
-          this.handleErrorCodes(error.error.issue[0]?.code);
-        }
-        if (error.error?.issues) {
-          const retryAfter = error.headers.get('Retry-After');
-          this.handleErrorCodes(error.error.issues[0]?.code, Number(retryAfter));
-        }
-        return throwError(error);
-      })
-    );
-  }
-
-  public handleErrorCodes(errorCode, retryAfter?: number) {
-    this.snackbar.displayErrorMessage(errorCode, retryAfter);
+    return next
+      .handle(req)
+      .pipe(catchError((error: HttpErrorResponse) => this.errorHandler.handleError(error, req)));
   }
 }

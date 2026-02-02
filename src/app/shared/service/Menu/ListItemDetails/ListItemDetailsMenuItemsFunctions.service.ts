@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { map, switchMap, take } from 'rxjs';
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SnackbarHelperService } from 'src/app/service/SnackbarHelper.service';
+import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,7 @@ export class ListItemDetailsMenuItemsFunctionsService {
     private searchTermDetailsService: SearchTermDetailsService,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
     private searchTermDetailsProviderService: SearchTermDetailsProviderService,
-    private snackbarHelperService: SnackbarHelperService
+    private snackbarMessageService: SnackbarMessageService
   ) {}
 
   public showCriteriaInResultList(id: string) {
@@ -43,7 +43,7 @@ export class ListItemDetailsMenuItemsFunctionsService {
           this.feasibilityQueryProviderHub.addCriteriaToStage(criteria);
         })
       )
-      .subscribe(() => this.snackbarHelperService.displayAddedToCriteriaStage());
+      .subscribe(() => this.snackbarMessageService.displayAddedToCriteriaStage());
   }
 
   public searchCriteria(id: string) {

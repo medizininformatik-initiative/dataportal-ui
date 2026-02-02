@@ -43,13 +43,6 @@ export class FeasibilityQueryApiService {
     });
   }
 
-  public validateStructuredQuery(structuredQuery: StructuredQuery): Observable<any> {
-    const url = FeasibilityQueryPaths.EXECUTE_QUERY + FeasibilityQueryPaths.VALIDATE;
-    return this.http.post<any>(this.backendService.createUrl(url), structuredQuery, {
-      headers: this.backendService.getHeaders(),
-    });
-  }
-
   public getStructuredQueryById(id: number): Observable<any> {
     const url = this.backendService.createUrl(
       FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id.toString()
@@ -60,7 +53,7 @@ export class FeasibilityQueryApiService {
   }
 
   public getSavedQuerySlotCount(): Observable<any> {
-    const url = this.backendService.createUrl(FeasibilityQueryPaths.SAVED_QUERY_SLOTS_ENDPOINT);
+    const url = this.backendService.createUrl(FeasibilityQueryPaths.SAVED_QUERY_SLOTS);
     return this.http.get(url, {
       headers: this.backendService.getHeaders(),
     });

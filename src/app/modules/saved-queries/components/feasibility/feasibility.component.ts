@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConsentService } from '../../../../service/Consent/Consent.service';
 import { DataQueryStorageService } from 'src/app/service/DataQuery/DataQueryStorage.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { map, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { first, Observable, Subscription } from 'rxjs';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class FeasibilityComponent implements OnInit, OnDestroy {
   savedQueries$: Observable<InterfaceSavedQueryTile[]>;
   loadSubscription: Subscription;
+  loadValidationReportSubscription: Subscription;
   constructor(
     private dataQueryStorageService: DataQueryStorageService,
     private navigationHelperService: NavigationHelperService,
@@ -32,6 +33,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.loadSubscription?.unsubscribe();
+    this.loadValidationReportSubscription?.unsubscribe();
   }
 
   private loadSavedQueries() {
@@ -45,6 +47,14 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.loadSavedQueries();
       });
+  }
+
+  public loadValidationReport(id: string) {
+    this.loadValidationReportSubscription?.unsubscribe();
+    this.loadValidationReportSubscription = this.dataQueryStorageService
+      .getValidationReportForDataquery(Number(id))
+      .pipe(take(1))
+      .subscribe();
   }
 
   public loadQueryIntoEditor(id: string) {

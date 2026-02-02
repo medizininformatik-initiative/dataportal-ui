@@ -1,7 +1,8 @@
 import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpContext, HttpContextToken, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
+import { IS_FEASIBILITY_REQUEST, IS_VALIDATION } from './HttpContextToken';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,22 @@ export class BackendService {
       url += '?' + paramString;
     }
     return url;
+  }
+
+  /**
+   * Returns an HttpContext with the validation context token set to true
+   * @returns
+   */
+  public static getValidationContextToken(): HttpContext {
+    return new HttpContext().set(IS_VALIDATION, true);
+  }
+
+  /**
+   * Returns an HttpContext with the feasibility request context token set to true
+   * @returns
+   */
+  public static getFeasibilityRequestContextToken(): HttpContext {
+    return new HttpContext().set(IS_FEASIBILITY_REQUEST, true);
   }
 
   public chunkArray<T>(array: T[], chunkSize: number): T[][] {

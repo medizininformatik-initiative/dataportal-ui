@@ -1,8 +1,9 @@
 import { CRTDL2UIModelService } from '../../Translator/CRTDL/CRTDL2UIModel.service';
+import { CRTDLValidationService } from '../../Validation/CRTDLValidation.service';
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service';
+import { map, Observable, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
-import { map, Observable, switchMap } from 'rxjs';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQueryListItem';
@@ -16,7 +17,8 @@ import { TypeAssertion } from '../../TypeGuard/TypeAssersations';
 export class ReadDataQueryService {
   constructor(
     private dataQueryApiService: DataQueryApiService,
-    private crtdl2UIModelService: CRTDL2UIModelService
+    private crtdl2UIModelService: CRTDL2UIModelService,
+    private validationService: CRTDLValidationService
   ) {}
 
   public readSavedQueries(): Observable<InterfaceSavedQueryTile[]> {
@@ -47,20 +49,21 @@ export class ReadDataQueryService {
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
       switchMap((data: SavedDataQueryData) => {
-        try {
-          TypeAssertion.assertSavedDataQueryData(data);
-          return this.transformDataQuery(data);
-        } catch (error) {
-          console.error(error);
-          throw error;
-        }
+        TypeAssertion.assertSavedDataQueryData(data);
+        return this.transformDataQuery(data);
       })
     );
   }
 
+  public getValidationReportForDataquery(id: number): Observable<boolean> {
+    return this.dataQueryApiService
+      .getDataQueryById(id)
+      .pipe(switchMap((data: SavedDataQueryData) => this.validationService.validate(data.content)));
+  }
+
   private transformDataQuery(data: SavedDataQueryData): Observable<SavedDataQuery> {
     return this.crtdl2UIModelService
-      .createCRDTLFromJson(data.content)
+      .createCRTDLFromJson(data.content)
       .pipe(map((uiCRTDL) => SavedDataQuery.fromJson(data, uiCRTDL)));
   }
 }

@@ -1,0 +1,67 @@
+<div class="error-item">
+  <div class="error-details">
+    <div class="error-location">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.LOCATION' | translate }}
+      <code>{{ error.getLocation() }}</code>
+    </div>
+    <div class="error-location">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.CODE' | translate }}
+      <code>{{ error.getCode() }}</code>
+    </div>
+    <div class="error-location">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MESSAGE' | translate }}
+      <code>{{ error.getMessage() }}</code>
+    </div>
+    <div class="error-extra">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
+      <code>
+        {{ 'VALIDATION.' + code | translate }}
+      </code>
+    </div>
+    <div class="error-extra" *ngIf="error.getCriteriaSetValidationIssue()">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.TERMCODE' | translate }}
+      <code>{{ error.getCriteriaSetValidationIssue().getCriteriaSet() | json }}</code>
+    </div>
+    <div class="error-extra" *ngIf="error.getValueSetValidationIssue()">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.VALUE_SETS' | translate }}
+      <code>{{ error.getValueSetValidationIssue().getValueSets() | json }}</code>
+    </div>
+    <div class="error-extra" *ngIf="error.getTimeRestrictionValidationIssue()">
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.AFTER_DATE' | translate }}
+      <code>{{ error.getTimeRestrictionValidationIssue().getAfterDate() | json }}</code>
+      <br />
+      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.BEFORE_DATE' | translate }}
+      <code>{{ error.getTimeRestrictionValidationIssue().getBeforeDate() | json }}</code>
+    </div>
+    <div class="error-extra" *ngIf="error.getQuantityUnitValidationIssue()">
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.SELECTED' | translate }}
+        <code>{{ error.getQuantityUnitValidationIssue()?.getSelected() }}</code>
+      </div>
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.ALLOWED' | translate }}
+        <code>{{ error.getQuantityUnitValidationIssue()?.getAllowed() | json }}</code>
+      </div>
+    </div>
+    <div class="error-extra" *ngIf="error.getDataExtractionValidationIssue()">
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.BEFORE_DATE' | translate }}
+        <code>{{ error.getDataExtractionValidationIssue()?.getStart() }}</code>
+      </div>
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.AFTER_DATE' | translate }}
+        <code>{{ error.getDataExtractionValidationIssue()?.getEnd() }}</code>
+      </div>
+    </div>
+    <div class="error-extra" *ngIf="error.getQuantityRangeValidationIssue()">
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MIN_VALUE' | translate }}
+        <code>{{ error.getQuantityRangeValidationIssue()?.getMinValue() }}</code>
+      </div>
+      <div>
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MAX_VALUE' | translate }}
+        <code>{{ error.getQuantityRangeValidationIssue()?.getMaxValue() }}</code>
+      </div>
+    </div>
+  </div>
+</div>

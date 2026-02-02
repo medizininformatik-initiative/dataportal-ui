@@ -1,20 +1,19 @@
-import { GitInformationData } from 'src/app/model/Interface/ActuatorInfoData/GitData/GitInformationData';
-import { GitBranchInformation } from './GitBranchInformation';
 import { GitBuildInformation } from './GitBuildInformation';
 import { GitCommitInformation } from './GitCommitInformation';
+import { GitInformationData } from 'src/app/model/Interface/ActuatorInfoData/GitData/GitInformationData';
 
 export class GitInformation {
   private buildInformation: GitBuildInformation;
-  private branchInformation: GitBranchInformation;
+  private branch: string;
   private commitInformation: GitCommitInformation;
 
   constructor(
     buildInformation: GitBuildInformation,
-    branchInformation: GitBranchInformation,
+    branch: string,
     commitInformation: GitCommitInformation
   ) {
     this.buildInformation = buildInformation;
-    this.branchInformation = branchInformation;
+    this.branch = branch;
     this.commitInformation = commitInformation;
   }
 
@@ -26,12 +25,12 @@ export class GitInformation {
     this.buildInformation = buildInformation;
   }
 
-  public getBranchInformation(): GitBranchInformation {
-    return this.branchInformation;
+  public getBranch(): string {
+    return this.branch;
   }
 
-  public setBranchInformation(branchInformation: GitBranchInformation): void {
-    this.branchInformation = branchInformation;
+  public setBranch(branch: string): void {
+    this.branch = branch;
   }
 
   public getCommitInformation(): GitCommitInformation {
@@ -45,7 +44,7 @@ export class GitInformation {
   public static fromJson(json: GitInformationData): GitInformation {
     return new GitInformation(
       GitBuildInformation.fromJson(json.build),
-      GitBranchInformation.fromJson(json.branch),
+      json.branch,
       GitCommitInformation.fromJson(json.commit)
     );
   }

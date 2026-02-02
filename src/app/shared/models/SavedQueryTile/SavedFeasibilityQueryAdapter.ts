@@ -9,6 +9,14 @@ export class SavedFeasibilityQueryAdapter {
       date: savedFeasibilityQuery.getCreatedAt(),
       label: savedFeasibilityQuery.getLabel(),
       totalNumberOfPatients: savedFeasibilityQuery.getTotalNumberOfResults(),
+      ccdl: {
+        exists: savedFeasibilityQuery.getCcdl().exists,
+        isValid: savedFeasibilityQuery.getCcdl().isValid,
+      },
+      dataExtraction: {
+        exists: savedFeasibilityQuery.getDataSelection().exists,
+        isValid: savedFeasibilityQuery.getDataSelection().isValid,
+      },
     };
   }
 }

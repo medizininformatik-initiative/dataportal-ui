@@ -1,11 +1,4 @@
-import {
-  faAngleDoubleRight,
-  faDownload,
-  faExternalLinkAlt,
-  faSitemap,
-  faUpload,
-} from '@fortawesome/free-solid-svg-icons';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faBug } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -55,6 +48,13 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faUsersCog } from '@fortawesome/free-solid-svg-icons';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { faWrench } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleDoubleRight,
+  faDownload,
+  faExternalLinkAlt,
+  faSitemap,
+  faUpload,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   faAngleDoubleLeft,
   faArrowRight,
@@ -144,4 +144,5 @@ export const FONT_AWESOME_ICONS = [
   faSitemap,
   faUpload,
   faDownload,
+  faBug,
 ];

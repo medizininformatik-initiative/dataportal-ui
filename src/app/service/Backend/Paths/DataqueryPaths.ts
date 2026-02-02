@@ -3,7 +3,6 @@ export class DataqueryPaths {
   public static readonly DATA = `${DataqueryPaths.BASE_URL}/data`;
   public static readonly CRTDL = `crtdl`;
   public static readonly SAVED_QUERY_SLOTS = `${DataqueryPaths.BASE_URL}/data/saved-query-slots`;
-  public static readonly VALIDATE = `${DataqueryPaths}/validate`;
   public static readonly SKIP_VALIDATION = `?skip-validation=`;
 
   public getBaseUrl(): string {

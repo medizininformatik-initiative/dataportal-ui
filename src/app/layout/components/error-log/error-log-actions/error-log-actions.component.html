@@ -1,0 +1,21 @@
+<div class="action-buttons">
+  <num-button
+    [matTooltip]="'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DOWNLOAD' | translate"
+    class="download-btn"
+    type="blue"
+    (click)="download()"
+  >
+    {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DOWNLOAD' | translate }}
+  </num-button>
+  <num-button
+    [matTooltip]="'APPLAYOUT.HEADER.ERROR_LOG.MODAL.CLEAR' | translate"
+    class="clear-btn"
+    type="blue"
+    (click)="clear()"
+  >
+    {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.CLEAR' | translate }}
+  </num-button>
+  <num-button [matTooltip]="'APPLAYOUT.HEADER.CLOSE' | translate" type="blue" (click)="close()">
+    {{ 'APPLAYOUT.HEADER.CLOSE' | translate }}
+  </num-button>
+</div>
