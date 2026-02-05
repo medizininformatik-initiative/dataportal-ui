@@ -4,4 +4,12 @@ export interface InterfaceSavedQueryTile {
   totalNumberOfPatients: number
   comment?: string
   date: string
+  ccdl: {
+    exists: boolean
+    isValid: boolean
+  }
+  dataExtraction: {
+    exists: boolean
+    isValid: boolean
+  }
 }

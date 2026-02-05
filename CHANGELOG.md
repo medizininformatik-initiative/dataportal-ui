@@ -1,5 +1,19 @@
 # Changelog
 
+## v6.6.0 (2025-02-05)
+
+### Features
+* Added a validation endpoint for CRTDLs to ensure only valid CRTDL files can be uploaded and used in the application. [#409](https://github.com/medizininformatik-initiative/dataportal-ui/issues/409)
+* Implemented a reusable modal to display validation errors, including support for reopening and an extended data model. [#507](https://github.com/medizininformatik-initiative/dataportal-ui/issues/507)
+
+### Changes
+* Removed support for uploading CCDL files, as this feature is no longer supported. [#320](https://github.com/medizininformatik-initiative/dataportal-ui/issues/320), [#471](https://github.com/medizininformatik-initiative/dataportal-ui/issues/471)
+* Introduced a global `DataportalErrorHandler` to capture and display application-wide errors, replacing Angular’s default `ErrorHandler`. [#433](https://github.com/medizininformatik-initiative/dataportal-ui/issues/433)
+* Refactored the HTTP interceptor to centralize error handling via the new `DataportalErrorHandler`. [#428](https://github.com/medizininformatik-initiative/dataportal-ui/issues/428)
+
+### Fixed
+* Recommended references on loaded CRTDL will not be set [#512](https://github.com/medizininformatik-initiative/dataportal-ui/issues/512)
+
 ## v6.5.0 (2025-12-10)
 
 ### Features

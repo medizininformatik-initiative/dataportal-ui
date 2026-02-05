@@ -1,8 +1,8 @@
-import { ActuatorInformationService } from 'src/app/service/Actuator/ActuatorInformation.service';
-import { BuildInformation } from 'src/app/model/Actuator/Information/BuildInformation';
+import { AboutInfoBuilderService } from 'src/app/service/AboutInfo/AboutInfoBuilder.service';
+import { AboutInfoData } from 'src/app/model/Interface/AboutInfo/AboutInfoData';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
+import { DownloadAboutInfoService } from 'src/app/service/Download/DownloadAboutInfo.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'num-about-modal',
@@ -10,31 +10,23 @@ import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsPr
   styleUrls: ['./about-modal.component.scss'],
 })
 export class AboutModalComponent implements OnInit {
-  actuatorInfo$: Observable<any>;
-  text: any;
-  legalVersion: string;
-  legalCopyrightOwner: string;
-  legalCopyrightYear: string;
-  legalEmail: string;
-  backendBuildTime: string;
+  aboutInfo: AboutInfoData;
 
   constructor(
-    private actuatorInformationService: ActuatorInformationService,
-    private appSettingsProviderService: AppSettingsProviderService
+    private readonly aboutInfoBuilder: AboutInfoBuilderService,
+    private readonly downloadAboutInfoService: DownloadAboutInfoService,
+    private readonly dialogRef: MatDialogRef<AboutModalComponent>
   ) {}
 
   ngOnInit() {
-    this.getActuatorInfo();
+    this.aboutInfo = this.aboutInfoBuilder.buildAboutInfo();
   }
 
-  public getActuatorInfo() {
-    this.actuatorInformationService.getActuatorInformation().subscribe((info) => {
-      this.text = info;
-      this.backendBuildTime = new Date(info.git?.build?.time).toLocaleString();
-    });
-    this.legalVersion = this.appSettingsProviderService.getVersion();
-    this.legalCopyrightOwner = this.appSettingsProviderService.getCopyrightOwner();
-    this.legalCopyrightYear = this.appSettingsProviderService.getCopyrightYear();
-    this.legalEmail = this.appSettingsProviderService.getEmail();
+  public downloadAboutInfo(): void {
+    this.downloadAboutInfoService.download();
+  }
+
+  public closeModal(): void {
+    this.dialogRef.close();
   }
 }

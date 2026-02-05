@@ -9,9 +9,6 @@ import { LanguageComponent } from '../language/language.component';
 import { HeaderComponent } from './header.component';
 import { OAuthService, UserInfo } from 'angular-oauth2-oidc';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FeatureProviderService } from '../../../modules/querybuilder/service/feature-provider.service';
-import { IAppConfig } from '../../../config/model/AppConfig/AppConfigData';
-import { FeatureService } from '../../../service/feature.service';
 import { IUserProfile } from '../../../shared/models/user/user-profile.interface';
 
 describe('HeaderComponent', () => {

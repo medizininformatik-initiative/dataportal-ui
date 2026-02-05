@@ -1,4 +1,3 @@
-import { AnnotatedCRTDLData } from 'src/app/model/Interface/AnnotatedCRTDLData';
 import { BackendService } from '../Backend.service';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 import { DataqueryPaths } from '../Paths/DataqueryPaths';
@@ -52,9 +51,9 @@ export class DataQueryApiService {
     });
   }
 
-  public deleteDataQueryById(dataQueryId: number): Observable<SavedDataQueryData> {
+  public deleteDataQueryById(dataQueryId: number): Observable<void> {
     const url = this.backendService.createUrl(DataqueryPaths.DATA) + '/' + dataQueryId;
-    return this.http.delete<SavedDataQueryData>(url, {
+    return this.http.delete<void>(url, {
       headers: this.backendService.getHeaders(),
     });
   }
@@ -72,13 +71,5 @@ export class DataQueryApiService {
         headers: this.backendService.getHeaders(),
       }
     );
-  }
-
-  public validateDataQuery(crtdl: CRTDLData): Observable<HttpResponse<AnnotatedCRTDLData>> {
-    const url = this.backendService.createUrl(DataqueryPaths.VALIDATE);
-    return this.http.post<AnnotatedCRTDLData>(url, crtdl, {
-      headers: this.backendService.getHeaders(),
-      observe: 'response',
-    });
   }
 }

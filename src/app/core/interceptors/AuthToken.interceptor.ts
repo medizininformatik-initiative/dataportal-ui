@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpContext,
+} from '@angular/common/http';
 
 /**
  * HTTP interceptor that automatically adds OAuth bearer tokens to outgoing requests.

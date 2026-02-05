@@ -1,16 +1,22 @@
 <num-snackbar></num-snackbar>
+<num-error-display></num-error-display>
 <mat-toolbar fxLayout="row" fxLayoutAlign="start center" color="light" fxLayoutGap="0px">
-  <img id="header-logo" src="assets/img/FDPG-Logo.svg" alt="{{ urlAlt }}" class="FDPGTheme" />
+  <img id="header-logo" [src]="imagePath" alt="{{ urlAlt }}" class="FDPGTheme" />
   <div fxFlex="100" fxLayoutAlign="end" class="margin-right">
     <num-language></num-language>
     <mat-form-field class="language-select" style="width: auto">
       <mat-select
+        [matBadge]
         hideSingleSelectionIndicator
         [placeholder]="profile?.info.name ? profile?.info.name : profile?.info.preferred_username"
       >
         <mat-option (click)="getActuatorInfo()">
           <fa-icon class="circle" size="lg" [fixedWidth]="true" [icon]="'info'"></fa-icon>
           {{ 'APPLAYOUT.HEADER.ABOUT' | translate }}
+        </mat-option>
+        <mat-option (click)="displayErrorLog()" [disabled]="!hasErrorsToDisplay()">
+          <fa-icon class="circle" size="lg" [fixedWidth]="true" [icon]="'bug'"></fa-icon>
+          {{ 'APPLAYOUT.HEADER.ERROR_LOG.LABEL' | translate }}
         </mat-option>
         <mat-option (click)="logout()">
           <fa-icon class="circle" size="lg" [fixedWidth]="true" [icon]="'sign-out-alt'"></fa-icon>

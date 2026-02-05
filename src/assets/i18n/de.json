@@ -2,6 +2,43 @@
   "APPLAYOUT": {
     "HEADER": {
       "ABOUT": "Über das Portal",
+      "ABOUT_MODAL": {
+        "BACKEND": "Backend",
+        "BRANCH": "Branch",
+        "BUILD_TIME": "Build time",
+        "COMMIT": "Commit",
+        "COPYRIGHT": "Copyright",
+        "DOWNLOAD": "Informationen herunterladen",
+        "EMAIL": "E-Mail",
+        "ONTOLOGY": "Ontologie",
+        "UI": "UI",
+        "VERSION": "Version"
+      },
+      "CLOSE": "Schließen",
+      "ERROR_LOG": {
+        "LABEL": "Fehlerprotokoll",
+        "MODAL": {
+          "CLEAR": "Fehlerprotokoll löschen",
+          "DESCRIPTION": "Folgende Validierungsprobleme wurden gefunden:",
+          "DOWNLOAD": "Fehlerprotokoll herunterladen",
+          "HEADER": "Fehlerprotokoll",
+          "ITEM": {
+            "AFTER_DATE": "Nach",
+            "ALLOWED": "Erlaubt:",
+            "BEFORE_DATE": "Vor",
+            "CODE": "Code:",
+            "CRITERIA_SETS": "Criteria Sets:",
+            "DETAILS": "Details:",
+            "LOCATION": "Ort:",
+            "MAX_VALUE": "Maximalwert:",
+            "MESSAGE": "Nachricht:",
+            "MIN_VALUE": "Minimalwert:",
+            "SELECTED": "Ausgewählt:",
+            "TERMCODE": "Termcode:",
+            "VALUE_SETS": "Value Sets:"
+          }
+        }
+      },
       "LOGOUT": "Abmelden",
       "PROPOSAL_PORTAL": "Antragsportal"
     },
@@ -171,7 +208,8 @@
         "DATA_REQUEST": "Datendefinition",
         "SAVE_DATAQUERY": "Datendefinition speichern",
         "SEND_QUERY": "Machbarkeitsabfrage senden",
-        "SEND_QUERY_TOOLTIP": "Machbarkeitsabfrage ausführen"
+        "SEND_QUERY_TOOLTIP": "Machbarkeitsabfrage ausführen",
+        "RETRY_AFTER": "Bitte warten {{seconds}} Sekunden"
       },
       "CONSENT": {
         "CENTRAL": "Zentral",
@@ -314,6 +352,7 @@
       "TAB_TITLE": "Was sind Referenzen?",
       "TITLE": "Was sind Referenzen?"
     },
+    "TAB_LABEL": "Information",
     "TERMCODE": {
       "DESCRIPTION": "Termcodes sind standardisierte Codes aus Terminologiesystemen, die spezifische medizinische Konzepte repräsentieren. Beispiele sind ICD-10-Codes für Diagnosen, LOINC-Codes für Labortests und SNOMED CT-Codes für klinische Befunde. Jeder Termcode identifiziert eindeutig ein medizinisches Konzept und gewährleistet eine konsistente Kommunikation zwischen Gesundheitssystemen.",
       "MULTIPLE_DESCRIPTION": "Wenn ein Element mehrere Termcodes hat, bedeutet dies, dass das Element durch unterschiedliche Kodierungsstandards repräsentiert werden kann oder dass es äquivalente Codes zwischen verschiedenen Terminologiesystemen gibt. Zum Beispiel kann eine Diagnose sowohl einen ICD-10-Code als auch einen SNOMED CT-Code haben, die das gleiche klinische Konzept darstellen. Dies ermöglicht Flexibilität beim Datenaustausch und gewährleistet die Interoperabilität zwischen verschiedenen Gesundheitssystemen und Organisationen.",
@@ -326,8 +365,7 @@
     "TOKEN_FILTER": {
       "DESCRIPTION": "Token-Filter ermöglichen die Auswahl standardisierter medizinischer Begriffe (Konzepte) aus Terminologiesystemen wie ICD-10, SNOMED CT oder LOINC. Diese Codes beschreiben Diagnosen, Befunde oder Laborwerte eindeutig und maschinenlesbar. Sie können einzelne Codes suchen, mehrere Codes gleichzeitig hinzufügen (Bulk-Search) oder aus vordefinierten ValueSets auswählen. Dadurch werden Suchanfragen präzise und interoperabel.",
       "TITLE": "Was ist ein Konzepte?"
-    },
-    "TAB_LABEL": "Information"
+    }
   },
   "LANGUAGE": {
     "ENGLISH": "Englisch",
@@ -356,7 +394,8 @@
     "LOAD": "Datendefinition laden",
     "PATIENTS": "Anzahl der Patienten:",
     "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen",
-    "TITLE": "Titel"
+    "TITLE": "Titel",
+    "VALIDATION_REPORT": "Fehlerprotokoll laden"
   },
   "SHARED_COMPONENTS": {
     "ACTION_BAR": {
@@ -467,7 +506,8 @@
   },
   "SNACKBAR": {
     "ERROR": {
-      "GENERIC": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+      "GENERIC": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "UPLOAD": "Fehler beim Hochladen der Datendefinition. Bitte überprüfen Sie das Fehlerprotokoll in der Kopfzeile für weitere Informationen."
     },
     "SUCCESS": {
       "DOWNLOAD": "Datenanfrage wurde heruntergeladen.",
@@ -488,5 +528,27 @@
       "RESULT": "Machbarkeitsabfrage - Ergebnis",
       "SEARCH": "Machbarkeitsabfrage - Suche"
     }
+  },
+  "VALIDATION": {
+    "10000": "Schema ist ungültig",
+    "10001": "Kontext fehlt.",
+    "20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden.",
+    "20002": "Der Termcode existiert nicht im System.",
+    "20003": "Die Zeitbeschränkung ist ungültig. beforeDate darf nicht vor afterDate liegen.",
+    "20004": "Die ausgewählte Einheit ist ungültig.",
+    "20005": "Der ausgewählte Wert liegt nicht innerhalb der definierten Grenzen.",
+    "20006": "Der ausgewählte Code ist nicht Teil der referenzierten criteria sets.",
+    "20007": "Der ausgewählte Code ist nicht Teil der referenzierten value sets.",
+    "20008": "Der minimale Wert muss kleiner als der maximale Wert sein.",
+    "50001": "UiProfil wurde nicht gefunden.",
+    "1000001": "Code-Filter wurde im value set nicht gefunden.",
+    "2000001": "Attributgruppe mit groupReference wurde nicht gefunden.",
+    "2000002": "attributeRef wurde im Ontologieprofil der Attributgruppe nicht gefunden.",
+    "2000003": "Code-Filter wurde im value set nicht gefunden.",
+    "2000004": "Code-Filter wurde im value set nicht gefunden.",
+    "2000005": "Verknüpfte Gruppe fehlt für Attribut vom Typ Referenz.",
+    "2000006": "Verknüpfte Gruppe wurde in CRTDL nicht gefunden.",
+    "2000007": "Das Enddatum muss nach dem Startdatum liegen.",
+    "00001": "JSON konnte nicht verarbeitet werden."
   }
 }

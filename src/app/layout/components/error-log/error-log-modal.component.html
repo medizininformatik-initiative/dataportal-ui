@@ -1,0 +1,13 @@
+<num-modal-window [displaySaveButtons]="false">
+  <num-error-log-header></num-error-log-header>
+  <div class="error-summary">
+    {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DESCRIPTION' | translate }}
+  </div>
+  <div class="error-log-content">
+    <div class="error-list">
+      <num-error-log-item *ngFor="let error of errors" [error]="error"></num-error-log-item>
+    </div>
+  </div>
+
+  <num-error-log-actions></num-error-log-actions>
+</num-modal-window>

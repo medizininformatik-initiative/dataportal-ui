@@ -23,12 +23,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { NgModule } from '@angular/core';
-import { MatStepperModule } from '@angular/material/stepper';
 
 const MATERIAL_MODULES = [
   MatSidenavModule,
@@ -61,6 +62,7 @@ const MATERIAL_MODULES = [
   MatMenuModule,
   MatBadgeModule,
   MatStepperModule,
+  MatTooltipModule,
 ];
 
 @NgModule({

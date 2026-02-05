@@ -114,7 +114,7 @@ export class DataExtraction2UiDataSelectionService {
     attributes: AttributesData[],
     profileFields: ProfileFields
   ): SelectedReferenceField[] {
-    return attributes
+    const result = attributes
       .filter((attribute) => attribute.linkedGroups && attribute.linkedGroups.length > 0)
       .map((attribute) => {
         const matchingField = this.findReferenceField(
@@ -128,6 +128,17 @@ export class DataExtraction2UiDataSelectionService {
         }
       })
       .filter((element) => element !== undefined);
+    profileFields.getReferenceFields().forEach((refField) => {
+      if (refField.getRecommended()) {
+        const foudnRef = result.find(
+          (res) => res.getSelectedField().getElementId() === refField.getElementId()
+        );
+        if (!foudnRef) {
+          refField.setRecommended(false);
+        }
+      }
+    });
+    return result;
   }
 
   /*TODO: Snackbar message is just a temporary solution. Will be obsolete with Backend validation*/
