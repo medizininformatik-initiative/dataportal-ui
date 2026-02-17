@@ -13,9 +13,10 @@ export class BasicField extends AbstractField {
     recommended: boolean,
     isSelected: boolean,
     isRequired: boolean,
+    deprecated: boolean,
     type: string
   ) {
-    super(elementId, display, description, isRequired, recommended, type);
+    super(elementId, display, description, isRequired, recommended, deprecated, type);
     this.children = children;
     this.isSelected = isSelected;
   }

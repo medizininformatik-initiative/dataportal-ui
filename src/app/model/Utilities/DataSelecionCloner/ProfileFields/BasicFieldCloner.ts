@@ -19,6 +19,7 @@ export class BasicFieldCloner {
       basicField.getRecommended(),
       basicField.getIsSelected(),
       basicField.getIsRequired(),
+      basicField.getDeprecated(),
       basicField.getType()
     );
   }

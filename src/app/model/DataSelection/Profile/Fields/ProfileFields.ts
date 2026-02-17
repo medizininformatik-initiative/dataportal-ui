@@ -30,6 +30,10 @@ export class ProfileFields {
     return this.fieldTree;
   }
 
+  public setFieldTree(basicFields: BasicField[]): void {
+    this.fieldTree = basicFields;
+  }
+
   public getReferenceFields(): ReferenceField[] {
     return this.referenceFields;
   }

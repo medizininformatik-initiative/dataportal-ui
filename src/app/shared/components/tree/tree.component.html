@@ -32,14 +32,17 @@
         </div>
       </div>
       <div class="node-display-container width-80">
-        <span
-          (click)="checkboxSelected(node)"
-          class="data-display"
-          matTooltipPosition="after"
-          matTooltipShowDelay="300"
-          [matTooltip]="node.data.display | displayTranslation"
-          >{{ node.data.display | displayTranslation }}</span
-        >
+        <div>
+          <span *ngIf="node.data.isDeprecated" style="font-weight: bold"> (deprecated) </span>
+          <span
+            (click)="checkboxSelected(node)"
+            class="data-display"
+            matTooltipPosition="after"
+            matTooltipShowDelay="300"
+            [matTooltip]="node.data.display | displayTranslation"
+            >{{ node.data.display | displayTranslation }}</span
+          >
+        </div>
         <div *ngIf="node.data.description" class="field-description">
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
             {{ node.data.description | displayTranslation }}

@@ -20,6 +20,7 @@ export class FieldsTreeAdapter {
         selectable: true,
         isCheckboxSelected: node.getIsSelected() || node.getIsRequired(),
         isDisabled: !node.getIsRequired(),
+        isDeprecated: node.getDeprecated(),
       },
       children: node?.getChildren()?.map((child: any) => FieldsTreeAdapter.toTreeNode(child)),
       originalEntry: node,

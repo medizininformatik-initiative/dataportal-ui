@@ -27,9 +27,18 @@ export class ReferenceField extends AbstractField {
     description: Display,
     isRequired: boolean = false,
     recommended: boolean = false,
+    deprecated: boolean = false,
     referencedProfiles: ReferencedProfile[] = []
   ) {
-    super(elementId, display, description, isRequired, recommended, ProfileFieldTypes.reference);
+    super(
+      elementId,
+      display,
+      description,
+      isRequired,
+      recommended,
+      deprecated,
+      ProfileFieldTypes.reference
+    );
     this.referencedProfiles = referencedProfiles;
   }
 
@@ -66,6 +75,7 @@ export class ReferenceField extends AbstractField {
       Display.fromJson(data.description),
       data.required,
       data.recommended,
+      false,
       data.referencedProfiles.map((profileData) => ReferencedProfile.fromJson(profileData))
     );
   }

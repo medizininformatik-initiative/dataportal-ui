@@ -18,6 +18,7 @@ import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFact
 import { v4 as uuidv4 } from 'uuid';
 import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service';
 import { SnackbarService } from '../../../shared/service/Snackbar/Snackbar.service';
+import { Display } from '../../../model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',
@@ -103,9 +104,26 @@ export class DataExtraction2UiDataSelectionService {
 
     profileFields.setSelectedBasicFields([]);
     profileFields.setSelectedReferenceFields([]);
-    profileFields.setSelectedBasicFields(selectedBasicFields);
+    profileFields.setSelectedBasicFields([
+      ...selectedBasicFields.found,
+      ...selectedBasicFields.notFound,
+    ]);
     profileFields.setSelectedReferenceFields(selectedReferenceFields);
 
+    if (selectedBasicFields.notFound.length > 0) {
+      const basicFields = selectedBasicFields.notFound.map((basicField) => new BasicField(
+          basicField.getElementId(),
+          basicField.getDisplay(),
+          basicField.getDescription(),
+          [],
+          true,
+          true,
+          false,
+          true,
+          null
+        ));
+      profileFields.setFieldTree([...profileFields.getFieldTree(), ...basicFields]);
+    }
     return ProfileFieldsCloner.deepCopyProfileFields(profileFields);
   }
 
@@ -145,21 +163,43 @@ export class DataExtraction2UiDataSelectionService {
   private buildSelectedBasicFields(
     attributes: AttributesData[],
     profileFields: ProfileFields
-  ): SelectedBasicField[] {
-    return attributes
+  ): { found: SelectedBasicField[]; notFound: SelectedBasicField[] } {
+    const found: SelectedBasicField[] = [];
+    const notFound: SelectedBasicField[] = [];
+    attributes
       .filter((attribute) => !attribute.linkedGroups || attribute.linkedGroups.length === 0)
-      .map((attribute) => {
+      .forEach((attribute) => {
         const matchingField = this.findBasicField(
           profileFields.getFieldTree(),
           attribute.attributeRef
         );
         if (matchingField) {
-          return this.createSelecteBasicFields(matchingField, attribute);
+          found.push(this.createSelectedBasicFields(matchingField, attribute));
         } else {
-          this.snackbar.displayErrorMessage('DSE-10001');
+          notFound.push(
+            this.createSelectedBasicFields(
+              new BasicField(
+                attribute.attributeRef,
+                Display.fromJson({
+                  original: attribute.attributeRef.split('.').slice(-1)[0],
+                  translations: [],
+                }),
+                Display.fromJson({ original: attribute.attributeRef, translations: [] }),
+                [],
+                false,
+                false,
+                false,
+                true,
+                null
+              ),
+              attribute
+            )
+          );
+          //this.snackbar.displayErrorMessage('DSE-10001');
         }
-      })
-      .filter((element) => element !== undefined);
+      });
+    //.filter((element) => element !== undefined);
+    return { found, notFound };
   }
 
   private findBasicField(basicFields: BasicField[], attributeRef: string): BasicField | undefined {
@@ -201,7 +241,7 @@ export class DataExtraction2UiDataSelectionService {
     return selectedReferenceField;
   }
 
-  private createSelecteBasicFields(
+  private createSelectedBasicFields(
     basicField: BasicField,
     attribute: AttributesData
   ): SelectedBasicField {

@@ -36,9 +36,14 @@ export class CRTDLValidationService {
     if (TypeGuard.isValidationError(error)) {
       const payload = error.payload;
       const validationReport = this.buildValidationReport(payload);
+
+      const specialIssue: boolean = validationReport?.getIssues().every((issue) => issue.getCode() === 'VALIDATION-2000002');
+      if (specialIssue) {
+        return of(true);
+      }
       this.errorLogProvider.setValidationResponseData(payload);
       this.errorLogProvider.setValidationResult(validationReport);
-      this.opeValidationReportModal(validationReport);
+      this.openValidationReportModal(validationReport);
       return of(false);
     }
     return throwError(() => error);
@@ -51,7 +56,7 @@ export class CRTDLValidationService {
     return new ValidationReport(validationErrors);
   }
 
-  private opeValidationReportModal(validationReport: ValidationReport): void {
+  private openValidationReportModal(validationReport: ValidationReport): void {
     this.matDialog.open(ErrorLogModalComponent, {
       data: validationReport,
     });

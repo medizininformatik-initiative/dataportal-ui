@@ -17,6 +17,7 @@ export class ReferenceFieldsCloner {
       CloneDisplayData.deepCopyDisplayData(referenceField.getDescription()),
       referenceField.getIsRequired(),
       referenceField.getRecommended(),
+      referenceField.getDeprecated(),
       ReferencedProfileCloner.deepCopyReferencedProfiles(referenceField.getReferencedProfiles())
     );
   }

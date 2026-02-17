@@ -156,6 +156,7 @@ export class CreateDataSelectionProfileService {
       node.recommended,
       isRequiredOrRecommended,
       node.required,
+      false,
       null
     );
     if (isRequiredOrRecommended) {

@@ -7,6 +7,7 @@ export abstract class AbstractField {
   private description: Display;
   private isRequired = false;
   private recommended = false;
+  private deprecated = false;
 
   constructor(
     elementId: string,
@@ -14,6 +15,7 @@ export abstract class AbstractField {
     description: Display,
     isRequired: boolean = false,
     recommended: boolean,
+    deprecated: boolean = false,
     type: string
   ) {
     this.elementId = elementId;
@@ -21,6 +23,7 @@ export abstract class AbstractField {
     this.description = description;
     this.isRequired = isRequired;
     this.recommended = recommended;
+    this.deprecated = deprecated;
     this.type = type;
   }
 
@@ -62,6 +65,14 @@ export abstract class AbstractField {
 
   public setRecommended(recommended: boolean): void {
     this.recommended = recommended;
+  }
+
+  public getDeprecated(): boolean {
+    return this.deprecated;
+  }
+
+  public setDeprecated(depricated: boolean): void {
+    this.deprecated = depricated;
   }
 
   public getType(): string {
