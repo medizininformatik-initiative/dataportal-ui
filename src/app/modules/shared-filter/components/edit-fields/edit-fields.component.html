@@ -42,13 +42,18 @@
                 </mat-checkbox>
               </div>
               <div class="display-part">
-                <span
-                  matTooltipPosition="below"
-                  matTooltipShowDelay="300"
-                  [matTooltip]="selectedField.getDisplay() | displayTranslation"
-                >
-                  {{ selectedField.getDisplay() | displayTranslation }}
-                </span>
+                <div>
+                  <span *ngIf="selectedField.getIsDeprecated()" style="font-weight: bold">
+                    (deprecated)
+                  </span>
+                  <span
+                    matTooltipPosition="below"
+                    matTooltipShowDelay="300"
+                    [matTooltip]="selectedField.getDisplay() | displayTranslation"
+                  >
+                    {{ selectedField.getDisplay() | displayTranslation }}
+                  </span>
+                </div>
               </div>
               <div
                 *ngIf="!selectedField.getIsRequired()"

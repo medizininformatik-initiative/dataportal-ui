@@ -33,4 +33,7 @@ export class SelectedBasicField extends AbstractSelectedField {
   public getIsRequired(): boolean {
     return this.selectedField.getField().getIsRequired();
   }
+  public getIsDeprecated(): boolean {
+    return this.selectedField.getField().getDeprecated();
+  }
 }
