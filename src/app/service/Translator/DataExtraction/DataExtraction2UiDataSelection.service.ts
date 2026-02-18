@@ -9,15 +9,14 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFieldsCloner';
+import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { TypeGuard } from '../../TypeGuard/TypeGuard';
-import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
-import { v4 as uuidv4 } from 'uuid';
-import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service';
 import { SnackbarService } from '../../../shared/service/Snackbar/Snackbar.service';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -101,9 +100,12 @@ export class DataExtraction2UiDataSelectionService {
     const selectedReferenceFields = this.buildSelectedReferenceFields(attributes, profileFields);
     const selectedBasicFields = this.buildSelectedBasicFields(attributes, profileFields);
 
-    profileFields.setSelectedBasicFields([]);
     profileFields.setSelectedReferenceFields([]);
-    profileFields.setSelectedBasicFields(selectedBasicFields);
+    const mergedSelectedFields = new Map<string, SelectedBasicField>()
+    ;[...profileFields.getSelectedBasicFields(), ...selectedBasicFields].forEach((field) => {
+      mergedSelectedFields.set(field.getElementId(), field);
+    });
+    profileFields.setSelectedBasicFields(Array.from(mergedSelectedFields.values()));
     profileFields.setSelectedReferenceFields(selectedReferenceFields);
 
     return ProfileFieldsCloner.deepCopyProfileFields(profileFields);
