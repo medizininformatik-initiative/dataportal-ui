@@ -1,8 +1,7 @@
+import { BasicField } from './BasicFields/BasicField';
 import { ReferenceField } from './RefrenceFields/ReferenceField';
 import { SelectedBasicField } from './BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from './RefrenceFields/SelectedReferenceField';
-import { BasicField } from './BasicFields/BasicField';
-import { SelectedField } from './SelectedField';
 
 export class ProfileFields {
   private readonly id: string;
