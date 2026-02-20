@@ -1,16 +1,16 @@
+import { DataSelectionApiService } from '../../Backend/Api/DataSelectionApi.service';
 import { DataSelectionProfileTree } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTree';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeRoot } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeRoot';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
-import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DataSelectionProfileTreeService {
+export class BuildProfileTreeService {
   constructor(private dataSelectionApiService: DataSelectionApiService) {}
 
   public fetchProfileTree(profileTreeData?: any): Observable<DataSelectionProfileTree> {
