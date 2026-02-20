@@ -1,12 +1,9 @@
-import { Injectable } from '@angular/core';
-import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
-import { CriterionProviderService } from '../Provider/CriterionProvider.service';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
-import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery';
-import { QuantityComparatorFilter } from '../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { QuantityRangeFilter } from '../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
-import { FilterTypesService } from '../FilterTypes.service';
-import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
+import { FilterTypesService } from '../../FilterTypes.service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',

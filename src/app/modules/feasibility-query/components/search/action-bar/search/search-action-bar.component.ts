@@ -1,15 +1,14 @@
+import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCriterionService';
 import { Component, OnInit } from '@angular/core';
-import { CreateCriterionService } from 'src/app/service/Criterion/CreateCriterionService';
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
-import { FeasibilityQueryProviderService } from '../../../../../../service/Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { map, Observable, of } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
-import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
+import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
 
 @Component({
   selector: 'num-search-action-bar',
@@ -23,7 +22,7 @@ export class SearchActionBarComponent implements OnInit {
 
   constructor(
     private listItemSelectionService: SelectedTableItemsService<CriteriaListEntry>,
-    private criterionService: CreateCriterionService,
+    private buildCriterionService: BuildCriterionService,
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
     private listItemService: SelectedTableItemsService<CriteriaListEntry>,
@@ -40,8 +39,8 @@ export class SearchActionBarComponent implements OnInit {
 
   public addItemsToStage() {
     const ids = this.listItemService.getSelectedIds();
-    this.criterionService
-      .createCriteriaFromHashes(ids)
+    this.buildCriterionService
+      .buildCriteriaFromHashes(ids)
       .pipe(
         map((criteria: Criterion[]) => {
           this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria);

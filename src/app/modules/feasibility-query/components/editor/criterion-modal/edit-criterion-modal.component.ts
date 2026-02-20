@@ -4,13 +4,13 @@ import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/Attrib
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { CriterionValidationService } from '../../../../../service/Criterion/CriterionValidation.deprecated.service';
+import { CriterionValidationService } from 'src/app/service/Criterion/Validation/CriterionValidation.deprecated.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 
 export class EnterCriterionListComponentData {
   criterion: AbstractCriterion;

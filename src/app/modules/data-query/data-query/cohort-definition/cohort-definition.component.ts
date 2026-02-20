@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
