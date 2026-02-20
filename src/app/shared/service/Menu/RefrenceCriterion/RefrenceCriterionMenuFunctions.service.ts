@@ -1,4 +1,4 @@
-import { CriterionModalService } from 'src/app/service/Criterion/CriterionModal.service';
+import { CriterionModalService } from 'src/app/service/Criterion/Modal/CriterionModal.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { Injectable } from '@angular/core';
 import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service';

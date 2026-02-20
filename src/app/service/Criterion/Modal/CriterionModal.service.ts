@@ -1,6 +1,6 @@
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
-import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
-import { CriterionProviderService } from '../Provider/CriterionProvider.service';
+import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion';
+import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { EditCriterionModalComponent } from 'src/app/modules/feasibility-query/components/editor/criterion-modal/edit-criterion-modal.component';
 import { EditReferenceCriteriaModalComponent } from 'src/app/modules/feasibility-query/components/editor/reference-criteria-modal/edit-reference-criteria-modal.component';
 import { Injectable, OnDestroy } from '@angular/core';

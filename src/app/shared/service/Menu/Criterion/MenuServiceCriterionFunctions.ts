@@ -1,5 +1,5 @@
 import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion';
-import { CriterionModalService } from 'src/app/service/Criterion/CriterionModal.service';
+import { CriterionModalService } from 'src/app/service/Criterion/Modal/CriterionModal.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
