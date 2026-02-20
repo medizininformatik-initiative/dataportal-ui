@@ -1,33 +1,24 @@
-import { DataSelectionApiService } from '../../Backend/Api/DataSelectionApi.service';
 import { DataSelectionProfileTree } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTree';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProfileTreeRoot } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeRoot';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BuildProfileTreeService {
-  constructor(private dataSelectionApiService: DataSelectionApiService) {}
+  constructor() {}
 
-  public fetchProfileTree(profileTreeData?: any): Observable<DataSelectionProfileTree> {
-    return this.dataSelectionApiService.getDataSelectionProfileTree().pipe(
-      map((response) => {
-        const rootNode = this.createNode(response.children);
-        const treeRoot = this.createTreeRoot(profileTreeData, rootNode);
-        return new DataSelectionProfileTree(treeRoot, rootNode);
-      })
-    );
+  public buildProfileTree(treeData: any): DataSelectionProfileTree {
+    const rootNode = this.createNode(treeData.children);
+    const treeRoot = this.createTreeRoot();
+    return new DataSelectionProfileTree(treeRoot, rootNode);
   }
 
-  private createTreeRoot(
-    data: any,
-    rootNode: DataSelectionProfileTreeNode[]
-  ): DataSelectionProfileTreeRoot {
-    return new DataSelectionProfileTreeRoot(data?.name, data?.module, data?.url, rootNode);
+  private createTreeRoot(): DataSelectionProfileTreeRoot {
+    return new DataSelectionProfileTreeRoot();
   }
 
   private createNode(data: any): DataSelectionProfileTreeNode[] {
