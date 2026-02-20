@@ -1,9 +1,9 @@
-import { BehaviorSubject, map, mapTo, Observable, switchMap, take, tap } from 'rxjs';
-import { CreateDataSelectionProfileService } from './DataSelection/CreateDataSelectionProfile.service';
+import { BehaviorSubject, map, mapTo, Observable, take, tap } from 'rxjs';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { ElementIdMapService } from './ElementIdMap.service';
 import { Injectable } from '@angular/core';
+import { LoadDataSelectionProfilesService } from './DataSelection/LoadDataSelectionProfiles.service';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
 
@@ -20,7 +20,7 @@ export class PossibleReferencesService {
   private possibleReferencesMap$ = this.possibleReferencesMapSubject.asObservable();
 
   constructor(
-    private createDataSelectionProfileService: CreateDataSelectionProfileService,
+    private loadDataSelectionProfilesService: LoadDataSelectionProfilesService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private elementIdMapService: ElementIdMapService,
     private profileProviderService: ProfileProviderService
@@ -173,7 +173,7 @@ export class PossibleReferencesService {
     elementId: string,
     parentProfileId: string
   ): Observable<PossibleProfileReferenceData[]> {
-    return this.createDataSelectionProfileService.fetchDataSelectionProfileData(urls, true).pipe(
+    return this.loadDataSelectionProfilesService.loadProfiles(urls, true).pipe(
       map((profiles: DataSelectionProfile[]) => {
         this.dataSelectionProviderService.setProfilesInActiveDataSelection(profiles);
         const possibleReferences = this.mapProfilesToReferences(profiles);

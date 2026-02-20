@@ -3,7 +3,7 @@ import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service';
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionFactoryService } from '../../DataSelection/DataSelection.factory.service';
+import { DataSelectionFactoryService } from '../../DataSelection/Factory/DataSelection.factory.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';

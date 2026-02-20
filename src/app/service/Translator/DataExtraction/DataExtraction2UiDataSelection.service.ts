@@ -1,7 +1,6 @@
 import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData';
 import { AttributesData } from 'src/app/model/Interface/AttributesData';
 import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
-import { CreateDataSelectionProfileService } from '../../DataSelection/CreateDataSelectionProfile.service';
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
@@ -17,6 +16,7 @@ import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fiel
 import { SnackbarService } from '../../../shared/service/Snackbar/Snackbar.service';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { v4 as uuidv4 } from 'uuid';
+import { LoadDataSelectionProfilesService } from '../../DataSelection/LoadDataSelectionProfiles.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class DataExtraction2UiDataSelectionService {
   private idMap: { oldId: string; newId: string }[] = [];
   constructor(
-    private createDataSelection: CreateDataSelectionProfileService,
+    private createDataSelection: LoadDataSelectionProfilesService,
     private profileFilterTranslatorService: ProfileFilterTranslatorService,
     private snackbar: SnackbarService
   ) {}
@@ -36,7 +36,7 @@ export class DataExtraction2UiDataSelectionService {
   public translate(dataExtraction: DataExtractionData): Observable<DataSelection> {
     if (dataExtraction.attributeGroups?.length > 0) {
       const urls = this.getGroupReferences(dataExtraction);
-      return this.createDataSelection.fetchDataSelectionProfileData(urls, false).pipe(
+      return this.createDataSelection.loadProfiles(urls, false).pipe(
         map((dataSelectionProfiles) => {
           this.replaceExternalIdsWithFetchedProfileIds(
             dataSelectionProfiles,

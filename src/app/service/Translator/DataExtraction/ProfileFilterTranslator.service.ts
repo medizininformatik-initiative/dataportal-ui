@@ -4,14 +4,13 @@ import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilte
 import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { FilterData } from 'src/app/model/Interface/FilterData';
 import { Injectable } from '@angular/core';
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
 import { v4 as uuidv4 } from 'uuid';
-import { TypeGuard } from '../../TypeGuard/TypeGuard';
 
 @Injectable({
   providedIn: 'root',
