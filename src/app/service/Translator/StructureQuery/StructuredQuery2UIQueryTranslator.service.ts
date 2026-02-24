@@ -36,9 +36,7 @@ export class StructuredQuery2UIQueryTranslatorService {
         this.criteriaProfileProviderService.setCachedCriteriaProfiles(criteriaProfileData)
       ),
       switchMap(() => this.codeableConceptApiService.getCodeableConceptsByIds(conceptHahes)),
-      tap((conceptsData: ConceptData[]) =>
-        this.conceptTranslationCache.setConceptsByHash(conceptsData)
-      ),
+      tap((conceptsData: ConceptData[]) => this.conceptTranslationCache.addMany(conceptsData)),
       map(() => this.translateInExclusion(inexclusion))
     );
   }

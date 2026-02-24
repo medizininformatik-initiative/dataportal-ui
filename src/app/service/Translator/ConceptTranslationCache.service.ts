@@ -1,36 +1,21 @@
 import { ConceptData } from 'src/app/model/Interface/ConceptData';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Injectable } from '@angular/core';
+import { AbstractArrayEntityProvider } from '../Provider/Abstract/AbstractArrayEntityProvider';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConceptTranslationCacheService {
-  private conceptTranslationCache = new Map<string, Display>();
-
-  constructor() {}
-
-  public getConceptDisplayByHash(id: string): Display | undefined {
-    return this.conceptTranslationCache.get(id);
+export class ConceptTranslationCacheService extends AbstractArrayEntityProvider<ConceptData> {
+  constructor() {
+    super();
   }
 
   /**
-   * @param id
-   * @param display
+   * Returns the ID of the concept data entity.
+   * @param entity
+   * @returns The ID of the concept data entity
    */
-  public setConceptDisplayByHash(id: string, display: Display): void {
-    this.conceptTranslationCache.set(id, display);
-  }
-
-  /**
-   *
-   * @param conceptsData
-   * @returns
-   */
-  public setConceptsByHash(conceptsData: ConceptData[]): void {
-    conceptsData.map((conceptData: ConceptData) => {
-      const display = Display.fromJson(conceptData.display);
-      this.setConceptDisplayByHash(conceptData.id, display);
-    });
+  protected selectId(entity: ConceptData): string {
+    return entity.hash;
   }
 }
