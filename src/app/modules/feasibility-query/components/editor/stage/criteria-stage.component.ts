@@ -18,7 +18,7 @@ import { StageProviderService } from '../../../../../service/Provider/StageProvi
 })
 export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   @Input() isEditable: boolean;
-  public $criterionUIDMap: Observable<Map<string, Criterion>>;
+  public $criterionUIDMap: Observable<Array<Criterion>>;
 
   public $stageUIDMap: Observable<Array<string>>;
 
@@ -46,13 +46,13 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
 
   public getCriterionArray() {
     this.$criteriaArray = of([]);
-    this.$stageUIDMap = this.stageProviderService.getStageUIDArray();
-    this.$criterionUIDMap = this.criterionProviderService.getCriterionUIDMap();
+    this.$stageUIDMap = this.stageProviderService.getAll();
+    this.$criterionUIDMap = this.criterionProviderService.getAll();
 
     this.$criteriaArray = this.$stageUIDMap.pipe(
       map((uids: string[]) =>
         uids.map((uid) => {
-          const criterion = this.criterionProviderService.getCriterionByUID(uid);
+          const criterion = this.criterionProviderService.getOne(uid);
           return criterion;
         })
       )

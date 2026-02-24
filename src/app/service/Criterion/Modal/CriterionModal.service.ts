@@ -31,10 +31,7 @@ export class CriterionModalService implements OnDestroy {
       .afterClosed()
       .subscribe((updatedCriterion: AbstractCriterion) => {
         if (updatedCriterion) {
-          this.criterionProviderService.setCriterionByUID(
-            updatedCriterion,
-            updatedCriterion.getId()
-          );
+          this.criterionProviderService.setOne(updatedCriterion);
         }
       });
   }
@@ -46,7 +43,7 @@ export class CriterionModalService implements OnDestroy {
     });
     this.dialogSubscription = dialogRef.afterClosed().subscribe((updatedCriterion: Criterion) => {
       if (updatedCriterion) {
-        this.criterionProviderService.setCriterionByUID(updatedCriterion, updatedCriterion.getId());
+        this.criterionProviderService.setOne(updatedCriterion);
       }
     });
   }

@@ -52,7 +52,7 @@ export class StructuredQuery2UIQueryTranslatorService {
             const termCode = TerminologyCode.fromJson(structuredQueryCriterion.termCodes[0]);
             if (!this.isConsent(termCode)) {
               const criterion = this.criterionTranslatorService.translate(structuredQueryCriterion);
-              this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
+              this.criterionProviderService.setOne(criterion);
               return criterion.getId();
             } else {
               this.setConsent(termCode);

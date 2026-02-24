@@ -11,7 +11,7 @@
     >
       <div *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index">
         <num-criteria-box
-          [criterion]="criterionProvider.getCriterionByUID(criterion)"
+          [criterion]="criterionProvider.getOne(criterion)"
           [isEditable]="isEditable"
         ></num-criteria-box>
         <ng-container>

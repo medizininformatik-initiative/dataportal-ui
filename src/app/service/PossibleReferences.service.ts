@@ -5,7 +5,7 @@ import { ElementIdMapService } from './ElementIdMap.service';
 import { Injectable } from '@angular/core';
 import { LoadDataSelectionProfilesService } from './DataSelection/LoadDataSelectionProfiles.service';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
-import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from './Provider/ProfileProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class PossibleReferencesService {
   ) {}
 
   public initialize(profileId: string): Observable<void> {
-    const profile = this.profileProviderService.getProfileById(profileId);
+    const profile = this.profileProviderService.getOne(profileId);
     const initialMap = new Map<string, Map<string, PossibleProfileReferenceData[]>>();
     const elementIdMap =
       this.elementIdMapService.createElementIdMapForPossibleReferencesNew(profile);

@@ -63,7 +63,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   private getCriterionFromProviderById(id: string): void {
-    this.criterion$ = of(this.criterionProviderService.getCriterionByUID(id));
+    this.criterion$ = of(this.criterionProviderService.getOne(id));
   }
 
   public updateCriterion(criterion: Criterion): void {

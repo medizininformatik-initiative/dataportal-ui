@@ -33,7 +33,7 @@ export class SearchActionBarComponent implements OnInit {
 
   ngOnInit() {
     this.listItemArray$ = this.listItemSelectionService.getSelectedTableItems();
-    this.stageArray$ = this.stageProviderService.getStageUIDArray();
+    this.stageArray$ = this.stageProviderService.getAll();
     this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
   }
 

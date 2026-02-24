@@ -32,7 +32,7 @@ export class CohortDefinitionActionBarComponent implements OnInit {
     this.feasibilityQueryService.getActiveFeasibilityQuery().subscribe((feasibilityQuery) => {
       const resultIdsLength = feasibilityQuery.getResultIds().length;
       this.totalNumberOfPatients = this.resultProviderService
-        .getResultByID(feasibilityQuery.getResultIds()[resultIdsLength - 1])
+        .getOne(feasibilityQuery.getResultIds()[resultIdsLength - 1])
         ?.getTotalNumberOfPatients();
     });
 

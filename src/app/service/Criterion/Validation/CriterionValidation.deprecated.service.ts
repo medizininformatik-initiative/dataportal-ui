@@ -47,14 +47,13 @@ export class CriterionValidationService {
     feasibilityQuery.getInclusionCriteria().forEach((innerArray) => {
       foundMissingFilterCriteria.push(
         ...innerArray.filter(
-          (criterion) =>
-            this.criterionService.getCriterionByUID(criterion).getIsRequiredFilterSet() === false
+          (criterion) => this.criterionService.getOne(criterion).getIsRequiredFilterSet() === false
         )
       );
       this.foundMissingFilterCriteria.next(foundMissingFilterCriteria);
       foundInvalidCriteria.push(
         ...innerArray.filter(
-          (criterion) => this.criterionService.getCriterionByUID(criterion).getIsInvalid() === true
+          (criterion) => this.criterionService.getOne(criterion).getIsInvalid() === true
         )
       );
 
@@ -63,14 +62,13 @@ export class CriterionValidationService {
     feasibilityQuery.getExclusionCriteria().forEach((innerArray) => {
       foundMissingFilterCriteria.push(
         ...innerArray.filter(
-          (criterion) =>
-            this.criterionService.getCriterionByUID(criterion).getIsRequiredFilterSet() === false
+          (criterion) => this.criterionService.getOne(criterion).getIsRequiredFilterSet() === false
         )
       );
       this.foundMissingFilterCriteria.next(foundMissingFilterCriteria);
       foundInvalidCriteria.push(
         ...innerArray.filter(
-          (criterion) => this.criterionService.getCriterionByUID(criterion).getIsInvalid() === true
+          (criterion) => this.criterionService.getOne(criterion).getIsInvalid() === true
         )
       );
       this.foundInvalidCriteria.next(foundInvalidCriteria);

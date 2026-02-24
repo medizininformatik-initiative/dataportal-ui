@@ -134,7 +134,9 @@ export class CoreInitService {
   private getUiProfilesData(): Observable<UiProfileResponseData[]> {
     return this.terminologyApiService.getUiProfileData().pipe(
       tap((uiProfileResponseData: UiProfileResponseData[]) =>
-        this.uiProfileProviderService.cacheUiProfiles(uiProfileResponseData)
+        this.uiProfileProviderService.setMany(
+          uiProfileResponseData.map((response) => response.uiProfileId)
+        )
       ),
       tap((data: UiProfileResponseData[]) =>
         console.log('UiProfiles data retrieved:', data.length)

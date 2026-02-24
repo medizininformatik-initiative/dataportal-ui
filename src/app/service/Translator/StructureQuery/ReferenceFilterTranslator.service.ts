@@ -37,7 +37,7 @@ export class ReferenceFilterTranslatorService {
   ): ReferenceFilter {
     const referenceCriteria = this.createReferenceCriteria(parentId, criteria);
     const referenceFilter = this.createReferenceFilter(referencedCriteriaSet, referenceCriteria);
-    this.referenceCriterionProviderService.setReferenceCriteriaById(referenceCriteria);
+    this.referenceCriterionProviderService.setMany(referenceCriteria);
     return referenceFilter;
   }
 

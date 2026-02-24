@@ -24,7 +24,7 @@ export class SaveFeasibilityQueryModalService {
       switchMap((id) => this.feasibilityQueryProviderService.getFeasibilityQueryByID(id)),
       switchMap((feasibilityQuery: FeasibilityQuery) => {
         const resultIds: string[] = feasibilityQuery.getResultIds();
-        return of(this.resultProvider.getResultByID(resultIds[resultIds.length - 1]));
+        return of(this.resultProvider.getOne(resultIds[resultIds.length - 1]));
       }),
       switchMap((result: QueryResult) => this.saveFeasibilityQueryResult(title, comment, result))
     );

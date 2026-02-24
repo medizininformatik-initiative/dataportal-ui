@@ -21,7 +21,7 @@ export class DataSelectionMainProfileInitializerService {
    */
   public initializePatientProfile(): Observable<DataSelectionProfile> {
     const mainProfileUrl = this.appSettingsProviderService.getDsePatientProfileUrl();
-    return this.loadDataSelectionProfilesService.loadProfiles([mainProfileUrl], true).pipe(
+    return this.loadDataSelectionProfilesService.loadProfiles([mainProfileUrl]).pipe(
       filter((profiles) => !!profiles && profiles.length > 0),
       map((profiles) => profiles[0])
     );

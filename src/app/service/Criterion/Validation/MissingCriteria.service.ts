@@ -28,11 +28,12 @@ export class MissingCriteriaService {
 
   private getMissingCriteriaFromGroup(criteriaGroup: string[]): Observable<string[]> {
     return this.criterionService
-      .getCriterionUIDMap()
+      .getAll()
       .pipe(
         map((criterionMap) =>
           criteriaGroup.filter(
-            (criterionId) => !criterionMap.get(criterionId)?.getIsRequiredFilterSet()
+            (criterionId) =>
+              !criterionMap.find((c) => c.getId() === criterionId)?.getIsRequiredFilterSet()
           )
         )
       );

@@ -37,7 +37,7 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
       .getSelectedBulkCriteria()
       .pipe(map((entries) => entries.length === 0));
     this.listItemArray$ = this.selectedBulkCriteriaService.getSelectedBulkCriteria();
-    this.stageArray$ = this.stageProviderService.getStageUIDArray();
+    this.stageArray$ = this.stageProviderService.getAll();
     this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
   }
 

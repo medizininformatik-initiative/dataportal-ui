@@ -13,35 +13,38 @@ export class RefrenceCriterionMenuFunctionsService {
     private referenceCriterionProvider: ReferenceCriterionProviderService
   ) {}
 
-  deleteCriterion(uid: string) {
-    const parentID = this.referenceCriterionProvider.getReferenceCriterionByUID(uid).getParentId();
+  deleteCriterion(id: string) {
+    const parentID = this.referenceCriterionProvider.getOne(id)?.getParentId();
+    if (!parentID) {
+      return;
+    }
     this.criterionProviderService
-      .getCriterionByUID(parentID)
+      .getOne(parentID)
       .getAttributeFilters()
       .forEach((attributeFilter) => {
         if (attributeFilter.isReferenceSet()) {
           const updatedReferences = attributeFilter
             .getReference()
             .getSelectedReferences()
-            .filter((reference) => reference.getId() !== uid);
+            .filter((reference) => reference.getId() !== id);
           attributeFilter.getReference().setSelectedReferences(updatedReferences);
         }
       });
 
-    this.referenceCriterionProvider.deleteReferenceCriterionFromMapByUID(uid);
+    this.referenceCriterionProvider.removeOne(id);
   }
 
-  duplicateCriterion(uid: string) {
-    const originalElement = this.criterionProviderService.getCriterionByUID(uid);
-    if (originalElement) {
-      const duplicateElement = { ...originalElement };
+  public duplicateCriterion(id: string) {
+    // Not implemented yet
+    return;
+  }
+
+  public applyReferenceCriterionFilter(id: string) {
+    const criterion =
+      this.criterionProviderService.getOne(id) ?? this.referenceCriterionProvider.getOne(id);
+    if (!criterion) {
+      return;
     }
-  }
-
-  applyReferenceCriterionFilter(uid: string) {
-    this.editCriterionService.openCriterionModal(
-      this.criterionProviderService.getCriterionByUID(uid) ??
-        this.referenceCriterionProvider.getReferenceCriterionByUID(uid)
-    );
+    this.editCriterionService.openCriterionModal(criterion);
   }
 }

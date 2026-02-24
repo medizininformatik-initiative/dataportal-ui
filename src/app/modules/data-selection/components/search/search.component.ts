@@ -138,7 +138,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   public getDataSelectionProfileData() {
     const dataSelectionProfileUrls = Array.from(this.selectedDataSelectionProfileUrls);
     this.dataSelectionProfileSubscription = this.loadDataSelectionProfilesService
-      .loadProfiles(dataSelectionProfileUrls, true)
+      .loadProfiles(dataSelectionProfileUrls)
       .subscribe((dataSelectionProfiles) => {
         this.selectedDataSelectionProfileUrls.clear();
         this.selectedDataSelectionProfileService.clearSelection();

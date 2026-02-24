@@ -4,7 +4,7 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { DataSelectionProfileData } from 'src/app/model/Interface/DataSelectionProfileData';
 import { Injectable } from '@angular/core';
 import { ProfileInstanceBuilderService } from './Builder/ProfileInstanceBuilder.service';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +39,6 @@ export class LoadDataSelectionProfilesService {
   }
 
   private setProfilesInProvider(profiles: DataSelectionProfile[]): void {
-    profiles.forEach((profile) => this.profileProvider.setProfileById(profile.getId(), profile));
+    profiles.forEach((profile) => this.profileProvider.setOne(profile));
   }
 }

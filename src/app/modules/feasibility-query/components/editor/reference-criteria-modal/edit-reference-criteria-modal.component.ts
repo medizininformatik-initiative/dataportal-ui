@@ -51,10 +51,7 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
       .buildReferenceCriteriaFromHashes(this.ids, this.criterion.getId())
       .subscribe((referenceCriteria: ReferenceCriterion[]) => {
         referenceCriteria.forEach((referenceCriterion) =>
-          this.referenceCriterionProvider.setReferenceCriterionById(
-            referenceCriterion.getId(),
-            referenceCriterion
-          )
+          this.referenceCriterionProvider.setOne(referenceCriterion)
         );
         const selectedReferenceFilter = this.parentAttributeFilter
           .getReference()

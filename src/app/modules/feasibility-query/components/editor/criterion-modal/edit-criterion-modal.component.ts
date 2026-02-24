@@ -142,7 +142,7 @@ export class EditCriterionModalComponent implements OnInit {
 
   public saveCriterion() {
     if (this.criterion instanceof ReferenceCriterion) {
-      const criterion = this.criterionProvider.getCriterionByUID(this.criterion.getParentId());
+      const criterion = this.criterionProvider.getOne(this.criterion.getParentId());
 
       criterion.getAttributeFilters().forEach((attributeFilter) => {
         if (attributeFilter.isReferenceSet()) {
