@@ -1,12 +1,11 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service';
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { RemoveReferenceService } from '../../../../service/RemoveReference.service';
 import { StagedProfileService } from '../../../../service/StagedDataSelectionProfile.service';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +21,7 @@ export class MenuServiceDataSelectionFunctions {
   ) {}
 
   public redirectToDataSelectionEditPage(id: string) {
-    this.stagedProfileService.initialize(id);
+    //this.stagedProfileService.initialize(id);
     this.navigationHelperService.navigateToEditProfile(id);
   }
   /**
@@ -30,15 +29,7 @@ export class MenuServiceDataSelectionFunctions {
    */
   public cloneDataSelectionObject(id: string) {
     const profile = this.profileProvider.getOne(id);
-    const copiedProfile = new DataSelectionProfile(
-      uuidv4(),
-      profile.getUrl(),
-      profile.getDisplay(),
-      profile.getProfileFields(),
-      profile.getFilters(),
-      profile.getReference(),
-      profile.getLabel()
-    );
+    const copiedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
     this.profileProvider.addOne(copiedProfile);
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile);
