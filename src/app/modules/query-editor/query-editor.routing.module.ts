@@ -13,6 +13,7 @@ const routes: Routes = [
   {
     path: `${PathSegments.criterion}/:id`,
     component: QueryEditorComponent,
+    canActivate: [RouteGuard],
   },
   {
     path: `${PathSegments.feature}/:id`,
