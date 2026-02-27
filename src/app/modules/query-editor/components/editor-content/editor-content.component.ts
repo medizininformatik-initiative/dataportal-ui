@@ -1,4 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Data } from '@angular/router';
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 
 @Component({
@@ -7,15 +10,13 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
   styleUrls: ['./editor-content.component.scss'],
 })
 export class EditorContentComponent implements OnInit {
-  @Input() criterion: Criterion;
+  @Input()
+  criterion: Criterion;
 
-  @Output() criterionChanged = new EventEmitter<Criterion>();
+  @Input()
+  dataSelectionProfile: DataSelectionProfile;
 
   constructor() {}
 
   ngOnInit() {}
-
-  public onCriterionChanged(updatedCriterion: Criterion): void {
-    this.criterionChanged.emit(updatedCriterion);
-  }
 }
