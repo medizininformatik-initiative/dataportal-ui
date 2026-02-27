@@ -4,6 +4,7 @@ import { ConceptFilterChipService } from './ConceptFilterChipService.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData';
 import { Injectable } from '@angular/core';
+import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { QuantityFilterChipService } from './QuantityFilterChipService.service';
 import { TerminologyCodeChipService } from './TerminologyCodeChip.service';
 import { TimeRestrictionChipService } from './TimeRestrictionChip.service';
