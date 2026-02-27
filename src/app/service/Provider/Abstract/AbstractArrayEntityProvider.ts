@@ -63,11 +63,9 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    */
   public addOne(entity: T): void {
     const id = this.selectId(entity);
-
-    if (this.items.some((e) => this.selectId(e) === id)) {
+    if (this.hasSameId(id)) {
       return;
     }
-
     this.items.push(entity);
     this.emit();
   }
@@ -84,7 +82,7 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
 
     for (const entity of entities) {
       const id = this.selectId(entity);
-      if (!this.items.some((item) => this.selectId(item) === id)) {
+      if (!this.hasSameId(id)) {
         this.items.push(entity);
         changed = true;
       }
@@ -189,5 +187,15 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    */
   protected emit(): void {
     this.itemsSubject.next([...this.items]);
+  }
+
+  /**
+   * Returns `true` when the collection already contains an entity whose
+   * ID matches the given `id`; `false` otherwise.
+   *
+   * @param id The identifier to look up.
+   */
+  private hasSameId(id: string): boolean {
+    return this.items.some((item) => this.selectId(item) === id);
   }
 }
