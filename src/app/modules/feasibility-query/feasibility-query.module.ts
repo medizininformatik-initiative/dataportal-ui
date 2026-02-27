@@ -112,6 +112,17 @@ export const FORMATS_GERMAN = {
     DisplayCriteriaComponent,
     DisplayFeasibilityQueryComponent,
     ConceptComponent,
+    AttributeFilterComponent,
+    QuantityComponent,
+    QuantityRangeComponent,
+    QuantityComparatorComponent,
+    QuantityComparisionSelectComponent,
+    AllowedUnitsComponent,
+    BeforeFilterComponent,
+    BetweenFilterComponent,
+    TermcodeComponent,
+    ValueFilterComponent,
+    ReferenceComponent,
   ],
   providers: [
     {
