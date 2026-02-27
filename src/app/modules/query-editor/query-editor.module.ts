@@ -28,6 +28,7 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
+import { CriterionHeaderComponent } from './components/editor-content/criterion/header/criterion-header.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -69,6 +70,7 @@ export const FORMATS_GERMAN = {
     ProfileReferenceModalComponent,
     ReferenceFieldTabComponent,
     PossibleReferencesComponent,
+    CriterionHeaderComponent,
   ],
   exports: [],
   providers: [

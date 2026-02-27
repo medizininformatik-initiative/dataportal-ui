@@ -1,0 +1,32 @@
+<div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
+  <div class="criterion-display">
+    {{ criterion.getDisplay() | displayTranslation }}
+    <div class="information-display">
+      {{ criterion.getContext().getDisplay() }}
+      {{ criterion.getTermCodes()[0].getCode() }}
+      {{ system | displayTranslation }}
+    </div>
+  </div>
+  <div
+    *ngIf="termCodesFilterChips.length > 0"
+    fxLayout="column"
+    class="filter-container padding-left-right-1"
+  >
+    {{ 'EDITOR.CONTENT.CRITERION.HEADER.TERMCODES' | translate }}
+    <div class="filter-chips-container">
+      <num-filter-chips style="padding-top: 1%" [filterChips]="termCodesFilterChips">
+      </num-filter-chips>
+    </div>
+  </div>
+  <div fxLayout="column" class="filter-container">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      {{ 'EDITOR.CONTENT.CRITERION.HEADER.FILTER' | translate }}
+    </div>
+    <div *ngIf="timeRestrictionFilterChips.length > 0">
+      <num-filter-chips [filterChips]="timeRestrictionFilterChips"> </num-filter-chips>
+    </div>
+    <div *ngIf="conceptFilterChips.length > 0">
+      <num-filter-chips [filterChips]="conceptFilterChips"> </num-filter-chips>
+    </div>
+  </div>
+</div>

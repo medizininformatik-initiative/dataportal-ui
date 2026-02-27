@@ -1,0 +1,123 @@
+// CSS Variables
+:host {
+  --primary-color: #5a79af;
+  --primary-light: rgba(90, 121, 175, 0.1);
+  --border-color: #c3c7ce;
+  --background-white: #ffffff;
+  --background-focus: #eff2f7;
+  --text-primary: #333;
+  --text-secondary: #6a7483;
+  --text-muted: #c2c2c2;
+  --text-dark: black;
+  --shadow-color: #bdbdbd;
+  --transition-duration: 0.5s;
+}
+
+// Layout Containers
+.selection-box {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 8px;
+  padding-top: 16px;
+}
+
+.display-container,
+.selected-fields-container {
+  width: 100%;
+  padding: 0 1%;
+  font-size: larger;
+  color: var(--text-dark);
+  border-right: 4px solid var(--primary-light);
+}
+
+.display-container > span {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  line-clamp: 6;
+  overflow: hidden;
+}
+
+.filter-container {
+  width: 100%;
+  padding-left: 8px;
+  font-size: larger;
+  color: var(--text-dark);
+}
+
+// Menu Section
+.menu-container {
+  align-self: self-start;
+  margin-left: 20px;
+  padding-top: 20px;
+}
+
+// Filter Chips
+.filter-chips-container {
+  height: 80%;
+  padding-top: 20px;
+  overflow-y: auto;
+}
+
+.filterChipsInfo {
+  margin-top: 10px;
+  font-size: 15px;
+  color: red;
+}
+
+// Block Chip Styles
+.block {
+  position: relative;
+  display: inline-block;
+  min-width: 100px;
+  width: fit-content;
+  height: 26px;
+  padding: 2px 10px 2px 4px;
+  background-color: var(--primary-color);
+  color: var(--background-white);
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: width 0.3s ease;
+}
+
+.block-triangle {
+  display: inline-block;
+  border-left: 13px solid var(--primary-color);
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  content: '';
+}
+
+// Spacing Utilities
+.reference-chip-padding-30 {
+  padding-top: 30px;
+}
+
+.padding-left-right-1 {
+  padding: 0 1%;
+}
+
+.criterion-display {
+  border-right: 4px solid var(--primary-light);
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 16px; /* scalable typography */
+  width: 100%;
+  color: #000;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.information-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #6b7280; /* subtle gray */
+  font-size: 0.9em;
+}
