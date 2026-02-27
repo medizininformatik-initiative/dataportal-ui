@@ -1,7 +1,71 @@
-<num-filter-tabs [content]="currentTemplates"></num-filter-tabs>
+<div class="container">
+  <num-criterion-header [criterion]="criterion" class="header-container"> </num-criterion-header>
+  <num-filter-tabs
+    class="filter-tabs-container"
+    *ngIf="templates.length > 0"
+    [content]="templates"
+  ></num-filter-tabs>
 
-<ng-template #timeRestriction>
-  <num-edit-time-restriction
-    [timeRestriction]="(criterion$ | async)?.getTimeRestriction()"
-  ></num-edit-time-restriction>
-</ng-template>
+  <ng-template #timeRestriction>
+    <num-edit-time-restriction
+      [timeRestriction]="criterion.getTimeRestriction()"
+      (timeRestrictionChanged)="updateTimeRestriction($event)"
+    ></num-edit-time-restriction>
+  </ng-template>
+
+  <ng-template #conceptAttributeFilterTemplate>
+    <div class="width-100" *ngFor="let conceptFilter of conceptAttributeFilter">
+      <num-concept
+        [conceptFilter]="conceptFilter.getConcept()"
+        (changedConceptFilter)="updateConceptAttributeFilter($event, conceptFilter)"
+      >
+      </num-concept>
+    </div>
+  </ng-template>
+
+  <ng-template #termCodes>
+    <num-edit-termcode
+      class="height-100"
+      [termCodes]="criterion.getTermCodes()"
+      [context]="criterion.getContext()"
+      (changedTermCodes)="updateTermCodes($event)"
+    >
+    </num-edit-termcode>
+  </ng-template>
+
+  <ng-template #reference>
+    <div *ngFor="let attributeFilter of referenceFilter" class="background">
+      <num-reference
+        *ngIf="attributeFilter.getReference()"
+        [attributeCode]="attributeFilter.getAttributeCode()"
+        [referenceFilterUri]="attributeFilter.getReference().getAllowedReferenceUri()"
+        (selectedReferenceIds)="updateReferenceFilter($event, attributeFilter)"
+      >
+      </num-reference>
+    </div>
+  </ng-template>
+
+  <ng-template #quantityAttributeFilterTemplate>
+    <div *ngFor="let quantityFilter of quantityAttributeFilter" class="background">
+      <num-quantity
+        *ngIf="quantityFilter"
+        (quantityFilterChange)="updateQuantityAttributeFilter($event, quantityFilter)"
+        [quantityFilter]="quantityFilter.getQuantity()"
+        [display]="quantityFilter.getDisplay()"
+        [attr.data-cy]="quantityFilter.getDisplay() | displayTranslation"
+      ></num-quantity>
+    </div>
+  </ng-template>
+
+  <ng-template #quantityValueFilterTemplate>
+    <div *ngFor="let quantityFilter of quantityValueFilter" class="background">
+      <num-quantity
+        *ngIf="quantityFilter"
+        (quantityFilterChange)="updateQuantityValueFilter($event)"
+        [quantityFilter]="quantityFilter.getQuantity()"
+        [display]="quantityFilter.getDisplay()"
+        [attr.data-cy]="quantityFilter.getDisplay() | displayTranslation"
+      ></num-quantity>
+    </div>
+  </ng-template>
+</div>
