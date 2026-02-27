@@ -29,13 +29,10 @@ export class CriterionFilterChipService {
   ): Observable<InterfaceFilterChip[]> {
     this.filterChipsSubject.next([]);
 
-    const conceptChips = this.generateConceptChips(criterion);
-    const quantityChips = this.generateQuantityChips(criterion);
-    const termcodeChips =
-      criterion.getTermCodes().length > 1 ? [this.generateTermcodeChips(criterion)] : [];
-    const timeRestrictionChips = this.timeRestrictionChipService.generateTimeRestrictionChips(
-      criterion.getTimeRestriction()
-    );
+    const conceptChips = this.buildConceptChips(criterion);
+    const quantityChips = this.buildQuantityChips(criterion);
+    const termcodeChips = this.buildTermCodeChips(criterion);
+    const timeRestrictionChips = this.buildTimeRestrictionChips(criterion);
     const allChips = [...conceptChips, ...quantityChips, ...termcodeChips, ...timeRestrictionChips];
     const filteredChips = allChips.filter((chip) => chip !== undefined);
     this.filterChipsSubject.next(filteredChips);
@@ -43,7 +40,13 @@ export class CriterionFilterChipService {
     return this.filterChipsSubject.asObservable();
   }
 
-  private generateConceptChips(criterion: AbstractCriterion): InterfaceFilterChip[] {
+  public buildTimeRestrictionChips(criterion: AbstractCriterion): InterfaceFilterChip[] {
+    return this.timeRestrictionChipService.generateTimeRestrictionChips(
+      criterion.getTimeRestriction()
+    );
+  }
+
+  public buildConceptChips(criterion: AbstractCriterion): InterfaceFilterChip[] {
     const attributeFilters = criterion.getAttributeFilters();
     const valueFilters = criterion.getValueFilters();
 
@@ -55,7 +58,7 @@ export class CriterionFilterChipService {
     return [...attributeChips, ...valueChips];
   }
 
-  private generateQuantityChips(criterion: AbstractCriterion): InterfaceFilterChip[] {
+  public buildQuantityChips(criterion: AbstractCriterion): InterfaceFilterChip[] {
     const attributeFilters = criterion.getAttributeFilters();
     const valueFilters = criterion.getValueFilters();
     if (attributeFilters.length > 0) {
@@ -73,7 +76,11 @@ export class CriterionFilterChipService {
     }
   }
 
-  private generateTermcodeChips(criterion: Criterion): InterfaceFilterChip {
-    return this.terminologyCodeChipService.generateTermcodeChipsFromCriterion(criterion);
+  public buildTermCodeChips(criterion: Criterion): InterfaceFilterChip[] | [] {
+    const termCodeLength = criterion.getTermCodes().length;
+    if (termCodeLength <= 1) {
+      return [];
+    }
+    return [this.terminologyCodeChipService.generateTermcodeChipsFromCriterion(criterion)];
   }
 }
