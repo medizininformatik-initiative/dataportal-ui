@@ -48,7 +48,7 @@ export class CloneAbstractCriterion {
     display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
-    uniqueID: string
+    id: string
     termCodes: Array<TerminologyCode>
   } {
     const context = CloneTerminologyCode.deepCopyTerminologyCode(abstractCriterion.getContext());
@@ -65,7 +65,7 @@ export class CloneAbstractCriterion {
       display,
       isInvalid: abstractCriterion.getIsInvalid(),
       isRequiredFilterSet: abstractCriterion.getIsRequiredFilterSet(),
-      uniqueID: uuidv4(),
+      id: uuidv4(),
       termCodes,
     };
   }

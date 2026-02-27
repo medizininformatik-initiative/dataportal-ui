@@ -13,6 +13,7 @@ export class AttributeFilter extends AbstractAttributeFilters {
    * Creates an instance of AttributeFilter.
    *
    * @param display - The display name for the filter.
+   * @param filter - The type of the filter (e.g., CONCEPT, QUANTITY).
    * @param attributeCode - The attribute code.
    * @param concept - Optional concept filter.
    * @param quantity - Optional quantity filter.
