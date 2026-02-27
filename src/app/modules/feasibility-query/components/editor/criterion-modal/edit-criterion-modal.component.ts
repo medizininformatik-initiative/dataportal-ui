@@ -98,7 +98,7 @@ export class EditCriterionModalComponent implements OnInit {
     display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
-    uniqueID: string
+    id: string
     termCodes: Array<TerminologyCode>
   } {
     const context = criterion.getContext();
@@ -113,7 +113,7 @@ export class EditCriterionModalComponent implements OnInit {
       display,
       isInvalid: false,
       isRequiredFilterSet,
-      uniqueID: criterion.getId(),
+      id: criterion.getId(),
       termCodes,
     };
   }
