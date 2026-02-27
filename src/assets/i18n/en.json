@@ -154,23 +154,23 @@
         "SNACKBAR": {
           "SAVED": "Profile saved successfully",
           "SAVING_ERROR": "Error saving profile"
-        },
-        "TAB_LABEL": {
-          "BULK": "Bulk search",
-          "FIELD": "Fields",
-          "FILTER": "Filter",
-          "INFORMATION": "Information",
-          "REFERENCE": "References",
-          "SELECTED_CONCEPTS": "Selected code filter ({{count}})",
-          "SINGLE_SEARCH": "Single search",
-          "TIMERESTRICTION": "Time restriction",
-          "TOKEN": "Code Filter"
         }
       }
     },
     "HEADER": {
       "NEXT": "Next Element",
       "PREVIOUS": "Previous Element"
+    },
+    "TAB_LABEL": {
+      "BULK": "Bulk search",
+      "FIELD": "Fields",
+      "FILTER": "Filter",
+      "INFORMATION": "Information",
+      "REFERENCE": "References",
+      "SELECTED_CONCEPTS": "Selected code filter ({{count}})",
+      "SINGLE_SEARCH": "Single search",
+      "TIMERESTRICTION": "Time restriction",
+      "TOKEN": "Code Filter"
     }
   },
   "ERROR": {

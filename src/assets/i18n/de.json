@@ -141,7 +141,13 @@
       "SAVE": "Speichern"
     },
     "CONTENT": {
-      "CRITERION": {},
+      "CRITERION": {
+        "HEADER": {
+          "CONCEPT": "Selektierte Konzepte",
+          "FILTER": "Selektierte Filter",
+          "TERMCODES": "Selektierte Terminologie-Codes"
+        }
+      },
       "PROFILE": {
         "FIELDS": {
           "HEADER": "Selektieren Sie Merkmale für ",
@@ -155,18 +161,22 @@
         "SNACKBAR": {
           "SAVED": "Profil erfolgreich gespeichert",
           "SAVING_ERROR": "Fehler beim Speichern des Profils"
-        },
-        "TAB_LABEL": {
-          "BULK": "Bulksuche",
-          "FIELD": "Felder",
-          "FILTER": "Filter",
-          "INFORMATION": "Informationen",
-          "REFERENCE": "Referenzen",
-          "SELECTED_CONCEPTS": "Selektierte Code Filter ({{count}})",
-          "SINGLE_SEARCH": "Einzelsuche",
-          "TIMERESTRICTION": "Zeiteinschränkung",
-          "TOKEN": "Code Filter"
         }
+      },
+      "TAB_LABEL": {
+        "ATTRIBUTEFILTER": "Attributfilter",
+        "BULK": "Bulksuche",
+        "CONCEPT": "Konzepte",
+        "FIELD": "Felder",
+        "FILTER": "Filter",
+        "INFORMATION": "Informationen",
+        "REFERENCE": "Referenzen",
+        "SELECTED_CONCEPTS": "Selektierte Code Filter ({{count}})",
+        "SINGLE_SEARCH": "Einzelsuche",
+        "TERMCODE": "Terminologie-Codes",
+        "TIMERESTRICTION": "Zeiteinschränkung",
+        "TOKEN": "Code Filter",
+        "VALUEFILTER": "Valuefilter"
       }
     },
     "HEADER": {
@@ -206,10 +216,10 @@
         "BULK_SEARCH": "Zur Bulk Suche",
         "BULK_SEARCH_TOOLTIP": "Zur Bulksuche navigieren, um mehrere Kriterien auf einmal hinzuzufügen",
         "DATA_REQUEST": "Datendefinition",
+        "RETRY_AFTER": "Bitte warten {{seconds}} Sekunden",
         "SAVE_DATAQUERY": "Datendefinition speichern",
         "SEND_QUERY": "Machbarkeitsabfrage senden",
-        "SEND_QUERY_TOOLTIP": "Machbarkeitsabfrage ausführen",
-        "RETRY_AFTER": "Bitte warten {{seconds}} Sekunden"
+        "SEND_QUERY_TOOLTIP": "Machbarkeitsabfrage ausführen"
       },
       "CONSENT": {
         "CENTRAL": "Zentral",
