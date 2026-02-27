@@ -1,11 +1,14 @@
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, of, Subscription, switchMap } from 'rxjs';
+import { combineLatest, map, Observable, of, Subscription, switchMap, take, tap } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { data } from 'cypress/types/jquery';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { PathSegments } from 'src/app/app-paths';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -15,59 +18,57 @@ import { PossibleReferencesService } from 'src/app/service/PossibleReferences.se
 export class QueryEditorComponent implements OnInit, OnDestroy {
   criterion$: Observable<Criterion>;
 
-  deepCopyCriterion: Criterion;
+  dataSelectionProfile: DataSelectionProfile;
 
   id: string;
   type: string;
 
   routeSubscription: Subscription;
 
-  buildProfileSubscription: Subscription;
-
   constructor(
     private criterionProviderService: CriterionProviderService,
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
+    private profileProviderService: ProfileProviderService,
     private possibleReferencesService: PossibleReferencesService
   ) {}
 
   ngOnInit(): void {
-    this.routeSubscription?.unsubscribe();
-    this.routeSubscription = combineLatest([this.activatedRoute.paramMap, this.activatedRoute.url])
-      .pipe(
-        switchMap(([paramMap, url]) => {
-          const id = paramMap.get('id');
-          const type = url[0]?.path;
+    const url = this.activatedRoute.snapshot.url;
 
-          if (id && type) {
-            this.id = id;
-            this.type = type;
-            this.getElementFromProvider();
-            return this.possibleReferencesService.initialize(id);
-          }
-          return of(undefined);
-        })
-      )
-      .subscribe();
+    this.id = url[1]?.path;
+    this.type = url[0]?.path;
+
+    if (this.id && this.type) {
+      this.getElementFromProvider();
+
+      if (this.isProfile()) {
+        this.possibleReferencesService.initialize(this.id).pipe(take(1)).subscribe();
+      }
+    }
   }
 
   ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe();
-    this.buildProfileSubscription?.unsubscribe();
   }
 
   private getElementFromProvider(): void {
     if (this.isCriterion()) {
-      this.getCriterionFromProviderById(this.id);
+      this.getCriterionFromProvider(this.id);
+    } else if (this.isProfile()) {
+      this.getDataSelectionProfileFromProvider(this.id);
     }
   }
 
-  private getCriterionFromProviderById(id: string): void {
-    this.criterion$ = of(this.criterionProviderService.getOne(id));
+  private getDataSelectionProfileFromProvider(id: string): void {
+    this.dataSelectionProfile = this.profileProviderService.getOne(id);
   }
 
-  public updateCriterion(criterion: Criterion): void {
-    this.deepCopyCriterion = criterion;
+  private getCriterionFromProvider(id: string): void {
+    this.criterion$ = this.criterionProviderService.getAll().pipe(
+      tap((criteria) => console.log('Fetched criteria from provider: ', criteria)),
+      map((criteria) => criteria.find((criterion) => criterion.getId() === id))
+    );
   }
 
   public onCancel(): void {
