@@ -1,19 +1,21 @@
 import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service';
+import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
 import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service';
 import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteria.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry';
-import { CriteriaBulkListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkListEntryAdapter';
+import { CriteriaBulkFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkFoundListEntryAdapter';
+import { CriteriaBulkNotFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkNotFoundListEntryAdapter';
 import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList';
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
-import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { map, Observable, of, Subscription, tap } from 'rxjs';
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
-import { SelectedBulkCriteriaService } from 'src/app/service/SelectedBulkCriteria.service';
-import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component';
+import { SelectedBulkCriteriaService } from 'src/app/service/SelectedBulkCriteria.service';
+import { TableData } from 'src/app/shared/models/TableData/TableData';
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
 
 export type SelectedTab = 'FOUND' | 'NOTFOUND';
 /**
@@ -101,7 +103,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    * Sets the selected row item in the bulk criteria selection.
    * @param item - The table data row that was selected
    */
-  public setSelectedRowItem(item: InterfaceTableDataRow): void {
+  public setSelectedRowItem(item: TableRowData): void {
     const criteriaBulkEntry = item.originalEntry as CriteriaBulkEntry;
     this.selectedBulkCriteriaService.addSelectedBulkCriterion(criteriaBulkEntry);
   }
@@ -165,8 +167,8 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
   private handleSearchResults(response: CriteriaBulkResultList): void {
     this.selectedBulkCriteriaService.addSelectedBulkCriteriaIds(response.getFound());
     this.selectedBulkCriteriaService.setUiProfileId(response.getUiProfileId());
-    this.foundCriteriaTableData = CriteriaBulkListEntryAdapter.adaptFound(response.getFound());
-    this.notFoundCriteriaTableData = CriteriaBulkListEntryAdapter.adaptNotFound(
+    this.foundCriteriaTableData = new CriteriaBulkFoundListEntryAdapter().adapt(response.getFound());
+    this.notFoundCriteriaTableData = new CriteriaBulkNotFoundListEntryAdapter().adapt(
       response.getNotFound()
     );
   }
@@ -180,7 +182,10 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
       return;
     }
     this.foundCriteriaTableData.body.rows.forEach((row) => {
-      row.isCheckboxSelected = entries.some((item) => item.getId() === row.id);
+      const checkboxCell = row.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+      if (checkboxCell) {
+        checkboxCell.isSelected = entries.some((item) => item.getId() === row.id);
+      }
     });
   }
 
