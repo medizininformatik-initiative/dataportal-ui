@@ -1,42 +1,30 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
-import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { TableBodyComponent } from './table-body/table-body.component';
+import { TableData } from 'src/app/shared/models/TableData/TableData';
+import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
+import { TableRowData } from '../../models/TableData/TableRowData';
 
 @Component({
   selector: 'num-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnInit {
-  @Input()
-  tableData: TableData;
+export class TableComponent {
+  @Input() tableData: TableData;
 
-  @Output()
-  selectedRow: EventEmitter<InterfaceTableDataRow> = new EventEmitter();
+  @Output() selectedRow = new EventEmitter<TableRowData>();
+  @Output() rowClicked = new EventEmitter<TableRowData>();
 
-  @Output()
-  rowClicked: EventEmitter<InterfaceTableDataRow> = new EventEmitter();
-
-  columnsToDisplay: string[] = [];
-
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  public onRowClick(row: InterfaceTableDataRow): void {
-    this.rowClicked.emit(row);
-  }
-
-  public onCheckboxSelect(row: InterfaceTableDataRow): void {
-    row.isCheckboxSelected = !row.isCheckboxSelected;
-    this.selectedRow.emit(row);
-  }
-
-  public unselectCheckbox(ids: string[]) {
+  public unselectCheckbox(ids: string[]): void {
     ids.forEach((id) => {
       const foundRow = this.tableData.body.rows.find((row) => row.id === id);
-      if (foundRow && foundRow.isCheckboxSelected) {
-        foundRow.isCheckboxSelected = false;
+      if (foundRow) {
+        const checkboxCell = foundRow.cells.find(
+          (c): c is CheckboxCellData => c.type === 'checkbox'
+        );
+        if (checkboxCell) {
+          checkboxCell.isSelected = false;
+        }
       }
     });
   }

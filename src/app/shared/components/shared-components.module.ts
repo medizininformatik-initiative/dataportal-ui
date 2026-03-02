@@ -1,17 +1,25 @@
 import { ActionBarComponent } from './action-bar/action-bar.component';
+import { AvailabilityCellComponent } from './table/cells/availability-cell/availability-cell.component';
+import { AvailabilityStatusBarComponent } from './availability-status-bar/availability-status-bar.component';
 import { BreadcrumbComponent } from './breadcrumbs/breadcrumbs.component';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
+import { CheckboxCellComponent } from './table/cells/checkbox-cell/checkbox-cell.component';
 import { CommonModule } from '@angular/common';
 import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
 import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import { DisplayCellComponent } from './table/cells/display-cell/display-cell.component';
 import { DisplayTranslationPipe } from '../pipes/DisplayTranslationPipe';
+import { DownloadCRTDLComponent } from './download-crtdl/download-crtdl.component';
+import { ErrorDisplayComponent } from './error-display/error-display.component';
 import { FilterChipsComponent } from './filter-chips/filter-chips.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { HeaderDescriptionComponent } from './header-description/header-description.component';
+import { InformationSectionComponent } from './information-section/information-section.component';
+import { InfoTileComponent } from './info-tile/info-tile.component';
 import { LinkedBadgeComponent } from './linked-badge/linked-badge.component';
 import { ListItemDetailsComponent } from './list-item-details/list-item-details.component';
 import { ListItemDetailsSectionsComponent } from './list-item-details/list-item-details-sections/list-item-details-sections.component';
@@ -36,16 +44,22 @@ import { SelectableReferenceTileComponent } from './selectable-reference-tile/se
 import { SnackbarComponent } from './snack-bar/snackbar.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SwitchComponent } from './switch/switch.component';
+import { TableBodyComponent } from './table/table-body/table-body.component';
 import { TableComponent } from './table/table.component';
+import { TableHeaderComponent } from './table/table-header/table-header.component';
+import { TextCellComponent } from './table/cells/text-cell/text-cell.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
-import { InformationSectionComponent } from './information-section/information-section.component';
-import { DownloadCRTDLComponent } from './download-crtdl/download-crtdl.component';
-import { InfoTileComponent } from './info-tile/info-tile.component';
-import { ErrorDisplayComponent } from './error-display/error-display.component';
 
 const SHARED_DECLARATIONS = [
+  AvailabilityCellComponent,
+  AvailabilityStatusBarComponent,
+  CheckboxCellComponent,
+  DisplayCellComponent,
+  TableBodyComponent,
+  TableHeaderComponent,
+  TextCellComponent,
   ActionBarComponent,
   ButtonComponent,
   CriteriaBoxComponent,
@@ -82,11 +96,14 @@ const SHARED_DECLARATIONS = [
   DownloadCRTDLComponent,
   InfoTileComponent,
   ErrorDisplayComponent,
+  TableHeaderComponent,
+  TableBodyComponent,
 ];
 
 @NgModule({
   declarations: [
     ...SHARED_DECLARATIONS,
+    AvailabilityStatusBarComponent,
     ActionBarComponent,
     CriteriaBoxComponent,
     DatePickerComponent,
@@ -115,6 +132,8 @@ const SHARED_DECLARATIONS = [
     ListItemDetailsComponent,
     SearchModeToggleComponent,
     InformationSectionComponent,
+    TableHeaderComponent,
+    TableBodyComponent,
   ],
   imports: [
     CommonModule,

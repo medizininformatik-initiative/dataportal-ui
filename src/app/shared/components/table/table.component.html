@@ -1,56 +1,13 @@
 <table *ngIf="tableData">
-  <thead class="table-header sticky-header">
-    <tr>
-      <th *ngFor="let headerItem of tableData.header.headers">
-        <div fxLayout="row" fxLayoutAlign="start center">
-          {{ 'SHARED_COMPONENTS.TABLE.' + headerItem | translate }}
-        </div>
-      </th>
-    </tr>
-  </thead>
-  <tbody class="overflow-control">
-    <tr
-      *ngFor="let row of tableData.body.rows; let i = index"
-      [ngClass]="{ 'clickable-row': row.isClickable }"
-      class="table-border height-3-rem table-row-hover"
-    >
-      <td
-        *ngFor="let cell of row.data; let j = index"
-        (click)="onRowClick(row)"
-        [ngClass]="{ 'table-row-text-color': columnsToDisplay[j] !== 'name' }"
-      >
-        <div class="row-container">
-          <mat-checkbox
-            *ngIf="row.hasCheckbox && row.checkboxColumnIndex === j"
-            color="primary"
-            matTooltip="{{ 'SHARED_COMPONENTS.TABLE.SELECT_CHECKBOX' | translate }}"
-            disableRipple="true"
-            [disabled]="!row.isDisabled"
-            [checked]="row.isCheckboxSelected"
-            (change)="onCheckboxSelect(row)"
-            (click)="$event.stopPropagation()"
-          ></mat-checkbox>
-          <fa-icon
-            matTooltip="{{ 'SHARED_COMPONENTS.TABLE.ICON' | translate }}"
-            matTooltipClass="prevent-selection"
-            *ngIf="row.treeIcon !== '' && row.treeIconColumnIndex === j"
-            size="1x"
-            icon="{{ row.treeIcon }}"
-            class="cursor-click"
-          ></fa-icon>
-          <div
-            matTooltip="{{ cell | displayTranslation }}"
-            [ngClass]="{
-              'name-column': j === 0,
-              'info-column': j > 0,
-              highlight: row.isClickable && j === 0
-            }"
-            data-cy="{{ cell | displayTranslation }}"
-          >
-            {{ cell | displayTranslation }}
-          </div>
-        </div>
-      </td>
-    </tr>
-  </tbody>
+  <thead
+    num-table-header
+    class="table-header sticky-header"
+    [headers]="tableData.header.headers"
+  ></thead>
+  <tbody
+    num-table-body
+    [rows]="tableData.body.rows"
+    (rowClicked)="rowClicked.emit($event)"
+    (selectedRow)="selectedRow.emit($event)"
+  ></tbody>
 </table>
