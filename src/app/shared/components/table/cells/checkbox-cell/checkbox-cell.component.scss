@@ -1,0 +1,23 @@
+.name-column {
+  padding-left: 8px;
+  font-size: 16px;
+}
+
+.highlight:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: black;
+}
+
+.cursor-click {
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+.row-container {
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}

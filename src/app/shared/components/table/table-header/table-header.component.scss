@@ -1,0 +1,22 @@
+.table-header {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  color: rgba(197, 202, 207, 1);
+  font-size: 16px;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.sticky-header {
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+th {
+  padding: 1rem 0.5rem;
+  font-size: 16px;
+  color: rgba(197, 202, 207, 1);
+  font-weight: 500;
+}

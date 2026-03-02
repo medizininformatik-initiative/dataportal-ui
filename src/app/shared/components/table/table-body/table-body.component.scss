@@ -1,0 +1,19 @@
+.table-border {
+  border-bottom: 1px solid #c5cacf;
+}
+
+.table-row-hover:hover {
+  background-color: #f5f5f5;
+}
+
+td {
+  padding: 0.5rem 0.5rem;
+}
+
+.row-container {
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
