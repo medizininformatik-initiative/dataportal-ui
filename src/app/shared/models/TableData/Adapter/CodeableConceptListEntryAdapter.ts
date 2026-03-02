@@ -1,40 +1,56 @@
+import { AbstractTableAdapter } from './AbstractTableAdapter';
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
-import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
-import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
-import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
-import { TableData } from '../InterfaceTableData';
-import { v4 as uuidv4 } from 'uuid';
+import { TableCellBuilder } from '../cells/TableCellBuilder';
+import { TableHeaderData } from '../TableHeaderData';
+import { TableRowData } from '../TableRowData';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
+import { v4 as uuidv4 } from 'uuid';
+import { TextCellData } from '../cells/TextCellData';
+import { TableCellType } from '../cells/TableCellType';
 
-export class CodeableConceptListEntryAdapter {
-  private static headers: InterfaceTableDataHeader = {
-    headers: ['DISPLAY', 'TERMINOLOGY_CODE', 'TERMCODE'],
-  };
+export class CodeableConceptListEntryAdapter extends AbstractTableAdapter<CodeableConceptResultListEntry> {
+  protected buildHeaders(): TableHeaderData {
+    return { headers: ['DISPLAY', 'TERMINOLOGY_CODE', 'TERMCODE'] };
+  }
 
-  public static adapt(listEntries: CodeableConceptResultListEntry[]): TableData {
-    const rows: InterfaceTableDataRow[] = listEntries.map(
-      (entry: CodeableConceptResultListEntry) => {
-        const terminologyCode = entry.getConcept().getTerminologyCode();
-        return {
-          id: uuidv4(),
-          data: [
-            entry.getConcept().getDisplay(),
-            TerminologySystemDictionary.getNameByUrl(terminologyCode.getSystem()) ??
-              terminologyCode.getSystem(),
-            terminologyCode.getCode(),
-          ],
-          hasCheckbox: true,
-          isCheckboxSelected: entry.getIsSelected(),
-          isClickable: false,
-          isDisabled: true,
-          checkboxColumnIndex: 0,
-          originalEntry: entry,
-        };
-      }
+  protected buildRows(listEntries: CodeableConceptResultListEntry[]): TableRowData[] {
+    return listEntries.map((entry) => this.buildRow(entry));
+  }
+
+  private buildRow(entry: CodeableConceptResultListEntry): TableRowData {
+    return {
+      id: uuidv4(),
+      isClickable: false,
+      originalEntry: entry,
+      cells: this.buildCells(entry),
+    };
+  }
+
+  private buildCells(entry: CodeableConceptResultListEntry): TableCellType[] {
+    return TableCellBuilder.row(
+      this.checkBoxCell(entry),
+      this.terminologyCell(entry),
+      this.termCodeCell(entry)
     );
+  }
 
-    const body: InterfaceTableDataBody = { rows };
+  private checkBoxCell(entry: CodeableConceptResultListEntry) {
+    const display = entry.getConcept().getDisplay();
+    const options = { isSelected: entry.getIsSelected(), isDisabled: true };
+    return TableCellBuilder.withCheckbox(display, options);
+  }
 
-    return { header: CodeableConceptListEntryAdapter.headers, body };
+  private terminologyCell(entry: CodeableConceptResultListEntry): TextCellData {
+    const terminologyName = TerminologySystemDictionary.getNameByUrl(
+      entry.getConcept().getTerminologyCode().getSystem()
+    );
+    return TableCellBuilder.withText(
+      terminologyName ?? entry.getConcept().getTerminologyCode().getSystem()
+    );
+  }
+
+  private termCodeCell(entry: CodeableConceptResultListEntry): TextCellData {
+    const termCode = entry.getConcept().getTerminologyCode().getCode();
+    return TableCellBuilder.withText(termCode ?? '');
   }
 }
