@@ -1,32 +1,42 @@
-import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
-import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
-import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
+import { AbstractTableAdapter } from './AbstractTableAdapter';
+import { CheckboxCellData } from '../cells/CheckboxCellData';
 import { ReferenceCriteriaListEntry } from '../../../../model/Search/ListEntries/ReferenceCriteriaListEntry';
-import { TableData } from '../InterfaceTableData';
+import { TableCellBuilder } from '../cells/TableCellBuilder';
+import { TableCellType } from '../cells/TableCellType';
+import { TableHeaderData } from '../TableHeaderData';
+import { TableRowData } from '../TableRowData';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
-export class ReferenceCriteriaListEntryAdapter {
-  private static headers: InterfaceTableDataHeader = {
-    headers: ['NAME', 'TERMINOLOGY_CODE'],
-  };
+export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<ReferenceCriteriaListEntry> {
+  protected buildHeaders(): TableHeaderData {
+    return { headers: ['NAME', 'TERMINOLOGY_CODE'] };
+  }
 
-  public static adapt(listEntries: ReferenceCriteriaListEntry[]): TableData {
-    const rows: InterfaceTableDataRow[] = listEntries.map((listEntry) => ({
+  protected buildRows(listEntries: ReferenceCriteriaListEntry[]): TableRowData[] {
+    return listEntries.map((listEntry) => this.buildRow(listEntry));
+  }
+
+  private buildRow(listEntry: ReferenceCriteriaListEntry): TableRowData {
+    return {
       id: listEntry.getId(),
-      data: [
-        listEntry.getDisplay(),
-        TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology()),
-      ],
-      hasCheckbox: true,
-      isCheckboxSelected: false,
       isClickable: false,
-      isDisabled: true,
-      checkboxColumnIndex: 0,
       originalEntry: listEntry,
-    }));
+      cells: this.buildCells(listEntry),
+    };
+  }
 
-    const body: InterfaceTableDataBody = { rows };
+  private buildCells(listEntry: ReferenceCriteriaListEntry): TableCellType[] {
+    return TableCellBuilder.row(this.checkBoxCell(listEntry), this.terminologyCell(listEntry));
+  }
 
-    return { header: ReferenceCriteriaListEntryAdapter.headers, body };
+  private checkBoxCell(listEntry: ReferenceCriteriaListEntry): CheckboxCellData {
+    const display = listEntry.getDisplay();
+    const options = { isDisabled: true };
+    return TableCellBuilder.withCheckbox(display, options);
+  }
+
+  private terminologyCell(listEntry: ReferenceCriteriaListEntry): TableCellType {
+    const terminologyName = TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology());
+    return TableCellBuilder.withText(terminologyName ?? listEntry.getTerminology());
   }
 }

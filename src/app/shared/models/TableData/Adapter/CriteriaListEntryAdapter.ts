@@ -1,50 +1,69 @@
+import { AbstractTableAdapter } from './AbstractTableAdapter';
+import { AvailabilityCellData } from '../cells/AvailabilityCellData';
+import { CheckboxCellData } from '../cells/CheckboxCellData';
 import { CriteriaListEntry } from '../../../../model/Search/ListEntries/CriteriaListListEntry';
-import { InterfaceTableDataBody } from '../InterfaceTableDataBody';
-import { InterfaceTableDataHeader } from '../InterfaceTableDataHeader';
-import { InterfaceTableDataRow } from '../InterfaceTableDataRows';
-import { TableData } from '../InterfaceTableData';
+import { TableCellBuilder } from '../cells/TableCellBuilder';
+import { TableHeaderData } from '../TableHeaderData';
+import { TableRowData } from '../TableRowData';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
+import { TextCellData } from '../cells/TextCellData';
+import { TableCellType } from '../cells/TableCellType';
 
-export class CriteriaListEntryAdapter {
-  private static headers: InterfaceTableDataHeader = {
-    headers: ['NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'],
-  };
-
-  public static adapt(listEntries: CriteriaListEntry[]): TableData {
-    const rows: InterfaceTableDataRow[] = listEntries.map((listEntry: CriteriaListEntry) => ({
-      id: listEntry.getId(),
-      data: [
-        listEntry.getDisplay(),
-        CriteriaListEntryAdapter.changeAvailabilityDisplay(listEntry.getAvailability()),
-        TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology()),
-        listEntry.getTermcode(),
-        listEntry.getContext(),
-      ],
-      hasCheckbox: true,
-      treeIcon: 'sitemap',
-      treeIconColumnIndex: 0,
-      isCheckboxSelected: false,
-      isClickable: true,
-      isDisabled: listEntry.getSelectable(),
-      checkboxColumnIndex: 0,
-      originalEntry: listEntry,
-    }));
-
-    const body: InterfaceTableDataBody = { rows };
-
-    return { header: CriteriaListEntryAdapter.headers, body };
+export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListEntry> {
+  protected buildHeaders(): TableHeaderData {
+    const headers = ['NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'];
+    return { headers };
   }
 
-  /**
-   * Transforms the availability value for display purposes.
-   * @param availability The availability value to transform.
-   * @returns The transformed availability value as a string.
-   */
-  private static changeAvailabilityDisplay(availability: number): string {
-    if (availability === 0) {
-      return '?';
-    }
+  protected buildRows(listEntries: CriteriaListEntry[]): TableRowData[] {
+    return listEntries.map((listEntry: CriteriaListEntry) => this.buildRow(listEntry));
+  }
 
-    return availability.toString();
+  private buildRow(listEntry: CriteriaListEntry): TableRowData {
+    const cells = this.buildCells(listEntry);
+    return {
+      id: listEntry.getId(),
+      isClickable: true,
+      originalEntry: listEntry,
+      cells,
+    };
+  }
+
+  private buildCells(listEntry: CriteriaListEntry): TableCellType[] {
+    return [
+      this.displayCell(listEntry),
+      this.availabilityCell(listEntry),
+      this.terminologyCell(listEntry),
+      this.termCodeCell(listEntry),
+      this.contextCell(listEntry),
+    ];
+  }
+
+  private displayCell(listEntry: CriteriaListEntry): CheckboxCellData {
+    return TableCellBuilder.withCheckbox(listEntry.getDisplay(), {
+      isSelected: false,
+      isDisabled: listEntry.getSelectable(),
+      icon: 'sitemap',
+    });
+  }
+
+  private terminologyCell(listEntry: CriteriaListEntry): TextCellData {
+    const terminologyName = TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology());
+    return TableCellBuilder.withText(terminologyName ?? listEntry.getTerminology());
+  }
+
+  private termCodeCell(listEntry: CriteriaListEntry): TextCellData {
+    const termCode = listEntry.getTermcode();
+    return TableCellBuilder.withText(termCode ?? '');
+  }
+
+  private contextCell(listEntry: CriteriaListEntry): TextCellData {
+    const context = listEntry.getContext();
+    return TableCellBuilder.withText(context ?? '');
+  }
+
+  private availabilityCell(listEntry: CriteriaListEntry): AvailabilityCellData {
+    const availabilityStatus = listEntry.getAvailabilityStatus();
+    return TableCellBuilder.withAvailability(availabilityStatus);
   }
 }
