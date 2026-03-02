@@ -1,4 +1,5 @@
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
+import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
 import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
@@ -6,11 +7,11 @@ import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
+import { ConceptSelectionHelperService } from '../../../service/ConceptSelection/ConceptSelectionHelper.service';
 import { map, Observable, Subscription, tap } from 'rxjs';
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service';
-import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { ConceptSelectionHelperService } from '../../../service/ConceptSelection/ConceptSelectionHelper.service';
+import { TableData } from 'src/app/shared/models/TableData/TableData';
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
 
 @Component({
   selector: 'num-concept-filter-table-copy',
@@ -50,10 +51,13 @@ export class CopyConceptFilterTableComponent implements OnInit, OnChanges, OnDes
     const selectedConcepts = this.selectedConceptProviderService.getSelectedConceptsValue();
     this.adaptedData?.body.rows.forEach((row) => {
       const entry = row.originalEntry as CodeableConceptResultListEntry;
-      row.isCheckboxSelected = this.conceptSelectionHelperService.isConceptSelected(
-        entry.getConcept(),
-        selectedConcepts
-      );
+      const checkboxCell = row.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+      if (checkboxCell) {
+        checkboxCell.isSelected = this.conceptSelectionHelperService.isConceptSelected(
+          entry.getConcept(),
+          selectedConcepts
+        );
+      }
     });
   }
 
@@ -72,7 +76,7 @@ export class CopyConceptFilterTableComponent implements OnInit, OnChanges, OnDes
           return results;
         }),
         map((results) => {
-          this.adaptedData = CodeableConceptListEntryAdapter.adapt(results.getResults());
+          this.adaptedData = new CodeableConceptListEntryAdapter().adapt(results.getResults());
         })
       )
       .subscribe(() => {
@@ -87,9 +91,10 @@ export class CopyConceptFilterTableComponent implements OnInit, OnChanges, OnDes
       const listEntry = row.originalEntry as CodeableConceptResultListEntry;
       const concept = CloneConcept.deepCopyConcept(listEntry.getConcept());
       this.clearSelectedConceptArray();
-      row.isCheckboxSelected = this.selectedConceptProviderService.findConcept(concept)
-        ? true
-        : false;
+      const checkboxCell = row.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+      if (checkboxCell) {
+        checkboxCell.isSelected = !!this.selectedConceptProviderService.findConcept(concept);
+      }
     });
   }
 
@@ -98,7 +103,7 @@ export class CopyConceptFilterTableComponent implements OnInit, OnChanges, OnDes
     this.subscription2?.unsubscribe();
   }
 
-  public addSelectedRow(item: InterfaceTableDataRow) {
+  public addSelectedRow(item: TableRowData) {
     const entry = item.originalEntry as CodeableConceptResultListEntry;
     const concept = CloneConcept.deepCopyConcept(entry.getConcept());
     if (this.selectedConceptProviderService.findConcept(concept)) {

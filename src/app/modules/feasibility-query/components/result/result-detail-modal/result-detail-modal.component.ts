@@ -8,7 +8,7 @@ import { map, Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { QueryResult } from '../../../../../model/Result/QueryResult';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
-import { TableData } from '../../../../../shared/models/TableData/InterfaceTableData';
+import { TableData } from '../../../../../shared/models/TableData/TableData';
 
 export class ResultDetailsModalComponentData {}
 @Component({
@@ -58,7 +58,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
 
   private setActiveResultIdAndAdaptedData(result: QueryResult): void {
     this.activeResultID = result.getId();
-    this.adaptedData = FeasibilityQueryResultDetailsListAdapter.adapt(this.sortResult(result));
+    this.adaptedData = new FeasibilityQueryResultDetailsListAdapter().adapt(this.sortResult(result));
   }
 
   ngOnDestroy() {
