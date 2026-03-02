@@ -1,6 +1,8 @@
 import { AbstractListEntry } from './AbstractListEntry';
+import { AvailabilityStatusType } from '../../Availability/AvailabilityStatusType';
 import { CriteriaListEntryData } from '../../Interface/Search/CriteriaListListEntryData';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { Availability } from '../../Availability/Availability';
 
 /**
  * Represents a criteria list item, extending AbstractSearchResult.
@@ -47,7 +49,7 @@ export class CriteriaListEntry extends AbstractListEntry {
    *
    * @returns if the Item is selectable
    */
-  getSelectable() {
+  public getSelectable() {
     return this.selectable;
   }
 
@@ -58,6 +60,10 @@ export class CriteriaListEntry extends AbstractListEntry {
    */
   public getAvailability(): number {
     return this.availability;
+  }
+
+  public getAvailabilityStatus(): AvailabilityStatusType {
+    return new Availability(this.availability).getStatus();
   }
 
   /**
