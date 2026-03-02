@@ -1,7 +1,5 @@
 import { BackendService } from '../Backend.service';
 import { ChunkedRequestService } from './ChunkedRequest.service';
-import { CodeableConceptPaths } from '../Paths/CodeableConceptPaths';
-import { ConceptData } from 'src/app/model/Interface/ConceptData';
 import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
 import { CriteriaSearchFilterData } from 'src/app/model/Interface/Search/CriteriaSearchFilterData';
@@ -11,9 +9,9 @@ import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
 import { Observable } from 'rxjs';
 import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
 import { TerminologyPaths } from '../Paths/TerminologyPaths';
-import { UiProfileResponseData } from '../../../model/Interface/UiProfileResponseData';
 import { BulkSearchPostData } from 'src/app/model/Interface/BulkSearchPostData';
 import { BulkSearchResponseData } from 'src/app/model/Interface/BulkSearchResponseData';
+import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
 
 @Injectable({
   providedIn: 'root',
@@ -92,10 +90,10 @@ export class TerminologyApiService {
 
   /**
    * Retrieves UI Profile data from the backend.
-   * @returns
+   * @returns An observable containing the UI profile data.
    */
-  public getUiProfileData(): Observable<UiProfileResponseData[]> {
-    return this.http.get<UiProfileResponseData[]>(
+  public getUiProfileData(): Observable<UiProfileData[]> {
+    return this.http.get<UiProfileData[]>(
       this.backendService.createUrl(TerminologyPaths.UIPROFILE_ENDPOINT)
     );
   }

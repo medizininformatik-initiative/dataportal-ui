@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
-import { UiProfileResponseData } from 'src/app/model/Interface/UiProfileResponseData';
 
 @Injectable({
   providedIn: 'root',
@@ -33,9 +32,7 @@ export class UiProfileProviderService {
    * @param uiProfiles
    * @returns
    */
-  public cacheUiProfiles(uiProfiles: UiProfileResponseData[]): void {
-    uiProfiles.forEach((profile: UiProfileResponseData) =>
-      this.cacheUiProfile(profile.id, profile.uiProfileId)
-    );
+  public cacheUiProfiles(uiProfiles: UiProfileData[]): void {
+    uiProfiles.forEach((profile: UiProfileData) => this.cacheUiProfile(profile.name, profile));
   }
 }

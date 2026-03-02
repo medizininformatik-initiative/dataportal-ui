@@ -1,4 +1,5 @@
 import { ActuatorApiService } from './service/Backend/Api/ActuatorApi.service';
+import { ActuatorInformationService } from './service/Actuator/ActuatorInformation.service';
 import { AppConfigData } from './config/model/AppConfig/AppConfigData';
 import { AppConfigService } from './config/AppConfig.service';
 import { catchError, concatMap, map, take, tap, timeout } from 'rxjs/operators';
@@ -11,10 +12,9 @@ import { Observable, of, throwError } from 'rxjs';
 import { ProvidersInitService } from './service/Provider/ProvidersInit.service';
 import { TerminologyApiService } from './service/Backend/Api/TerminologyApi.service';
 import { TerminologySystemProvider } from './service/Provider/TerminologySystemProvider.service';
+import { UiProfileData } from './model/Interface/UiProfileData';
 import { UiProfileProviderService } from './service/Provider/UiProfileProvider.service';
-import { UiProfileResponseData } from './model/Interface/UiProfileResponseData';
 import { UserProfileService } from './service/User/UserProfile.service';
-import { ActuatorInformationService } from './service/Actuator/ActuatorInformation.service';
 @Injectable({ providedIn: 'root' })
 export class CoreInitService {
   constructor(
@@ -131,14 +131,12 @@ export class CoreInitService {
    * Returns the UI Profiles data from the backend and caches them.
    * @returns
    */
-  private getUiProfilesData(): Observable<UiProfileResponseData[]> {
+  private getUiProfilesData(): Observable<UiProfileData[]> {
     return this.terminologyApiService.getUiProfileData().pipe(
-      tap((uiProfileResponseData: UiProfileResponseData[]) =>
-        this.uiProfileProviderService.cacheUiProfiles(uiProfileResponseData)
+      tap((uiProfileData: UiProfileData[]) =>
+        this.uiProfileProviderService.cacheUiProfiles(uiProfileData)
       ),
-      tap((data: UiProfileResponseData[]) =>
-        console.log('UiProfiles data retrieved:', data.length)
-      ),
+      tap((data: UiProfileData[]) => console.log('UiProfiles data retrieved:', data.length)),
       catchError((err) => {
         console.error('Failed to retrieve UiProfiles data:', err);
         return throwError(() => err);
