@@ -1,12 +1,9 @@
 import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
+import { TableCellType } from './cells/TableCellType';
 
-export interface InterfaceTableDataRow {
+export interface TableRowData {
   id: string
-  data: any[]
-  hasCheckbox?: boolean
-  isCheckboxSelected?: boolean
+  cells: Array<TableCellType>
   isClickable?: boolean
-  isDisabled: boolean
-  checkboxColumnIndex?: number
   originalEntry: AbstractListEntry
 }

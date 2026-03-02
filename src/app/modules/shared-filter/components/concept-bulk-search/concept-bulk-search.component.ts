@@ -1,5 +1,7 @@
 import { BulkCodeableConceptSearchEngineService } from 'src/app/service/Search/SearchTypes/BulkCodeableConcept/BulkCodeableConceptSearchEngine';
-import { CodeableConceptBulkEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkEntryAdapter';
+import { CodeableConceptBulkEntry } from '../../../../model/Search/ListEntries/CodeableConceptBulkEntry';
+import { CodeableConceptBulkFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkFoundEntryAdapter';
+import { CodeableConceptBulkNotFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkNotFoundEntryAdapter';
 import { CodeableConceptBulkResultList } from 'src/app/model/Search/ResultList/CodeableConceptBulkResultList';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
@@ -7,9 +9,8 @@ import { ConceptSelectionHelperService } from '../../service/ConceptSelection/Co
 import { Observable, of, Subscription, tap } from 'rxjs';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
-import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
-import { InterfaceTableDataRow } from '../../../../shared/models/TableData/InterfaceTableDataRows';
-import { CodeableConceptBulkEntry } from '../../../../model/Search/ListEntries/CodeableConceptBulkEntry';
+import { TableData } from 'src/app/shared/models/TableData/TableData';
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
 
 @Component({
   selector: 'num-concept-bulk-search',
@@ -112,12 +113,12 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
     const notFound = resultList.getNotFound();
 
     if (found.length > 0) {
-      this.foundTableData = CodeableConceptBulkEntryAdapter.adaptFound(found);
+      this.foundTableData = new CodeableConceptBulkFoundEntryAdapter().adapt(found);
     } else {
       this.foundTableData = null;
     }
     if (notFound.length > 0) {
-      this.notFoundTableData = CodeableConceptBulkEntryAdapter.adaptNotFound(notFound);
+      this.notFoundTableData = new CodeableConceptBulkNotFoundEntryAdapter().adapt(notFound);
     } else {
       this.notFoundTableData = null;
     }
@@ -141,7 +142,7 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
     this.selectedConceptFilterService.clearSelectedConceptFilter();
   }
 
-  public addSelectedRow(item: InterfaceTableDataRow) {
+  public addSelectedRow(item: TableRowData): void {
     const entry = item.originalEntry as CodeableConceptBulkEntry;
     const concept = new Concept(entry.getDisplay(), entry.getTermCode());
     const updatedSelectedConcepts = this.conceptSelectionService.toggleConceptSelection(

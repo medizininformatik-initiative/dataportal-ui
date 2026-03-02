@@ -1,3 +1,4 @@
+import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter';
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
@@ -5,17 +6,18 @@ import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearch
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
-import { InterfaceTableDataRow } from 'src/app/shared/models/TableData/InterfaceTableDataRows';
 import { map, Observable, of, Subscription } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
+import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component';
 import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
 import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { TableData } from 'src/app/shared/models/TableData/InterfaceTableData';
+import { TableData } from 'src/app/shared/models/TableData/TableData';
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -27,7 +29,6 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -116,14 +117,17 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   /** Search Result Handling */
   private handleSearchResults(results: CriteriaListEntry[]): void {
     this.listItems = results;
-    this.adaptedData = CriteriaListEntryAdapter.adapt(this.listItems);
+    this.adaptedData = new CriteriaListEntryAdapter().adapt(this.listItems);
     this.searchResultsFound = this.adaptedData.body.rows.length > 0;
     this.selectedTableItemsService
       .getSelectedTableItems()
       .pipe(
         map((selected) => {
           this.adaptedData.body.rows.forEach((row) => {
-            row.isCheckboxSelected = selected.some((item) => item.getId() === row.id);
+            const checkboxCell = row.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+            if (checkboxCell) {
+              checkboxCell.isSelected = selected.some((item) => item.getId() === row.id);
+            }
           });
         })
       )
@@ -147,8 +151,9 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   private uncheckAllRows(): void {
     this.adaptedData?.body.rows.forEach((item) => {
-      if (item.isCheckboxSelected) {
-        item.isCheckboxSelected = false;
+      const checkboxCell = item.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+      if (checkboxCell) {
+        checkboxCell.isSelected = false;
       }
     });
   }
@@ -160,7 +165,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.criteriaSearchService.search(searchText).subscribe();
   }
 
-  public setSelectedRowItem(item: InterfaceTableDataRow) {
+  public setSelectedRowItem(item: TableRowData): void {
     const selectedIds = this.selectedTableItemsService.getSelectedIds();
     const itemId = item.originalEntry.getId();
     if (selectedIds.includes(itemId)) {
@@ -174,7 +179,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     }
   }
 
-  public setClickedRow(row: InterfaceTableDataRow) {
+  public setClickedRow(row: TableRowData): void {
     const originalEntry = row.originalEntry as CriteriaListEntry;
     this.listIetmDetailsSubscription?.unsubscribe();
     this.listIetmDetailsSubscription = this.searchTermDetailsService
