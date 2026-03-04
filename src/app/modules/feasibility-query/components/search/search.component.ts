@@ -7,8 +7,8 @@ import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
 import { map, Observable, of, Subscription } from 'rxjs';
-import { MatDrawer } from '@angular/material/sidenav';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component';
 import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
@@ -25,9 +25,7 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
-  TemplateRef,
   ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
 
 @Component({
@@ -36,14 +34,10 @@ import {
   styleUrls: ['./search.component.scss'],
 })
 export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('drawer') sidenav: MatDrawer;
-  @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
-  @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;
+  @ViewChild('searchResults') searchResultsComponent: SearchResultsComponent;
   listItems: Array<CriteriaListEntry> = [];
   adaptedData: TableData;
   private subscription: Subscription;
-  isOpen = false;
-
   private isInitialized = false;
 
   elasticSearchEnabled = false;
@@ -216,18 +210,12 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.startSearch(this.searchText);
   }
 
-  openSidenav() {
-    if (this.sidenav) {
-      this.isOpen = true;
-      this.sidenav.open();
-    }
+  public openSidenav(): void {
+    this.searchResultsComponent?.openSidenav();
   }
 
-  closeSidenav() {
-    if (this.sidenav) {
-      this.isOpen = false;
-      this.sidenav.close();
-    }
+  public closeSidenav(): void {
+    this.searchResultsComponent?.closeSidenav();
   }
 
   public loadMoreCriteriaSearchResults() {

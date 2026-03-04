@@ -3,7 +3,7 @@
 services:
   dataportal-backend:
     container_name: dataportal-backend
-    image:  ghcr.io/medizininformatik-initiative/feasibility-backend:latest
+    image:  ghcr.io/medizininformatik-initiative/dataportal-backend:latest
     ports:
       - "8090:8090"
     depends_on:
@@ -103,7 +103,7 @@ services:
     container_name: elastic-search-init
     environment:
       ES_HOST: dataportal-elastic
-      ONTO_GIT_TAG: v3.9.1
+      ONTO_GIT_TAG: v4.0.0
       ONTO_REPO: https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download
       DOWNLOAD_FILENAME: elastic.zip
       EXIT_ON_EXISTING_INDICES: false

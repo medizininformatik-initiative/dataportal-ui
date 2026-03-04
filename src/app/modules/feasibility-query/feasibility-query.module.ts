@@ -19,6 +19,9 @@ import { EditTimeRestrictionComponent } from './components/editor/criterion-moda
 import { FeasibilityQueryBulkSearchComponent } from './components/search/bulk/bulk-search.component';
 import { FeasibilityQueryRoutingModule } from './feasibility-query-routing.module';
 import { FeasibilityQuerySearchComponent } from './components/search/search.component';
+import { SearchBarComponent } from './components/search/search-bar/search-bar.component';
+import { SearchFilterBarComponent } from './components/search/search-filter-bar/search-filter-bar.component';
+import { SearchResultsComponent } from './components/search/search-results/search-results.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LayoutModule } from 'src/app/layout/layout.module';
@@ -86,6 +89,9 @@ export const FORMATS_GERMAN = {
     TimerestrictionTypeSelectorComponent,
     ConsentSwitchesComponent,
     FeasibilityQuerySearchComponent,
+    SearchBarComponent,
+    SearchFilterBarComponent,
+    SearchResultsComponent,
     DisplayFeasibilityQueryComponent,
     SearchActionBarComponent,
     DisplayCriteriaComponent,
