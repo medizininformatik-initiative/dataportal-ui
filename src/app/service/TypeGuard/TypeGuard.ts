@@ -1,6 +1,10 @@
 import { AnnotatedCRTDLData } from '../../model/Interface/AnnotatedCRTDLData';
 import { AttributeCode } from '../../model/Interface/AttributeCode';
 import { AttributeDefinitionData } from '../../model/Interface/AttributeDefinitionData';
+import { BulkSearchResponseData } from '../../model/Interface/BulkSearchResponseData';
+import { BulkSearchResponseFoundData } from '../../model/Interface/BulkSearchResponseFoundData';
+import { CriteriaSearchFilterData } from '../../model/Interface/Search/CriteriaSearchFilterData';
+import { SearchFilterData } from '../../model/Interface/Search/SearchFilterData';
 import { AttributeFilterBaseData } from '../../model/Interface/AttributeFilterBaseData';
 import { AttributeFilterData } from '../../model/Interface/AttributeFilterData';
 import { AttributeGroupsData } from '../../model/Interface/AttributeGroupsData';
@@ -46,6 +50,7 @@ import { ValidationIssueType } from 'src/app/core/model/Validation/ValidationIss
 import { ValueDefinitionData } from '../../model/Interface/ValueDefinition';
 import { ValueFilterData } from '../../model/Interface/ValueFilterData';
 import { ValueSetValidationIssueData } from 'src/app/core/model/Validation/ValueSetValidationIssueData';
+import { TerminologySystemData } from 'src/app/model/Interface/TerminologySystemData';
 
 /**
  * Utility class for type guards to ensure objects conform to their respective interfaces.
@@ -101,6 +106,10 @@ export class TypeGuard {
 
   public static isOptionalObject(val: unknown): boolean {
     return TypeGuard.isObject(val) || val === undefined;
+  }
+
+  public static isNullable<T>(val: unknown, checkFn?: (item: unknown) => boolean): val is T | null {
+    return val === null || (checkFn ? checkFn(val) : true);
   }
 
   /**
@@ -205,6 +214,84 @@ export class TypeGuard {
       TypeGuard.isString(contextData.system) &&
       TypeGuard.isString(contextData.display) &&
       TypeGuard.isString(contextData.version)
+    );
+  }
+
+  /**
+   * Checks if the object is an array of CriteriaProfileData.
+   * @param obj
+   * @returns boolean
+   */
+  public static isCriteriaProfileDataArray(obj: unknown): obj is CriteriaProfileData[] {
+    return TypeGuard.isArray(obj, TypeGuard.isCriteriaProfileData);
+  }
+
+  /**
+   * Checks if the object is an instance of CriteriaSearchFilterData.
+   * @param obj
+   * @returns boolean
+   */
+  public static isCriteriaSearchFilterData(obj: unknown): obj is CriteriaSearchFilterData {
+    const d = obj as CriteriaSearchFilterData;
+    return (
+      TypeGuard.isObject(d) &&
+      TypeGuard.isString(d.name) &&
+      TypeGuard.isString(d.type) &&
+      TypeGuard.isArray(d.values, TypeGuard.isSearchFilterData)
+    );
+  }
+
+  /**
+   * Checks if the object is an array of CriteriaSearchFilterData.
+   * @param obj
+   * @returns boolean
+   */
+  public static isCriteriaSearchFilterDataArray(obj: unknown): obj is CriteriaSearchFilterData[] {
+    return TypeGuard.isArray(obj, TypeGuard.isCriteriaSearchFilterData);
+  }
+
+  /**
+   * Checks if the object is an instance of SearchFilterData.
+   * @param obj
+   * @returns boolean
+   */
+  private static isSearchFilterData(obj: unknown): obj is SearchFilterData {
+    const d = obj as SearchFilterData;
+    return TypeGuard.isObject(d) && TypeGuard.isString(d.label) && TypeGuard.isNumber(d.count);
+  }
+
+  /**
+   * Checks if the object is an instance of BulkSearchResponseFoundData.
+   * @param obj
+   * @returns boolean
+   */
+  public static isBulkSearchResponseFoundData(obj: unknown): obj is BulkSearchResponseFoundData {
+    const d = obj as BulkSearchResponseFoundData;
+    return (
+      TypeGuard.isObject(d) &&
+      TypeGuard.isString(d.id) &&
+      TypeGuard.isDisplayData(d.display) &&
+      TypeGuard.isNumber(d.availability) &&
+      TypeGuard.isTerminologyCodeData(d.context) &&
+      TypeGuard.isString(d.terminology) &&
+      TypeGuard.isArray(d.termcodes, TypeGuard.isTerminologyCodeData) &&
+      TypeGuard.isString(d.kdsModule) &&
+      TypeGuard.isBoolean(d.selectable)
+    );
+  }
+
+  /**
+   * Checks if the object is an instance of BulkSearchResponseData.
+   * @param obj
+   * @returns boolean
+   */
+  public static isBulkSearchResponseData(obj: unknown): obj is BulkSearchResponseData {
+    const bulkSearchResponseData = obj as BulkSearchResponseData;
+    return (
+      TypeGuard.isObject(bulkSearchResponseData) &&
+      TypeGuard.isString(bulkSearchResponseData.uiProfileId) &&
+      TypeGuard.isArray(bulkSearchResponseData.found, TypeGuard.isBulkSearchResponseFoundData) &&
+      TypeGuard.isArray(bulkSearchResponseData.notFound, TypeGuard.isString)
     );
   }
 
@@ -358,17 +445,17 @@ export class TypeGuard {
    * @param obj
    * @returns boolean
    */
-  public static isCriteriaRelations(obj: unknown): obj is CriteriaRelationsData {
+  public static isCriteriaRelationsData(obj: unknown): obj is CriteriaRelationsData {
     const relations = obj as CriteriaRelationsData;
     return (
       TypeGuard.isObject(relations) &&
       TypeGuard.isDisplayData(relations.display) &&
-      Array.isArray(relations.parents) &&
-      relations.parents.every(TypeGuard.isCriteriaRelative) &&
-      Array.isArray(relations.children) &&
-      relations.children.every(TypeGuard.isCriteriaRelative) &&
-      Array.isArray(relations.relatedTerms) &&
-      relations.relatedTerms.every(TypeGuard.isCriteriaRelative)
+      TypeGuard.isBoolean(relations.selectable) &&
+      TypeGuard.isString(relations.termcode) &&
+      TypeGuard.isString(relations.terminology) &&
+      TypeGuard.isOptionalArray(relations.parents, TypeGuard.isCriteriaRelative) &&
+      TypeGuard.isOptionalArray(relations.children, TypeGuard.isCriteriaRelative) &&
+      TypeGuard.isOptionalArray(relations.relatedTerms, TypeGuard.isCriteriaRelative)
     );
   }
 
@@ -577,6 +664,10 @@ export class TypeGuard {
     );
   }
 
+  public static isUiProfileDataList(obj: unknown): obj is UiProfileData[] {
+    return TypeGuard.isArray(obj, TypeGuard.isUiProfileData);
+  }
+
   /**
    * Checks if the object is an instance of UiProfileData.
    * @param obj
@@ -592,7 +683,10 @@ export class TypeGuard {
         uiProfileData.attributeDefinitions,
         TypeGuard.isAttributeDefinitionData
       ) &&
-      TypeGuard.isValueDefinitionData(uiProfileData.valueDefinition)
+      TypeGuard.isNullable<UiProfileData>(
+        uiProfileData.valueDefinition,
+        TypeGuard.isValueDefinitionData
+      )
     );
   }
 
@@ -607,15 +701,17 @@ export class TypeGuard {
       TypeGuard.isObject(valueDefinitionData) &&
       TypeGuard.isDisplayData(valueDefinitionData.display) &&
       TypeGuard.isString(valueDefinitionData.type) &&
+      TypeGuard.isArray(valueDefinitionData.selectableConcepts, TypeGuard.isTerminologyCodeData) &&
+      TypeGuard.isBoolean(valueDefinitionData.optional) &&
+      TypeGuard.isArray(valueDefinitionData.allowedUnits, TypeGuard.isQuantityUnitData) &&
+      TypeGuard.isOptionalNumber(valueDefinitionData.precision) &&
+      TypeGuard.isNullable<number>(valueDefinitionData.max, TypeGuard.isNumber) &&
+      TypeGuard.isNullable<number>(valueDefinitionData.min, TypeGuard.isNumber) &&
       TypeGuard.isOptionalArray<string>(
-        valueDefinitionData.selectableConcepts,
+        valueDefinitionData.referencedCriteriaSet,
         TypeGuard.isString
       ) &&
-      TypeGuard.isBoolean(valueDefinitionData.optional) &&
-      TypeGuard.isOptionalArray<string>(valueDefinitionData.allowedUnits) &&
-      TypeGuard.isOptionalNumber(valueDefinitionData.precision) &&
-      TypeGuard.isOptionalNumber(valueDefinitionData.max) &&
-      TypeGuard.isOptionalNumber(valueDefinitionData.min)
+      TypeGuard.isOptionalArray<string>(valueDefinitionData.referencedValueSet, TypeGuard.isString)
     );
   }
 
@@ -660,17 +756,25 @@ export class TypeGuard {
     const attributeDefinitionData = obj as AttributeDefinitionData;
     return (
       TypeGuard.isObject(attributeDefinitionData) &&
-      TypeGuard.isNumber(attributeDefinitionData.min) &&
-      TypeGuard.isNumber(attributeDefinitionData.max) &&
+      TypeGuard.isNullable<number>(attributeDefinitionData.min, TypeGuard.isNumber) &&
+      TypeGuard.isNullable<number>(attributeDefinitionData.max, TypeGuard.isNumber) &&
       Array.isArray(attributeDefinitionData.allowedUnits) &&
       attributeDefinitionData.allowedUnits.every(TypeGuard.isQuantityUnitData) &&
       TypeGuard.isAttributeCode(attributeDefinitionData.attributeCode) &&
       TypeGuard.isDisplayData(attributeDefinitionData.display) &&
       TypeGuard.isBoolean(attributeDefinitionData.optional) &&
-      TypeGuard.isNumber(attributeDefinitionData.precision) &&
+      TypeGuard.isOptionalNumber(attributeDefinitionData.precision) &&
       Array.isArray(attributeDefinitionData.selectableConcepts) &&
       attributeDefinitionData.selectableConcepts.every(TypeGuard.isString) &&
-      TypeGuard.isString(attributeDefinitionData.type)
+      TypeGuard.isString(attributeDefinitionData.type) &&
+      TypeGuard.isOptionalArray<string>(
+        attributeDefinitionData.referencedCriteriaSet,
+        TypeGuard.isString
+      ) &&
+      TypeGuard.isOptionalArray<string>(
+        attributeDefinitionData.referencedValueSet,
+        TypeGuard.isString
+      )
     );
   }
 
@@ -806,6 +910,16 @@ export class TypeGuard {
     );
   }
 
+  public static isCriteriaListResultList(
+    obj: unknown
+  ): obj is ResultListData<CriteriaListEntryData> {
+    const criteriaListResult = obj as ResultListData<CriteriaListEntryData>;
+    return (
+      TypeGuard.isObject(criteriaListResult) &&
+      TypeGuard.isArray(criteriaListResult.results, TypeGuard.isCriteriaListListEntryData)
+    );
+  }
+
   public static isCriteriaListListEntryData(obj: unknown): obj is CriteriaListEntryData {
     const criteriaListEntry = obj as CriteriaListEntryData;
     return (
@@ -906,5 +1020,19 @@ export class TypeGuard {
 
   public static isFeasibilityPayload(payload: unknown): payload is { issues: IssueData[] } {
     return typeof payload === 'object' && payload !== null && 'issues' in payload;
+  }
+
+  public static isTerminologySystemDataArray(obj: unknown): obj is TerminologySystemData[] {
+    return TypeGuard.isArray(obj, TypeGuard.isTerminologySystemData);
+  }
+
+  public static isTerminologySystemData(obj: unknown): obj is TerminologySystemData {
+    const terminologySystemData = obj as TerminologySystemData;
+    return (
+      TypeGuard.isObject(terminologySystemData) &&
+      TypeGuard.isNullable<string>(terminologySystemData.name, TypeGuard.isString) &&
+      TypeGuard.isString(terminologySystemData.url) &&
+      TypeGuard.isDisplayData(terminologySystemData.display)
+    );
   }
 }

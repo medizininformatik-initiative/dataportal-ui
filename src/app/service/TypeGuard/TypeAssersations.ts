@@ -35,6 +35,8 @@ import { TypeGuard } from './TypeGuard';
 import { UiProfileData } from '../../model/Interface/UiProfileData';
 import { ValueDefinitionData } from '../../model/Interface/ValueDefinition';
 import { ValueFilterData } from '../../model/Interface/ValueFilterData';
+import { TerminologySystemData } from 'src/app/model/Interface/TerminologySystemData';
+import { Type } from '@angular/core';
 
 /**
  * Class containing methods for type assertions.
@@ -94,6 +96,17 @@ export class TypeAssertion {
   public static assertCriteriaProfileData(obj: unknown): asserts obj is CriteriaProfileData {
     if (!TypeGuard.isCriteriaProfileData(obj)) {
       throw new Error(`Invalid CriteriaProfileData: ${JSON.stringify(obj)}`);
+    }
+  }
+
+  /**
+   * Asserts that the object is of type CriteriaProfileData array.
+   * @param obj - The object to check.
+   * @throws Will throw an error if the object is not of type CriteriaProfileData array.
+   */
+  public static assertCriteriaProfileDataArray(obj: unknown): asserts obj is CriteriaProfileData[] {
+    if (!TypeGuard.isCriteriaProfileDataArray(obj)) {
+      throw new Error(`Invalid CriteriaProfileDataArray: ${JSON.stringify(obj)}`);
     }
   }
 
@@ -180,7 +193,7 @@ export class TypeAssertion {
    * @throws Will throw an error if the object is not of type Relations.
    */
   public static assertCriteriaRelationsData(obj: unknown): asserts obj is CriteriaRelationsData {
-    if (!TypeGuard.isCriteriaRelations(obj)) {
+    if (!TypeGuard.isCriteriaRelationsData(obj)) {
       throw new Error(`Invalid Relations: ${JSON.stringify(obj)}`);
     }
   }
@@ -447,6 +460,14 @@ export class TypeAssertion {
   public static assertCriteriaRelativeData(obj: unknown): asserts obj is CriteriaRelativeData {
     if (!TypeGuard.isCriteriaRelative(obj)) {
       throw new Error(`Invalid CriteriaRelativeData: ${JSON.stringify(obj)}`);
+    }
+  }
+
+  public static assertTerminologySystemDataArray(
+    obj: unknown
+  ): asserts obj is TerminologySystemData[] {
+    if (!TypeGuard.isTerminologySystemDataArray(obj)) {
+      throw new Error(`Invalid TerminologySystemDataArray: ${JSON.stringify(obj)}`);
     }
   }
 }
