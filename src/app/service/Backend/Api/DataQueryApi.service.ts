@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItemData } from 'src/app/model/Interface/SavedDataQueryListItemData';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
 
 @Injectable({
   providedIn: 'root',
@@ -34,10 +35,12 @@ export class DataQueryApiService {
     dataQueryId: number,
     skipValidation: boolean = false
   ): Observable<SavedDataQueryData> {
+    const context = BackendService.createTypeGuardContext(TypeGuard.isSavedDataQueryData);
     const skip = DataqueryPaths.SKIP_VALIDATION + skipValidation;
     const url = this.backendService.createUrl(DataqueryPaths.DATA) + '/' + dataQueryId + skip;
     return this.http.get<SavedDataQueryData>(url, {
       headers: this.backendService.getHeaders(),
+      context,
     });
   }
 
@@ -59,6 +62,7 @@ export class DataQueryApiService {
   }
 
   public getDatQueryCrtdl(): Observable<CRTDLData> {
+    const context = BackendService.createTypeGuardContext(TypeGuard.isCRTDLData);
     return this.http.get<CRTDLData>(this.backendService.createUrl(DataqueryPaths.CRTDL), {
       headers: this.backendService.getHeaders(),
     });

@@ -1,6 +1,6 @@
 import { BackendService } from '../Backend.service';
 import { forkJoin, map, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -11,11 +11,17 @@ export class ChunkedRequestService {
 
   constructor(private backendService: BackendService, private http: HttpClient) {}
 
-  public getChunkedRequest(ids: string[], path: string): Observable<Array<any>> {
+  public getChunkedRequest<T>(
+    ids: string[],
+    path: string,
+    context: HttpContext = new HttpContext()
+  ): Observable<Array<any>> {
     const chunks = this.backendService.chunkArrayForStrings(ids, this.chunkSize);
     const observables = chunks.map((chunk) => {
       const commaSeparatedIds = chunk.join(',');
-      return this.http.get<Array<any>>(this.backendService.createUrl(path + commaSeparatedIds));
+      return this.http.get<Array<any>>(this.backendService.createUrl(path + commaSeparatedIds), {
+        context,
+      });
     });
     return forkJoin(observables).pipe(map((results) => [].concat(...results)));
   }

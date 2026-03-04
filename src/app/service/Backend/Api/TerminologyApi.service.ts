@@ -1,7 +1,10 @@
 import { BackendService } from '../Backend.service';
+import { BulkSearchPostData } from 'src/app/model/Interface/BulkSearchPostData';
+import { BulkSearchResponseData } from 'src/app/model/Interface/BulkSearchResponseData';
 import { ChunkedRequestService } from './ChunkedRequest.service';
 import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
+import { CriteriaRelationsData } from 'src/app/model/Interface/CriteriaRelationsData';
 import { CriteriaSearchFilterData } from 'src/app/model/Interface/Search/CriteriaSearchFilterData';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -9,8 +12,9 @@ import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
 import { Observable } from 'rxjs';
 import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
 import { TerminologyPaths } from '../Paths/TerminologyPaths';
-import { BulkSearchPostData } from 'src/app/model/Interface/BulkSearchPostData';
-import { BulkSearchResponseData } from 'src/app/model/Interface/BulkSearchResponseData';
+import { TerminologySystemData } from 'src/app/model/Interface/TerminologySystemData';
+import { TypeAssertion } from '../../TypeGuard/TypeAssersations';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
 
 @Injectable({
@@ -29,8 +33,10 @@ export class TerminologyApiService {
    * @returns - An observable containing the search filter options.
    */
   public getSearchFilter(): Observable<Array<CriteriaSearchFilterData>> {
+    const context = BackendService.createTypeGuardContext(TypeGuard.isCriteriaSearchFilterDataArray);
     return this.http.get<Array<CriteriaSearchFilterData>>(
-      this.backendService.createUrl(TerminologyPaths.SEARCH_FILTER_ENDPOINT)
+      this.backendService.createUrl(TerminologyPaths.SEARCH_FILTER_ENDPOINT),
+      { context }
     );
   }
 
@@ -40,9 +46,13 @@ export class TerminologyApiService {
    * @returns - An observable containing the criteria profile data.
    */
   public getCriteriaProfileData(ids: string[]): Observable<Array<CriteriaProfileData>> {
+    const context = BackendService.createAssertContextToken(
+      TypeAssertion.assertCriteriaProfileDataArray
+    );
     return this.chunkedRequestService.getChunkedRequest(
       ids,
-      TerminologyPaths.CRITERIA_PROFILE_ENDPOINT
+      TerminologyPaths.CRITERIA_PROFILE_ENDPOINT,
+      context
     );
   }
 
@@ -51,12 +61,14 @@ export class TerminologyApiService {
    * @param id
    * @returns
    */
-  public getSearchTermEntryRelations(id: string): Observable<any> {
-    return this.http.get<any>(
-      this.backendService.createUrl(
-        TerminologyPaths.ENTRY_ENDPOINT + '/' + id + TerminologyPaths.RELATIONS_ENDPOINT
-      )
+  public getSearchTermEntryRelations(id: string): Observable<CriteriaRelationsData> {
+    const context = BackendService.createAssertContextToken(
+      TypeAssertion.assertCriteriaRelationsData
     );
+    const url = this.backendService.createUrl(
+      TerminologyPaths.ENTRY_ENDPOINT + '/' + id + TerminologyPaths.RELATIONS_ENDPOINT
+    );
+    return this.http.get<CriteriaRelationsData>(url, { context });
   }
 
   /**
@@ -75,17 +87,23 @@ export class TerminologyApiService {
    * @returns - An observable containing the entry data.
    */
   public getEntryById(id: string): Observable<CriteriaListEntryData> {
-    return this.http.get<CriteriaListEntryData>(
-      this.backendService.createUrl(TerminologyPaths.ENTRY_ENDPOINT + '/' + id)
+    const context = BackendService.createAssertContextToken(
+      TypeAssertion.assertCriteriaListListEntryData
     );
+    const url = this.backendService.createUrl(TerminologyPaths.ENTRY_ENDPOINT + '/' + id);
+    return this.http.get<CriteriaListEntryData>(url, { context });
   }
 
   /**
    *
    * @returns
    */
-  public getTerminologySystems() {
-    return this.http.get<any>(this.backendService.createUrl(TerminologyPaths.SYSTEMS_ENDPOINT));
+  public getTerminologySystems(): Observable<TerminologySystemData[]> {
+    const context = BackendService.createAssertContextToken(
+      TypeAssertion.assertTerminologySystemDataArray
+    );
+    const url = this.backendService.createUrl(TerminologyPaths.SYSTEMS_ENDPOINT);
+    return this.http.get<TerminologySystemData[]>(url, { context });
   }
 
   /**
@@ -93,8 +111,10 @@ export class TerminologyApiService {
    * @returns An observable containing the UI profile data.
    */
   public getUiProfileData(): Observable<UiProfileData[]> {
+    const context = BackendService.createTypeGuardContext(TypeGuard.isUiProfileDataList);
     return this.http.get<UiProfileData[]>(
-      this.backendService.createUrl(TerminologyPaths.UIPROFILE_ENDPOINT)
+      this.backendService.createUrl(TerminologyPaths.UIPROFILE_ENDPOINT),
+      { context }
     );
   }
 
@@ -104,9 +124,11 @@ export class TerminologyApiService {
    * @returns
    */
   public postTerminologyBulkSearch(body: BulkSearchPostData): Observable<BulkSearchResponseData> {
+    const context = BackendService.createTypeGuardContext(TypeGuard.isBulkSearchResponseData);
     return this.http.post<BulkSearchResponseData>(
       this.backendService.createUrl(TerminologyPaths.BULK_SEARCH_ENDPOINT),
-      body
+      body,
+      { context }
     );
   }
 }
