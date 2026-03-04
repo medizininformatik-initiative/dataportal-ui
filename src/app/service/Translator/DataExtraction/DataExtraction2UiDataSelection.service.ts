@@ -101,11 +101,7 @@ export class DataExtraction2UiDataSelectionService {
     const selectedBasicFields = this.buildSelectedBasicFields(attributes, profileFields);
 
     profileFields.setSelectedReferenceFields([]);
-    const mergedSelectedFields = new Map<string, SelectedBasicField>()
-    ;[...profileFields.getSelectedBasicFields(), ...selectedBasicFields].forEach((field) => {
-      mergedSelectedFields.set(field.getElementId(), field);
-    });
-    profileFields.setSelectedBasicFields(Array.from(mergedSelectedFields.values()));
+    profileFields.setSelectedBasicFields(selectedBasicFields);
     profileFields.setSelectedReferenceFields(selectedReferenceFields);
 
     return ProfileFieldsCloner.deepCopyProfileFields(profileFields);
