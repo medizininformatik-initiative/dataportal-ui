@@ -18,3 +18,18 @@
 .information-icon {
   margin-right: 8px;
 }
+mat-tab-group {
+  height: 100%;
+}
+
+::ng-deep .mat-mdc-tab-body-wrapper {
+  height: 100%;
+}
+
+::ng-deep .mat-mdc-tab-body {
+  height: 100%;
+}
+
+::ng-deep .mat-mdc-tab-body-content {
+  height: 100%;
+}
