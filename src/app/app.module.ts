@@ -15,6 +15,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from './shared/shared.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { ValidationInterceptor } from './core/interceptors/TypeGuard.interceptor';
 
 export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   new TranslateHttpLoader(http);
@@ -53,6 +54,11 @@ export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ValidationInterceptor,
       multi: true,
     },
     {
