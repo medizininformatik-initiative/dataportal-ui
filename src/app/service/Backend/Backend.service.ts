@@ -2,7 +2,17 @@ import { AppSettingsProviderService } from '../Config/AppSettingsProvider.servic
 import { HttpContext, HttpContextToken, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
-import { IS_FEASIBILITY_REQUEST, IS_VALIDATION } from './HttpContextToken';
+import {
+  AssertionMethod,
+  HttpContextTokenOptions,
+  IS_FEASIBILITY_REQUEST,
+  IS_VALIDATION,
+  RESPONSE_ASSERT,
+  RESPONSE_GUARD,
+  ResponseAssert,
+  ResponseGuard,
+  SKIP_AUTH,
+} from './HttpContextToken';
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +65,36 @@ export class BackendService {
    */
   public static getFeasibilityRequestContextToken(): HttpContext {
     return new HttpContext().set(IS_FEASIBILITY_REQUEST, true);
+  }
+
+  public static createTypeGuardContext<T>(guard: ResponseGuard<T>): HttpContext {
+    return new HttpContext().set(RESPONSE_GUARD, guard);
+  }
+
+  public static createAssertContextToken(assert: AssertionMethod): HttpContext {
+    return new HttpContext().set(RESPONSE_ASSERT, assert);
+  }
+  /**
+   * @param options
+   * @example createContext({ guard: (value): value is MyResponseType => { ... }, skipAuth: true, validateResponse: true })
+   * @returns HttpContext with the specified options set (e.g. response guard, skipAuth, validateResponse)
+   */
+  public static createContext<T>(options?: HttpContextTokenOptions<T>): HttpContext {
+    let context = new HttpContext();
+
+    if (options?.guard) {
+      context = context.set(RESPONSE_GUARD, options.guard);
+    }
+
+    if (options?.skipAuth) {
+      context = context.set(SKIP_AUTH, true);
+    }
+
+    if (options?.validateResponse) {
+      context = context.set(IS_VALIDATION, true);
+    }
+
+    return context;
   }
 
   public chunkArray<T>(array: T[], chunkSize: number): T[][] {
