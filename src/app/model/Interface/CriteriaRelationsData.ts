@@ -3,7 +3,10 @@ import { DisplayData } from './DisplayData';
 
 export interface CriteriaRelationsData {
   display: DisplayData
-  parents: CriteriaRelativeData[]
-  children: CriteriaRelativeData[]
-  relatedTerms: CriteriaRelativeData[]
+  selectable: boolean
+  termcode: string
+  terminology: string
+  parents?: CriteriaRelativeData[]
+  children?: CriteriaRelativeData[]
+  relatedTerms?: CriteriaRelativeData[]
 }
