@@ -1,12 +1,13 @@
 import { BackendService } from '../Backend.service';
 import { ChunkedRequestService } from './ChunkedRequest.service';
+import { CodeableConceptBulkSearchPostData } from 'src/app/model/Interface/CodeableConceptBulkSearchPostData';
+import { CodeableConceptBulkSearchResponse } from 'src/app/model/Interface/CodeableConceptBulkSearchResponse';
 import { CodeableConceptPaths } from '../Paths/CodeableConceptPaths';
 import { ConceptData } from 'src/app/model/Interface/ConceptData';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CodeableConceptBulkSearchPostData } from 'src/app/model/Interface/CodeableConceptBulkSearchPostData';
-import { CodeableConceptBulkSearchResponse } from 'src/app/model/Interface/CodeableConceptBulkSearchResponse';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
 
 @Injectable({
   providedIn: 'root',
