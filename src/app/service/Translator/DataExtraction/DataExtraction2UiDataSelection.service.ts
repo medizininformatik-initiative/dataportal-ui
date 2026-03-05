@@ -1,6 +1,7 @@
 import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData';
 import { AttributesData } from 'src/app/model/Interface/AttributesData';
-import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
+import { BasicFieldTranslatorService } from './BasicFieldTranslator.service';
+import { CreateDataSelectionProfileService } from '../../DataSelection/CreateDataSelectionProfile.service';
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
@@ -10,13 +11,9 @@ import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/Profil
 import { ProfileFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFieldsCloner';
 import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
-import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
-import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { SnackbarService } from '../../../shared/service/Snackbar/Snackbar.service';
+import { ReferenceFieldTranslatorService } from './ReferenceFieldTranslator.service';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { v4 as uuidv4 } from 'uuid';
-import { LoadDataSelectionProfilesService } from '../../DataSelection/LoadDataSelectionProfiles.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,65 +21,118 @@ import { LoadDataSelectionProfilesService } from '../../DataSelection/LoadDataSe
 export class DataExtraction2UiDataSelectionService {
   private idMap: { oldId: string; newId: string }[] = [];
   constructor(
-    private createDataSelection: LoadDataSelectionProfilesService,
+    private createDataSelection: CreateDataSelectionProfileService,
     private profileFilterTranslatorService: ProfileFilterTranslatorService,
-    private snackbar: SnackbarService
+    private basicFieldTranslator: BasicFieldTranslatorService,
+    private referenceFieldTranslator: ReferenceFieldTranslatorService
   ) {}
 
   /**
-   * @todo Check if version is part of the dataExtraction.attributeGroups.filter.codes
+   * Translates the given DataExtractionData into a DataSelection by fetching the necessary profile data and applying the relevant information from the DataExtractionData to the fetched profiles.
    * @param dataExtraction
+   * @returns An Observable that emits the translated DataSelection.
    */
   public translate(dataExtraction: DataExtractionData): Observable<DataSelection> {
     if (dataExtraction.attributeGroups?.length > 0) {
       const urls = this.getGroupReferences(dataExtraction);
-      return this.createDataSelection.loadProfiles(urls, false).pipe(
-        map((dataSelectionProfiles) => {
-          this.replaceExternalIdsWithFetchedProfileIds(
-            dataSelectionProfiles,
-            dataExtraction.attributeGroups
-          );
-
-          dataSelectionProfiles.forEach((dataSelectionProfile) => {
-            const externDataSelectionProfile = this.findExternalProfileFromIdMap(
-              dataSelectionProfile,
-              dataExtraction
-            );
-            dataSelectionProfile.setLabel(
-              externDataSelectionProfile.name ?? dataSelectionProfile.getLabel().getOriginal()
-            );
-            if (
-              externDataSelectionProfile.attributes &&
-              externDataSelectionProfile.attributes.length > 0
-            ) {
-              const profileFields = dataSelectionProfile.getProfileFields();
-              const attributes = externDataSelectionProfile.attributes;
-              const updatedProfileFields = this.setProfileFields(attributes, profileFields);
-              dataSelectionProfile.setProfileFields(updatedProfileFields);
-            } else {
-              dataSelectionProfile.getProfileFields().setSelectedBasicFields([]);
-            }
-
-            if (TypeGuard.isFilterDataArray(externDataSelectionProfile.filter)) {
-              const profileFilter = this.profileFilterTranslatorService.createProfileFilters(
-                externDataSelectionProfile,
-                dataSelectionProfile
-              );
-              dataSelectionProfile.setFilters(profileFilter);
-            }
-
-            if (externDataSelectionProfile.includeReferenceOnly) {
-              dataSelectionProfile.setReference(new ProfileReference(true, true));
-            } else {
-              dataSelectionProfile.setReference(new ProfileReference(true, false));
-            }
-          });
-          return new DataSelection(dataSelectionProfiles, uuidv4());
-        })
-      );
+      return this.createDataSelection
+        .fetchDataSelectionProfileData(urls, false)
+        .pipe(
+          map((dataSelectionProfiles: DataSelectionProfile[]) =>
+            this.buildDataSelection(dataSelectionProfiles, dataExtraction)
+          )
+        );
     }
   }
 
+  /**
+   * Builds a DataSelection from the given profiles and DataExtractionData.
+   * @param profiles
+   * @param dataExtraction
+   * @returns
+   */
+  private buildDataSelection(
+    profiles: DataSelectionProfile[],
+    dataExtraction: DataExtractionData
+  ): DataSelection {
+    this.replaceExternalIdsWithFetchedProfileIds(profiles, dataExtraction.attributeGroups);
+
+    profiles.forEach((profile: DataSelectionProfile) =>
+      this.applyExternalProfile(profile, dataExtraction)
+    );
+
+    return new DataSelection(profiles, uuidv4());
+  }
+
+  /**
+   * @param profile
+   * @param dataExtraction
+   */
+  private applyExternalProfile(
+    profile: DataSelectionProfile,
+    dataExtraction: DataExtractionData
+  ): void {
+    const externProfile = this.findExternalProfileFromIdMap(profile, dataExtraction);
+    this.applyLabel(profile, externProfile);
+    this.applyProfileFields(profile, externProfile);
+    this.applyFilters(profile, externProfile);
+    this.applyReference(profile, externProfile);
+  }
+
+  /**
+   * @param profile
+   * @param externProfile
+   */
+  private applyLabel(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
+    profile.setLabel(externProfile.name ?? profile.getLabel().getOriginal());
+  }
+
+  /**
+   * @param profile
+   * @param externProfile
+   */
+  private applyProfileFields(
+    profile: DataSelectionProfile,
+    externProfile: AttributeGroupsData
+  ): void {
+    if (externProfile.attributes?.length > 0) {
+      const updatedFields = this.setProfileFields(
+        externProfile.attributes,
+        profile.getProfileFields()
+      );
+      profile.setProfileFields(updatedFields);
+    } else {
+      profile.getProfileFields().setSelectedBasicFields([]);
+    }
+  }
+
+  /**
+   * @param profile
+   * @param externProfile
+   */
+  private applyFilters(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
+    if (TypeGuard.isFilterDataArray(externProfile.filter)) {
+      const profileFilter = this.profileFilterTranslatorService.createProfileFilters(
+        externProfile,
+        profile
+      );
+      profile.setFilters(profileFilter);
+    }
+  }
+
+  /**
+   * @param profile
+   * @param externProfile
+   */
+  private applyReference(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
+    profile.setReference(new ProfileReference(true, externProfile.includeReferenceOnly ?? false));
+  }
+
+  /**
+   * @param profile
+   * @param dataExtraction
+   * @returns
+   */
   private findExternalProfileFromIdMap(
     profile: DataSelectionProfile,
     dataExtraction: DataExtractionData
@@ -93,12 +143,25 @@ export class DataExtraction2UiDataSelectionService {
     );
   }
 
+  /**
+   * Sets the profile fields of the given ProfileFields based on the provided attributes and returns a new instance of ProfileFields with the updated fields.
+   * @param attributes
+   * @param profileFields
+   * @returns
+   */
   private setProfileFields(
     attributes: AttributesData[],
     profileFields: ProfileFields
   ): ProfileFields {
-    const selectedReferenceFields = this.buildSelectedReferenceFields(attributes, profileFields);
-    const selectedBasicFields = this.buildSelectedBasicFields(attributes, profileFields);
+    const selectedReferenceFields = this.referenceFieldTranslator.buildSelectedReferenceFields(
+      attributes,
+      profileFields,
+      this.idMap
+    );
+    const selectedBasicFields = this.basicFieldTranslator.buildSelectedBasicFields(
+      attributes,
+      profileFields
+    );
 
     profileFields.setSelectedReferenceFields([]);
     profileFields.setSelectedBasicFields(selectedBasicFields);
@@ -107,110 +170,15 @@ export class DataExtraction2UiDataSelectionService {
     return ProfileFieldsCloner.deepCopyProfileFields(profileFields);
   }
 
-  /*TODO: Snackbar message is just a temporary solution. Will be obsolete with Backend validation*/
-  private buildSelectedReferenceFields(
-    attributes: AttributesData[],
-    profileFields: ProfileFields
-  ): SelectedReferenceField[] {
-    const result = attributes
-      .filter((attribute) => attribute.linkedGroups && attribute.linkedGroups.length > 0)
-      .map((attribute) => {
-        const matchingField = this.findReferenceField(
-          profileFields.getReferenceFields(),
-          attribute.attributeRef
-        );
-        if (matchingField) {
-          return this.createSelectedReferenceField(attribute, matchingField);
-        } else {
-          this.snackbar.displayErrorMessage('DSE-10001');
-        }
-      })
-      .filter((element) => element !== undefined);
-    profileFields.getReferenceFields().forEach((refField) => {
-      if (refField.getRecommended()) {
-        const foudnRef = result.find(
-          (res) => res.getSelectedField().getElementId() === refField.getElementId()
-        );
-        if (!foudnRef) {
-          refField.setRecommended(false);
-        }
-      }
-    });
-    return result;
-  }
-
-  /*TODO: Snackbar message is just a temporary solution. Will be obsolete with Backend validation*/
-  private buildSelectedBasicFields(
-    attributes: AttributesData[],
-    profileFields: ProfileFields
-  ): SelectedBasicField[] {
-    return attributes
-      .filter((attribute) => !attribute.linkedGroups || attribute.linkedGroups.length === 0)
-      .map((attribute) => {
-        const matchingField = this.findBasicField(
-          profileFields.getFieldTree(),
-          attribute.attributeRef
-        );
-        if (matchingField) {
-          return this.createSelecteBasicFields(matchingField, attribute);
-        } else {
-          this.snackbar.displayErrorMessage('DSE-10001');
-        }
-      })
-      .filter((element) => element !== undefined);
-  }
-
-  private findBasicField(basicFields: BasicField[], attributeRef: string): BasicField | undefined {
-    for (const field of basicFields) {
-      if (field.getElementId() === attributeRef) {
-        return field;
-      } else if (field.getChildren().length > 0) {
-        const result = this.findBasicField(field.getChildren(), attributeRef);
-        if (result) {
-          return result;
-        }
-      }
-    }
-    return undefined;
-  }
-
-  private findReferenceField(
-    referenceFields: ReferenceField[],
-    attributeRef: string
-  ): ReferenceField {
-    return referenceFields.find((field) => field.getElementId() === attributeRef);
-  }
-
-  private createSelectedReferenceField(
-    attribute: AttributesData,
-    foundField: ReferenceField
-  ): SelectedReferenceField {
-    const linkedProfileIds = attribute.linkedGroups.map(
-      (linkedGroup) =>
-        this.idMap
-          .map((id) => (id.oldId === linkedGroup ? id.newId : undefined))
-          .filter((id) => id !== undefined)[0]
-    );
-    const selectedReferenceField = new SelectedReferenceField(
-      foundField,
-      linkedProfileIds,
-      attribute.mustHave
-    );
-    return selectedReferenceField;
-  }
-
-  private createSelecteBasicFields(
-    basicField: BasicField,
-    attribute: AttributesData
-  ): SelectedBasicField {
-    const selectedBasicField = new SelectedBasicField(basicField, attribute.mustHave);
-    return selectedBasicField;
-  }
-
   private getGroupReferences(dataExtraction: DataExtractionData): string[] {
     return dataExtraction.attributeGroups.map((attributeGroup) => attributeGroup.groupReference);
   }
 
+  /**
+   * Replaces the old IDs in the idMap with the new IDs from the fetched profiles based on matching URLs between the DataSelectionProfiles and the AttributeGroupsData from the DataExtractionData. This allows for correct mapping of profile data to the corresponding profiles when applying the external profile data.
+   * @param dataSelectionProfiles
+   * @param externProfiles
+   */
   private replaceExternalIdsWithFetchedProfileIds(
     dataSelectionProfiles: DataSelectionProfile[],
     externProfiles: AttributeGroupsData[]
