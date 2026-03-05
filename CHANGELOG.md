@@ -1,5 +1,13 @@
 # Changelog
 
+## v6.6.1 (2025-03-02)
+
+### Changed
+* Updated UIProfile date model [#526](https://github.com/medizininformatik-initiative/dataportal-ui/issues/526)
+* Refactored table data model and components to support dynamic table structures and improved reusability [#523](https://github.com/medizininformatik-initiative/dataportal-ui/issues/523)
+### Features
+ * Added avaibility component and data classes to display the availability of criteria in the UI [#520](https://github.com/medizininformatik-initiative/dataportal-ui/issues/520)
+
 ## v6.6.0 (2025-02-05)
 
 ### Features
