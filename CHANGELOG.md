@@ -1,6 +1,20 @@
 # Changelog
 
-## v6.6.1 (2025-03-02)
+## v6.7.0 (2026-03-05)
+
+### Features
+### Changed
+* Fix height of placeholder component in reference tab in query editor [#529](https://github.com/medizininformatik-initiative/dataportal-ui/issues/529)
+* Do not add recommended fields on uploaded CRTDL if they are not set [#531](https://github.com/medizininformatik-initiative/dataportal-ui/issues/531)
+* Commented out the consent toggle component [#532](https://github.com/medizininformatik-initiative/dataportal-ui/issues/532)
+* Refactored DataExtraction2UiDataSelectionService into smaller services for better maintainability and separation of concerns [#534](https://github.com/medizininformatik-initiative/dataportal-ui/issues/534)
+
+### Fixed
+* Display was added to translated codefilter for a profile of the data extraction [#535](https://github.com/medizininformatik-initiative/dataportal-ui/issues/535)
+
+### Features
+* Added translation for criteria search [#536](https://github.com/medizininformatik-initiative/dataportal-ui/issues/536)
+## v6.6.1 (2026-03-02)
 
 ### Changed
 * Updated UIProfile date model [#526](https://github.com/medizininformatik-initiative/dataportal-ui/issues/526)
@@ -8,7 +22,7 @@
 ### Features
  * Added avaibility component and data classes to display the availability of criteria in the UI [#520](https://github.com/medizininformatik-initiative/dataportal-ui/issues/520)
 
-## v6.6.0 (2025-02-05)
+## v6.6.0 (2026-02-05)
 
 ### Features
 * Added a validation endpoint for CRTDLs to ensure only valid CRTDL files can be uploaded and used in the application. [#409](https://github.com/medizininformatik-initiative/dataportal-ui/issues/409)
