@@ -321,7 +321,7 @@
       "CLOSE_DETAILS": "Close",
       "EMPTY": "Sorry, we could not find any results for ",
       "HEADER": "Criteria search",
-      "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide.",
+      "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide.If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU ” or other criteria from the “EINWILLIGUNG” module.",
       "LABEL": "Enter code or search term",
       "SEARCHBAR": "Search for term or terminology code",
       "SEARCH_BUTTON": "Search",

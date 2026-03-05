@@ -335,7 +335,7 @@
       "CLOSE_DETAILS": "Schließen",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
       "HEADER": "Kriteriensuche",
-      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen.",
+      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen. Wenn Sie die Rohdaten, pseudonymisiert, lokal analysieren möchten, fügen Sie das Kriterium \"MDAT wissenschaftlich nutzen EU DSGVO NIVEAU\" oder weitere Kriterien aus dem Modul \"EINWILLIGUNG\" hinzu.",
       "LABEL": "Code oder Suchbegriff eingeben",
       "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
       "SEARCH_BUTTON": "Suchen",
