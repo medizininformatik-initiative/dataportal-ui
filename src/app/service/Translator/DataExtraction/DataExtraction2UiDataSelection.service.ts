@@ -1,12 +1,13 @@
 import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData';
 import { AttributesData } from 'src/app/model/Interface/AttributesData';
 import { BasicFieldTranslatorService } from './BasicFieldTranslator.service';
+import { ConceptHashCollectorService } from './ConceptHashCollector.service';
 import { CreateDataSelectionProfileService } from '../../DataSelection/CreateDataSelectionProfile.service';
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields';
 import { ProfileFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFieldsCloner';
 import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service';
@@ -14,6 +15,8 @@ import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/
 import { ReferenceFieldTranslatorService } from './ReferenceFieldTranslator.service';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { v4 as uuidv4 } from 'uuid';
+import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service';
+import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +27,10 @@ export class DataExtraction2UiDataSelectionService {
     private createDataSelection: CreateDataSelectionProfileService,
     private profileFilterTranslatorService: ProfileFilterTranslatorService,
     private basicFieldTranslator: BasicFieldTranslatorService,
-    private referenceFieldTranslator: ReferenceFieldTranslatorService
+    private referenceFieldTranslator: ReferenceFieldTranslatorService,
+    private conceptHashCollector: ConceptHashCollectorService,
+    private conceptTranslationCacheService: ConceptTranslationCacheService,
+    private codeableConceptApiService: CodeableConceptApiService
   ) {}
 
   /**
@@ -33,16 +39,24 @@ export class DataExtraction2UiDataSelectionService {
    * @returns An Observable that emits the translated DataSelection.
    */
   public translate(dataExtraction: DataExtractionData): Observable<DataSelection> {
+    const hashes = this.conceptHashCollector.collectConceptHashes(dataExtraction);
     if (dataExtraction.attributeGroups?.length > 0) {
       const urls = this.getGroupReferences(dataExtraction);
-      return this.createDataSelection
-        .fetchDataSelectionProfileData(urls, false)
-        .pipe(
-          map((dataSelectionProfiles: DataSelectionProfile[]) =>
-            this.buildDataSelection(dataSelectionProfiles, dataExtraction)
-          )
-        );
+      return this.createDataSelection.fetchDataSelectionProfileData(urls, false).pipe(
+        switchMap((profiles: DataSelectionProfile[]) => this.loadConcepts(profiles, hashes)),
+        map((profiles: DataSelectionProfile[]) => this.buildDataSelection(profiles, dataExtraction))
+      );
     }
+  }
+
+  private loadConcepts(
+    profiles: DataSelectionProfile[],
+    hashes: string[]
+  ): Observable<DataSelectionProfile[]> {
+    return this.codeableConceptApiService.getCodeableConceptsByIds(hashes).pipe(
+      tap((concepts) => this.conceptTranslationCacheService.setConceptsByHash(concepts)),
+      map(() => profiles)
+    );
   }
 
   /**
