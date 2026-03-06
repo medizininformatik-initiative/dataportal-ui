@@ -1,0 +1,14 @@
+<div class="search-bar-container">
+  <num-searchbar
+    class="searchbar"
+    icon="search"
+    [searchText]="searchText$ | async"
+    [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
+    (searchTextChange)="onSearchTextChange($event)"
+  ></num-searchbar>
+  <div class="search-button-wrapper">
+    <num-button [isDisabled]="!searchText" type="blue" (click)="onSearch()">
+      {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
+    </num-button>
+  </div>
+</div>
