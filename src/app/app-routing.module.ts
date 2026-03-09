@@ -16,8 +16,8 @@ export const routes: Routes = [
       hideSideNav: false,
       navId: BasePaths.queryEditor,
       roles: ['main'],
-      breadcrumb: 'Query Editor',
-      title: 'Query Editor',
+      breadcrumb: 'BREADCRUMB.QUERY_EDITOR',
+      title: 'TAB_TITLE.QUERY_EDITOR',
       animation: 'QueryEditorPage',
     },
     loadChildren: () =>
@@ -30,9 +30,9 @@ export const routes: Routes = [
     data: {
       navId: BasePaths.dataQuery,
       roles: ['main'],
-      breadcrumb: 'Data Query',
+      breadcrumb: 'BREADCRUMB.DATA_QUERY',
       animation: 'HomePage',
-      title: 'Data Query',
+      title: 'TAB_TITLE.DATA_QUERY.INDEX',
     },
     loadChildren: () =>
       import(
@@ -48,9 +48,9 @@ export const routes: Routes = [
     data: {
       navId: BasePaths.feasibilityQuery,
       roles: ['main'],
-      breadcrumb: 'Query Builder',
+      breadcrumb: 'BREADCRUMB.FEASIBILITY_QUERY',
       animation: 'FeasibilityQueryPage',
-      title: 'Feasibility Query',
+      title: 'TAB_TITLE.FEASIBILITY_QUERY.INDEX',
     },
     loadChildren: () =>
       import(
@@ -62,9 +62,9 @@ export const routes: Routes = [
     data: {
       navId: BasePaths.dataSelection,
       roles: ['main'],
-      breadcrumb: 'Data Selection',
+      breadcrumb: 'BREADCRUMB.DATA_SELECTION',
       animation: 'DataSelectionPage',
-      title: 'Data Selection',
+      title: 'TAB_TITLE.DATA_SELECTION.INDEX',
     },
     loadChildren: () =>
       import(
@@ -76,9 +76,9 @@ export const routes: Routes = [
     data: {
       navId: 'saved-queries',
       roles: ['main'],
-      breadcrumb: 'Saved Queries',
+      breadcrumb: 'BREADCRUMB.SAVED_QUERIES',
       animation: 'SavedQueriesPage',
-      title: 'Saved Queries',
+      title: 'TAB_TITLE.SAVED_QUERIES',
     },
     loadChildren: () =>
       import(
@@ -89,9 +89,9 @@ export const routes: Routes = [
     path: 'data-protection',
     component: DataProtectionComponent,
     data: {
-      breadcrumb: 'Data Protection',
+      breadcrumb: 'BREADCRUMB.DATA_PROTECTION',
       animation: 'DataProtectionPage',
-      title: 'Data Protection',
+      title: 'TAB_TITLE.DATA_PROTECTION',
     },
   },
   { path: '', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
