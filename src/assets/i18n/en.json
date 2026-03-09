@@ -49,6 +49,22 @@
       "LABEL": "Toggle side navigation"
     }
   },
+  "BREADCRUMB": {
+    "DATA_PROTECTION": "Data Protection",
+    "DATA_QUERY": "Data Definition",
+    "DATA_QUERY_COHORT_DEFINITION": "Cohort Definition",
+    "DATA_QUERY_DATA_SELECTION": "Feature Selection",
+    "DATA_SELECTION": "Feature Selection",
+    "DATA_SELECTION_EDITOR": "Editor",
+    "DATA_SELECTION_SEARCH": "Search",
+    "FEASIBILITY_QUERY": "Cohort Selection",
+    "FEASIBILITY_QUERY_BULK_SEARCH": "Bulk Search",
+    "FEASIBILITY_QUERY_EDITOR": "Editor",
+    "FEASIBILITY_QUERY_RESULT": "Result",
+    "FEASIBILITY_QUERY_SEARCH": "Search",
+    "QUERY_EDITOR": "Query Editor",
+    "SAVED_QUERIES": "Saved Data Definitions"
+  },
   "DATAQUERY": {
     "COHORT": {
       "ACTION_BAR": {
@@ -103,18 +119,22 @@
       },
       "DISPLAY": {
         "APPLIED_FILTER": "Applied filters",
+        "APPLIED_FILTER_TOOLTIP_TEXT": "Filters restrict the data of a profile to specific values, e.g. only diagnoses after a certain date. Optional filters are only applied if corresponding data is available.",
+        "APPLIED_FILTER_TOOLTIP_TITLE": "Applied Filter",
         "APPLIED_REFERENCES": "Referenced features",
+        "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenced profiles are linked profiles that are automatically included when the current profile is part of the request. They cannot be deselected individually.",
+        "APPLIED_REFERENCES_TOOLTIP_TITLE": "Applied References",
         "LINKED": "Linked",
         "OPTIONAL": "Optional",
         "REFERENCE": "Only if referenced",
         "REQUIRED": "Required",
-        "SELECTED_FIELDS": "Selected fields"
+        "SELECTED_FIELDS": "Selected fields",
+        "SELECTED_FIELDS_TOOLTIP_TEXT": "Fields are the specific data points of a profile, e.g. diagnosis code or date. Pre-selected fields have been predefined based on typical research requirements. You can add further fields or remove ones you don't need.",
+        "SELECTED_FIELDS_TOOLTIP_TITLE": "Selected Fields"
       },
       "HEADER": "Selected features",
       "HEADER_DESCRIPTION": "Define which patient features in the cohort are relevant to your research question here. Pay attention to data sparseness and alignment with your study protocol, ethics approval, or research proposal (if available). Change the selection by clicking the pencil icon and add filters (e.g., specific diagnosis codes) as needed.",
-      "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
-      "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
-      "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
+      "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at <a href=\"mailto:{{email}}\" target=\"_blank\">{{email}}</a>. There are two tutorials on how to use the system on the FDPG website: <a href=\"https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/\" target=\"_blank\">https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/</a> When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
       "SECTION": "Selected criteria"
     },
     "SEARCH": {
@@ -429,7 +449,9 @@
     "KONTEXT": "Context / CDS Profile",
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Child element",
-      "PARENTS": "Parent element"
+      "DETAILS": "Details",
+      "PARENTS": "Parent element",
+      "TRANSLATIONS": "Automatic Translations"
     },
     "MENU": {
       "ADD": "Add to cohort selection",
@@ -510,19 +532,27 @@
     }
   },
   "TAB_TITLE": {
+    "DATA_PROTECTION": "Data Protection",
     "DATA_QUERY": {
       "COHORT_DEFINITION": "Data Definition - Cohort Selection",
-      "DATA_SELECTION": "Data Definition - Feature Selection"
+      "DATA_SELECTION": "Data Definition - Feature Selection",
+      "INDEX": "Data Definition"
     },
     "DATA_SELECTION": {
       "EDITOR": "Feature Selection - Editor",
+      "INDEX": "Feature Selection",
       "SEARCH": "Feature Selection - Search"
     },
     "FEASIBILITY_QUERY": {
       "EDITOR": "Feasibility Query - Editor",
+      "INDEX": "Feasibility Query",
       "RESULT": "Feasibility Query - Result",
       "SEARCH": "Feasibility Query - Search"
-    }
+    },
+    "QUERY_EDITOR": "Feature Selection - Query Editor",
+    "QUERY_EDITOR_CRITERION": "Cohort Selection - Criterion Editor",
+    "QUERY_EDITOR_FEATURE": "Feature Selection - Feature Editor",
+    "SAVED_QUERIES": "Saved Queries"
   },
   "VALIDATION": {
     "10000": "invalid schema",

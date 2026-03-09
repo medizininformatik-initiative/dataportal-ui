@@ -49,6 +49,22 @@
       "LABEL": "Seitennavigation umschalten"
     }
   },
+  "BREADCRUMB": {
+    "DATA_PROTECTION": "Datenschutz",
+    "DATA_QUERY": "Datendefinition",
+    "DATA_QUERY_COHORT_DEFINITION": "Kohortenselektion",
+    "DATA_QUERY_DATA_SELECTION": "Merkmalselektion",
+    "DATA_SELECTION": "Merkmalselektion",
+    "DATA_SELECTION_EDITOR": "Editor",
+    "DATA_SELECTION_SEARCH": "Suche",
+    "FEASIBILITY_QUERY": "Kohortenselektion",
+    "FEASIBILITY_QUERY_BULK_SEARCH": "Massensuche",
+    "FEASIBILITY_QUERY_EDITOR": "Editor",
+    "FEASIBILITY_QUERY_RESULT": "Ergebnis",
+    "FEASIBILITY_QUERY_SEARCH": "Suche",
+    "QUERY_EDITOR": "Editor",
+    "SAVED_QUERIES": "Gespeicherte Datendefinitionen"
+  },
   "DATAQUERY": {
     "COHORT": {
       "ACTION_BAR": {
@@ -103,18 +119,22 @@
       },
       "DISPLAY": {
         "APPLIED_FILTER": "Angewandte Filter",
+        "APPLIED_FILTER_TOOLTIP_TEXT": "Filter schränken die Daten eines Merkmals auf bestimmte Werte ein, z. B. nur Diagnosen ab einem bestimmten Datum. Optionale Filter werden nur dann angewendet, wenn entsprechende Daten vorhanden sind.",
+        "APPLIED_FILTER_TOOLTIP_TITLE": "Angewandte Filter",
         "APPLIED_REFERENCES": "Referenzierte Merkmale",
+        "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenzierte Merkmale sind verknüpfte Profile, die automatisch mitgeliefert werden, wenn das aktuelle Merkmal in der Anfrage enthalten ist. Sie können nicht einzeln abgewählt werden.",
+        "APPLIED_REFERENCES_TOOLTIP_TITLE": "Referenzierte Merkmale",
         "LINKED": "Verknüpft",
         "OPTIONAL": "Optional",
         "REFERENCE": "Nur wenn referenziert",
         "REQUIRED": "Erforderlich",
-        "SELECTED_FIELDS": "Selektierte Felder"
+        "SELECTED_FIELDS": "Selektierte Felder",
+        "SELECTED_FIELDS_TOOLTIP_TEXT": "Felder sind die konkreten Datenpunkte eines Merkmals, z. B. Diagnose-Code oder Datum. Die vorausgewählten Felder wurden anhand typischer Forschungsanforderungen vordefiniert. Sie können weitere Felder hinzufügen oder nicht benötigte entfernen.",
+        "SELECTED_FIELDS_TOOLTIP_TITLE": "Selektierte Felder"
       },
       "HEADER": "Ausgewählte Merkmale",
       "HEADER_DESCRIPTION": "Hier können Sie definieren, welche Merkmale von Patientinnen und Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll / Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z. B. auf bestimmte Diagnosecodes) hinzu.",
-      "HEADER_INFO1": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter ",
-      "HEADER_INFO2": ". Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: ",
-      "HEADER_INFO3": "Achten Sie bei der Bearbeitung darauf, dass alle Zwischenergebnisse durch Klick auf \"Speichern\" in der Bearbeitungsansicht der Module zwischengespeichert werden müssen.",
+      "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter <a href=\"mailto:{{email}}\" target=\"_blank\">{{email}}</a>. Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: <a href=\"https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/\" target=\"_blank\">https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/</a> Achten Sie bei der Bearbeitung darauf, dass alle Zwischenergebnisse durch Klick auf \"Speichern\" in der Bearbeitungsansicht der Module zwischengespeichert werden müssen.",
       "SECTION": "Ausgewählte Kriterien"
     },
     "SEARCH": {
@@ -433,7 +453,9 @@
     "KONTEXT": "Kontext / KDS-Profil",
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Kindelement",
-      "PARENTS": "Elternelement"
+      "DETAILS": "Details",
+      "PARENTS": "Elternelement",
+      "TRANSLATIONS": "Automatische Übersetzungen"
     },
     "MENU": {
       "ADD": "Zur Kohortenselektion hinzufügen",
@@ -516,18 +538,26 @@
   },
   "TAB_TITLE": {
     "DATA_QUERY": {
+      "INDEX": "Datendefinition",
       "COHORT_DEFINITION": "Datendefinition - Kohortenselektion",
       "DATA_SELECTION": "Datendefinition - Merkmalselektion"
     },
+    "DATA_PROTECTION": "Datenschutz",
     "DATA_SELECTION": {
+      "INDEX": "Merkmalselektion",
       "EDITOR": "Merkmalselektion - Editor",
       "SEARCH": "Merkmalselektion - Suche"
     },
     "FEASIBILITY_QUERY": {
+      "INDEX": "Machbarkeitsabfrage",
       "EDITOR": "Machbarkeitsabfrage - Editor",
       "RESULT": "Machbarkeitsabfrage - Ergebnis",
       "SEARCH": "Machbarkeitsabfrage - Suche"
-    }
+    },
+    "QUERY_EDITOR": "Merkmalselektion - Query Editor",
+    "QUERY_EDITOR_CRITERION": "Kohortenselektion - Kriterium Editor",
+    "QUERY_EDITOR_FEATURE": "Merkmalselektion - Merkmal Editor",
+    "SAVED_QUERIES": "Gespeicherte Abfragen"
   },
   "VALIDATION": {
     "10000": "Schema ist ungültig",
