@@ -2,29 +2,15 @@
   display: flex;
   justify-content: start;
   align-items: center;
-  background: #f9f9f9;
+  background: rgba(0, 0, 0, 0.02);
   padding: 10px 16px;
   margin: 8px 0;
-  border-radius: 6px;
-  font-family: sans-serif;
+  border-radius: var(--border-radius-card);
+  font-family: var(--font-body);
 }
 
 .link-info {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.mat-mdc-checkbox.mat-accent {
-  --mdc-checkbox-selected-checkmark-color: #fff;
-  --mdc-checkbox-selected-focus-icon-color: #ffffff;
-  --mdc-checkbox-selected-hover-icon-color: var(--num-color--primary-light-green);
-  --mdc-checkbox-selected-icon-color: var(--num-color--primary-green);
-  --mdc-checkbox-selected-pressed-icon-color: #ffffff;
-  --mdc-checkbox-unselected-focus-icon-color: #212121;
-  --mdc-checkbox-unselected-hover-icon-color: var(--num-color--primary-blue);
-  --mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
-  --mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
-  --mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
-  --mdc-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
 }
