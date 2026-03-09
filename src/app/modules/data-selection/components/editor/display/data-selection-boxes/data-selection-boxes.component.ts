@@ -31,6 +31,7 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
 
   display: string;
   label: Display;
+  displayExpanded = false;
   menuItems: MenuItemInterface[] = [];
   filterChipsSelected = false;
   $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
