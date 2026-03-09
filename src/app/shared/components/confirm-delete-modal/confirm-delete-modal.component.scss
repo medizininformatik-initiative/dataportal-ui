@@ -1,35 +1,36 @@
 .container {
   width: 40em;
   min-height: 18vh;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: var(--shadow-modal);
+  border-radius: var(--border-radius-card);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.5rem;
+  padding: 24px 32px;
 }
 
 .modal-header {
   text-align: center;
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 1rem;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
 }
 
 .content-container {
   overflow: auto;
   flex-grow: 1;
-  padding: 1rem;
-  font-size: 1rem;
-  color: #555;
+  padding: 16px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
 }
 
 .select-button {
-  padding: 0.6rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: bold;
+  padding: 8px;
+  border-radius: var(--border-radius-card);
+  font-size: var(--font-size-md);
+  font-weight: 600;
   cursor: pointer;
 }

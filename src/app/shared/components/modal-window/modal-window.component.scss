@@ -1,11 +1,12 @@
 .container {
-  padding: 1rem;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   width: 60em;
-  height: 100vh;
-  background-color: white;
+  background: #ffffff;
+  border-radius: var(--border-radius-card);
   overflow: auto;
+  height: 90vh;
 }
 
 .content-container {
