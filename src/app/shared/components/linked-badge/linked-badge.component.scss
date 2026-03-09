@@ -1,20 +1,39 @@
 .linked-badge {
   display: inline-flex;
   align-items: center;
-  background-color: #e0e9f6;
-  border-radius: 9999px;
-  padding: 4px 10px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--num-color--primary-blue);
-  gap: 6px;
-  border: 1px solid #d1d5db; // light gray border
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); // soft shadow
+  width: 170px;
+  height: 29px;
+  background: #ffffff;
+  border-radius: 20px;
   position: relative;
   top: -15px;
   margin-left: 3%;
+
   .icon {
-    color: var(--num-color--primary-blue);
-    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 31px;
+    height: 18px;
+    background: var(--color-accent-border);
+    border-radius: 10px;
+    margin-left: 9px;
+    flex-shrink: 0;
+    color: var(--color-accent);
+    font-size: 12px;
+
+    fa-icon {
+      transform: rotate(45deg);
+    }
+  }
+
+  .text {
+    flex: 1;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+    color: var(--color-accent);
+    text-align: center;
   }
 }
