@@ -1,7 +1,12 @@
 <num-snackbar></num-snackbar>
 <num-error-display></num-error-display>
-<mat-toolbar fxLayout="row" fxLayoutAlign="start center" color="light" fxLayoutGap="0px">
-  <img id="header-logo" [src]="imagePath" alt="{{ urlAlt }}" class="FDPGTheme" />
+<mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0px">
+  <div class="logo-wrapper">
+    <img id="header-logo" [src]="imagePath" alt="{{ urlAlt }}" class="FDPGTheme" />
+  </div>
+  <div class="breadcrumbs-wrapper">
+    <num-breadcrumbs></num-breadcrumbs>
+  </div>
   <div fxFlex="100" fxLayoutAlign="end" class="margin-right">
     <num-language></num-language>
     <mat-form-field class="language-select" style="width: auto">
