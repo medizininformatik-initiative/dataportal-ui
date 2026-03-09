@@ -1,28 +1,53 @@
-.row-block {
+/* ── Tab group ──────────────────────────────────────────────── */
+.details-tab-group {
   width: 100%;
-  min-height: 16%;
-}
-
-.row-header {
-  font-weight: 500;
-  justify-content: flex-start;
-  min-width: 24%;
   height: 100%;
 }
 
-.row-content {
+/* ── Tab body content area ──────────────────────────────────── */
+.tab-content {
+  padding: 16px 0;
   overflow-y: auto;
 }
 
-.border-top {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.divider {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.orginal-item {
-  font-weight: 500;
+/* ── Item title ─────────────────────────────────────────────── */
+.original-item {
   font-size: 16px;
+  font-weight: 500;
+  padding-bottom: 12px;
+}
+
+/* ── Detail row (label + content) ───────────────────────────── */
+.detail-row {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.detail-row.divider {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detail-label {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text-primary);
+  min-width: 180px;
+  max-width: 180px;
+  padding-right: 16px;
+  padding-top: 2px;
+}
+
+.detail-value {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Translation row ──────────────────────────────────────────── */
+.translation-entry {
+  margin-bottom: 6px;
+  font-size: 14px;
+  gap: 8px;
 }
