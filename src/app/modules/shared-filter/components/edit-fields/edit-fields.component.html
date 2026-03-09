@@ -35,19 +35,25 @@
               class="selected-filter-container"
             >
               <div>
-                <mat-checkbox
+                <num-checkbox
                   [checked]="selectedField.getMustHave()"
-                  (change)="setFieldAsRequired(selectedField)"
-                >
-                </mat-checkbox>
+                  (checkedChange)="setFieldAsRequired(selectedField)"
+                ></num-checkbox>
               </div>
               <div class="display-part">
                 <span
+                  class="field-name"
                   matTooltipPosition="below"
                   matTooltipShowDelay="300"
                   [matTooltip]="selectedField.getDisplay() | displayTranslation"
                 >
                   {{ selectedField.getDisplay() | displayTranslation }}
+                </span>
+                <span
+                  class="field-description"
+                  *ngIf="selectedField.getDescription() | displayTranslation"
+                >
+                  {{ selectedField.getDescription() | displayTranslation }}
                 </span>
               </div>
               <div
