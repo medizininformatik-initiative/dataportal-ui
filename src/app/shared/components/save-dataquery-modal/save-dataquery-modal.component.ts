@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DataQueryValidationService } from '../../../service/DataQuery/DataQueryValidation.service';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModal';
@@ -65,11 +64,11 @@ export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  toggleFeasibilityQuery(checked: MatCheckboxChange) {
-    this.isFeasibilityChecked = checked.checked;
+  toggleFeasibilityQuery(checked: boolean) {
+    this.isFeasibilityChecked = checked;
   }
 
-  toggleDataSelection(checked: MatCheckboxChange) {
-    this.isDataSelectionChecked = checked.checked;
+  toggleDataSelection(checked: boolean) {
+    this.isDataSelectionChecked = checked;
   }
 }
