@@ -1,11 +1,11 @@
 <div class="breadcrumb">
-  <span
-    *ngFor="let breadcrumb of breadcrumbs; let last = last"
-    class="breadcrumb-item"
-    [ngClass]="{ active: last }"
-  >
-    <a [routerLink]="breadcrumb.url" (click)="navigateToDataQueryEditor()"
-      >{{ breadcrumb.label }} /</a
-    >
-  </span>
+  <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
+    <span class="breadcrumb-item" [ngClass]="{ active: last }">
+      <a *ngIf="!last" (click)="navigateTo(breadcrumb.url)">{{
+        breadcrumb.label | displayTranslation
+      }}</a>
+      <span *ngIf="last">{{ breadcrumb.label | displayTranslation }}</span>
+    </span>
+    <span *ngIf="!last" class="breadcrumb-separator"> / </span>
+  </ng-container>
 </div>
