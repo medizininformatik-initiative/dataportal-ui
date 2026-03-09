@@ -1,11 +1,8 @@
 /* === Layout Containers === */
+// Core card shape — visual styles live in the global .num-card class (src/styles/general-styles/_ui-classes.scss)
 .selection-box {
-  width: 100%;
   min-height: 20%;
-  background-color: rgba(90, 121, 175, 0.1);
-  border-radius: 4px;
   margin-bottom: 8px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .display-container,
@@ -17,9 +14,10 @@
 }
 
 .display-container {
-  border-right: 4px solid rgba(90, 121, 175, 0.1);
+  border-right: 1px solid var(--border-color);
   padding: 20px;
-  width: 50%;
+  flex: 0 0 220px;
+  min-width: 0;
 }
 
 .display-container > span {
@@ -31,7 +29,7 @@
 }
 
 .display-selected-fields-container {
-  border-right: 4px solid rgba(90, 121, 175, 0.1);
+  border-right: 1px solid var(--border-color);
 }
 
 .menu-container {
@@ -54,10 +52,12 @@
   padding-top: 2%;
 }
 
-/* === Typography === */
-.text-small {
-  font-size: small;
-}
+/* === Typography ===
+   .display-label  → .num-text-body  (global)
+   .text-small     → .num-text-body  (global)
+   .section-label  → .num-text-accent (global)
+   .display-value-pill → .num-pill   (global)
+*/
 
 .filterChipsInfo {
   color: red;
@@ -69,10 +69,10 @@
 .block {
   display: inline-block;
   position: relative;
-  background-color: #5a79af;
+  background-color: var(--color-accent);
   color: #fff;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-top-left-radius: var(--border-radius-card);
+  border-bottom-left-radius: var(--border-radius-card);
   width: fit-content;
   min-width: 100px;
   height: 26px;
@@ -87,28 +87,9 @@
 .block-triangle {
   display: inline-block;
   content: '';
-  color: #5a79af;
+  color: var(--color-accent);
   border-left: 13px solid;
   border-top: 13px solid transparent;
   border-bottom: 13px solid transparent;
-  /* Uncomment below if positioning is needed
-  position: absolute;
-  right: -13px;
   top: 0;
-  */
-}
-
-/* === Material Checkbox Overrides === */
-.mat-mdc-checkbox.mat-accent {
-  --mdc-checkbox-selected-checkmark-color: #fff;
-  --mdc-checkbox-selected-focus-icon-color: #ffffff;
-  --mdc-checkbox-selected-hover-icon-color: var(--num-color--primary-light-green);
-  --mdc-checkbox-selected-icon-color: var(--num-color--primary-green);
-  --mdc-checkbox-selected-pressed-icon-color: #ffffff;
-  --mdc-checkbox-unselected-focus-icon-color: #212121;
-  --mdc-checkbox-unselected-hover-icon-color: var(--num-color--primary-blue);
-  --mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
-  --mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
-  --mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
-  --mdc-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
 }

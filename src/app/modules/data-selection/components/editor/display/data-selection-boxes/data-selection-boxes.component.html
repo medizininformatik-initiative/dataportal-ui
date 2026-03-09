@@ -1,21 +1,51 @@
 <div
   fxLayout="row"
   fxLayoutAlign="start stretch"
-  class="selection-box"
+  class="num-card selection-box"
   [attr.data-cy]="label | displayTranslation"
 >
   <div class="display-container">
-    <div>{{ label | displayTranslation }}</div>
-    <div class="text-small">{{ display }}</div>
+    <div class="num-text-body">{{ label | displayTranslation }}</div>
+    <div
+      class="num-pill"
+      [class.expanded]="displayExpanded"
+      (click)="displayExpanded = !displayExpanded"
+    >
+      {{ display }}
+    </div>
   </div>
   <div class="display-selected-fields-container padding-1">
-    {{ 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate }}
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate
+      }}</span>
+      <span
+        class="info-icon"
+        numInfoTooltip
+        [infoTooltipTitle]="
+          'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TITLE' | translate
+        "
+        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TEXT' | translate"
+        >?</span
+      >
+    </div>
     <div class="filter-chips-container padding-1">
       <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
     </div>
   </div>
   <div fxLayout="column" class="filter-container padding-1">
-    {{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate }}
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate
+      }}</span>
+      <span
+        class="info-icon"
+        numInfoTooltip
+        [infoTooltipTitle]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TITLE' | translate"
+        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TEXT' | translate"
+        >?</span
+      >
+    </div>
     <div
       fxLayout="row"
       fxLayoutAlign="start center"
@@ -25,11 +55,11 @@
       <ng-container *ngIf="isReferenced">
         <div class="block">{{ 'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate }}</div>
         <div class="block-triangle"></div>
-        <mat-checkbox
+        <num-checkbox
           [disabled]="!isEditable"
           [checked]="profile.getReference().getIsReferenceSet()"
-          (change)="toggleIsReferenceSet(profile.getReference())"
-        ></mat-checkbox>
+          (checkedChange)="toggleIsReferenceSet(profile.getReference())"
+        ></num-checkbox>
       </ng-container>
     </div>
     <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container padding-1">
