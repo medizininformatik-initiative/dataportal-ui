@@ -6,24 +6,22 @@
 }
 
 .icon-color {
-  color: rgba(197, 202, 207, 1);
+  color: var(--border-color);
   padding-right: 10px;
 }
 
 .divider:hover,
 .divider:hover .icon-color {
-  color: rgba(90, 121, 175, 1);
-  /* Hover color */
+  color: var(--color-accent);
 }
 
 .last-item:hover,
 .last-item:hover .icon-color {
-  color: rgba(90, 121, 175, 1);
-  /* Hover color */
+  color: var(--color-accent);
 }
 
 .menu-icon {
-  color: rgba(90, 121, 175, 1);
+  color: var(--color-accent);
 }
 
 .menu-icon:hover {

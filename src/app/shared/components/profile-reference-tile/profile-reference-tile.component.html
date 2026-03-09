@@ -16,13 +16,13 @@
     </span>
   </div>
 
-  <mat-checkbox
-    *ngIf="referenceField"
-    [checked]="referenceField.getMustHave()"
-    (change)="setMustHave($event.checked)"
-  >
-    {{ 'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}
-  </mat-checkbox>
+  <span class="checkbox-label" *ngIf="referenceField">
+    <num-checkbox
+      [checked]="referenceField.getMustHave()"
+      (checkedChange)="setMustHave($event)"
+    ></num-checkbox>
+    <span>{{ 'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}</span>
+  </span>
   <div class="actions" (click)="deleteReferenceLink()">
     {{ 'SHARED_COMPONENTS.REFERENCE_TILE.DELETE' | translate }}
     <fa-icon class="icon" icon="trash" size="lg"></fa-icon>
