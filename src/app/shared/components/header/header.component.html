@@ -1,3 +1,11 @@
 <p class="header-font">
   <ng-content></ng-content>
+  <button
+    *ngIf="showToggle"
+    class="toggle-btn"
+    (click)="toggleService.toggle()"
+    [title]="(toggleService.visible$ | async) ? 'Hide' : 'Show'"
+  >
+    <fa-icon [icon]="(toggleService.visible$ | async) ? 'eye-slash' : 'eye'"></fa-icon>
+  </button>
 </p>
