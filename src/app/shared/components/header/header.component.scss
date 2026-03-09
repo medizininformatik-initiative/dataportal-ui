@@ -1,7 +1,28 @@
 .header-font {
-  font-size: 24px;
+  font-style: normal;
   font-weight: 700;
-  color: rgba(106, 116, 131, 1);
-  font-family: 'Titillium Web';
-  line-height: 30px;
+  font-size: 30px;
+  line-height: 46px;
+  color: var(--color-text-secondary);
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle-btn {
+  flex-shrink: 0;
+  background: var(--color-accent-bg);
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--border-radius-card);
+  cursor: pointer;
+  padding: 5px 8px;
+  color: var(--color-accent);
+  line-height: 1;
+
+  &:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
 }
