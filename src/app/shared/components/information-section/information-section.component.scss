@@ -1,10 +1,10 @@
 .information-section {
-  background-color: #e3f2fd;
-  border-left: 4px solid #2196f3;
-  border-radius: 4px;
-  padding: 1.5rem 2rem;
-  margin: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-accent-bg);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--border-radius-card);
+  padding: 16px 20px;
+  margin: 8px 0;
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -14,40 +14,49 @@
 .information-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .information-icon {
-  color: #2196f3;
-  font-size: 28px;
-  width: 28px;
-  height: 28px;
+  color: var(--color-accent);
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
 }
 
 .information-title {
   margin: 0;
-  color: #1976d2;
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  line-height: var(--line-height-md);
+  color: var(--color-accent);
   display: flex;
   align-items: center;
 }
 
 .information-content {
-  color: #424242;
-  line-height: 1.8;
-  font-size: 1.125rem;
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  color: var(--color-text-primary);
   flex: 1;
 
   ::ng-deep {
     p {
-      margin-bottom: 0.75rem;
-      font-size: 1.125rem;
+      margin-bottom: 8px;
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-md);
 
       &:last-child {
         margin-bottom: 0;
       }
+    }
+
+    strong {
+      font-weight: 600;
+      color: var(--color-text-primary);
     }
   }
 }
