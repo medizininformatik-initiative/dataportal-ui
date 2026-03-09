@@ -1,32 +1,32 @@
-<div class="padding-2em">
+<div class="modal-content">
+  <button class="close-btn" (click)="doDiscard()" aria-label="Close">
+    <fa-icon icon="times"></fa-icon>
+  </button>
   <ng-content></ng-content>
   <div class="save-query-box">
-    <div fxLayout="column" fxLayoutAlign="space-around center">
-      <mat-form-field class="input-field">
-        <mat-label>{{ 'SHARED_COMPONENTS.SAVE_MODAL.LABEL' | translate }}</mat-label>
-        <input matInput type="text" [(ngModel)]="title" />
-      </mat-form-field>
-      <mat-form-field *ngIf="isCommentRequired" class="input-field" appearance="fill">
-        <mat-label>{{ 'SAVED_QUERIES.COMMENT' | translate }}</mat-label>
-        <textarea matInput [(ngModel)]="comment"></textarea>
-      </mat-form-field>
-    </div>
+    <input
+      class="field-input"
+      type="text"
+      [(ngModel)]="title"
+      placeholder="{{ 'SHARED_COMPONENTS.SAVE_MODAL.LABEL' | translate }}"
+    />
+    <textarea
+      *ngIf="isCommentRequired"
+      class="field-input field-textarea"
+      [(ngModel)]="comment"
+      placeholder="{{ 'SAVED_QUERIES.COMMENT' | translate }}"
+    ></textarea>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
-    <div fxFlex="fill"></div>
-
+  <div class="save-dialog-footer">
     <num-button
-      type="blue"
+      type="green"
       [attr.data-cy]="'save-file-button'"
       [isDisabled]="title.length === 0"
       (click)="doSave()"
       class="button-save"
     >
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.SAVE' | translate }}
-    </num-button>
-    <num-button type="blue" (click)="doDiscard()">
-      {{ 'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate }}
     </num-button>
   </div>
 </div>
