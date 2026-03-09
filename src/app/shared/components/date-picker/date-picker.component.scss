@@ -1,7 +1,59 @@
-.container {
-  padding-left: 2%;
-  width: 40%;
+.date-input-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 161px;
+  height: 42px;
+  padding: 0 12px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-card);
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+
+  &:focus-within {
+    border-color: var(--color-accent);
+  }
 }
-.padding-left-10 {
-  padding-left: 10px;
+
+.date-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  padding: 0;
+  min-width: 0;
+
+  &::placeholder {
+    color: var(--border-color);
+    font-weight: 400;
+  }
+}
+
+.date-toggle {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+
+  ::ng-deep .mat-mdc-icon-button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .mat-mdc-button-ripple,
+    .mat-mdc-button-persistent-ripple {
+      display: none;
+    }
+  }
+
+  fa-icon {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
 }
