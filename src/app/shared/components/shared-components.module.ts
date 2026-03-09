@@ -4,6 +4,7 @@ import { AvailabilityStatusBarComponent } from './availability-status-bar/availa
 import { BreadcrumbComponent } from './breadcrumbs/breadcrumbs.component';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { CheckboxCellComponent } from './table/cells/checkbox-cell/checkbox-cell.component';
+import { CheckboxComponent } from './checkbox/checkbox.component';
 import { CommonModule } from '@angular/common';
 import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
 import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
@@ -19,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { HeaderDescriptionComponent } from './header-description/header-description.component';
 import { InformationSectionComponent } from './information-section/information-section.component';
+import { InfoTooltipComponent } from './info-tooltip/info-tooltip.component';
+import { InfoTooltipDirective } from './info-tooltip/info-tooltip.directive';
 import { InfoTileComponent } from './info-tile/info-tile.component';
 import { LinkedBadgeComponent } from './linked-badge/linked-badge.component';
 import { ListItemDetailsComponent } from './list-item-details/list-item-details.component';
@@ -95,6 +98,9 @@ const SHARED_DECLARATIONS = [
   InformationSectionComponent,
   DownloadCRTDLComponent,
   InfoTileComponent,
+  InfoTooltipComponent,
+  InfoTooltipDirective,
+  CheckboxComponent,
   ErrorDisplayComponent,
   TableHeaderComponent,
   TableBodyComponent,
