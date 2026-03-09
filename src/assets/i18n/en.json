@@ -55,14 +55,14 @@
     "DATA_QUERY_COHORT_DEFINITION": "Cohort Definition",
     "DATA_QUERY_DATA_SELECTION": "Feature Selection",
     "DATA_SELECTION": "Feature Selection",
-    "DATA_SELECTION_EDITOR": "Editor",
+    "DATA_SELECTION_EDITOR": "Overview",
     "DATA_SELECTION_SEARCH": "Search",
     "FEASIBILITY_QUERY": "Cohort Selection",
     "FEASIBILITY_QUERY_BULK_SEARCH": "Bulk Search",
-    "FEASIBILITY_QUERY_EDITOR": "Editor",
+    "FEASIBILITY_QUERY_EDITOR": "Overview",
     "FEASIBILITY_QUERY_RESULT": "Result",
     "FEASIBILITY_QUERY_SEARCH": "Search",
-    "QUERY_EDITOR": "Query Editor",
+    "QUERY_EDITOR": "Editor",
     "SAVED_QUERIES": "Saved Data Definitions"
   },
   "DATAQUERY": {
