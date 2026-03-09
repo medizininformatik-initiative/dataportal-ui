@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
+<div fxLayout="row" fxLayoutAlign="start stretch" class="num-card selection-box">
   <div class="display-container">
     <num-searchbar
       icon="pencil-alt"
@@ -11,20 +11,59 @@
     <div class="profile-display"><span>Type: </span>{{ profile.getDisplay().getOriginal() }}</div>
   </div>
   <div class="selected-fields-container padding-left-right-1">
-    {{ 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate }}
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate
+      }}</span>
+      <span
+        class="info-icon"
+        numInfoTooltip
+        [infoTooltipTitle]="
+          'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TITLE' | translate
+        "
+        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TEXT' | translate"
+        >?</span
+      >
+    </div>
     <div class="filter-chips-container">
       <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
     </div>
   </div>
   <div fxLayout="column" class="filter-container padding-left-right-1">
-    {{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate }}
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate
+      }}</span>
+      <span
+        class="info-icon"
+        numInfoTooltip
+        [infoTooltipTitle]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TITLE' | translate"
+        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TEXT' | translate"
+        >?</span
+      >
+    </div>
     <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container">
-      <num-filter-chips style="padding-top: 1%" [filterChips]="chips"> </num-filter-chips>
+      <num-filter-chips [filterChips]="chips"> </num-filter-chips>
     </div>
   </div>
   <div fxLayout="column" class="reference-container">
     <div fxLayout="row wrap" fxLayoutAlign="space-between">
-      {{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate }}
+      <div class="label-with-info">
+        <span class="num-text-accent">{{
+          'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate
+        }}</span>
+        <span
+          class="info-icon"
+          numInfoTooltip
+          [infoTooltipTitle]="
+            'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES_TOOLTIP_TITLE' | translate
+          "
+          [infoTooltipText]="
+            'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES_TOOLTIP_TEXT' | translate
+          "
+          >?</span
+        >
+      </div>
     </div>
     <div *ngIf="profileReferenceChips" class="filter-chips-container">
       <num-filter-chips [filterChips]="profileReferenceChips"> </num-filter-chips>
