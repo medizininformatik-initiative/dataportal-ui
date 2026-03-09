@@ -23,6 +23,7 @@ const routes: Routes = [
     data: {
       animation: 'Feasibility_Editor',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.EDITOR',
+      breadcrumb: 'BREADCRUMB.FEASIBILITY_QUERY_EDITOR',
     },
   },
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
     data: {
       animation: 'Feasibility_Result',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.RESULT',
+      breadcrumb: 'BREADCRUMB.FEASIBILITY_QUERY_RESULT',
     },
   },
   {
@@ -39,6 +41,7 @@ const routes: Routes = [
     data: {
       animation: 'Feasibility_Search',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
+      breadcrumb: 'BREADCRUMB.FEASIBILITY_QUERY_SEARCH',
     },
   },
   {
@@ -47,6 +50,7 @@ const routes: Routes = [
     data: {
       animation: 'Feasibility_Bulk_Search',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
+      breadcrumb: 'BREADCRUMB.FEASIBILITY_QUERY_BULK_SEARCH',
     },
   },
 ];
