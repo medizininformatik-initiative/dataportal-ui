@@ -1,16 +1,25 @@
 .table-border {
-  border-bottom: 1px solid #c5cacf;
+  border-top: 1px solid #f1f2f3;
 }
 
 .table-row-hover:hover {
   background-color: #f5f5f5;
 }
 
+tr {
+  height: 42px;
+  background: #ffffff;
+}
+
 td {
-  padding: 0.5rem 0.5rem;
+  padding: 0 0.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
 }
 
 td:nth-child(1) {
