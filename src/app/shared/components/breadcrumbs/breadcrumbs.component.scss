@@ -1,7 +1,8 @@
 .breadcrumb {
-  margin-left: 10%;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px;
 }
 
 .breadcrumb-item {
@@ -10,10 +11,16 @@
 
 .breadcrumb-item a {
   text-decoration: none;
-  color: #007bff;
+  color: var(--color-accent);
+  cursor: pointer;
 }
 
-.breadcrumb-item.active {
+.breadcrumb-item.active span {
   font-weight: bold;
-  color: #6c757d;
+  color: var(--color-text-secondary);
+}
+
+.breadcrumb-separator {
+  font-size: 14px;
+  color: var(--color-text-secondary);
 }
