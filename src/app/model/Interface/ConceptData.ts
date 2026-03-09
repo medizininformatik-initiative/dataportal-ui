@@ -10,7 +10,7 @@ export interface ConceptData {
   /**
    * Hash made from code + system uuid3 namespace 00000000-0000-0000-0000-000000000000
    */
-  id: string
+  hash: string
   /**
    * Display information including original text and translations for the concept
    */

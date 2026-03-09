@@ -2,7 +2,7 @@ import { CreateSelectedReferenceService } from 'src/app/service/CreateSelectedRe
 import { filter, map, Observable, Subscription, switchMap, take, tap } from 'rxjs';
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
-import { ProfileReferenceModalService } from 'src/app/service/DataSelection/ProfileReferenceModal.service';
+import { ProfileReferenceModalService } from 'src/app/service/DataSelection/Modal/ProfileReferenceModal.service';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import {

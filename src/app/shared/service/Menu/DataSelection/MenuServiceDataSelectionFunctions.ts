@@ -3,7 +3,7 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { RemoveReferenceService } from '../../../../service/RemoveReference.service';
 import { StagedProfileService } from '../../../../service/StagedDataSelectionProfile.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,8 +28,8 @@ export class MenuServiceDataSelectionFunctions {
   /**
    * @param id
    */
-  public cloneDataSelectionObject(url: string) {
-    const profile = this.profileProvider.getProfileById(url);
+  public cloneDataSelectionObject(id: string) {
+    const profile = this.profileProvider.getOne(id);
     const copiedProfile = new DataSelectionProfile(
       uuidv4(),
       profile.getUrl(),
@@ -39,7 +39,7 @@ export class MenuServiceDataSelectionFunctions {
       profile.getReference(),
       profile.getLabel()
     );
-    this.profileProvider.setProfileById(copiedProfile.getId(), profile);
+    this.profileProvider.addOne(copiedProfile);
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId();
     this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile);
   }

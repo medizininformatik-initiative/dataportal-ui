@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataQueryValidationService } from 'src/app/service/DataQuery/DataQueryValidation.service';
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable, of, Subscription } from 'rxjs';
 import { StageProviderService } from '../../../../../service/Provider/StageProvider.service';

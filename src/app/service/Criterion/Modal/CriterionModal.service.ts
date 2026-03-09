@@ -1,6 +1,6 @@
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
-import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
-import { CriterionProviderService } from '../Provider/CriterionProvider.service';
+import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion';
+import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { EditCriterionModalComponent } from 'src/app/modules/feasibility-query/components/editor/criterion-modal/edit-criterion-modal.component';
 import { EditReferenceCriteriaModalComponent } from 'src/app/modules/feasibility-query/components/editor/reference-criteria-modal/edit-reference-criteria-modal.component';
 import { Injectable, OnDestroy } from '@angular/core';
@@ -31,10 +31,7 @@ export class CriterionModalService implements OnDestroy {
       .afterClosed()
       .subscribe((updatedCriterion: AbstractCriterion) => {
         if (updatedCriterion) {
-          this.criterionProviderService.setCriterionByUID(
-            updatedCriterion,
-            updatedCriterion.getId()
-          );
+          this.criterionProviderService.setOne(updatedCriterion);
         }
       });
   }
@@ -46,7 +43,7 @@ export class CriterionModalService implements OnDestroy {
     });
     this.dialogSubscription = dialogRef.afterClosed().subscribe((updatedCriterion: Criterion) => {
       if (updatedCriterion) {
-        this.criterionProviderService.setCriterionByUID(updatedCriterion, updatedCriterion.getId());
+        this.criterionProviderService.setOne(updatedCriterion);
       }
     });
   }

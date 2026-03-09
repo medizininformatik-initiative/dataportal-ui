@@ -3,12 +3,12 @@ import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service';
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionFactoryService } from '../../DataSelection/DataSelection.factory.service';
+import { DataSelectionFactoryService } from '../../DataSelection/Factory/DataSelection.factory.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { StructuredQuery2FeasibilityQueryService } from '../StructureQuery/StructuredQuery2FeasibilityQuery.service';
 import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData';
 import { TypeAssertion } from '../../TypeGuard/TypeAssersations';
@@ -114,6 +114,6 @@ export class CRTDL2UIModelService {
 
   private resetDataSelection(): void {
     this.dataSelectionProvider.clearDataSelection();
-    this.profileProviderService.resetProfileMap();
+    this.profileProviderService.removeAll();
   }
 }

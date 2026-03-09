@@ -31,7 +31,7 @@ export class DropGroupDirective implements OnInit {
           this.addToInclusion(droppedCriterion, event.currentIndex);
           break;
         case 'Stage':
-          this.stageProviderService.addCriterionToStage(droppedCriterion);
+          this.stageProviderService.addOne(droppedCriterion);
           break;
         default:
           break;
@@ -44,7 +44,7 @@ export class DropGroupDirective implements OnInit {
           this.deleteFromInclusion(droppedCriterion);
           break;
         case 'Stage':
-          this.stageProviderService.deleteCriterionByUID(droppedCriterion);
+          this.stageProviderService.removeOne(droppedCriterion);
           break;
         default:
           break;

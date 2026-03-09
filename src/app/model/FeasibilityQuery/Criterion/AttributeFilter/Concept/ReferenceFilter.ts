@@ -1,5 +1,3 @@
-import { AbstractConceptFilter } from './AbstractConceptFilter';
-import { Concept } from './Concept';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { ReferenceCriterion } from '../../ReferenceCriterion';
 
@@ -7,6 +5,7 @@ import { ReferenceCriterion } from '../../ReferenceCriterion';
  * Class representing a ReferenceFilter.
  */
 export class ReferenceFilter {
+  private readonly id: string;
   private allowedReferenceUri: string[];
   private selectedReferences: ReferenceCriterion[] = [];
   private type: FilterTypes = FilterTypes.REFERENCE;
@@ -14,17 +13,25 @@ export class ReferenceFilter {
   /**
    * Creates an instance of ReferenceFilter.
    *
-   * @param selectedReferences - The selected reference criteria.
    * @param allowedReferenceUri - The allowed reference URI.
-   * @param selectedConcepts - The selected concepts (inherited from AbstractConceptFilter).
+   * @param selectedReferences - The selected reference criteria.
    */
   constructor(
     id: string,
     allowedReferenceUri: string[],
     selectedReferences: ReferenceCriterion[] = []
   ) {
+    this.id = id;
     this.selectedReferences = selectedReferences;
     this.allowedReferenceUri = allowedReferenceUri;
+  }
+
+  /**
+   * Returns the unique identifier of the ReferenceFilter.
+   * @returns
+   */
+  public getId(): string {
+    return this.id;
   }
 
   /**

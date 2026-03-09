@@ -36,9 +36,7 @@ export class StructuredQuery2UIQueryTranslatorService {
         this.criteriaProfileProviderService.setCachedCriteriaProfiles(criteriaProfileData)
       ),
       switchMap(() => this.codeableConceptApiService.getCodeableConceptsByIds(conceptHahes)),
-      tap((conceptsData: ConceptData[]) =>
-        this.conceptTranslationCache.setConceptsByHash(conceptsData)
-      ),
+      tap((conceptsData: ConceptData[]) => this.conceptTranslationCache.addMany(conceptsData)),
       map(() => this.translateInExclusion(inexclusion))
     );
   }
@@ -52,7 +50,7 @@ export class StructuredQuery2UIQueryTranslatorService {
             const termCode = TerminologyCode.fromJson(structuredQueryCriterion.termCodes[0]);
             if (!this.isConsent(termCode)) {
               const criterion = this.criterionTranslatorService.translate(structuredQueryCriterion);
-              this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
+              this.criterionProviderService.setOne(criterion);
               return criterion.getId();
             } else {
               this.setConsent(termCode);

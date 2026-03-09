@@ -49,7 +49,7 @@ export class CodeableConceptResultListEntry extends AbstractListEntry {
   public static fromJson(json: CodeableConceptResultListEntryData): CodeableConceptResultListEntry {
     return new CodeableConceptResultListEntry(
       Concept.fromJson({
-        id: json.id,
+        hash: json.id,
         display: json.display,
         terminologyCode: json.termCode,
       }),

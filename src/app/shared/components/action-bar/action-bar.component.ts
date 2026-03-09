@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component';
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
 import { map, Observable, Subscription } from 'rxjs';

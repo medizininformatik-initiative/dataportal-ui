@@ -1,5 +1,6 @@
 import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData';
 import { AttributesData } from 'src/app/model/Interface/AttributesData';
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
 import { BasicFieldTranslatorService } from './BasicFieldTranslator.service';
 import { ConceptHashCollectorService } from './ConceptHashCollector.service';
 import { CreateDataSelectionProfileService } from '../../DataSelection/CreateDataSelectionProfile.service';
@@ -15,6 +16,7 @@ import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/
 import { ReferenceFieldTranslatorService } from './ReferenceFieldTranslator.service';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { v4 as uuidv4 } from 'uuid';
+import { LoadDataSelectionProfilesService } from '../../DataSelection/LoadDataSelectionProfiles.service';
 import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service';
 import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service';
 
@@ -24,7 +26,7 @@ import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.
 export class DataExtraction2UiDataSelectionService {
   private idMap: { oldId: string; newId: string }[] = [];
   constructor(
-    private createDataSelection: CreateDataSelectionProfileService,
+    private createDataSelection: LoadDataSelectionProfilesService,
     private profileFilterTranslatorService: ProfileFilterTranslatorService,
     private basicFieldTranslator: BasicFieldTranslatorService,
     private referenceFieldTranslator: ReferenceFieldTranslatorService,

@@ -79,7 +79,7 @@ export class UIQuery2StructuredQueryService {
   private translateInnerArray(criterionArray: string[]): StructuredQueryCriterion[] {
     const structuredQueryInnerArray: StructuredQueryCriterion[] = [];
     criterionArray.forEach((criterionID) => {
-      const criterion = this.criterionProvider.getCriterionByUID(criterionID);
+      const criterion = this.criterionProvider.getOne(criterionID);
       structuredQueryInnerArray.push(this.assignStructuredQueryCriterionElements(criterion));
     });
     return structuredQueryInnerArray;

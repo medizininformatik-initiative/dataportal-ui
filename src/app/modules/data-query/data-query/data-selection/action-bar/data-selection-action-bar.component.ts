@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { DataSelectionFactoryService } from 'src/app/service/DataSelection/DataSelection.factory.service';
+import { DataSelectionFactoryService } from 'src/app/service/DataSelection/Factory/DataSelection.factory.service';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { map } from 'rxjs/operators';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable, Subscription } from 'rxjs';

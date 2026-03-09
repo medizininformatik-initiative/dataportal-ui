@@ -2,7 +2,7 @@ import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery';
-import { FilterValidationService } from '../FilterValidation.service';
+import { FilterValidationService } from './FilterValidation.service';
 import { Injectable } from '@angular/core';
 
 @Injectable({

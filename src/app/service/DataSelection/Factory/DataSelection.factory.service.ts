@@ -1,5 +1,5 @@
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionMainProfileInitializerService } from '../DataSelectionMainProfileInitializerService';
+import { DataSelectionMainProfileInitializerService } from '../../DataSelectionMainProfileInitializerService';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
