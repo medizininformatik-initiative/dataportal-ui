@@ -1,40 +1,99 @@
 <ng-container *ngIf="listItemDetails$ | async as listItemDetails">
-  <div class="height-100 width-100" fxLayout="column" fxLayoutAlign="start start">
-    <div class="padding-bottom-4 width-100 orginal-item">
-      <span>
-        {{ listItemDetails.display | displayTranslation }}
-      </span>
-    </div>
-    <!-- Parents -->
-    <div fxLayout="row" fxLayoutAlign="start center" class="row-block divider width-100">
-      <div class="row-header margin-right-2">
-        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
-      </div>
-      <div class="row-content margin-bottom-3 height-100 width-100">
-        <num-list-item-details-sections
-          [listItemDetails]="listItemDetails.parents"
-          (selectedRelative)="getSelectedRelative($event)"
-        >
-        </num-list-item-details-sections>
-      </div>
-    </div>
+  <mat-tab-group class="details-tab-group" animationDuration="0ms">
+    <!-- ── DETAILS tab ─────────────────────────────────────────── -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.DETAILS' | translate }}
+      </ng-template>
 
-    <!-- Children -->
-    <div
-      fxLayout="row"
-      fxLayoutAlign="start center"
-      class="row-block width-100 divider padding-top-3"
-    >
-      <div class="row-header margin-right-2">
-        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
+      <div class="tab-content" fxLayout="column">
+        <!-- Item title -->
+        <div class="original-item">
+          {{ listItemDetails.getDisplay() | displayTranslation }}
+        </div>
+
+        <!-- Automatic Translations -->
+        <div
+          *ngIf="listItemDetails.getDisplay()?.getTranslations()?.length"
+          fxLayout="row"
+          fxLayoutAlign="start start"
+          class="detail-row divider"
+        >
+          <div class="detail-label">
+            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.TRANSLATIONS' | translate }}
+          </div>
+          <div class="detail-value" fxLayout="column">
+            <div
+              *ngFor="let t of listItemDetails.getDisplay().getTranslations()"
+              fxLayout="row"
+              fxLayoutAlign="start center"
+              class="translation-entry"
+            >
+              <span
+                class="fi"
+                [ngClass]="'fi-' + (t.getLanguage() === 'en' ? 'gb' : t.getLanguage())"
+              ></span>
+              <span>{{ t.getValue() }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parents -->
+        <div fxLayout="row" fxLayoutAlign="start start" class="detail-row divider">
+          <div class="detail-label">
+            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
+          </div>
+          <div class="detail-value">
+            <num-list-item-details-sections
+              [listItemDetails]="listItemDetails.getParents()"
+              (selectedRelative)="getSelectedRelative($event)"
+            >
+            </num-list-item-details-sections>
+          </div>
+        </div>
+
+        <!-- Children -->
+        <div fxLayout="row" fxLayoutAlign="start start" class="detail-row">
+          <div class="detail-label">
+            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
+          </div>
+          <div class="detail-value">
+            <num-list-item-details-sections
+              [listItemDetails]="listItemDetails.getChildren()"
+              (selectedRelative)="getSelectedRelative($event)"
+            >
+            </num-list-item-details-sections>
+          </div>
+        </div>
       </div>
-      <div class="row-content margin-bottom-3 height-100 width-100">
+    </mat-tab>
+
+    <!-- ── PARENTS tab ─────────────────────────────────────────── -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
+      </ng-template>
+      <div class="tab-content">
         <num-list-item-details-sections
-          [listItemDetails]="listItemDetails.children"
+          [listItemDetails]="listItemDetails.getParents()"
           (selectedRelative)="getSelectedRelative($event)"
         >
         </num-list-item-details-sections>
       </div>
-    </div>
-  </div>
+    </mat-tab>
+
+    <!-- ── CHILDREN tab ────────────────────────────────────────── -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
+      </ng-template>
+      <div class="tab-content">
+        <num-list-item-details-sections
+          [listItemDetails]="listItemDetails.getChildren()"
+          (selectedRelative)="getSelectedRelative($event)"
+        >
+        </num-list-item-details-sections>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </ng-container>
