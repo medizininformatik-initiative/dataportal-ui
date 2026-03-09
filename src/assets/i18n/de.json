@@ -55,11 +55,11 @@
     "DATA_QUERY_COHORT_DEFINITION": "Kohortenselektion",
     "DATA_QUERY_DATA_SELECTION": "Merkmalselektion",
     "DATA_SELECTION": "Merkmalselektion",
-    "DATA_SELECTION_EDITOR": "Editor",
+    "DATA_SELECTION_EDITOR": "Auswahl",
     "DATA_SELECTION_SEARCH": "Suche",
     "FEASIBILITY_QUERY": "Kohortenselektion",
     "FEASIBILITY_QUERY_BULK_SEARCH": "Massensuche",
-    "FEASIBILITY_QUERY_EDITOR": "Editor",
+    "FEASIBILITY_QUERY_EDITOR": "Auswahl",
     "FEASIBILITY_QUERY_RESULT": "Ergebnis",
     "FEASIBILITY_QUERY_SEARCH": "Suche",
     "QUERY_EDITOR": "Editor",
@@ -537,20 +537,20 @@
     }
   },
   "TAB_TITLE": {
-    "DATA_QUERY": {
-      "INDEX": "Datendefinition",
-      "COHORT_DEFINITION": "Datendefinition - Kohortenselektion",
-      "DATA_SELECTION": "Datendefinition - Merkmalselektion"
-    },
     "DATA_PROTECTION": "Datenschutz",
+    "DATA_QUERY": {
+      "COHORT_DEFINITION": "Datendefinition - Kohortenselektion",
+      "DATA_SELECTION": "Datendefinition - Merkmalselektion",
+      "INDEX": "Datendefinition"
+    },
     "DATA_SELECTION": {
-      "INDEX": "Merkmalselektion",
       "EDITOR": "Merkmalselektion - Editor",
+      "INDEX": "Merkmalselektion",
       "SEARCH": "Merkmalselektion - Suche"
     },
     "FEASIBILITY_QUERY": {
-      "INDEX": "Machbarkeitsabfrage",
       "EDITOR": "Machbarkeitsabfrage - Editor",
+      "INDEX": "Machbarkeitsabfrage",
       "RESULT": "Machbarkeitsabfrage - Ergebnis",
       "SEARCH": "Machbarkeitsabfrage - Suche"
     },

@@ -9,7 +9,7 @@ export const BasePaths = {
 
 export const PathSegments = {
   search: 'search',
-  editor: 'editor',
+  editor: 'overview',
   result: 'result',
   loadQuery: 'load-query',
   cohortDefinition: 'cohort-definition',
