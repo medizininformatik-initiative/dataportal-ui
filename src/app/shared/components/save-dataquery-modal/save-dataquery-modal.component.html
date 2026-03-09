@@ -1,55 +1,58 @@
-<div class="padding-2em">
-  <ng-content></ng-content>
+<div class="modal-content">
+  <button class="close-btn" (click)="doDiscard()" aria-label="Close">
+    <fa-icon icon="times"></fa-icon>
+  </button>
+  <num-header>
+    {{ 'SHARED_COMPONENTS.SAVE_MODAL.HEADER' | translate }}
+  </num-header>
   <div class="save-query-box">
-    <div fxLayout="column" fxLayoutAlign="space-around center">
-      <mat-form-field class="input-field">
-        <mat-label>{{ 'SAVED_QUERIES.TITLE' | translate }}</mat-label>
-        <input matInput type="text" [(ngModel)]="title" />
-      </mat-form-field>
-      <mat-form-field class="input-field" appearance="fill">
-        <mat-label>{{ 'SAVED_QUERIES.COMMENT' | translate }}</mat-label>
-        <textarea matInput [(ngModel)]="comment"></textarea>
-      </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="space-around center" class="checkbox-box">
-      <span [matTooltip]="'DATAQUERY.COHORT.REQUIRED' | translate" [matTooltipPosition]="'above'">
-        <mat-checkbox
-          color="primary"
-          disableRipple="true"
+    <input
+      class="field-input"
+      type="text"
+      [(ngModel)]="title"
+      placeholder="{{ 'SAVED_QUERIES.TITLE' | translate }}"
+    />
+    <textarea
+      class="field-input field-textarea"
+      [(ngModel)]="comment"
+      placeholder="{{ 'SAVED_QUERIES.COMMENT' | translate }}"
+    ></textarea>
+
+    <div class="checkbox-box">
+      <span
+        class="checkbox-label"
+        [matTooltip]="'DATAQUERY.COHORT.REQUIRED' | translate"
+        [matTooltipPosition]="'above'"
+      >
+        <num-checkbox
           [disabled]="true"
           [checked]="(validatedDataQuery$ | async).feasibilityQuery"
-          (change)="toggleFeasibilityQuery($event)"
-          >{{ 'DATAQUERY.COHORT.HEADER' | translate }}</mat-checkbox
-        >
+          (checkedChange)="toggleFeasibilityQuery($event)"
+        ></num-checkbox>
+        <span>{{ 'DATAQUERY.COHORT.HEADER' | translate }}</span>
       </span>
-      <mat-checkbox
-        color="primary"
-        disableRipple="true"
-        [disabled]="(validatedDataQuery$ | async).dataSelection === false"
-        [checked]="(validatedDataQuery$ | async).dataSelection"
-        (change)="toggleDataSelection($event)"
-        >{{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}</mat-checkbox
-      >
+      <span class="checkbox-label">
+        <num-checkbox
+          [disabled]="(validatedDataQuery$ | async).dataSelection === false"
+          [checked]="(validatedDataQuery$ | async).dataSelection"
+          (checkedChange)="toggleDataSelection($event)"
+        ></num-checkbox>
+        <span>{{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}</span>
+      </span>
     </div>
     <span *ngIf="(validatedDataQuery$ | async).feasibilityQuery === false" class="filter-warning">
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.COHORT_WARNING' | translate }}
     </span>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
-    <div fxFlex="fill"></div>
-
+  <div class="save-dialog-footer">
     <num-button
-      type="blue"
+      type="green"
       [isDisabled]="title.length === 0 || !isFeasibilityChecked"
       (click)="doSave()"
       class="button-save"
     >
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.SAVE' | translate }}
-    </num-button>
-
-    <num-button type="blue" (click)="doDiscard()">
-      {{ 'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate }}
     </num-button>
   </div>
 </div>
