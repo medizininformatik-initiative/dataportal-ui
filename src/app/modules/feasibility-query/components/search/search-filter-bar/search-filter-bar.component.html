@@ -1,14 +1,7 @@
 <div class="filter-container">
-  <div class="filter-chips">
-    <num-search-filter
-      *ngFor="let searchFilter of searchFilters$ | async"
-      [filter]="searchFilter"
-      (selectedFilterChanged)="filterChanged.emit($event)"
-    ></num-search-filter>
-  </div>
-  <div class="filter-actions">
-    <num-button [isDisabled]="resetFilterEnabled$ | async" type="blue" (click)="filterReset.emit()">
-      {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
-    </num-button>
-  </div>
+  <num-search-filter
+    *ngFor="let searchFilter of searchFilters$ | async"
+    [filter]="searchFilter"
+    (selectedFilterChanged)="filterChanged.emit($event)"
+  ></num-search-filter>
 </div>
