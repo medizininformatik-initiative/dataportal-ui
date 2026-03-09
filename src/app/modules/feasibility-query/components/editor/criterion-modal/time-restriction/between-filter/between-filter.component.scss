@@ -1,52 +1,17 @@
-.container {
-  margin: 1em 0 0 0;
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.container {
-  padding: 1em;
-}
-
-.mat-date-range-input {
-  width: 15em;
-}
-
-.mat-mdc-radio-group {
-  padding: 0 0 1em 0;
-}
-
-.mat-mdc-radio-button {
-  padding: 0 0 0.5em 0;
-  width: max-content;
-}
-/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-::ng-deep num-edit-time-restriction .mat-form-field-wrapper {
-  padding-bottom: 0px !important;
-}
-
-.operator-part {
-  padding-right: 1.5em;
-  width: 11em;
-}
-.form-field-from,
-.form-field-to {
-  margin: 0 1em;
-  width: 11em;
-}
-::ng-deep mat-datepicker-toggle > .mat-mdc-icon-button {
-  padding-top: 1em;
-}
-::ng-deep mat-datepicker-toggle > .mat-mdc-icon-button > .mat-button-ripple.mat-ripple,
-::ng-deep mat-datepicker-toggle > .mat-icon-button > .mat-button-focus-overlay {
-  top: 7px;
-  bottom: -7px;
-}
-
-mat-expansion-panel {
-  background-color: rgb(90, 121, 175, 0.1);
-}
-.mat-expansion-panel-header-title {
-  font-size: 16px;
-  font-weight: normal;
+.date-warning {
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  color: #e05050;
+  margin-top: 2px;
 }
 .mat-expansion-panel-header {
   height: 48px;

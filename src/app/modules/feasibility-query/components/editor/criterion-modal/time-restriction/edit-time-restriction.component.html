@@ -1,8 +1,8 @@
-<div *ngIf="timeRestriction" fxLayout="column" [@.disabled]="disableAnimation" class="width-100">
-  <num-header-description>
+<div *ngIf="timeRestriction" [@.disabled]="disableAnimation" class="time-restriction-wrapper">
+  <span class="section-label">
     {{ 'SHARED_FILTER.TIMERESTRICTION.TITLE' | translate }}
-  </num-header-description>
-  <div fxLayout="row" fxLayoutAlign="start" class="width-100">
+  </span>
+  <div class="time-restriction-row">
     <!--Time restriction Filter type-->
     <num-timerestriction-type-selector
       [type]="this.timeRestriction.getType()"
@@ -13,7 +13,7 @@
     <!--Between Filter-->
     <ng-container *ngIf="selectedTimeRestrictionType === 'BETWEEN'">
       <num-between-filter
-        class="width-100"
+        class="fill"
         (betweenFilterChanged)="emitSelectedTimeRestrictionInstance($event)"
         [betweenFilter]="timeRestriction"
       ></num-between-filter>
@@ -24,7 +24,7 @@
       *ngIf="selectedTimeRestrictionType !== 'BETWEEN' && selectedTimeRestrictionType !== 'NONE'"
     >
       <num-before-filter
-        class="width-100"
+        class="fill"
         [timeRestrictionType]="selectedTimeRestrictionType"
         [selectedDate]="timeRestriction.getAfterDate()"
         (timeRestrictionInstanceChanged)="emitSelectedTimeRestrictionInstance($event)"

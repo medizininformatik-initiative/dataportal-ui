@@ -1,0 +1,36 @@
+.type-select-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.type-select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 127px;
+  height: 42px;
+  padding: 0 32px 0 15px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #5f6266;
+  background: #ffffff;
+  border: 1px solid #c5cacf;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
+  cursor: pointer;
+
+  &:focus {
+    border-color: #5a79af;
+  }
+}
+
+.select-chevron {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #6a7483;
+  pointer-events: none;
+}
