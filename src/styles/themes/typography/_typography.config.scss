@@ -3,7 +3,7 @@
 @use '@angular/material' as mat;
 /* font-size | line-height |font-weight */
 $num-typography: mat.define-typography-config(
-  $font-family: 'Roboto, monospace',
+  $font-family: "'Titillium Web', sans-serif",
   /* mat-h1 */ $headline-1: mat.define-typography-level(40px, 48px, 300),
   /* mat-h2 */ //$title: mat.define-typography-level(28px, 32px, 300),
   /* mat-h3 */ //$subheading-2: mat.define-typography-level(22px, 28px, 500),
@@ -15,5 +15,5 @@ $num-typography: mat.define-typography-config(
   /* Dialog H1 */ //$display-1: mat.define-typography-level(22px, 28px, 400),
   /* Dialog H2 */ //$display-2: mat.define-typography-level(18px, 24px, 400),
   /* Dialog H3 */ //$display-3: mat.define-typography-level(16px, 24px, 500),
-  //$display-4: mat.define-typography-level(16px, 24px, 500),
+  //$display-4: mat.define-typography-level(16px, 24px, 500),,
 );

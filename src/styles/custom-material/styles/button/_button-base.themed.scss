@@ -1,0 +1,41 @@
+@mixin button-base($theme) {
+  $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+  .mat-mdc-button-base {
+    text-transform: none !important;
+    font-family: inherit !important;
+  }
+
+  .mat-mdc-icon-button {
+    width: 40px; // 5 * 8
+    height: 40px; // 5 * 8
+    font-size: 16px; // 2 * 8
+    font-weight: 400;
+    padding: 0;
+  }
+
+  .num-button {
+    font-family: inherit;
+    font-size: 16px;
+    box-shadow: $raised-shadow;
+    height: 42px;
+    padding: 9px 18px;
+    border-radius: 5px;
+    letter-spacing: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    opacity: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    fa-icon {
+      margin: 0;
+    }
+
+    &.cdk-keyboard-focused .mat-button-focus-overlay {
+      display: none;
+    }
+  }
+}

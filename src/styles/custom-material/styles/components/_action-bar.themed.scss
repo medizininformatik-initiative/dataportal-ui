@@ -1,0 +1,78 @@
+@use 'node_modules/@angular/material' as mat;
+
+@mixin action-bar_themed($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  num-action-bar {
+    .container {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      height: 80px;
+      border-radius: 5px;
+      background-color: mat.get-color-from-palette($primary, 'white');
+      box-sizing: border-box;
+      overflow-x: auto;
+      overflow-y: hidden;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: mat.get-color-from-palette($primary, 'green');
+        opacity: 0.1;
+        border-radius: 5px;
+        pointer-events: none;
+      }
+
+      > * {
+        flex: 0 0 auto;
+      }
+    }
+
+    .selection-text {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+      color: mat.get-color-from-palette($primary, 900);
+    }
+
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 21px;
+      padding: 0 4px;
+      background: mat.get-color-from-palette($primary, 'white');
+      border: 2px solid mat.get-color-from-palette($primary, 'green');
+      border-radius: 5px;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 12px;
+      color: mat.get-color-from-palette($primary, 'green');
+    }
+
+    .right {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+    }
+
+    .padding-left-right-5px {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .file-input {
+      display: none;
+    }
+  }
+}
