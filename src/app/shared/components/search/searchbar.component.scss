@@ -5,59 +5,51 @@
 
 /* Form container */
 .form-design {
-  border: 1px solid #c3c7ce;
-  border-radius: 4px; // 8-point system
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-card);
   background-color: #fff;
 
   &:focus-within {
     outline: none !important;
     font-weight: 600;
     border-width: 2px;
-    border-color: #5a79ae;
-    background-color: #eff2f7;
-    box-shadow: 0 0 8px -4px #5a79ae;
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-bg);
+    box-shadow: 0 0 8px -4px var(--color-accent);
     transition: background-color 0.5s;
   }
 }
 
 /* Input field */
 .input-design {
-  flex: 1; // take remaining space
-  height: 40px; // snapped to 8-point
-  padding: 0 16px; // horizontal padding
-  font-size: 16px;
-  color: #333;
-  font-family: 'Titillium Web', serif;
+  flex: 1;
+  height: 42px;
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   border: none;
+  background: transparent;
 
   &:focus {
     outline: none !important;
-    font-weight: 600;
-    background-color: #eff2f7;
-    transition: background-color 0.5s;
-  }
-
-  &:focus + fa-icon {
-    color: #828282;
   }
 }
 
 /* Icon inside input */
 .icon-design {
-  display: flex; // make it a flex container
-  align-items: center; // vertical center
-  justify-content: center; // horizontal center inside its box
-  width: 40px; // fixed width (multiple of 8)
-  height: 40px; // match input height
-  color: #c2c2c2;
-  font-size: 16px;
-  padding: 0; // remove extra padding
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 42px;
+  color: var(--color-accent);
+  font-size: var(--font-size-sm);
+  padding: 0;
 }
 
 /* Warning message */
 .search-warning {
-  color: red;
+  color: var(--num-color--warn, var(--num-color--red, #b30519));
 }
