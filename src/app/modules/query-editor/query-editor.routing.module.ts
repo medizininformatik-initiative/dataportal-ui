@@ -6,19 +6,18 @@ import { RouteGuard } from 'src/app/core/auth/guards/route.guard.service';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: PathSegments.search,
-    pathMatch: 'full',
-  },
-  {
     path: `${PathSegments.criterion}/:id`,
     component: QueryEditorComponent,
-    canActivate: [RouteGuard],
+    data: { title: 'TAB_TITLE.QUERY_EDITOR_CRITERION', breadcrumb: 'BREADCRUMB.QUERY_EDITOR' },
   },
   {
     path: `${PathSegments.feature}/:id`,
     component: QueryEditorComponent,
-    data: { hideSideNav: false },
+    data: {
+      hideSideNav: false,
+      breadcrumb: 'BREADCRUMB.DATA_SELECTION',
+      title: 'TAB_TITLE.QUERY_EDITOR_FEATURE',
+    },
     canActivate: [RouteGuard],
   },
 ];
