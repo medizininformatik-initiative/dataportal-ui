@@ -1,5 +1,7 @@
-import { faAngleRight, faBug } from '@fortawesome/free-solid-svg-icons';
+import { faBug } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +9,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +18,7 @@ import { faDna } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faEquals } from '@fortawesome/free-solid-svg-icons';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { faFile, faFileImage, faWindowMinimize } from '@fortawesome/free-solid-svg-icons';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -29,6 +32,7 @@ import { faLessThan } from '@fortawesome/free-solid-svg-icons';
 import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { faMicroscope } from '@fortawesome/free-solid-svg-icons';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import { faNotEqual } from '@fortawesome/free-solid-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons';
@@ -72,12 +76,14 @@ import {
   faTh,
 } from '@fortawesome/free-solid-svg-icons';
 export const FONT_AWESOME_ICONS = [
+  faCalendarAlt,
   faClipboardList,
   faFilter,
   faQuestionCircle,
   faExclamationCircle,
   faTh,
   faMicroscope,
+  faMinus,
   faBars,
   faGlobeEurope,
   faEnvelope,
@@ -100,6 +106,7 @@ export const FONT_AWESOME_ICONS = [
   faProjectDiagram,
   faChevronRight,
   faChevronDown,
+  faChevronUp,
   faLink,
   faUnlink,
   faArrowUp,
@@ -123,6 +130,7 @@ export const FONT_AWESOME_ICONS = [
   faSave,
   faPenSquare,
   faEye,
+  faEyeSlash,
   faWindowMinimize,
   faEllipsisV,
   faEllipsisH,
