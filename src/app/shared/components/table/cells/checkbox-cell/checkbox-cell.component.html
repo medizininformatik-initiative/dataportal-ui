@@ -8,16 +8,12 @@
     class="cursor-click"
   >
   </fa-icon>
-  <mat-checkbox
-    color="primary"
+  <num-checkbox
     matTooltip="{{ 'SHARED_COMPONENTS.TABLE.SELECT_CHECKBOX' | translate }}"
-    disableRipple="true"
     [disabled]="!cell.isDisabled"
     [checked]="cell.isSelected"
-    (change)="onCheckboxChange()"
-    (click)="onCheckboxClick($event)"
-  >
-  </mat-checkbox>
+    (checkedChange)="onCheckboxChange()"
+  ></num-checkbox>
   <div class="name-column highlight" matTooltip="{{ cell.value | displayTranslation }}">
     {{ cell.value | displayTranslation }}
   </div>
