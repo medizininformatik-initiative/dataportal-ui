@@ -9,7 +9,9 @@ import { Observable } from 'rxjs';
 export class SearchBarComponent {
   @Input() searchText$: Observable<string>;
   @Input() searchText = '';
+  @Input() resetFilterEnabled$: Observable<boolean>;
   @Output() searchChanged = new EventEmitter<string>();
+  @Output() filterReset = new EventEmitter<void>();
 
   public onSearchTextChange(text: string): void {
     this.searchChanged.emit(text);
