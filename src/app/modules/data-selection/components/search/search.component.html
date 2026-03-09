@@ -1,16 +1,10 @@
 <div class="container">
   <div>
-    <num-header>{{ 'DATASELECTION.SEARCH.HEADER' | translate }}</num-header>
+    <num-header [showToggle]="true">{{ 'DATASELECTION.SEARCH.HEADER' | translate }}</num-header>
     <num-header-description>
-      {{ 'DATASELECTION.EDITOR.HEADER_INFO1' | translate }}
-      <a href="{{ 'mailto: ' + emailLink }}" target="_blank">{{ emailLink }}</a>
-      {{ 'DATASELECTION.EDITOR.HEADER_INFO2' | translate }}
-      <a
-        href="https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/"
-        target="_blank"
-        >https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/</a
-      >
-      {{ 'DATASELECTION.EDITOR.HEADER_INFO3' | translate }}
+      <span
+        [innerHTML]="'DATASELECTION.EDITOR.HEADER_INFO' | translate : { email: emailLink }"
+      ></span>
     </num-header-description>
   </div>
   <div class="tree-container margin-bottom-3">

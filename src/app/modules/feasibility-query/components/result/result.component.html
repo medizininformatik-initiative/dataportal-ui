@@ -1,9 +1,9 @@
 <div class="container">
   <div>
-    <num-header *ngIf="!resultLoaded">{{
+    <num-header *ngIf="!resultLoaded" [showToggle]="true">{{
       'FEASIBILITY.RESULT.HEADER.RESULT_NOT_LOADED' | translate
     }}</num-header>
-    <num-header *ngIf="resultLoaded">{{
+    <num-header *ngIf="resultLoaded" [showToggle]="true">{{
       'FEASIBILITY.RESULT.HEADER.RESULT_LOADED' | translate
     }}</num-header>
     <num-header-description>
