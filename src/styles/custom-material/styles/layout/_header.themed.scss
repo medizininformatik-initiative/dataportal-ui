@@ -5,7 +5,9 @@
   $name: map-get($theme, name);
 
   num-dataportal-header mat-toolbar {
-    background: mat.get-color-from-palette($primary, 100) !important;
-    color: mat.get-contrast-color-from-palette($primary, 200) !important;
+    --mat-toolbar-container-background-color: #f1f2f3;
+    --mat-toolbar-container-text-color: #000000;
+    background: #ffffff !important;
+    color: #000000 !important;
   }
 }

@@ -1,20 +1,24 @@
 $num-fdpg-primary-palette: (
-  50: #ffffff,
-  100: #ffffff,
+  50: #f9f9f9,
+  // page background (lightest)
+  100: #f1f2f3,
+  // light UI surface (hover bg, scrollbar track)
   200: #e8ebed,
-  300: #c0c7ce,
+  300: #c5cacf,
+  // borders, placeholders
   400: #afb8c0,
+  // disabled
   500: #9ea9b3,
+  // mid grey
   600: #8d9aa6,
   700: #7c8b98,
   800: #6c7b89,
   900: #5e6c78,
-  'white': #fff,
+  'white': #ffffff,
   'blue-hover': #678fd2,
-  'blue': rgba(90, 121, 175, 1),
-  'green': rgba(155, 184, 35, 1),
+  'green': #9bb823,
   'green-hover': rgba(163, 210, 128, 0.9),
-  'grey-hover': rgba(241, 242, 243, 1),
+  'grey-hover': #f1f2f3,
   'red': #ff4545,
   'red-hover': #ff8383,
   A100: #ffffff,

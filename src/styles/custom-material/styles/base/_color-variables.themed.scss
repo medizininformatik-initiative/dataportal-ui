@@ -10,14 +10,21 @@
   --num-color--primary-300: #{mat.get-color-from-palette($primary, 300)};
   --num-color--primary-400: #{mat.get-color-from-palette($primary, 400)};
   --num-color--primary-900: #{mat.get-color-from-palette($primary, 900)};
-  --num-color--primary-blue: #{mat.get-color-from-palette($primary, 'blue')};
+  --num-color--primary-blue: #{mat.get-color-from-palette($accent, 500)};
 
   --num-color--primary-light-green: #{mat.get-color-from-palette($primary, 'green-hover')};
   --num-color--primary-green: #{mat.get-color-from-palette($primary, 'green')};
   --num-color--primary-white: #{mat.get-color-from-palette($primary, 'white')};
 
-  --num-color--primary-blue: #{mat.get-color-from-palette($primary, 'blue')};
   --num-color--primary-red: #{mat.get-color-from-palette($primary, 'red')};
+
+  // Semantic aliases
+  --num-color--blue: #{mat.get-color-from-palette($accent, 500)};
+  --num-color--blue-hover: #{mat.get-color-from-palette($primary, 'blue-hover')};
+  --num-color--green: #{mat.get-color-from-palette($primary, 'green')};
+  --num-color--red: #{mat.get-color-from-palette($primary, 'red')};
+  --num-color--surface: #{mat.get-color-from-palette($primary, 100)};
+  --num-color--border: #{mat.get-color-from-palette($primary, 300)};
 
   --num-color--accent: #{mat.get-color-from-palette($accent, 500)};
   --num-color--warn: #{mat.get-color-from-palette($warn)};
