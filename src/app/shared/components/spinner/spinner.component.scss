@@ -8,60 +8,79 @@
   width: 80px;
   height: 80px;
   position: relative;
-  animation: rotate 2.5s infinite linear; /* Makes the dots rotate */
+  animation: rotate 1.2s infinite steps(12);
 }
 
 .dot {
-  width: 10.5px; /* Size of the dots */
-  height: 10.5px;
-  background-color: #4c82c0;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   position: absolute;
-  animation: changeColor 2s infinite linear;
+  top: 50%;
+  left: 50%;
 }
 
 .dot:nth-child(1) {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(0deg) translate(30px) rotate(0deg);
+  transform: translate(-50%, -50%) rotate(0deg) translate(30px);
+  opacity: 0.92;
+  background: var(--color-accent);
 }
 .dot:nth-child(2) {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg) translate(30px) rotate(-45deg);
+  transform: translate(-50%, -50%) rotate(30deg) translate(30px);
+  opacity: 0.84;
+  background: var(--color-accent);
 }
 .dot:nth-child(3) {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(90deg) translate(30px) rotate(-90deg);
+  transform: translate(-50%, -50%) rotate(60deg) translate(30px);
+  opacity: 0.75;
+  background: var(--color-accent);
 }
 .dot:nth-child(4) {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(135deg) translate(30px) rotate(-135deg);
+  transform: translate(-50%, -50%) rotate(90deg) translate(30px);
+  opacity: 0.67;
+  background: var(--color-accent);
 }
 .dot:nth-child(5) {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(180deg) translate(30px) rotate(-180deg);
+  transform: translate(-50%, -50%) rotate(120deg) translate(30px);
+  opacity: 0.59;
+  background: var(--color-accent);
 }
 .dot:nth-child(6) {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(225deg) translate(30px) rotate(-225deg);
+  transform: translate(-50%, -50%) rotate(150deg) translate(30px);
+  opacity: 0.51;
+  background: var(--color-accent);
 }
 .dot:nth-child(7) {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(270deg) translate(30px) rotate(-270deg);
+  transform: translate(-50%, -50%) rotate(180deg) translate(30px);
+  opacity: 0.43;
+  background: var(--color-accent);
 }
 .dot:nth-child(8) {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(315deg) translate(30px) rotate(-315deg);
+  transform: translate(-50%, -50%) rotate(210deg) translate(30px);
+  opacity: 0.35;
+  background: var(--color-accent);
+}
+.dot:nth-child(9) {
+  transform: translate(-50%, -50%) rotate(240deg) translate(30px);
+  opacity: 0.26;
+  background: var(--color-accent);
+}
+.dot:nth-child(10) {
+  transform: translate(-50%, -50%) rotate(270deg) translate(30px);
+  opacity: 0.18;
+  background: var(--color-accent);
+}
+.dot:nth-child(11) {
+  transform: translate(-50%, -50%) rotate(300deg) translate(30px);
+  opacity: 0.1;
+  background: var(--color-accent);
+}
+.dot:nth-child(12) {
+  transform: translate(-50%, -50%) rotate(330deg) translate(30px);
+  opacity: 0.05;
+  background: var(--color-accent);
 }
 
-/* Rotating the whole loader */
 @keyframes rotate {
   0% {
     transform: rotate(0deg);
@@ -71,45 +90,13 @@
   }
 }
 
-/* Animation for the rotating dots */
-@keyframes changeColor {
-  0% {
-    background-color: #4c82c0;
-  }
-  12.5% {
-    background-color: #7ab8e6;
-  }
-  25% {
-    background-color: #b2c15c;
-  }
-  37.5% {
-    background-color: #f5e04a;
-  }
-  50% {
-    background-color: #f5b04a;
-  }
-  62.5% {
-    background-color: #e07e2b;
-  }
-  75% {
-    background-color: #b24c4c;
-  }
-  87.5% {
-    background-color: #7a4c82;
-  }
-  100% {
-    background-color: #4c82c0;
-  }
-}
-
-/* Center the text in the middle of the loader without spinning */
 .center-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 14px;
-  color: #000;
+  color: var(--color-text-primary);
   font-weight: bold;
-  z-index: 1; /* Ensure the text is on top of the dots */
+  z-index: 1;
 }
