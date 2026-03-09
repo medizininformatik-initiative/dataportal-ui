@@ -1,16 +1,16 @@
 .container {
   width: 500px;
   min-height: 130px;
-  background-color: rgba(197, 202, 207, 0.1);
-  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: var(--border-radius-card);
   position: relative;
   padding: 20px;
 }
 
 .title-section {
-  font-size: larger;
+  font-size: 18px;
   width: 100%;
-  color: black;
+  color: var(--color-text-primary);
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* number of lines to show */
@@ -27,11 +27,11 @@
 .info-item {
   padding-right: 5%;
   padding-left: 20px;
-  color: #6a7483;
+  color: var(--color-text-secondary);
 }
 
 .menu-icon {
-  color: rgba(90, 121, 175, 1);
+  color: var(--color-accent);
 }
 
 .filter-chips-container {

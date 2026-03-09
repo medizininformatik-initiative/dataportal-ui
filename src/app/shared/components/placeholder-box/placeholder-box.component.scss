@@ -5,21 +5,23 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px dashed #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  color: #666;
+  border: 1px dashed var(--color-accent);
+  border-radius: var(--border-radius-card);
+  background-color: transparent;
+  opacity: 0.5;
+  color: var(--color-accent);
   text-align: center;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .placeholder-icon {
-  color: #aaa;
+  color: var(--border-color);
   margin-bottom: 8px;
 }
 
 .placeholder-content {
-  font-size: 1.5em;
-  color: #666;
+  font-size: 24px;
+  color: var(--color-text-secondary);
   text-align: center;
 }

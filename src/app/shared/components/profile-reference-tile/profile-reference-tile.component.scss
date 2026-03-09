@@ -2,11 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f9f9f9;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: var(--border-radius-card);
   padding: 10px 16px;
   margin: -18px 0 8px 3%;
-  border-radius: 6px;
-  font-family: sans-serif;
+  font-family: var(--font-body);
 }
 
 .link-info {
@@ -16,30 +16,30 @@
   width: 60%;
 
   .child-badge {
-    background-color: #e0e9ff;
-    color: #0045ad;
+    background-color: var(--color-accent-bg);
+    color: var(--color-accent);
     padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: var(--border-radius-card);
+    font-size: var(--font-size-sm);
   }
 
   .warning-badge {
-    background-color: #ffe5e5; // soft light red/pink
-    color: #c62828; // deep red text
+    background-color: rgba(198, 40, 40, 0.08);
+    color: #c62828;
     padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: var(--border-radius-card);
+    font-size: var(--font-size-sm);
     font-weight: 500;
   }
 }
 
 .type-tag {
   .type-label {
-    background: #eef1f7;
+    background: var(--color-accent-bg);
     padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    color: #4b5563;
+    border-radius: var(--border-radius-card);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
   }
 }
 
@@ -50,7 +50,7 @@
   cursor: pointer;
 
   .delete-link {
-    color: #3b82f6;
+    color: var(--color-accent);
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -66,13 +66,22 @@
   }
 
   .icon {
-    color: var(--num-color--primary-blue);
+    color: var(--color-accent);
   }
 }
 
 .arrow-icon {
-  color: var(--num-color--primary-blue);
-  font-size: 12px; // or try 0.8rem
+  color: var(--color-accent);
+  font-size: 12px;
   font-weight: 300;
-  transform: translateY(-1px); // aligns better vertically
+  transform: translateY(-1px);
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
 }
