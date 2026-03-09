@@ -1,6 +1,8 @@
 import INavItem from '../../models/nav-item.interface';
 import { mainNavItems } from '../../../core/constants/navigation';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'num-side-menu',
@@ -13,7 +15,12 @@ export class SideMenuComponent implements OnInit {
 
   @Output() toggleSideMenu = new EventEmitter<boolean>();
 
-  constructor() {}
+  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'cohort-network',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/cohort-network.svg')
+    );
+  }
 
   ngOnInit(): void {}
 
