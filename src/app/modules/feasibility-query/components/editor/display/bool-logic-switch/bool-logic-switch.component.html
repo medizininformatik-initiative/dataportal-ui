@@ -1,15 +1,16 @@
 <div
-  class="container-bool-logic"
+  class="bool-logic-switch"
   [ngClass]="{
-    'container-bool-logic-inner': position === 'inner',
-    'container-bool-logic-outer': position === 'outer'
+    'is-inner': position === 'inner',
+    'is-outer': position === 'outer'
   }"
+  (click)="switch()"
 >
-  <mat-chip-option (click)="switch()">
-    <span [ngClass]="{ 'container-bool-logic-inner-margin': position === 'inner' }">
-      <fa-icon icon="circle" *ngIf="position === 'inner'"></fa-icon>
-      {{ getLabelKey() | translate }}
-      <fa-icon icon="circle" *ngIf="position === 'outer'"></fa-icon>
-    </span>
-  </mat-chip-option>
+  <span class="switch-label" [ngClass]="{ active: label === 'AND' }">
+    {{ 'FEASIBILITY.EDITOR.SWITCH.LABEL_AND' | translate }}
+  </span>
+  <div class="switch-indicator" [ngClass]="{ 'slide-right': label === 'OR' }"></div>
+  <span class="switch-label" [ngClass]="{ active: label === 'OR' }">
+    {{ 'FEASIBILITY.EDITOR.SWITCH.LABEL_OR' | translate }}
+  </span>
 </div>
