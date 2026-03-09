@@ -1,0 +1,47 @@
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.checkbox {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #c3c7cd;
+  border-radius: 3px;
+  background-color: #ffffff;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+
+  // Checkmark via pseudo-element — accent colour on white background
+  &::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: 2px solid var(--color-accent);
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+  }
+
+  &.checked {
+    background-color: #ffffff;
+    border-color: var(--color-accent);
+
+    &::after {
+      display: block;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
