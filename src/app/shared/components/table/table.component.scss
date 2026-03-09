@@ -1,81 +1,15 @@
 /* Table base */
 table {
   width: 100%;
+  table-layout: fixed;
   font-family: 'Titillium Web', sans-serif;
   color: #6a7484;
   background-color: #fff;
-  border-radius: 4px; /* as requested */
+  border-radius: 4px;
   border-collapse: collapse;
-}
-
-/* Table header */
-.table-header {
-  text-align: left;
-  padding: 8px; /* multiple of 8 */
-  border-bottom: 1px solid #ddd;
-  color: rgba(197, 202, 207, 1);
-  font-size: 16px; /* medium mapped to 16px */
-  font-family: 'Titillium Web', sans-serif;
-}
-
-.sticky-header {
-  background-color: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-
-/* Table row and border */
-.table-border {
-  border-bottom: 1px solid #c5cacf;
-}
-
-.table-row-hover:hover {
-  background-color: #f5f5f5;
-}
-
-/* Table columns */
-.name-column {
-  padding-left: 8px; /* snapped from 10px → 8px */
-  font-size: 16px;
-}
-
-.info-column {
-  font-size: 14px; /* small mapped to 14px */
-}
-
-/* Highlight and clickable styles */
-.highlight:hover {
-  text-decoration: underline;
-  cursor: pointer;
-  color: black;
-}
-
-.cursor-click {
-  cursor: pointer;
-  padding-left: 8px; /* snapped from 5px → 8px */
 }
 
 .font-size-small {
   font-size: 14px;
   color: #6a7483;
-}
-
-td {
-  padding: 0.5rem 0.5rem;
-}
-
-th {
-  padding: 1rem 0.5rem; /* snapped from 8px → 8px */
-  font-size: 16px;
-  color: rgba(197, 202, 207, 1);
-  font-weight: 500;
-}
-
-.row-container {
-  height: 2rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
 }

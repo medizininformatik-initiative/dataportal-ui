@@ -1,0 +1,25 @@
+<tr
+  *ngFor="let row of rows"
+  [ngClass]="{ 'clickable-row': row.isClickable }"
+  class="table-border height-3-rem table-row-hover"
+>
+  <td
+    *ngFor="let cell of row.cells; let j = index"
+    (click)="onRowClick(row)"
+    [ngClass]="{ 'table-row-text-color': j > 0 }"
+  >
+    <div class="row-container" [ngSwitch]="cell.type">
+      <num-checkbox-cell
+        *ngSwitchCase="'checkbox'"
+        [cell]="cell"
+        (checkboxChange)="onCheckboxSelect(row)"
+      ></num-checkbox-cell>
+
+      <num-availability-cell *ngSwitchCase="'availability'" [cell]="cell"></num-availability-cell>
+
+      <num-display-cell *ngSwitchCase="'display'" [cell]="cell"></num-display-cell>
+
+      <num-text-cell *ngSwitchDefault [cell]="cell"></num-text-cell>
+    </div>
+  </td>
+</tr>
