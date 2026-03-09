@@ -52,7 +52,7 @@ export class TreeComponent implements OnInit {
     if (isCheckbox) {
       return '10px';
     } else {
-      return `calc(${level} * 40px)`;
+      return `calc(${level} * 29px)`;
     }
   }
   public checkboxSelected(node: TreeNode): void {
