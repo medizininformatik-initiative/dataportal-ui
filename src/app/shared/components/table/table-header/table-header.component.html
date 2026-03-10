@@ -1,5 +1,8 @@
 <tr>
-  <th *ngFor="let headerItem of headers">
+  <th
+    *ngFor="let headerItem of headers; let i = index"
+    [style.width.%]="i === 0 ? 35 : 65 / (headers.length - 1)"
+  >
     <div fxLayout="row" fxLayoutAlign="start center">
       {{ 'SHARED_COMPONENTS.TABLE.' + headerItem | translate }}
     </div>
