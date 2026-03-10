@@ -40,7 +40,8 @@
         }
       },
       "LOGOUT": "Log Out",
-      "PROPOSAL_PORTAL": "Proposal Portal"
+      "PROPOSAL_PORTAL": "Proposal Portal",
+      "PROPOSAL_PORTAL_TOOLTIP": "Open the Proposal Portal in a new tab"
     },
     "SIDENAV": {
       "LABEL": "Side navigation"
@@ -125,17 +126,22 @@
         "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenced profiles are linked profiles that are automatically included when the current profile is part of the request. They cannot be deselected individually.",
         "APPLIED_REFERENCES_TOOLTIP_TITLE": "Applied References",
         "LINKED": "Linked",
+        "NO_FIELDS": "No fields included",
+        "NO_FILTERS": "None applied",
         "OPTIONAL": "Optional",
         "REFERENCE": "Only if referenced",
+        "REFERENCE_TOOLTIP_TEXT": "When enabled, this FHIR profile is only included in the data request if it is explicitly referenced by another selected profile. This is useful for linked resources — for example, including an Observation only when it is referenced by a selected Condition — avoiding the retrieval of unrelated data.",
+        "REFERENCE_TOOLTIP_TITLE": "Only if referenced",
         "REQUIRED": "Required",
         "SELECTED_FIELDS": "Selected fields",
         "SELECTED_FIELDS_TOOLTIP_TEXT": "Fields are the specific data points of a profile, e.g. diagnosis code or date. Pre-selected fields have been predefined based on typical research requirements. You can add further fields or remove ones you don't need.",
         "SELECTED_FIELDS_TOOLTIP_TITLE": "Selected Fields"
       },
-      "HEADER": "Selected features",
+      "HEADER": "Features",
       "HEADER_DESCRIPTION": "Define which patient features in the cohort are relevant to your research question here. Pay attention to data sparseness and alignment with your study protocol, ethics approval, or research proposal (if available). Change the selection by clicking the pencil icon and add filters (e.g., specific diagnosis codes) as needed.",
       "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at <a href=\"mailto:{{email}}\" target=\"_blank\">{{email}}</a>. There are two tutorials on how to use the system on the FDPG website: <a href=\"https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/\" target=\"_blank\">https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/</a> When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
-      "SECTION": "Selected criteria"
+      "SECTION": "Selected criteria",
+      "SECTION_NAME": "Selected Features"
     },
     "SEARCH": {
       "ACTION_BAR": {
@@ -165,7 +171,8 @@
       "PROFILE": {
         "FIELDS": {
           "HEADER": "Select features for ",
-          "REQUIRED": "Mark as required"
+          "REQUIRED": "Mark as required",
+          "TITLE": "Fields"
         },
         "REFERENCE": {
           "ADD": "Add new reference",
@@ -433,6 +440,9 @@
       "TERMINOLOGY_CODE": "Terminology Codes",
       "TIMERESTRICTION": "Time Restriction"
     },
+    "CRITERIA_BOX": {
+      "DRAG_ICON_LABEL": "Drag criterion to inclusion or exclusion group (Drag & Drop)"
+    },
     "DELETE_MODAL": {
       "CANCEL": "Cancel",
       "DELETE": "Delete",
@@ -473,8 +483,15 @@
     },
     "REFERENCE_TILE": {
       "DELETE": "Delete",
+      "LINKED_FEATURES_LABEL": "Linked features",
+      "LINK_FIELD_LABEL": "Link field",
       "NOTLINKED": "Not linked",
-      "REQUIRED": "Required"
+      "NOTLINKED_TOOLTIP_TEXT": "This FHIR reference is required or recommended but has not yet been linked to a profile in the selection. Link it to include related data in your query.",
+      "NOTLINKED_TOOLTIP_TITLE": "Reference not linked",
+      "REQUIRED": "Required",
+      "REQUIRED_HELPER": "If enabled, this reference must be present in the linked profile.",
+      "REQUIRED_TOOLTIP_TEXT": "If checked, this reference must be present in the linked profile for the query to match. Unchecking makes the reference optional.",
+      "REQUIRED_TOOLTIP_TITLE": "Required reference"
     },
     "SAVE_MODAL": {
       "CANCEL": "Cancel",
