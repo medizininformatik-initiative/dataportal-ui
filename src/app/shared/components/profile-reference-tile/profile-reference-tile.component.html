@@ -1,18 +1,38 @@
 <div class="link-field-container">
   <div class="link-info">
-    <span>{{ display | displayTranslation }} ({{ elementId }})</span>
-    <fa-icon icon="arrow-right" class="arrow-icon"></fa-icon>
+    <div class="label-value-group">
+      <div class="label plain-label">
+        {{ 'SHARED_COMPONENTS.REFERENCE_TILE.LINK_FIELD_LABEL' | translate }}
+      </div>
+      <span class="value">{{ display | displayTranslation }} ({{ elementId }})</span>
+    </div>
+    <div>
+      <fa-icon icon="arrow-right" class="arrow-icon"></fa-icon>
+    </div>
     <span *ngIf="parentProfile" class="child-badge">{{
       parentProfile.getDisplay() | displayTranslation
     }}</span>
-    <ng-container *ngIf="filterChips">
-      <num-filter-chips
-        [displayBlockTriangle]="false"
-        [filterChips]="filterChips"
-      ></num-filter-chips>
+    <ng-container *ngIf="filterChips && !unlinkedRequiredOrRecommendedReferences">
+      <div class="label-value-group">
+        <div class="label">
+          {{ 'SHARED_COMPONENTS.REFERENCE_TILE.LINKED_FEATURES_LABEL' | translate }}
+        </div>
+        <span class="value">
+          <num-filter-chips
+            [displayBlockTriangle]="false"
+            [filterChips]="filterChips"
+          ></num-filter-chips>
+        </span>
+      </div>
     </ng-container>
-    <span *ngIf="unlinkedRequiredOrRecommendedReferences" class="warning-badge"
-      >{{ 'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED' | translate }}
+    <span *ngIf="unlinkedRequiredOrRecommendedReferences" class="warning-badge">
+      {{ 'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED' | translate }}
+      <span
+        class="info-icon"
+        numInfoTooltip
+        [infoTooltipTitle]="'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED_TOOLTIP_TITLE' | translate"
+        [infoTooltipText]="'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED_TOOLTIP_TEXT' | translate"
+      ></span>
     </span>
   </div>
 
@@ -21,7 +41,15 @@
       [checked]="referenceField.getMustHave()"
       (checkedChange)="setMustHave($event)"
     ></num-checkbox>
-    <span>{{ 'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}</span>
+    <span>
+      {{ 'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}
+      <span
+        class="info-icon"
+        numInfoTooltip
+        [infoTooltipTitle]="'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED_TOOLTIP_TITLE' | translate"
+        [infoTooltipText]="'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED_TOOLTIP_TEXT' | translate"
+      ></span>
+    </span>
   </span>
   <div class="actions" (click)="deleteReferenceLink()">
     {{ 'SHARED_COMPONENTS.REFERENCE_TILE.DELETE' | translate }}
