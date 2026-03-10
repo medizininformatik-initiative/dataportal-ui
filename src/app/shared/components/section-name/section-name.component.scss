@@ -1,11 +1,11 @@
 .section-header {
   width: 100%;
-  font-family: 'Titillium Web', sans-serif;
+  font-family: var(--font-body, 'Titillium Web', sans-serif);
   font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: #000000;
-  margin-bottom: 12px;
-  margin-top: 12px;
+  font-weight: var(--font-weight-bold, 600);
+  font-size: var(--font-size-md, 16px);
+  line-height: var(--line-height-md, 24px);
+  color: var(--color-text-section, #5f6266);
+  margin-bottom: var(--spacing-sm, 12px);
+  margin-top: var(--spacing-sm, 12px);
 }
