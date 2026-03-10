@@ -17,6 +17,8 @@ import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '../shared/components/shared-components.module';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserMenuComponent } from './components/header/user-menu/user-menu.component';
+import { PortalLinkComponent } from './components/header/portal-link/portal-link.component';
 
 const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
 
@@ -31,6 +33,8 @@ const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
     ErrorLogHeaderComponent,
     ErrorLogItemComponent,
     ErrorLogActionsComponent,
+    UserMenuComponent,
+    PortalLinkComponent,
   ],
   imports: [
     ...SHARED_MODULES,
