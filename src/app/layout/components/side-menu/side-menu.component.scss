@@ -1,7 +1,7 @@
 /* Navigation list */
 mat-nav-list {
   margin: 0;
-  padding: 16px 8px 0 8px;
+  padding: 16px 12px 0 12px;
 }
 
 /* Nav items */
@@ -11,7 +11,7 @@ mat-nav-list {
   align-items: center;
   padding: 8px 16px;
   gap: 4px;
-  width: 300px;
+  width: 100%;
   min-height: 40px;
   height: auto;
   background: #ffffff;
