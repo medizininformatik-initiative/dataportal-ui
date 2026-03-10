@@ -6,7 +6,7 @@
   background: #ffffff;
   border-radius: 20px;
   position: relative;
-  top: -15px;
+  top: -24px;
   margin-left: 3%;
 
   .icon {
@@ -15,16 +15,17 @@
     justify-content: center;
     width: 31px;
     height: 18px;
-    background: var(--color-accent-border);
     border-radius: 10px;
-    margin-left: 9px;
     flex-shrink: 0;
     color: var(--color-accent);
     font-size: 12px;
+    transform: rotateZ(45deg);
+  }
 
-    fa-icon {
-      transform: rotate(45deg);
-    }
+  .icon-area {
+    background: var(--color-accent-border);
+    border-radius: 10px;
+    margin-right: 8px;
   }
 
   .text {
@@ -34,6 +35,5 @@
     font-size: var(--font-size-md);
     line-height: var(--line-height-md);
     color: var(--color-accent);
-    text-align: center;
   }
 }
