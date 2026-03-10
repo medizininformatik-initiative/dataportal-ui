@@ -44,7 +44,7 @@ export class TreeComponent implements OnInit {
       if (level > 1) {
         return `calc(${level} * 35px)`;
       } else {
-        return `calc(${level} * 30px)`;
+        return `calc(${level} * 38px)`;
       }
     }
   }
