@@ -21,7 +21,7 @@ import { HeaderComponent } from './header/header.component';
 import { HeaderDescriptionComponent } from './header-description/header-description.component';
 import { InformationSectionComponent } from './information-section/information-section.component';
 import { InfoTooltipComponent } from './info-tooltip/info-tooltip.component';
-import { InfoTooltipDirective } from './info-tooltip/info-tooltip.directive';
+import { InfoTooltipDirective } from '../directives/info-tooltip.directive';
 import { InfoTileComponent } from './info-tile/info-tile.component';
 import { LinkedBadgeComponent } from './linked-badge/linked-badge.component';
 import { ListItemDetailsComponent } from './list-item-details/list-item-details.component';
