@@ -4,7 +4,11 @@
       <a *ngIf="!last" (click)="navigateTo(breadcrumb.url)">
         {{ breadcrumb.label | displayTranslation }}
       </a>
-      <div *ngIf="last" class="last-breadcrumb">
+      <div
+        *ngIf="last"
+        class="last-breadcrumb"
+        [matTooltip]="breadcrumb.label | displayTranslation"
+      >
         {{ breadcrumb.label | displayTranslation }}
       </div>
       <div *ngIf="!last" class="breadcrumb-separator">»</div>
