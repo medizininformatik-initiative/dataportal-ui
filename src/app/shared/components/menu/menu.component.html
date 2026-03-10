@@ -10,9 +10,16 @@
 </button>
 
 <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+  <div class="options-header" (click)="$event.stopPropagation()">
+    {{ 'SHARED_COMPONENTS.MENU.OPTIONS' | translate }}
+  </div>
   <div *ngFor="let item of menuItems; let isLast = last" data-cy="{{ item.label | translate }}">
     <button
-      [ngClass]="{ divider: !isLast, 'last-item': isLast }"
+      [ngClass]="{
+        divider: !isLast,
+        'last-item': isLast,
+        'menu-item--primary': item.type === 'primary'
+      }"
       mat-menu-item
       [disabled]="item.disabled"
       (click)="item.action(id)"
