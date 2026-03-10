@@ -40,7 +40,8 @@
         }
       },
       "LOGOUT": "Abmelden",
-      "PROPOSAL_PORTAL": "Antragsportal"
+      "PROPOSAL_PORTAL": "Antragsportal",
+      "PROPOSAL_PORTAL_TOOLTIP": "Antragsportal in einem neuen Tab öffnen"
     },
     "SIDENAV": {
       "LABEL": "Seitennavigation"
@@ -125,17 +126,22 @@
         "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenzierte Merkmale sind verknüpfte Profile, die automatisch mitgeliefert werden, wenn das aktuelle Merkmal in der Anfrage enthalten ist. Sie können nicht einzeln abgewählt werden.",
         "APPLIED_REFERENCES_TOOLTIP_TITLE": "Referenzierte Merkmale",
         "LINKED": "Verknüpft",
+        "NO_FIELDS": "Keine Felder eingeschlossen",
+        "NO_FILTERS": "Keine angewendet",
         "OPTIONAL": "Optional",
         "REFERENCE": "Nur wenn referenziert",
+        "REFERENCE_TOOLTIP_TEXT": "Wenn aktiviert, wird dieses FHIR-Profil nur dann in die Datenanfrage einbezogen, wenn es explizit von einem anderen ausgewählten Profil referenziert wird. Dies ist nützlich für verknüpfte Ressourcen – zum Beispiel, um eine Observation nur dann einzuschließen, wenn sie von einer ausgewählten Condition referenziert wird – und verhindert so das Abrufen nicht relevanter Daten.",
+        "REFERENCE_TOOLTIP_TITLE": "Nur wenn referenziert",
         "REQUIRED": "Erforderlich",
         "SELECTED_FIELDS": "Selektierte Felder",
         "SELECTED_FIELDS_TOOLTIP_TEXT": "Felder sind die konkreten Datenpunkte eines Merkmals, z. B. Diagnose-Code oder Datum. Die vorausgewählten Felder wurden anhand typischer Forschungsanforderungen vordefiniert. Sie können weitere Felder hinzufügen oder nicht benötigte entfernen.",
         "SELECTED_FIELDS_TOOLTIP_TITLE": "Selektierte Felder"
       },
-      "HEADER": "Ausgewählte Merkmale",
+      "HEADER": "Merkmale",
       "HEADER_DESCRIPTION": "Hier können Sie definieren, welche Merkmale von Patientinnen und Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll / Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z. B. auf bestimmte Diagnosecodes) hinzu.",
       "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter <a href=\"mailto:{{email}}\" target=\"_blank\">{{email}}</a>. Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: <a href=\"https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/\" target=\"_blank\">https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/</a> Achten Sie bei der Bearbeitung darauf, dass alle Zwischenergebnisse durch Klick auf \"Speichern\" in der Bearbeitungsansicht der Module zwischengespeichert werden müssen.",
-      "SECTION": "Ausgewählte Kriterien"
+      "SECTION": "Ausgewählte Kriterien",
+      "SECTION_NAME": "Ausgewählte Merkmale"
     },
     "SEARCH": {
       "ACTION_BAR": {
@@ -437,6 +443,9 @@
       "TERMINOLOGY_CODE": "Terminologie-Codes",
       "TIMERESTRICTION": "Zeiteinschränkung"
     },
+    "CRITERIA_BOX": {
+      "DRAG_ICON_LABEL": "Kriterium in Einschluss- oder Ausschlussgruppe verschieben (Drag & Drop)"
+    },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",
       "DELETE": "Löschen",
@@ -477,8 +486,15 @@
     },
     "REFERENCE_TILE": {
       "DELETE": "Löschen",
+      "LINKED_FEATURES_LABEL": "Verknüpfte Merkmale",
+      "LINK_FIELD_LABEL": "Verknüpfungsfeld",
       "NOTLINKED": "Nicht verknüpft",
-      "REQUIRED": "Erforderlich"
+      "NOTLINKED_TOOLTIP_TEXT": "Diese FHIR-Referenz ist erforderlich oder empfohlen, wurde aber noch nicht mit einem Profil in der Selektion verknüpft. Verknüpfen Sie sie, um zugehörige Daten in Ihre Abfrage einzubeziehen.",
+      "NOTLINKED_TOOLTIP_TITLE": "Referenz nicht verknüpft",
+      "REQUIRED": "Erforderlich",
+      "REQUIRED_HELPER": "Wenn aktiviert, muss diese Referenz im verknüpften Profil vorhanden sein.",
+      "REQUIRED_TOOLTIP_TEXT": "Wenn aktiviert, muss diese Referenz im verknüpften Profil vorhanden sein, damit die Abfrage übereinstimmt. Wenn deaktiviert, ist die Referenz optional.",
+      "REQUIRED_TOOLTIP_TITLE": "Erforderliche Referenz"
     },
     "SAVE_MODAL": {
       "CANCEL": "Abbrechen",
