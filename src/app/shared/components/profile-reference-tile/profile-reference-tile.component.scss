@@ -1,11 +1,55 @@
+.label-value-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.label-value-group .label {
+  font-weight: var(--font-weight-bold, 400);
+  color: var(--color-accent);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xs, 4px);
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  margin-left: 4px;
+}
+
+.label-value-group .label.plain-label {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-normal, 400);
+  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-xxs, 2px);
+}
+
+.label-value-group .value {
+  color: var(--color-accent);
+  font-size: var(--font-size-md);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.link-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+  color: var(--color-accent);
+  font-size: var(--font-size-md);
+  justify-content: flex-start;
+}
 .link-field-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(197, 202, 207, 0.1);
   border-radius: var(--border-radius-card);
+  min-height: 67px;
   padding: 10px 16px;
-  margin: -18px 0 8px 3%;
+  margin-top: -4px;
   font-family: var(--font-body);
 }
 
@@ -14,6 +58,8 @@
   align-items: center;
   gap: 8px;
   width: 60%;
+  color: var(--color-accent);
+  font-size: var(--font-size-md);
 
   .child-badge {
     background-color: var(--color-accent-bg);
@@ -24,7 +70,7 @@
   }
 
   .warning-badge {
-    background-color: rgba(198, 40, 40, 0.08);
+    background-color: #ffe4e4;
     color: #c62828;
     padding: 4px 8px;
     border-radius: var(--border-radius-card);
