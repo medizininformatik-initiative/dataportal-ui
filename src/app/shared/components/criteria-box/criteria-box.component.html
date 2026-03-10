@@ -39,7 +39,12 @@
   <div class="handle-icons" fxLayout="column" fxLayoutAlign="start start">
     <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="criterion.getId()"></num-menu>
     <div *ngIf="isEditable" fxFlexAlign="end" class="menu-icon" cdkDragHandle>
-      <fa-icon class="icon drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
+      <fa-icon
+        [matTooltip]="'SHARED_COMPONENTS.CRITERIA_BOX.DRAG_ICON_LABEL' | translate"
+        class="icon drag-handle"
+        size="m"
+        icon="expand-arrows-alt"
+      ></fa-icon>
     </div>
   </div>
 </div>
