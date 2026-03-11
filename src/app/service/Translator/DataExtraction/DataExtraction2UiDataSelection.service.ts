@@ -2,7 +2,6 @@ import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData
 import { AttributesData } from 'src/app/model/Interface/AttributesData';
 import { BasicFieldTranslatorService } from './BasicFieldTranslator.service';
 import { ConceptHashCollectorService } from './ConceptHashCollector.service';
-import { CreateDataSelectionProfileService } from '../../DataSelection/CreateDataSelectionProfile.service';
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData';
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
@@ -42,7 +41,7 @@ export class DataExtraction2UiDataSelectionService {
     const hashes = this.conceptHashCollector.collectConceptHashes(dataExtraction);
     if (dataExtraction.attributeGroups?.length > 0) {
       const urls = this.getGroupReferences(dataExtraction);
-      return this.createDataSelection.fetchDataSelectionProfileData(urls, false).pipe(
+      return this.createDataSelection.loadProfiles(urls, false).pipe(
         switchMap((profiles: DataSelectionProfile[]) => this.loadConcepts(profiles, hashes)),
         map((profiles: DataSelectionProfile[]) => this.buildDataSelection(profiles, dataExtraction))
       );
@@ -54,7 +53,7 @@ export class DataExtraction2UiDataSelectionService {
     hashes: string[]
   ): Observable<DataSelectionProfile[]> {
     return this.codeableConceptApiService.getCodeableConceptsByIds(hashes).pipe(
-      tap((concepts) => this.conceptTranslationCacheService.setConceptsByHash(concepts)),
+      tap((concepts) => this.conceptTranslationCacheService.setMany(concepts)),
       map(() => profiles)
     );
   }
