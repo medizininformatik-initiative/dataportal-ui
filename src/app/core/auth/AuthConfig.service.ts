@@ -31,6 +31,7 @@ export class AuthConfigService {
       issuer,
       clientId,
       responseType: 'code',
+      logoutUrl: `${issuer}/protocol/openid-connect/logout`,
       redirectUri,
       silentRefreshRedirectUri: silentRefreshUri,
       scope: 'openid profile email roles',
