@@ -35,7 +35,7 @@ export class CodeableConceptBulkEntry extends AbstractListEntry {
    */
   public static fromJson(json: ConceptData): CodeableConceptBulkEntry {
     return new CodeableConceptBulkEntry(
-      json.hash,
+      json.id,
       Display.fromJson(json.display),
       TerminologyCode.fromJson(json.termCode)
     );
