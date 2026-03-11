@@ -34,7 +34,6 @@ export class DataSelection2DataExtraction {
   private translateAttributeGroups(profile: DataSelectionProfile): AttributeGroup {
     const attributes = this.translateSelectedFields(profile.getProfileFields());
     const filters = this.translateFilters(profile.getFilters());
-    console.log('Translated filters:', profile);
     return new AttributeGroup(
       profile.getId(),
       profile.getUrl(),
