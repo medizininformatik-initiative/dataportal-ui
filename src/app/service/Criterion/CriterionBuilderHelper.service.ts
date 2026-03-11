@@ -21,7 +21,6 @@ export class CriterionBuilderHelperService {
   ) {}
 
   public setBuilderWithCriteriaProfileData(profileData: CriteriaProfileData): CriterionBuilder {
-    console.log('Setting builder with criteria profile data:', profileData);
     const mandatoryFields = this.criterionMetadataService.createMandatoryFields(profileData);
     const uiProfile = this.uiProfileProviderService.getOne(profileData.uiProfileId);
     const builder = new CriterionBuilder(mandatoryFields);

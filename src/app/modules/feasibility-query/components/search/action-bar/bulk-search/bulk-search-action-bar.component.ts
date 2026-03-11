@@ -32,7 +32,6 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log('Result Type in Action Bar:', this.resultType);
     this.disabledAddToStageButton = this.selectedBulkCriteriaService
       .getSelectedBulkCriteria()
       .pipe(map((entries) => entries.length === 0));
