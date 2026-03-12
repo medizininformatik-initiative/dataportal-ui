@@ -6,7 +6,15 @@
   padding-top: 16px;
 }
 
-.display-container,
+.display-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 0 1%;
+  color: var(--color-text-primary);
+}
+
 .selected-fields-container {
   width: 100%;
   padding: 0 1%;
@@ -35,34 +43,6 @@
   overflow-y: auto;
 }
 
-// Block Chip Styles
-.block {
-  position: relative;
-  display: inline-block;
-  min-width: 100px;
-  width: fit-content;
-  height: 26px;
-  padding: 2px 10px 2px 4px;
-  background-color: var(--color-accent);
-  color: #ffffff;
-  border-top-left-radius: var(--border-radius-card);
-  border-bottom-left-radius: var(--border-radius-card);
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: width 0.3s ease;
-}
-
-.block-triangle {
-  display: inline-block;
-  border-left: 13px solid var(--color-accent);
-  border-top: 13px solid transparent;
-  border-bottom: 13px solid transparent;
-  content: '';
-}
-
-// Spacing Utilities
 .reference-chip-padding-30 {
   padding-top: 30px;
 }
@@ -81,4 +61,8 @@
   color: var(--color-text-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-card);
+}
+
+.border-right-1 {
+  border-right: 1px solid var(--border-color);
 }
