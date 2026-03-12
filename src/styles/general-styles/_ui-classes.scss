@@ -66,11 +66,6 @@
   cursor: pointer;
   transition: white-space 0.15s ease, var(--transition-shadow), border-color 0.2s ease;
 
-  &:hover {
-    border-color: rgba(90, 121, 175, 0.5);
-    box-shadow: var(--shadow-card-hover);
-  }
-
   &.expanded {
     white-space: normal;
     overflow: visible;
