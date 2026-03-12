@@ -5,7 +5,6 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe';
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter';
-import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { Observable, of } from 'rxjs';
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData';
@@ -20,6 +19,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData';
 
 @Component({
   selector: 'num-profile-header',
@@ -38,12 +38,14 @@ export class ProfileHeaderComponent implements OnInit, OnChanges {
   placeholder: string;
 
   filterChipsSelected = false;
-  $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
+  $fieldsFilterChips: Observable<FilterChipData[]> = of([]);
 
-  filtersFilterChips: InterfaceFilterChip[] = [];
-  filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
+  filtersFilterChips: FilterChipData[] = [];
+  filtersFilterChips$: Observable<FilterChipData[]> = of([]);
 
-  profileReferenceChips: InterfaceFilterChip[] = [];
+  profileReferenceChips: FilterChipData[] = [];
+
+  displayExpanded = false;
 
   constructor(
     private profileProviderService: ProfileProviderService,
@@ -97,7 +99,7 @@ export class ProfileHeaderComponent implements OnInit, OnChanges {
 
   public getProfileReferenceChips(
     selectedReferenceFields: SelectedReferenceField[]
-  ): InterfaceFilterChip[] {
+  ): FilterChipData[] {
     const groupedByElementId = selectedReferenceFields.reduce((acc, ref) => {
       const key = ref.getElementId();
       if (!acc[key]) {
