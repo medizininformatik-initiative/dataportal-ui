@@ -132,6 +132,7 @@
         "REFERENCE": "Nur wenn referenziert",
         "REFERENCE_TOOLTIP_TEXT": "Wenn aktiviert, wird dieses FHIR-Profil nur dann in die Datenanfrage einbezogen, wenn es explizit von einem anderen ausgewählten Profil referenziert wird. Dies ist nützlich für verknüpfte Ressourcen – zum Beispiel, um eine Observation nur dann einzuschließen, wenn sie von einer ausgewählten Condition referenziert wird – und verhindert so das Abrufen nicht relevanter Daten.",
         "REFERENCE_TOOLTIP_TITLE": "Nur wenn referenziert",
+        "RENAME_FEATURE": "Merkmal umbenennen",
         "REQUIRED": "Erforderlich",
         "SELECTED_FIELDS": "Selektierte Felder",
         "SELECTED_FIELDS_TOOLTIP_TEXT": "Felder sind die konkreten Datenpunkte eines Merkmals, z. B. Diagnose-Code oder Datum. Die vorausgewählten Felder wurden anhand typischer Forschungsanforderungen vordefiniert. Sie können weitere Felder hinzufügen oder nicht benötigte entfernen.",
@@ -473,6 +474,9 @@
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Kindelement",
       "DETAILS": "Details",
+      "NO_CHILDREN": "Keine Kindelemente",
+      "NO_PARENTS": "Keine Elternelemente",
+      "NO_TRANSLATIONS": "Keine automatischen Übersetzungen",
       "PARENTS": "Elternelement",
       "TRANSLATIONS": "Automatische Übersetzungen"
     },
