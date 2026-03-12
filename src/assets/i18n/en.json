@@ -132,6 +132,7 @@
         "REFERENCE": "Only if referenced",
         "REFERENCE_TOOLTIP_TEXT": "When enabled, this FHIR profile is only included in the data request if it is explicitly referenced by another selected profile. This is useful for linked resources — for example, including an Observation only when it is referenced by a selected Condition — avoiding the retrieval of unrelated data.",
         "REFERENCE_TOOLTIP_TITLE": "Only if referenced",
+        "RENAME_FEATURE": "Rename Feature",
         "REQUIRED": "Required",
         "SELECTED_FIELDS": "Selected fields",
         "SELECTED_FIELDS_TOOLTIP_TEXT": "Fields are the specific data points of a profile, e.g. diagnosis code or date. Pre-selected fields have been predefined based on typical research requirements. You can add further fields or remove ones you don't need.",
@@ -460,6 +461,9 @@
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Child element",
       "DETAILS": "Details",
+      "NO_CHILDREN": "No child elements",
+      "NO_PARENTS": "No parent elements",
+      "NO_TRANSLATIONS": "No automatic translations",
       "PARENTS": "Parent element",
       "TRANSLATIONS": "Automatic Translations"
     },
