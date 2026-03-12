@@ -1,13 +1,11 @@
 <ng-container *ngIf="listItemDetails$ | async as listItemDetails">
   <mat-tab-group class="details-tab-group" animationDuration="0ms">
-    <!-- ── DETAILS tab ─────────────────────────────────────────── -->
     <mat-tab>
       <ng-template mat-tab-label>
         {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.DETAILS' | translate }}
       </ng-template>
 
       <div class="tab-content" fxLayout="column">
-        <!-- Item title -->
         <div class="original-item">
           {{ listItemDetails.getDisplay() | displayTranslation }}
         </div>
@@ -31,9 +29,12 @@
             >
               <span
                 class="fi"
-                [ngClass]="'fi-' + (t.getLanguage() === 'en' ? 'gb' : t.getLanguage())"
+                style="font-size: 14px"
+                [ngClass]="'fi-' + (t.getLanguage() === 'en-US' ? 'gb' : 'de')"
               ></span>
-              <span>{{ t.getValue() }}</span>
+              <span [matTooltip]="t.getValue() | displayTranslation" class="num-text-accent">{{
+                t.getValue()
+              }}</span>
             </div>
           </div>
         </div>
@@ -43,12 +44,15 @@
           <div class="detail-label">
             {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
           </div>
-          <div class="detail-value">
+          <div *ngIf="listItemDetails.getParents().length > 0" class="detail-value">
             <num-list-item-details-sections
               [listItemDetails]="listItemDetails.getParents()"
               (selectedRelative)="getSelectedRelative($event)"
             >
             </num-list-item-details-sections>
+          </div>
+          <div class="num-text-accent" *ngIf="listItemDetails.getParents().length === 0">
+            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_PARENTS' | translate }}
           </div>
         </div>
 
@@ -57,21 +61,28 @@
           <div class="detail-label">
             {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
           </div>
-          <div class="detail-value">
+          <div *ngIf="listItemDetails.getChildren().length > 0" class="detail-value">
             <num-list-item-details-sections
               [listItemDetails]="listItemDetails.getChildren()"
               (selectedRelative)="getSelectedRelative($event)"
             >
             </num-list-item-details-sections>
           </div>
+          <div class="num-text-accent" *ngIf="listItemDetails.getChildren().length === 0">
+            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_CHILDREN' | translate }}
+          </div>
         </div>
       </div>
     </mat-tab>
 
     <!-- ── PARENTS tab ─────────────────────────────────────────── -->
-    <mat-tab>
+    <mat-tab
+      [disabled]="!listItemDetails.getParents() || listItemDetails.getParents().length === 0"
+    >
       <ng-template mat-tab-label>
-        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
+        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }} ({{
+          listItemDetails.getParents()?.length || 0
+        }})
       </ng-template>
       <div class="tab-content">
         <num-list-item-details-sections
@@ -83,9 +94,13 @@
     </mat-tab>
 
     <!-- ── CHILDREN tab ────────────────────────────────────────── -->
-    <mat-tab>
+    <mat-tab
+      [disabled]="!listItemDetails.getChildren() || listItemDetails.getChildren().length === 0"
+    >
       <ng-template mat-tab-label>
-        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
+        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }} ({{
+          listItemDetails.getChildren()?.length || 0
+        }})
       </ng-template>
       <div class="tab-content">
         <num-list-item-details-sections

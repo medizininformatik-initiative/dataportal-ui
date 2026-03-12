@@ -24,7 +24,7 @@
 }
 
 .detail-row.divider {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #f1f2f3;
 }
 
 .detail-label {
@@ -50,4 +50,11 @@
   margin-bottom: 6px;
   font-size: 14px;
   gap: 8px;
+}
+
+/* Fix flag icon size in translation row */
+.translation-entry .fi {
+  font-size: 20px !important;
+  line-height: 1;
+  vertical-align: middle;
 }
