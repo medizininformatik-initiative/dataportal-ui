@@ -1,10 +1,11 @@
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service';
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
+import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData';
 import { map, Observable, of, Subscription, take } from 'rxjs';
 import { MenuItemInterface } from '../../../../../../shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from '../../../../../../shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
@@ -14,7 +15,6 @@ import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/Refre
 import { RemoveReferenceService } from 'src/app/service/RemoveReference.service';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -34,12 +34,12 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
   displayExpanded = false;
   menuItems: MenuItemInterface[] = [];
   filterChipsSelected = false;
-  $fieldsFilterChips: Observable<InterfaceFilterChip[]> = of([]);
+  $fieldsFilterChips: Observable<FilterChipData[]> = of([]);
 
-  filtersFilterChips: InterfaceFilterChip[] = [];
-  filtersFilterChips$: Observable<InterfaceFilterChip[]> = of([]);
+  filtersFilterChips: FilterChipData[] = [];
+  filtersFilterChips$: Observable<FilterChipData[]> = of([]);
 
-  profileRefrenceChips: InterfaceFilterChip[] = [];
+  profileRefrenceChips: FilterChipData[] = [];
 
   unlinkedRequiredOrRecommendedReferences: ReferenceField[];
 

@@ -1,4 +1,4 @@
-export interface InterfaceFilterChipData {
+export interface FilterChipPropertyData {
   id: string
   text: string
   expanded: boolean
