@@ -101,10 +101,7 @@ export class SelectedBulkCriteriaService {
     console.log('Removing entries:', entries);
     const currentEntries = this.selectedBulkCriteriaTermCodes.value;
     this.selectedBulkCriteriaTermCodes.next(
-      currentEntries.filter((selectedEntry) => {
-        console.log('Checking selected entry:', selectedEntry);
-        return !entries.find((entry) => entry.getId() === selectedEntry.getId());
-      })
+      currentEntries.filter((selectedEntry) => !entries.find((entry) => entry.getId() === selectedEntry.getId()))
     );
   }
 
