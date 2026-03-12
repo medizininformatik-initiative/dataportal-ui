@@ -2,10 +2,16 @@
   <mat-drawer #drawer position="end" mode="side" class="details-drawer">
     <ng-container *ngIf="listItems">
       <div class="details-wrapper">
-        <button (click)="closeSidenav()" class="cancel-button">
-          {{ 'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate }}
-          <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
-        </button>
+        <div class="button-align-right padding-top-2">
+          <button
+            [matTooltip]="'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate"
+            (click)="closeSidenav()"
+            class="num-button cancel"
+          >
+            {{ 'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate }}
+            <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
+          </button>
+        </div>
         <num-list-item-details
           class="details-panel"
           [listItemDetails$]="selectedDetails$"
