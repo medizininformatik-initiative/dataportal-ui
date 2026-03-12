@@ -1,0 +1,48 @@
+@use 'node_modules/@angular/material' as mat;
+
+@mixin button-cancel($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+  .num-button.cancel {
+    // Use base button properties
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    height: 42px;
+    padding: 9px 18px;
+    border-radius: 5px;
+    letter-spacing: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    opacity: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: $raised-shadow;
+    border: 1px solid mat.get-color-from-palette($accent, 200);
+    background: mat.get-color-from-palette($primary, 50);
+    color: mat.get-color-from-palette($accent, 600);
+    margin-bottom: 1rem;
+
+    &:hover:not(.disabled) {
+      background: mat.get-color-from-palette($primary, 100);
+      color: mat.get-color-from-palette($accent, 400);
+      box-shadow: rgba(81, 112, 168, 0.13) 0 4px 16px;
+    }
+
+    &.cdk-keyboard-focused {
+      background: mat.get-color-from-palette($primary, 100);
+    }
+
+    &.disabled {
+      background: mat.get-color-from-palette($primary, 50);
+      color: mat.get-color-from-palette($primary, 400);
+      border-color: mat.get-color-from-palette($primary, 300);
+      box-shadow: none;
+      cursor: unset;
+    }
+  }
+}
