@@ -14,17 +14,8 @@
   height: 100%;
 }
 
-.cancel-button {
-  background-color: white;
-  height: 4%;
-  align-self: flex-end;
-  border: 0px;
-  text-decoration: underline #5170a8;
-}
-
-.cancel-button:hover {
-  transform: translateY(-3px);
-  color: #5288b7;
+.button-align-right {
+  text-align: right;
 }
 
 .close-icon {
@@ -66,7 +57,6 @@
 
 .details-panel {
   height: 96%;
-  padding-left: 2rem;
 }
 
 ::ng-deep .mat-drawer-inner-container {
