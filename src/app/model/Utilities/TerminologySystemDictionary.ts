@@ -47,6 +47,12 @@ export class TerminologySystemDictionary {
     return TerminologySystemDictionary.nameToUrlMap;
   }
 
+  /**
+   * Gets the display name for a given URL e.g "http://loinc.org" -> "LOINC".
+   * Based on api/v5/terminology/systems
+   * @param url
+   * @returns
+   */
   public static getNameByUrl(url: string): Display | undefined {
     if (!TerminologySystemDictionary.instance) {
       throw new Error('CodeSystemDictionary is not initialized. Please call initialize() first.');
