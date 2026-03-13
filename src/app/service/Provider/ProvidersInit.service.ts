@@ -1,3 +1,4 @@
+import { DataSelectionMainProfileProviderService } from '../DataSelectionMainProfileProvider.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
@@ -12,7 +13,8 @@ import { switchMap } from 'rxjs/operators';
 export class ProvidersInitService {
   constructor(
     private dataSelectionProvider: DataSelectionProviderService,
-    private feasibilityQueryProvider: FeasibilityQueryProviderService
+    private feasibilityQueryProvider: FeasibilityQueryProviderService,
+    private dataSelectionMainProfileProviderService: DataSelectionMainProfileProviderService
   ) {}
 
   /**
@@ -20,6 +22,7 @@ export class ProvidersInitService {
    * Emits true only if both succeed.
    */
   public initializeProviders(patientProfileResult: DataSelectionProfile): Observable<boolean> {
+    this.dataSelectionMainProfileProviderService.setPatientProfile(patientProfileResult);
     return this.dataSelectionProvider
       .initializeDataSelectionInstance(patientProfileResult)
       .pipe(
