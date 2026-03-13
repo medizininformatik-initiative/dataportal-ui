@@ -1,7 +1,27 @@
 /* Navigation list */
+
 mat-nav-list {
   margin: 0;
   padding: 16px 12px 0 12px;
+
+  &.collapsed {
+    .num-mat-list-item {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+      gap: 0;
+    }
+    .navItem-font {
+      display: none !important;
+    }
+    fa-icon,
+    .nav-svg-icon {
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
 
 /* Nav items */
