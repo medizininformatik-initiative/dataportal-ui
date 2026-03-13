@@ -367,6 +367,7 @@
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
       "HEADER": "Kriteriensuche",
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen. Wenn Sie die Rohdaten, pseudonymisiert, lokal analysieren möchten, fügen Sie das Kriterium \"MDAT wissenschaftlich nutzen EU DSGVO NIVEAU\" oder weitere Kriterien aus dem Modul \"EINWILLIGUNG\" hinzu.",
+      "INFO_TOOLTIP": "<b>Kontext:</b> Beschreibt den medizinischen Zusammenhang eines Suchbegriffs, z. B. Diagnose, Prozedur oder Laborwert.<br><br><b>Terminologie:</b> Gibt an, aus welchem medizinischen Klassifikationssystem ein Begriff stammt, z. B. ICD-10, OPS oder LOINC.<br><br><b>KDS-Modul:</b> Bezeichnet den Bereich des MII-Kerndatensatzes, in dem die Daten strukturiert gespeichert sind.",
       "LABEL": "Code oder Suchbegriff eingeben",
       "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
       "SEARCH_BUTTON": "Suchen",
@@ -375,7 +376,8 @@
         "ADDED_TO_COHORT": "Kriterien wurden zur Kohortenselektion hinzugefügt",
         "ADDED_TO_STAGE": "Kriterium wurde ausgewählt",
         "REMOVED_FROM_STAGE": "Kriterium wurde entfernt"
-      }
+      },
+      "TOOLTIP_TITLE": "Suchfilter"
     }
   },
   "INFORMATION": {
@@ -471,6 +473,7 @@
       "AVAILABILITY": "Verfügbarkeit",
       "CONTEXT": "Kontext",
       "KDS_MODULE": "KDS-Modul",
+      "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
       "TERMINOLOGY": "Terminologie"
     },
     "HEADER": {

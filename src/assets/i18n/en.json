@@ -350,6 +350,7 @@
       "EMPTY": "Sorry, we could not find any results for ",
       "HEADER": "Criteria search",
       "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide.If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU ” or other criteria from the “EINWILLIGUNG” module.",
+      "INFO_TOOLTIP": "<b>Context:</b> Describes the medical context of a search term, e.g. diagnosis, procedure, or laboratory value.<br><br><b>Terminology:</b> Indicates which medical classification system a term comes from, e.g. ICD-10, OPS, or LOINC.<br><br><b>KDS Module:</b> Refers to the section of the MII core dataset where the data is structured, e.g. diagnosis, medication, or laboratory data.",
       "LABEL": "Enter code or search term",
       "SEARCHBAR": "Search for term or terminology code",
       "SEARCH_BUTTON": "Search",
@@ -358,7 +359,8 @@
         "ADDED_TO_COHORT": "Criteria added to cohort selection",
         "ADDED_TO_STAGE": "Criterion was selected ",
         "REMOVED_FROM_STAGE": "Criterion was removed"
-      }
+      },
+      "TOOLTIP_TITLE": "Search filter"
     }
   },
   "INFORMATION": {
@@ -454,6 +456,7 @@
       "AVAILABILITY": "Availability",
       "CONTEXT": "Context",
       "KDS_MODULE": "CDS Modules",
+      "NO_FILTER_SELECTED": "No search filter selected",
       "TERMINOLOGY": "Terminology"
     },
     "HEADER": {
