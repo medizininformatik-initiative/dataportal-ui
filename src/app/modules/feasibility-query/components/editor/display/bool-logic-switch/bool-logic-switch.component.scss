@@ -11,12 +11,6 @@
   user-select: none;
   position: relative;
   box-sizing: border-box;
-
-  &.is-inner {
-    position: relative;
-    top: -0.8em;
-    left: 10px;
-  }
 }
 
 .switch-label {
