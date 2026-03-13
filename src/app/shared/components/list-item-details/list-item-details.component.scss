@@ -1,26 +1,37 @@
-/* ── Tab group ──────────────────────────────────────────────── */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
 .details-tab-group {
   width: 100%;
   height: 100%;
 }
 
-/* ── Tab body content area ──────────────────────────────────── */
 .tab-content {
   padding: 16px 0;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
 }
 
-/* ── Item title ─────────────────────────────────────────────── */
 .original-item {
   font-size: 16px;
   font-weight: 500;
   padding-bottom: 12px;
 }
 
-/* ── Detail row (label + content) ───────────────────────────── */
 .detail-row {
   width: 100%;
-  padding: 10px 0;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  height: 60%;
 }
 
 .detail-row.divider {
@@ -34,22 +45,30 @@
   font-size: 12px;
   line-height: 16px;
   color: var(--color-text-primary);
-  min-width: 180px;
-  max-width: 180px;
+  min-width: 190px;
+  max-width: 190px;
   padding-right: 16px;
   padding-top: 2px;
 }
 
 .detail-value {
-  flex: 1;
-  overflow: hidden;
+  min-width: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ── Translation row ──────────────────────────────────────────── */
 .translation-entry {
   margin-bottom: 6px;
   font-size: 14px;
   gap: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 /* Fix flag icon size in translation row */
