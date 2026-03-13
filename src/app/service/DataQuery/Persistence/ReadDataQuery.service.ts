@@ -1,9 +1,10 @@
+import { CheckAndUpgradeCCDLService } from '../../CheckAndUpgradeCCDL.service';
 import { CRTDL2UIModelService } from '../../Translator/CRTDL/CRTDL2UIModel.service';
 import { CRTDLValidationService } from '../../Validation/CRTDLValidation.service';
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service';
-import { map, Observable, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
+import { map, Observable, switchMap } from 'rxjs';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData';
 import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQueryListItem';
@@ -18,7 +19,8 @@ export class ReadDataQueryService {
   constructor(
     private dataQueryApiService: DataQueryApiService,
     private crtdl2UIModelService: CRTDL2UIModelService,
-    private validationService: CRTDLValidationService
+    private validationService: CRTDLValidationService,
+    private checkAndUpgradeCCDLService: CheckAndUpgradeCCDLService
   ) {}
 
   public readSavedQueries(): Observable<InterfaceSavedQueryTile[]> {
@@ -46,8 +48,12 @@ export class ReadDataQueryService {
     return SavedFeasibilityQueryAdapter.adapt(savedDataQueryListItem);
   }
 
+  /**
+   * @todo //call check and upgrade
+   */
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
+      map((data) => this.checkAndUpgradeCCDLService.checkAndUpgradeCCDLAsSavedData(data.content)),
       switchMap((data: SavedDataQueryData) => {
         TypeAssertion.assertSavedDataQueryData(data);
         return this.transformDataQuery(data);
