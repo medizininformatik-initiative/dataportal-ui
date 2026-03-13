@@ -492,8 +492,8 @@ export class TypeGuard {
       TypeGuard.isObject(structuredQueryData) &&
       TypeGuard.isString(structuredQueryData.version) &&
       TypeGuard.isOptionalString(structuredQueryData.display) &&
-      TypeGuard.isInclusionOrExclusionCriteria(structuredQueryData.inclusionCriteria) &&
-      TypeGuard.isInclusionOrExclusionCriteria(structuredQueryData.exclusionCriteria)
+      TypeGuard.isInclusionCriteria(structuredQueryData.inclusionCriteria) &&
+      TypeGuard.isExclusionCriteria(structuredQueryData.exclusionCriteria)
     );
   }
 
@@ -507,8 +507,24 @@ export class TypeGuard {
    * @param val - The value to check.
    * @returns boolean
    */
-  public static isInclusionOrExclusionCriteria(val: unknown): boolean {
+  public static isExclusionCriteria(val: unknown): boolean {
     return TypeGuard.isOptionalArray(val, (criteria) =>
+      TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData)
+    );
+  }
+
+  /**
+   * Checks if the given value is a valid inclusionCriteria array.
+   * @param val
+   * @returns boolean
+   */
+  /**
+   * Checks if the given value is a valid inclusion or exclusion criteria array.
+   * @param val - The value to check.
+   * @returns boolean
+   */
+  public static isInclusionCriteria(val: unknown): boolean {
+    return TypeGuard.isArray(val, (criteria) =>
       TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData)
     );
   }
