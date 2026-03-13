@@ -1,4 +1,4 @@
-<mat-nav-list fxLayout="column" fxFill>
+<mat-nav-list fxLayout="column" fxFill [ngClass]="{ collapsed: !isSideMenuExpanded }">
   <ng-container *ngFor="let navItem of mainNavItems">
     <a
       class="num-mat-list-item"
@@ -7,6 +7,8 @@
       [disableRipple]="true"
       [routerLink]="navItem.routeTo"
       (click)="menuItemClicked($event, navItem)"
+      [matTooltip]="!isSideMenuExpanded ? (navItem.translationKey | translate) : null"
+      matTooltipPosition="right"
     >
       <fa-icon *ngIf="navItem.icon" size="lg" [fixedWidth]="true" [icon]="navItem.icon"></fa-icon>
       <mat-icon *ngIf="navItem.svgIcon" class="nav-svg-icon" [svgIcon]="navItem.svgIcon"></mat-icon>
