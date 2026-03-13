@@ -1,8 +1,3 @@
-:host {
-  display: inline-flex;
-  flex-shrink: 0;
-}
-
 .checkbox {
   display: inline-block;
   width: 15px;
@@ -14,34 +9,47 @@
   position: relative;
   flex-shrink: 0;
   box-sizing: border-box;
-  transition: border-color 0.15s ease;
 
-  // Checkmark via pseudo-element — accent colour on white background
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px, rgba(0, 0, 0, 0.06) 0px 1px 1px;
+
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+
   &::after {
     content: '';
     position: absolute;
-    display: none;
+
+    /* improved alignment */
     left: 4px;
-    top: 1px;
-    width: 5px;
-    height: 9px;
-    border: 2px solid var(--color-accent);
-    border-top: none;
-    border-left: none;
-    transform: rotate(45deg);
+    top: 2px;
+
+    width: 4px;
+    height: 8px;
+
+    /* thicker + cleaner */
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+
+    transform: rotate(45deg) scale(0.8);
+    opacity: 0;
+
+    transition: transform 0.12s ease-out, opacity 0.12s ease-out;
   }
 
   &.checked {
-    background-color: #ffffff;
-    border-color: var(--color-accent);
+    background-color: #9bb823;
+    border-color: #9bb823;
+
+    box-shadow: rgba(155, 184, 35, 0.35) 0px 2px 4px, rgba(0, 0, 0, 0.06) 0px 1px 2px;
 
     &::after {
-      display: block;
+      opacity: 1;
+      transform: rotate(45deg) scale(1);
     }
   }
 
   &.disabled {
     opacity: 0.4;
     cursor: not-allowed;
+    box-shadow: none;
   }
 }

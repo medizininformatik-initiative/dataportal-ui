@@ -9,7 +9,11 @@
   >
   </fa-icon>
   <num-checkbox
-    matTooltip="{{ 'SHARED_COMPONENTS.TABLE.SELECT_CHECKBOX' | translate }}"
+    [matTooltip]="
+      !cell.isDisabled
+        ? ('SHARED_COMPONENTS.TABLE.NOT_SELECTABLE' | translate)
+        : ('SHARED_COMPONENTS.TABLE.SELECT_CHECKBOX' | translate)
+    "
     [disabled]="!cell.isDisabled"
     [checked]="cell.isSelected"
     (checkedChange)="onCheckboxChange()"
