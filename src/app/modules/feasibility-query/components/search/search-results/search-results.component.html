@@ -2,7 +2,7 @@
   <mat-drawer #drawer position="end" mode="side" class="details-drawer">
     <ng-container *ngIf="listItems">
       <div class="details-wrapper">
-        <div class="button-align-right padding-top-2">
+        <div class="button-align-right">
           <button
             [matTooltip]="'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate"
             (click)="closeSidenav()"
@@ -12,11 +12,13 @@
             <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
           </button>
         </div>
-        <num-list-item-details
-          class="details-panel"
-          [listItemDetails$]="selectedDetails$"
-          (selectedRelative)="selectedRelative.emit($event)"
-        ></num-list-item-details>
+        <div class="details-container">
+          <num-list-item-details
+            class="details-panel"
+            [listItemDetails$]="selectedDetails$"
+            (selectedRelative)="selectedRelative.emit($event)"
+          ></num-list-item-details>
+        </div>
       </div>
     </ng-container>
   </mat-drawer>

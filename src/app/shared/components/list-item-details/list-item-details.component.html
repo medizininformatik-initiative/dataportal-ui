@@ -5,7 +5,7 @@
         {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.DETAILS' | translate }}
       </ng-template>
 
-      <div class="tab-content" fxLayout="column">
+      <div class="tab-content">
         <div class="original-item">
           {{ listItemDetails.getDisplay() | displayTranslation }}
         </div>
@@ -13,18 +13,14 @@
         <!-- Automatic Translations -->
         <div
           *ngIf="listItemDetails.getDisplay()?.getTranslations()?.length"
-          fxLayout="row"
-          fxLayoutAlign="start start"
           class="detail-row divider"
         >
           <div class="detail-label">
             {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.TRANSLATIONS' | translate }}
           </div>
-          <div class="detail-value" fxLayout="column">
+          <div class="detail-value">
             <div
               *ngFor="let t of listItemDetails.getDisplay().getTranslations()"
-              fxLayout="row"
-              fxLayoutAlign="start center"
               class="translation-entry"
             >
               <span
@@ -40,7 +36,7 @@
         </div>
 
         <!-- Parents -->
-        <div fxLayout="row" fxLayoutAlign="start start" class="detail-row divider">
+        <div class="detail-row divider">
           <div class="detail-label">
             {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
           </div>
@@ -57,7 +53,7 @@
         </div>
 
         <!-- Children -->
-        <div fxLayout="row" fxLayoutAlign="start start" class="detail-row">
+        <div class="detail-row">
           <div class="detail-label">
             {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
           </div>
