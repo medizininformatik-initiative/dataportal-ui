@@ -3,7 +3,9 @@
     fxLayout="row"
     fxLayoutAlign="center center"
     [matTooltip]="
-      selectedValues.length === 0 ? ('SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED' | translate) : ''
+      selectedValues?.length === 0
+        ? ('SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED' | translate)
+        : ''
     "
   >
     <mat-select

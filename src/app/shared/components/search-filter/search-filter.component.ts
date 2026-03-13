@@ -46,7 +46,7 @@ export class SearchFilterComponent implements OnInit {
   public getTooltipText(): string {
     if (
       !this.selectedValues ||
-      (Array.isArray(this.selectedValues) && this.selectedValues.length === 0)
+      (Array.isArray(this.selectedValues) && this.selectedValues?.length === 0)
     ) {
       return 'SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED';
     }
