@@ -1,9 +1,19 @@
 .header-description {
   width: 100%;
-  font-size: 16px;
-  font-weight: 500;
-  color: rgb(90, 122, 175);
-  font-family: 'Titillium Web', sans-serif;
-  text-align: justify;
-  line-height: 24px; // already multiple of 8 (3 × 8)
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: var(--border-color);
+  overflow: hidden;
+  max-height: 200px;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+
+  &.hidden {
+    max-height: 0;
+    opacity: 0;
+  }
 }

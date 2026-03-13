@@ -1,7 +1,9 @@
 <num-modal-window [displaySaveButtons]="false">
   <div>
     <div fxLayout="row" fxLayoutAlign="space-between">
-      <num-header>{{ 'FEASIBILITY.RESULT.SAVE_DIALOG.HEADER' | translate }}</num-header>
+      <num-header [showToggle]="true">{{
+        'FEASIBILITY.RESULT.SAVE_DIALOG.HEADER' | translate
+      }}</num-header>
       <fa-icon size="2x" class="icon-close" icon="window-close" (click)="doClose()"></fa-icon>
     </div>
     <num-header-description>

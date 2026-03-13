@@ -19,7 +19,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(90, 121, 175, 0.1); /* Same lighter blue for both states */
+  background-color: var(--color-accent-bg);
   -webkit-transition: 0.4s;
   transition: 0.4s;
   border-radius: 20.4px; /* Round the corners */
@@ -32,7 +32,7 @@
   width: 15.6px; /* Width of the knob */
   right: 2.4px; /* Default position for unchecked state */
   bottom: 2.4px; /* Position the knob */
-  background-color: rgba(90, 121, 175, 1); /* Dark blue for the knob */
+  background-color: var(--color-accent);
   border-radius: 50%; /* Make it round */
   -webkit-transition: 0.4s;
   transition: 0.4s;

@@ -21,8 +21,7 @@ export class DownloadCRTDLService extends AbstractDownloadService {
   /**
    * Downloads the CRTDL as a JSON file.
    * Creates the CRTDL, formats it as JSON, and triggers a file download.
-   * @param [filename] - Optional custom filename (without extension)
-   * @param [displaySnackbar] - Whether to display a snackbar notification
+   * @param filename - Optional custom filename (without extension)
    */
   public download(filename?: string): void {
     this.createCRTDLService

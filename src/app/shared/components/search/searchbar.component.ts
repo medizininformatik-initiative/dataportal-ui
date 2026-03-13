@@ -1,7 +1,6 @@
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
-import { debounceTime, filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
 import {
   Component,
   EventEmitter,
@@ -20,7 +19,7 @@ import {
 })
 export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
   private readonly debounceTime = 300;
-  searchForm: UntypedFormGroup;
+  private inputSubject = new Subject<string>();
   constructor(private activeSearchTermService: ActiveSearchTermService) {}
 
   private subscriptions = new Subscription();
@@ -32,27 +31,27 @@ export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() icon: string;
 
   showWarning = false;
-
+  inputValue = '';
   currentText = '';
 
   ngOnInit(): void {
-    this.searchForm = new UntypedFormGroup({
-      query: new UntypedFormControl(this.searchText || ''),
-    });
+    this.inputValue = this.searchText || '';
 
     this.subscriptions.add(
-      this.searchForm
-        .get('query')
-        .valueChanges.pipe(debounceTime(this.debounceTime))
-        .subscribe((value) => {
-          this.currentText = value;
-          this.activeSearchTermService.setActiveSearchTerm(value);
-          this.showWarning = value.length > 0 && value.length < this.minLength;
-          if (value.length >= this.minLength || value.length === 0) {
-            this.searchTextChange.emit(value);
-          }
-        })
+      this.inputSubject.pipe(debounceTime(this.debounceTime)).subscribe((value) => {
+        this.currentText = value;
+        this.activeSearchTermService.setActiveSearchTerm(value);
+        this.showWarning = value.length > 0 && value.length < this.minLength;
+        if (value.length >= this.minLength || value.length === 0) {
+          this.searchTextChange.emit(value);
+        }
+      })
     );
+  }
+
+  onInput(event: Event): void {
+    this.inputValue = (event.target as HTMLInputElement).value;
+    this.inputSubject.next(this.inputValue);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -79,11 +78,8 @@ export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   patchInput(value: string): void {
-    if (this.searchForm.value.query !== undefined) {
-      this.searchForm.patchValue({
-        query: value,
-      });
-    }
+    this.inputValue = value;
+    this.inputSubject.next(value);
   }
 
   clearInput(): void {

@@ -1,7 +1,7 @@
 <div class="container">
   <div>
     <div class="header-container">
-      <num-header>{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
+      <num-header [showToggle]="true">{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
       <div class="margin-left-auto">
         <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
       </div>
@@ -14,7 +14,9 @@
   <num-criteria-search-bar
     [searchText$]="searchText$"
     [searchText]="searchText"
+    [resetFilterEnabled$]="resetFilterEnabled$"
     (searchChanged)="startSearch($event)"
+    (filterReset)="resetFilter()"
   ></num-criteria-search-bar>
 
   <num-criteria-search-filter-bar

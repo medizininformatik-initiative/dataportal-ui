@@ -1,20 +1,18 @@
 .toggle-container {
   display: flex;
   align-items: center;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-body);
   background-color: white;
   width: 100px;
   border-radius: 2px;
 }
 
-/* Style for selected label */
 .selected-label {
   font-size: 18px;
-  color: #4a78c2; /* Blue color for selected text */
+  color: var(--color-accent);
 }
 
-/* Style for unselected label */
 .unselected-label {
   font-size: 18px;
-  color: #bfbfbf; /* Gray color for unselected text */
+  color: var(--border-color);
 }

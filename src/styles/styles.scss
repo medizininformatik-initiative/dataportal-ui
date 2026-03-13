@@ -4,8 +4,19 @@
 @import './themes';
 @import './custom-material';
 @import './general-styles/_margin-bottom-classes';
+@import './general-styles/_ui-classes';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import '/node_modules/flag-icons/css/flag-icons.min.css';
+
+/* Override Material's Roboto default with our global font */
+.mat-typography,
+.mat-typography p,
+.mat-typography input,
+.mat-typography button,
+.mat-typography select,
+.mat-typography textarea {
+  font-family: 'Titillium Web', sans-serif;
+}
 
 //@include mat-core();
 @include mat.core();
@@ -13,6 +24,71 @@
 .FDPGTheme {
   @include mat.core-theme($num-portal-webapp-theme-fdpg);
   @include custom-material_themed($num-portal-webapp-theme-fdpg);
+}
+
+/* ── Design tokens ─────────────────────────────────────────────
+   Typography
+   --font-body           : body / UI text font stack (Open Sans)
+   --font-size-md        : standard body text size
+   --font-size-sm        : secondary / label text size
+   --line-height-md      : line-height for font-size-md
+   --line-height-sm      : line-height for font-size-sm
+
+   Text colours
+   --color-text-primary  : main body text
+   --color-text-secondary: muted / meta text
+
+   Brand accent
+   --color-accent        : primary blue
+   --color-accent-bg     : tinted card background (10% opacity)
+   --color-accent-border : pill / light border (20% opacity)
+
+   Borders & Radius
+   --border-color        : default rule / divider colour
+   --border-radius-card  : standard card corner radius
+
+   Transitions
+   --transition-shadow   : hover shadow transition shorthand
+
+   Shadow tokens
+   --shadow-card         : resting elevation for cards / raised rows
+   --shadow-card-hover   : elevated state on hover
+   --shadow-card-active  : active/tab elevation (upward shadow)
+   --shadow-panel        : structural panel separation (sidenav, editor)
+   --shadow-menu         : floating menus / dropdowns
+   --shadow-modal        : modals / dialogs
+──────────────────────────────────────────────────────────────── */
+:root {
+  /* Typography */
+  --font-body: 'Open Sans', sans-serif;
+  --font-size-md: 14px;
+  --font-size-sm: 12px;
+  --line-height-md: 19px;
+  --line-height-sm: 16px;
+
+  /* Text colours */
+  --color-text-primary: #000000;
+  --color-text-secondary: #6a7483;
+
+  /* Brand accent */
+  --color-accent: #5a79af;
+  --color-accent-bg: rgba(90, 121, 175, 0.1);
+  --color-accent-border: rgba(90, 121, 175, 0.2);
+
+  /* Borders & radius */
+  --border-color: #c5cacf;
+  --border-radius-card: 5px;
+
+  /* Transitions */
+  --transition-shadow: box-shadow 0.2s ease;
+
+  /* Shadows */
+  --shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  --shadow-card-hover: rgba(0, 0, 0, 0.15) 0px 8px 16px -2px, rgba(0, 0, 0, 0.1) 0px 4px 8px -2px;
+  --shadow-card-active: rgba(0, 0, 0, 0.1) 0px -3px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  --shadow-panel: -4px 0 20px rgba(0, 0, 0, 0.1);
+  --shadow-menu: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 html,
@@ -23,8 +99,15 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
 }
 
 .pointer {
@@ -110,3 +193,26 @@ $spacing-scale: (
 // Generate percentage classes
 @include generate-directional-spacing(padding);
 @include generate-directional-spacing(margin);
+
+// Global scrollbar
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f2f3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5cacf;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8aeb5;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c5cacf #f1f2f3;
+}

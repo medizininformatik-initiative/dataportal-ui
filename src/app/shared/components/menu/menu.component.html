@@ -1,11 +1,25 @@
-<num-button data-cy="openMenu" type="blue" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
-  {{ 'SHARED_COMPONENTS.MENU.OPTIONS' | translate }}
-</num-button>
+<button
+  [matTooltip]="'SHARED_COMPONENTS.MENU.OPTIONS' | translate"
+  class="num-button blue icon"
+  data-cy="openMenu"
+  type="button"
+  #menuTrigger="matMenuTrigger"
+  [matMenuTriggerFor]="menu"
+>
+  <fa-icon size="lg" [icon]="'cog'"></fa-icon>
+</button>
 
 <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+  <div class="options-header" (click)="$event.stopPropagation()">
+    {{ 'SHARED_COMPONENTS.MENU.OPTIONS' | translate }}
+  </div>
   <div *ngFor="let item of menuItems; let isLast = last" data-cy="{{ item.label | translate }}">
     <button
-      [ngClass]="{ divider: !isLast, 'last-item': isLast }"
+      [ngClass]="{
+        divider: !isLast,
+        'last-item': isLast,
+        'menu-item--primary': item.type === 'primary'
+      }"
       mat-menu-item
       [disabled]="item.disabled"
       (click)="item.action(id)"

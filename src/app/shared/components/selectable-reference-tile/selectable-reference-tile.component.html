@@ -1,9 +1,9 @@
 <div class="link-field-container">
   <div class="link-info">
-    <mat-checkbox
+    <num-checkbox
       [checked]="possibleReference.isSelected"
-      (change)="checkboxSelected(possibleReference)"
-    ></mat-checkbox>
+      (checkedChange)="checkboxSelected(possibleReference)"
+    ></num-checkbox>
     {{ label }} ( {{ display | displayTranslation }})
   </div>
 </div>

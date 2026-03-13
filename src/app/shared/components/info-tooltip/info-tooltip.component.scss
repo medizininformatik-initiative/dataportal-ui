@@ -1,0 +1,65 @@
+:host {
+  display: block;
+}
+
+/* ── Tooltip card ───────────────────────────────────────────── */
+.tooltip-card {
+  box-sizing: border-box;
+  width: 294px;
+  min-height: 109px;
+  padding: 14px 20px;
+
+  background: #ffffff;
+  border: 1px solid #c3c7cd;
+  border-radius: 5px;
+  box-shadow: var(--shadow-menu);
+}
+
+/* ── Card header row ────────────────────────────────────────── */
+.card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-family: 'Titillium Web', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  color: #000000;
+  flex: 1;
+  padding-right: 8px;
+}
+
+.info-badge {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #5f6266;
+  border: 1px solid #5f6266;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  color: #ffffff;
+}
+
+/* ── Card body text ─────────────────────────────────────────── */
+.card-body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 17px;
+  color: #5f6266;
+}

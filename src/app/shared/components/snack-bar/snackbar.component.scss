@@ -20,22 +20,6 @@
   animation: slideInDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 9999;
 
-  // Subtle gradient overlay
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0.05) 100%
-    );
-    pointer-events: none;
-  }
-
   // Hover effect - adjusted for fixed positioning
   &:hover {
     transform: translateX(-50%) translateY(-2px);
@@ -43,40 +27,16 @@
   }
 }
 
-// Error snackbar with modern red gradient
 .error-snackbar {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+  background: #ff5252;
   color: white;
   border-left: 4px solid #ff3d3d;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, #ff3d3d 0%, #ff6b6b 100%);
-    border-radius: 2px 0 0 2px;
-  }
 }
 
-// Success snackbar with modern green gradient
 .info-snackbar {
-  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+  background: #9bb823;
   color: white;
-  border-left: 4px solid #43a047;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, #43a047 0%, #4caf50 100%);
-    border-radius: 2px 0 0 2px;
-  }
+  border-left: 4px solid #8aa61f;
 }
 
 // Modern message styling

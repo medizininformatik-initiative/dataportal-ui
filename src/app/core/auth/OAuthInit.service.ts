@@ -27,7 +27,7 @@ export class OAuthInitService {
   private startOAuthLogin(): Observable<boolean> {
     const init$ = from(
       this.oauthService.loadDiscoveryDocumentAndLogin().then((loggedIn) => {
-        if (loggedIn && this.oauthService.hasValidAccessToken()) {
+        if (this.oauthService.hasValidAccessToken()) {
           this.oauthService.setupAutomaticSilentRefresh();
           return true;
         } else {

@@ -14,16 +14,29 @@
     }
 
     .mdc-line-ripple {
-      display: none; /* Hide the ripple effect */
+      display: none;
       border: 0px;
     }
   }
 
-  ::ng-deep .cdk-overlay-container .cdk-overlay-pane .example-panel {
-    background-color: #fff;
-    width: 55%;
-    position: fixed;
-    left: 19%; /* Adjust as needed */
+  /* Ensure the arrow wrapper is visible and sized */
+  .mat-mdc-select-arrow-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+  }
+
+  .mat-mdc-select-arrow {
+    color: #5f6266 !important;
+    border-left: 5px solid transparent !important;
+    border-right: 5px solid transparent !important;
+    border-top: 5px solid currentColor !important;
+    width: 0 !important;
+    height: 0 !important;
+
+    svg {
+      display: none !important;
+    }
   }
 
   .option-layout {
@@ -33,4 +46,31 @@
   .margin-right-10 {
     margin-right: 10px;
   }
+}
+
+/* Language dropdown panel — must be at root level (overlay appended to body) */
+::ng-deep .cdk-overlay-container .cdk-overlay-pane .language-panel {
+  background-color: #ffffff;
+  min-width: 140px !important;
+  width: fit-content !important;
+  box-sizing: border-box;
+}
+
+::ng-deep .cdk-overlay-container .cdk-overlay-pane .language-panel .mat-mdc-select-panel {
+  background: #ffffff;
+  min-width: 140px !important;
+  padding: 4px 0;
+}
+
+::ng-deep .cdk-overlay-container .cdk-overlay-pane .language-panel .mat-mdc-option {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+}
+
+::ng-deep .cdk-overlay-container .cdk-overlay-pane .language-panel .mat-mdc-option .fi {
+  flex-shrink: 0;
+  width: 1.333em;
+  height: 1em;
+  margin-right: 8px;
 }

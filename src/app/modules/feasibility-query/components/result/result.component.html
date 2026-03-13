@@ -1,16 +1,16 @@
 <div class="container">
   <div>
-    <num-header *ngIf="!resultLoaded">{{
+    <num-header *ngIf="!resultLoaded" [showToggle]="true">{{
       'FEASIBILITY.RESULT.HEADER.RESULT_NOT_LOADED' | translate
     }}</num-header>
-    <num-header *ngIf="resultLoaded">{{
+    <num-header *ngIf="resultLoaded" [showToggle]="true">{{
       'FEASIBILITY.RESULT.HEADER.RESULT_LOADED' | translate
     }}</num-header>
     <num-header-description>
       {{ 'FEASIBILITY.RESULT.HEADER_DESCRIPTION' | translate }}
     </num-header-description>
   </div>
-  <div>
+  <div style="height: 24%">
     <num-simple-result (resultLoaded)="setResultLoaded($event)"></num-simple-result>
   </div>
   <div class="feasibility-container">

@@ -1,5 +1,11 @@
-<mat-form-field appearance="fill" class="padding-right-3">
-  <div fxLayout="row" fxLayoutAlign="center center">
+<mat-form-field appearance="fill">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    [matTooltip]="
+      selectedValues.length === 0 ? ('SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED' | translate) : ''
+    "
+  >
     <mat-select
       disableOptionCentering
       (selectionChange)="onSelectionChange()"
@@ -8,6 +14,13 @@
       [(value)]="selectedValues"
       [multiple]="multiSelect"
     >
+      <mat-select-trigger
+        [matTooltip]="getCleanValue(selectedValues)"
+        matTooltipPosition="below"
+        matTooltipShowDelay="300"
+      >
+        {{ getCleanValue(selectedValues) }}
+      </mat-select-trigger>
       <mat-option *ngFor="let value of filter.data" [value]="value.label">
         {{ value.display | displayTranslation }} ({{ value.count }})
       </mat-option>

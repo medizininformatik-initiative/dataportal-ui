@@ -2,8 +2,8 @@ import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/Abst
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ConceptFilterChipService } from './ConceptFilterChipService.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData';
 import { Injectable } from '@angular/core';
-import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { QuantityFilterChipService } from './QuantityFilterChipService.service';
 import { TerminologyCodeChipService } from './TerminologyCodeChip.service';
 import { TimeRestrictionChipService } from './TimeRestrictionChip.service';
@@ -12,10 +12,10 @@ import { TimeRestrictionChipService } from './TimeRestrictionChip.service';
   providedIn: 'root',
 })
 export class CriterionFilterChipService {
-  private filterChipsSubject: BehaviorSubject<InterfaceFilterChip[]> = new BehaviorSubject<
-    InterfaceFilterChip[]
+  private filterChipsSubject: BehaviorSubject<FilterChipData[]> = new BehaviorSubject<
+    FilterChipData[]
   >([]);
-  filterChips$: Observable<InterfaceFilterChip[]> = this.filterChipsSubject.asObservable();
+  filterChips$: Observable<FilterChipData[]> = this.filterChipsSubject.asObservable();
 
   constructor(
     private conceptFilterChipService: ConceptFilterChipService,
@@ -26,7 +26,7 @@ export class CriterionFilterChipService {
 
   public generateFilterChipsFromCriterion(
     criterion: AbstractCriterion
-  ): Observable<InterfaceFilterChip[]> {
+  ): Observable<FilterChipData[]> {
     this.filterChipsSubject.next([]);
 
     const conceptChips = this.generateConceptChips(criterion);
@@ -43,7 +43,7 @@ export class CriterionFilterChipService {
     return this.filterChipsSubject.asObservable();
   }
 
-  private generateConceptChips(criterion: AbstractCriterion): InterfaceFilterChip[] {
+  private generateConceptChips(criterion: AbstractCriterion): FilterChipData[] {
     const attributeFilters = criterion.getAttributeFilters();
     const valueFilters = criterion.getValueFilters();
 
@@ -55,7 +55,7 @@ export class CriterionFilterChipService {
     return [...attributeChips, ...valueChips];
   }
 
-  private generateQuantityChips(criterion: AbstractCriterion): InterfaceFilterChip[] {
+  private generateQuantityChips(criterion: AbstractCriterion): FilterChipData[] {
     const attributeFilters = criterion.getAttributeFilters();
     const valueFilters = criterion.getValueFilters();
     if (attributeFilters.length > 0) {
@@ -73,7 +73,7 @@ export class CriterionFilterChipService {
     }
   }
 
-  private generateTermcodeChips(criterion: Criterion): InterfaceFilterChip {
+  private generateTermcodeChips(criterion: Criterion): FilterChipData {
     return this.terminologyCodeChipService.generateTermcodeChipsFromCriterion(criterion);
   }
 }

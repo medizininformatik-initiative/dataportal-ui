@@ -1,5 +1,10 @@
-<div class="padding-2em">
-  <ng-content></ng-content>
+<div class="modal-content">
+  <button class="close-btn" (click)="doDiscard()" aria-label="Close">
+    <fa-icon icon="times"></fa-icon>
+  </button>
+  <num-header>
+    {{ 'SHARED_COMPONENTS.SAVE_MODAL.HEADER' | translate }}
+  </num-header>
   <div class="save-query-box">
     <input
       class="field-input"
@@ -21,10 +26,6 @@
       class="button-save"
     >
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.SAVE' | translate }}
-    </num-button>
-
-    <num-button type="blue" (click)="doDiscard()">
-      {{ 'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate }}
     </num-button>
   </div>
 </div>

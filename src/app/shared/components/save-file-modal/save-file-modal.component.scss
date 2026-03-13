@@ -1,22 +1,95 @@
-.button-save {
-  margin: 0 1em 0 2em;
+.modal-content {
+  position: relative;
+  padding: 40px 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 534px;
+  box-sizing: border-box;
 }
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #c5cacf;
+  transition: color 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    color: #6a7483;
+    background: rgba(197, 202, 207, 0.15);
+  }
+
+  fa-icon {
+    font-size: 18px;
+  }
+}
+
 .save-query-box {
-  min-width: 30em;
-  margin-bottom: 5em;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-textarea {
-  box-sizing: content-box;
+
+.field-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 17px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000;
+  background: #ffffff;
+  border: 1px solid #c5cacf;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+
+  &::placeholder {
+    color: #c5cacf;
+  }
+
+  &:focus {
+    border-color: #5a79af;
+  }
 }
-.input-field {
-  width: 90%;
-  margin: 0.5em 0;
+
+.field-textarea {
+  height: auto;
+  min-height: 80px;
+  padding: 10px 17px;
+  resize: vertical;
 }
+
+.save-dialog-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
+
 h2 {
-  padding: 5px !important;
+  margin: 0 0 8px 0;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #c5cacf;
 }
-.padding-2em {
-  padding: 2em;
-}
-.checkbox-box {
+
+.button-save {
+  margin: 0;
 }

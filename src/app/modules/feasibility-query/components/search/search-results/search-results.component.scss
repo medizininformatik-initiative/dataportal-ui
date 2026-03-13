@@ -6,24 +6,21 @@
 
 .details-drawer {
   width: 50%;
+  padding-left: 24px;
 }
 
 .details-wrapper {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.cancel-button {
-  background-color: white;
-  height: 4%;
-  align-self: flex-end;
-  border: 0px;
-  text-decoration: underline #5170a8;
-}
-
-.cancel-button:hover {
-  transform: translateY(-3px);
-  color: #5288b7;
+.button-align-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 8px 0;
 }
 
 .close-icon {
@@ -32,43 +29,18 @@
   padding-left: 10px;
 }
 
-::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-}
-
-/* Scrollbar design */
-::-webkit-scrollbar {
-  width: 20px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 0px;
-  box-shadow: none;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #c5cacf;
-}
-
-::-webkit-scrollbar-track-piece {
-  color: red;
-}
-
 .no-results-box {
   height: 50%;
   width: 100%;
   flex: 1;
 }
 
-.details-panel {
-  height: 96%;
-  padding-left: 2rem;
-}
-
 ::ng-deep .mat-drawer-inner-container {
   overflow: hidden;
   height: 100%;
+}
+
+.details-container {
+  flex: 1;
+  height: 90%;
 }

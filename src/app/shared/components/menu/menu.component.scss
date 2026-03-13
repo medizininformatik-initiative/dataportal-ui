@@ -1,48 +1,84 @@
-.divider {
-  border: 0;
-  border-bottom: 1px solid #0000001f;
-  width: 100%;
-  align-content: center;
+/* ── Panel ─────────────────────────────────────────── */
+::ng-deep .mat-mdc-menu-panel {
+  min-width: 214px !important;
+  max-width: 214px !important;
+  background: #ffffff;
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--border-radius-card) !important;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
 }
 
+/* ── "Optionen" header ─────────────────────────────── */
+.options-header {
+  padding: 0 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-accent-border);
+  cursor: default;
+  user-select: none;
+}
+
+/* ── Shared item typography ────────────────────────── */
+::ng-deep .mat-mdc-menu-item {
+  font-family: var(--font-body) !important;
+  font-size: var(--font-size-md) !important;
+  font-weight: 400 !important;
+  height: 40px;
+  min-height: 40px;
+  color: var(--color-text-secondary) !important;
+}
+
+/* ── Divider lines (between items) ────────────────── */
+.divider {
+  border: 0;
+  border-bottom: 1px solid var(--color-accent-border);
+  width: 100%;
+}
+
+/* ── Icon ──────────────────────────────────────────── */
 .icon-color {
-  color: rgba(197, 202, 207, 1);
+  color: var(--border-color);
   padding-right: 10px;
+  transition: color 0.15s ease;
 }
 
 .divider:hover,
-.divider:hover .icon-color {
-  color: rgba(90, 121, 175, 1);
-  /* Hover color */
-}
-
+.divider:hover .icon-color,
 .last-item:hover,
 .last-item:hover .icon-color {
-  color: rgba(90, 121, 175, 1);
-  /* Hover color */
+  color: var(--color-accent);
 }
 
-.menu-icon {
-  color: rgba(90, 121, 175, 1);
+/* ── Primary item (e.g. delete) ────────────────────── */
+.menu-item--primary {
+  color: var(--color-accent) !important;
+  font-weight: 500 !important;
 }
 
-.menu-icon:hover {
-  cursor: pointer;
+.menu-item--primary .icon-color {
+  color: var(--color-accent);
 }
 
-::ng-deep.mat-mdc-menu-panel {
-  background-color: #fff;
-  width: 1000px;
+.menu-item--primary:hover .icon-color {
+  color: var(--num-color--accent-400, #345396);
 }
 
-.options {
-  font-weight: 500;
-  pointer-events: none;
-  cursor: default; /* Prevents pointer icon */
-  color: rgba(0, 0, 0, 0.87); /* Ensure consistent text color */
-  padding: 8px 16px; /* Matches mat-menu-item padding */
+/* ── Disabled items ────────────────────────────────── */
+::ng-deep .mat-mdc-menu-item[disabled] {
+  color: var(--border-color) !important;
 }
 
-.non-clickable:hover {
-  background: none; /* Prevent hover background */
+::ng-deep .mat-mdc-menu-item[disabled] .icon-color {
+  color: var(--border-color);
+}
+
+/* ── MDC list text full width ──────────────────────── */
+::ng-deep .mdc-list-item__primary-text {
+  width: 100%;
 }

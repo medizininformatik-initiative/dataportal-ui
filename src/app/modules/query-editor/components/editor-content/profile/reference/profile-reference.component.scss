@@ -33,3 +33,7 @@ mat-tab-group {
 ::ng-deep .mat-mdc-tab-body-content {
   height: 100%;
 }
+
+::ng-deep .mat-mdc-tab-label-container {
+  background-color: white;
+}

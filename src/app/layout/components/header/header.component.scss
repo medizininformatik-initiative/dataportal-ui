@@ -1,77 +1,97 @@
 /* Toolbar base */
 .toolbar {
   background: transparent;
-  font-size: 16px; // snapped from 14px → 16px for better visibility
-  margin: 0 0 16px 0; // 1em → 16px
+  font-size: 16px;
+  margin: 0 0 16px 0;
   display: flex;
   align-items: center;
 }
 
 /* Toolbar icons */
 .toolbar fa-icon {
-  padding-left: 16px; // 1em → 16px
+  padding-left: 16px;
+}
+
+/* Logo wrapper — matches expanded sidenav width so the border aligns */
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 320px;
+  min-width: 320px;
+  height: 100%;
+  flex-shrink: 0;
+  border-right: 2px solid #f1f2f3;
 }
 
 /* Theme/logo image */
 .FDPGTheme {
-  width: 208px; // snapped from 250px → closest 8-point friendly
-  max-width: 208px; // snapped from 210px
-  height: 104px; // snapped from 105px
+  width: 208px;
+  max-width: 208px;
+  height: 104px;
   object-fit: cover;
+  display: block;
 }
 
-/* Angular Material toolbar */
+/* Angular Material toolbar — two‑group flex row */
 .mat-toolbar {
-  height: 104px; // snapped from 105px
+  height: 104px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+  width: 95%;
 }
 
 .mat-toolbar-single-row {
   padding-left: 0 !important;
 }
 
-/* User button */
+/* Left group: logo + breadcrumbs */
+.header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+}
+
+/* Right group: language, user menu, portal link */
+.header-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 8px;
+  padding-right: 16px;
+}
+
+/* User/role button (active pill) */
 .user-button {
-  background-color: var(--num-color--primary-blue) !important;
-  border-radius: 20px; // optional, can keep for rounded pill shape
-  min-width: 104px; // snapped from 100px
-  color: white !important;
-  padding: 8px 16px; // consistent 8-point padding
-  font-size: 16px;
+  background-color: #5a79af !important;
+  border-radius: 19px;
+  min-width: 104px;
+  color: #ffffff !important;
+  padding: 8px 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
 }
 
-/* Margin utilities */
-.margin-right-20 {
-  margin-right: 16px; // snapped from 20px
+/* Breadcrumbs wrapper */
+.breadcrumbs-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  min-width: 0;
+  flex: 1 1 auto;
+  height: 100%;
 }
 
+/* Margin utility (kept for backward compat) */
 .margin-right {
-  margin-right: 16px; // snapped from 3% to 16px
-}
-
-/* Circle element */
-.circle {
-  color: var(--num-color--primary-blue);
-  margin-right: 16px; // snapped from 10%
-}
-
-/* MDC list text */
-::ng-deep .mdc-list-item__primary-text {
-  width: 100%;
-}
-
-/* Link-like span */
-span.link-like {
-  padding-top: 8px; // 0.3em → snapped to 8px
-  padding-left: 16px; // 1em → 16px
-  cursor: pointer;
-  color: var(--num-color--primary);
-  font-size: 16px; // medium mapped to 16px
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-span.link-like:hover {
-  text-decoration: underline;
-  color: #0056b3;
+  margin-right: 16px;
 }

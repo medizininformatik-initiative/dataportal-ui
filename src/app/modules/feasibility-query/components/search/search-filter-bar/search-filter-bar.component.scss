@@ -1,20 +1,7 @@
-:host {
-  display: block;
-  width: 100%;
-}
-
 .filter-container {
   display: flex;
   align-content: space-around;
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.filter-chips {
-  display: flex;
-}
-
-.filter-actions {
-  display: flex;
 }

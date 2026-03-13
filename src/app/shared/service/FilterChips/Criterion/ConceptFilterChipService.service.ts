@@ -3,8 +3,8 @@ import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/Attribut
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipConceptAdapter } from '../../../models/FilterChips/Adapter/FilterChipConceptAdapter';
 import { Injectable } from '@angular/core';
-import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +16,12 @@ export class ConceptFilterChipService {
    * Generates concept filter chips from an array of AttributeFilters.
    *
    * @param attributeFilters Array of AttributeFilter objects
-   * @returns Array of InterfaceFilterChip
+   * @returns Array of FilterChipData
    */
   public generateConceptChipsFromAttributeFilters(
     attributeFilters: AttributeFilter[]
-  ): InterfaceFilterChip[] {
-    const chips: InterfaceFilterChip[] = [];
+  ): FilterChipData[] {
+    const chips: FilterChipData[] = [];
 
     attributeFilters.forEach((attributeFilter) => {
       chips.push(...this.generateConceptChipsFromAttributeFilter(attributeFilter));
@@ -34,10 +34,10 @@ export class ConceptFilterChipService {
    * Generates concept filter chips from an array of ValueFilters.
    *
    * @param valueFilters Array of ValueFilter objects
-   * @returns Array of InterfaceFilterChip
+   * @returns Array of FilterChipData
    */
-  public generateConceptChipsFromValueFilters(valueFilters: ValueFilter[]): InterfaceFilterChip[] {
-    const chips: InterfaceFilterChip[] = [];
+  public generateConceptChipsFromValueFilters(valueFilters: ValueFilter[]): FilterChipData[] {
+    const chips: FilterChipData[] = [];
 
     valueFilters.forEach((valueFilter) => {
       chips.push(...this.generateConceptChipsFromValueFilter(valueFilter));
@@ -50,11 +50,11 @@ export class ConceptFilterChipService {
    * Generates concept filter chips from a specific AttributeFilter.
    *
    * @param attributeFilter The AttributeFilter object
-   * @returns Array of InterfaceFilterChip
+   * @returns Array of FilterChipData
    */
   private generateConceptChipsFromAttributeFilter(
     attributeFilter: AttributeFilter
-  ): InterfaceFilterChip[] {
+  ): FilterChipData[] {
     const conceptFilter = attributeFilter.getConcept();
     const display = attributeFilter.getDisplay();
     if (conceptFilter) {
@@ -67,9 +67,9 @@ export class ConceptFilterChipService {
    * Generates concept filter chips from a specific ConceptFilter.
    *
    * @param conceptFilter The ConceptFilter object
-   * @returns Array of InterfaceFilterChip
+   * @returns Array of FilterChipData
    */
-  private generateConceptChipsFromValueFilter(valueFilter: ValueFilter): InterfaceFilterChip[] {
+  private generateConceptChipsFromValueFilter(valueFilter: ValueFilter): FilterChipData[] {
     const conceptFilter = valueFilter?.getConcept();
     if (conceptFilter) {
       return this.generateConceptChips(conceptFilter, valueFilter.getDisplay());
@@ -78,16 +78,13 @@ export class ConceptFilterChipService {
   }
 
   /**
-   * Adapts the ConceptFilter into an array of InterfaceFilterChip.
+   * Adapts the ConceptFilter into an array of FilterChipData.
    *
    * @param conceptFilter The ConceptFilter object
    * @param attributeCode Optional TerminologyCode for the attribute
-   * @returns Array of InterfaceFilterChip
+   * @returns Array of FilterChipData
    */
-  public generateConceptChips(
-    conceptFilter: ConceptFilter,
-    display: Display
-  ): InterfaceFilterChip[] {
+  public generateConceptChips(conceptFilter: ConceptFilter, display: Display): FilterChipData[] {
     return FilterChipConceptAdapter.adaptCodeableConcept(
       conceptFilter.getSelectedConcepts(),
       display

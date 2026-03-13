@@ -1,0 +1,60 @@
+@use 'node_modules/@angular/material' as mat;
+
+@mixin button-blue($theme) {
+  $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .num-button.blue {
+    min-width: 125px !important;
+    line-height: 24px;
+    border: none;
+    background-color: mat.get-color-from-palette($accent, 500);
+    color: mat.get-color-from-palette($primary, 'white');
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 18px;
+    gap: 15px;
+
+    &:hover:not(.disabled) {
+      color: white !important;
+      background: mat.get-color-from-palette($primary, 'blue-hover') !important;
+      box-shadow: $raised-shadow;
+    }
+
+    &.cdk-keyboard-focused {
+      background: mat.get-color-from-palette($primary, 'blue-hover');
+    }
+
+    &.disabled {
+      background-color: mat.get-color-from-palette($primary, 50);
+      color: mat.get-color-from-palette($accent, 500);
+      box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($accent, 500);
+      cursor: unset;
+    }
+
+    &.icon {
+      min-width: 50px !important;
+      width: 50px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      fa-icon {
+        margin: 0;
+      }
+
+      &.disabled {
+        background-color: mat.get-color-from-palette($primary, 50);
+        color: mat.get-color-from-palette($accent, 500);
+        box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($accent, 500);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
