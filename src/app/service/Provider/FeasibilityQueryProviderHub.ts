@@ -28,7 +28,7 @@ export class FeasibilityQueryProviderHub {
    */
   public addCriteriaToStage(criterions: Criterion[]): void {
     const ids = criterions.map((criterion) => criterion.getId());
-    this.stageProviderService.addCriteriaToStage(ids);
+    this.stageProviderService.addMany(ids);
   }
 
   /**
@@ -37,7 +37,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add
    */
   public addCriterionToStage(criterion: Criterion): void {
-    this.stageProviderService.addCriterionToStage(criterion.getId());
+    this.stageProviderService.addOne(criterion.getId());
   }
 
   /**
@@ -46,7 +46,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add
    */
   public addCriterionByIdToStage(id: string): void {
-    this.stageProviderService.addCriterionToStage(id);
+    this.stageProviderService.addOne(id);
   }
 
   /**
@@ -55,7 +55,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add
    */
   public addCriterionToCriterionProvider(criterion: Criterion): void {
-    this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
+    this.criterionProviderService.setOne(criterion);
   }
 
   /**
@@ -64,7 +64,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add
    */
   public addCriterionToByIdCriterionProvider(criterion: Criterion): void {
-    this.criterionProviderService.setCriterionByUID(criterion, criterion.getId());
+    this.criterionProviderService.setOne(criterion);
   }
 
   /**
@@ -73,7 +73,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterions Array of Criterion objects
    */
   public addCriteriaToCriterionProvider(criterions: Criterion[]): void {
-    this.criterionProviderService.setCriteriaById(criterions);
+    this.criterionProviderService.setMany(criterions);
   }
 
   /**
@@ -103,10 +103,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add as a reference
    */
   public addReferenceCriterion(refernceCriterion: ReferenceCriterion): void {
-    this.referenceCriterionProviderService.setReferenceCriterionByUID(
-      refernceCriterion.getId(),
-      refernceCriterion
-    );
+    this.referenceCriterionProviderService.setOne(refernceCriterion);
   }
 
   /**
@@ -115,7 +112,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterions Array of Criterion objects to add as references
    */
   public addReferenceCriteria(referenceCriteria: ReferenceCriterion[]): void {
-    this.referenceCriterionProviderService.setReferenceCriteriaById(referenceCriteria);
+    this.referenceCriterionProviderService.setMany(referenceCriteria);
   }
 
   /**
@@ -124,6 +121,6 @@ export class FeasibilityQueryProviderHub {
    * @param result The query result object
    */
   public addQueryResult(result: QueryResult): void {
-    this.queryResultProviderService.setResultByID(result, result.getId());
+    this.queryResultProviderService.setOne(result);
   }
 }

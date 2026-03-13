@@ -1,5 +1,5 @@
 import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion';
-import { CriterionModalService } from 'src/app/service/Criterion/CriterionModal.service';
+import { CriterionModalService } from 'src/app/service/Criterion/Modal/CriterionModal.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
@@ -17,29 +17,29 @@ export class MenuServiceCriterionFunctions {
   ) {}
 
   public deleteCriterion(id: string): void {
-    this.stageProviderService.deleteCriterionByUID(id);
+    this.stageProviderService.removeOne(id);
     this.queryProviderService.deleteFromInclusion(id);
     this.queryProviderService.deleteFromExclusion(id);
-    this.criterionProviderService.deleteCriterionFromMapByUID(id);
+    this.criterionProviderService.removeOne(id);
   }
 
   public duplicateCriterion(id: string): void {
     const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(
-      this.criterionProviderService.getCriterionByUID(id)
+      this.criterionProviderService.getOne(id)
     );
-    this.criterionProviderService.setCriterionByUID(clonedCriterion, clonedCriterion.getId());
-    this.stageProviderService.addCriterionToStage(clonedCriterion.getId());
+    this.criterionProviderService.setOne(clonedCriterion);
+    this.stageProviderService.addOne(clonedCriterion.getId());
   }
 
   public editLinkedCriteria(id: string): void {
-    const criterion = this.criterionProviderService.getCriterionByUID(id);
+    const criterion = this.criterionProviderService.getOne(id);
     if (criterion) {
       this.editCriterionService.openReferenceCriteriaModal(criterion);
     }
   }
 
   public editCriterionFilter(id: string): void {
-    const criterion = this.criterionProviderService.getCriterionByUID(id);
+    const criterion = this.criterionProviderService.getOne(id);
     if (criterion) {
       this.editCriterionService.openCriterionModal(criterion);
     }

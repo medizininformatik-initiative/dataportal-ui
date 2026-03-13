@@ -17,38 +17,11 @@
       [(ngModel)]="comment"
       placeholder="{{ 'SAVED_QUERIES.COMMENT' | translate }}"
     ></textarea>
-
-    <div class="checkbox-box">
-      <span
-        class="checkbox-label"
-        [matTooltip]="'DATAQUERY.COHORT.REQUIRED' | translate"
-        [matTooltipPosition]="'above'"
-      >
-        <num-checkbox
-          [disabled]="true"
-          [checked]="(validatedDataQuery$ | async).feasibilityQuery"
-          (checkedChange)="toggleFeasibilityQuery($event)"
-        ></num-checkbox>
-        <span>{{ 'DATAQUERY.COHORT.HEADER' | translate }}</span>
-      </span>
-      <span class="checkbox-label">
-        <num-checkbox
-          [disabled]="(validatedDataQuery$ | async).dataSelection === false"
-          [checked]="(validatedDataQuery$ | async).dataSelection"
-          (checkedChange)="toggleDataSelection($event)"
-        ></num-checkbox>
-        <span>{{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}</span>
-      </span>
-    </div>
-    <span *ngIf="(validatedDataQuery$ | async).feasibilityQuery === false" class="filter-warning">
-      {{ 'SHARED_COMPONENTS.SAVE_MODAL.COHORT_WARNING' | translate }}
-    </span>
   </div>
-
   <div class="save-dialog-footer">
     <num-button
       type="green"
-      [isDisabled]="title.length === 0 || !isFeasibilityChecked"
+      [isDisabled]="title.length === 0"
       (click)="doSave()"
       class="button-save"
     >

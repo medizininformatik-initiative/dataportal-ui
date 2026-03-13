@@ -9,7 +9,7 @@ import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData
 import { map, Observable, of, Subscription, take } from 'rxjs';
 import { MenuItemInterface } from '../../../../../../shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from '../../../../../../shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { RemoveReferenceService } from 'src/app/service/RemoveReference.service';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
-import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from './Provider/ProfileProvider.service';
 import { map, take } from 'rxjs';
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
@@ -23,7 +23,7 @@ export class RemoveReferenceService {
           dataSelection.getProfiles().map((profile) => {
             const updatedProfile = this.removeReferenceFromProfile(profile, profileIdToBeDeleted);
             this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile);
-            this.profileProviderService.setProfileById(updatedProfile.getId(), updatedProfile);
+            this.profileProviderService.setOne(updatedProfile);
           });
           //this.profileProviderService.removeProfileById(profileIdToBeDeleted);
           return dataSelection;

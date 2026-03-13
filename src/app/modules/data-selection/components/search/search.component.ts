@@ -1,14 +1,15 @@
 import { ActivatedRoute } from '@angular/router';
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service';
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
-import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode';
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service';
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter';
+import { LoadDataSelectionProfilesService } from 'src/app/service/DataSelection/LoadDataSelectionProfiles.service';
 import { map, Observable, Subscription } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelection/SelectedDataSelectionProfile.service';
+import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelection/Selection/SelectedDataSelectionProfile.service';
+import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service';
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 import {
@@ -23,7 +24,6 @@ import {
   ElementRef,
   EventEmitter,
 } from '@angular/core';
-import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service';
 
 @Component({
   selector: 'num-search-data-selection',
@@ -53,7 +53,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
 
   constructor(
     public elementRef: ElementRef,
-    private createDataSelectionProfileService: CreateDataSelectionProfileService,
+    private loadDataSelectionProfilesService: LoadDataSelectionProfilesService,
     private dataSelectionProviderService: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
     private selectedDataSelectionProfileService: SelectedDataSelectionProfileService,
@@ -137,8 +137,8 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
 
   public getDataSelectionProfileData() {
     const dataSelectionProfileUrls = Array.from(this.selectedDataSelectionProfileUrls);
-    this.dataSelectionProfileSubscription = this.createDataSelectionProfileService
-      .fetchDataSelectionProfileData(dataSelectionProfileUrls)
+    this.dataSelectionProfileSubscription = this.loadDataSelectionProfilesService
+      .loadProfiles(dataSelectionProfileUrls)
       .subscribe((dataSelectionProfiles) => {
         this.selectedDataSelectionProfileUrls.clear();
         this.selectedDataSelectionProfileService.clearSelection();

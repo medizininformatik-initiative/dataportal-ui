@@ -2,7 +2,6 @@ import { ActuatorApiService } from './service/Backend/Api/ActuatorApi.service';
 import { ActuatorInformationService } from './service/Actuator/ActuatorInformation.service';
 import { AppConfigData } from './config/model/AppConfig/AppConfigData';
 import { AppConfigService } from './config/AppConfig.service';
-import { catchError, concatMap, map, take, tap, timeout } from 'rxjs/operators';
 import { DataportalConfigService } from './config/DataportalConfig.service';
 import { DataSelectionMainProfileInitializerService } from './service/DataSelectionMainProfileInitializerService';
 import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile';
@@ -15,6 +14,7 @@ import { TerminologySystemProvider } from './service/Provider/TerminologySystemP
 import { UiProfileData } from './model/Interface/UiProfileData';
 import { UiProfileProviderService } from './service/Provider/UiProfileProvider.service';
 import { UserProfileService } from './service/User/UserProfile.service';
+import { catchError, concatMap, map, tap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class CoreInitService {
   constructor(
@@ -36,7 +36,7 @@ export class CoreInitService {
    * be Observable<unknown> therefore it needs to be casted explicitly
    * to the return desired type
    * Initializes core services and features.
-   * @returns An observable of the application configuration.
+   * @returns An observable of the application configuration data.
    */
   public init(): Observable<AppConfigData> {
     return this.loadAppConfig().pipe(
@@ -61,7 +61,7 @@ export class CoreInitService {
 
   /**
    * Loads the application configuration.
-   * @returns An observable of the application configuration.
+   * @returns An observable of the application configuration data.
    */
   private loadAppConfig(): Observable<AppConfigData> {
     return this.appConfigService.loadAppConfig().pipe(
@@ -133,9 +133,7 @@ export class CoreInitService {
    */
   private getUiProfilesData(): Observable<UiProfileData[]> {
     return this.terminologyApiService.getUiProfileData().pipe(
-      tap((uiProfileData: UiProfileData[]) =>
-        this.uiProfileProviderService.cacheUiProfiles(uiProfileData)
-      ),
+      tap((uiProfileData: UiProfileData[]) => this.uiProfileProviderService.setMany(uiProfileData)),
       tap((data: UiProfileData[]) => console.log('UiProfiles data retrieved:', data.length)),
       catchError((err) => {
         console.error('Failed to retrieve UiProfiles data:', err);

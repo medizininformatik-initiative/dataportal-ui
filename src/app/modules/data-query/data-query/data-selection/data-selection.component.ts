@@ -1,5 +1,5 @@
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { map, Observable, Subscription } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/FeasibilityQueryValidation.service';
+import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
@@ -27,7 +27,7 @@ export class CohortDefinitionComponent implements OnInit {
     this.feasibilityQueryService.getActiveFeasibilityQuery().subscribe((feasibilityQuery) => {
       const resultIdsLength = feasibilityQuery.getResultIds().length;
       this.totalNumberOfPatients = this.resultProviderService
-        .getResultByID(feasibilityQuery.getResultIds()[resultIdsLength - 1])
+        .getOne(feasibilityQuery.getResultIds()[resultIdsLength - 1])
         ?.getTotalNumberOfPatients();
     });
     this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();

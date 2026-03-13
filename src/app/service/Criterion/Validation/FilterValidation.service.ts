@@ -1,6 +1,6 @@
 import { AbstractAttributeFilters } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { FilterTypesService } from '../FilterTypes.service';
+import { FilterTypesService } from '../../FilterTypes.service';
 import { Injectable } from '@angular/core';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 

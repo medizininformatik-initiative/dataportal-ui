@@ -23,7 +23,7 @@ export class InvalidCriteriaService {
 
   private processInvalidCriteria(criteriaGroup: string[], invalidCriteria: string[]): void {
     criteriaGroup.forEach((criterionId) => {
-      const criterion = this.criterionService.getCriterionByUID(criterionId);
+      const criterion = this.criterionService.getOne(criterionId);
       if (criterion.getIsInvalid()) {
         invalidCriteria.push(criterionId);
       }

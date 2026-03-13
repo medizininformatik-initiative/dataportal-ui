@@ -6,7 +6,7 @@ import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe';
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter';
 import { Observable, of } from 'rxjs';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
@@ -107,7 +107,7 @@ export class ProfileHeaderComponent implements OnInit, OnChanges {
       }
       const linkedProfiles = ref
         .getLinkedProfileIds()
-        .map((id) => this.profileProviderService.getProfileById(id).getDisplay())
+        .map((id) => this.profileProviderService.getOne(id).getDisplay())
         .filter((profileDisplay): profileDisplay is Display => !!profileDisplay);
 
       acc[key].push(...linkedProfiles);

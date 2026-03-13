@@ -1,5 +1,5 @@
 import { combineLatest, map, Observable, switchMap } from 'rxjs';
-import { CriterionValidationManagerService } from './Validation/CriterionValidationManager.service';
+import { CriterionValidationManagerService } from '../Criterion/Validation/CriterionValidationManager.service';
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';

@@ -42,9 +42,7 @@ export class CriterionTranslatorService {
       criterionId,
       termCodes
     );
-    const uiProfile = this.uiProfileProviderService.getUiProfileById(
-      criteriaProfileData.uiProfileId
-    );
+    const uiProfile = this.uiProfileProviderService.getOne(criteriaProfileData.uiProfileId);
     this.applyValueFilters(criterionBuilder, structuredQueryCriterion, uiProfile.valueDefinition);
 
     this.applyValueFilters(criterionBuilder, structuredQueryCriterion, uiProfile.valueDefinition);
