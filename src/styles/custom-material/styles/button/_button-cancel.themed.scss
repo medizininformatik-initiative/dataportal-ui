@@ -6,7 +6,6 @@
   $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
   .num-button.cancel {
-    // Use base button properties
     font-family: inherit;
     font-size: 16px;
     font-weight: 500;
@@ -25,7 +24,6 @@
     border: 1px solid mat.get-color-from-palette($accent, 200);
     background: mat.get-color-from-palette($primary, 50);
     color: mat.get-color-from-palette($accent, 600);
-    margin-bottom: 1rem;
 
     &:hover:not(.disabled) {
       background: mat.get-color-from-palette($primary, 100);
