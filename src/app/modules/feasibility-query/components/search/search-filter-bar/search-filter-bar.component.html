@@ -4,4 +4,10 @@
     [filter]="searchFilter"
     (selectedFilterChanged)="filterChanged.emit($event)"
   ></num-search-filter>
+  <span
+    class="info-icon"
+    numInfoTooltip
+    [infoTooltipTitle]="'FEASIBILITY.SEARCH.TOOLTIP_TITLE' | translate"
+    [infoTooltipText]="'FEASIBILITY.SEARCH.INFO_TOOLTIP' | translate"
+  ></span>
 </div>
