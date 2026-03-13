@@ -1,10 +1,5 @@
-<div class="modal-content">
-  <button class="close-btn" (click)="doDiscard()" aria-label="Close">
-    <fa-icon icon="times"></fa-icon>
-  </button>
-  <num-header>
-    {{ 'SHARED_COMPONENTS.SAVE_MODAL.HEADER' | translate }}
-  </num-header>
+<div class="padding-2em">
+  <ng-content></ng-content>
   <div class="save-query-box">
     <input
       class="field-input"
@@ -17,42 +12,19 @@
       [(ngModel)]="comment"
       placeholder="{{ 'SAVED_QUERIES.COMMENT' | translate }}"
     ></textarea>
-
-    <div class="checkbox-box">
-      <span
-        class="checkbox-label"
-        [matTooltip]="'DATAQUERY.COHORT.REQUIRED' | translate"
-        [matTooltipPosition]="'above'"
-      >
-        <num-checkbox
-          [disabled]="true"
-          [checked]="(validatedDataQuery$ | async).feasibilityQuery"
-          (checkedChange)="toggleFeasibilityQuery($event)"
-        ></num-checkbox>
-        <span>{{ 'DATAQUERY.COHORT.HEADER' | translate }}</span>
-      </span>
-      <span class="checkbox-label">
-        <num-checkbox
-          [disabled]="(validatedDataQuery$ | async).dataSelection === false"
-          [checked]="(validatedDataQuery$ | async).dataSelection"
-          (checkedChange)="toggleDataSelection($event)"
-        ></num-checkbox>
-        <span>{{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}</span>
-      </span>
-    </div>
-    <span *ngIf="(validatedDataQuery$ | async).feasibilityQuery === false" class="filter-warning">
-      {{ 'SHARED_COMPONENTS.SAVE_MODAL.COHORT_WARNING' | translate }}
-    </span>
   </div>
-
   <div class="save-dialog-footer">
     <num-button
       type="green"
-      [isDisabled]="title.length === 0 || !isFeasibilityChecked"
+      [isDisabled]="title.length === 0"
       (click)="doSave()"
       class="button-save"
     >
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.SAVE' | translate }}
+    </num-button>
+
+    <num-button type="blue" (click)="doDiscard()">
+      {{ 'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate }}
     </num-button>
   </div>
 </div>
