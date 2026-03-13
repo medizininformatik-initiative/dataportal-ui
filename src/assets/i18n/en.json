@@ -456,6 +456,10 @@
       "KDS_MODULE": "CDS Modules",
       "TERMINOLOGY": "Terminology"
     },
+    "HEADER": {
+      "HIDE": "Hide explanations",
+      "SHOW": "Show explanations"
+    },
     "KDS_MODULE": "CDS Modules",
     "KONTEXT": "Context / CDS Profile",
     "LIST_ITEM_DETAILS": {
@@ -515,6 +519,7 @@
       "DISPLAY": "Display",
       "ICON": "Show related criteria",
       "NAME": "Name",
+      "NOT_SELECTABLE": "Criterion cannot be selected",
       "PATIENT_COUNT": "Number of patients",
       "SELECT_CHECKBOX": "Select Criteria",
       "SITE": "Location",
