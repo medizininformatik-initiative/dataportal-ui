@@ -17,4 +17,8 @@ export class DataSelectionMainProfileProviderService {
   public getPatientProfile$(): Observable<DataSelectionProfile | null> {
     return this.patientProfileSubject.asObservable();
   }
+
+  public getPatientProfileValue(): DataSelectionProfile {
+    return this.patientProfileSubject.getValue();
+  }
 }
