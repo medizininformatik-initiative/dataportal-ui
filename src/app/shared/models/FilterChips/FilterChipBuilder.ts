@@ -13,7 +13,6 @@ export class FilterChipBuilder {
   }
 
   public addData(id: string, text: any, expanded: boolean = false): this {
-    console.log(`Adding data to chip: id=${id}, text=${text}, expanded=${expanded}`);
     this.data.push({ id, text, expanded });
     return this;
   }
