@@ -235,7 +235,7 @@
         "VIEW_STAGE_TOOLTIP": "Zum Editor navigieren, um die bereitgestellten Elemente anzuzeigen"
       },
       "HEADER": "Bulk Suche",
-      "HEADER_INFO": "Definieren Sie Ihre Kohorte, indem Sie im Bulk-Modus zwei Filter festlegen: Context und Terminology. Geben Sie anschließend eine Liste von kommaseparierten Terminologie-Codes (z. B. ICD-10, LOINC, OPS) ein, um die Suche gezielt einzuschränken.Die Bulk-Kohortensuche ermöglicht es Ihnen, große Mengen an Codes auf einmal zu verarbeiten",
+      "HEADER_INFO": "Hier können Sie mehrere Codes gleichzeitig zu einem Kriterium verknüpfen. Fügen Sie eine Liste (Tab- oder Komma-getrennt) von Kodierungen eines spezifischen Systems (z. B. LOINC, ICD-10, OPS) ein und spezifizieren Sie den Kontext (z. B. Laboruntersuchung, Diagnose, Prozedur). Die Suche verknüpft die Kriterien als \"oder\".",
       "INPUT_PLACEHOLDER": "Geben Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
       "PLACEHOLDER": "Fügen Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
       "SEARCH_BUTTON_TOOLTIP": "Alle eingegebenen Begriffe mit ausgewählten Filtern suchen"
