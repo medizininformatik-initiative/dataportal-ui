@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
 import { BasePaths, PathSegments } from '../../../app-paths';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { filter, Subscription } from 'rxjs';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 
 interface Breadcrumb {
   label: string | Display
@@ -88,10 +88,10 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
 
   private resolveQueryEditorId(subPath: string, id: string): Display {
     if (subPath === PathSegments.feature) {
-      const profile = this.profileProviderService.getProfileById(id);
+      const profile = this.profileProviderService.getOne(id);
       return profile.getDisplay();
     } else if (subPath === PathSegments.criterion) {
-      const criterion = this.criterionProviderService.getCriterionByUID(id);
+      const criterion = this.criterionProviderService.getOne(id);
       return criterion.getDisplay();
     }
   }
