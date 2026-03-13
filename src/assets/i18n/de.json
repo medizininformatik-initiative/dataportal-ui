@@ -80,6 +80,8 @@
       },
       "EMPTY": "Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohortenselektion oder erstellen Sie eine neue Kohorte.",
       "HEADER": "Kohortenselektion",
+      "INFO_TOOLTIP_TEXT": "Eine Kohortendefinition legt die Gruppe von Patienten oder Datenobjekten fest, die Sie analysieren möchten. Definieren Sie Ein- und Ausschlusskriterien, um Ihre Zielpopulation präzise zu beschreiben. Dieser Schritt ist erforderlich, um fortzufahren.",
+      "INFO_TOOLTIP_TITLE": "Kohortendefinition",
       "REQUIRED": "Kohortenselektion ist ein Pflichtfeld"
     },
     "DATASELECTION": {
@@ -106,6 +108,8 @@
       },
       "SUCCESS": {
         "DOWNLOAD": "Datendefinition wurde erfolgreich heruntergeladen.",
+        "INFO_TOOLTIP_TEXT": "Die Datenselektion legt fest, welche Datenfelder oder Variablen für die definierte Kohorte einbezogen werden. Wählen Sie die relevanten Datenpunkte für Ihre Analyse aus. Dieser Schritt ist erforderlich, um fortzufahren.",
+        "INFO_TOOLTIP_TITLE": "Datenselektion",
         "UPLOAD": "Datendefinition wurde hochgeladen."
       }
     }
@@ -459,6 +463,10 @@
       "KDS_MODULE": "KDS-Modul",
       "TERMINOLOGY": "Terminologie"
     },
+    "HEADER": {
+      "HIDE": "Erklärungen ausblenden",
+      "SHOW": "Erklärungen einblenden"
+    },
     "KDS_MODULE": "KDS-Modul",
     "KONTEXT": "Kontext / KDS-Profil",
     "LIST_ITEM_DETAILS": {
@@ -518,6 +526,7 @@
       "DISPLAY": "Anzeige",
       "ICON": "Verwandte Kriterien anzeigen",
       "NAME": "Name",
+      "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
       "PATIENT_COUNT": "Anzahl der Patienten",
       "SELECT_CHECKBOX": "Kriterium auswählen",
       "SITE": "Standort",
