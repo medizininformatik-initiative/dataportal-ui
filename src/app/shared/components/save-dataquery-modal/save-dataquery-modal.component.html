@@ -1,47 +1,22 @@
 <div class="padding-2em">
   <ng-content></ng-content>
   <div class="save-query-box">
-    <div fxLayout="column" fxLayoutAlign="space-around center">
-      <mat-form-field class="input-field">
-        <mat-label>{{ 'SAVED_QUERIES.TITLE' | translate }}</mat-label>
-        <input matInput type="text" [(ngModel)]="title" />
-      </mat-form-field>
-      <mat-form-field class="input-field" appearance="fill">
-        <mat-label>{{ 'SAVED_QUERIES.COMMENT' | translate }}</mat-label>
-        <textarea matInput [(ngModel)]="comment"></textarea>
-      </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="space-around center" class="checkbox-box">
-      <span [matTooltip]="'DATAQUERY.COHORT.REQUIRED' | translate" [matTooltipPosition]="'above'">
-        <mat-checkbox
-          color="primary"
-          disableRipple="true"
-          [disabled]="true"
-          [checked]="(validatedDataQuery$ | async).feasibilityQuery"
-          (change)="toggleFeasibilityQuery($event)"
-          >{{ 'DATAQUERY.COHORT.HEADER' | translate }}</mat-checkbox
-        >
-      </span>
-      <mat-checkbox
-        color="primary"
-        disableRipple="true"
-        [disabled]="(validatedDataQuery$ | async).dataSelection === false"
-        [checked]="(validatedDataQuery$ | async).dataSelection"
-        (change)="toggleDataSelection($event)"
-        >{{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}</mat-checkbox
-      >
-    </div>
-    <span *ngIf="(validatedDataQuery$ | async).feasibilityQuery === false" class="filter-warning">
-      {{ 'SHARED_COMPONENTS.SAVE_MODAL.COHORT_WARNING' | translate }}
-    </span>
+    <input
+      class="field-input"
+      type="text"
+      [(ngModel)]="title"
+      placeholder="{{ 'SAVED_QUERIES.TITLE' | translate }}"
+    />
+    <textarea
+      class="field-input field-textarea"
+      [(ngModel)]="comment"
+      placeholder="{{ 'SAVED_QUERIES.COMMENT' | translate }}"
+    ></textarea>
   </div>
-
-  <div fxLayout="row" fxLayoutAlign="center center" class="save-dialog-footer">
-    <div fxFlex="fill"></div>
-
+  <div class="save-dialog-footer">
     <num-button
-      type="blue"
-      [isDisabled]="title.length === 0 || !isFeasibilityChecked"
+      type="green"
+      [isDisabled]="title.length === 0"
       (click)="doSave()"
       class="button-save"
     >

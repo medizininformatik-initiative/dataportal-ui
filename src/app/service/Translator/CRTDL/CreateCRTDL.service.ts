@@ -21,22 +21,13 @@ export class CreateCRTDLService {
     private activeDataSelectionService: ActiveDataSelectionService
   ) {}
 
-  public createCRTDLForSave(getFeasibility: boolean, getDataSelection: boolean): Observable<CRTDL> {
+  public createCRTDLForSave(): Observable<CRTDL> {
     const structuredQuery$ = this.getStructuredQuery();
     const dataExtraction$ = this.getDataExtraction();
 
-    if (getFeasibility && getDataSelection) {
-      return combineLatest([structuredQuery$, dataExtraction$]).pipe(
-        map(([structuredQuery, dataExtraction]) => this.buildCRTDL(structuredQuery, dataExtraction))
-      );
-    }
-    if (getDataSelection) {
-      return dataExtraction$.pipe(map((dataExtraction) => this.buildCRTDL(null, dataExtraction)));
-    }
-    if (getFeasibility) {
-      return structuredQuery$.pipe(map((structuredQuery) => this.buildCRTDL(structuredQuery, null)));
-    }
-    return of(this.buildCRTDL(null, null));
+    return combineLatest([structuredQuery$, dataExtraction$]).pipe(
+      map(([structuredQuery, dataExtraction]) => this.buildCRTDL(structuredQuery, dataExtraction))
+    );
   }
 
   public createCRTDL(): Observable<CRTDL> {

@@ -19,13 +19,11 @@ export class SavedDataQueryService {
   ) {}
 
   public saveDataQuery(data: SaveDataModal | null = null): Observable<SavedUsageStats> {
-    return this.createCRTDLService
-      .createCRTDLForSave(data?.feasibilityQuery, data?.dataSelection)
-      .pipe(
-        switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)),
-        switchMap((savedDataQueryData) => this.postDataQuery(savedDataQueryData)),
-        take(1)
-      );
+    return this.createCRTDLService.createCRTDLForSave().pipe(
+      switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)),
+      switchMap((savedDataQueryData) => this.postDataQuery(savedDataQueryData)),
+      take(1)
+    );
   }
 
   private buildSavedDataQueryData(crtdl: CRTDL, data: SaveDataModal | null): Observable<any> {
