@@ -53,16 +53,22 @@ export class DataSelection2DataExtraction {
     const selectedBasicFields = profileFields.getSelectedBasicFields();
     const selectedReferenceFields = profileFields.getSelectedReferenceFields();
 
-    const basicFieldAttributes = selectedBasicFields.map((selectedBasicField) => new Attributes(
-        selectedBasicField.getElementId(),
-        selectedBasicField.getMustHave(),
-        undefined
-      ));
-    const referenceFieldAttributes = selectedReferenceFields.map((selectedReferenceField) => new Attributes(
-        selectedReferenceField.getElementId(),
-        selectedReferenceField.getMustHave(),
-        selectedReferenceField.getLinkedProfileIds()
-      ));
+    const basicFieldAttributes = selectedBasicFields.map(
+      (selectedBasicField) =>
+        new Attributes(
+          selectedBasicField.getElementId(),
+          selectedBasicField.getMustHave(),
+          undefined
+        )
+    );
+    const referenceFieldAttributes = selectedReferenceFields.map(
+      (selectedReferenceField) =>
+        new Attributes(
+          selectedReferenceField.getElementId(),
+          selectedReferenceField.getMustHave(),
+          selectedReferenceField.getLinkedProfileIds()
+        )
+    );
     const combinedAttributes = [...basicFieldAttributes, ...referenceFieldAttributes];
     return combinedAttributes.length > 0 ? combinedAttributes : undefined;
   }

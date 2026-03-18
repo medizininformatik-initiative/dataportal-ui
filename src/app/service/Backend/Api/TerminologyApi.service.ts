@@ -90,7 +90,7 @@ export class TerminologyApiService {
 
   /**
    * Retrieves UI Profile data from the backend.
-   * @returns An observable containing the UI profile data.
+   * @returns An observable containing the UI Profile data.
    */
   public getUiProfileData(): Observable<UiProfileData[]> {
     return this.http.get<UiProfileData[]>(

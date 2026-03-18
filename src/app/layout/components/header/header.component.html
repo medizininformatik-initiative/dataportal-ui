@@ -1,32 +1,17 @@
 <num-snackbar></num-snackbar>
 <num-error-display></num-error-display>
-<mat-toolbar fxLayout="row" fxLayoutAlign="start center" color="light" fxLayoutGap="0px">
-  <img id="header-logo" [src]="imagePath" alt="{{ urlAlt }}" class="FDPGTheme" />
-  <div fxFlex="100" fxLayoutAlign="end" class="margin-right">
+<mat-toolbar>
+  <div class="header-left">
+    <div class="logo-wrapper">
+      <img id="header-logo" [src]="imagePath" alt="{{ urlAlt }}" class="FDPGTheme" />
+    </div>
+    <div class="breadcrumbs-wrapper">
+      <num-breadcrumbs></num-breadcrumbs>
+    </div>
+  </div>
+  <div class="header-right">
     <num-language></num-language>
-    <mat-form-field class="language-select" style="width: auto">
-      <mat-select
-        [matBadge]
-        hideSingleSelectionIndicator
-        [placeholder]="profile?.info.name ? profile?.info.name : profile?.info.preferred_username"
-      >
-        <mat-option (click)="getActuatorInfo()">
-          <fa-icon class="circle" size="lg" [fixedWidth]="true" [icon]="'info'"></fa-icon>
-          {{ 'APPLAYOUT.HEADER.ABOUT' | translate }}
-        </mat-option>
-        <mat-option (click)="displayErrorLog()" [disabled]="!hasErrorsToDisplay()">
-          <fa-icon class="circle" size="lg" [fixedWidth]="true" [icon]="'bug'"></fa-icon>
-          {{ 'APPLAYOUT.HEADER.ERROR_LOG.LABEL' | translate }}
-        </mat-option>
-        <mat-option (click)="logout()">
-          <fa-icon class="circle" size="lg" [fixedWidth]="true" [icon]="'sign-out-alt'"></fa-icon>
-          {{ 'APPLAYOUT.HEADER.LOGOUT' | translate }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <span class="link-like" (click)="navigateToProposalPortal()">
-      {{ 'APPLAYOUT.HEADER.PROPOSAL_PORTAL' | translate }}
-      <fa-icon size="1x" icon="external-link-alt"></fa-icon>
-    </span>
+    <num-header-user-menu></num-header-user-menu>
+    <num-header-portal-link></num-header-portal-link>
   </div>
 </mat-toolbar>

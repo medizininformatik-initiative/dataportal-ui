@@ -1,0 +1,62 @@
+@use 'node_modules/@angular/material' as mat;
+@mixin side-menu-component_themed($theme) {
+  $accent: map-get($theme, accent);
+  $primary: map-get($theme, primary);
+  $name: map-get($theme, name);
+
+  .mdc-list-item__primary-text {
+    display: flex;
+  }
+  .mdc-list-item.mdc-list-item--with-one-line {
+    height: 40px !important;
+  }
+  @if ($name == 'fdpg') {
+    .mat-mdc-nav-list {
+      background: transparent !important;
+    }
+    .num-logo-row a {
+      color: mat.get-contrast-color-from-palette($primary, 200) !important;
+    }
+    .num-mat-list-item {
+      color: #5f6266 !important;
+    }
+  }
+
+  .num-logo-row button:hover {
+    background: mat.get-color-from-palette($accent, 200) !important;
+    color: mat.get-contrast-color-from-palette($accent, 200) !important;
+  }
+  @if ($name == 'fdpg') {
+    .num-mat-list-item {
+      font-family: 'Titillium Web', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      line-height: 24px !important;
+      letter-spacing: normal !important;
+      background: #ffffff !important;
+      border-radius: 5px !important;
+
+      &--active {
+        background: #f1f2f3 !important;
+        color: #5f6266 !important;
+        font-weight: 600 !important;
+      }
+      &--active div {
+        color: #5f6266 !important;
+        font-weight: 600 !important;
+      }
+      &--active fa-icon {
+        color: rgba(90, 121, 175, 1) !important;
+      }
+      &:hover {
+        background: #e8ebf0 !important;
+        color: #5f6266 !important;
+      }
+
+      &:focus {
+        background: #f1f2f3 !important;
+        color: #5f6266 !important;
+      }
+    }
+  }
+}

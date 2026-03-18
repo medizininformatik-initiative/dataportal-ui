@@ -1,10 +1,7 @@
 <num-date-picker [selectedDate]="afterDate" (dateChanged)="onAfterDateChange($event)">
-  <mat-label>{{ 'SHARED_FILTER.TIMERESTRICTION.FROM' | translate }}</mat-label>
 </num-date-picker>
-
 <num-date-picker [selectedDate]="beforeDate" (dateChanged)="onBeforeDateChange($event)">
-  <mat-label>{{ 'SHARED_FILTER.TIMERESTRICTION.TO' | translate }}</mat-label>
 </num-date-picker>
-<div *ngIf="displayDateWarning" fxLayout="column">
-  <span class="warning">{{ 'SHARED_FILTER.TIMERESTRICTION.WARNING' | translate }}</span>
+<div *ngIf="displayDateWarning" class="date-warning">
+  <span>{{ 'SHARED_FILTER.TIMERESTRICTION.WARNING' | translate }}</span>
 </div>

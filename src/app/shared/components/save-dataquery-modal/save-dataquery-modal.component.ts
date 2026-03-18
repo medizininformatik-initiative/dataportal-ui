@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DataQueryValidationService } from '../../../service/DataQuery/DataQueryValidation.service';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModal';
@@ -25,8 +24,6 @@ export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
 
   title = '';
   comment = '';
-  isFeasibilityChecked = false;
-  isDataSelectionChecked = false;
 
   private destroy$ = new Subject<void>();
 
@@ -37,10 +34,7 @@ export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.validatedDataQuery$ = this.dataQueryValidation.validateDataQuery();
-    this.validatedDataQuery$.pipe(takeUntil(this.destroy$)).subscribe((validation) => {
-      this.isFeasibilityChecked = validation.feasibilityQuery;
-      this.isDataSelectionChecked = validation.dataSelection;
-    });
+    this.validatedDataQuery$.pipe(takeUntil(this.destroy$)).subscribe();
   }
 
   ngOnDestroy(): void {
@@ -49,27 +43,13 @@ export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
   }
 
   doSave(): void {
-    if (!this.isFeasibilityChecked && !this.isDataSelectionChecked) {
-      return;
-    }
-
     this.dialogRef.close({
       title: this.title,
       comment: this.comment,
-      feasibilityQuery: this.isFeasibilityChecked,
-      dataSelection: this.isDataSelectionChecked,
     });
   }
 
   doDiscard(): void {
     this.dialogRef.close();
-  }
-
-  toggleFeasibilityQuery(checked: MatCheckboxChange) {
-    this.isFeasibilityChecked = checked.checked;
-  }
-
-  toggleDataSelection(checked: MatCheckboxChange) {
-    this.isDataSelectionChecked = checked.checked;
   }
 }

@@ -17,6 +17,8 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   menuItemsTrue: MenuItemInterface[] = [];
   menuItemsFalse: MenuItemInterface[] = [];
 
+  terminology = '';
+
   @Output()
   selectedRelative: EventEmitter<CriteriaListEntry> = new EventEmitter();
 

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter';
 
 @Component({
@@ -17,7 +16,7 @@ export class SearchFilterComponent implements OnInit {
   @Output()
   selectedFilterChanged = new EventEmitter<SearchFilter>();
 
-  selectedValues: string[] | string;
+  selectedValues: string[] | string = [];
 
   translatedLabel: { translatedSystem: string; count: number; url: string }[] = [];
   constructor() {}
@@ -35,5 +34,22 @@ export class SearchFilterComponent implements OnInit {
 
     this.filter.selectedValues = normalizedValues;
     this.selectedFilterChanged.emit(this.filter);
+  }
+
+  public getCleanValue(value: string | string[]): string {
+    if (Array.isArray(value)) {
+      return value.map((v) => v.replace(/\s*\(\d+\)$/, '')).join(', ');
+    }
+    return value?.replace(/\s*\(\d+\)$/, '') || '';
+  }
+
+  public getTooltipText(): string {
+    if (
+      !this.selectedValues ||
+      (Array.isArray(this.selectedValues) && this.selectedValues?.length === 0)
+    ) {
+      return 'SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED';
+    }
+    return this.getCleanValue(this.selectedValues);
   }
 }

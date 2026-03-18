@@ -18,12 +18,20 @@ const routes: Routes = [
     resolve: {
       preLoadDataSelectionData: DataSelectionProfileResolverService,
     },
-    data: { animation: 'Data_Selection_Search', title: 'TAB_TITLE.DATA_SELECTION.SEARCH' },
+    data: {
+      animation: 'Data_Selection_Search',
+      title: 'TAB_TITLE.DATA_SELECTION.SEARCH',
+      breadcrumb: 'BREADCRUMB.DATA_SELECTION_SEARCH',
+    },
   },
   {
     path: PathSegments.editor,
     component: DisplayDataSelectionComponent,
-    data: { animation: 'Data_Selection_Editor', title: 'TAB_TITLE.DATA_SELECTION.EDITOR' },
+    data: {
+      animation: 'Data_Selection_Editor',
+      title: 'TAB_TITLE.DATA_SELECTION.EDITOR',
+      breadcrumb: 'BREADCRUMB.DATA_SELECTION_EDITOR',
+    },
   },
 ];
 

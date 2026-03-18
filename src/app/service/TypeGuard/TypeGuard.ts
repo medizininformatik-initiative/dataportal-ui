@@ -18,10 +18,16 @@ import { CRTDLData } from '../../model/Interface/CRTDLData';
 import { DataExtractionData } from '../../model/Interface/DataExtractionData';
 import { DataExtractionValidationIssueData } from 'src/app/core/model/Validation/DataExtractionValidationIssueData';
 import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData';
+import { DateFilterUpgrade } from '../../core/model/Upgrade/Filter/DateFilterUpgradeData';
 import { DisplayData } from '../../model/Interface/DisplayData';
+import { FieldUpgradeData } from '../../core/model/Upgrade/Field/FieldUpgradeData';
 import { FilterData } from '../../model/Interface/FilterData';
 import { IssueData } from '../../core/model/Feasibility/IssueData';
 import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
+import { ProfileFieldUpgradeData } from '../../core/model/Upgrade/Field/ProfileFieldUpgradeData';
+import { ProfileFilterUpgradeData } from 'src/app/core/model/Upgrade/Filter/ProfileFilterUpgradeData';
+import { ProfileRemovedData } from '../../core/model/Upgrade/Profile/ProfileRemovedData';
+import { ProfileUpgradeData } from '../../core/model/Upgrade/Profile/ProfileUpgradeData';
 import { QuantityRangeValidationIssueData } from 'src/app/core/model/Validation/QuantityRangeValidationIssueData';
 import { QuantityUnitData } from '../../model/Interface/Unit';
 import { QuantityUnitValidationIssueData } from 'src/app/core/model/Validation/QuantityUnitValidationIssueData';
@@ -39,7 +45,9 @@ import { TerminologyCodeData } from '../../model/Interface/TerminologyCodeData';
 import { TimeRestrictionData } from '../../model/Interface/TimeRestrictionData';
 import { TimeRestrictionValidationIssueData } from 'src/app/core/model/Validation/TimeRestrictionValidationIssueData';
 import { TranslationData } from '../../model/Interface/TranslationData';
+import { Type } from '@angular/core';
 import { UiProfileData } from '../../model/Interface/UiProfileData';
+import { UpgradeData } from '../../core/model/Upgrade/UpgradeData';
 import { ValidationErrorData } from 'src/app/core/model/Validation/ValidationErrorData';
 import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
 import { ValidationIssueType } from 'src/app/core/model/Validation/ValidationIssueType';
@@ -492,8 +500,8 @@ export class TypeGuard {
       TypeGuard.isObject(structuredQueryData) &&
       TypeGuard.isString(structuredQueryData.version) &&
       TypeGuard.isOptionalString(structuredQueryData.display) &&
-      TypeGuard.isInclusionOrExclusionCriteria(structuredQueryData.inclusionCriteria) &&
-      TypeGuard.isInclusionOrExclusionCriteria(structuredQueryData.exclusionCriteria)
+      TypeGuard.isInclusionCriteria(structuredQueryData.inclusionCriteria) &&
+      TypeGuard.isExclusionCriteria(structuredQueryData.exclusionCriteria)
     );
   }
 
@@ -507,8 +515,24 @@ export class TypeGuard {
    * @param val - The value to check.
    * @returns boolean
    */
-  public static isInclusionOrExclusionCriteria(val: unknown): boolean {
+  public static isExclusionCriteria(val: unknown): boolean {
     return TypeGuard.isOptionalArray(val, (criteria) =>
+      TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData)
+    );
+  }
+
+  /**
+   * Checks if the given value is a valid inclusionCriteria array.
+   * @param val
+   * @returns boolean
+   */
+  /**
+   * Checks if the given value is a valid inclusion or exclusion criteria array.
+   * @param val - The value to check.
+   * @returns boolean
+   */
+  public static isInclusionCriteria(val: unknown): boolean {
+    return TypeGuard.isArray(val, (criteria) =>
       TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData)
     );
   }
@@ -906,5 +930,96 @@ export class TypeGuard {
 
   public static isFeasibilityPayload(payload: unknown): payload is { issues: IssueData[] } {
     return typeof payload === 'object' && payload !== null && 'issues' in payload;
+  }
+
+  /**
+   * Checks if the object is an instance of DateFilterUpgrade.
+   */
+  public static isDateFilterUpgrade(obj: unknown): obj is DateFilterUpgrade {
+    const d = obj as DateFilterUpgrade;
+    return (
+      TypeGuard.isObject(d) &&
+      TypeGuard.isString(d.name) &&
+      TypeGuard.isString(d.type) &&
+      TypeGuard.isString(d.start) &&
+      TypeGuard.isString(d.end)
+    );
+  }
+
+  /**
+   * Checks if the object is an instance of FieldUpgradeData.
+   */
+  public static isFieldUpgradeData(obj: unknown): obj is FieldUpgradeData {
+    const f = obj as FieldUpgradeData;
+    return (
+      TypeGuard.isObject(f) && TypeGuard.isString(f.attributeRef) && TypeGuard.isBoolean(f.mustHave)
+    );
+  }
+
+  /**
+   * Checks if the object is an instance of ProfileFieldUpgradeData.
+   */
+  public static isProfileFieldUpgradeData(obj: unknown): obj is ProfileFieldUpgradeData {
+    const p = obj as ProfileFieldUpgradeData;
+    return (
+      TypeGuard.isObject(p) &&
+      TypeGuard.isFieldUpgradeData(p.replaced) &&
+      (p.replacedWith === undefined || TypeGuard.isFieldUpgradeData(p.replacedWith))
+    );
+  }
+
+  /**
+   * Checks if the object is an instance of ProfileFilterUpgradeData.
+   */
+  public static isProfileFilterUpgradeData(obj: unknown): obj is ProfileFilterUpgradeData {
+    const p = obj as ProfileFilterUpgradeData;
+    return (
+      TypeGuard.isObject(p) &&
+      TypeGuard.isDateFilterUpgrade(p.replaced) &&
+      (p.replacedWith === undefined || TypeGuard.isDateFilterUpgrade(p.replacedWith))
+    );
+  }
+
+  /**
+   * Checks if the object is an instance of ProfileRemovedData.
+   */
+  public static isProfileRemovedData(obj: unknown): obj is ProfileRemovedData {
+    const p = obj as ProfileRemovedData;
+    return (
+      TypeGuard.isObject(p) &&
+      TypeGuard.isString(p.groupReference) &&
+      TypeGuard.isString(p.id) &&
+      TypeGuard.isString(p.name)
+    );
+  }
+
+  /**
+   * Checks if the object is an instance of ProfileUpgradeData.
+   */
+  public static isProfileUpgradeData(obj: unknown): obj is ProfileUpgradeData {
+    const p = obj as ProfileUpgradeData;
+    return TypeGuard.isObject(p) && TypeGuard.isProfileRemovedData(p.replaced);
+  }
+
+  /**
+   * Checks if the object is an instance of UpgradeData.
+   */
+  public static isUpgradeData(obj: unknown): obj is UpgradeData {
+    const u = obj as UpgradeData;
+    return (
+      TypeGuard.isObject(u) &&
+      TypeGuard.isCRTDLData(u.crtdl) &&
+      Array.isArray(u.annotations) &&
+      u.annotations.every(
+        (a) =>
+          (TypeGuard.isProfileUpgradeData(a.details) ||
+            TypeGuard.isProfileFieldUpgradeData(a.details) ||
+            TypeGuard.isProfileFilterUpgradeData(a.details)) &&
+          TypeGuard.isString(a.path) &&
+          TypeGuard.isObject(a.value) &&
+          TypeGuard.isString(a.value.message) &&
+          TypeGuard.isString(a.value.code)
+      )
+    );
   }
 }

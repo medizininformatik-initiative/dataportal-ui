@@ -1,12 +1,25 @@
-::ng-deep num-edit-time-restriction .mat-form-field-wrapper {
-  padding-bottom: 0px !important;
+.section-label {
+  display: flex;
+  align-items: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #6a7483;
+  margin-bottom: 8px;
 }
 
-.operator-part {
-  padding-right: 1.5em;
-  width: 11em;
-}
-
-.width-100 {
+.time-restriction-wrapper {
   width: 100%;
+}
+
+.time-restriction-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.fill {
+  flex: 1;
 }

@@ -1,7 +1,9 @@
+import { CheckAndUpgradeCCDLService } from '../../Upgrade/CheckAndUpgradeCCDL.service';
+import { concatMap, map, Observable, switchMap } from 'rxjs';
 import { CRTDL2UIModelService } from '../../Translator/CRTDL/CRTDL2UIModel.service';
+import { CrtdlProcessingPipelineService } from '../../CrtdlProcessingPipeline.service';
 import { CRTDLValidationService } from '../../Validation/CRTDLValidation.service';
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service';
-import { map, Observable, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
@@ -10,6 +12,7 @@ import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQu
 import { SavedDataQueryListItemData } from 'src/app/model/Interface/SavedDataQueryListItemData';
 import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTile/SavedFeasibilityQueryAdapter';
 import { TypeAssertion } from '../../TypeGuard/TypeAssersations';
+import { TypeGuard } from '../../TypeGuard/TypeGuard';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +21,9 @@ export class ReadDataQueryService {
   constructor(
     private dataQueryApiService: DataQueryApiService,
     private crtdl2UIModelService: CRTDL2UIModelService,
-    private validationService: CRTDLValidationService
+    private validationService: CRTDLValidationService,
+    private checkAndUpgradeCCDLService: CheckAndUpgradeCCDLService,
+    private crtdlProcessingPipelineService: CrtdlProcessingPipelineService
   ) {}
 
   public readSavedQueries(): Observable<InterfaceSavedQueryTile[]> {
@@ -46,11 +51,24 @@ export class ReadDataQueryService {
     return SavedFeasibilityQueryAdapter.adapt(savedDataQueryListItem);
   }
 
+  /**
+   * @todo //call check and upgrade
+   */
+  /**
+   * @todo //call check and upgrade
+   */
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
-      switchMap((data: SavedDataQueryData) => {
-        TypeAssertion.assertSavedDataQueryData(data);
-        return this.transformDataQuery(data);
+      map((data: SavedDataQueryData) => {
+        data.content = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDLAsSavedData(data.content);
+        return data;
+      }),
+      concatMap((data: any) => {
+        if (TypeGuard.isCRTDLData(data.content)) {
+          return this.crtdlProcessingPipelineService
+            .process(data.content)
+            .pipe(map((crtdl) => SavedDataQuery.fromJson(data, crtdl)));
+        }
       })
     );
   }
@@ -59,11 +77,5 @@ export class ReadDataQueryService {
     return this.dataQueryApiService
       .getDataQueryById(id)
       .pipe(switchMap((data: SavedDataQueryData) => this.validationService.validate(data.content)));
-  }
-
-  private transformDataQuery(data: SavedDataQueryData): Observable<SavedDataQuery> {
-    return this.crtdl2UIModelService
-      .createCRTDLFromJson(data.content)
-      .pipe(map((uiCRTDL) => SavedDataQuery.fromJson(data, uiCRTDL)));
   }
 }

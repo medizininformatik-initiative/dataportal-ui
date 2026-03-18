@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { InterfaceFilterChip } from '../../models/FilterChips/InterfaceFilterChip';
-import { Observable, of } from 'rxjs';
 import { DisplayData } from '../../../model/Interface/DisplayData';
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe';
+import { FilterChipData } from '../../models/FilterChips/FilterChipData';
+import { Observable, of } from 'rxjs';
+import { FilterChipPropertyData } from '../../models/FilterChips/FilterChipPropertyData';
 
 @Component({
   selector: 'num-filter-chips',
@@ -10,10 +11,10 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe';
   styleUrls: ['./filter-chips.component.scss'],
 })
 export class FilterChipsComponent implements OnInit {
-  chipData$: Observable<InterfaceFilterChip[]> = of([]);
+  chipData$: Observable<FilterChipData[]> = of([]);
 
   @Input()
-  filterChips: InterfaceFilterChip[] = [];
+  filterChips: FilterChipData[] = [];
 
   @Input()
   displayBlockTriangle = true;
@@ -22,7 +23,7 @@ export class FilterChipsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public toggleExpanded(chip) {
+  public toggleExpanded(chip: FilterChipPropertyData) {
     chip.expanded = !chip.expanded;
   }
   public toggleTypeExpanded(chip) {

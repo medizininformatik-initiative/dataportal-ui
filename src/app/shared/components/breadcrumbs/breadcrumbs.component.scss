@@ -1,19 +1,47 @@
 .breadcrumb {
-  margin-left: 10%;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
 .breadcrumb-item {
+  display: flex;
+  align-items: center;
   font-size: 14px;
 }
 
 .breadcrumb-item a {
   text-decoration: none;
-  color: #007bff;
+  color: var(--color-accent);
+  cursor: pointer;
 }
 
 .breadcrumb-item.active {
+  gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.breadcrumb-item.active span {
   font-weight: bold;
-  color: #6c757d;
+  color: var(--color-text-secondary);
+}
+
+.breadcrumb-separator {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  font-size: 24px;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+  padding: 0 8px;
+}
+
+.last-breadcrumb {
+  gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

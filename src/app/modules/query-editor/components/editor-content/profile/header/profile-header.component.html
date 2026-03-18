@@ -1,30 +1,49 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" class="selection-box">
-  <div class="display-container">
-    <num-searchbar
-      icon="pencil-alt"
-      [label]="placeholder"
-      [minLength]="0"
-      [searchText]="label"
-      (searchTextChange)="setLabel($event)"
-    >
-    </num-searchbar>
-    <div class="profile-display"><span>Type: </span>{{ profile.getDisplay().getOriginal() }}</div>
+<div fxLayout="row" fxLayoutAlign="start stretch" class="num-card selection-box">
+  <div class="display-container border-right-1">
+    <div>
+      <div class="num-text-accent margin-bottom-2">
+        {{ 'DATASELECTION.EDITOR.DISPLAY.RENAME_FEATURE' | translate }}
+      </div>
+      <num-searchbar
+        icon="pencil-alt"
+        [label]="placeholder"
+        [minLength]="0"
+        [searchText]="label"
+        (searchTextChange)="setLabel($event)"
+      >
+      </num-searchbar>
+      <div class="num-pill" numPillExpandable>
+        {{ profile.getDisplay().getOriginal() }}
+      </div>
+    </div>
   </div>
-  <div class="selected-fields-container padding-left-right-1">
-    {{ 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate }}
+  <div class="selected-fields-container border-right-1 padding-left-right-1">
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate
+      }}</span>
+    </div>
     <div class="filter-chips-container">
       <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
     </div>
   </div>
-  <div fxLayout="column" class="filter-container padding-left-right-1">
-    {{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate }}
+  <div fxLayout="column" class="filter-container border-right-1 padding-left-right-1">
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate
+      }}</span>
+    </div>
     <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container">
-      <num-filter-chips style="padding-top: 1%" [filterChips]="chips"> </num-filter-chips>
+      <num-filter-chips [filterChips]="chips"> </num-filter-chips>
     </div>
   </div>
-  <div fxLayout="column" class="reference-container">
+  <div fxLayout="column" class="reference-container padding-left-right-1">
     <div fxLayout="row wrap" fxLayoutAlign="space-between">
-      {{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate }}
+      <div class="label-with-info">
+        <span class="num-text-accent">{{
+          'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate
+        }}</span>
+      </div>
     </div>
     <div *ngIf="profileReferenceChips" class="filter-chips-container">
       <num-filter-chips [filterChips]="profileReferenceChips"> </num-filter-chips>

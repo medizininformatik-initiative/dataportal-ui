@@ -24,7 +24,7 @@ export class CreateBulkCriterionService {
   ) {}
 
   public createBulkCriterion(response: CriteriaBulkEntry[], uiProfileId: string) {
-    const uiProfile: UiProfileData = this.uiProfileProviderService.getUiProfileById(uiProfileId);
+    const uiProfile: UiProfileData = this.uiProfileProviderService.getOne(uiProfileId);
     const termcodes: TerminologyCode[] = this.extractTermcodes(response);
     const criteriaProfile = this.buildCriteriaProfile(response, termcodes);
     const builder = new CriterionBuilder(criteriaProfile);

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 35 236 190" fill="none">
+
+  <!-- Connector lines — trimmed to new cylinder edges -->
+  <line x1="144" y1="130" x2="184" y2="130" stroke="#5D707F" stroke-width="2" stroke-linecap="round"/>
+  <line x1="137" y1="141" x2="163" y2="185" stroke="#5D707F" stroke-width="2" stroke-linecap="round"/>
+  <line x1="123" y1="141" x2="97"  y2="185" stroke="#5D707F" stroke-width="2" stroke-linecap="round"/>
+  <line x1="116" y1="130" x2="76"  y2="130" stroke="#5D707F" stroke-width="2" stroke-linecap="round"/>
+  <line x1="123" y1="119" x2="97"  y2="75"  stroke="#5D707F" stroke-width="2" stroke-linecap="round"/>
+  <line x1="137" y1="119" x2="163" y2="75"  stroke="#5D707F" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Central hub — MII blue -->
+  <circle cx="130" cy="130" r="14" fill="rgba(32,111,168,0.2)" stroke="#206FA8" stroke-width="2"/>
+
+  <!-- RIGHT — MII blue #206FA8 (cx=210 cy=130, top=116, bot=144, walls x=184/236) -->
+  <ellipse cx="210" cy="116" rx="26" ry="10" fill="rgba(32,111,168,0.15)" stroke="#206FA8" stroke-width="1.8"/>
+  <line x1="184" y1="116" x2="184" y2="144" stroke="#206FA8" stroke-width="1.8"/>
+  <line x1="236" y1="116" x2="236" y2="144" stroke="#206FA8" stroke-width="1.8"/>
+  <ellipse cx="210" cy="130" rx="26" ry="10" fill="none" stroke="#206FA8" stroke-width="1.3"/>
+  <ellipse cx="210" cy="144" rx="26" ry="10" fill="rgba(32,111,168,0.1)" stroke="#206FA8" stroke-width="1.8"/>
+
+  <!-- TOP-RIGHT — MII green #94C11C (cx=170 cy=61, top=47, bot=75, walls x=144/196) -->
+  <ellipse cx="170" cy="47" rx="26" ry="10" fill="rgba(148,193,28,0.15)" stroke="#94C11C" stroke-width="1.8"/>
+  <line x1="144" y1="47" x2="144" y2="75" stroke="#94C11C" stroke-width="1.8"/>
+  <line x1="196" y1="47" x2="196" y2="75" stroke="#94C11C" stroke-width="1.8"/>
+  <ellipse cx="170" cy="61" rx="26" ry="10" fill="none" stroke="#94C11C" stroke-width="1.3"/>
+  <ellipse cx="170" cy="75" rx="26" ry="10" fill="rgba(148,193,28,0.1)" stroke="#94C11C" stroke-width="1.8"/>
+
+  <!-- TOP-LEFT — MII teal #488994 (cx=90 cy=61, top=47, bot=75, walls x=64/116) -->
+  <ellipse cx="90" cy="47" rx="26" ry="10" fill="rgba(72,137,148,0.15)" stroke="#488994" stroke-width="1.8"/>
+  <line x1="64" y1="47" x2="64" y2="75" stroke="#488994" stroke-width="1.8"/>
+  <line x1="116" y1="47" x2="116" y2="75" stroke="#488994" stroke-width="1.8"/>
+  <ellipse cx="90" cy="61" rx="26" ry="10" fill="none" stroke="#488994" stroke-width="1.3"/>
+  <ellipse cx="90" cy="75" rx="26" ry="10" fill="rgba(72,137,148,0.1)" stroke="#488994" stroke-width="1.8"/>
+
+  <!-- LEFT — MII blue #206FA8 (cx=50 cy=130, top=116, bot=144, walls x=24/76) -->
+  <ellipse cx="50" cy="116" rx="26" ry="10" fill="rgba(32,111,168,0.15)" stroke="#206FA8" stroke-width="1.8"/>
+  <line x1="24" y1="116" x2="24" y2="144" stroke="#206FA8" stroke-width="1.8"/>
+  <line x1="76" y1="116" x2="76" y2="144" stroke="#206FA8" stroke-width="1.8"/>
+  <ellipse cx="50" cy="130" rx="26" ry="10" fill="none" stroke="#206FA8" stroke-width="1.3"/>
+  <ellipse cx="50" cy="144" rx="26" ry="10" fill="rgba(32,111,168,0.1)" stroke="#206FA8" stroke-width="1.8"/>
+
+  <!-- BOTTOM-LEFT — MII green #94C11C (cx=90 cy=199, top=185, bot=213, walls x=64/116) -->
+  <ellipse cx="90" cy="185" rx="26" ry="10" fill="rgba(148,193,28,0.15)" stroke="#94C11C" stroke-width="1.8"/>
+  <line x1="64" y1="185" x2="64" y2="213" stroke="#94C11C" stroke-width="1.8"/>
+  <line x1="116" y1="185" x2="116" y2="213" stroke="#94C11C" stroke-width="1.8"/>
+  <ellipse cx="90" cy="199" rx="26" ry="10" fill="none" stroke="#94C11C" stroke-width="1.3"/>
+  <ellipse cx="90" cy="213" rx="26" ry="10" fill="rgba(148,193,28,0.1)" stroke="#94C11C" stroke-width="1.8"/>
+
+  <!-- BOTTOM-RIGHT — MII teal #488994 (cx=170 cy=199, top=185, bot=213, walls x=144/196) -->
+  <ellipse cx="170" cy="185" rx="26" ry="10" fill="rgba(72,137,148,0.15)" stroke="#488994" stroke-width="1.8"/>
+  <line x1="144" y1="185" x2="144" y2="213" stroke="#488994" stroke-width="1.8"/>
+  <line x1="196" y1="185" x2="196" y2="213" stroke="#488994" stroke-width="1.8"/>
+  <ellipse cx="170" cy="199" rx="26" ry="10" fill="none" stroke="#488994" stroke-width="1.3"/>
+  <ellipse cx="170" cy="213" rx="26" ry="10" fill="rgba(72,137,148,0.1)" stroke="#488994" stroke-width="1.8"/>
+</svg>

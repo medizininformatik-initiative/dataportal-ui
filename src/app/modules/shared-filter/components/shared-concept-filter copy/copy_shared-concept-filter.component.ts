@@ -32,7 +32,6 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy, OnCh
   ) {}
 
   ngOnInit(): void {
-    console.log('Initializing CopySharedConceptFilterComponent');
     this.initializeComponent();
   }
 

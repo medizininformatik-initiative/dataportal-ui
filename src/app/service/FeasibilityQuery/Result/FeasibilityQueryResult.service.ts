@@ -73,7 +73,7 @@ export class FeasibilityQueryResultService {
   }
 
   private setQueryResultProvider(queryResult: QueryResult): void {
-    this.resultProvider.setResultByID(queryResult, queryResult.getId());
+    this.resultProvider.setOne(queryResult);
   }
 
   public stopPolling(): void {

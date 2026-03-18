@@ -1,0 +1,13 @@
+@import './button-base.themed';
+@import './button-blue.themed';
+@import './button-green.themed';
+@import './button-red.themed';
+@import './button-cancel.themed';
+
+@mixin buttons($theme) {
+  @include button-base($theme);
+  @include button-blue($theme);
+  @include button-green($theme);
+  @include button-red($theme);
+  @include button-cancel($theme);
+}

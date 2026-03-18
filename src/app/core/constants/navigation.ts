@@ -4,7 +4,7 @@ import INavItem from '../../layout/models/nav-item.interface';
 export const mainNavItems: INavItem[] = [
   {
     routeTo: BasePaths.dataQuery,
-    icon: 'database',
+    icon: 'clipboard-list',
     translationKey: 'NAVIGATION.DATAQUERY',
   },
   {
@@ -14,12 +14,12 @@ export const mainNavItems: INavItem[] = [
   },
   {
     routeTo: BasePaths.dataSelection,
-    icon: 'dna',
+    icon: 'database',
     translationKey: 'NAVIGATION.DATASELECTION',
   },
   {
     routeTo: BasePaths.savedQueries,
-    icon: 'folder',
+    icon: 'folder-open',
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
 ];

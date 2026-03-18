@@ -1,40 +1,57 @@
-.container-bool-logic-outer {
-  padding: 0.1em 0;
-}
-
-.container-bool-logic-inner {
-  height: 0;
-  position: relative;
-  top: -0.8em;
-  left: 10px;
-}
-
-.container-bool-logic-inner-margin {
-  background-color: white;
-  padding: 0 0.3em 0 0;
-  border-radius: 1em;
-}
-
-.mat-mdc-standard-chip {
+.bool-logic-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 170px;
+  height: 29px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 0 6px;
   cursor: pointer;
-  border-radius: 1em;
-  border: 1px solid black;
-  padding: 1px 4px;
-  vertical-align: middle;
   user-select: none;
+  position: relative;
+  box-sizing: border-box;
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
-mat-chip {
-  cursor: pointer;
+.switch-label {
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #c5cacf;
+  z-index: 1;
+  flex: 1;
+  text-align: center;
+  transition: color 0.2s ease;
+
+  &.active {
+    color: #5a79af;
+  }
 }
 
-::ng-deep .container-bool-logic-outer .mat-mdc-chip.mat-mdc-standard-chip {
-  background-color: transparent;
-  padding-left: 6px;
-}
+.switch-indicator {
+  width: 41px;
+  height: 18px;
+  background: rgba(90, 121, 175, 0.2);
+  border-radius: 10px;
+  flex-shrink: 0;
+  position: relative;
 
-::ng-deep .container-bool-logic-inner .mat-mdc-chip.mat-mdc-standard-chip {
-  background-color: white;
-  border-radius: 1em;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 12px;
+    background: #5a79af;
+    border-radius: 6px;
+    transition: left 0.2s ease;
+  }
+
+  &.slide-right::after {
+    left: calc(100% - 18px);
+  }
 }

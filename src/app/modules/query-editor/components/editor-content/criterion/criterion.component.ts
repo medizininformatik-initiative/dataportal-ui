@@ -1,10 +1,8 @@
-import { Component, Input, OnInit, ViewChild, TemplateRef, AfterViewInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { CreateCriterionService } from 'src/app/service/Criterion/CreateCriterionService';
-import { CreateDataSelectionProfileService } from 'src/app/service/DataSelection/CreateDataSelectionProfile.service';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'num-criterion',
@@ -24,7 +22,7 @@ export class CriterionComponent implements OnInit, AfterViewInit {
   dseElement$: Observable<DataSelectionProfile>;
   currentTemplates: TemplateRef<any>[] = [];
 
-  constructor(private dse: CreateDataSelectionProfileService) {}
+  constructor() {}
 
   ngOnInit() {}
 

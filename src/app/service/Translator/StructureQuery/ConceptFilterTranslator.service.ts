@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
 import { v4 as uuidv4 } from 'uuid';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',
@@ -46,8 +47,9 @@ export class ConceptFilterTranslatorService {
    */
   private translateSingleConcept(terminologyCodeData: TerminologyCodeData): Concept {
     const hash = this.hashService.createConceptHash(terminologyCodeData);
-    const conceptDisplay = this.conceptTranslationCache.getConceptDisplayByHash(hash);
+    const conceptData = this.conceptTranslationCache.getOne(hash);
+    const display = Display.fromJson(conceptData.display);
     const terminologyCode = TerminologyCode.fromJson(terminologyCodeData);
-    return new Concept(conceptDisplay, terminologyCode);
+    return new Concept(display, terminologyCode);
   }
 }

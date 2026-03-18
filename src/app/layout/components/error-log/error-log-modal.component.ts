@@ -1,8 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue';
 import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
+import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade';
 
 @Component({
   selector: 'num-error-log-modal',
@@ -12,12 +14,20 @@ import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
 export class ErrorLogModalComponent implements OnInit, OnDestroy {
   validationReport: ValidationReport | null = null;
   errors: ValidationIssue[] = [];
+
+  upgrades$: Observable<ProfileUpgrade[] | null>;
   private destroy$ = new Subject<void>();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ValidationReport) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: ValidationReport,
+    private errorLogProvider: ErrorLogProviderService
+  ) {}
   ngOnInit(): void {
     this.validationReport = this.data;
-    this.errors = this.data?.getIssues() || [];
+    if (this.data instanceof ValidationReport) {
+      this.errors = this.data?.getIssues() || [];
+    }
+    this.upgrades$ = this.errorLogProvider.getProfileUpgrade$();
   }
 
   ngOnDestroy(): void {

@@ -4,7 +4,7 @@ import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldT
 import { map, Subscription, take } from 'rxjs';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedFieldCloner';
-import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/SelectedProfileFields.service';
+import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/Selection/SelectedProfileFields.service';
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface';
 
 @Component({

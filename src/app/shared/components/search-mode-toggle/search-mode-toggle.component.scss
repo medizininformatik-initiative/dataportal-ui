@@ -1,4 +1,19 @@
-.container {
+.toggle-container {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+}
+
+span {
+  font-size: var(--font-size-md);
+  color: var(--border-color);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+
+  &.active {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
 }

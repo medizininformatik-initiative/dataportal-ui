@@ -1,0 +1,13 @@
+@use 'node_modules/@angular/material' as mat;
+@mixin header_themed($theme) {
+  $accent: map-get($theme, accent);
+  $primary: map-get($theme, primary);
+  $name: map-get($theme, name);
+
+  num-dataportal-header mat-toolbar {
+    --mat-toolbar-container-background-color: #f1f2f3;
+    --mat-toolbar-container-text-color: #000000;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+}

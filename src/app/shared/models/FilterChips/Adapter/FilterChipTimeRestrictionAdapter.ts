@@ -1,17 +1,15 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
 import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipBuilder } from '../FilterChipBuilder';
-import { InterfaceFilterChip } from '../InterfaceFilterChip';
+import { FilterChipData } from '../FilterChipData';
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation';
 import { v4 as uuidv4 } from 'uuid';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
 export class FilterChipTimeRestrictionAdapter {
-  public static adaptTimeRestriction(
-    timeRestriction: AbstractTimeRestriction
-  ): InterfaceFilterChip[] {
-    const chips: InterfaceFilterChip[] = [];
+  public static adaptTimeRestriction(timeRestriction: AbstractTimeRestriction): FilterChipData[] {
+    const chips: FilterChipData[] = [];
     if (timeRestriction) {
       switch (timeRestriction.getType()) {
         case TimeRestrictionType.BETWEEN:
@@ -34,14 +32,14 @@ export class FilterChipTimeRestrictionAdapter {
     return chips;
   }
 
-  private static createBetweenChip(timeRestriction: any): InterfaceFilterChip {
+  private static createBetweenChip(timeRestriction: any): FilterChipData {
     const betweenText = this.createDisplayDataInstanceForBetweenFilter(timeRestriction);
     const builder = new FilterChipBuilder('SHARED_FILTER.TIMERESTRICTION.BETWEEN');
     builder.addData(uuidv4(), betweenText);
     return builder.buildFilterChip();
   }
 
-  private static createAtChip(timeRestriction: any): InterfaceFilterChip {
+  private static createAtChip(timeRestriction: any): FilterChipData {
     const atText = this.createDisplayDataInstance(
       `${this.formatDate(timeRestriction.getBeforeDate())}`
     );
@@ -50,7 +48,7 @@ export class FilterChipTimeRestrictionAdapter {
     return builder.buildFilterChip();
   }
 
-  private static createBeforeChip(timeRestriction: BeforeFilter): InterfaceFilterChip {
+  private static createBeforeChip(timeRestriction: BeforeFilter): FilterChipData {
     const beforeText = this.createDisplayDataInstance(
       `${this.formatDate(timeRestriction.getAfterDate())}`
     );
@@ -59,7 +57,7 @@ export class FilterChipTimeRestrictionAdapter {
     return builder.buildFilterChip();
   }
 
-  private static createAfterChip(timeRestriction: any): InterfaceFilterChip {
+  private static createAfterChip(timeRestriction: any): FilterChipData {
     const afterText = this.createDisplayDataInstance(
       `${this.formatDate(timeRestriction.getAfterDate())}`
     );

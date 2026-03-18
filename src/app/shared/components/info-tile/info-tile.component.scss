@@ -1,11 +1,11 @@
 .info-item {
   display: flex;
-  gap: 1rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
-  background-color: rgba(90, 121, 175, 0.1);
-  border-left: 4px solid #9bb823;
-  border-radius: 4px;
+  gap: 12px;
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  background-color: var(--color-accent-bg);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--border-radius-card);
   align-items: center;
 
   &.info-item-red {
@@ -18,25 +18,26 @@
   flex-shrink: 0;
   min-width: 100px;
   font-weight: 600;
-  color: #495057;
-  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
 }
 
 .info-value {
   flex: 1;
-  color: #212529;
-  font-size: 0.9rem;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
 
   code {
-    background: #e9ecef;
-    padding: 0.125rem 0.5rem;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 1px 6px;
     border-radius: 3px;
-    font-size: 0.875rem;
-    color: #495057;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    border: 1px solid var(--border-color);
   }
 
   a {
-    color: #5a79af;
+    color: var(--color-accent);
     text-decoration: none;
 
     &:hover {

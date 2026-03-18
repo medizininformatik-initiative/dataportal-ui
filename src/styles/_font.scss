@@ -36,3 +36,21 @@
     url('/assets/font/titillium-web-v14-latin-regular.woff2') format('woff2'),
     url('/assets/font/titillium-web-v14-latin-regular.woff') format('woff');
 }
+
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Titillium Web SemiBold'),
+    url('/assets/font/titillium-web-v14-latin-600.woff2') format('woff2'),
+    url('/assets/font/titillium-web-v14-latin-600.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Titillium Web Bold'),
+    url('/assets/font/titillium-web-v14-latin-700.woff2') format('woff2'),
+    url('/assets/font/titillium-web-v14-latin-700.woff') format('woff');
+}

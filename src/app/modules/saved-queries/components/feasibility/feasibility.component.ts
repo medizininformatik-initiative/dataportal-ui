@@ -69,7 +69,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
           return queryResult;
         }),
         tap((queryResult) => {
-          this.resultProviderService.setResultByID(queryResult, queryResult.getId());
+          this.resultProviderService.setOne(queryResult);
         })
       )
       .subscribe(() => this.navigate());

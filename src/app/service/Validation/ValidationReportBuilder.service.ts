@@ -19,8 +19,10 @@ export class ValidationReportBuilderService {
     const issues = this.errorLogProviderService.getCurrentValidationResponseData();
     return {
       timestamp: new Date().toISOString(),
-      totalErrors: issues.length,
-      issues,
+      totalErrors: issues?.length || 0,
+      errors: issues?.length > 0 ? issues : [],
+      totalUpgrades: this.errorLogProviderService.getCurrentUpgradeData()?.annotations?.length || 0,
+      upgrades: this.errorLogProviderService.getCurrentUpgradeData()?.annotations || [],
       dataportal: this.aboutInfoBuilder.buildAboutInfo(),
       crtdl: this.errorLogProviderService.getCurrentValidatedCRTDL(),
     };

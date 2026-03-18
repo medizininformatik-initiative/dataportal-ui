@@ -4,7 +4,7 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { Injectable } from '@angular/core';
-import { ProfileProviderService } from '../modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from './Provider/ProfileProvider.service';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
@@ -41,7 +41,7 @@ export class StagedProfileService {
    * @returns
    */
   public initialize(id: string): void {
-    const profile = this.profileProviderService.getProfileById(id);
+    const profile = this.profileProviderService.getOne(id);
     this.stagedProfileSubject.next(profile);
   }
 
@@ -140,11 +140,10 @@ export class StagedProfileService {
   private getProfilesFromProviderAndSetInDataSelection(
     linkedProfileIds: string[]
   ): Observable<void[]> {
-    return this.profileProviderService.getProfileIdMap().pipe(
-      tap((profileMap) => console.log('Profile Map:', profileMap)),
-      map((profileMap: Map<string, DataSelectionProfile>) =>
+    return this.profileProviderService.getAll().pipe(
+      map((profileArray: Array<DataSelectionProfile>) =>
         linkedProfileIds.map((id) => {
-          const profile = profileMap.get(id);
+          const profile = profileArray.find((p) => p.getId() === id);
           if (profile) {
             return this.setProfileInDataSelectionProvider(profile);
           }
@@ -173,7 +172,7 @@ export class StagedProfileService {
   public buildProfile(): Observable<void[]> {
     const profile = this.stagedProfileSubject.value;
     this.triggerUpdate(profile);
-    this.profileProviderService.setProfileById(profile.getId(), profile);
+    this.profileProviderService.setOne(profile);
     this.setProfileInDataSelectionProvider(profile);
     return this.setLinkedProfillesInDataSelectionProvdier();
   }

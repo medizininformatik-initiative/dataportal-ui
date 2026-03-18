@@ -1,8 +1,7 @@
-import { CRTDL2UIModelService } from '../Translator/CRTDL/CRTDL2UIModel.service';
+import { CheckAndUpgradeCCDLService } from '../Upgrade/CheckAndUpgradeCCDL.service';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
-import { CRTDLValidationService } from '../Validation/CRTDLValidation.service';
+import { CrtdlProcessingPipelineService } from '../CrtdlProcessingPipeline.service';
 import { FileUploadService } from './FileUpload.service';
-import { filter, switchMap, take } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { SnackbarMessageService } from '../SnackbarMessage.service';
 
@@ -12,9 +11,9 @@ import { SnackbarMessageService } from '../SnackbarMessage.service';
 export class UploadService {
   constructor(
     private fileUploadService: FileUploadService,
-    private crtdlValidationService: CRTDLValidationService,
-    private crdtlTranslatorService: CRTDL2UIModelService,
-    private snackbarMessageService: SnackbarMessageService
+    private snackbarMessageService: SnackbarMessageService,
+    private checkAndUpgradeCCDLService: CheckAndUpgradeCCDLService,
+    private crtdlProcessingPipelineService: CrtdlProcessingPipelineService
   ) {}
 
   public uploadCRTDL(file: File): void {
@@ -28,20 +27,10 @@ export class UploadService {
     this.uploadAndTranslate(importedQuery);
   }
 
-  /**
-   * Uploads the CRTDL after successful validation
-   * @param crtdl
-   */
-  private uploadAndTranslate(crtdl: CRTDLData): void {
-    this.crtdlValidationService
-      .validate(crtdl)
-      .pipe(
-        filter((isValid) => isValid),
-        switchMap(() => this.crdtlTranslatorService.createCRTDLFromJson(crtdl)),
-        take(1)
-      )
-      .subscribe(() => {
-        this.snackbarMessageService.dataDefinitionUploadSuccess();
-      });
+  public uploadAndTranslate(crtdl: CRTDLData): void {
+    const preUpgraded = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDL(crtdl);
+    this.crtdlProcessingPipelineService.process(preUpgraded).subscribe(() => {
+      this.snackbarMessageService.dataDefinitionUploadSuccess();
+    });
   }
 }

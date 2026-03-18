@@ -18,17 +18,29 @@ const routes: Routes = [
       preLoadedQuery: LoadQueryIntoEditorFromUrlService,
     },
     component: CohortDefinitionComponent,
-    data: { animation: 'Cohort' },
+    data: {
+      animation: 'Cohort',
+      title: 'TAB_TITLE.DATA_QUERY.COHORT_DEFINITION',
+      breadcrumb: 'BREADCRUMB.DATA_QUERY_COHORT_DEFINITION',
+    },
   },
   {
     path: PathSegments.cohortDefinition,
     component: CohortDefinitionComponent,
-    data: { animation: 'Cohort', title: 'TAB_TITLE.DATA_QUERY.COHORT_DEFINITION' },
+    data: {
+      animation: 'Cohort',
+      title: 'TAB_TITLE.DATA_QUERY.COHORT_DEFINITION',
+      breadcrumb: 'BREADCRUMB.DATA_QUERY_COHORT_DEFINITION',
+    },
   },
   {
     path: PathSegments.dataSelection,
     component: DataSelectionComponent,
-    data: { animation: 'DataSelection', title: 'TAB_TITLE.DATA_QUERY.DATA_SELECTION' },
+    data: {
+      animation: 'DataSelection',
+      title: 'TAB_TITLE.DATA_QUERY.DATA_SELECTION',
+      breadcrumb: 'BREADCRUMB.DATA_QUERY_DATA_SELECTION',
+    },
   },
 ];
 

@@ -1,0 +1,121 @@
+@use 'node_modules/@angular/material' as mat;
+
+@mixin filter-chips_themed($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  num-filter-chips {
+    .chip-container {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 0 8px;
+      height: 24px;
+      font-family: 'Open Sans', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 24px;
+      color: mat.get-color-from-palette($accent, 500);
+      background: transparent;
+      border: 1px solid rgba(mat.get-color-from-palette($accent, 500), 0.2);
+      border-radius: 4px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+
+      &.expanded {
+        width: min-content;
+        min-width: 150px;
+        max-width: max-content;
+        white-space: normal;
+        overflow: visible;
+        padding-right: 5px;
+        height: auto;
+        min-height: 26px;
+      }
+
+      &.count-badge {
+        background-color: rgba(mat.get-color-from-palette($accent, 500), 0.3);
+        color: mat.get-color-from-palette($accent, 500);
+        font-weight: bold;
+        padding: 0 8px;
+        min-width: auto;
+        max-width: none;
+      }
+    }
+
+    .block {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      height: 24px;
+      border-radius: 4px 0 0 4px;
+      border: 1px solid mat.get-color-from-palette($accent, 500);
+      background: mat.get-color-from-palette($accent, 500);
+      font-family: 'Open Sans', sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: mat.get-color-from-palette($primary, 'white');
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+
+      &.expanded {
+        width: min-content;
+        min-width: 150px;
+        max-width: max-content;
+        white-space: normal;
+        overflow: visible;
+        padding-right: 5px;
+        height: auto;
+        min-height: 26px;
+      }
+
+      &.twoLine {
+        margin-bottom: 3px;
+        min-height: 42px;
+      }
+    }
+
+    .block-triangle {
+      color: mat.get-color-from-palette($accent, 500);
+      border-left: 12px solid;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      display: inline-block;
+      content: '';
+
+      &.twoLine {
+        border-left: 12px solid;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+      }
+    }
+
+    .padding-left-20 {
+      padding-left: 20px;
+    }
+
+    .height-100 {
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .filter-wrapper {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+  }
+}

@@ -1,21 +1,33 @@
 /* import of not themed classes */
-@import './styles/select-classes';
+@import './styles/base/select-classes';
 
-/* import of themed mixins */
-@import './styles/buttons.themed';
-@import './styles/lang-toggle-button.themed';
-@import './styles/color-variables.themed';
-@import './styles/color-classes.themed';
-@import './styles/divider-classes.themed';
-@import './styles/side-menu.component.themed';
-@import './styles/general_table.themed';
-@import './styles/footer.themed';
-@import './styles/header.themed';
-@import './styles/search-input.themed';
-@import './styles/typography.themed';
-@import './styles/mat-chip.themed';
-@import './styles/mat-expansion-panel.themed';
-@import './styles/code-editor.themed';
+/* base */
+@import './styles/base/color-variables.themed';
+@import './styles/base/color-classes.themed';
+@import './styles/base/divider-classes.themed';
+@import './styles/base/typography.themed';
+
+/* layout */
+@import './styles/layout/header.themed';
+@import './styles/layout/footer.themed';
+@import './styles/layout/side-menu.component.themed';
+
+/* material */
+@import './styles/material/mat-chip.themed';
+@import './styles/material/mat-expansion-panel.themed';
+@import './styles/material/mat-tooltip.themed';
+
+/* buttons */
+@import './styles/button/buttons.themed';
+
+/* components */
+@import './styles/components/lang-toggle-button.themed';
+@import './styles/components/search-input.themed';
+@import './styles/components/general_table.themed';
+@import './styles/components/code-editor.themed';
+@import './styles/components/checkbox.themed';
+@import './styles/components/action-bar.themed';
+@import './styles/components/filter-chips.themed';
 
 /* export themed mixins */
 @mixin custom-material_themed($theme) {
@@ -27,10 +39,14 @@
   @include general_table_themed($theme);
   @include footer_themed($theme);
   @include header_themed($theme);
+  @include mat-tooltip_themed($theme);
   @include typography_themed($theme);
   @include buttons($theme);
   @include mat-chip_themed($theme);
   @include mat-expansion-panel_themed($theme);
   @include code-editor_themed($theme);
   @include drop-down-search-theme($theme);
+  @include checkbox_themed($theme);
+  @include action-bar_themed($theme);
+  @include filter-chips_themed($theme);
 }

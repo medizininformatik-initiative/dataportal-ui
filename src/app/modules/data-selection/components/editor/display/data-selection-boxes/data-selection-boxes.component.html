@@ -1,39 +1,95 @@
 <div
   fxLayout="row"
   fxLayoutAlign="start stretch"
-  class="selection-box"
+  class="num-card selection-box"
   [attr.data-cy]="label | displayTranslation"
 >
   <div class="display-container">
-    <div>{{ label | displayTranslation }}</div>
-    <div class="text-small">{{ display }}</div>
-  </div>
-  <div class="display-selected-fields-container padding-1">
-    {{ 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate }}
-    <div class="filter-chips-container padding-1">
-      <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
+    <div class="num-text-body">{{ label | displayTranslation }}</div>
+    <div
+      class="num-pill"
+      [class.expanded]="displayExpanded"
+      (click)="displayExpanded = !displayExpanded"
+    >
+      {{ display }}
     </div>
   </div>
-  <div fxLayout="column" class="filter-container padding-1">
-    {{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate }}
-    <div
-      fxLayout="row"
-      fxLayoutAlign="start center"
-      *ngIf="profile.getReference().getIncludeReferenceOnly()"
-      class="reference-chip-padding-30"
-    >
-      <ng-container *ngIf="isReferenced">
-        <div class="block">{{ 'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate }}</div>
-        <div class="block-triangle"></div>
-        <mat-checkbox
-          [disabled]="!isEditable"
-          [checked]="profile.getReference().getIsReferenceSet()"
-          (change)="toggleIsReferenceSet(profile.getReference())"
-        ></mat-checkbox>
+  <div class="card-col">
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate
+      }}</span>
+      <span
+        class="info-icon"
+        numInfoTooltip
+        [infoTooltipTitle]="
+          'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TITLE' | translate
+        "
+        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TEXT' | translate"
+      ></span>
+    </div>
+    <div class="filter-chips-container">
+      <ng-container *ngIf="$fieldsFilterChips | async as chips">
+        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
+        <span *ngIf="!chips.length" class="empty-state">{{
+          'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate
+        }}</span>
       </ng-container>
     </div>
-    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container padding-1">
-      <num-filter-chips [filterChips]="chips"></num-filter-chips>
+  </div>
+  <div class="card-col">
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate
+      }}</span>
+      <span
+        class="info-icon"
+        numInfoTooltip
+        [infoTooltipTitle]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TITLE' | translate"
+        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TEXT' | translate"
+      ></span>
+    </div>
+    <div class="filter-chips-container">
+      <ng-container *ngIf="filtersFilterChips$ | async as chips">
+        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
+        <span *ngIf="!chips.length" class="empty-state">{{
+          'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
+        }}</span>
+      </ng-container>
+    </div>
+  </div>
+  <div
+    *ngIf="profile.getReference().getIsReferenceSet()"
+    fxLayout="column"
+    class="reference-container"
+  >
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
+      }}</span>
+      <span
+        class="info-icon"
+        numInfoTooltip
+        [infoTooltipTitle]="'DATASELECTION.EDITOR.DISPLAY.REFERENCE_TOOLTIP_TITLE' | translate"
+        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.REFERENCE_TOOLTIP_TEXT' | translate"
+      ></span>
+    </div>
+    <div class="reference-toggle-row">
+      <ng-container *ngIf="isReferenced">
+        <div
+          class="reference-toggle"
+          [class.reference-toggle--active]="profile.getReference().getIsReferenceSet()"
+        >
+          <num-checkbox
+            [disabled]="!isEditable"
+            [checked]="profile.getReference().getIsReferenceSet()"
+            (checkedChange)="toggleIsReferenceSet(profile.getReference())"
+          ></num-checkbox>
+          <span class="reference-toggle-text">{{
+            'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
+          }}</span>
+        </div>
+      </ng-container>
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="start start" class="menu-box">

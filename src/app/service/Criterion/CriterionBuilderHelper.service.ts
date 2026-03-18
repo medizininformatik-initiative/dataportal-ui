@@ -22,7 +22,7 @@ export class CriterionBuilderHelperService {
 
   public setBuilderWithCriteriaProfileData(profileData: CriteriaProfileData): CriterionBuilder {
     const mandatoryFields = this.criterionMetadataService.createMandatoryFields(profileData);
-    const uiProfile = this.uiProfileProviderService.getUiProfileById(profileData.uiProfileId);
+    const uiProfile = this.uiProfileProviderService.getOne(profileData.uiProfileId);
     const builder = new CriterionBuilder(mandatoryFields);
     const valueFilter = this.addValueFilters(uiProfile.valueDefinition);
     const attributeFilter = this.addAttributeFilters(uiProfile.attributeDefinitions);

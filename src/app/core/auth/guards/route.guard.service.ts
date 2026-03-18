@@ -3,7 +3,7 @@ import { CriterionProviderService } from 'src/app/service/Provider/CriterionProv
 import { Injectable } from '@angular/core';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable, of } from 'rxjs';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { PathSegments } from 'src/app/app-paths';
 
 @Injectable({ providedIn: 'root' })
@@ -26,22 +26,22 @@ export class RouteGuard implements CanActivate {
   }
 
   private handleProfile(id: string) {
-    const canRoute = this.profileService.getProfileById(id) ? true : false;
+    const canRoute = this.profileService.getOne(id) ? true : false;
     if (!canRoute) {
       this.navigationHelperService.navigateToDataSelectionSearch();
       return of(false);
     } else {
-      of(true);
+      return of(true);
     }
   }
 
   private handleCriterion(id: string) {
-    const canRoute = this.criterionProviderService.getCriterionByUID(id) ? true : false;
+    const canRoute = this.criterionProviderService.getOne(id) ? true : false;
     if (!canRoute) {
       this.navigationHelperService.navigateToFeasibilityQuerySearch();
       return of(false);
     } else {
-      of(true);
+      return of(true);
     }
   }
 }

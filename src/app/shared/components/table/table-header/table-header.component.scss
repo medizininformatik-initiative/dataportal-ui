@@ -1,10 +1,8 @@
 .table-header {
   text-align: left;
   padding: 8px;
-  border-bottom: 1px solid #ddd;
-  color: rgba(197, 202, 207, 1);
-  font-size: 16px;
-  font-family: 'Titillium Web', sans-serif;
+  border-bottom: 1px solid #f1f2f3;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .sticky-header {
@@ -16,9 +14,11 @@
 
 th {
   padding: 1rem 0.5rem;
-  font-size: 16px;
-  color: rgba(197, 202, 207, 1);
-  font-weight: 500;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 14px;
+  color: #6a7483;
 }
 
 th:nth-child(1) {

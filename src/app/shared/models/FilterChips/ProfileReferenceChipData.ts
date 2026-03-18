@@ -1,7 +1,7 @@
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { InterfaceFilterChipData } from './InterfaceFilterChipData';
+import { FilterChipData } from './FilterChipData';
 
-export interface ProfileReferenceChipData extends InterfaceFilterChipData {
+export interface ProfileReferenceChipData extends FilterChipData {
   id: string
   text: string
   expanded: boolean

@@ -16,12 +16,12 @@
       },
       "CLOSE": "Schließen",
       "ERROR_LOG": {
-        "LABEL": "Fehlerprotokoll",
+        "LABEL": "Protokoll",
         "MODAL": {
           "CLEAR": "Fehlerprotokoll löschen",
-          "DESCRIPTION": "Folgende Validierungsprobleme wurden gefunden:",
-          "DOWNLOAD": "Fehlerprotokoll herunterladen",
-          "HEADER": "Fehlerprotokoll",
+          "DESCRIPTION": "Folgende Validierungsprobleme wurden gefunden- bei Fragen wenden Sie sich bitte an <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
+          "DOWNLOAD": "Protokoll herunterladen",
+          "HEADER": "Protokoll",
           "ITEM": {
             "AFTER_DATE": "Nach",
             "ALLOWED": "Erlaubt:",
@@ -40,7 +40,21 @@
         }
       },
       "LOGOUT": "Abmelden",
-      "PROPOSAL_PORTAL": "Antragsportal"
+      "PROPOSAL_PORTAL": "Antragsportal",
+      "PROPOSAL_PORTAL_TOOLTIP": "Antragsportal in einem neuen Tab öffnen",
+      "UPGRADE_LOG": {
+        "LABEL": "Upgrade Log",
+        "MODAL": {
+          "DESCRIPTION": "Die folgenden Änderungen wurden automatisch vorgenommen - bei Fragen wenden Sie sich bitte an <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
+          "HEADER": "Upgrade Log",
+          "ITEM": {
+            "REMOVED_FIELDS": "Das Merkmal Feld <code>{{ replaced }}</code> wurde entfernt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
+            "REMOVED_PROFILE": "Das Profil <code>{{ profileName }}</code> wurde entfernt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
+            "UPGRADE_FIELDS": "Das Merkmal Feld <code>{{ replaced }}</code> wurde ersetzt durch <code>{{ replacedWith }}</code>. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
+            "UPGRADE_FILTER": "Der Filter wurde aktualisiert. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an."
+          }
+        }
+      }
     },
     "SIDENAV": {
       "LABEL": "Seitennavigation"
@@ -48,6 +62,22 @@
     "TOGGLE": {
       "LABEL": "Seitennavigation umschalten"
     }
+  },
+  "BREADCRUMB": {
+    "DATA_PROTECTION": "Datenschutz",
+    "DATA_QUERY": "Datendefinition",
+    "DATA_QUERY_COHORT_DEFINITION": "Kohortenselektion",
+    "DATA_QUERY_DATA_SELECTION": "Merkmalselektion",
+    "DATA_SELECTION": "Merkmalselektion",
+    "DATA_SELECTION_EDITOR": "Auswahl",
+    "DATA_SELECTION_SEARCH": "Suche",
+    "FEASIBILITY_QUERY": "Kohortenselektion",
+    "FEASIBILITY_QUERY_BULK_SEARCH": "Massensuche",
+    "FEASIBILITY_QUERY_EDITOR": "Auswahl",
+    "FEASIBILITY_QUERY_RESULT": "Ergebnis",
+    "FEASIBILITY_QUERY_SEARCH": "Suche",
+    "QUERY_EDITOR": "Editor",
+    "SAVED_QUERIES": "Gespeicherte Datendefinitionen"
   },
   "DATAQUERY": {
     "COHORT": {
@@ -63,6 +93,8 @@
       },
       "EMPTY": "Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohortenselektion oder erstellen Sie eine neue Kohorte.",
       "HEADER": "Kohortenselektion",
+      "INFO_TOOLTIP_TEXT": "Eine Kohortendefinition legt die Gruppe von Patienten oder Datenobjekten fest, die Sie analysieren möchten. Definieren Sie Ein- und Ausschlusskriterien, um Ihre Zielpopulation präzise zu beschreiben. Dieser Schritt ist erforderlich, um fortzufahren.",
+      "INFO_TOOLTIP_TITLE": "Kohortendefinition",
       "REQUIRED": "Kohortenselektion ist ein Pflichtfeld"
     },
     "DATASELECTION": {
@@ -81,7 +113,7 @@
       },
       "ERROR": {
         "DOWNLOAD": "Es wurde keine Kohorte definiert, Download nicht möglich.",
-        "UPLOAD": "In der hochgeladenen Datei wurde keine Kohorte definiert."
+        "UPLOAD": "Datendefintion konnte nicht hochgeladen werden"
       },
       "HEADER": "Merkmalselektion",
       "SAVE": {
@@ -89,6 +121,8 @@
       },
       "SUCCESS": {
         "DOWNLOAD": "Datendefinition wurde erfolgreich heruntergeladen.",
+        "INFO_TOOLTIP_TEXT": "Die Datenselektion legt fest, welche Datenfelder oder Variablen für die definierte Kohorte einbezogen werden. Wählen Sie die relevanten Datenpunkte für Ihre Analyse aus. Dieser Schritt ist erforderlich, um fortzufahren.",
+        "INFO_TOOLTIP_TITLE": "Datenselektion",
         "UPLOAD": "Datendefinition wurde hochgeladen."
       }
     }
@@ -103,19 +137,29 @@
       },
       "DISPLAY": {
         "APPLIED_FILTER": "Angewandte Filter",
+        "APPLIED_FILTER_TOOLTIP_TEXT": "Filter schränken die Daten eines Merkmals auf bestimmte Werte ein, z. B. nur Diagnosen ab einem bestimmten Datum. Optionale Filter werden nur dann angewendet, wenn entsprechende Daten vorhanden sind.",
+        "APPLIED_FILTER_TOOLTIP_TITLE": "Angewandte Filter",
         "APPLIED_REFERENCES": "Referenzierte Merkmale",
+        "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenzierte Merkmale sind verknüpfte Profile, die automatisch mitgeliefert werden, wenn das aktuelle Merkmal in der Anfrage enthalten ist. Sie können nicht einzeln abgewählt werden.",
+        "APPLIED_REFERENCES_TOOLTIP_TITLE": "Referenzierte Merkmale",
         "LINKED": "Verknüpft",
+        "NO_FIELDS": "Keine Felder eingeschlossen",
+        "NO_FILTERS": "Keine angewendet",
         "OPTIONAL": "Optional",
         "REFERENCE": "Nur wenn referenziert",
+        "REFERENCE_TOOLTIP_TEXT": "Wenn aktiviert, wird dieses FHIR-Profil nur dann in die Datenanfrage einbezogen, wenn es explizit von einem anderen ausgewählten Profil referenziert wird. Dies ist nützlich für verknüpfte Ressourcen – zum Beispiel, um eine Observation nur dann einzuschließen, wenn sie von einer ausgewählten Condition referenziert wird – und verhindert so das Abrufen nicht relevanter Daten.",
+        "REFERENCE_TOOLTIP_TITLE": "Nur wenn referenziert",
+        "RENAME_FEATURE": "Merkmal umbenennen",
         "REQUIRED": "Erforderlich",
-        "SELECTED_FIELDS": "Selektierte Felder"
+        "SELECTED_FIELDS": "Selektierte Felder",
+        "SELECTED_FIELDS_TOOLTIP_TEXT": "Felder sind die konkreten Datenpunkte eines Merkmals, z. B. Diagnose-Code oder Datum. Die vorausgewählten Felder wurden anhand typischer Forschungsanforderungen vordefiniert. Sie können weitere Felder hinzufügen oder nicht benötigte entfernen.",
+        "SELECTED_FIELDS_TOOLTIP_TITLE": "Selektierte Felder"
       },
-      "HEADER": "Ausgewählte Merkmale",
+      "HEADER": "Merkmale",
       "HEADER_DESCRIPTION": "Hier können Sie definieren, welche Merkmale von Patientinnen und Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll / Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z. B. auf bestimmte Diagnosecodes) hinzu.",
-      "HEADER_INFO1": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter ",
-      "HEADER_INFO2": ". Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: ",
-      "HEADER_INFO3": "Achten Sie bei der Bearbeitung darauf, dass alle Zwischenergebnisse durch Klick auf \"Speichern\" in der Bearbeitungsansicht der Module zwischengespeichert werden müssen.",
-      "SECTION": "Ausgewählte Kriterien"
+      "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter <a href=\"mailto:{{email}}\" target=\"_blank\">{{email}}</a>. Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: <a href=\"https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/\" target=\"_blank\">https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/</a> Achten Sie bei der Bearbeitung darauf, dass alle Zwischenergebnisse durch Klick auf \"Speichern\" in der Bearbeitungsansicht der Module zwischengespeichert werden müssen.",
+      "SECTION": "Ausgewählte Kriterien",
+      "SECTION_NAME": "Ausgewählte Merkmale"
     },
     "SEARCH": {
       "ACTION_BAR": {
@@ -194,7 +238,7 @@
         "VIEW_STAGE_TOOLTIP": "Zum Editor navigieren, um die bereitgestellten Elemente anzuzeigen"
       },
       "HEADER": "Bulk Suche",
-      "HEADER_INFO": "Definieren Sie Ihre Kohorte, indem Sie im Bulk-Modus zwei Filter festlegen: Context und Terminology. Geben Sie anschließend eine Liste von kommaseparierten Terminologie-Codes (z. B. ICD-10, LOINC, OPS) ein, um die Suche gezielt einzuschränken.Die Bulk-Kohortensuche ermöglicht es Ihnen, große Mengen an Codes auf einmal zu verarbeiten",
+      "HEADER_INFO": "Hier können Sie mehrere Codes gleichzeitig zu einem Kriterium verknüpfen. Fügen Sie eine Liste (Tab- oder Komma-getrennt) von Kodierungen eines spezifischen Systems (z. B. LOINC, ICD-10, OPS) ein und spezifizieren Sie den Kontext (z. B. Laboruntersuchung, Diagnose, Prozedur). Die Suche verknüpft die Kriterien als \"oder\".",
       "INPUT_PLACEHOLDER": "Geben Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
       "PLACEHOLDER": "Fügen Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
       "SEARCH_BUTTON_TOOLTIP": "Alle eingegebenen Begriffe mit ausgewählten Filtern suchen"
@@ -326,6 +370,7 @@
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
       "HEADER": "Kriteriensuche",
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen. Wenn Sie die Rohdaten, pseudonymisiert, lokal analysieren möchten, fügen Sie das Kriterium \"MDAT wissenschaftlich nutzen EU DSGVO NIVEAU\" oder weitere Kriterien aus dem Modul \"EINWILLIGUNG\" hinzu.",
+      "INFO_TOOLTIP": "<b>Kontext:</b> Beschreibt den medizinischen Zusammenhang eines Suchbegriffs, z. B. Diagnose, Prozedur oder Laborwert.<br><br><b>Terminologie:</b> Gibt an, aus welchem medizinischen Klassifikationssystem ein Begriff stammt, z. B. ICD-10, OPS oder LOINC.<br><br><b>KDS-Modul:</b> Bezeichnet den Bereich des MII-Kerndatensatzes, in dem die Daten strukturiert gespeichert sind.",
       "LABEL": "Code oder Suchbegriff eingeben",
       "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
       "SEARCH_BUTTON": "Suchen",
@@ -334,7 +379,8 @@
         "ADDED_TO_COHORT": "Kriterien wurden zur Kohortenselektion hinzugefügt",
         "ADDED_TO_STAGE": "Kriterium wurde ausgewählt",
         "REMOVED_FROM_STAGE": "Kriterium wurde entfernt"
-      }
+      },
+      "TOOLTIP_TITLE": "Suchfilter"
     }
   },
   "INFORMATION": {
@@ -417,6 +463,9 @@
       "TERMINOLOGY_CODE": "Terminologie-Codes",
       "TIMERESTRICTION": "Zeiteinschränkung"
     },
+    "CRITERIA_BOX": {
+      "DRAG_ICON_LABEL": "Kriterium in Einschluss- oder Ausschlussgruppe verschieben (Drag & Drop)"
+    },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",
       "DELETE": "Löschen",
@@ -427,13 +476,23 @@
       "AVAILABILITY": "Verfügbarkeit",
       "CONTEXT": "Kontext",
       "KDS_MODULE": "KDS-Modul",
+      "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
       "TERMINOLOGY": "Terminologie"
+    },
+    "HEADER": {
+      "HIDE": "Erklärungen ausblenden",
+      "SHOW": "Erklärungen einblenden"
     },
     "KDS_MODULE": "KDS-Modul",
     "KONTEXT": "Kontext / KDS-Profil",
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Kindelement",
-      "PARENTS": "Elternelement"
+      "DETAILS": "Details",
+      "NO_CHILDREN": "Keine Kindelemente",
+      "NO_PARENTS": "Keine Elternelemente",
+      "NO_TRANSLATIONS": "Keine automatischen Übersetzungen",
+      "PARENTS": "Elternelement",
+      "TRANSLATIONS": "Automatische Übersetzungen"
     },
     "MENU": {
       "ADD": "Zur Kohortenselektion hinzufügen",
@@ -455,8 +514,15 @@
     },
     "REFERENCE_TILE": {
       "DELETE": "Löschen",
+      "LINKED_FEATURES_LABEL": "Verknüpfte Merkmale",
+      "LINK_FIELD_LABEL": "Verknüpfungsfeld",
       "NOTLINKED": "Nicht verknüpft",
-      "REQUIRED": "Erforderlich"
+      "NOTLINKED_TOOLTIP_TEXT": "Diese FHIR-Referenz ist erforderlich oder empfohlen, wurde aber noch nicht mit einem Profil in der Selektion verknüpft. Verknüpfen Sie sie, um zugehörige Daten in Ihre Abfrage einzubeziehen.",
+      "NOTLINKED_TOOLTIP_TITLE": "Referenz nicht verknüpft",
+      "REQUIRED": "Erforderlich",
+      "REQUIRED_HELPER": "Wenn aktiviert, muss diese Referenz im verknüpften Profil vorhanden sein.",
+      "REQUIRED_TOOLTIP_TEXT": "Wenn aktiviert, muss diese Referenz im verknüpften Profil vorhanden sein, damit die Abfrage übereinstimmt. Wenn deaktiviert, ist die Referenz optional.",
+      "REQUIRED_TOOLTIP_TITLE": "Erforderliche Referenz"
     },
     "SAVE_MODAL": {
       "CANCEL": "Abbrechen",
@@ -476,6 +542,7 @@
       "DISPLAY": "Anzeige",
       "ICON": "Verwandte Kriterien anzeigen",
       "NAME": "Name",
+      "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
       "PATIENT_COUNT": "Anzahl der Patienten",
       "SELECT_CHECKBOX": "Kriterium auswählen",
       "SITE": "Standort",
@@ -515,19 +582,27 @@
     }
   },
   "TAB_TITLE": {
+    "DATA_PROTECTION": "Datenschutz",
     "DATA_QUERY": {
       "COHORT_DEFINITION": "Datendefinition - Kohortenselektion",
-      "DATA_SELECTION": "Datendefinition - Merkmalselektion"
+      "DATA_SELECTION": "Datendefinition - Merkmalselektion",
+      "INDEX": "Datendefinition"
     },
     "DATA_SELECTION": {
       "EDITOR": "Merkmalselektion - Editor",
+      "INDEX": "Merkmalselektion",
       "SEARCH": "Merkmalselektion - Suche"
     },
     "FEASIBILITY_QUERY": {
       "EDITOR": "Machbarkeitsabfrage - Editor",
+      "INDEX": "Machbarkeitsabfrage",
       "RESULT": "Machbarkeitsabfrage - Ergebnis",
       "SEARCH": "Machbarkeitsabfrage - Suche"
-    }
+    },
+    "QUERY_EDITOR": "Merkmalselektion - Query Editor",
+    "QUERY_EDITOR_CRITERION": "Kohortenselektion - Kriterium Editor",
+    "QUERY_EDITOR_FEATURE": "Merkmalselektion - Merkmal Editor",
+    "SAVED_QUERIES": "Gespeicherte Abfragen"
   },
   "VALIDATION": {
     "10000": "Schema ist ungültig",

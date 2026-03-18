@@ -1,53 +1,104 @@
 .container {
-  padding: 1rem;
+  padding: 16px;
   height: 100%;
   background-color: white;
   display: flex;
   flex-direction: column;
 }
 
+// ── Field row ──────────────────────────────────────────────────
 .selected-filter-container {
   width: 100%;
-  height: 40px;
+  min-height: 49px;
   background-color: white;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1215686275);
-  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding: 6px 0;
+  gap: 10px;
 }
 
 .display-part {
-  padding-left: 10px;
-  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
 }
-.display-part > span {
+
+.field-name {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+  line-height: 12px;
+  color: #080707;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.filter-title {
-  margin-bottom: 20px;
-  margin-top: 20px;
-  color: #6a7483;
-  font-size: 16px;
+
+.field-description {
+  font-family: var(--font-body);
+  font-style: normal;
   font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  color: #5f6266;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.select-button {
-  border-radius: 5px;
-  background: rgb(90, 121, 175, 1);
-  margin-left: 2%;
-  color: white;
+.delete-button {
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--color-accent);
+  }
 }
 
-.filter-header {
-  color: #5a7aaf;
-  font-size: 15px;
-  margin-top: 8px;
-  margin-bottom: 18px;
-  font-weight: 500;
+// ── Checkbox override — 15×15, white, #C3C7CD border ──────────
+::ng-deep .mat-mdc-checkbox {
+  .mdc-checkbox {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+    padding: 0;
+
+    .mdc-checkbox__background {
+      width: 15px;
+      height: 15px;
+      top: 0;
+      left: 0;
+      border-radius: 3px !important;
+      background-color: #ffffff !important;
+      border: 1px solid #c3c7cd !important;
+    }
+
+    .mdc-checkbox__native-control {
+      width: 15px;
+      height: 15px;
+    }
+
+    // ripple sizing
+    .mdc-checkbox__ripple,
+    .mat-mdc-checkbox-ripple {
+      display: none;
+    }
+  }
+
+  // checked state — filled accent square, white tick
+  &.mat-mdc-checkbox-checked .mdc-checkbox__background {
+    background-color: var(--color-accent) !important;
+    border-color: var(--color-accent) !important;
+  }
 }
 
+// ── Layout ─────────────────────────────────────────────────────
 .selected-fields-box {
   display: flex;
   flex-direction: column;
@@ -58,8 +109,8 @@
 
 .sidebar {
   width: 30%;
-  border-left: 1px solid #ccc;
-  padding-left: 1rem;
+  border-left: 1px solid var(--border-color);
+  padding-left: 16px;
 }
 
 .main-content {
@@ -69,6 +120,7 @@
 }
 
 .field-box {
+  padding-left: 16px;
   width: 70%;
   height: 100%;
   display: flex;
@@ -81,8 +133,15 @@
   display: flex;
   width: 100%;
 }
+
+// ── Tab bar ─────────────────────────────────────────────────────
 ::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+  font-family: var(--font-body);
   font-weight: 500;
-  font-size: medium;
-  color: rgba(90, 121, 175, 1);
+  font-size: var(--font-size-sm);
+  color: var(--color-accent);
+}
+
+::ng-deep .mat-mdc-tab-label-container {
+  background-color: white;
 }

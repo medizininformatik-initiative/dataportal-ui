@@ -20,18 +20,19 @@
   align-self: end;
   background-color: white;
   border: 0px;
-  text-decoration: underline #5170a8;
+  text-decoration: underline;
+  color: var(--color-accent);
   padding-bottom: 10px;
 }
 
 .cancel-button:hover {
   transform: translateY(-3px);
-  color: #5288b7;
+  color: var(--color-accent);
 }
 
 .close-icon {
   font-size: medium;
-  color: #5170a8;
+  color: var(--color-accent);
   padding-left: 10px;
 }
 
@@ -62,7 +63,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c5cacf;
+  background: var(--border-color);
 }
 
 ::-webkit-scrollbar-track-piece {

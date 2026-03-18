@@ -11,6 +11,7 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { v4 as uuidv4 } from 'uuid';
+import { Display } from '../../../model/DataSelection/Profile/Display';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,8 @@ export class ProfileTokenFilterTranslatorService {
   private createConcept(code: TerminologyCodeData): Concept {
     const termCodeData = this.buildTermCodeData(code);
     const hash = this.hashService.createConceptHash(termCodeData);
-    const display = this.conceptTranslationCacheService.getConceptDisplayByHash(hash);
+    const conceptData = this.conceptTranslationCacheService.getOne(hash);
+    const display = Display.fromJson(conceptData.display);
     return new Concept(display, TerminologyCode.fromJson(code));
   }
 

@@ -4,7 +4,7 @@ import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecion
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { ProfileReferenceChipData } from '../../models/FilterChips/ProfileReferenceChipData';
 import { ProfileReferenceChipsService } from '../../service/FilterChips/DataSelection/ProfileReferenceChips.service';
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
@@ -80,7 +80,7 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   }
 
   public deleteReferenceLink(): void {
-    const profile = this.profileProviderService.getProfileById(this.parentId);
+    const profile = this.profileProviderService.getOne(this.parentId);
     if (this.unlinkedRequiredOrRecommendedReferences) {
       const profileFields = profile.getProfileFields().getReferenceFields();
       const foundField = profileFields.find(
@@ -104,7 +104,7 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   }
 
   private updateReferenceField(): void {
-    const profile = this.profileProviderService.getProfileById(this.parentId);
+    const profile = this.profileProviderService.getOne(this.parentId);
     const selectedReferences = profile.getProfileFields().getSelectedReferenceFields();
     const index = this.getIndexOfSelectedReferenceField(selectedReferences);
 
@@ -119,7 +119,7 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   private updateProfile(profile: DataSelectionProfile): void {
     this.dataSelectionProviderSubscription?.unsubscribe();
     const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
-    this.profileProviderService.setProfileById(this.parentId, updatedProfile);
+    this.profileProviderService.addOne(updatedProfile);
     this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile);
   }
 

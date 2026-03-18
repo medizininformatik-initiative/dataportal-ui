@@ -1,8 +1,8 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData';
 import { FilterChipQuantityAdapter } from '../../../models/FilterChips/Adapter/FilterChipQuantityAdapter';
 import { Injectable } from '@angular/core';
-import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Injectable({
@@ -15,11 +15,11 @@ export class QuantityFilterChipService {
    * Generates quantity filter chips from an array of AttributeFilters.
    *
    * @param attributeFilters Array of AttributeFilter objects
-   * @returns Array of InterfaceFilterChip
+   * @returns Array of FilterChipData
    */
   public generateQuantityChipsFromAttributeFilters(
     attributeFilters: AttributeFilter[]
-  ): InterfaceFilterChip[] {
+  ): FilterChipData[] {
     const chips = attributeFilters.map((attributeFilter: AttributeFilter) =>
       this.createQuantityChips(attributeFilter)
     );
@@ -31,9 +31,9 @@ export class QuantityFilterChipService {
    * Generates quantity filter chips from an array of ValueFilters.
    *
    * @param valueFilters Array of ValueFilter objects
-   * @returns Array of InterfaceFilterChip
+   * @returns Array of FilterChipData
    */
-  public generateQuantityChipsFromValueFilters(valueFilters: ValueFilter[]): InterfaceFilterChip[] {
+  public generateQuantityChipsFromValueFilters(valueFilters: ValueFilter[]): FilterChipData[] {
     const chips = valueFilters.map((valueFilter: ValueFilter) =>
       this.createQuantityChips(valueFilter)
     );
@@ -45,9 +45,9 @@ export class QuantityFilterChipService {
    * Generates quantity filter chips obtained from AttributeFilter.
    *
    * @param quantityFilter The AbstractQuantityFilter object
-   * @returns Array of InterfaceFilterChip
+   * @returns Array of FilterChipData
    */
-  private createQuantityChips(filter: AttributeFilter | ValueFilter): InterfaceFilterChip {
+  private createQuantityChips(filter: AttributeFilter | ValueFilter): FilterChipData {
     const quantityFilter = filter?.getQuantity();
     const display: Display = filter.getDisplay();
     if (quantityFilter && quantityFilter.getComparator()) {

@@ -1,7 +1,7 @@
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter';
 import { Injectable } from '@angular/core';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import {
   ProfileReferenceChipData,
@@ -35,7 +35,7 @@ export class ProfileReferenceChipsService {
   private getLinkedProfileDisplays(selectedReferenceField: SelectedReferenceField): Display[] {
     return selectedReferenceField
       .getLinkedProfileIds()
-      .map((id) => this.profileProviderService.getProfileById(id).getLabel())
+      .map((id) => this.profileProviderService.getOne(id).getLabel())
 
       .filter((profileDisplay): profileDisplay is Display => !!profileDisplay);
   }

@@ -1,0 +1,35 @@
+::ng-deep .language-select {
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 8px;
+  }
+
+  .mat-mdc-form-field-flex {
+    align-items: center;
+    height: 40px;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding: 0 !important;
+    min-height: unset;
+    border-top: none;
+  }
+
+  .mdc-line-ripple {
+    display: none;
+  }
+}
+
+.circle {
+  color: var(--num-color--primary-blue);
+  margin-right: 16px;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+  width: 100%;
+}

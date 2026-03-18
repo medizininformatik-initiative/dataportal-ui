@@ -12,10 +12,11 @@
 
 /* Form field flex */
 ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
-  border: 1px solid var(--num-color--primary-300);
-  padding: 0 16px; // horizontal padding snapped to 16
-  border-radius: 4px; // snapped from 5px
-  height: 40px; // snapped from 42px
+  border: 1px solid var(--border-color);
+  padding: 0 16px;
+  border-radius: var(--border-radius-card);
+  height: 36px;
+  width: 152px;
   align-items: center;
   display: flex;
 }
@@ -28,35 +29,48 @@
 
 /* Overlay panel adjustments */
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .example-panel {
-  background-color: #fff;
+  background-color: #ffffff;
   width: fit-content;
-  min-width: 20%; // keep relative sizing
-  max-width: 1000px; // optional max width
+  min-width: 20%;
+  max-width: 1000px;
   position: fixed;
-  padding: 16px; // optional padding inside panel
   box-sizing: border-box;
 }
 
-/* Select panel adjustments */
+/* Select panel — white bg, mid-grey border, 4px radius */
+::ng-deep .cdk-overlay-container .cdk-overlay-pane .example-panel .mat-mdc-select-panel,
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .mat-mdc-select-panel {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-card) !important;
+  box-sizing: border-box;
   max-height: 50%;
   overflow: auto;
-  padding: 8px 0; // add small 8px spacing
+  padding: 8px 0;
 }
 
 ::ng-deep .mat-pseudo-checkbox-full {
-  background: white !important; // example override
-  border: 2px solid black !important; // force border
+  width: 15px !important;
+  height: 15px !important;
+  background: #ffffff !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 3px !important;
 
   &::after {
-    color: rgba(90, 121, 175, 1) !important;
+    color: var(--color-accent) !important;
+  }
+}
+
+::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked,
+::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate {
+  background: #ffffff !important;
+  border-color: var(--border-color) !important;
+
+  &::after {
+    color: var(--color-accent) !important;
   }
 }
 
 ::ng-deep .mat-mdc-option.mat-mdc-option-active {
   background-color: #ffffff !important;
-}
-
-::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after {
-  color: rgba(90, 121, 175, 1) !important; // this controls the check mark
 }

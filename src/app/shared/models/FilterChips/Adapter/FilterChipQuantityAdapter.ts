@@ -1,19 +1,16 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipBuilder } from '../FilterChipBuilder';
+import { FilterChipData } from '../FilterChipData';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { getArithmeticSymbol } from 'src/app/model/Utilities/Quantity/ArithmeticSymbolResolver';
-import { InterfaceFilterChip } from '../InterfaceFilterChip';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
 import { v4 as uuidv4 } from 'uuid';
 
 export class FilterChipQuantityAdapter {
-  public static adaptQuantity(
-    quantity: AbstractQuantityFilter,
-    display: Display
-  ): InterfaceFilterChip {
+  public static adaptQuantity(quantity: AbstractQuantityFilter, display: Display): FilterChipData {
     const type = quantity.getType();
     if (type !== FilterTypes.QUANTITY_NOT_SET) {
       const unitDisplay = quantity.getSelectedUnit().getDisplay();
@@ -41,7 +38,7 @@ export class FilterChipQuantityAdapter {
     display: Display,
     quantity: QuantityRangeFilter,
     unitDisplay: string
-  ): InterfaceFilterChip {
+  ): FilterChipData {
     const minValue = quantity.getMinValue();
     const maxValue = quantity.getMaxValue();
     const text = `${minValue} - ${maxValue} ${unitDisplay}`;
@@ -54,7 +51,7 @@ export class FilterChipQuantityAdapter {
     quantity: QuantityComparatorFilter,
     unitDisplay: string,
     symbol
-  ): InterfaceFilterChip {
+  ): FilterChipData {
     const value = quantity.getValue();
     const text = `${symbol} ${value} ${unitDisplay}`;
 
@@ -66,9 +63,9 @@ export class FilterChipQuantityAdapter {
    *
    * @param type The type of filter chip
    * @param text The text to display in the chip
-   * @returns An InterfaceFilterChip
+   * @returns An FilterChipData
    */
-  private static createFilterChip(display: Display, text: string): InterfaceFilterChip {
+  private static createFilterChip(display: Display, text: string): FilterChipData {
     const builder = new FilterChipBuilder(display);
     builder.addData(uuidv4(), text);
     return builder.buildFilterChip();

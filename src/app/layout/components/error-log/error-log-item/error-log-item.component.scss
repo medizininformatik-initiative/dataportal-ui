@@ -48,3 +48,15 @@
     }
   }
 }
+
+::ng-deep code {
+  background: #e9ecef;
+  padding: 0.125rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.875rem;
+  color: #495057;
+}
+
+.font-weight-medium {
+  font-weight: 700;
+}

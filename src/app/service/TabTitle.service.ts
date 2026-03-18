@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, map, mergeMap, switchMap } from 'rxjs';
+import { filter, map, merge, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,23 +11,23 @@ export class TabTitleService {
   constructor(
     private titleService: Title,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private translate: TranslateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translate: TranslateService
   ) {}
 
   public initializeTitleListener() {
-    this.router.events
+    const onNavEnd$ = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
+
+    merge(onNavEnd$, this.translate.onLangChange)
       .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        map(() => this.route.root),
-        map((rootRoute) => {
-          while (rootRoute.firstChild) {
-            rootRoute = rootRoute.firstChild;
+        map(() => {
+          let route = this.route.root;
+          while (route.firstChild) {
+            route = route.firstChild;
           }
-          return rootRoute;
+          return route.snapshot.data;
         }),
-        switchMap((route) => route.data),
+        filter((data) => !!data?.title),
         switchMap((data) => this.translate.get(data.title))
       )
       .subscribe((translatedTitle) => {

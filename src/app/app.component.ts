@@ -8,9 +8,9 @@ import { TabTitleService } from './service/TabTitle.service';
 })
 export class AppComponent implements OnInit {
   title = 'num-portal-webapp';
-  constructor() {}
+  constructor(private tabTitleService1: TabTitleService) {}
 
   ngOnInit() {
-    //this.tabTitleService1.initializeTitleListener();
+    this.tabTitleService1.initializeTitleListener();
   }
 }

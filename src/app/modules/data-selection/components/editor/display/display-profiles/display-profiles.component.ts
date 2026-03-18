@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { map, Observable, tap } from 'rxjs';
-import { ProfileProviderService } from 'src/app/modules/data-selection/services/ProfileProvider.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 
 @Component({
   selector: 'num-display-profiles',
@@ -32,9 +32,7 @@ export class DisplayProfilesComponent implements OnInit {
       .getActiveDataSelection()
       .pipe(
         map((dataSelection) =>
-          dataSelection
-            .getProfiles()
-            .map((profile) => this.profileProvider.getProfileById(profile.getId()))
+          dataSelection.getProfiles().map((profile) => this.profileProvider.getOne(profile.getId()))
         )
       );
   }

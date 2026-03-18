@@ -6,16 +6,14 @@
     [style.marginLeft]="calcMarginLeft(level)"
     [attr.data-cy]="node.data.display | displayTranslation"
   >
-    <div fxLayout="row" fxLayoutAlign="start center" style="height: 50px" class="width-100">
-      <div>
-        <mat-checkbox
-          *ngIf="node.data.selectable"
-          [disabled]="!node.data.isDisabled"
-          [checked]="node?.data.isCheckboxSelected"
-          (change)="checkboxSelected(node)"
-          [style.marginLeft]="calcMarginLeftCheckbox(level)"
-        ></mat-checkbox>
-      </div>
+    <div fxLayout="row" fxLayoutAlign="start center" class="width-100 node-row">
+      <num-checkbox
+        *ngIf="node.data.selectable"
+        [disabled]="!node.data.isDisabled"
+        [checked]="node?.data.isCheckboxSelected"
+        (checkedChange)="checkboxSelected(node)"
+        [style.marginLeft]="calcMarginLeftCheckbox(level)"
+      ></num-checkbox>
       <div
         *ngIf="node?.children && node.children.length > 0"
         class="tree-node"
@@ -27,8 +25,8 @@
           (click)="toggleExpand(node)"
           class="icon-container"
         >
-          <fa-icon *ngIf="!isExpanded(node)" icon="chevron-right"></fa-icon>
-          <fa-icon *ngIf="isExpanded(node)" icon="chevron-down"></fa-icon>
+          <fa-icon *ngIf="!isExpanded(node)" icon="minus" class="icon-collapsed"></fa-icon>
+          <fa-icon *ngIf="isExpanded(node)" icon="chevron-up"></fa-icon>
         </div>
       </div>
       <div class="node-display-container width-80">

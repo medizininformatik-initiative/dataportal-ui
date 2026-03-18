@@ -1,4 +1,4 @@
-import { data } from 'cypress/types/jquery';
+import { AbstractCodeMessage } from '../Utilities/AbstractCodeMessage';
 import { CriteriaSetValidationIssue } from './Issues/CriteriaSetValidationIssue';
 import { DataExtractionValidationIssue } from './Issues/DataExtractionValidationIssue';
 import { QuantityRangeValidationIssue } from './Issues/QuantityRangeValidationIssue';
@@ -6,11 +6,7 @@ import { QuantityUnitValidationIssue } from './Issues/QuantityUnitValidationIssu
 import { TimeRestrictionValidationIssue } from './Issues/TimeRestrictionValidationIssue';
 import { ValueSetValidationIssue } from './Issues/ValueSetValidationIssue';
 
-export class ValidationIssue {
-  private readonly code: string;
-  private readonly message: string;
-  private readonly location: string;
-
+export class ValidationIssue extends AbstractCodeMessage {
   /**
    * Optional detaile information about the criteria set involved in the validation issue
    * @see CriteriaSetValidationIssueData.
@@ -57,18 +53,12 @@ export class ValidationIssue {
     valueSetValidationIssue?: ValueSetValidationIssue,
     dataExtractionValidationIssue?: DataExtractionValidationIssue
   ) {
-    this.location = location;
-    this.code = code;
-    this.message = message;
+    super(code, message, location);
     this.quantityRangeValidationIssue = quantityRangeValidationIssue;
     this.quantityUnitValidationIssue = quantityUnitValidationIssue;
     this.valueSetValidationIssue = valueSetValidationIssue;
     this.timeRestrictionValidationIssue = timeRestrictionValidationIssue;
     this.criteriaSetValidationIssue = criteriaSetValidationIssue;
-  }
-
-  public getLocation(): string {
-    return this.location;
   }
 
   public getQuantityUnitValidationIssue(): QuantityUnitValidationIssue | undefined {
@@ -117,13 +107,5 @@ export class ValidationIssue {
 
   public getDataExtractionValidationIssue(): DataExtractionValidationIssue | undefined {
     return this.dataExtractionValidationIssue;
-  }
-
-  public getCode(): string {
-    return this.code;
-  }
-
-  public getMessage(): string {
-    return this.message;
   }
 }

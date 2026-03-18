@@ -3,7 +3,7 @@ import { ProfileReferenceChipData, ProfileReferenceGroup } from '../../ProfileRe
 
 export class FilterChipProfileRefrenceAdapter {
   /**
-   *
+   *@todo check what '4' is? Placeholder/dummy?
    * @param profileReferenceGroup
    * @returns
    */
