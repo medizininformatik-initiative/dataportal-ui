@@ -1,8 +1,30 @@
 # Changelog
 
-## v6.7.0 (2026-03-05)
+## v6.8.0 (2026-03-18)
 
 ### Features
+* Added auto upgrade of CRTDL on upload [#545](https://github.com/medizininformatik-initiative/dataportal-ui/issues/545)
+* Added auto upgrade of CCDL on upload [#548](https://github.com/medizininformatik-initiative/dataportal-ui/issues/548)
+
+### Changed
+* Refactor Provider Services in the UI to use common abstract Provdier service [#518](https://github.com/medizininformatik-initiative/dataportal-ui/issues/518)
+* Major overhaul of design and layout of the UI for improved user experience and consistency [#539](https://github.com/medizininformatik-initiative/dataportal-ui/issues/539)
+* Updated several language entries in the translation files [#542](https://github.com/medizininformatik-initiative/dataportal-ui/issues/542), [#546](https://github.com/medizininformatik-initiative/dataportal-ui/issues/546), [#541](https://github.com/medizininformatik-initiative/dataportal-ui/issues/541)
+* Removed option to save query without feature selection [#543](https://github.com/medizininformatik-initiative/dataportal-ui/issues/543)## v6.8.0 (2026-03-18)
+
+### Features
+* Added auto upgrade of CRTDL on upload [#545](https://github.com/medizininformatik-initiative/dataportal-ui/issues/545)
+* Added auto upgrade of CCDL on upload [#548](https://github.com/medizininformatik-initiative/dataportal-ui/issues/548)
+
+### Changed
+* Refactor Provider Services in the UI to use common abstract Provdier service [#518](https://github.com/medizininformatik-initiative/dataportal-ui/issues/518)
+* Major overhaul of design and layout of the UI for improved user experience and consistency [#539](https://github.com/medizininformatik-initiative/dataportal-ui/issues/539)
+* Updated several language entries in the translation files [#542](https://github.com/medizininformatik-initiative/dataportal-ui/issues/542), [#546](https://github.com/medizininformatik-initiative/dataportal-ui/issues/546), [#541](https://github.com/medizininformatik-initiative/dataportal-ui/issues/541)
+* Removed option to save query without feature selection [#543](https://github.com/medizininformatik-initiative/dataportal-ui/issues/543)
+
+
+## v6.7.0 (2026-03-05)
+
 ### Changed
 * Fix height of placeholder component in reference tab in query editor [#529](https://github.com/medizininformatik-initiative/dataportal-ui/issues/529)
 * Do not add recommended fields on uploaded CRTDL if they are not set [#531](https://github.com/medizininformatik-initiative/dataportal-ui/issues/531)
@@ -14,6 +36,8 @@
 
 ### Features
 * Added translation for criteria search [#536](https://github.com/medizininformatik-initiative/dataportal-ui/issues/536)
+
+
 ## v6.6.1 (2026-03-02)
 
 ### Changed
