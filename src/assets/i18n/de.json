@@ -19,7 +19,7 @@
         "LABEL": "Protokoll",
         "MODAL": {
           "CLEAR": "Fehlerprotokoll löschen",
-          "DESCRIPTION": "Folgende Validierungsprobleme wurden gefunden:",
+          "DESCRIPTION": "Folgende Validierungsprobleme wurden gefunden- bei Fragen wenden Sie sich bitte an info@forschen-fuer-gesundheit.de",
           "DOWNLOAD": "Protokoll herunterladen",
           "HEADER": "Protokoll",
           "ITEM": {
@@ -45,7 +45,7 @@
       "UPGRADE_LOG": {
         "LABEL": "Upgrade Log",
         "MODAL": {
-          "DESCRIPTION": "Folgende Änderungen wurden automatisch vorgenommen:",
+          "DESCRIPTION": "Datendefinition wurde erfolgreich geladen, aber die folgenden Änderungen wurden automatisch vorgenommen - bei Fragen wenden Sie sich bitte an info@forschen-fuer-gesundheit.de",
           "HEADER": "Upgrade Log",
           "ITEM": {
             "REMOVED_FIELDS": "Das Merkmal Feld <code>{{ replaced }}</code> wurde entfernt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
@@ -113,7 +113,7 @@
       },
       "ERROR": {
         "DOWNLOAD": "Es wurde keine Kohorte definiert, Download nicht möglich.",
-        "UPLOAD": "In der hochgeladenen Datei wurde keine Kohorte definiert."
+        "UPLOAD": "Datendefintion konnte nicht hochgeladen werden"
       },
       "HEADER": "Merkmalselektion",
       "SAVE": {
