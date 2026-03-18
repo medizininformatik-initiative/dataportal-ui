@@ -24,18 +24,20 @@ export class CRTDLValidationService {
     private matDialog: MatDialog
   ) {}
 
-  public validate(crtdl: CRTDLData): Observable<boolean> {
+  public validate(crtdl: CRTDLData, setValidationReport: boolean = true): Observable<boolean> {
     this.errorLogProvider.setValidatedCRTDL(crtdl);
     return this.validationApiService.validateCRTDL(crtdl).pipe(
       map(() => true),
-      catchError((error: DataportalErrorData) => this.handleValidationError(error))
+      catchError((error: DataportalErrorData) =>
+        setValidationReport ? this.handleValidationError(error) : of(false)
+      )
     );
   }
 
-  private handleValidationError(error: DataportalErrorData): Observable<boolean> {
+  public handleValidationError(error: DataportalErrorData): Observable<boolean> {
     if (TypeGuard.isValidationError(error)) {
       const payload = error.payload;
-      const validationReport = this.buildValidationReport(payload);
+      const validationReport: ValidationReport = this.buildValidationReport(payload);
       this.errorLogProvider.setValidationResponseData(payload);
       this.errorLogProvider.setValidationResult(validationReport);
       this.opeValidationReportModal(validationReport);
