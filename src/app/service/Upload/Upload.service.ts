@@ -1,12 +1,9 @@
-import { CheckAndUpgradeCCDLService } from '../CheckAndUpgradeCCDL.service';
-import { CRTDL2UIModelService } from '../Translator/CRTDL/CRTDL2UIModel.service';
+import { CheckAndUpgradeCCDLService } from '../Upgrade/CheckAndUpgradeCCDL.service';
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
-import { CRTDLValidationService } from '../Validation/CRTDLValidation.service';
+import { CrtdlProcessingPipelineService } from '../CrtdlProcessingPipeline.service';
 import { FileUploadService } from './FileUpload.service';
-import { filter, switchMap, take } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { SnackbarMessageService } from '../SnackbarMessage.service';
-import { TypeAssertion } from '../TypeGuard/TypeAssersations';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +11,9 @@ import { TypeAssertion } from '../TypeGuard/TypeAssersations';
 export class UploadService {
   constructor(
     private fileUploadService: FileUploadService,
-    private crtdlValidationService: CRTDLValidationService,
-    private crdtlTranslatorService: CRTDL2UIModelService,
     private snackbarMessageService: SnackbarMessageService,
-    private checkAndUpgradeCCDLService: CheckAndUpgradeCCDLService
+    private checkAndUpgradeCCDLService: CheckAndUpgradeCCDLService,
+    private crtdlProcessingPipelineService: CrtdlProcessingPipelineService
   ) {}
 
   public uploadCRTDL(file: File): void {
@@ -28,25 +24,13 @@ export class UploadService {
 
   private onReaderLoad(result: string | ArrayBuffer | null): void {
     const importedQuery = JSON.parse(result as string);
-
     this.uploadAndTranslate(importedQuery);
   }
 
-  /**
-   * Uploads the CRTDL after successful validation
-   * @param crtdl
-   */
-  private uploadAndTranslate(crtdl: CRTDLData): void {
-    const upgraded = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDL(crtdl);
-    this.crtdlValidationService
-      .validate(upgraded)
-      .pipe(
-        filter((isValid) => isValid),
-        switchMap(() => this.crdtlTranslatorService.createCRTDLFromJson(upgraded)),
-        take(1)
-      )
-      .subscribe(() => {
-        this.snackbarMessageService.dataDefinitionUploadSuccess();
-      });
+  public uploadAndTranslate(crtdl: CRTDLData): void {
+    const preUpgraded = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDL(crtdl);
+    this.crtdlProcessingPipelineService.process(preUpgraded).subscribe(() => {
+      this.snackbarMessageService.dataDefinitionUploadSuccess();
+    });
   }
 }
