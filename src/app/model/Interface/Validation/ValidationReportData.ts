@@ -7,7 +7,9 @@ import { CRTDLData } from '../CRTDLData';
 export interface ValidationReportData {
   timestamp: string
   totalErrors: number
-  issues: any
+  errors: any[]
   dataportal: AboutInfoData
   crtdl: CRTDLData
+  upgrades: any[]
+  totalUpgrades: number
 }
