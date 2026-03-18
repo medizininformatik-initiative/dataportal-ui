@@ -1,67 +1,132 @@
 <div class="error-item">
   <div class="error-details">
     <div class="error-location">
-      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.LOCATION' | translate }}
-      <code>{{ error.getLocation() }}</code>
+      <span class="num-text-accent font-weight-medium">
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.LOCATION' | translate }}
+      </span>
+      <code>{{ error?.getLocation() }}{{ profileUpgrade?.getLocation() }}</code>
+    </div>
+    <div>
+      <span class="num-text-accent font-weight-medium">
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.CODE' | translate }}
+      </span>
+      <code>{{ error?.getCode() }}{{ profileUpgrade?.getCode() }}</code>
     </div>
     <div class="error-location">
-      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.CODE' | translate }}
-      <code>{{ error.getCode() }}</code>
+      <span class="num-text-accent font-weight-medium">
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MESSAGE' | translate }}
+      </span>
+      <code>{{ error?.getMessage() }} {{ profileUpgrade?.getMessage() }}</code>
     </div>
-    <div class="error-location">
-      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MESSAGE' | translate }}
-      <code>{{ error.getMessage() }}</code>
-    </div>
-    <div class="error-extra">
-      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
+    <div *ngIf="error">
+      <span class="num-text-accent font-weight-medium">
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
+      </span>
       <code>
         {{ 'VALIDATION.' + code | translate }}
       </code>
     </div>
-    <div class="error-extra" *ngIf="error.getCriteriaSetValidationIssue()">
+    <div class="error-extra" *ngIf="error?.getCriteriaSetValidationIssue()">
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.TERMCODE' | translate }}
-      <code>{{ error.getCriteriaSetValidationIssue().getCriteriaSet() | json }}</code>
+      <code>{{ error?.getCriteriaSetValidationIssue()?.getCriteriaSet() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error.getValueSetValidationIssue()">
+    <div class="error-extra" *ngIf="error?.getValueSetValidationIssue()">
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.VALUE_SETS' | translate }}
-      <code>{{ error.getValueSetValidationIssue().getValueSets() | json }}</code>
+      <code>{{ error?.getValueSetValidationIssue()?.getValueSets() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error.getTimeRestrictionValidationIssue()">
+    <div class="error-extra" *ngIf="error?.getTimeRestrictionValidationIssue()">
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.AFTER_DATE' | translate }}
-      <code>{{ error.getTimeRestrictionValidationIssue().getAfterDate() | json }}</code>
+      <code>{{ error?.getTimeRestrictionValidationIssue()?.getAfterDate() | json }}</code>
       <br />
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.BEFORE_DATE' | translate }}
-      <code>{{ error.getTimeRestrictionValidationIssue().getBeforeDate() | json }}</code>
+      <code>{{ error?.getTimeRestrictionValidationIssue()?.getBeforeDate() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error.getQuantityUnitValidationIssue()">
+    <div class="error-extra" *ngIf="error?.getQuantityUnitValidationIssue()">
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.SELECTED' | translate }}
-        <code>{{ error.getQuantityUnitValidationIssue()?.getSelected() }}</code>
+        <code>{{ error?.getQuantityUnitValidationIssue()?.getSelected() }}</code>
       </div>
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.ALLOWED' | translate }}
-        <code>{{ error.getQuantityUnitValidationIssue()?.getAllowed() | json }}</code>
+        <code>{{ error?.getQuantityUnitValidationIssue()?.getAllowed() | json }}</code>
       </div>
     </div>
-    <div class="error-extra" *ngIf="error.getDataExtractionValidationIssue()">
+    <div class="error-extra" *ngIf="error?.getDataExtractionValidationIssue()">
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.BEFORE_DATE' | translate }}
-        <code>{{ error.getDataExtractionValidationIssue()?.getStart() }}</code>
+        <code>{{ error?.getDataExtractionValidationIssue()?.getStart() }}</code>
       </div>
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.AFTER_DATE' | translate }}
-        <code>{{ error.getDataExtractionValidationIssue()?.getEnd() }}</code>
+        <code>{{ error?.getDataExtractionValidationIssue()?.getEnd() }}</code>
       </div>
     </div>
-    <div class="error-extra" *ngIf="error.getQuantityRangeValidationIssue()">
+    <div class="error-extra" *ngIf="error?.getQuantityRangeValidationIssue()">
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MIN_VALUE' | translate }}
-        <code>{{ error.getQuantityRangeValidationIssue()?.getMinValue() }}</code>
+        <code>{{ error?.getQuantityRangeValidationIssue()?.getMinValue() }}</code>
       </div>
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MAX_VALUE' | translate }}
-        <code>{{ error.getQuantityRangeValidationIssue()?.getMaxValue() }}</code>
+        <code>{{ error?.getQuantityRangeValidationIssue()?.getMaxValue() }}</code>
       </div>
+    </div>
+
+    <!-- Profile Upgrade Details -->
+    <div *ngIf="profileUpgrade?.getProfileRemoved()">
+      <span class="num-text-accent font-weight-medium">
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
+      </span>
+      <span
+        [innerHTML]="
+          'APPLAYOUT.HEADER.UPGRADE_LOG.MODAL.ITEM.REMOVED_PROFILE'
+            | translate : { profileName: profileUpgrade?.getProfileRemoved()?.getName() }
+        "
+      >
+      </span>
+    </div>
+
+    <div *ngIf="profileUpgrade?.getProfileFieldChange() as change">
+      <span class="num-text-accent font-weight-medium">
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
+      </span>
+
+      <span
+        [innerHTML]="
+          'APPLAYOUT.HEADER.UPGRADE_LOG.MODAL.ITEM.UPGRADE_FIELDS'
+            | translate
+              : {
+                  replaced: change.getReplaced(),
+                  replacedWith: change.getReplacedWith()
+                }
+        "
+      >
+      </span>
+    </div>
+
+    <div *ngIf="profileUpgrade?.getProfileFieldRemoved()">
+      <span class="num-text-accent font-weight-medium">
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
+      </span>
+      <span
+        [innerHTML]="
+          'APPLAYOUT.HEADER.UPGRADE_LOG.MODAL.ITEM.REMOVED_FIELDS'
+            | translate
+              : {
+                  replaced: profileUpgrade?.getProfileFieldRemoved()?.getReplaced()
+                }
+        "
+      >
+      </span>
+    </div>
+
+    <div *ngIf="profileUpgrade?.getProfileFilterChange()">
+      <span class="num-text-accent font-weight-medium">
+        {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
+      </span>
+      <span>
+        {{ 'APPLAYOUT.HEADER.UPGRADE_LOG.MODAL.ITEM.UPGRADE_FILTER' | translate }}
+      </span>
     </div>
   </div>
 </div>

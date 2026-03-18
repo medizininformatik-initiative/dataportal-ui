@@ -1,13 +1,29 @@
 <num-modal-window [displaySaveButtons]="false">
   <num-error-log-header></num-error-log-header>
-  <div class="error-summary">
-    {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DESCRIPTION' | translate }}
-  </div>
-  <div class="error-log-content">
-    <div class="error-list">
-      <num-error-log-item *ngFor="let error of errors" [error]="error"></num-error-log-item>
-    </div>
-  </div>
 
+  <ng-container *ngIf="errors.length > 0">
+    <div class="error-summary">
+      <span [innerHTML]="'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DESCRIPTION' | translate"></span>
+    </div>
+    <div class="error-log-content">
+      <div class="error-list" *ngIf="errors.length > 0">
+        <num-error-log-item *ngFor="let error of errors" [error]="error"></num-error-log-item>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="upgrades$ | async as upgrades">
+    <ng-container *ngIf="upgrades.length > 0">
+      <div class="error-summary">
+        <span [innerHTML]="'APPLAYOUT.HEADER.UPGRADE_LOG.MODAL.DESCRIPTION' | translate"></span>
+      </div>
+
+      <div class="error-log-content">
+        <div class="error-list">
+          <num-error-log-item *ngFor="let upgrade of upgrades" [profileUpgrade]="upgrade">
+          </num-error-log-item>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
   <num-error-log-actions></num-error-log-actions>
 </num-modal-window>
