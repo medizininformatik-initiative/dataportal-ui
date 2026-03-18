@@ -16,12 +16,12 @@
       },
       "CLOSE": "Schließen",
       "ERROR_LOG": {
-        "LABEL": "Fehlerprotokoll",
+        "LABEL": "Protokoll",
         "MODAL": {
           "CLEAR": "Fehlerprotokoll löschen",
           "DESCRIPTION": "Folgende Validierungsprobleme wurden gefunden:",
-          "DOWNLOAD": "Fehlerprotokoll herunterladen",
-          "HEADER": "Fehlerprotokoll",
+          "DOWNLOAD": "Protokoll herunterladen",
+          "HEADER": "Protokoll",
           "ITEM": {
             "AFTER_DATE": "Nach",
             "ALLOWED": "Erlaubt:",
@@ -41,7 +41,20 @@
       },
       "LOGOUT": "Abmelden",
       "PROPOSAL_PORTAL": "Antragsportal",
-      "PROPOSAL_PORTAL_TOOLTIP": "Antragsportal in einem neuen Tab öffnen"
+      "PROPOSAL_PORTAL_TOOLTIP": "Antragsportal in einem neuen Tab öffnen",
+      "UPGRADE_LOG": {
+        "LABEL": "Upgrade Log",
+        "MODAL": {
+          "DESCRIPTION": "Folgende Änderungen wurden automatisch vorgenommen:",
+          "HEADER": "Upgrade Log",
+          "ITEM": {
+            "REMOVED_FIELDS": "Das Merkmal Feld <code>{{ replaced }}</code> wurde entfernt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
+            "REMOVED_PROFILE": "Das Profil <code>{{ profileName }}</code> wurde entfernt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
+            "UPGRADE_FIELDS": "Das Merkmal Feld <code>{{ replaced }}</code> wurde ersetzt durch <code>{{ replacedWith }}</code>. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
+            "UPGRADE_FILTER": "Der Filter wurde aktualisiert. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an."
+          }
+        }
+      }
     },
     "SIDENAV": {
       "LABEL": "Seitennavigation"
