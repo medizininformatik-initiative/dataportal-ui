@@ -61,7 +61,6 @@ export class ProfileTokenFilterTranslatorService {
     const termCodeData = this.buildTermCodeData(code);
     const hash = this.hashService.createConceptHash(termCodeData);
     const conceptData = this.conceptTranslationCacheService.getOne(hash);
-    console.log(conceptData);
     const display = Display.fromJson(conceptData.display);
     return new Concept(display, TerminologyCode.fromJson(code));
   }

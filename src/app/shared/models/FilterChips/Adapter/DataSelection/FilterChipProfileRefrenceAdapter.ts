@@ -3,17 +3,15 @@ import { ProfileReferenceChipData, ProfileReferenceGroup } from '../../ProfileRe
 
 export class FilterChipProfileRefrenceAdapter {
   /**
-   *
+   *@todo check what '4' is? Placeholder/dummy?
    * @param profileReferenceGroup
    * @returns
    */
   public static adaptToProfileReferenceChipData(
     profileReferenceGroup: ProfileReferenceGroup
   ): ProfileReferenceChipData {
-    console.log(profileReferenceGroup);
     const builder = new FilterChipBuilder(profileReferenceGroup.elementId);
     profileReferenceGroup.profiles.forEach((profileDisplay) => {
-      console.log(`Adding profile display to chip: ${profileDisplay}`);
       builder.addData('4', profileDisplay, false);
     });
     return builder.buildFilterChip() as ProfileReferenceChipData;

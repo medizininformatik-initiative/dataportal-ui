@@ -23,7 +23,6 @@ export class ErrorLogModalComponent implements OnInit, OnDestroy {
     private errorLogProvider: ErrorLogProviderService
   ) {}
   ngOnInit(): void {
-    console.log(this.data);
     this.validationReport = this.data;
     if (this.data instanceof ValidationReport) {
       this.errors = this.data?.getIssues() || [];

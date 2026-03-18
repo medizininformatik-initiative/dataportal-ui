@@ -15,7 +15,6 @@ export class CheckAndUpgradeCCDLService {
   ) {}
 
   public checkAndUpgradeCCDLAsSavedData(data: any) {
-    console.log('Checking and upgrading CCDL data:', TypeGuard.isStructuredQueryData(data));
     if (TypeGuard.isStructuredQueryData(data)) {
       const dataExtraction = this.buildDataExtraction();
       return {
