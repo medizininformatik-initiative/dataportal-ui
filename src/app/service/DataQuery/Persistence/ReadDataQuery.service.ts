@@ -1,4 +1,4 @@
-import { CheckAndUpgradeCCDLService } from '../../CheckAndUpgradeCCDL.service';
+import { CheckAndUpgradeCCDLService } from '../../Upgrade/CheckAndUpgradeCCDL.service';
 import { CRTDL2UIModelService } from '../../Translator/CRTDL/CRTDL2UIModel.service';
 import { CRTDLValidationService } from '../../Validation/CRTDLValidation.service';
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service';
