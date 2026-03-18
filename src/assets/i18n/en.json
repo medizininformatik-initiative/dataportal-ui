@@ -19,7 +19,7 @@
         "LABEL": "Log",
         "MODAL": {
           "CLEAR": "Clear Error Log",
-          "DESCRIPTION": "The following validation issues were found:",
+          "DESCRIPTION": "The following validation issues were found:- If you have any questions please contact info@forschen-fuer-gesundheit.de",
           "DOWNLOAD": "Download Log",
           "HEADER": "Log",
           "ITEM": {
@@ -45,7 +45,7 @@
       "UPGRADE_LOG": {
         "LABEL": "Upgrade Log",
         "MODAL": {
-          "DESCRIPTION": "The following changes were applied automatically:",
+          "DESCRIPTION": "Data definition successfully loaded, but the following changes were applied automatically - If you have any question please contact info@forschen-fuer-gesundheit.de",
           "HEADER": "Upgrade Log",
           "ITEM": {
             "REMOVED_FIELDS": "The field <code>{{ replaced }}</code> has been removed. Please review your selections and adjust them if necessary.",
@@ -111,7 +111,7 @@
       },
       "ERROR": {
         "DOWNLOAD": "No cohort defined; download not possible",
-        "UPLOAD": "No valid cohort defined in the uploaded file"
+        "UPLOAD": "Could not upload data definition"
       },
       "HEADER": "Feature Selection",
       "SAVE": {

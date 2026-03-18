@@ -12,6 +12,7 @@ import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIss
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue';
 import { ValidationIssueMapperService } from './ValidationIssueMapper.service';
 import { TypeGuard } from '../TypeGuard/TypeGuard';
+import { SnackbarMessageService } from '../SnackbarMessage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,8 @@ export class CRTDLValidationService {
     private readonly validationApiService: ValidationApiService,
     private readonly errorLogProvider: ErrorLogProviderService,
     private readonly validationIssueMapper: ValidationIssueMapperService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private snackbarMessageService: SnackbarMessageService
   ) {}
 
   public validate(crtdl: CRTDLData, setValidationReport: boolean = true): Observable<boolean> {
@@ -41,6 +43,7 @@ export class CRTDLValidationService {
       this.errorLogProvider.setValidationResponseData(payload);
       this.errorLogProvider.setValidationResult(validationReport);
       this.opeValidationReportModal(validationReport);
+      this.snackbarMessageService.dataDefinitionUploadError();
       return of(false);
     }
     return throwError(() => error);
