@@ -45,7 +45,7 @@
       "UPGRADE_LOG": {
         "LABEL": "Upgrade Log",
         "MODAL": {
-          "DESCRIPTION": "Data definition successfully loaded, but the following changes were applied automatically - If you have any question please contact <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
+          "DESCRIPTION": "The following changes were applied automatically - If you have any questions please contact <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
           "HEADER": "Upgrade Log",
           "ITEM": {
             "REMOVED_FIELDS": "The field <code>{{ replaced }}</code> has been removed. Please review your selections and adjust them if necessary.",

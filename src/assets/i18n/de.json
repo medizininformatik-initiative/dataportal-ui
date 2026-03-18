@@ -45,7 +45,7 @@
       "UPGRADE_LOG": {
         "LABEL": "Upgrade Log",
         "MODAL": {
-          "DESCRIPTION": "Datendefinition wurde erfolgreich geladen, aber die folgenden Änderungen wurden automatisch vorgenommen - bei Fragen wenden Sie sich bitte an <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
+          "DESCRIPTION": "Die folgenden Änderungen wurden automatisch vorgenommen - bei Fragen wenden Sie sich bitte an <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
           "HEADER": "Upgrade Log",
           "ITEM": {
             "REMOVED_FIELDS": "Das Merkmal Feld <code>{{ replaced }}</code> wurde entfernt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
