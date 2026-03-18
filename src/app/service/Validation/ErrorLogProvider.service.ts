@@ -3,6 +3,8 @@ import { CRTDLData } from 'src/app/model/Interface/CRTDLData';
 import { Injectable } from '@angular/core';
 import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
 import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
+import { UpgradeData } from 'src/app/core/model/Upgrade/UpgradeData';
+import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +12,9 @@ import { ValidationReport } from 'src/app/model/Validation/ValidationReport';
 export class ErrorLogProviderService {
   private readonly validationResult$ = new BehaviorSubject<ValidationReport | null>(null);
   private readonly validationResultData$ = new BehaviorSubject<ValidationIssueData[] | null>(null);
+  private readonly profileUpgrade$ = new BehaviorSubject<ProfileUpgrade[] | null>(null);
+  private readonly upgradeData$ = new BehaviorSubject<UpgradeData | null>(null);
+
   private validatedCRTDLData$: BehaviorSubject<CRTDLData | null> =
     new BehaviorSubject<CRTDLData | null>(null);
 
@@ -31,6 +36,13 @@ export class ErrorLogProviderService {
 
   public setValidationResponseData(data: ValidationIssueData[]): void {
     this.validationResultData$.next(data);
+  }
+
+  public updateValidationResponseData(data: ValidationIssueData[]): void {
+    const result = this.validationResultData$.value
+      ? [...this.validationResultData$.value, ...data]
+      : data;
+    this.validationResultData$.next(result);
   }
 
   public getValidationResponseData$(): Observable<ValidationIssueData[] | null> {
@@ -55,5 +67,37 @@ export class ErrorLogProviderService {
 
   public getCurrentValidatedCRTDL(): CRTDLData | null {
     return this.validatedCRTDLData$.value;
+  }
+
+  public setUpgradeData(data: UpgradeData): void {
+    this.upgradeData$.next(data);
+  }
+
+  public getUpgradeData$(): Observable<UpgradeData | null> {
+    return this.upgradeData$.asObservable();
+  }
+
+  public getCurrentUpgradeData(): UpgradeData | null {
+    return this.upgradeData$.value;
+  }
+
+  public clearUpgradeData(): void {
+    this.upgradeData$.next(null);
+  }
+
+  public setProfileUpgrade(profileUpgrade: ProfileUpgrade[]): void {
+    this.profileUpgrade$.next(profileUpgrade);
+  }
+
+  public getProfileUpgrade$(): Observable<ProfileUpgrade[] | null> {
+    return this.profileUpgrade$.asObservable();
+  }
+
+  public getCurrentProfileUpgrade(): ProfileUpgrade[] | null {
+    return this.profileUpgrade$.value;
+  }
+
+  public clearProfileUpgrade(): void {
+    this.profileUpgrade$.next(null);
   }
 }
