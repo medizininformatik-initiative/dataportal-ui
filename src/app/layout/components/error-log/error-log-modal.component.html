@@ -3,7 +3,7 @@
 
   <ng-container *ngIf="errors.length > 0">
     <div class="error-summary">
-      {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DESCRIPTION' | translate }}
+      <span [innerHTML]="'APPLAYOUT.HEADER.ERROR_LOG.MODAL.DESCRIPTION' | translate"></span>
     </div>
     <div class="error-log-content">
       <div class="error-list" *ngIf="errors.length > 0">
@@ -14,7 +14,7 @@
   <ng-container *ngIf="upgrades$ | async as upgrades">
     <ng-container *ngIf="upgrades.length > 0">
       <div class="error-summary">
-        {{ 'APPLAYOUT.HEADER.UPGRADE_LOG.MODAL.DESCRIPTION' | translate }}
+        <span [innerHTML]="'APPLAYOUT.HEADER.UPGRADE_LOG.MODAL.DESCRIPTION' | translate"></span>
       </div>
 
       <div class="error-log-content">
