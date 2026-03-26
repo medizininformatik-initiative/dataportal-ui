@@ -3,8 +3,8 @@ import { Observable, of, tap } from 'rxjs';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
-import { InterfaceFilterChip } from 'src/app/shared/models/FilterChips/InterfaceFilterChip';
 import { CriterionFilterChipService } from 'src/app/shared/service/FilterChips/Criterion/CriterionFilterChips.service';
+import { FilterChipData } from '../../../../../../shared/models/FilterChips/FilterChipData';
 
 @Component({
   selector: 'num-criterion-header',
@@ -16,13 +16,13 @@ export class CriterionHeaderComponent implements OnChanges, OnInit {
   @Input()
   criterion: Criterion;
 
-  quantityFilterChips: InterfaceFilterChip[] = [];
+  quantityFilterChips: FilterChipData[] = [];
 
-  timeRestrictionFilterChips: InterfaceFilterChip[] = [];
+  timeRestrictionFilterChips: FilterChipData[] = [];
 
-  termCodesFilterChips: InterfaceFilterChip[] = [];
+  termCodesFilterChips: FilterChipData[] = [];
 
-  conceptFilterChips: InterfaceFilterChip[] = [];
+  conceptFilterChips: FilterChipData[] = [];
 
   system: Display;
 
@@ -47,7 +47,7 @@ export class CriterionHeaderComponent implements OnChanges, OnInit {
   }
 
   private getQuantityFilterChips() {
-    this.quantityFilterChips = this.filterChipsService.buildQuantityChips(this.criterion);
+    this.quantityFilterChips = this.filterChipsService.generateQuantityChips(this.criterion);
   }
 
   private getTimeRestrictionFilterChips() {
@@ -57,10 +57,10 @@ export class CriterionHeaderComponent implements OnChanges, OnInit {
   }
 
   private getTermCodesFilterChips() {
-    this.termCodesFilterChips = this.filterChipsService.buildTermCodeChips(this.criterion);
+    this.termCodesFilterChips = this.filterChipsService.generateTermcodeChips(this.criterion);
   }
 
   private getConceptFilterChips() {
-    this.conceptFilterChips = this.filterChipsService.buildConceptChips(this.criterion);
+    this.conceptFilterChips = this.filterChipsService.generateConceptChips(this.criterion);
   }
 }

@@ -16,6 +16,7 @@ import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { v4 as uuidv4 } from 'uuid';
 import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service';
 import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service';
+import { LoadDataSelectionProfilesService } from '../../DataSelection/LoadDataSelectionProfiles.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.
 export class DataExtraction2UiDataSelectionService {
   private idMap: { oldId: string; newId: string }[] = [];
   constructor(
-    private createDataSelection: CreateDataSelectionProfileService,
+    private createDataSelection: LoadDataSelectionProfilesService,
     private profileFilterTranslatorService: ProfileFilterTranslatorService,
     private basicFieldTranslator: BasicFieldTranslatorService,
     private referenceFieldTranslator: ReferenceFieldTranslatorService,

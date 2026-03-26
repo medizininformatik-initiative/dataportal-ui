@@ -4,6 +4,7 @@ import { CriterionProviderService } from 'src/app/service/Provider/CriterionProv
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
 import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
+import { NavigationHelperService } from '../../../../service/NavigationHelper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,8 @@ export class MenuServiceCriterionFunctions {
     private criterionProviderService: CriterionProviderService,
     private editCriterionService: CriterionModalService,
     private stageProviderService: StageProviderService,
-    private queryProviderService: FeasibilityQueryProviderService
+    private queryProviderService: FeasibilityQueryProviderService,
+    private navigationHelperService: NavigationHelperService
   ) {}
 
   public deleteCriterion(id: string): void {
@@ -34,14 +36,14 @@ export class MenuServiceCriterionFunctions {
   public editLinkedCriteria(id: string): void {
     const criterion = this.criterionProviderService.getOne(id);
     if (criterion) {
-      this.editCriterionService.openReferenceCriteriaModal(criterion);
+      this.navigationHelperService.navigateToEditCriterion(id);
     }
   }
 
   public editCriterionFilter(id: string): void {
     const criterion = this.criterionProviderService.getOne(id);
     if (criterion) {
-      this.editCriterionService.openCriterionModal(criterion);
+      this.navigationHelperService.navigateToEditCriterion(id);
     }
   }
 }

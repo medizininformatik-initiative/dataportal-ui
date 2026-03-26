@@ -4,7 +4,6 @@ import { ConceptFilterChipService } from './ConceptFilterChipService.service';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData';
 import { Injectable } from '@angular/core';
-import { InterfaceFilterChip } from '../../../models/FilterChips/InterfaceFilterChip';
 import { QuantityFilterChipService } from './QuantityFilterChipService.service';
 import { TerminologyCodeChipService } from './TerminologyCodeChip.service';
 import { TimeRestrictionChipService } from './TimeRestrictionChip.service';
@@ -34,7 +33,9 @@ export class CriterionFilterChipService {
     const quantityChips = this.generateQuantityChips(criterion);
     const termcodeChips =
       criterion.getTermCodes().length > 1 ? this.generateTermcodeChips(criterion) : [];
-    const timeRestrictionChips = this.buildTimeRestrictionChips(criterion);
+    const timeRestrictionChips = this.timeRestrictionChipService.generateTimeRestrictionChips(
+      criterion.getTimeRestriction()
+    );
     const allChips = [...conceptChips, ...quantityChips, ...termcodeChips, ...timeRestrictionChips];
     const filteredChips = allChips.filter((chip) => chip !== undefined);
     this.filterChipsSubject.next(filteredChips);
@@ -79,6 +80,7 @@ export class CriterionFilterChipService {
     }
     return [this.terminologyCodeChipService.generateTermcodeChipsFromCriterion(criterion)];
   }
+
   public buildTimeRestrictionChips(criterion: AbstractCriterion): FilterChipData[] {
     return this.timeRestrictionChipService.generateTimeRestrictionChips(
       criterion.getTimeRestriction()
