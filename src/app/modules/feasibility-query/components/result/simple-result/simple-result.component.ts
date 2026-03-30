@@ -2,7 +2,19 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery';
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service';
-import { filter, Observable, pairwise, Subject, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  filter,
+  map,
+  Observable,
+  of,
+  pairwise,
+  Subject,
+  Subscription,
+  switchMap,
+  timer,
+} from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { QueryResult } from 'src/app/model/Result/QueryResult';
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit';
@@ -28,6 +40,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   patientCountArray: string[] = [];
 
   queryResultRateLimit$: Observable<QueryResultRateLimit>;
+  private loadedResultSubject = new BehaviorSubject<boolean>(false);
   loadedResult = false;
 
   activeFeasibilityQuerySusbscription: Subscription;
@@ -35,6 +48,10 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   doSendSusbscription: Subscription;
 
   modalSubscription: Subscription;
+
+  isResultButtonDisabled$: Observable<boolean>;
+
+  totalNumberOfPatients: number;
 
   @Output()
   resultLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -62,7 +79,31 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
         next: () => this.doSend(),
         error: (err) => console.error('Error fetching feasibility query', err),
       });
+
+    this.isResultButtonDisabled$ = combineLatest([
+      this.queryResultRateLimit$,
+      this.loadedResultSubject.asObservable(),
+      of(this.appSettingsProviderService.getQueryResultExpiryTime()),
+    ]).pipe(
+      switchMap(([rateLimit, loadedResult, expirySeconds]) => {
+        const remaining = rateLimit?.getRemaining?.() ?? 1;
+        if (!expirySeconds) {
+          return of(!loadedResult || remaining === 0);
+        }
+        const expiryTimestamp = Date.now() + expirySeconds * 1000;
+        return timer(0, 1000).pipe(
+          map(() => {
+            const isExpired = Date.now() >= expiryTimestamp;
+            return !loadedResult || remaining === 0 || isExpired;
+          })
+        );
+      })
+    );
   }
+
+  /**
+   * Updates the disabled state for the result button.
+   */
 
   ngOnDestroy(): void {
     this.activeFeasibilityQuerySusbscription?.unsubscribe();
@@ -157,24 +198,15 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   private initializeState(): void {
     this.loadedResult = false;
+    this.loadedResultSubject.next(false);
     this.showSpinner = true;
   }
 
   private handleResult(result: QueryResult): void {
-    this.setPatientCount(result.getTotalNumberOfPatients());
+    this.totalNumberOfPatients = result.getTotalNumberOfPatients();
+    this.loadedResult = true;
+    this.loadedResultSubject.next(true);
     this.resultLoaded.emit(this.loadedResult);
-  }
-
-  /**
-   * If the result array has fewer than 10 digits, pad it with leading '0' digits until its length is 10
-   */
-  private setPatientCount(totalNumberOfPatients: number): void {
-    const patientCountArray = totalNumberOfPatients.toString().split('');
-    const lengthOfDigitFields = 8;
-    while (patientCountArray.length < lengthOfDigitFields) {
-      patientCountArray.unshift('0');
-    }
-    this.patientCountArray = patientCountArray;
   }
 
   private finalize(): void {

@@ -1,22 +1,10 @@
 <div fxLayout="column" class="container padding-1">
-  <div
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    *ngIf="patientCountArray.length > 0"
-    class="margin-bottom-3"
-  >
-    <div *ngFor="let digit of patientCountArray" class="number-of-patients">
-      <div class="digit">
-        {{ digit }}
-      </div>
-    </div>
-    {{ 'FEASIBILITY.RESULT.PATIENT_NUMBER' | translate }}
-  </div>
+  <num-patient-count [totalNumberOfPatients]="totalNumberOfPatients"></num-patient-count>
   <div class="margin-top-3" fxLayout="row" fxLayoutAlign="start center">
     <num-button
       type="green"
       class="padding-3"
-      [isDisabled]="!loadedResult || (queryResultRateLimit$ | async)?.getRemaining() === 0"
+      [isDisabled]="isResultButtonDisabled$ | async"
       matTooltipShowDelay="300"
       [matTooltip]="'FEASIBILITY.RESULT.DETAILS_TOOLTIP' | translate"
       matTooltipPosition="right"

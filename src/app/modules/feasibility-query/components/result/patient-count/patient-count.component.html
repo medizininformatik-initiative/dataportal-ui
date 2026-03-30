@@ -1,0 +1,8 @@
+<div *ngIf="patientCountArray.length > 0" class="container">
+  <div *ngFor="let digit of patientCountArray" class="number-of-patients">
+    <div class="digit">
+      {{ digit }}
+    </div>
+  </div>
+  {{ 'FEASIBILITY.RESULT.PATIENT_NUMBER' | translate }}
+</div>
