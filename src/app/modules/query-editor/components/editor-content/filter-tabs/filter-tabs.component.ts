@@ -6,8 +6,8 @@ import { Component, Input, OnInit, TemplateRef } from '@angular/core';
   styleUrls: ['./filter-tabs.component.scss'],
 })
 export class FilterTabsComponent implements OnInit {
-  @Input() content: { template: TemplateRef<any>; name: string }[];
-
+  @Input()
+  content: { template: TemplateRef<any>; name: string; context?: any }[];
   selectedIndex = 0;
 
   constructor() {}
