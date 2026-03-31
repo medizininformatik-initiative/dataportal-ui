@@ -13,11 +13,11 @@
     ></num-edit-time-restriction>
   </ng-template>
 
-  <ng-template #conceptAttributeFilterTemplate>
-    <div class="width-100" *ngFor="let conceptFilter of conceptAttributeFilter">
+  <ng-template #conceptAttributeFilterTemplate let-index>
+    <div class="width-100">
       <num-concept
-        [conceptFilter]="conceptFilter.getConcept()"
-        (changedConceptFilter)="updateConceptAttributeFilter($event, conceptFilter)"
+        [conceptFilter]="conceptAttributeFilter[index].getConcept()"
+        (changedConceptFilter)="updateConceptAttributeFilter($event, conceptAttributeFilter[index])"
       >
       </num-concept>
     </div>

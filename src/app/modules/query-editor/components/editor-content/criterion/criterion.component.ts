@@ -19,6 +19,8 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { EditCriterionService } from 'src/app/service/Criterion/Edit/EditCriterion.service';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { CriterionTabData, TabItem } from 'src/app/model/TabComponentData';
+import { CloneAttributeFilter } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/CloneAttributeFilter';
 
 @Component({
   selector: 'num-criterion',
@@ -63,7 +65,7 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit {
   @ViewChild('quantityValueFilterTemplate', { static: false, read: TemplateRef })
   quantityValueFilterTemplate: TemplateRef<any>;
 
-  templates: { template: TemplateRef<any>; name: string }[] = [];
+  templates: any[] = [];
 
   constructor(private criterionEditService: EditCriterionService, private cdr: ChangeDetectorRef) {}
 
@@ -72,8 +74,8 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.initializeFromCriterion();
     if (changes.criterion && this.criterion) {
-      this.initializeFromCriterion();
     }
   }
 
@@ -83,7 +85,9 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit {
     this.referenceFilter = this.criterion.getReferenceAttributeFilters();
     this.quantityAttributeFilter = this.criterion.getQuantityAttributeFilters();
     this.quantityValueFilter = this.criterion.getQuantityValueFilters();
-    this.conceptAttributeFilter = this.criterion.getConceptAttributeFilters();
+    this.conceptAttributeFilter = CloneAttributeFilter.deepCopyAttributeFilters(
+      this.criterion.getConceptAttributeFilters()
+    );
     this.conceptValueFilter = this.criterion.getConceptValueFilters();
   }
 
@@ -140,9 +144,16 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit {
   }
 
   private setConceptAttributeFilterTemplate(): void {
-    if (this.conceptAttributeFilter.length > 0) {
-      this.templates.push({ template: this.conceptAttributeFiltersTemplate, name: 'CONCEPT' });
-    }
+    this.conceptAttributeFilter.forEach((filter, index) => {
+      const display = filter.getDisplay();
+      console.log(index);
+
+      this.templates.push({
+        template: this.conceptAttributeFiltersTemplate,
+        display,
+        context: { $implicit: index },
+      });
+    });
   }
 
   public updateConceptAttributeFilter(
