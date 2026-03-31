@@ -6,7 +6,7 @@
     ></num-editor-content>
 
     <num-editor-content
-      *ngIf="dataSelectionProfile"
+      *ngIf="dataSelectionProfile$ | async as dataSelectionProfile"
       [dataSelectionProfile]="dataSelectionProfile"
     ></num-editor-content>
   </div>

@@ -18,7 +18,7 @@ import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider
 export class QueryEditorComponent implements OnInit, OnDestroy {
   criterion$: Observable<Criterion>;
 
-  dataSelectionProfile: DataSelectionProfile;
+  dataSelectionProfile$: Observable<DataSelectionProfile>;
 
   id: string;
   type: string;
@@ -61,7 +61,10 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   private getDataSelectionProfileFromProvider(id: string): void {
-    this.dataSelectionProfile = this.profileProviderService.getOne(id);
+    this.dataSelectionProfile$ = this.profileProviderService.getAll().pipe(
+      tap((profiles) => console.log('Fetched profiles from provider: ', profiles)),
+      map((profiles) => profiles.find((profile) => profile.getId() === id))
+    );
   }
 
   private getCriterionFromProvider(id: string): void {
