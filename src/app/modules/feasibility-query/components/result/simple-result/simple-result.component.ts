@@ -38,6 +38,9 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   pollingTime: number;
   patientCountArray: string[] = [];
+  private isActive = true;
+  private timeoutId: ReturnType<typeof setTimeout> | null = null;
+  expTime: number;
 
   queryResultRateLimit$: Observable<QueryResultRateLimit>;
   private loadedResultSubject = new BehaviorSubject<boolean>(false);
@@ -200,6 +203,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.loadedResult = false;
     this.loadedResultSubject.next(false);
     this.showSpinner = true;
+    this.expTime = this.appSettingsProviderService.getQueryResultExpiryTime();
+    console.log(this.expTime);
   }
 
   private handleResult(result: QueryResult): void {
@@ -212,5 +217,12 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private finalize(): void {
     this.loadedResult = true;
     this.showSpinner = false;
+  }
+
+  start(durationMs: number) {
+    this.timeoutId = setTimeout(() => {
+      this.isActive = false;
+      console.log('Timer abgelaufen → isActive = false');
+    }, durationMs);
   }
 }
