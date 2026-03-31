@@ -40,6 +40,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   modalSubscription: Subscription;
 
+  totalNumberOfPatients: number;
+
   @Output()
   resultLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -80,7 +82,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.initializeState();
     this.doSendSusbscription?.unsubscribe();
 
-    this.startExpirationTimer(this.expTime * 1000);
+    this.startExpirationTimer(90 * 1000);
     const obs = this.feasibilityQueryResultService.doSendQueryRequest();
 
     this.doSendSusbscription = this.createDoSendSubscription(obs);
@@ -167,6 +169,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   private handleResult(result: QueryResult): void {
+    this.totalNumberOfPatients = result.getTotalNumberOfPatients();
     this.setPatientCount(result.getTotalNumberOfPatients());
     this.resultLoaded.emit(this.loadedResult);
   }
