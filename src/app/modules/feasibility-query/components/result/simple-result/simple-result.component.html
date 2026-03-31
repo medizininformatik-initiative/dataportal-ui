@@ -16,7 +16,9 @@
     <num-button
       type="green"
       class="padding-3"
-      [isDisabled]="!loadedResult || (queryResultRateLimit$ | async)?.getRemaining() === 0"
+      [isDisabled]="
+        !loadedResult || isQueryExpired || (queryResultRateLimit$ | async)?.getRemaining() === 0
+      "
       matTooltipShowDelay="300"
       [matTooltip]="'FEASIBILITY.RESULT.DETAILS_TOOLTIP' | translate"
       matTooltipPosition="right"

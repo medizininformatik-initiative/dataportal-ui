@@ -27,6 +27,10 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   pollingTime: number;
   patientCountArray: string[] = [];
 
+  public isQueryExpired = false;
+  private timeoutId: ReturnType<typeof setTimeout> | null = null;
+  private expTime: number;
+
   queryResultRateLimit$: Observable<QueryResultRateLimit>;
   loadedResult = false;
 
@@ -76,6 +80,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.initializeState();
     this.doSendSusbscription?.unsubscribe();
 
+    this.startExpirationTimer(this.expTime * 1000);
     const obs = this.feasibilityQueryResultService.doSendQueryRequest();
 
     this.doSendSusbscription = this.createDoSendSubscription(obs);
@@ -158,6 +163,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private initializeState(): void {
     this.loadedResult = false;
     this.showSpinner = true;
+    this.expTime = this.appSettingsProviderService.getQueryResultExpiry();
   }
 
   private handleResult(result: QueryResult): void {
@@ -180,5 +186,12 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private finalize(): void {
     this.loadedResult = true;
     this.showSpinner = false;
+  }
+
+  private startExpirationTimer(durationMs: number) {
+    this.timeoutId = setTimeout(() => {
+      this.isQueryExpired = true;
+      console.log('Timer abgelaufen');
+    }, durationMs);
   }
 }
