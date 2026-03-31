@@ -18,6 +18,8 @@ import {
   OnInit,
   OnDestroy,
   Input,
+  SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 @Component({
   selector: 'num-profile',
@@ -31,7 +33,7 @@ import {
  * It initializes the profile, updates selected fields, and manages filters.
  * Newly added and stagged references are managed automatically in the StagedProfileService.
  */
-export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
+export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy, OnChanges {
   @Input()
   profile: DataSelectionProfile;
 
@@ -63,6 +65,19 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnInit(): void {
     this.stagedProfileService.initialize(this.profile);
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.tokenFilter = this.profile
+      .getFilters()
+      .find(
+        (filter: AbstractProfileFilter) => filter.getUiType() === DataSelectionUIType.CODE
+      ) as ProfileTokenFilter;
+    this.timeRestrictionFilters = this.profile
+      .getFilters()
+      .filter(
+        (filter: AbstractProfileFilter) =>
+          filter.getUiType() === DataSelectionUIType.TIMERESTRICTION
+      ) as ProfileTimeRestrictionFilter[];
+  }
 
   ngOnDestroy(): void {
     this.possibleReferencesServiceSubscription?.unsubscribe();
@@ -77,6 +92,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     this.stagedProfileService.initialize(this.profile);
     this.templates = [];
     this.updateTemplatesArray();
+    this.cdr.detectChanges();
   }
 
   private updateTemplatesArray(): void {
