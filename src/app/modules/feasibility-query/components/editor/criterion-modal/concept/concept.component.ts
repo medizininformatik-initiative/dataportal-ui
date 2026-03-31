@@ -38,7 +38,6 @@ export class ConceptComponent implements OnChanges, OnInit {
 
   ngOnInit() {
     this.selectedConcepts = this.conceptFilter.getSelectedConcepts();
-    console.log('bla', this.conceptFilter);
   }
 
   ngOnChanges(): void {
