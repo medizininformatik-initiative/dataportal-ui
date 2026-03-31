@@ -56,7 +56,7 @@ export interface DataportalConfigData {
   /**
    * Expiry time for query result
    */
-  readonly queryResultExpiryTime: string
+  readonly queryResultExpiry: string
 
   /**
    * max allowed saved queries per user

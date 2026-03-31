@@ -201,8 +201,8 @@ export class AppSettingsProviderService implements AppSettingGetter {
     return this.getDataPortalConfigByKey('maxSavedQueriesPerUser');
   }
 
-  public getQueryResultExpiryTime(): number {
-    const duration = iso8601.parse(this.getDataPortalConfigByKey('queryResultExpiryTime'));
+  public getQueryResultExpiry(): number {
+    const duration = iso8601.parse(this.getDataPortalConfigByKey('queryResultExpiry'));
     return iso8601.toSeconds(duration);
   }
 }

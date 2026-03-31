@@ -1,5 +1,8 @@
 <div fxLayout="column" class="container padding-1">
-  <num-patient-count [totalNumberOfPatients]="totalNumberOfPatients"></num-patient-count>
+  <num-patient-count
+    *ngIf="totalNumberOfPatients"
+    [totalNumberOfPatients]="totalNumberOfPatients"
+  ></num-patient-count>
   <div class="margin-top-3" fxLayout="row" fxLayoutAlign="start center">
     <num-button
       type="green"

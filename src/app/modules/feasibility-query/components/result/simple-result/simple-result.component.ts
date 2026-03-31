@@ -86,7 +86,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.isResultButtonDisabled$ = combineLatest([
       this.queryResultRateLimit$,
       this.loadedResultSubject.asObservable(),
-      of(this.appSettingsProviderService.getQueryResultExpiryTime()),
+      of(this.appSettingsProviderService.getQueryResultExpiry()),
     ]).pipe(
       switchMap(([rateLimit, loadedResult, expirySeconds]) => {
         const remaining = rateLimit?.getRemaining?.() ?? 1;
@@ -203,7 +203,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.loadedResult = false;
     this.loadedResultSubject.next(false);
     this.showSpinner = true;
-    this.expTime = this.appSettingsProviderService.getQueryResultExpiryTime();
+    this.expTime = this.appSettingsProviderService.getQueryResultExpiry();
     console.log(this.expTime);
   }
 
