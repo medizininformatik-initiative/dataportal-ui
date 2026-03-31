@@ -1,11 +1,10 @@
 import { AttributeFilter } from '../../../FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { CloneConceptFilter } from './Concept/CloneConceptFilter';
+import { CloneQuantityFilter } from './Quantity/CloneQuantityFilter';
+import { CloneReferenceFilter } from './ReferenceFilter/CloneReferenceFilter';
+import { CloneTerminologyCode } from '../TerminologyCode/CloneTerminologyCode';
 import { ConceptFilter } from '../../../FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { ReferenceFilter } from '../../../FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
-import { FilterTypes } from '../../FilterTypes';
-import { CloneQuantityFilter } from './Quantity/CloneQuantityFilter';
-import { CloneTerminologyCode } from '../TerminologyCode/CloneTerminologyCode';
-import { CloneConceptFilter } from './Concept/CloneConceptFilter';
-import { CloneReferenceFilter } from './ReferenceFilter/CloneReferenceFilter';
 
 export class CloneAttributeFilter {
   static deepCopyAttributeFilters(attributeFilters: AttributeFilter[]): AttributeFilter[] {
