@@ -54,6 +54,11 @@ export interface DataportalConfigData {
   readonly readResultDetailedObfuscatedPollingInterval: string
 
   /**
+   * Expiry time for query result
+   */
+  readonly queryResultExpiry: string
+
+  /**
    * max allowed saved queries per user
    */
   readonly maxSavedQueriesPerUser: number
