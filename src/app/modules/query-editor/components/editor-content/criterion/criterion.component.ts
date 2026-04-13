@@ -1,6 +1,14 @@
 import { AbstractAttributeFilters } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
+import { CloneAttributeFilter } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/CloneAttributeFilter';
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { EditCriterionService } from 'src/app/service/Criterion/Edit/EditCriterion.service';
+import { Subscription } from 'rxjs';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -8,19 +16,12 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { EditCriterionService } from 'src/app/service/Criterion/Edit/EditCriterion.service';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { CriterionTabData, TabItem } from 'src/app/model/TabComponentData';
-import { CloneAttributeFilter } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/CloneAttributeFilter';
 
 @Component({
   selector: 'num-criterion',
@@ -28,7 +29,7 @@ import { CloneAttributeFilter } from 'src/app/model/Utilities/CriterionCloner/Va
   styleUrls: ['./criterion.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CriterionComponent implements OnChanges, OnInit, AfterViewInit {
+export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
   @Input()
   criterion: Criterion;
 
@@ -67,6 +68,8 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit {
 
   templates: any[] = [];
 
+  referenceSubscription: Subscription;
+
   constructor(private criterionEditService: EditCriterionService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
@@ -77,6 +80,10 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit {
     this.initializeFromCriterion();
     if (changes.criterion && this.criterion) {
     }
+  }
+
+  ngOnDestroy(): void {
+    this.referenceSubscription?.unsubscribe();
   }
 
   private initializeFromCriterion(): void {
@@ -178,8 +185,11 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit {
     this.criterionEditService.updateTermCodes(termCodes);
   }
 
-  public updateReferenceFilter(ids: string[], attributeFilter: AttributeFilter): void {
-    this.criterionEditService.updateReferenceFilter(ids, attributeFilter);
+  public updateReferenceFilter(id: string, attributeFilter: AttributeFilter): void {
+    this.referenceSubscription?.unsubscribe();
+    this.referenceSubscription = this.criterionEditService
+      .updateReferenceFilter(id, attributeFilter)
+      .subscribe();
   }
 
   public updateQuantityValueFilter(quantityFilter: AbstractQuantityFilter): void {

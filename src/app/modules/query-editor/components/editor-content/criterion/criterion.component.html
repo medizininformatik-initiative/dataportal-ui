@@ -38,6 +38,7 @@
       <num-reference
         *ngIf="attributeFilter.getReference()"
         [attributeCode]="attributeFilter.getAttributeCode()"
+        [selectedReferenceCriterion]="attributeFilter.getReference().getSelectedReferences()"
         [referenceFilterUri]="attributeFilter.getReference().getAllowedReferenceUri()"
         (selectedReferenceIds)="updateReferenceFilter($event, attributeFilter)"
       >
