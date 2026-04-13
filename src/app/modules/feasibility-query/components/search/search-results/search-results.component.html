@@ -34,6 +34,7 @@
     <num-table
       (selectedRow)="selectedRow.emit($event)"
       (rowClicked)="rowClicked.emit($event)"
+      (iconClicked)="iconClicked.emit($event)"
       [tableData]="adaptedData"
     ></num-table>
   </mat-drawer-content>
