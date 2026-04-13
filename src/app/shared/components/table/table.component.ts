@@ -14,6 +14,7 @@ export class TableComponent {
 
   @Output() selectedRow = new EventEmitter<TableRowData>();
   @Output() rowClicked = new EventEmitter<TableRowData>();
+  @Output() iconClicked = new EventEmitter<TableRowData>();
 
   public unselectCheckbox(ids: string[]): void {
     ids.forEach((id) => {

@@ -17,6 +17,13 @@ export class TableBodyComponent {
   @Output()
   selectedRow = new EventEmitter<TableRowData>();
 
+  @Output()
+  iconClicked = new EventEmitter<TableRowData>();
+
+  public onIconClick(row: TableRowData): void {
+    this.iconClicked.emit(row);
+  }
+
   public onRowClick(row: TableRowData): void {
     this.rowClicked.emit(row);
   }

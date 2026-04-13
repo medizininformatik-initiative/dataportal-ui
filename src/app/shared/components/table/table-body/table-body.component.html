@@ -20,6 +20,12 @@
       <num-display-cell *ngSwitchCase="'display'" [cell]="cell"></num-display-cell>
 
       <num-text-cell *ngSwitchDefault [cell]="cell"></num-text-cell>
+
+      <num-icon-cell
+        *ngSwitchCase="'icon'"
+        [iconData]="cell"
+        (iconClicked)="onIconClick(row)"
+      ></num-icon-cell>
     </div>
   </td>
 </tr>
