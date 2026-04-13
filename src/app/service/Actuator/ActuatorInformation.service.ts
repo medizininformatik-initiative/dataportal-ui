@@ -8,9 +8,8 @@ import { map, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ActuatorInformationService {
-  private actuatorInfo$: BehaviorSubject<ActuatorData | null> = new BehaviorSubject<ActuatorData>(
-    null
-  );
+  private actuatorInfo$: BehaviorSubject<ActuatorData | null> =
+    new BehaviorSubject<ActuatorData | null>(null);
 
   constructor(private actuator: ActuatorApiService) {}
 
@@ -18,7 +17,7 @@ export class ActuatorInformationService {
    * Fetches and caches actuator information from the backend.
    * @returns of actuator information
    */
-  public getActuatorInfo(): Observable<ActuatorData> {
+  public getActuatorInfo(): Observable<ActuatorData | null> {
     if (this.actuatorInfo$.value) {
       return this.actuatorInfo$.asObservable();
     }

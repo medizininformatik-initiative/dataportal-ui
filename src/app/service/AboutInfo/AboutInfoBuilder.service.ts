@@ -25,12 +25,17 @@ export class AboutInfoBuilderService {
    */
   public buildAboutInfo(): AboutInfoData {
     const actuatorInfo = this.actuatorInformationService.getActuatorInfoValue();
+    if (!actuatorInfo) {
+      throw new Error(
+        'Actuator information is not available. Ensure it is loaded before building about info.'
+      );
+    }
     return {
       timestamp: new Date().toISOString(),
       ui: this.buildUiInfo(),
       backend: this.buildBackendInfo(actuatorInfo.git),
       ontology: {
-        version: actuatorInfo?.terminology?.ontologyTag,
+        version: actuatorInfo.terminology.ontologyTag,
       },
     };
   }
@@ -59,7 +64,6 @@ export class AboutInfoBuilderService {
     return {
       version: gitInformation?.build?.version,
       buildTime: backendBuildTime,
-      branch: gitInformation?.branch,
       commit: gitInformation?.commit?.id?.abbrev,
       fullCommit: gitInformation?.commit?.id?.full,
     };
