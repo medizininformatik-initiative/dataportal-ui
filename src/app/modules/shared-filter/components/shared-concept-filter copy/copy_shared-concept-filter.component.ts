@@ -1,4 +1,5 @@
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
+import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
@@ -11,7 +12,7 @@ import { SelectedConceptFilterProviderService } from '../../service/ConceptFilte
   selector: 'num-shared-concept-filter-copy',
   templateUrl: './copy_shared-concept-filter.component.html',
   styleUrls: ['./copy_shared-concept-filter.component.scss'],
-  providers: [ConceptSelectionHelperService],
+  providers: [ConceptSelectionHelperService, SelectedConceptFilterProviderService],
 })
 export class CopySharedConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
   @Input() valueSetUrl: string[];
@@ -76,7 +77,7 @@ export class CopySharedConceptFilterComponent implements OnInit, OnDestroy, OnCh
     this.searchResults$ = this.conceptSearchService.getSearchResults(this.valueSetUrl).pipe(
       filter((results) => results != null),
       map((results) => {
-        results.getResults().find((entry) => {
+        results.getResults().find((entry: CodeableConceptResultListEntry) => {
           entry.setIsSelected(
             this.selectedConceptFilterService.isConceptSelected(
               entry.getConcept().getTerminologyCode()
