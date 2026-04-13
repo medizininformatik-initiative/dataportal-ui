@@ -44,7 +44,7 @@ export class CriteriaBoxComponent implements OnInit {
   }
 
   private getMenuItems() {
-    this.menuItems = this.menuService.getMenuItemsForCriterion(this.isRefrenceSet());
+    this.menuItems = this.menuService.getMenuItemsForCriterion();
   }
 
   private getFilterChips() {

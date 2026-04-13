@@ -1,5 +1,4 @@
 import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion';
-import { CriterionModalService } from 'src/app/service/Criterion/Modal/CriterionModal.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
@@ -12,7 +11,6 @@ import { NavigationHelperService } from '../../../../service/NavigationHelper.se
 export class MenuServiceCriterionFunctions {
   constructor(
     private criterionProviderService: CriterionProviderService,
-    private editCriterionService: CriterionModalService,
     private stageProviderService: StageProviderService,
     private queryProviderService: FeasibilityQueryProviderService,
     private navigationHelperService: NavigationHelperService
@@ -31,13 +29,6 @@ export class MenuServiceCriterionFunctions {
     );
     this.criterionProviderService.setOne(clonedCriterion);
     this.stageProviderService.addOne(clonedCriterion.getId());
-  }
-
-  public editLinkedCriteria(id: string): void {
-    const criterion = this.criterionProviderService.getOne(id);
-    if (criterion) {
-      this.navigationHelperService.navigateToEditCriterion(id);
-    }
   }
 
   public editCriterionFilter(id: string): void {
