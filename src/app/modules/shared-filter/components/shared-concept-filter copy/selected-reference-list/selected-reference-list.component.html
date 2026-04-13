@@ -1,0 +1,9 @@
+<div class="selected-reference-list">
+  <div *ngFor="let reference of selectedReferences" class="reference-item">
+    <span style="width: 60%">{{ reference.getDisplay() | displayTranslation }}</span>
+    <span>{{ reference.getTerminologyCode().getCode() }}</span>
+    <button (click)="removeSelectedReference(reference)" class="delete-button">
+      {{ 'FEASIBILITY.EDITOR.MODAL.REMOVE' | translate }}
+    </button>
+  </div>
+</div>

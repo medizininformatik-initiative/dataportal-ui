@@ -1,0 +1,19 @@
+/* You can copy or customize styles as needed for the reference list */
+.selected-reference-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 16px;
+}
+.reference-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.delete-button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+}

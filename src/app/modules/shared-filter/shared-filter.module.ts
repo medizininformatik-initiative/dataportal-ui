@@ -9,6 +9,7 @@ import { SelectedConceptListComponent } from './components/shared-concept-filter
 import { CopySearchConceptComponent } from './components/shared-concept-filter copy/search-concept/copy_search-concept.component';
 import { CopySharedConceptFilterComponent } from './components/shared-concept-filter copy/copy_shared-concept-filter.component';
 import { CopyConceptFilterTableComponent } from './components/shared-concept-filter copy/concept-filter-table/copy_concept-filter-table.component';
+import { SelectedReferenceListComponent } from './components/shared-concept-filter copy/selected-reference-list/selected-reference-list.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CopyConceptFilterTableComponent } from './components/shared-concept-fil
     ConceptBulkSearchComponent,
     CopyConceptFilterTableComponent,
     SelectedConceptListComponent,
+    SelectedReferenceListComponent,
   ],
   imports: [CommonModule, LayoutModule, SharedModule, InfiniteScrollModule],
   exports: [
@@ -25,6 +27,7 @@ import { CopyConceptFilterTableComponent } from './components/shared-concept-fil
     CopySharedConceptFilterComponent,
     ConceptBulkSearchComponent,
     SelectedConceptListComponent,
+    SelectedReferenceListComponent,
   ],
 })
 export class SharedFilterModule {}
