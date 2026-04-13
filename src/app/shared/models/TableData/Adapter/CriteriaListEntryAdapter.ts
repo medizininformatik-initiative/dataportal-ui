@@ -8,10 +8,15 @@ import { TableRowData } from '../TableRowData';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 import { TextCellData } from '../cells/TextCellData';
 import { TableCellType } from '../cells/TableCellType';
+import { IconCellData } from '../cells/IconCellData';
 
 export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListEntry> {
+  constructor() {
+    super();
+  }
+
   protected buildHeaders(): TableHeaderData {
-    const headers = ['NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'];
+    const headers = [' ', 'NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'];
     return { headers };
   }
 
@@ -31,6 +36,7 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
 
   private buildCells(listEntry: CriteriaListEntry): TableCellType[] {
     return [
+      this.iconCell(listEntry),
       this.displayCell(listEntry),
       this.availabilityCell(listEntry),
       this.terminologyCell(listEntry),
@@ -43,8 +49,11 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
     return TableCellBuilder.withCheckbox(listEntry.getDisplay(), {
       isSelected: false,
       isDisabled: listEntry.getSelectable(),
-      icon: 'sitemap',
     });
+  }
+
+  private iconCell(listEntry: CriteriaListEntry): IconCellData {
+    return TableCellBuilder.withIcon('sitemap');
   }
 
   private terminologyCell(listEntry: CriteriaListEntry): TextCellData {

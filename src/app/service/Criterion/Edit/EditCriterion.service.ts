@@ -88,11 +88,11 @@ export class EditCriterionService {
   }
 
   public updateReferenceFilter(
-    ids: string[],
+    id: string,
     attributeFilter: AttributeFilter
   ): Observable<ReferenceCriterion[]> {
     return this.referenceFilterService.updateReferenceFilter(
-      ids,
+      [id],
       this.getCriterion().getId(),
       attributeFilter
     );
