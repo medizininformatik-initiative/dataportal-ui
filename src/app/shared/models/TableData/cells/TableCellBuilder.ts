@@ -5,6 +5,7 @@ import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayCellData } from './DisplayCellData';
 import { TableCellType } from './TableCellType';
 import { TextCellData } from './TextCellData';
+import { IconCellData } from './IconCellData';
 
 /**
  * Factory class for constructing typed table cells.
@@ -16,6 +17,9 @@ import { TextCellData } from './TextCellData';
  *   TableCellBuilder.display(entry.getDisplay(), { icon: 'sitemap' })
  */
 export class TableCellBuilder {
+  public static withIcon(icon: string): IconCellData {
+    return { type: 'icon', icon };
+  }
   /**
    * Text cell builder
    * @param value
@@ -48,7 +52,6 @@ export class TableCellBuilder {
       value,
       isSelected: options.isSelected ?? false,
       isDisabled: options.isDisabled ?? false,
-      icon: options.icon,
     };
   }
 

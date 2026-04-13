@@ -5,11 +5,9 @@ export interface CheckboxCellData {
   value: string | Display
   isSelected: boolean
   isDisabled: boolean
-  icon?: string
 }
 
 export interface CheckboxCellOptionsData {
   isSelected?: boolean
   isDisabled?: boolean
-  icon?: string
 }

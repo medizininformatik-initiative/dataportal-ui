@@ -54,6 +54,7 @@ import { TextCellComponent } from './table/cells/text-cell/text-cell.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
+import { IconCellComponent } from './table/cells/icon-cell/icon-cell.component';
 
 const SHARED_DECLARATIONS = [
   AvailabilityCellComponent,
@@ -104,6 +105,7 @@ const SHARED_DECLARATIONS = [
   ErrorDisplayComponent,
   TableHeaderComponent,
   TableBodyComponent,
+  IconCellComponent,
 ];
 
 @NgModule({
@@ -140,6 +142,7 @@ const SHARED_DECLARATIONS = [
     InformationSectionComponent,
     TableHeaderComponent,
     TableBodyComponent,
+    IconCellComponent,
   ],
   imports: [
     CommonModule,
