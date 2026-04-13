@@ -1,16 +1,26 @@
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
 import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CriteriaSetSearchService } from 'src/app/service/Search/SearchTypes/CriteriaSet/CriteriaSetSearch.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { filter, Observable, Subscription, tap } from 'rxjs';
 import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
 import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter';
 import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
 import { TableData } from 'src/app/shared/models/TableData/TableData';
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 interface selectedItem {
   id: string
@@ -24,17 +34,20 @@ interface selectedItem {
   styleUrls: ['./reference.component.scss'],
   providers: [SelectedTableItemsService],
 })
-export class ReferenceComponent implements OnInit, OnDestroy {
+export class ReferenceComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   referenceFilterUri: string;
 
   @Input()
   attributeCode: TerminologyCode;
 
+  @Input()
+  selectedReferenceCriterion: ReferenceCriterion[] = [];
+
   listItems: ReferenceCriteriaListEntry[] = [];
 
   @Output()
-  selectedReferenceIds = new EventEmitter<string[]>();
+  selectedReferenceIds = new EventEmitter<string>();
 
   private subscription: Subscription;
 
@@ -58,11 +71,16 @@ export class ReferenceComponent implements OnInit, OnDestroy {
     private selectedTableItemsService: SelectedTableItemsService<ReferenceCriteriaListEntry>
   ) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.selectedReferenceCriterion);
+  }
+
   ngOnInit() {
     this.startElasticSearch('');
     this.subscription = this.criteriaSetSearchService
       .getSearchResults([this.referenceFilterUri])
       .pipe(
+        tap((t) => console.log(t)),
         filter(
           (searchResult: ReferenceCriteriaResultList) => searchResult?.getResults()?.length > 0
         )
@@ -122,46 +140,13 @@ export class ReferenceComponent implements OnInit, OnDestroy {
     }
   }
 
-  setSelectedReferenceCriteria() {
-    this.selectedTableItemsService
-      .getSelectedTableItems()
-      .subscribe((items) => {
-        items.forEach((item: ReferenceCriteriaListEntry) => {
-          this.arrayOfSelectedReferences.push({
-            id: item.getId(),
-            display: item.getDisplay(),
-            system: item.getSystem(),
-            terminology: item.getTerminology(),
-          });
-        });
-      })
-      .unsubscribe();
-
-    this.emitIds();
-    this.selectedTableItemsService.clearSelection();
-  }
-
-  public setSelectedRowItem(item: TableRowData): void {
-    const selectedIds = this.selectedTableItemsService.getSelectedIds();
-    const itemId = item.originalEntry.getId();
-    if (selectedIds.includes(itemId)) {
-      this.selectedTableItemsService.removeFromSelection(
-        item.originalEntry as ReferenceCriteriaListEntry
-      );
-    } else {
-      this.selectedTableItemsService.setSelectedTableItem(
-        item.originalEntry as ReferenceCriteriaListEntry
-      );
-    }
-  }
-
   public removeSelectedReference(index: number): void {
     this.arrayOfSelectedReferences.splice(index, 1);
-    this.emitIds();
   }
 
-  private emitIds(): void {
-    this.selectedReferenceIds.emit(this.arrayOfSelectedReferences.map((items) => items.id));
+  public emitIds(item: TableRowData): void {
+    const itemId = item.originalEntry.getId();
+    this.selectedReferenceIds.emit(itemId);
   }
 
   public loadMoreCriteriaSetResults(): void {
