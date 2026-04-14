@@ -16,8 +16,8 @@ import { FilterChipData } from '../../models/FilterChips/FilterChipData';
   providers: [CriterionFilterChipService],
 })
 export class CriteriaBoxComponent implements OnInit {
-  @Input() criterion: Criterion;
-  @Input() isEditable: boolean;
+  @Input() criterion!: Criterion;
+  @Input() isEditable!: boolean;
 
   menuItems: MenuItemInterface[] = [];
 
@@ -25,9 +25,11 @@ export class CriteriaBoxComponent implements OnInit {
 
   $filterChips: Observable<FilterChipData[]> = of([]);
 
-  system: Display;
+  system!: Display;
 
-  isFilterRequired: boolean;
+  isFilterRequired!: boolean;
+
+  warningSignUrl = 'assets/img/alert-blue-white.png';
 
   constructor(
     private menuService: CriterionMenuItems,
@@ -49,11 +51,5 @@ export class CriteriaBoxComponent implements OnInit {
 
   private getFilterChips() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion);
-  }
-
-  private isRefrenceSet(): boolean {
-    return this.criterion
-      .getAttributeFilters()
-      .some((attributeFilter) => attributeFilter.isReferenceSet());
   }
 }
