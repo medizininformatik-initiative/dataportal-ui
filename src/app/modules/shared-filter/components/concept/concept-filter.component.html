@@ -11,12 +11,12 @@
       [filter]="searchFilter"
       (selectedFilterChanged)="setValueSet($event)"
     ></num-search-filter>
-    <num-concept-filter-table-copy
+    <num-concept-filter-table
       style="overflow: auto"
       *ngIf="searchResults$ | async as searchResults"
       [valueSetUrl]="valueSetUrl"
       [conceptFilterId]="conceptFilterId"
       (selectedConcept)="toggleConceptSelection($event)"
-    ></num-concept-filter-table-copy>
+    ></num-concept-filter-table>
   </div>
 </div>

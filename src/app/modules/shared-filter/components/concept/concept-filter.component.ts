@@ -9,12 +9,12 @@ import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearch
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
 
 @Component({
-  selector: 'num-shared-concept-filter-copy',
-  templateUrl: './copy_shared-concept-filter.component.html',
-  styleUrls: ['./copy_shared-concept-filter.component.scss'],
+  selector: 'num-concept-filter',
+  templateUrl: './concept-filter.component.html',
+  styleUrls: ['./concept-filter.component.scss'],
   providers: [ConceptSelectionHelperService, SelectedConceptFilterProviderService],
 })
-export class CopySharedConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
+export class ConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
   @Input() valueSetUrl: string[];
   @Input() conceptFilterId: string;
   @Input() preSelectedConcepts: Concept[] = [];

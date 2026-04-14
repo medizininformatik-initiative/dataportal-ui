@@ -14,11 +14,11 @@ import { TableData } from 'src/app/shared/models/TableData/TableData';
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
 
 @Component({
-  selector: 'num-concept-filter-table-copy',
-  templateUrl: './copy_concept-filter-table.component.html',
-  styleUrls: ['./copy_concept-filter-table.component.scss'],
+  selector: 'num-concept-filter-table',
+  templateUrl: './concept-filter-table.component.html',
+  styleUrls: ['./concept-filter-table.component.scss'],
 })
-export class CopyConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy {
+export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy {
   codeableConceptResultList: CodeableConceptResultList;
 
   @Input()

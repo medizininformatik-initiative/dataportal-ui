@@ -5,11 +5,11 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
 
 @Component({
-  selector: 'num-search-concept-copy',
-  templateUrl: './copy_search-concept.component.html',
-  styleUrls: ['./copy_search-concept.component.scss'],
+  selector: 'num-search-concept',
+  templateUrl: './search-concept.component.html',
+  styleUrls: ['./search-concept.component.scss'],
 })
-export class CopySearchConceptComponent implements OnDestroy, OnInit {
+export class SearchConceptComponent implements OnDestroy, OnInit {
   @Input()
   valueSetUrl: string[];
 
