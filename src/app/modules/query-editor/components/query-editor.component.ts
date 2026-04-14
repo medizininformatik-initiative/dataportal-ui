@@ -61,17 +61,15 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   private getDataSelectionProfileFromProvider(id: string): void {
-    this.dataSelectionProfile$ = this.profileProviderService.getAll().pipe(
-      tap((profiles) => console.log('Fetched profiles from provider: ', profiles)),
-      map((profiles) => profiles.find((profile) => profile.getId() === id))
-    );
+    this.dataSelectionProfile$ = this.profileProviderService
+      .getAll()
+      .pipe(map((profiles) => profiles.find((profile) => profile.getId() === id)));
   }
 
   private getCriterionFromProvider(id: string): void {
-    this.criterion$ = this.criterionProviderService.getAll().pipe(
-      tap((criteria) => console.log('Fetched criteria from provider: ', criteria)),
-      map((criteria) => criteria.find((criterion) => criterion.getId() === id))
-    );
+    this.criterion$ = this.criterionProviderService
+      .getAll()
+      .pipe(map((criteria) => criteria.find((criterion) => criterion.getId() === id)));
   }
 
   public onCancel(): void {
