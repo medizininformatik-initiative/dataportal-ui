@@ -55,6 +55,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
 import { IconCellComponent } from './table/cells/icon-cell/icon-cell.component';
+import { SelectedItemsListComponent } from './selected-items-list/selected-items-list.component';
 
 const SHARED_DECLARATIONS = [
   AvailabilityCellComponent,
@@ -106,6 +107,7 @@ const SHARED_DECLARATIONS = [
   TableHeaderComponent,
   TableBodyComponent,
   IconCellComponent,
+  SelectedItemsListComponent,
 ];
 
 @NgModule({
