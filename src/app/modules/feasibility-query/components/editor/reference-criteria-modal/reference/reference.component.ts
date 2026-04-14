@@ -21,6 +21,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service';
 
 interface selectedItem {
   id: string
@@ -67,12 +68,16 @@ export class ReferenceComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private activeSearchTermService: ActiveSearchTermService,
+    private snackbarMessageService: SnackbarMessageService,
     private criteriaSetSearchService: CriteriaSetSearchService,
     private selectedTableItemsService: SelectedTableItemsService<ReferenceCriteriaListEntry>
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.selectedReferenceCriterion);
+    console.log(
+      'ReferenceComponent ngOnChanges triggered with changes:',
+      this.selectedReferenceCriterion
+    );
   }
 
   ngOnInit() {
@@ -80,7 +85,6 @@ export class ReferenceComponent implements OnInit, OnDestroy, OnChanges {
     this.subscription = this.criteriaSetSearchService
       .getSearchResults([this.referenceFilterUri])
       .pipe(
-        tap((t) => console.log(t)),
         filter(
           (searchResult: ReferenceCriteriaResultList) => searchResult?.getResults()?.length > 0
         )
@@ -145,6 +149,7 @@ export class ReferenceComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public emitIds(item: TableRowData): void {
+    this.snackbarMessageService.displayCriterionEditSuccess();
     const itemId = item.originalEntry.getId();
     this.selectedReferenceIds.emit(itemId);
   }
