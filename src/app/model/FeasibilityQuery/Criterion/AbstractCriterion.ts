@@ -207,7 +207,7 @@ export abstract class AbstractCriterion {
    *
    * @returns Array of TerminologyCode objects.
    */
-  public getTermCodes(): Array<TerminologyCode> | undefined {
+  public getTermCodes(): Array<TerminologyCode> {
     return this.termCodes;
   }
 
