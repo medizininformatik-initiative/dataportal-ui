@@ -1,6 +1,6 @@
 <mat-tab-group
   animationDuration="0ms"
-  class="token-filter-container"
+  class="container"
   disableRipple="true"
   mat-stretch-tabs="false"
   [selectedIndex]="1"
@@ -43,6 +43,7 @@
     </div>
   </mat-tab>
   <mat-tab
+    class="height-100"
     [label]="
       'EDITOR.CONTENT.TAB_LABEL.SELECTED_REFERENCES'
         | translate : { count: selectedReferenceCriterion.length }
@@ -50,6 +51,7 @@
     [disabled]="selectedReferenceCriterion.length === 0"
   >
     <num-selected-reference-list
+      *ngIf="selectedReferenceCriterion.length > 0"
       [selectedReferences]="selectedReferenceCriterion"
       (changedSelectedReferences)="arrayOfSelectedReferences = $event"
     ></num-selected-reference-list>
