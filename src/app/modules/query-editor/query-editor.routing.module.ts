@@ -8,7 +8,11 @@ const routes: Routes = [
   {
     path: `${PathSegments.criterion}/:id`,
     component: QueryEditorComponent,
-    data: { title: 'TAB_TITLE.QUERY_EDITOR_CRITERION', breadcrumb: 'BREADCRUMB.QUERY_EDITOR' },
+    data: {
+      breadcrumb: 'BREADCRUMB.QUERY_EDITOR',
+      hideSideNav: false,
+      title: 'TAB_TITLE.QUERY_EDITOR_CRITERION',
+    },
     canActivate: [RouteGuard],
   },
   {
