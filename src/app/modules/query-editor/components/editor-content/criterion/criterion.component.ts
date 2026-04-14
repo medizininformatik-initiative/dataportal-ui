@@ -31,7 +31,7 @@ import {
 })
 export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
   @Input()
-  criterion: Criterion;
+  criterion!: Criterion;
 
   attributeFilters: AbstractAttributeFilters[] = [];
 
@@ -46,29 +46,29 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
   quantityAttributeFilter: AttributeFilter[] = [];
 
   @ViewChild('timeRestriction', { static: false, read: TemplateRef })
-  timeRestrictionTemplate: TemplateRef<any>;
+  timeRestrictionTemplate: TemplateRef<any> | undefined = undefined;
 
   @ViewChild('conceptAttributeFilterTemplate', { static: false, read: TemplateRef })
-  conceptAttributeFiltersTemplate: TemplateRef<any>;
+  conceptAttributeFiltersTemplate: TemplateRef<any> | undefined = undefined;
 
   @ViewChild('conceptValueFilterTemplate', { static: false, read: TemplateRef })
-  conceptValueFiltersTemplate: TemplateRef<any>;
+  conceptValueFiltersTemplate: TemplateRef<any> | undefined = undefined;
 
   @ViewChild('termCodes', { static: false, read: TemplateRef })
-  termCodesTemplate: TemplateRef<any>;
+  termCodesTemplate: TemplateRef<any> | undefined = undefined;
 
   @ViewChild('reference', { static: false, read: TemplateRef })
-  referenceTemplate: TemplateRef<any>;
+  referenceTemplate: TemplateRef<any> | undefined = undefined;
 
   @ViewChild('quantityAttributeFilterTemplate', { static: false, read: TemplateRef })
-  quantityAttributeFilterTemplate: TemplateRef<any>;
+  quantityAttributeFilterTemplate: TemplateRef<any> | undefined = undefined;
 
   @ViewChild('quantityValueFilterTemplate', { static: false, read: TemplateRef })
-  quantityValueFilterTemplate: TemplateRef<any>;
+  quantityValueFilterTemplate: TemplateRef<any> | undefined = undefined;
 
   templates: any[] = [];
 
-  referenceSubscription: Subscription;
+  referenceSubscription: Subscription | undefined = undefined;
 
   constructor(private criterionEditService: EditCriterionService, private cdr: ChangeDetectorRef) {}
 
@@ -153,8 +153,6 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
   private setConceptAttributeFilterTemplate(): void {
     this.conceptAttributeFilter.forEach((filter, index) => {
       const display = filter.getDisplay();
-      console.log(index);
-
       this.templates.push({
         template: this.conceptAttributeFiltersTemplate,
         display,
