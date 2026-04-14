@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 import { CriterionFilterChipService } from 'src/app/shared/service/FilterChips/Criterion/CriterionFilterChips.service';
+import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipData } from '../../../../../../shared/models/FilterChips/FilterChipData';
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 
 @Component({
   selector: 'num-criterion-header',
@@ -14,7 +13,7 @@ import { FilterChipData } from '../../../../../../shared/models/FilterChips/Filt
 })
 export class CriterionHeaderComponent implements OnChanges, OnInit {
   @Input()
-  criterion: Criterion;
+  criterion!: Criterion;
 
   quantityFilterChips: FilterChipData[] = [];
 
