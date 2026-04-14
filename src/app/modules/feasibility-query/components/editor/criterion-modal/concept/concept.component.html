@@ -18,14 +18,14 @@
     </num-information-section>
   </mat-tab>
   <mat-tab *ngIf="conceptFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
-    <num-shared-concept-filter-copy
+    <num-concept-filter
       *ngIf="conceptFilter"
       [conceptFilterId]="conceptFilter.getId()"
       [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
       [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
       (changedSelectedConcepts)="emitConceptFilter($event)"
     >
-    </num-shared-concept-filter-copy>
+    </num-concept-filter>
   </mat-tab>
   <mat-tab *ngIf="conceptFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
     <num-concept-bulk-search
