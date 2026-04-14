@@ -91,10 +91,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.cdr.detectChanges();
   }
 
-  handleIconClick(row: TableRowData): void {
-    console.log('Icon clicked for row:', row);
-  }
-
   ngOnDestroy() {
     this.subscription?.unsubscribe();
     this.searchSubscription?.unsubscribe();
