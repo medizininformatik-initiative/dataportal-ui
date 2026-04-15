@@ -34,13 +34,17 @@
   </ng-template>
 
   <ng-template #reference>
-    <div *ngFor="let attributeFilter of referenceFilter" class="background">
+    <div
+      *ngFor="let attributeFilter of referenceFilter; trackBy: trackByAttributeCode"
+      class="background"
+    >
       <num-reference
         *ngIf="attributeFilter.getReference()"
         [attributeCode]="attributeFilter.getAttributeCode()"
         [selectedReferenceCriterion]="attributeFilter.getReference().getSelectedReferences()"
         [referenceFilterUri]="attributeFilter.getReference().getAllowedReferenceUri()"
         (selectedReferenceIds)="updateReferenceFilter($event, attributeFilter)"
+        (changedSelectedReferences)="updateSelectedReferences(attributeFilter, $event)"
       >
       </num-reference>
     </div>

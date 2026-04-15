@@ -22,6 +22,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 
 @Component({
   selector: 'num-criterion',
@@ -186,7 +187,7 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
   public updateReferenceFilter(id: string, attributeFilter: AttributeFilter): void {
     this.referenceSubscription?.unsubscribe();
     this.referenceSubscription = this.criterionEditService
-      .updateReferenceFilter(id, attributeFilter)
+      .addReferenceCriteria(id, attributeFilter)
       .subscribe();
   }
 
@@ -196,5 +197,16 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
 
   public updateConceptValueFilter(conceptFilter: ConceptFilter): void {
     this.criterionEditService.updateConceptValueFilter(conceptFilter);
+  }
+
+  public updateSelectedReferences(
+    attributeFilter: AttributeFilter,
+    updatedReferences: ReferenceCriterion[]
+  ): void {
+    this.criterionEditService.updateSelectedReferences(attributeFilter, updatedReferences);
+  }
+
+  public trackByAttributeCode(_index: number, attributeFilter: AttributeFilter): string {
+    return attributeFilter.getAttributeCode()?.getCode() ?? String(_index);
   }
 }
