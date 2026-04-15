@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { QuantityFilterChipService } from './QuantityFilterChipService.service';
 import { TerminologyCodeChipService } from './TerminologyCodeChip.service';
 import { TimeRestrictionChipService } from './TimeRestrictionChip.service';
+import { ReferenceFilterChipService } from './ReferenceFilterChip.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +22,13 @@ export class CriterionFilterChipService {
     private conceptFilterChipService: ConceptFilterChipService,
     private quantityFilterChipService: QuantityFilterChipService,
     private timeRestrictionChipService: TimeRestrictionChipService,
-    private terminologyCodeChipService: TerminologyCodeChipService
+    private terminologyCodeChipService: TerminologyCodeChipService,
+    private referenceFilterChipService: ReferenceFilterChipService
   ) {}
 
   public generateFilterChipsFromCriterion(
-    criterion: AbstractCriterion
+    criterion: AbstractCriterion,
+    includeReferenceChips = false
   ): Observable<FilterChipData[]> {
     this.filterChipsSubject.next([]);
 
@@ -37,9 +40,11 @@ export class CriterionFilterChipService {
       criterion.getTimeRestriction()
     );
     const allChips = [...conceptChips, ...quantityChips, ...termcodeChips, ...timeRestrictionChips];
+    if (includeReferenceChips) {
+      allChips.push(...this.referenceFilterChipService.generateReferenceChips(criterion));
+    }
     const filteredChips = allChips.filter((chip) => chip !== undefined);
     this.filterChipsSubject.next(filteredChips);
-
     return this.filterChipsSubject.asObservable();
   }
 
@@ -85,5 +90,9 @@ export class CriterionFilterChipService {
     return this.timeRestrictionChipService.generateTimeRestrictionChips(
       criterion.getTimeRestriction()
     );
+  }
+
+  public createReferenceChips(criterion: AbstractCriterion): FilterChipData[] {
+    return this.referenceFilterChipService.generateReferenceChips(criterion);
   }
 }
