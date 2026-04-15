@@ -2,7 +2,6 @@ import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/Abst
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion';
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
@@ -11,17 +10,16 @@ import { EditAttributeFilterService } from './EditAttributeFilter.service';
 import { EditReferenceFilterService } from './EditReferenceFilter.service';
 import { EditValueFilterService } from './EditValueFilter.service';
 import { Injectable } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditCriterionService {
-  private criterionSubject: BehaviorSubject<Criterion>;
-
-  criterion$: Observable<Criterion>;
+  private workingCriterion: Criterion;
 
   constructor(
     private criterionProvider: CriterionProviderService,
@@ -33,16 +31,14 @@ export class EditCriterionService {
   public initialize(criterion: AbstractCriterion): void {
     const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(criterion);
     copy.setId(criterion.getId());
-    this.criterionSubject = new BehaviorSubject<Criterion>(copy);
-    this.criterion$ = this.criterionSubject.asObservable();
+    this.workingCriterion = copy as Criterion;
   }
 
   public getCriterion(): Criterion {
-    const value = this.criterionSubject?.getValue();
-    if (!value) {
+    if (!this.workingCriterion) {
       throw new Error('EditCriterionService: Criterion not initialized. Call initialize() first.');
     }
-    return value;
+    return this.workingCriterion;
   }
 
   public updateConceptAttributeFilter(
@@ -50,13 +46,10 @@ export class EditCriterionService {
     attributeFilter: AttributeFilter
   ): void {
     const criterion = this.getCriterion();
-    const attributeFilters = this.attributeFilterService.buildFromConcept(
+    this.applyAttributeFilters(
       criterion,
-      concept,
-      attributeFilter
+      this.attributeFilterService.buildFromConcept(criterion, concept, attributeFilter)
     );
-    criterion.setAttributeFilters(attributeFilters);
-    criterion.setIsRequiredFilterSet(this.attributeFilterService.isFilterRequired(criterion));
     this.emit();
   }
 
@@ -65,13 +58,10 @@ export class EditCriterionService {
     attributeFilter: AttributeFilter
   ): void {
     const criterion = this.getCriterion();
-    const attributeFilters = this.attributeFilterService.buildFromQuantity(
+    this.applyAttributeFilters(
       criterion,
-      quantityFilter,
-      attributeFilter
+      this.attributeFilterService.buildFromQuantity(criterion, quantityFilter, attributeFilter)
     );
-    criterion.setAttributeFilters(attributeFilters);
-    criterion.setIsRequiredFilterSet(this.attributeFilterService.isFilterRequired(criterion));
     this.emit();
   }
 
@@ -87,28 +77,30 @@ export class EditCriterionService {
     this.emit();
   }
 
-  public updateReferenceFilter(
+  public addReferenceCriteria(
     id: string,
     attributeFilter: AttributeFilter
-  ): Observable<ReferenceCriterion[]> {
-    return this.referenceFilterService.updateReferenceFilter(
-      [id],
-      this.getCriterion().getId(),
+  ): Observable<ReferenceFilter> {
+    return this.referenceFilterService
+      .updateReferenceFilter([id], this.getCriterion().getId(), attributeFilter)
+      .pipe(
+        tap((updatedReferenceFilter) =>
+          this.applyReferenceFilter(attributeFilter, updatedReferenceFilter)
+        ),
+        tap(() => this.emit())
+      );
+  }
+
+  public updateSelectedReferences(
+    attributeFilter: AttributeFilter,
+    updatedReferences: ReferenceCriterion[]
+  ): void {
+    const updatedReferenceFilter = this.referenceFilterService.updateSelectedReferences(
+      updatedReferences,
       attributeFilter
     );
-  }
-
-  private emit(): void {
-    const criterion = this.getCriterion();
-    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(criterion);
-    copy.setId(criterion.getId());
-    this.updateProvider(copy);
-    console.log('Emitting updated criterion:', copy);
-    this.criterionSubject.next(copy);
-  }
-
-  private updateProvider(criterion: Criterion): void {
-    this.criterionProvider.setOne(criterion);
+    this.applyReferenceFilter(attributeFilter, updatedReferenceFilter);
+    this.emit();
   }
 
   public updateConceptValueFilter(conceptFilter: ConceptFilter): void {
@@ -121,5 +113,28 @@ export class EditCriterionService {
     const criterion = this.getCriterion();
     criterion.setValueFilters(this.valueFilterService.buildFromQuantity(criterion, quantityFilter));
     this.emit();
+  }
+
+  private applyAttributeFilters(criterion: Criterion, attributeFilters: AttributeFilter[]): void {
+    criterion.setAttributeFilters(attributeFilters);
+    criterion.setIsRequiredFilterSet(this.attributeFilterService.isFilterRequired(criterion));
+  }
+
+  private applyReferenceFilter(
+    attributeFilter: AttributeFilter,
+    referenceFilter: ReferenceFilter
+  ): void {
+    const criterion = this.getCriterion();
+    this.applyAttributeFilters(
+      criterion,
+      this.attributeFilterService.buildFromReference(criterion, referenceFilter, attributeFilter)
+    );
+  }
+
+  private emit(): void {
+    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(this.workingCriterion);
+    copy.setId(this.workingCriterion.getId());
+    this.workingCriterion = copy as Criterion;
+    this.criterionProvider.setOne(copy);
   }
 }

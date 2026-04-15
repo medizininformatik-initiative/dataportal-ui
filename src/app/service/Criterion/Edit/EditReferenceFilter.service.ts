@@ -1,7 +1,8 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { BuildReferenceCriterionService } from '../Build/BuildReferenceCriterionService';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
+import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service';
 
@@ -21,14 +22,14 @@ export class EditReferenceFilterService {
     ids: string[],
     criterionId: string,
     attributeFilter: AttributeFilter
-  ): Observable<ReferenceCriterion[]> {
+  ): Observable<ReferenceFilter> {
     return this.buildReferenceCriterionService
       .buildReferenceCriteriaFromHashes(ids, criterionId)
       .pipe(
         tap((referenceCriteria) => {
           this.updateProvider(referenceCriteria);
-          this.updateSelectedReferences(referenceCriteria, attributeFilter);
-        })
+        }),
+        map((referenceCriteria) => this.addSelectedReferences(referenceCriteria, attributeFilter))
       );
   }
 
@@ -36,14 +37,33 @@ export class EditReferenceFilterService {
     references.forEach((reference) => this.referenceCriterionProvider.setOne(reference));
   }
 
-  private updateSelectedReferences(
+  public updateSelectedReferences(
+    updatedReferences: ReferenceCriterion[],
+    attributeFilter: AttributeFilter
+  ): ReferenceFilter {
+    return this.buildReferenceFilter(attributeFilter.getReference(), updatedReferences);
+  }
+
+  private addSelectedReferences(
     references: ReferenceCriterion[],
     attributeFilter: AttributeFilter
-  ): void {
+  ): ReferenceFilter {
     const reference = attributeFilter.getReference();
 
-    const updated = [...reference.getSelectedReferences(), ...references];
+    return this.buildReferenceFilter(reference, [
+      ...reference.getSelectedReferences(),
+      ...references,
+    ]);
+  }
 
-    reference.setSelectedReferences(updated);
+  private buildReferenceFilter(
+    referenceFilter: ReferenceFilter,
+    selectedReferences: ReferenceCriterion[]
+  ): ReferenceFilter {
+    return ReferenceFilter.create(
+      referenceFilter.getId(),
+      [...referenceFilter.getAllowedReferenceUri()],
+      [...selectedReferences]
+    );
   }
 }

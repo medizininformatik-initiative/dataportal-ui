@@ -5,6 +5,7 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionValidationService } from '../Validation/CriterionValidation.deprecated.service';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { Injectable } from '@angular/core';
+import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,35 @@ export class EditAttributeFilterService {
       FilterTypes.CONCEPT,
       conceptFilter,
       undefined
+    );
+    const index = filters.findIndex(
+      (existing) =>
+        attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
+    );
+    if (index !== -1) {
+      filters[index] = updated;
+    } else {
+      filters.push(updated);
+    }
+    return filters;
+  }
+
+  /**
+   * Returns an updated attribute filter list with the provided reference applied
+   * to the matching attribute filter entry.
+   */
+  public buildFromReference(
+    criterion: Criterion,
+    referenceFilter: ReferenceFilter,
+    attributeFilter: AttributeFilter
+  ): AttributeFilter[] {
+    const filters = [...criterion.getAttributeFilters()];
+    const updated = this.buildAttributeFilter(
+      attributeFilter,
+      FilterTypes.REFERENCE,
+      undefined,
+      undefined,
+      referenceFilter
     );
     const index = filters.findIndex(
       (existing) =>
@@ -76,7 +106,8 @@ export class EditAttributeFilterService {
     attributeFilter: AttributeFilter,
     filterType: FilterTypes,
     conceptFilter?: ConceptFilter,
-    quantityFilter?: AbstractQuantityFilter
+    quantityFilter?: AbstractQuantityFilter,
+    referenceFilter?: ReferenceFilter
   ): AttributeFilter {
     return new AttributeFilter(
       attributeFilter.getDisplay(),
@@ -84,7 +115,7 @@ export class EditAttributeFilterService {
       attributeFilter.getAttributeCode(),
       conceptFilter,
       quantityFilter,
-      undefined,
+      referenceFilter,
       attributeFilter.getOptional()
     );
   }

@@ -189,6 +189,7 @@
         "HEADER": {
           "CONCEPT": "Selektierte Konzepte",
           "FILTER": "Selektierte Filter",
+          "REFERENCE": "Selektierte Referenzen",
           "TERMCODES": "Selektierte Terminologie-Codes"
         }
       },
@@ -216,6 +217,7 @@
         "INFORMATION": "Informationen",
         "REFERENCE": "Referenzen",
         "SELECTED_CONCEPTS": "Selektierte Code Filter ({{count}})",
+        "SELECTED_REFERENCES": "Selektierte Referenzen ({{count}})",
         "SINGLE_SEARCH": "Einzelsuche",
         "TERMCODE": "Terminologie-Codes",
         "TIMERESTRICTION": "Zeiteinschränkung",
