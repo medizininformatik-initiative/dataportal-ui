@@ -67,7 +67,7 @@ export class ConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private initializePreSelectedConcepts(): void {
-    const hasPreSelectedConcepts = this.preSelectedConcepts.length > 0;
+    const hasPreSelectedConcepts = this.preSelectedConcepts.length >= 0;
     if (hasPreSelectedConcepts) {
       this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
     }
