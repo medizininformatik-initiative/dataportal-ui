@@ -28,15 +28,13 @@
         (scrolled)="loadMoreCriteriaSetResults()"
       >
         <num-table
-          *ngIf="listItems.length > 0 && adaptedData"
+          *ngIf="tableData$ | async as tableData"
           class="result-list-container"
-          [tableData]="adaptedData"
-          [searchTermResultList]="listItems"
-          (selectedRow)="setSelectedRowItem($event)"
+          [tableData]="tableData"
           (iconClicked)="emitIds($event)"
         ></num-table>
       </div>
-      <num-placeholder-box class="no-results-text" *ngIf="!searchResultsFound"
+      <num-placeholder-box class="no-results-text" *ngIf="!(tableData$ | async)">
         >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
         >"
       </num-placeholder-box>
@@ -53,7 +51,7 @@
     <num-selected-reference-list
       *ngIf="selectedReferenceCriterion.length > 0"
       [selectedReferences]="selectedReferenceCriterion"
-      (changedSelectedReferences)="arrayOfSelectedReferences = $event"
+      (changedSelectedReferences)="updateSelectedReferences($event)"
     ></num-selected-reference-list>
   </mat-tab>
 </mat-tab-group>
