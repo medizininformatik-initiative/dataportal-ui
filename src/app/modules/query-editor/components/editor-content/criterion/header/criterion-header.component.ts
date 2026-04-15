@@ -23,6 +23,8 @@ export class CriterionHeaderComponent implements OnChanges, OnInit {
 
   conceptFilterChips: FilterChipData[] = [];
 
+  refernceFilterChips: FilterChipData[] = [];
+
   system: Display;
 
   constructor(private filterChipsService: CriterionFilterChipService) {}
@@ -43,6 +45,11 @@ export class CriterionHeaderComponent implements OnChanges, OnInit {
     this.getTimeRestrictionFilterChips();
     this.getTermCodesFilterChips();
     this.getConceptFilterChips();
+    this.getReferenceFilterChips();
+  }
+
+  public getReferenceFilterChips() {
+    this.refernceFilterChips = this.filterChipsService.createReferenceChips(this.criterion);
   }
 
   private getQuantityFilterChips() {

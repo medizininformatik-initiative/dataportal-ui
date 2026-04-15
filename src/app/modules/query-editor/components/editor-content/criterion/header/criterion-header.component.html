@@ -32,4 +32,10 @@
       <num-filter-chips [filterChips]="quantityFilterChips"> </num-filter-chips>
     </div>
   </div>
+  <div *ngIf="refernceFilterChips.length > 0" fxLayout="column" class="filter-container">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      {{ 'EDITOR.CONTENT.CRITERION.HEADER.REFERENCE' | translate }}
+    </div>
+    <num-filter-chips [filterChips]="refernceFilterChips"> </num-filter-chips>
+  </div>
 </div>
