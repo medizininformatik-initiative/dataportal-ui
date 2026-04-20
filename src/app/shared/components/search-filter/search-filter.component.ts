@@ -17,6 +17,15 @@ export class SearchFilterComponent implements OnInit {
   selectedFilterChanged = new EventEmitter<SearchFilter>();
 
   selectedValues: string[] | string = [];
+  searchText = '';
+
+  get filteredData() {
+    if (!this.searchText) {
+      return this.filter.data;
+    }
+    const query = this.searchText.toLowerCase();
+    return this.filter.data.filter((item) => item.label.toLowerCase().includes(query));
+  }
 
   translatedLabel: { translatedSystem: string; count: number; url: string }[] = [];
   constructor() {}

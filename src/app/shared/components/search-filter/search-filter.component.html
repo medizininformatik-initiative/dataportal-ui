@@ -23,9 +23,23 @@
       >
         {{ getCleanValue(selectedValues) }}
       </mat-select-trigger>
-      <mat-option *ngFor="let value of filter.data" [value]="value.label">
-        {{ value.display | displayTranslation }} ({{ value.count }})
+      <mat-option disabled class="select-search-option">
+        <div class="select-search-wrapper">
+          <fa-icon class="icon-design" icon="search" [fixedWidth]="true"></fa-icon>
+          <input
+            class="select-search-input"
+            [placeholder]="'SHARED_COMPONENTS.FILTER.SEARCH' | translate"
+            [(ngModel)]="searchText"
+            (click)="$event.stopPropagation()"
+            (keydown)="$event.stopPropagation()"
+          />
+        </div>
       </mat-option>
+      <mat-optgroup class="scrollable-options-group">
+        <mat-option *ngFor="let value of filteredData" [value]="value.label">
+          {{ value.display | displayTranslation }} ({{ value.count }})
+        </mat-option>
+      </mat-optgroup>
     </mat-select>
   </div>
 </mat-form-field>
