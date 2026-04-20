@@ -79,8 +79,6 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
 
   ngOnChanges(changes: SimpleChanges): void {
     this.initializeFromCriterion();
-    if (changes.criterion && this.criterion) {
-    }
   }
 
   ngOnDestroy(): void {
