@@ -38,11 +38,6 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
 
   ngOnInit() {
     this.criterion = this.data.criterion;
-    this.referenceFilter = this.criterion.getReferenceAttributeFilters()[0].getReference();
-    console.log(
-      'Initialized EditReferenceCriteriaModalComponent with criterion:',
-      this.referenceFilter
-    );
   }
 
   public setSelectedReferenceIds(ids: string[], attributeFilter: AttributeFilter) {
