@@ -48,10 +48,14 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * Retrieves a single entity by its identifier.
    *
    * @param id The unique identifier of the entity to look up.
-   * @returns The matching entity, or `undefined` if no entity with that ID exists.
+   * @returns The matching entity, or throws an error if no entity with the given ID is found.
    */
-  public getOne(id: string): T | undefined {
-    return this.items.find((e) => this.selectId(e) === id);
+  public getOne(id: string): T {
+    const entity = this.items.find((e) => this.selectId(e) === id);
+    if (!entity) {
+      throw new Error(`Entity with id ${id} not found.`);
+    }
+    return entity;
   }
 
   /**

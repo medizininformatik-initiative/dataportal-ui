@@ -29,7 +29,7 @@ export class EditCriterionService {
   ) {}
 
   public initialize(criterion: AbstractCriterion): void {
-    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(criterion);
+    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(criterion, true);
     copy.setId(criterion.getId());
     this.workingCriterion = copy as Criterion;
   }
@@ -132,9 +132,9 @@ export class EditCriterionService {
   }
 
   private emit(): void {
-    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(this.workingCriterion);
+    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(this.workingCriterion, true);
     copy.setId(this.workingCriterion.getId());
     this.workingCriterion = copy as Criterion;
-    this.criterionProvider.setOne(copy);
+    this.criterionProvider.setOne(this.workingCriterion);
   }
 }

@@ -38,7 +38,11 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
 
   ngOnInit() {
     this.criterion = this.data.criterion;
-    this.referenceFilter = this.filterAttributeFiltersByTypeReference();
+    this.referenceFilter = this.criterion.getReferenceAttributeFilters()[0].getReference();
+    console.log(
+      'Initialized EditReferenceCriteriaModalComponent with criterion:',
+      this.referenceFilter
+    );
   }
 
   public setSelectedReferenceIds(ids: string[], attributeFilter: AttributeFilter) {
@@ -59,14 +63,11 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
         selectedReferenceFilter.push(...referenceCriteria);
         this.parentAttributeFilter.getReference().setSelectedReferences(selectedReferenceFilter);
       });
-    this.dialogRef.close(CloneAbstractCriterion.deepCopyAbstractCriterion(this.criterion));
+    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(this.criterion);
+    copy.setId(this.criterion.getId());
+    this.dialogRef.close(copy);
   }
 
-  private filterAttributeFiltersByTypeReference(): AttributeFilter[] {
-    return this.criterion
-      .getAttributeFilters()
-      .filter((filter) => filter.getFilterType() === FilterTypes.REFERENCE);
-  }
   closeDialog() {
     this.dialogRef.close();
   }

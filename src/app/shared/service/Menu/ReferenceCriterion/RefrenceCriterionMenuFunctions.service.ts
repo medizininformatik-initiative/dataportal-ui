@@ -14,13 +14,14 @@ export class RefrenceCriterionMenuFunctionsService {
   ) {}
 
   deleteCriterion(id: string) {
+    this.referenceCriterionProvider.getAll().subscribe((criteria) => console.log(criteria));
     const parentID = this.referenceCriterionProvider.getOne(id)?.getParentId();
     if (!parentID) {
-      return;
+      throw new Error(`ReferenceCriterion with id ${id} does not have a parent ID.`);
     }
     this.criterionProviderService
       .getOne(parentID)
-      .getAttributeFilters()
+      .getReferenceAttributeFilters()
       .forEach((attributeFilter) => {
         if (attributeFilter.isReferenceSet()) {
           const updatedReferences = attributeFilter
@@ -40,11 +41,12 @@ export class RefrenceCriterionMenuFunctionsService {
   }
 
   public applyReferenceCriterionFilter(id: string) {
-    const criterion =
-      this.criterionProviderService.getOne(id) ?? this.referenceCriterionProvider.getOne(id);
+    const referenceCriterion = this.referenceCriterionProvider.getOne(id);
+    const criterion = this.criterionProviderService.getOne(referenceCriterion.getParentId());
+
     if (!criterion) {
       return;
     }
-    this.editCriterionService.openCriterionModal(criterion);
+    this.editCriterionService.openReferenceCriteriaModal(criterion);
   }
 }

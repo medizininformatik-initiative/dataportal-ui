@@ -1,7 +1,6 @@
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion';
 import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service';
-import { EditCriterionModalComponent } from 'src/app/modules/feasibility-query/components/editor/criterion-modal/edit-criterion-modal.component';
 import { EditReferenceCriteriaModalComponent } from 'src/app/modules/feasibility-query/components/editor/reference-criteria-modal/edit-reference-criteria-modal.component';
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,20 +19,6 @@ export class CriterionModalService implements OnDestroy {
 
   ngOnDestroy() {
     this.dialogSubscription.unsubscribe();
-  }
-
-  public openCriterionModal(criterion: AbstractCriterion) {
-    const dialogRef = this.dialog.open(EditCriterionModalComponent, {
-      disableClose: true,
-      data: { criterion },
-    });
-    this.dialogSubscription = dialogRef
-      .afterClosed()
-      .subscribe((updatedCriterion: AbstractCriterion) => {
-        if (updatedCriterion) {
-          this.criterionProviderService.setOne(updatedCriterion);
-        }
-      });
   }
 
   public openReferenceCriteriaModal(criterion: Criterion) {

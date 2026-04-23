@@ -37,6 +37,7 @@ export class CriteriaBoxComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('Initializing CriteriaBoxComponent with criterion:', this.criterion);
     this.system = TerminologySystemDictionary.getNameByUrl(
       this.criterion.getTermCodes()[0].getSystem()
     );
