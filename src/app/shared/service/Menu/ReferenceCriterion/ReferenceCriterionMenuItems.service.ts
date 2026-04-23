@@ -28,7 +28,7 @@ export class ReferenceCriterionMenuItems {
         action: (id: string) => this.referenceCriterionMenuFunctions.deleteCriterion(id),
       },
       {
-        disabled: false,
+        disabled: true,
         icon: 'filter',
         label: 'APPLY_FILTERS',
         action: (id: string) =>
