@@ -533,6 +533,7 @@
       "AVAILABILITY": "Availability",
       "CONTEXT": "Context",
       "DISPLAY": "Display",
+      "EMPTY": "",
       "ICON": "Show related criteria",
       "NAME": "Name",
       "NOT_SELECTABLE": "Criterion cannot be selected",

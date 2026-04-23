@@ -1,5 +1,5 @@
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service';
-import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData';
 import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept';
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter';
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
@@ -51,7 +51,9 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
     const selectedConcepts = this.selectedConceptProviderService.getSelectedConceptsValue();
     this.adaptedData?.body.rows.forEach((row) => {
       const entry = row.originalEntry as CodeableConceptResultListEntry;
-      const checkboxCell = row.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+      const checkboxCell = row.cells.find(
+        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+      );
       if (checkboxCell) {
         checkboxCell.isSelected = this.conceptSelectionHelperService.isConceptSelected(
           entry.getConcept(),
@@ -91,7 +93,7 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
       const listEntry = row.originalEntry as CodeableConceptResultListEntry;
       const concept = CloneConcept.deepCopyConcept(listEntry.getConcept());
       this.clearSelectedConceptArray();
-      const checkboxCell = row.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+      const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === 'checkbox');
       if (checkboxCell) {
         checkboxCell.isSelected = !!this.selectedConceptProviderService.findConcept(concept);
       }

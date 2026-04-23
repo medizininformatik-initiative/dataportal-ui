@@ -1,6 +1,6 @@
 import { AbstractTableAdapter } from './AbstractTableAdapter';
 import { AvailabilityCellData } from '../cells/AvailabilityCellData';
-import { CheckboxCellData } from '../cells/CheckboxCellData';
+import { CheckboxTextCellData } from '../cells/CheckboxTextCellData';
 import { CriteriaListEntry } from '../../../../model/Search/ListEntries/CriteriaListListEntry';
 import { TableCellBuilder } from '../cells/TableCellBuilder';
 import { TableHeaderData } from '../TableHeaderData';
@@ -16,7 +16,7 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
   }
 
   protected buildHeaders(): TableHeaderData {
-    const headers = [' ', 'NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'];
+    const headers = ['EMPTY', 'NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'];
     return { headers };
   }
 
@@ -45,8 +45,8 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
     ];
   }
 
-  private displayCell(listEntry: CriteriaListEntry): CheckboxCellData {
-    return TableCellBuilder.withCheckbox(listEntry.getDisplay(), {
+  private displayCell(listEntry: CriteriaListEntry): CheckboxTextCellData {
+    return TableCellBuilder.withCheckboxText(listEntry.getDisplay(), {
       isSelected: false,
       isDisabled: listEntry.getSelectable(),
     });

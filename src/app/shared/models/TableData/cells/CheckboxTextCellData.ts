@@ -1,7 +1,7 @@
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 
-export interface CheckboxCellData {
-  type: 'checkbox'
+export interface CheckboxTextCellData {
+  type: 'checkboxText'
   value: string | Display
   isSelected: boolean
   isDisabled: boolean

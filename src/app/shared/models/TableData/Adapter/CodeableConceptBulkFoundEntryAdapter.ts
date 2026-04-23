@@ -37,7 +37,10 @@ export class CodeableConceptBulkFoundEntryAdapter extends AbstractTableAdapter<C
   }
 
   private checkBoxCell(entry: CodeableConceptBulkEntry) {
-    return TableCellBuilder.withCheckbox(entry.getDisplay(), { isSelected: true, isDisabled: true });
+    return TableCellBuilder.withCheckboxText(entry.getDisplay(), {
+      isSelected: true,
+      isDisabled: true,
+    });
   }
 
   private terminologyCell(terminologyCode: TerminologyCode): TextCellData {

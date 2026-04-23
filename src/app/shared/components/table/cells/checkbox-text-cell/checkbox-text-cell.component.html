@@ -9,4 +9,7 @@
     [checked]="cell.isSelected"
     (checkedChange)="onCheckboxChange()"
   ></num-checkbox>
+  <div class="name-column highlight" matTooltip="{{ cell.value | displayTranslation }}">
+    {{ cell.value | displayTranslation }}
+  </div>
 </div>

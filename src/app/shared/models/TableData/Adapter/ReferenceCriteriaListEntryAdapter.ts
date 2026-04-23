@@ -1,5 +1,4 @@
 import { AbstractTableAdapter } from './AbstractTableAdapter';
-import { CheckboxCellData } from '../cells/CheckboxCellData';
 import { ReferenceCriteriaListEntry } from '../../../../model/Search/ListEntries/ReferenceCriteriaListEntry';
 import { TableCellBuilder } from '../cells/TableCellBuilder';
 import { TableCellType } from '../cells/TableCellType';

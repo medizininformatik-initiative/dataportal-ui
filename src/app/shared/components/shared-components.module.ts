@@ -56,11 +56,13 @@ import { TreeComponent } from './tree/tree.component';
 import { ValueSelectComponent } from './value-select/value-select.component';
 import { IconCellComponent } from './table/cells/icon-cell/icon-cell.component';
 import { SelectedItemsListComponent } from './selected-items-list/selected-items-list.component';
+import { CheckboxTextCellComponent } from './table/cells/checkbox-text-cell/checkbox-text-cell.component';
 
 const SHARED_DECLARATIONS = [
   AvailabilityCellComponent,
   AvailabilityStatusBarComponent,
   CheckboxCellComponent,
+  CheckboxTextCellComponent,
   DisplayCellComponent,
   TableBodyComponent,
   TableHeaderComponent,

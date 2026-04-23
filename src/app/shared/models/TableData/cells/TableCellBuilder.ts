@@ -1,11 +1,13 @@
 import { AvailabilityCellData } from './AvailabilityCellData';
 import { AvailabilityStatusType } from 'src/app/model/Availability/AvailabilityStatusType';
-import { CheckboxCellData, CheckboxCellOptionsData } from './CheckboxCellData';
+import { CheckboxTextCellData } from './CheckboxTextCellData';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { DisplayCellData } from './DisplayCellData';
 import { TableCellType } from './TableCellType';
 import { TextCellData } from './TextCellData';
 import { IconCellData } from './IconCellData';
+import { CheckboxCellOptionsData } from './CheckboxCellOptionData';
+import { CheckboxCellData } from './CheckboxCellData';
 
 /**
  * Factory class for constructing typed table cells.
@@ -43,6 +45,17 @@ export class TableCellBuilder {
    * @param options
    * @returns
    */
+  public static withCheckboxText(
+    value: string | Display,
+    options: CheckboxCellOptionsData = {}
+  ): CheckboxTextCellData {
+    return {
+      type: 'checkboxText',
+      value,
+      isSelected: options.isSelected ?? false,
+      isDisabled: options.isDisabled ?? false,
+    };
+  }
   public static withCheckbox(
     value: string | Display,
     options: CheckboxCellOptionsData = {}
@@ -54,7 +67,6 @@ export class TableCellBuilder {
       isDisabled: options.isDisabled ?? false,
     };
   }
-
   /**
    * Display-object cell with optional icon
    * @param value

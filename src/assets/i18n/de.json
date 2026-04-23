@@ -553,6 +553,7 @@
       "AVAILABILITY": "Verfügbarkeit",
       "CONTEXT": "Kontext",
       "DISPLAY": "Anzeige",
+      "EMPTY": "",
       "ICON": "Verwandte Kriterien anzeigen",
       "NAME": "Name",
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
