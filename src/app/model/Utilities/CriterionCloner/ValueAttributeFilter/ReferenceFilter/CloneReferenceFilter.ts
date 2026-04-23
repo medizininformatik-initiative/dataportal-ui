@@ -11,16 +11,20 @@ export class CloneReferenceFilter {
    * @param referenceFilter - The ReferenceFilter instance to deep copy.
    * @returns A new ReferenceFilter instance that is a deep copy of the given instance.
    */
-  static deepCopyReferenceFilter(referenceFilter: ReferenceFilter): ReferenceFilter {
+  static deepCopyReferenceFilter(
+    referenceFilter: ReferenceFilter,
+    preserveId = false
+  ): ReferenceFilter {
     if (!(referenceFilter instanceof ReferenceFilter)) {
       throw new Error('Invalid instance type for deep copy');
     }
     const copiedSelectedReferences = CloneAbstractCriterion.deepCopyAbstractCriterions(
-      referenceFilter.getSelectedReferences()
+      referenceFilter.getSelectedReferences(),
+      preserveId
     ) as ReferenceCriterion[];
 
     return new ReferenceFilter(
-      uuidv4(),
+      preserveId ? referenceFilter.getId() : uuidv4(),
       referenceFilter.getAllowedReferenceUri(),
       copiedSelectedReferences
     );
