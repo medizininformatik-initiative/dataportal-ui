@@ -11,7 +11,6 @@ import { CriteriaStageComponent } from './components/editor/stage/criteria-stage
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DisplayCriteriaComponent } from './components/editor/display/display-criteria/display-criteria.component';
 import { DisplayFeasibilityQueryComponent } from './components/editor/display/display.component';
-import { EditCriterionModalComponent } from './components/editor/criterion-modal/edit-criterion-modal.component';
 import { EditFeasibilityQueryComponent } from './components/editor/edit.component';
 import { EditorActionBarComponent } from './components/editor/action-bar/editor-action-bar.component';
 import { EditReferenceCriteriaModalComponent } from './components/editor/reference-criteria-modal/edit-reference-criteria-modal.component';
@@ -68,7 +67,6 @@ export const FORMATS_GERMAN = {
     EditFeasibilityQueryComponent,
     EditorActionBarComponent,
     CriteriaStageComponent,
-    EditCriterionModalComponent,
     EditReferenceCriteriaModalComponent,
     SimpleResultComponent,
     ResultComponent,
