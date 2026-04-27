@@ -51,6 +51,9 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * @returns The matching entity, or throws an error if no entity with the given ID is found.
    */
   public getOne(id: string): T {
+    if (!id) {
+      throw new Error('ID must be provided to get an entity.');
+    }
     const entity = this.items.find((e) => this.selectId(e) === id);
     if (!entity) {
       throw new Error(`Entity with id ${id} not found.`);
