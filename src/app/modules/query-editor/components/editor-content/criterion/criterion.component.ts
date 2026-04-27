@@ -6,6 +6,7 @@ import { CloneAttributeFilter } from 'src/app/model/Utilities/CriterionCloner/Va
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { EditCriterionService } from 'src/app/service/Criterion/Edit/EditCriterion.service';
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 import { Subscription } from 'rxjs';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
@@ -71,7 +72,11 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
 
   referenceSubscription: Subscription | undefined = undefined;
 
-  constructor(private criterionEditService: EditCriterionService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private criterionEditService: EditCriterionService,
+    private cdr: ChangeDetectorRef,
+    private referenceCriterionProvider: ReferenceCriterionProviderService
+  ) {}
 
   ngOnInit() {
     this.initializeFromCriterion();
@@ -202,6 +207,20 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
     updatedReferences: ReferenceCriterion[]
   ): void {
     this.criterionEditService.updateSelectedReferences(attributeFilter, updatedReferences);
+  }
+
+  public resolveReferenceCriteria(attributeFilter: AttributeFilter): ReferenceCriterion[] {
+    return attributeFilter
+      .getReference()
+      .getSelectedReferenceIds()
+      .reduce((acc, id) => {
+        try {
+          acc.push(this.referenceCriterionProvider.getOne(id));
+        } catch {
+          // not yet in provider
+        }
+        return acc;
+      }, [] as ReferenceCriterion[]);
   }
 
   public trackByAttributeCode(_index: number, attributeFilter: AttributeFilter): string {

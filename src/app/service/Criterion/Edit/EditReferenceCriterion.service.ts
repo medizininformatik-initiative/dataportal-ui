@@ -159,30 +159,6 @@ export class EditReferenceCriterionService {
     }
     try {
       const parentCriterion = this.criterionProvider.getOne(parentId);
-      const updatedAttributeFilters = parentCriterion
-        .getAttributeFilters()
-        .map((attributeFilter) => {
-          const referenceFilter = attributeFilter.getReference();
-          if (!referenceFilter) {
-            return attributeFilter;
-          }
-          const updatedReferences = referenceFilter
-            .getSelectedReferences()
-            .map((ref) =>
-              ref.getId() === this.workingReferenceCriterion.getId()
-                ? this.workingReferenceCriterion
-                : ref
-            );
-          attributeFilter.setReference(
-            ReferenceFilter.create(
-              referenceFilter.getId(),
-              [...referenceFilter.getAllowedReferenceUri()],
-              updatedReferences
-            )
-          );
-          return attributeFilter;
-        });
-      parentCriterion.setAttributeFilters(updatedAttributeFilters);
       this.criterionProvider.setOne(parentCriterion);
     } catch {
       // parent criterion not found in provider, nothing to update

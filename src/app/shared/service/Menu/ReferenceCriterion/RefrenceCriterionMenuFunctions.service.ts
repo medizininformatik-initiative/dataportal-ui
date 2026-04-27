@@ -26,11 +26,11 @@ export class RefrenceCriterionMenuFunctionsService {
       .getReferenceAttributeFilters()
       .forEach((attributeFilter) => {
         if (attributeFilter.isReferenceSet()) {
-          const updatedReferences = attributeFilter
+          const updatedIds = attributeFilter
             .getReference()
-            .getSelectedReferences()
-            .filter((reference) => reference.getId() !== id);
-          attributeFilter.getReference().setSelectedReferences(updatedReferences);
+            .getSelectedReferenceIds()
+            .filter((refId) => refId !== id);
+          attributeFilter.getReference().setSelectedReferenceIds(updatedIds);
         }
       });
 

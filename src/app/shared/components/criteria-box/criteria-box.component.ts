@@ -1,3 +1,4 @@
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
@@ -5,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipData } from '../../models/FilterChips/FilterChipData';
@@ -33,7 +35,8 @@ export class CriteriaBoxComponent implements OnInit {
 
   constructor(
     private menuService: CriterionMenuItems,
-    private filterChipsService: CriterionFilterChipService
+    private filterChipsService: CriterionFilterChipService,
+    private referenceCriterionProvider: ReferenceCriterionProviderService
   ) {}
 
   ngOnInit() {
@@ -52,5 +55,19 @@ export class CriteriaBoxComponent implements OnInit {
 
   private getFilterChips() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion);
+  }
+
+  public getReferenceCriteriaFromFilter(attributeFilter: AttributeFilter): ReferenceCriterion[] {
+    return attributeFilter
+      .getReference()
+      .getSelectedReferenceIds()
+      .reduce((acc, id) => {
+        try {
+          acc.push(this.referenceCriterionProvider.getOne(id));
+        } catch {
+          // not yet in provider
+        }
+        return acc;
+      }, [] as ReferenceCriterion[]);
   }
 }

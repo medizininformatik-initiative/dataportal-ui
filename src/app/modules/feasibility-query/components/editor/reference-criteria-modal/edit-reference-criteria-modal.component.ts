@@ -52,11 +52,11 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
         referenceCriteria.forEach((referenceCriterion) =>
           this.referenceCriterionProvider.setOne(referenceCriterion)
         );
-        const selectedReferenceFilter = this.parentAttributeFilter
+        const currentIds = this.parentAttributeFilter.getReference().getSelectedReferenceIds();
+        const newIds = referenceCriteria.map((rc) => rc.getId());
+        this.parentAttributeFilter
           .getReference()
-          .getSelectedReferences();
-        selectedReferenceFilter.push(...referenceCriteria);
-        this.parentAttributeFilter.getReference().setSelectedReferences(selectedReferenceFilter);
+          .setSelectedReferenceIds([...currentIds, ...newIds]);
       });
     const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(this.criterion);
     copy.setId(this.criterion.getId());

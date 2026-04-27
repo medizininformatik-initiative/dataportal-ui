@@ -42,7 +42,10 @@ export class EditReferenceFilterService {
     updatedReferences: ReferenceCriterion[],
     attributeFilter: AttributeFilter
   ): ReferenceFilter {
-    return this.buildReferenceFilter(attributeFilter.getReference(), updatedReferences);
+    return this.buildReferenceFilter(
+      attributeFilter.getReference(),
+      updatedReferences.map((ref) => ref.getId())
+    );
   }
 
   private addSelectedReferences(
@@ -52,19 +55,19 @@ export class EditReferenceFilterService {
     const reference = attributeFilter.getReference();
 
     return this.buildReferenceFilter(reference, [
-      ...reference.getSelectedReferences(),
-      ...references,
+      ...reference.getSelectedReferenceIds(),
+      ...references.map((ref) => ref.getId()),
     ]);
   }
 
   private buildReferenceFilter(
     referenceFilter: ReferenceFilter,
-    selectedReferences: ReferenceCriterion[]
+    selectedReferenceIds: string[]
   ): ReferenceFilter {
     return ReferenceFilter.create(
       referenceFilter.getId(),
       [...referenceFilter.getAllowedReferenceUri()],
-      [...selectedReferences]
+      [...selectedReferenceIds]
     );
   }
 }
