@@ -9,6 +9,8 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { PathSegments } from 'src/app/app-paths';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -20,6 +22,8 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
 
   dataSelectionProfile$: Observable<DataSelectionProfile>;
 
+  referenceCriterion$: Observable<ReferenceCriterion>;
+
   id: string;
   type: string;
 
@@ -30,7 +34,8 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
     private profileProviderService: ProfileProviderService,
-    private possibleReferencesService: PossibleReferencesService
+    private possibleReferencesService: PossibleReferencesService,
+    private referenceCriterionProviderService: ReferenceCriterionProviderService
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +62,8 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
       this.getCriterionFromProvider(this.id);
     } else if (this.isProfile()) {
       this.getDataSelectionProfileFromProvider(this.id);
+    } else if (this.isReferenceCriterion()) {
+      this.getReferenceCriterionFromProvider(this.id);
     }
   }
 
@@ -72,10 +79,18 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
       .pipe(map((criteria) => criteria.find((criterion) => criterion.getId() === id)));
   }
 
+  private getReferenceCriterionFromProvider(id: string): void {
+    this.referenceCriterion$ = this.referenceCriterionProviderService
+      .getAll()
+      .pipe(map((criteria) => criteria.find((criterion) => criterion.getId() === id)));
+  }
+
   public onCancel(): void {
     if (this.isProfile()) {
       this.navigationHelperService.navigateToDataSelectionEditor();
     } else if (this.isCriterion()) {
+      this.navigationHelperService.navigateToFeasibilityQueryEditor();
+    } else if (this.isReferenceCriterion()) {
       this.navigationHelperService.navigateToFeasibilityQueryEditor();
     }
   }
@@ -86,5 +101,9 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
 
   private isCriterion(): boolean {
     return this.type === PathSegments.criterion;
+  }
+
+  private isReferenceCriterion(): boolean {
+    return this.type === PathSegments.reference;
   }
 }

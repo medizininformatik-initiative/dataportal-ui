@@ -25,6 +25,16 @@ const routes: Routes = [
     },
     canActivate: [RouteGuard],
   },
+  {
+    path: `${PathSegments.reference}/:id`,
+    component: QueryEditorComponent,
+    data: {
+      hideSideNav: false,
+      breadcrumb: 'BREADCRUMB.QUERY_EDITOR',
+      title: 'TAB_TITLE.QUERY_EDITOR_REFERENCE',
+    },
+    canActivate: [RouteGuard],
+  },
 ];
 
 @NgModule({

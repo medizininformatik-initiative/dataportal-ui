@@ -1,0 +1,30 @@
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.filter-tabs-container {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+}
+
+::ng-deep .mdc-tab {
+  max-width: fit-content;
+  padding: 0 30px;
+}
+
+.header-container {
+  width: 100%;
+  overflow: hidden;
+  flex: 0 1 24%;
+}
+
+.background {
+  background-color: var(--background);
+  height: 100%;
+  width: 100%;
+}

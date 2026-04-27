@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Data } from '@angular/router';
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { Component, Input, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 
 @Component({
   selector: 'num-editor-content',
@@ -15,6 +14,9 @@ export class EditorContentComponent implements OnInit {
 
   @Input()
   dataSelectionProfile: DataSelectionProfile;
+
+  @Input()
+  referenceCriterion: ReferenceCriterion;
 
   constructor() {}
 

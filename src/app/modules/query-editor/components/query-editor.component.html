@@ -9,6 +9,10 @@
       *ngIf="dataSelectionProfile$ | async as dataSelectionProfile"
       [dataSelectionProfile]="dataSelectionProfile"
     ></num-editor-content>
+    <num-editor-content
+      *ngIf="referenceCriterion$ | async as referenceCriterion"
+      [referenceCriterion]="referenceCriterion"
+    ></num-editor-content>
   </div>
 
   <num-edit-action-bar (cancel)="onCancel()"></num-edit-action-bar>
