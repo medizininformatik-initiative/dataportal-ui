@@ -616,6 +616,7 @@
     "QUERY_EDITOR": "Merkmalselektion - Query Editor",
     "QUERY_EDITOR_CRITERION": "Kohortenselektion - Kriterium Editor",
     "QUERY_EDITOR_FEATURE": "Merkmalselektion - Merkmal Editor",
+    "QUERY_EDITOR_REFERENCE": "Kohortenselektion - Referenz",
     "SAVED_QUERIES": "Gespeicherte Abfragen"
   },
   "VALIDATION": {

@@ -595,6 +595,7 @@
     "QUERY_EDITOR": "Feature Selection - Query Editor",
     "QUERY_EDITOR_CRITERION": "Cohort Selection - Criterion Editor",
     "QUERY_EDITOR_FEATURE": "Feature Selection - Feature Editor",
+    "QUERY_EDITOR_REFERENCE": "Cohort Selection - Reference Editor",
     "SAVED_QUERIES": "Saved Queries"
   },
   "VALIDATION": {
