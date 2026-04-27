@@ -2,6 +2,7 @@ import { CriterionModalService } from 'src/app/service/Criterion/Modal/Criterion
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { Injectable } from '@angular/core';
 import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service';
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,8 @@ export class RefrenceCriterionMenuFunctionsService {
   constructor(
     private criterionProviderService: CriterionProviderService,
     private editCriterionService: CriterionModalService,
-    private referenceCriterionProvider: ReferenceCriterionProviderService
+    private referenceCriterionProvider: ReferenceCriterionProviderService,
+    private navigationHelperService: NavigationHelperService
   ) {}
 
   deleteCriterion(id: string) {
@@ -47,6 +49,6 @@ export class RefrenceCriterionMenuFunctionsService {
     if (!criterion) {
       return;
     }
-    this.editCriterionService.openReferenceCriteriaModal(criterion);
+    this.navigationHelperService.navigateToEditReferenceCriterion(id);
   }
 }

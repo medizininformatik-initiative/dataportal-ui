@@ -35,6 +35,10 @@ export class NavigationHelperService {
     this.router.navigate([`${UrlPaths.queryEditor.criteria}`, id]);
   }
 
+  public navigateToEditReferenceCriterion(id: string): void {
+    this.router.navigate([`${UrlPaths.queryEditor.reference}`, id]);
+  }
+
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.editor | /feasibility-query/editor}
    * @returns void
