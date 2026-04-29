@@ -21,6 +21,58 @@
   display: flex;
 }
 
+.icon-design {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 42px;
+  color: var(--color-accent);
+  font-size: var(--font-size-sm);
+  padding: 0;
+}
+
+/* Search option — hide checkbox and disabled overlay */
+::ng-deep .select-search-option {
+  cursor: default !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+
+  .mat-pseudo-checkbox,
+  .mdc-checkbox {
+    display: none !important;
+  }
+
+  .mdc-list-item__primary-text,
+  .mat-mdc-option-text {
+    opacity: 1 !important;
+    width: 100%;
+  }
+}
+
+/* Search input wrapper — visible border/frame */
+.select-search-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 4px;
+  padding: 2px 8px;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Search input inside mat-select */
+.select-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 4px 0;
+  background: transparent;
+  font-size: 14px;
+  color: inherit;
+}
+
 /* Remove default line ripple */
 ::ng-deep .mat-mdc-text-field-wrapper .mdc-line-ripple {
   display: none;
@@ -44,9 +96,20 @@
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-card) !important;
   box-sizing: border-box;
-  max-height: 50%;
-  overflow: auto;
+  max-height: none;
+  overflow: hidden;
   padding: 8px 0;
+}
+
+/* Options group — scroll container for options only */
+::ng-deep .scrollable-options-group {
+  display: block;
+  overflow-y: auto;
+  max-height: 200px;
+
+  .mat-mdc-optgroup-label {
+    display: none;
+  }
 }
 
 ::ng-deep .mat-pseudo-checkbox-full {

@@ -1,7 +1,5 @@
 import { BackendService } from '../Backend.service';
 import { ChunkedRequestService } from './ChunkedRequest.service';
-import { CodeableConceptPaths } from '../Paths/CodeableConceptPaths';
-import { ConceptData } from 'src/app/model/Interface/ConceptData';
 import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
 import { CriteriaSearchFilterData } from 'src/app/model/Interface/Search/CriteriaSearchFilterData';

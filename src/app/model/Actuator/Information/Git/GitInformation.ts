@@ -4,7 +4,6 @@ import { GitInformationData } from 'src/app/model/Interface/ActuatorInfoData/Git
 
 export class GitInformation {
   private buildInformation: GitBuildInformation;
-  private branch: string;
   private commitInformation: GitCommitInformation;
 
   constructor(
@@ -13,7 +12,6 @@ export class GitInformation {
     commitInformation: GitCommitInformation
   ) {
     this.buildInformation = buildInformation;
-    this.branch = branch;
     this.commitInformation = commitInformation;
   }
 
@@ -23,14 +21,6 @@ export class GitInformation {
 
   public setBuildInformation(buildInformation: GitBuildInformation): void {
     this.buildInformation = buildInformation;
-  }
-
-  public getBranch(): string {
-    return this.branch;
-  }
-
-  public setBranch(branch: string): void {
-    this.branch = branch;
   }
 
   public getCommitInformation(): GitCommitInformation {

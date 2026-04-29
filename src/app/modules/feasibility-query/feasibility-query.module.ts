@@ -48,6 +48,7 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
+import { PatientCountComponent } from './components/result/patient-count/patient-count.component';
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -97,6 +98,7 @@ export const FORMATS_GERMAN = {
     FeasibilityQueryBulkSearchComponent,
     BulkSearchActionBarComponent,
     TermcodeComponent,
+    PatientCountComponent,
   ],
   imports: [
     CommonModule,

@@ -17,6 +17,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service';
 import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service';
 import { LoadDataSelectionProfilesService } from '../../DataSelection/LoadDataSelectionProfiles.service';
+import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service';
+import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service';
 
 @Injectable({
   providedIn: 'root',
