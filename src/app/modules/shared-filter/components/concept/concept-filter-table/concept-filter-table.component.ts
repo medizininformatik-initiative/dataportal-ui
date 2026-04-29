@@ -93,7 +93,9 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
       const listEntry = row.originalEntry as CodeableConceptResultListEntry;
       const concept = CloneConcept.deepCopyConcept(listEntry.getConcept());
       this.clearSelectedConceptArray();
-      const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === 'checkbox');
+      const checkboxCell = row.cells.find(
+        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+      );
       if (checkboxCell) {
         checkboxCell.isSelected = !!this.selectedConceptProviderService.findConcept(concept);
       }
