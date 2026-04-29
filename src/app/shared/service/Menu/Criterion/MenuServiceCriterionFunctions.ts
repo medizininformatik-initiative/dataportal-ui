@@ -25,7 +25,8 @@ export class MenuServiceCriterionFunctions {
 
   public duplicateCriterion(id: string): void {
     const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(
-      this.criterionProviderService.getOne(id)
+      this.criterionProviderService.getOne(id),
+      false
     );
     this.criterionProviderService.setOne(clonedCriterion);
     this.stageProviderService.addOne(clonedCriterion.getId());
