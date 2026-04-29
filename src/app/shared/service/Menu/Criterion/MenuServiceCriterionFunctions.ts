@@ -2,6 +2,8 @@ import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service';
 
@@ -11,6 +13,7 @@ import { NavigationHelperService } from '../../../../service/NavigationHelper.se
 export class MenuServiceCriterionFunctions {
   constructor(
     private criterionProviderService: CriterionProviderService,
+    private referenceCriterionProviderService: ReferenceCriterionProviderService,
     private stageProviderService: StageProviderService,
     private queryProviderService: FeasibilityQueryProviderService,
     private navigationHelperService: NavigationHelperService
@@ -28,6 +31,27 @@ export class MenuServiceCriterionFunctions {
       this.criterionProviderService.getOne(id),
       false
     );
+
+    clonedCriterion.getReferenceAttributeFilters().forEach((attributeFilter) => {
+      if (attributeFilter.isReferenceSet()) {
+        const referenceFilter = attributeFilter.getReference();
+        const newIds = referenceFilter.getSelectedReferenceIds().map((refId) => {
+          const originalRef = this.referenceCriterionProviderService.getOne(refId);
+          if (!originalRef) {
+            return refId;
+          }
+          const clonedRef = CloneAbstractCriterion.deepCopyAbstractCriterion(
+            originalRef,
+            false
+          ) as ReferenceCriterion;
+          clonedRef.setParentId(clonedCriterion.getId());
+          this.referenceCriterionProviderService.setOne(clonedRef);
+          return clonedRef.getId();
+        });
+        referenceFilter.setSelectedReferenceIds(newIds);
+      }
+    });
+
     this.criterionProviderService.setOne(clonedCriterion);
     this.stageProviderService.addOne(clonedCriterion.getId());
   }
