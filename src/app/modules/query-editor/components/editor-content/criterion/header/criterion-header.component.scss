@@ -121,3 +121,12 @@
   color: #6b7280; /* subtle gray */
   font-size: 0.9em;
 }
+
+.empty-state {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}

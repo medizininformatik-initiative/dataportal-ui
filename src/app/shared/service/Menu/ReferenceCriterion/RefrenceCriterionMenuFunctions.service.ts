@@ -16,7 +16,6 @@ export class RefrenceCriterionMenuFunctionsService {
   ) {}
 
   deleteCriterion(id: string) {
-    this.referenceCriterionProvider.getAll().subscribe((criteria) => console.log(criteria));
     const parentID = this.referenceCriterionProvider.getOne(id)?.getParentId();
     if (!parentID) {
       throw new Error(`ReferenceCriterion with id ${id} does not have a parent ID.`);

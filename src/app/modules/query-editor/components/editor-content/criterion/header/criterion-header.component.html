@@ -31,6 +31,15 @@
     <div *ngIf="quantityFilterChips.length > 0">
       <num-filter-chips [filterChips]="quantityFilterChips"> </num-filter-chips>
     </div>
+    <span
+      *ngIf="
+        !timeRestrictionFilterChips.length &&
+        !conceptFilterChips.length &&
+        !quantityFilterChips.length
+      "
+      class="empty-state"
+      >{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span
+    >
   </div>
   <div *ngIf="refernceFilterChips.length > 0" fxLayout="column" class="filter-container">
     <div fxLayout="row wrap" fxLayoutAlign="space-between">

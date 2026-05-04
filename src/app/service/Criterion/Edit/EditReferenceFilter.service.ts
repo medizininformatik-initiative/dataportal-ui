@@ -34,7 +34,6 @@ export class EditReferenceFilterService {
   }
 
   private updateProvider(references: ReferenceCriterion[]): void {
-    console.log('Updating provider with references:', references);
     references.forEach((reference) => this.referenceCriterionProvider.setOne(reference));
   }
 

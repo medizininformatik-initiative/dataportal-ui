@@ -33,7 +33,6 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.referenceCriterion);
     this.getMenuItems();
     this.getFilterChips();
     this.translatedSystem = TerminologySystemDictionary.getNameByUrl(
