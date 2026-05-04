@@ -6,7 +6,7 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData';
-import { map, Observable, of, Subscription, take } from 'rxjs';
+import { map, Observable, of, Subscription } from 'rxjs';
 import { MenuItemInterface } from '../../../../../../shared/models/Menu/MenuItemInterface';
 import { MenuServiceDataSelection } from '../../../../../../shared/service/Menu/DataSelection/MenuServiceDataSelection.service';
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
@@ -53,8 +53,7 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
     private removeReferenceService: RemoveReferenceService,
     private menuService: MenuServiceDataSelection,
     private appSettingsProvider: AppSettingsProviderService,
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private profileProviderService: ProfileProviderService
+    private dataSelectionProviderService: DataSelectionProviderService
   ) {}
 
   ngOnInit(): void {
@@ -100,16 +99,12 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
       .getActiveDataSelection()
       .pipe(
         map((dataSelection) => {
-          this.isReferenced = dataSelection.getProfiles().some((profile) =>
-            profile
+          this.isReferenced = dataSelection.getProfiles().some((profile) => profile
               .getProfileFields()
               .getSelectedReferenceFields()
-              .some((referenceField) =>
-                referenceField
+              .some((referenceField) => referenceField
                   .getLinkedProfileIds()
-                  .some((linkedProfileId) => this.profile.getId() === linkedProfileId)
-              )
-          );
+                  .some((linkedProfileId) => this.profile.getId() === linkedProfileId)));
           return this.isReferenced;
         })
       )
