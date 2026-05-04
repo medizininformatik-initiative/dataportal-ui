@@ -53,7 +53,7 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
   @ViewChild('conceptAttributeFilterTemplate', { static: false, read: TemplateRef })
   conceptAttributeFiltersTemplate: TemplateRef<any> | undefined = undefined;
 
-  @ViewChild('conceptValueFilterTemplate', { static: false, read: TemplateRef })
+  @ViewChild('conceptValueFiltersTemplate', { static: false, read: TemplateRef })
   conceptValueFiltersTemplate: TemplateRef<any> | undefined = undefined;
 
   @ViewChild('termCodes', { static: false, read: TemplateRef })
@@ -116,6 +116,7 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
     this.setReferenceTemplate();
     this.setTermCodesTemplate();
     this.setTimeRestrictionTemplate();
+    console.log('Templates set in criterion component', this.templates);
   }
 
   private setTimeRestrictionTemplate(): void {
@@ -138,13 +139,15 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
 
   private setQuantityValueFilterTemplate(): void {
     if (this.quantityValueFilter.length > 0) {
-      this.templates.push({ template: this.quantityValueFilterTemplate, name: 'QUANTITY' });
+      const display = this.quantityValueFilter[0].getDisplay();
+      this.templates.push({ template: this.quantityValueFilterTemplate, display });
     }
   }
 
   private setQuantityAttributeFilterTemplate(): void {
     if (this.quantityAttributeFilter.length > 0) {
-      this.templates.push({ template: this.quantityAttributeFilterTemplate, name: 'QUANTITY' });
+      const display = this.quantityAttributeFilter[0].getDisplay();
+      this.templates.push({ template: this.quantityAttributeFilterTemplate, display });
     }
   }
 

@@ -63,7 +63,9 @@ export class ConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private initializeTerminologyFilter(): void {
-    this.searchFilter = this.conceptSelectionService.createTerminologyFilter(this.valueSetUrl);
+    if (this.valueSetUrl?.length > 1) {
+      this.searchFilter = this.conceptSelectionService.createTerminologyFilter(this.valueSetUrl);
+    }
   }
 
   private initializePreSelectedConcepts(): void {

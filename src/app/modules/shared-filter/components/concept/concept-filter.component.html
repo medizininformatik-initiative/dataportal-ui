@@ -8,6 +8,7 @@
     </num-searchbar>
 
     <num-search-filter
+      *ngIf="valueSetUrl?.length > 1"
       [filter]="searchFilter"
       (selectedFilterChanged)="setValueSet($event)"
     ></num-search-filter>

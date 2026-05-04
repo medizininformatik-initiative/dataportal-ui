@@ -23,6 +23,16 @@
     </div>
   </ng-template>
 
+  <ng-template #conceptValueFiltersTemplate>
+    <div class="width-100">
+      <num-concept
+        [conceptFilter]="conceptValueFilter[0].getConcept()"
+        (changedConceptFilter)="updateConceptValueFilter($event, conceptValueFilter[0])"
+      >
+      </num-concept>
+    </div>
+  </ng-template>
+
   <ng-template #termCodes>
     <num-edit-termcode
       class="height-100"
