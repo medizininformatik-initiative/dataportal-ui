@@ -562,6 +562,7 @@
       "MIN_LENGTH": "Required length of 3 letters"
     },
     "TABLE": {
+      "ADD": "Add",
       "AVAILABILITY": "Availability",
       "CONTEXT": "Context",
       "DISPLAY": "Display",

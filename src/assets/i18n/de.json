@@ -551,6 +551,7 @@
       "MIN_LENGTH": "Bitte mindestens drei Buchstaben eingeben"
     },
     "TABLE": {
+      "ADD": "Hinzufügen",
       "AVAILABILITY": "Verfügbarkeit",
       "CONTEXT": "Kontext",
       "DISPLAY": "Anzeige",

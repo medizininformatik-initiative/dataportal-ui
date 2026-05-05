@@ -34,7 +34,7 @@
           (iconClicked)="emitIds($event)"
         ></num-table>
       </div>
-      <num-placeholder-box class="no-results-text" *ngIf="!(tableData$ | async)">
+      <num-placeholder-box class="no-results-text" *ngIf="(tableData$ | async) === null">
         >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
         >"
       </num-placeholder-box>

@@ -10,7 +10,7 @@ import { DisplayCellData } from '../cells/DisplayCellData';
 
 export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<ReferenceCriteriaListEntry> {
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['Hinzufügen', 'NAME', 'TERMINOLOGY_CODE'] };
+    return { headers: ['EMPTY', 'NAME', 'TERMINOLOGY_CODE'] };
   }
 
   protected buildRows(listEntries: ReferenceCriteriaListEntry[]): TableRowData[] {
