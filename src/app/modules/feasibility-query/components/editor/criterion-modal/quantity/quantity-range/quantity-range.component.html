@@ -15,6 +15,6 @@
     [label]="'FEASIBILITY.EDITOR.QUANTITY.MAX'"
   ></num-value-select>
 </div>
-<div *ngIf="displayWarning" fxLayout="column">
+<div *ngIf="displayWarning" fxLayout="column" style="position: absolute">
   <span class="warning">{{ 'FEASIBILITY.HINT.MINIMUM_GREATER_MAXIMUM' | translate }}</span>
 </div>

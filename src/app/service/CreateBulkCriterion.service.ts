@@ -53,7 +53,7 @@ export class CreateBulkCriterionService {
     display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
-    uniqueID: string
+    id: string
     termCodes: Array<TerminologyCode>
   } {
     const firstBulkElement = response[0];
@@ -70,7 +70,7 @@ export class CreateBulkCriterionService {
     display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
-    uniqueID: string
+    id: string
     termCodes: Array<TerminologyCode>
   } {
     const context = response.getContext();
@@ -84,7 +84,7 @@ export class CreateBulkCriterionService {
       display,
       isInvalid: false,
       isRequiredFilterSet: true,
-      uniqueID: uuidv4(),
+      id: uuidv4(),
       termCodes: termcodes,
     };
   }

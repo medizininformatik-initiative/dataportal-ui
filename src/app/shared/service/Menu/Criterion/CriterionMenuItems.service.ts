@@ -11,7 +11,7 @@ export class CriterionMenuItems {
   /**
    * @returns Array of Menu functions for a criterion box
    */
-  public getMenuItemsForCriterion(isReferenceEnabled: boolean): MenuItemInterface[] {
+  public getMenuItemsForCriterion(): MenuItemInterface[] {
     return [
       {
         disabled: false,
@@ -24,12 +24,6 @@ export class CriterionMenuItems {
         icon: 'clone',
         label: 'DUPLICATE',
         action: (id: string) => this.menuServiceCriterionFunctions.duplicateCriterion(id),
-      },
-      {
-        disabled: !isReferenceEnabled,
-        icon: 'link',
-        label: 'REFERENCE',
-        action: (id: string) => this.menuServiceCriterionFunctions.editLinkedCriteria(id),
       },
       {
         disabled: false,

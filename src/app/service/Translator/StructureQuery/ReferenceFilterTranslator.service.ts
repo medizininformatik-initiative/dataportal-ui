@@ -51,7 +51,11 @@ export class ReferenceFilterTranslatorService {
     referencedCriteriaSet: string[],
     referenceCriteria: ReferenceCriterion[]
   ): ReferenceFilter {
-    return new ReferenceFilter(uuidv4(), referencedCriteriaSet, referenceCriteria);
+    return new ReferenceFilter(
+      uuidv4(),
+      referencedCriteriaSet,
+      referenceCriteria.map((r) => r.getId())
+    );
   }
 
   /**

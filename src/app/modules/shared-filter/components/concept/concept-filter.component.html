@@ -1,0 +1,23 @@
+<div fxLayout="row" class="height-100 width-100">
+  <div fxLayout="column" class="container">
+    <num-searchbar
+      [icon]="'search'"
+      (searchTextChange)="searchConcepts($event)"
+      [label]="'SHARED_FILTER.CONCEPT_FILTER.SEARCH_PLACEHOLDER'"
+    >
+    </num-searchbar>
+
+    <num-search-filter
+      *ngIf="valueSetUrl?.length > 1"
+      [filter]="searchFilter"
+      (selectedFilterChanged)="setValueSet($event)"
+    ></num-search-filter>
+    <num-concept-filter-table
+      style="overflow: auto"
+      *ngIf="searchResults$ | async as searchResults"
+      [valueSetUrl]="valueSetUrl"
+      [conceptFilterId]="conceptFilterId"
+      (selectedConcept)="toggleConceptSelection($event)"
+    ></num-concept-filter-table>
+  </div>
+</div>

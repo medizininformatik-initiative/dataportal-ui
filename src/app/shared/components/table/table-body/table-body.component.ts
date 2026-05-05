@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/component-selector */
-import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
 
@@ -17,12 +17,19 @@ export class TableBodyComponent {
   @Output()
   selectedRow = new EventEmitter<TableRowData>();
 
+  @Output()
+  iconClicked = new EventEmitter<TableRowData>();
+
+  public onIconClick(row: TableRowData): void {
+    this.iconClicked.emit(row);
+  }
+
   public onRowClick(row: TableRowData): void {
     this.rowClicked.emit(row);
   }
 
   public onCheckboxSelect(row: TableRowData): void {
-    const checkboxCell = row.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+    const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === 'checkboxText');
     if (checkboxCell) {
       checkboxCell.isSelected = !checkboxCell.isSelected;
     }

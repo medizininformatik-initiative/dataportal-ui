@@ -1,5 +1,4 @@
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { ReferenceCriterion } from '../../ReferenceCriterion';
 
 /**
  * Class representing a ReferenceFilter.
@@ -7,22 +6,18 @@ import { ReferenceCriterion } from '../../ReferenceCriterion';
 export class ReferenceFilter {
   private readonly id: string;
   private allowedReferenceUri: string[];
-  private selectedReferences: ReferenceCriterion[] = [];
+  private selectedReferenceIds: string[] = [];
   private type: FilterTypes = FilterTypes.REFERENCE;
 
   /**
    * Creates an instance of ReferenceFilter.
    *
    * @param allowedReferenceUri - The allowed reference URI.
-   * @param selectedReferences - The selected reference criteria.
+   * @param selectedReferenceIds - The IDs of the selected reference criteria.
    */
-  constructor(
-    id: string,
-    allowedReferenceUri: string[],
-    selectedReferences: ReferenceCriterion[] = []
-  ) {
+  constructor(id: string, allowedReferenceUri: string[], selectedReferenceIds: string[] = []) {
     this.id = id;
-    this.selectedReferences = selectedReferences;
+    this.selectedReferenceIds = selectedReferenceIds;
     this.allowedReferenceUri = allowedReferenceUri;
   }
 
@@ -35,21 +30,21 @@ export class ReferenceFilter {
   }
 
   /**
-   * Gets the selected reference criteria.
+   * Gets the IDs of the selected reference criteria.
    *
-   * @returns An array of selected reference criteria.
+   * @returns An array of IDs of selected reference criteria.
    */
-  public getSelectedReferences(): ReferenceCriterion[] {
-    return this.selectedReferences;
+  public getSelectedReferenceIds(): string[] {
+    return this.selectedReferenceIds;
   }
 
   /**
-   * Sets the selected reference criteria.
+   * Sets the IDs of the selected reference criteria.
    *
-   * @param selectedReferences - An array of selected reference criteria.
+   * @param ids - An array of IDs of selected reference criteria.
    */
-  public setSelectedReferences(selectedReferences: ReferenceCriterion[]): void {
-    this.selectedReferences = selectedReferences;
+  public setSelectedReferenceIds(ids: string[]): void {
+    this.selectedReferenceIds = ids;
   }
 
   /**
@@ -99,16 +94,16 @@ export class ReferenceFilter {
   public static create(
     id: string,
     allowedReferenceUri: string[],
-    selectedReference: ReferenceCriterion[] = []
+    selectedReferenceIds: string[] = []
   ): ReferenceFilter {
-    return new ReferenceFilter(id, allowedReferenceUri, selectedReference);
+    return new ReferenceFilter(id, allowedReferenceUri, selectedReferenceIds);
   }
 
   public isSelectedReferenceSet(): boolean {
     return (
-      this.selectedReferences !== undefined &&
-      this.selectedReferences !== null &&
-      this.selectedReferences.length > 0
+      this.selectedReferenceIds !== undefined &&
+      this.selectedReferenceIds !== null &&
+      this.selectedReferenceIds.length > 0
     );
   }
 }

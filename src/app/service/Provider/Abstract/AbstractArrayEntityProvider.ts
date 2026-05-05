@@ -48,10 +48,17 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * Retrieves a single entity by its identifier.
    *
    * @param id The unique identifier of the entity to look up.
-   * @returns The matching entity, or `undefined` if no entity with that ID exists.
+   * @returns The matching entity, or throws an error if no entity with the given ID is found.
    */
-  public getOne(id: string): T | undefined {
-    return this.items.find((e) => this.selectId(e) === id);
+  public getOne(id: string): T {
+    if (!id) {
+      throw new Error('ID must be provided to get an entity.');
+    }
+    const entity = this.items.find((e) => this.selectId(e) === id);
+    if (!entity) {
+      throw new Error(`Entity with id ${id} not found.`);
+    }
+    return entity;
   }
 
   /**
@@ -63,11 +70,9 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    */
   public addOne(entity: T): void {
     const id = this.selectId(entity);
-
-    if (this.items.some((e) => this.selectId(e) === id)) {
+    if (this.hasSameId(id)) {
       return;
     }
-
     this.items.push(entity);
     this.emit();
   }
@@ -84,7 +89,7 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
 
     for (const entity of entities) {
       const id = this.selectId(entity);
-      if (!this.items.some((item) => this.selectId(item) === id)) {
+      if (!this.hasSameId(id)) {
         this.items.push(entity);
         changed = true;
       }
@@ -189,5 +194,15 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    */
   protected emit(): void {
     this.itemsSubject.next([...this.items]);
+  }
+
+  /**
+   * Returns `true` when the collection already contains an entity whose
+   * ID matches the given `id`; `false` otherwise.
+   *
+   * @param id The identifier to look up.
+   */
+  private hasSameId(id: string): boolean {
+    return this.items.some((item) => this.selectId(item) === id);
   }
 }

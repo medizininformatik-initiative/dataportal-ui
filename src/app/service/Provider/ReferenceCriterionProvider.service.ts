@@ -1,6 +1,6 @@
+import { AbstractArrayEntityProvider } from './Abstract/AbstractArrayEntityProvider';
 import { Injectable } from '@angular/core';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { AbstractArrayEntityProvider } from './Abstract/AbstractArrayEntityProvider';
 
 @Injectable({
   providedIn: 'root',

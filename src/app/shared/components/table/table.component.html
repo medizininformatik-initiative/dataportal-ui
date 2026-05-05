@@ -1,13 +1,10 @@
 <table *ngIf="tableData">
-  <thead
-    num-table-header
-    class="table-header sticky-header"
-    [headers]="tableData.header.headers"
-  ></thead>
+  <thead num-table-header class="table-header sticky-header" [tableData]="tableData"></thead>
   <tbody
     num-table-body
     [rows]="tableData.body.rows"
     (rowClicked)="rowClicked.emit($event)"
     (selectedRow)="selectedRow.emit($event)"
+    (iconClicked)="iconClicked.emit($event)"
   ></tbody>
 </table>

@@ -1,14 +1,1 @@
-<div class="button-container" fxLayout="row" fxLayoutAlign="space-between start">
-  <num-button
-    (click)="navigateToPreviousProfile()"
-    [isDisabled]="(previousElementExists$ | async) === false"
-  >
-    {{ 'EDITOR.HEADER.PREVIOUS' | translate }}
-  </num-button>
-  <num-button
-    (click)="navigateToNextProfile()"
-    [isDisabled]="(nextElementExists$ | async) === false"
-  >
-    {{ 'EDITOR.HEADER.NEXT' | translate }}
-  </num-button>
-</div>
+<div class="button-container" fxLayout="row" fxLayoutAlign="space-between start"></div>

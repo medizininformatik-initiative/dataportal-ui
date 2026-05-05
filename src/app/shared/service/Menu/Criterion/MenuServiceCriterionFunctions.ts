@@ -1,9 +1,11 @@
 import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion';
-import { CriterionModalService } from 'src/app/service/Criterion/Modal/CriterionModal.service';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service';
 import { Injectable } from '@angular/core';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 import { StageProviderService } from '../../../../service/Provider/StageProvider.service';
+import { NavigationHelperService } from '../../../../service/NavigationHelper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +13,10 @@ import { StageProviderService } from '../../../../service/Provider/StageProvider
 export class MenuServiceCriterionFunctions {
   constructor(
     private criterionProviderService: CriterionProviderService,
-    private editCriterionService: CriterionModalService,
+    private referenceCriterionProviderService: ReferenceCriterionProviderService,
     private stageProviderService: StageProviderService,
-    private queryProviderService: FeasibilityQueryProviderService
+    private queryProviderService: FeasibilityQueryProviderService,
+    private navigationHelperService: NavigationHelperService
   ) {}
 
   public deleteCriterion(id: string): void {
@@ -25,23 +28,38 @@ export class MenuServiceCriterionFunctions {
 
   public duplicateCriterion(id: string): void {
     const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(
-      this.criterionProviderService.getOne(id)
+      this.criterionProviderService.getOne(id),
+      false
     );
+
+    clonedCriterion.getReferenceAttributeFilters().forEach((attributeFilter) => {
+      if (attributeFilter.isReferenceSet()) {
+        const referenceFilter = attributeFilter.getReference();
+        const newIds = referenceFilter.getSelectedReferenceIds().map((refId) => {
+          const originalRef = this.referenceCriterionProviderService.getOne(refId);
+          if (!originalRef) {
+            return refId;
+          }
+          const clonedRef = CloneAbstractCriterion.deepCopyAbstractCriterion(
+            originalRef,
+            false
+          ) as ReferenceCriterion;
+          clonedRef.setParentId(clonedCriterion.getId());
+          this.referenceCriterionProviderService.setOne(clonedRef);
+          return clonedRef.getId();
+        });
+        referenceFilter.setSelectedReferenceIds(newIds);
+      }
+    });
+
     this.criterionProviderService.setOne(clonedCriterion);
     this.stageProviderService.addOne(clonedCriterion.getId());
-  }
-
-  public editLinkedCriteria(id: string): void {
-    const criterion = this.criterionProviderService.getOne(id);
-    if (criterion) {
-      this.editCriterionService.openReferenceCriteriaModal(criterion);
-    }
   }
 
   public editCriterionFilter(id: string): void {
     const criterion = this.criterionProviderService.getOne(id);
     if (criterion) {
-      this.editCriterionService.openCriterionModal(criterion);
+      this.navigationHelperService.navigateToEditCriterion(id);
     }
   }
 }

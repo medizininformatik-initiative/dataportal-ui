@@ -1,0 +1,46 @@
+.name-column {
+  padding-left: 8px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+}
+
+.highlight:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #000000;
+}
+
+.cursor-click {
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+.row-container {
+  height: 42px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+/* Checkbox */
+input[type='checkbox'] {
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  background: #ffffff;
+  border: 1px solid #c3c7cd;
+  border-radius: 3px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+
+  &:checked {
+    background: #5a79af;
+    border-color: #5a79af;
+  }
+}

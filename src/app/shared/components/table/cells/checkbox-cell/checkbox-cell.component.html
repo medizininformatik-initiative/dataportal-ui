@@ -1,13 +1,4 @@
 <div class="row-container">
-  <fa-icon
-    *ngIf="cell.icon"
-    matTooltip="{{ 'SHARED_COMPONENTS.TABLE.ICON' | translate }}"
-    matTooltipClass="prevent-selection"
-    size="1x"
-    [icon]="cell.icon"
-    class="cursor-click"
-  >
-  </fa-icon>
   <num-checkbox
     [matTooltip]="
       !cell.isDisabled
@@ -18,7 +9,4 @@
     [checked]="cell.isSelected"
     (checkedChange)="onCheckboxChange()"
   ></num-checkbox>
-  <div class="name-column highlight" matTooltip="{{ cell.value | displayTranslation }}">
-    {{ cell.value | displayTranslation }}
-  </div>
 </div>

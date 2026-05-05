@@ -11,6 +11,7 @@ import { Injectable } from '@angular/core';
 import { ObjectHelper } from 'src/app/service/ObjectHelper';
 import { ReferenceFilter as ReferenceFilterSQ } from '../../../model/StructuredQuery/Criterion/AttributeFilters/ReferenceFilter/ReferenceFilter';
 import { ReferenceFilter as ReferenceFilterFQ } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
+import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service';
 import { StructuredQuery } from '../../../model/StructuredQuery/StructuredQuery';
 import { StructuredQueryCriterion } from '../../../model/StructuredQuery/Criterion/StructuredQueryCriterion';
 import { StructuredQueryQuantityFilterTranslatorService } from './Builder/StructuredQueryQuantityFilterTranslator.service';
@@ -24,6 +25,7 @@ import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTran
 export class UIQuery2StructuredQueryService {
   constructor(
     private criterionProvider: CriterionProviderService,
+    private referenceCriterionProvider: ReferenceCriterionProviderService,
     private timeRestrictionTranslation: TimeRestrictionTranslationService,
     private quantityFilterTranslator: StructuredQueryQuantityFilterTranslatorService,
     private terminologyTranslator: TerminologyCodeTranslator,
@@ -191,9 +193,12 @@ export class UIQuery2StructuredQueryService {
     attributeCode: TerminologyCode,
     referenceFilter: ReferenceFilterFQ
   ): ReferenceFilterSQ {
+    const referenceCriteria = referenceFilter
+      .getSelectedReferenceIds()
+      .map((id) => this.referenceCriterionProvider.getOne(id));
     const translatedRefrenceFilter: ReferenceFilterSQ = new ReferenceFilterSQ(
       this.createStructuredQueryAttributeCode(attributeCode),
-      this.setEachLinkedCriteria(referenceFilter.getSelectedReferences())
+      this.setEachLinkedCriteria(referenceCriteria)
     );
     return translatedRefrenceFilter;
   }

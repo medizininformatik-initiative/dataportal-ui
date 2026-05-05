@@ -28,16 +28,16 @@ export class CodeableConceptListEntryAdapter extends AbstractTableAdapter<Codeab
 
   private buildCells(entry: CodeableConceptResultListEntry): TableCellType[] {
     return TableCellBuilder.row(
-      this.checkBoxCell(entry),
+      this.checkboxTextCell(entry),
       this.terminologyCell(entry),
       this.termCodeCell(entry)
     );
   }
 
-  private checkBoxCell(entry: CodeableConceptResultListEntry) {
+  private checkboxTextCell(entry: CodeableConceptResultListEntry) {
     const display = entry.getConcept().getDisplay();
     const options = { isSelected: entry.getIsSelected(), isDisabled: true };
-    return TableCellBuilder.withCheckbox(display, options);
+    return TableCellBuilder.withCheckboxText(display, options);
   }
 
   private terminologyCell(entry: CodeableConceptResultListEntry): TextCellData {

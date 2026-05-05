@@ -88,4 +88,12 @@ export class SnackbarMessageService {
   public dataDefinitionDownloadSuccess(): void {
     this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
   }
+
+  /**
+   * Displays success message for criterion edit
+   * @returns
+   */
+  public displayCriterionEditSuccess(): void {
+    this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.EDIT_SUCCESS');
+  }
 }

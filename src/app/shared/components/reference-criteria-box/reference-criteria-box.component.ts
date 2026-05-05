@@ -5,7 +5,7 @@ import { FilterChipData } from '../../models/FilterChips/FilterChipData';
 import { MenuItemInterface } from '../../models/Menu/MenuItemInterface';
 import { Observable, of } from 'rxjs';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { ReferenceCriterionMenuItems } from '../../service/Menu/RefrenceCriterion/ReferenceCriterionMenuItems.service';
+import { ReferenceCriterionMenuItems } from '../../service/Menu/ReferenceCriterion/ReferenceCriterionMenuItems.service';
 import { TerminologySystemDictionary } from '../../../model/Utilities/TerminologySystemDictionary';
 
 @Component({

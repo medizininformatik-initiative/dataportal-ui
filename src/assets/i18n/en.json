@@ -93,6 +93,8 @@
       },
       "EMPTY": "You have not defined a cohort yet. Upload an existing cohort selection or create a new one.",
       "HEADER": "Cohort Selection",
+      "INFO_TOOLTIP_TEXT": "A cohort definition specifies the group of patients or data objects you want to analyze. Define inclusion and exclusion criteria to precisely describe your target population. This step is required to proceed.",
+      "INFO_TOOLTIP_TITLE": "Cohort Definition",
       "REQUIRED": "Cohort selection is a mandatory field"
     },
     "DATASELECTION": {
@@ -119,6 +121,8 @@
       },
       "SUCCESS": {
         "DOWNLOAD": "Data definition downloaded successfully",
+        "INFO_TOOLTIP_TEXT": "The data selection defines which data fields or variables are included for the defined cohort. Select the relevant data points for your analysis. This step is required to proceed.",
+        "INFO_TOOLTIP_TITLE": "Data Selection",
         "UPLOAD": "Data definition uploaded successfully"
       }
     }
@@ -181,7 +185,14 @@
       "SAVE": "Save"
     },
     "CONTENT": {
-      "CRITERION": {},
+      "CRITERION": {
+        "HEADER": {
+          "CONCEPT": "Selected Concepts",
+          "FILTER": "Selected Filters",
+          "REFERENCE": "Selected References",
+          "TERMCODES": "Selected Terminology Codes"
+        }
+      },
       "PROFILE": {
         "FIELDS": {
           "HEADER": "Select features for ",
@@ -195,23 +206,39 @@
         "SNACKBAR": {
           "SAVED": "Profile saved successfully",
           "SAVING_ERROR": "Error saving profile"
-        },
-        "TAB_LABEL": {
-          "BULK": "Bulk search",
-          "FIELD": "Fields",
-          "FILTER": "Filter",
-          "INFORMATION": "Information",
-          "REFERENCE": "References",
-          "SELECTED_CONCEPTS": "Selected code filter ({{count}})",
-          "SINGLE_SEARCH": "Single search",
-          "TIMERESTRICTION": "Time restriction",
-          "TOKEN": "Code Filter"
         }
+      },
+      "TAB_LABEL": {
+        "ATTRIBUTEFILTER": "Attribute Filter",
+        "BULK": "Bulk search",
+        "CONCEPT": "Concepts",
+        "FIELD": "Fields",
+        "FILTER": "Filter",
+        "INFORMATION": "Information",
+        "REFERENCE": "References",
+        "SELECTED_CONCEPTS": "Selected code filter ({{count}})",
+        "SELECTED_REFERENCES": "Selected References ({{count}})",
+        "SINGLE_SEARCH": "Single search",
+        "TERMCODE": "Terminology Codes",
+        "TIMERESTRICTION": "Time restriction",
+        "TOKEN": "Code Filter",
+        "VALUEFILTER": "Value Filter"
       }
     },
     "HEADER": {
       "NEXT": "Next Element",
       "PREVIOUS": "Previous Element"
+    },
+    "TAB_LABEL": {
+      "BULK": "Bulk search",
+      "FIELD": "Fields",
+      "FILTER": "Filter",
+      "INFORMATION": "Information",
+      "REFERENCE": "References",
+      "SELECTED_CONCEPTS": "Selected code filter ({{count}})",
+      "SINGLE_SEARCH": "Single search",
+      "TIMERESTRICTION": "Time restriction",
+      "TOKEN": "Code Filter"
     }
   },
   "ERROR": {
@@ -281,6 +308,7 @@
         "yes-yes-yes-yes": "Distributed, EU GDPR compliant analysis, with health insurance data, and with recontacting"
       },
       "DRAG_AND_DROP": "Use drag & drop to sort",
+      "EDIT_SUCCESS": "Criterion edited successfully",
       "EMPTY": "Sorry, we could not find any results for ",
       "EXCLUSION": "Exclusion criteria",
       "FILTER_SELECTION": "Selected items",
@@ -315,6 +343,9 @@
       "SWITCH": {
         "LABEL_AND": "AND",
         "LABEL_OR": "OR"
+      },
+      "TERMCODE": {
+        "HEADER": "Included Terminology Codes"
       }
     },
     "HINT": {
@@ -531,9 +562,11 @@
       "MIN_LENGTH": "Required length of 3 letters"
     },
     "TABLE": {
+      "ADD": "Add",
       "AVAILABILITY": "Availability",
       "CONTEXT": "Context",
       "DISPLAY": "Display",
+      "EMPTY": "",
       "ICON": "Show related criteria",
       "NAME": "Name",
       "NOT_SELECTABLE": "Criterion cannot be selected",
@@ -567,7 +600,8 @@
   },
   "SNACKBAR": {
     "ERROR": {
-      "GENERIC": "An error occurred. Please try again later."
+      "GENERIC": "An error occurred. Please try again later.",
+      "UPLOAD": "Error uploading data definition. Please check the error log in the header for more information."
     },
     "SUCCESS": {
       "DOWNLOAD": "Data selection downloaded successfully.",
@@ -595,6 +629,7 @@
     "QUERY_EDITOR": "Feature Selection - Query Editor",
     "QUERY_EDITOR_CRITERION": "Cohort Selection - Criterion Editor",
     "QUERY_EDITOR_FEATURE": "Feature Selection - Feature Editor",
+    "QUERY_EDITOR_REFERENCE": "Cohort Selection - Reference Editor",
     "SAVED_QUERIES": "Saved Queries"
   },
   "VALIDATION": {

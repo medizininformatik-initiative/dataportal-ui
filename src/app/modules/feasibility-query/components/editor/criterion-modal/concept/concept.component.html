@@ -1,10 +1,49 @@
-<div *ngIf="conceptFilter" class="container" [@.disabled]="disableAnimation">
-  <num-shared-concept-filter
-    *ngIf="conceptFilter"
-    [conceptFilterId]="conceptFilter.getId()"
-    [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
-    [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
-    (changedSelectedConcepts)="emitConceptFilter($event)"
+<mat-tab-group
+  animationDuration="0ms"
+  class="token-filter-container"
+  disableRipple="true"
+  mat-stretch-tabs="false"
+  [selectedIndex]="1"
+  (selectedTabChange)="onTabChange()"
+>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <fa-icon icon="info" class="information-icon"></fa-icon>
+      {{ 'INFORMATION.TAB_LABEL' | translate }}
+    </ng-template>
+
+    <num-information-section>
+      <span slot="title">{{ 'INFORMATION.CONCEPTS.TITLE' | translate }}</span>
+      {{ 'INFORMATION.CONCEPTS.DESCRIPTION' | translate }}
+    </num-information-section>
+  </mat-tab>
+  <mat-tab *ngIf="conceptFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
+    <num-concept-filter
+      *ngIf="conceptFilter"
+      [conceptFilterId]="conceptFilter.getId()"
+      [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
+      [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
+      (changedSelectedConcepts)="emitConceptFilter($event)"
+    >
+    </num-concept-filter>
+  </mat-tab>
+  <mat-tab *ngIf="conceptFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
+    <num-concept-bulk-search
+      [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
+      [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
+      [tabChanged]="tabChanged"
+      (changedSelectedConcepts)="emitConceptFilter($event)"
+    ></num-concept-bulk-search>
+  </mat-tab>
+  <mat-tab
+    [label]="
+      'EDITOR.CONTENT.TAB_LABEL.SELECTED_CONCEPTS' | translate : { count: selectedConcepts.length }
+    "
+    [disabled]="selectedConcepts.length === 0"
   >
-  </num-shared-concept-filter>
-</div>
+    <num-selected-concept-list
+      [selectedConcepts]="selectedConcepts"
+      (changedSelectedConcepts)="emitConceptFilter($event)"
+    ></num-selected-concept-list>
+  </mat-tab>
+</mat-tab-group>

@@ -194,7 +194,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private startExpirationTimer(durationMs: number) {
     this.timeoutId = setTimeout(() => {
       this.isQueryExpired = true;
-      console.log('Timer abgelaufen');
     }, durationMs);
   }
 }

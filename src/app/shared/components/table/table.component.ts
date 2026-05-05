@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { TableBodyComponent } from './table-body/table-body.component';
 import { TableData } from 'src/app/shared/models/TableData/TableData';
-import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData';
 import { TableRowData } from '../../models/TableData/TableRowData';
 
 @Component({
@@ -14,13 +14,14 @@ export class TableComponent {
 
   @Output() selectedRow = new EventEmitter<TableRowData>();
   @Output() rowClicked = new EventEmitter<TableRowData>();
+  @Output() iconClicked = new EventEmitter<TableRowData>();
 
   public unselectCheckbox(ids: string[]): void {
     ids.forEach((id) => {
-      const foundRow = this.tableData.body.rows.find((row) => row.id === id);
+      const foundRow = this.tableData?.body?.rows?.find((row) => row.id === id);
       if (foundRow) {
         const checkboxCell = foundRow.cells.find(
-          (c): c is CheckboxCellData => c.type === 'checkbox'
+          (c): c is CheckboxTextCellData => c.type === 'checkboxText'
         );
         if (checkboxCell) {
           checkboxCell.isSelected = false;

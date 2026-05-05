@@ -1,4 +1,3 @@
-import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
@@ -7,9 +6,9 @@ import { Injectable } from '@angular/core';
 import { ProfileProviderService } from './Provider/ProfileProvider.service';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
 import { ProfileTimeRestrictionFilter } from '../model/DataSelection/Profile/Filter/ProfileDateFilter';
 import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter';
+import { initial } from 'lodash';
 
 /**
  * Service for managing staged profile changes before committing to data selection.
@@ -19,63 +18,22 @@ import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/Profil
   providedIn: 'root',
 })
 export class StagedProfileService {
-  /**
-   * @type {BehaviorSubject<DataSelectionProfile | null>} Subject holding the staged profile
-   */
-  private stagedProfileSubject = new BehaviorSubject<DataSelectionProfile | null>(null);
-
-  /**
-   * @type {Observable<DataSelectionProfile | null>} Observable of the staged profile
-   */
-  public readonly profile$ = this.stagedProfileSubject.asObservable();
-
+  private stagedProfile: DataSelectionProfile;
   constructor(
     private dataSelectionProviderService: DataSelectionProviderService,
-    private profileProviderService: ProfileProviderService,
-    private snackbarService: SnackbarService
+    private profileProviderService: ProfileProviderService
   ) {}
 
-  /**
-   * Initializes the staged profile with a profile from the provider.
-   * @param id - The profile ID to initialize
-   * @returns
-   */
-  public initialize(id: string): void {
-    const profile = this.profileProviderService.getOne(id);
-    this.stagedProfileSubject.next(profile);
+  public initialize(profile: DataSelectionProfile): void {
+    this.stagedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
   }
-
-  /**
-   * Gets an observable of the staged profile.
-   * @returns Observable of the staged profile
-   */
-  public getProfile(): DataSelectionProfile {
-    return this.stagedProfileSubject.getValue();
-  }
-
-  /**
-   * Gets an observable of the staged profile.
-   * @returns Observable of the staged profile
-   */
-  public getProfileObservable(): Observable<DataSelectionProfile | null> {
-    return this.stagedProfileSubject.asObservable();
-  }
-
-  /**
-   * Gets the current staged profile value.
-   * @returns The current staged profile or null
-   */
-  public getStagedProfile(): DataSelectionProfile | null {
-    return this.stagedProfileSubject.value;
-  }
-
   /**
    * Updates the selected basic fields in the staged profile.
    * @param selectedBasicFields - The selected basic fields to set
    * @returns
    */
   public updateSelectedBasicFields(selectedBasicFields: SelectedBasicField[]): void {
-    const profile = this.stagedProfileSubject.value;
+    const profile = this.stagedProfile;
     if (profile) {
       profile.getProfileFields().setSelectedBasicFields(selectedBasicFields);
       this.buildProfile();
@@ -88,7 +46,7 @@ export class StagedProfileService {
    * @returns
    */
   public updateSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {
-    const profile = this.stagedProfileSubject.value;
+    const profile = this.stagedProfile;
     if (profile) {
       profile.getProfileFields().setSelectedReferenceFields(selectedReferenceFields);
       this.setLinkedProfillesInDataSelectionProvdier();
@@ -97,7 +55,7 @@ export class StagedProfileService {
   }
 
   public updateProfileFilter(filter: ProfileTokenFilter | ProfileTimeRestrictionFilter): void {
-    const profile = this.stagedProfileSubject.value;
+    const profile = this.stagedProfile;
     if (profile) {
       profile.setFilter(filter);
       this.buildProfile();
@@ -110,7 +68,7 @@ export class StagedProfileService {
    * @returns
    */
   public updateLabel(label: string): void {
-    const profile = this.stagedProfileSubject.value;
+    const profile = this.stagedProfile;
     if (profile) {
       profile.setLabel(label);
       this.buildProfile();
@@ -122,8 +80,7 @@ export class StagedProfileService {
    * @private
    */
   private setLinkedProfillesInDataSelectionProvdier(): Observable<void[]> {
-    const profile = this.stagedProfileSubject.value;
-
+    const profile = this.stagedProfile;
     if (profile) {
       const selectedReferenceFields = [...profile.getProfileFields().getSelectedReferenceFields()];
       const linkedProfileIds = this.getReferencedProfileIds(selectedReferenceFields);
@@ -170,21 +127,11 @@ export class StagedProfileService {
    * @returns Observable of void array for completion tracking
    */
   public buildProfile(): Observable<void[]> {
-    const profile = this.stagedProfileSubject.value;
-    this.triggerUpdate(profile);
+    const profile = this.stagedProfile;
+    this.stagedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
     this.profileProviderService.setOne(profile);
     this.setProfileInDataSelectionProvider(profile);
     return this.setLinkedProfillesInDataSelectionProvdier();
-  }
-
-  /**
-   * Triggers an update by deep copying the profile and emitting to subscribers.
-   * @param profile - The profile to update
-   * @returns
-   * @private
-   */
-  private triggerUpdate(profile: DataSelectionProfile): void {
-    this.stagedProfileSubject.next(DataSelectionProfileCloner.deepCopyProfile(profile));
   }
 
   /**

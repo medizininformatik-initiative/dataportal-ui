@@ -1,0 +1,35 @@
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
+import { SelectedListItem } from 'src/app/shared/components/selected-items-list/selected-items-list.component';
+
+@Component({
+  selector: 'num-selected-reference-list',
+  templateUrl: './selected-reference-list.component.html',
+  styleUrls: ['./selected-reference-list.component.scss'],
+})
+export class SelectedReferenceListComponent implements OnInit, OnChanges {
+  @Input()
+  selectedReferences: ReferenceCriterion[] = [];
+
+  @Output()
+  changedSelectedReferences = new EventEmitter<ReferenceCriterion[]>();
+
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  ngOnChanges(): void {}
+
+  get listItems(): SelectedListItem[] {
+    return this.selectedReferences.map((ref) => ({
+      display: ref.getDisplay(),
+      code: ref.getTermCodes()[0].getCode(),
+    }));
+  }
+
+  public removeAtIndex(index: number): void {
+    const updatedReferences = this.selectedReferences.filter((_, i) => i !== index);
+    this.changedSelectedReferences.emit(updatedReferences);
+  }
+}
