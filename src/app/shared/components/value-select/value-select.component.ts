@@ -16,6 +16,8 @@ export class ValueSelectComponent {
   selectedValue: EventEmitter<number> = new EventEmitter<number>();
 
   public emitValue() {
-    this.selectedValue.emit(this.value);
+    setTimeout(() => {
+      this.selectedValue.emit(this.value);
+    }, 1000);
   }
 }

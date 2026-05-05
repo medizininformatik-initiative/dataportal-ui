@@ -109,12 +109,12 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
   }
 
   private buildTemplates(): void {
+    this.setTermCodesTemplate();
     this.setConceptAttributeFilterTemplate();
     this.setConceptValueFilterTemplate();
     this.setQuantityAttributeFilterTemplate();
     this.setQuantityValueFilterTemplate();
     this.setReferenceTemplate();
-    this.setTermCodesTemplate();
     this.setTimeRestrictionTemplate();
     console.log('Templates set in criterion component', this.templates);
   }
@@ -153,7 +153,8 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
 
   private setConceptValueFilterTemplate(): void {
     if (this.conceptValueFilter.length > 0) {
-      this.templates.push({ template: this.conceptValueFiltersTemplate, name: 'CONCEPT' });
+      const display = this.conceptValueFilter[0].getDisplay();
+      this.templates.push({ template: this.conceptValueFiltersTemplate, display });
     }
   }
 

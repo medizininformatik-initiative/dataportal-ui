@@ -55,8 +55,6 @@ export class QuantityRangeComponent implements OnChanges {
         this.quantityRangeInstance.emit(quantityRangeFilter);
         this.displayWarning = false;
       } else {
-        const emptyFilter = this.quantityFilterFactoryService.createEmptyQuantityFilter();
-        this.quantityRangeInstance.emit(emptyFilter);
         this.displayWarning = true;
       }
     }

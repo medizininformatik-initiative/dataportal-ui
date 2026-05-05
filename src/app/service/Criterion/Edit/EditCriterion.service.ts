@@ -14,6 +14,7 @@ import { Observable, tap } from 'rxjs';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { CriterionValidationService } from '../Validation/CriterionValidation.deprecated.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,8 @@ export class EditCriterionService {
     private criterionProvider: CriterionProviderService,
     private referenceFilterService: EditReferenceFilterService,
     private valueFilterService: EditValueFilterService,
-    private attributeFilterService: EditAttributeFilterService
+    private attributeFilterService: EditAttributeFilterService,
+    private criterionValidationService: CriterionValidationService
   ) {}
 
   public initialize(criterion: AbstractCriterion): void {
@@ -133,6 +135,7 @@ export class EditCriterionService {
 
   private emit(): void {
     const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(this.workingCriterion, true);
+    copy.setIsRequiredFilterSet(this.criterionValidationService.setIsFilterRequired(copy));
     copy.setId(this.workingCriterion.getId());
     this.workingCriterion = copy as Criterion;
     this.criterionProvider.setOne(this.workingCriterion);
