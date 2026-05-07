@@ -20,7 +20,6 @@ import { TypeGuard } from '../../TypeGuard/TypeGuard';
 export class ReadDataQueryService {
   constructor(
     private dataQueryApiService: DataQueryApiService,
-    private crtdl2UIModelService: CRTDL2UIModelService,
     private validationService: CRTDLValidationService,
     private checkAndUpgradeCCDLService: CheckAndUpgradeCCDLService,
     private crtdlProcessingPipelineService: CrtdlProcessingPipelineService
@@ -52,10 +51,9 @@ export class ReadDataQueryService {
   }
 
   /**
-   * @todo //call check and upgrade
-   */
-  /**
-   * @todo //call check and upgrade
+   * Reads a saved data query by its ID, checks and upgrades CCDL if necessary, processes CRTDL data, and returns the result as an observable.
+   * @param id - The ID of the saved data query to read
+   * @returns Observable that emits the loaded saved query with processed CRTDL data
    */
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
@@ -73,6 +71,11 @@ export class ReadDataQueryService {
     );
   }
 
+  /**
+   * Gets the validation report for a saved data query by its ID.
+   * @param id - The ID of the saved data query to validate
+   * @returns Observable that emits the validation result
+   */
   public getValidationReportForDataquery(id: number): Observable<boolean> {
     return this.dataQueryApiService
       .getDataQueryById(id)
