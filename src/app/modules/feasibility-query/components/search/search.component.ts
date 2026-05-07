@@ -28,6 +28,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service';
+import { filter } from 'lodash';
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -189,15 +191,24 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   public getElasticSearchFilter(): void {
-    this.searchFilters$ = this.searchFilterProvider
-      .getCriteriaSearchFilters()
-      .pipe(
-        map((searchFilters: CriteriaSearchFilter[]) =>
-          searchFilters.map((searchFilter: CriteriaSearchFilter) =>
-            CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
-          )
+    this.searchFilters$ = this.searchFilterProvider.getCriteriaSearchFilters().pipe(
+      map((searchFilters: CriteriaSearchFilter[]) =>
+        searchFilters.map((searchFilter: CriteriaSearchFilter) =>
+          CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
         )
-      );
+      ),
+      map((searchFilters: SearchFilter[]) => {
+        const filterOrder: Record<string, number> = {
+          [ElasticSearchFilterTypes.KDS_MODULE]: 0,
+          [ElasticSearchFilterTypes.CONTEXT]: 1,
+          [ElasticSearchFilterTypes.TERMINOLOGY]: 2,
+        };
+        return searchFilters.sort(
+          (a, b) =>
+            filterOrder[a.filterType.toLowerCase()] - filterOrder[b.filterType.toLowerCase()]
+        );
+      })
+    );
   }
 
   /**
