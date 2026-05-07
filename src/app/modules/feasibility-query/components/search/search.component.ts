@@ -28,7 +28,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 
 @Component({
   selector: 'num-feasibility-query-search',

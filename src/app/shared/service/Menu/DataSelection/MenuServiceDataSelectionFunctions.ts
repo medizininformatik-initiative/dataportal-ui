@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service';
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { RemoveReferenceService } from '../../../../service/RemoveReference.service';
-import { StagedProfileService } from '../../../../service/StagedDataSelectionProfile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +15,7 @@ export class MenuServiceDataSelectionFunctions {
     private dataSelectionProvider: DataSelectionProviderService,
     private activeDataSelectionService: ActiveDataSelectionService,
     private navigationHelperService: NavigationHelperService,
-    private removeReferenceService: RemoveReferenceService,
-    private stagedProfileService: StagedProfileService
+    private removeReferenceService: RemoveReferenceService
   ) {}
 
   public redirectToDataSelectionEditPage(id: string) {
