@@ -6,11 +6,7 @@ export class GitInformation {
   private buildInformation: GitBuildInformation;
   private commitInformation: GitCommitInformation;
 
-  constructor(
-    buildInformation: GitBuildInformation,
-    branch: string,
-    commitInformation: GitCommitInformation
-  ) {
+  constructor(buildInformation: GitBuildInformation, commitInformation: GitCommitInformation) {
     this.buildInformation = buildInformation;
     this.commitInformation = commitInformation;
   }
@@ -34,7 +30,6 @@ export class GitInformation {
   public static fromJson(json: GitInformationData): GitInformation {
     return new GitInformation(
       GitBuildInformation.fromJson(json.build),
-      json.branch,
       GitCommitInformation.fromJson(json.commit)
     );
   }
