@@ -3,44 +3,16 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
 import { PossibleProfileReferenceData } from '../model/Interface/PossibleProfileReferenceData';
 
-interface ElementUrlEntry {
-  elementId: string
-  url: string
-}
-
 @Injectable({
   providedIn: 'root',
 })
 export class ElementIdMapService {
-  /**
-   * Creates a map of element IDs to their associated URLs for a given profile.
-   * @param profile - The profile to process.
-   * @returns A map of element IDs to arrays of URLs.
-   */
-  public createElementIdMap(profile: DataSelectionProfile): Map<string, string[]> {
-    const elementIdMap = new Map<string, string[]>();
-    const fields = profile.getProfileFields();
-
-    fields.getReferenceFields().forEach((field: ReferenceField) => {
-      const elementId = field.getElementId();
-      elementIdMap.set(elementId, []);
-    });
-
-    return elementIdMap;
+  public createUrlMap(profile: DataSelectionProfile): Map<string, string[]> {
+    return this.buildElementIdMap(profile, () => [] as string[]);
   }
 
-  public createElementIdMapForPossibleReferences(
-    profile: DataSelectionProfile
-  ): Map<string, Set<string>> {
-    const elementIdMap = new Map<string, Set<string>>();
-    const fields = profile.getProfileFields();
-
-    fields.getReferenceFields().forEach((field: ReferenceField) => {
-      const elementId = field.getElementId();
-      elementIdMap.set(elementId, new Set<string>());
-    });
-
-    return elementIdMap;
+  public createUrlSetMap(profile: DataSelectionProfile): Map<string, Set<string>> {
+    return this.buildElementIdMap(profile, () => new Set<string>());
   }
 
   /**
@@ -53,36 +25,29 @@ export class ElementIdMapService {
     currentMap: Map<string, Map<string, string[]>>,
     profileId: string
   ): Map<string, string[]> {
-    if (!currentMap.has(profileId)) {
-      currentMap.set(profileId, new Map<string, string[]>());
-    }
-    return currentMap.get(profileId);
+    const existing = currentMap.get(profileId) ?? new Map<string, string[]>();
+    currentMap.set(profileId, existing);
+    return existing;
   }
 
-  /**
-   * Retrieves or creates a field URLs array for a given element ID.
-   * @param profileMap - The profile map containing the reference field.
-   * @param elementId - The ID of the reference field.
-   * @returns The array of URLs for the given element ID.
-   */
   public getOrCreateFieldUrls(profileMap: Map<string, string[]>, elementId: string): string[] {
-    if (!profileMap.has(elementId)) {
-      profileMap.set(elementId, []);
-    }
-    return profileMap.get(elementId);
+    const existing = profileMap.get(elementId) ?? [];
+    profileMap.set(elementId, existing);
+    return existing;
   }
 
-  public createElementIdMapForPossibleReferencesNew(
+  public createReferenceDataMap(
     profile: DataSelectionProfile
   ): Map<string, PossibleProfileReferenceData[]> {
-    const elementIdMap = new Map<string, PossibleProfileReferenceData[]>();
-    const fields = profile.getProfileFields();
+    return this.buildElementIdMap(profile, () => [] as PossibleProfileReferenceData[]);
+  }
 
-    fields.getReferenceFields().forEach((field: ReferenceField) => {
-      const elementId = field.getElementId();
-      elementIdMap.set(elementId, []);
-    });
-
-    return elementIdMap;
+  private buildElementIdMap<T>(profile: DataSelectionProfile, factory: () => T): Map<string, T> {
+    const map = new Map<string, T>();
+    profile
+      .getProfileFields()
+      .getReferenceFields()
+      .forEach((field: ReferenceField) => map.set(field.getElementId(), factory()));
+    return map;
   }
 }

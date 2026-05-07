@@ -62,7 +62,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   }
 
   private loadPossibleReferences(): void {
-    this.possibleReferences$ = this.possibleReferencesService.getPossibleReferencesMap().pipe(
+    this.possibleReferences$ = this.possibleReferencesService.getReferencesMap().pipe(
       filter((innerMap) => innerMap.has(this.profileId)),
       map((innerMap) => innerMap.get(this.profileId).get(this.elementId))
     );
@@ -76,11 +76,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
         take(1),
         filter((urls) => urls.length > 0),
         switchMap((urls: string[]) =>
-          this.possibleReferencesService.fetchProfilesAndMapToPossibleReferences(
-            urls,
-            this.elementId,
-            this.profileId
-          )
+          this.possibleReferencesService.loadAndMapProfiles(urls, this.elementId, this.profileId)
         )
       )
       .subscribe((possibleProfileReferenceData: PossibleProfileReferenceData[]) =>
@@ -99,7 +95,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
 
   public updateSelectedPossibleReferences(test: PossibleProfileReferenceData): void {
     this.possibleReferencesService
-      .getPossibleReferencesMap()
+      .getReferencesMap()
       .pipe(
         take(1),
         filter((innerMap) => innerMap.has(this.profileId)),
@@ -116,7 +112,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((possibleReferences) => {
-        this.possibleReferencesService.setPossibleReferencesMapElement(
+        this.possibleReferencesService.setReferencesMapElement(
           this.profileId,
           this.elementId,
           possibleReferences

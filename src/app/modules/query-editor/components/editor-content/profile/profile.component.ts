@@ -81,7 +81,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy, OnCha
 
   ngOnDestroy(): void {
     this.possibleReferencesServiceSubscription?.unsubscribe();
-    this.possibleReferencesService.clearPossibleReferencesMap();
+    this.possibleReferencesService.clearReferencesMap();
   }
 
   /**
