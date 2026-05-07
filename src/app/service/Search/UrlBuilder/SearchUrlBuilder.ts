@@ -66,6 +66,11 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
     return this;
   }
 
+  public withTargetFilter(targetFilter: string): this {
+    this.queryParams.set('targetFilter', targetFilter);
+    return this;
+  }
+
   /**
    * The page size is limited to 20 to prevent performance issues with large datasets.
    * @param offset
@@ -85,7 +90,7 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
   }
 
   public buildUrl(): string {
-    const queryParamsArray = [];
+    const queryParamsArray: string[] = [];
     this.queryParams.forEach((value, key) => {
       queryParamsArray.push(`${key}=${value}`);
     });
