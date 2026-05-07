@@ -1,8 +1,9 @@
 <div class="filter-container">
   <num-search-filter
-    *ngFor="let searchFilter of searchFilters$ | async"
+    *ngFor="let searchFilter of searchFilters$ | async; trackBy: trackByFilterType"
     [filter]="searchFilter"
     (selectedFilterChanged)="filterChanged.emit($event)"
+    (isOpen)="isOpen.emit($event)"
   ></num-search-filter>
   <span
     class="info-icon"
