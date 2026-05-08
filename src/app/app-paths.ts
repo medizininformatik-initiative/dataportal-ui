@@ -8,15 +8,16 @@ export const BasePaths = {
 };
 
 export const PathSegments = {
-  search: 'search',
-  editor: 'overview',
-  result: 'result',
-  loadQuery: 'load-query',
-  cohortDefinition: 'cohort-definition',
-  dataSelection: 'data-selection',
-  criterion: 'criterion',
   bulkSearch: 'bulk-search',
+  cohortDefinition: 'cohort-definition',
+  criterion: 'criterion',
+  dataSelection: 'data-selection',
+  editor: 'overview',
   feature: 'feature',
+  loadQuery: 'load-query',
+  reference: 'reference',
+  result: 'result',
+  search: 'search',
 };
 
 export const UrlPaths = {
@@ -37,5 +38,6 @@ export const UrlPaths = {
   queryEditor: {
     criteria: `${BasePaths.queryEditor}/${PathSegments.criterion}`,
     feature: `${BasePaths.queryEditor}/${PathSegments.feature}`,
+    reference: `${BasePaths.queryEditor}/${PathSegments.reference}`,
   },
 };

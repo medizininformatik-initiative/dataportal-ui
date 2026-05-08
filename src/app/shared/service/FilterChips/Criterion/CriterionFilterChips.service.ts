@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { QuantityFilterChipService } from './QuantityFilterChipService.service';
 import { TerminologyCodeChipService } from './TerminologyCodeChip.service';
 import { TimeRestrictionChipService } from './TimeRestrictionChip.service';
+import { ReferenceFilterChipService } from './ReferenceFilterChip.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,29 +22,33 @@ export class CriterionFilterChipService {
     private conceptFilterChipService: ConceptFilterChipService,
     private quantityFilterChipService: QuantityFilterChipService,
     private timeRestrictionChipService: TimeRestrictionChipService,
-    private terminologyCodeChipService: TerminologyCodeChipService
+    private terminologyCodeChipService: TerminologyCodeChipService,
+    private referenceFilterChipService: ReferenceFilterChipService
   ) {}
 
   public generateFilterChipsFromCriterion(
-    criterion: AbstractCriterion
+    criterion: AbstractCriterion,
+    includeReferenceChips = false
   ): Observable<FilterChipData[]> {
     this.filterChipsSubject.next([]);
 
     const conceptChips = this.generateConceptChips(criterion);
     const quantityChips = this.generateQuantityChips(criterion);
     const termcodeChips =
-      criterion.getTermCodes().length > 1 ? [this.generateTermcodeChips(criterion)] : [];
+      criterion.getTermCodes().length > 1 ? this.generateTermcodeChips(criterion) : [];
     const timeRestrictionChips = this.timeRestrictionChipService.generateTimeRestrictionChips(
       criterion.getTimeRestriction()
     );
     const allChips = [...conceptChips, ...quantityChips, ...termcodeChips, ...timeRestrictionChips];
+    if (includeReferenceChips) {
+      allChips.push(...this.referenceFilterChipService.generateReferenceChips(criterion));
+    }
     const filteredChips = allChips.filter((chip) => chip !== undefined);
     this.filterChipsSubject.next(filteredChips);
-
     return this.filterChipsSubject.asObservable();
   }
 
-  private generateConceptChips(criterion: AbstractCriterion): FilterChipData[] {
+  public generateConceptChips(criterion: AbstractCriterion): FilterChipData[] {
     const attributeFilters = criterion.getAttributeFilters();
     const valueFilters = criterion.getValueFilters();
 
@@ -55,7 +60,7 @@ export class CriterionFilterChipService {
     return [...attributeChips, ...valueChips];
   }
 
-  private generateQuantityChips(criterion: AbstractCriterion): FilterChipData[] {
+  public generateQuantityChips(criterion: AbstractCriterion): FilterChipData[] {
     const attributeFilters = criterion.getAttributeFilters();
     const valueFilters = criterion.getValueFilters();
     if (attributeFilters.length > 0) {
@@ -73,7 +78,21 @@ export class CriterionFilterChipService {
     }
   }
 
-  private generateTermcodeChips(criterion: Criterion): FilterChipData {
-    return this.terminologyCodeChipService.generateTermcodeChipsFromCriterion(criterion);
+  public generateTermcodeChips(criterion: Criterion): FilterChipData[] {
+    const termCodeLength = criterion.getTermCodes().length;
+    if (termCodeLength <= 1) {
+      return [];
+    }
+    return [this.terminologyCodeChipService.generateTermcodeChipsFromCriterion(criterion)];
+  }
+
+  public buildTimeRestrictionChips(criterion: AbstractCriterion): FilterChipData[] {
+    return this.timeRestrictionChipService.generateTimeRestrictionChips(
+      criterion.getTimeRestriction()
+    );
+  }
+
+  public createReferenceChips(criterion: AbstractCriterion): FilterChipData[] {
+    return this.referenceFilterChipService.generateReferenceChips(criterion);
   }
 }

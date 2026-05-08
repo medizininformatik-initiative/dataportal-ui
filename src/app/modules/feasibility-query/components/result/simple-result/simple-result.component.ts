@@ -27,6 +27,10 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   pollingTime: number;
   patientCountArray: string[] = [];
 
+  public isQueryExpired = false;
+  private timeoutId: ReturnType<typeof setTimeout> | null = null;
+  private expTime: number;
+
   queryResultRateLimit$: Observable<QueryResultRateLimit>;
   loadedResult = false;
 
@@ -35,6 +39,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   doSendSusbscription: Subscription;
 
   modalSubscription: Subscription;
+
+  totalNumberOfPatients: number;
 
   @Output()
   resultLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -76,6 +82,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.initializeState();
     this.doSendSusbscription?.unsubscribe();
 
+    this.startExpirationTimer(90 * 1000);
     const obs = this.feasibilityQueryResultService.doSendQueryRequest();
 
     this.doSendSusbscription = this.createDoSendSubscription(obs);
@@ -158,9 +165,11 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private initializeState(): void {
     this.loadedResult = false;
     this.showSpinner = true;
+    this.expTime = this.appSettingsProviderService.getQueryResultExpiry();
   }
 
   private handleResult(result: QueryResult): void {
+    this.totalNumberOfPatients = result.getTotalNumberOfPatients();
     this.setPatientCount(result.getTotalNumberOfPatients());
     this.resultLoaded.emit(this.loadedResult);
   }
@@ -180,5 +189,11 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private finalize(): void {
     this.loadedResult = true;
     this.showSpinner = false;
+  }
+
+  private startExpirationTimer(durationMs: number) {
+    this.timeoutId = setTimeout(() => {
+      this.isQueryExpired = true;
+    }, durationMs);
   }
 }

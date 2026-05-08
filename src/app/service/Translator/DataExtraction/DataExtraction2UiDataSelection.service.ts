@@ -14,9 +14,9 @@ import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/
 import { ReferenceFieldTranslatorService } from './ReferenceFieldTranslator.service';
 import { TypeGuard } from '../../TypeGuard/TypeGuard';
 import { v4 as uuidv4 } from 'uuid';
-import { LoadDataSelectionProfilesService } from '../../DataSelection/LoadDataSelectionProfiles.service';
 import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service';
 import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service';
+import { LoadDataSelectionProfilesService } from '../../DataSelection/LoadDataSelectionProfiles.service';
 
 @Injectable({
   providedIn: 'root',

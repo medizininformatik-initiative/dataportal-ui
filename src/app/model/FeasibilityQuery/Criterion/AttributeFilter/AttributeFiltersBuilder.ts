@@ -136,6 +136,10 @@ export class AttributeFiltersBuilder {
     allowedReferenceUri: string[],
     selectedReference: ReferenceCriterion[] = []
   ): ReferenceFilter {
-    return new ReferenceFilter(id, allowedReferenceUri, selectedReference);
+    return new ReferenceFilter(
+      id,
+      allowedReferenceUri,
+      selectedReference.map((r) => r.getId())
+    );
   }
 }

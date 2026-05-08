@@ -1,0 +1,60 @@
+<div class="container">
+  <num-criterion-header [criterion]="referenceCriterion" class="header-container">
+  </num-criterion-header>
+  <num-filter-tabs
+    class="filter-tabs-container"
+    *ngIf="templates.length > 0"
+    [content]="templates"
+  ></num-filter-tabs>
+
+  <ng-template #timeRestriction>
+    <num-edit-time-restriction
+      [timeRestriction]="referenceCriterion.getTimeRestriction()"
+      (timeRestrictionChanged)="updateTimeRestriction($event)"
+    ></num-edit-time-restriction>
+  </ng-template>
+
+  <ng-template #conceptAttributeFilterTemplate let-index>
+    <div class="width-100">
+      <num-concept
+        [conceptFilter]="conceptAttributeFilter[index].getConcept()"
+        (changedConceptFilter)="updateConceptAttributeFilter($event, conceptAttributeFilter[index])"
+      >
+      </num-concept>
+    </div>
+  </ng-template>
+
+  <ng-template #termCodes>
+    <num-edit-termcode
+      class="height-100"
+      [termCodes]="referenceCriterion.getTermCodes()"
+      [context]="referenceCriterion.getContext()"
+      (changedTermCodes)="updateTermCodes($event)"
+    >
+    </num-edit-termcode>
+  </ng-template>
+
+  <ng-template #quantityAttributeFilterTemplate>
+    <div *ngFor="let quantityFilter of quantityAttributeFilter" class="background">
+      <num-quantity
+        *ngIf="quantityFilter"
+        (quantityFilterChange)="updateQuantityAttributeFilter($event, quantityFilter)"
+        [quantityFilter]="quantityFilter.getQuantity()"
+        [display]="quantityFilter.getDisplay()"
+        [attr.data-cy]="quantityFilter.getDisplay() | displayTranslation"
+      ></num-quantity>
+    </div>
+  </ng-template>
+
+  <ng-template #quantityValueFilterTemplate>
+    <div *ngFor="let quantityFilter of quantityValueFilter" class="background">
+      <num-quantity
+        *ngIf="quantityFilter"
+        (quantityFilterChange)="updateQuantityValueFilter($event)"
+        [quantityFilter]="quantityFilter.getQuantity()"
+        [display]="quantityFilter.getDisplay()"
+        [attr.data-cy]="quantityFilter.getDisplay() | displayTranslation"
+      ></num-quantity>
+    </div>
+  </ng-template>
+</div>

@@ -4,6 +4,7 @@ import { HashService } from '../Hash.service';
 import { Injectable } from '@angular/core';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { v4 as uuidv4 } from 'uuid';
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class CriterionMetadataService {
     display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
-    uniqueID: string
+    id: string
     termCodes: Array<TerminologyCode>
   } {
     const context = TerminologyCode.fromJson(criteriaProfileData.context);
@@ -40,7 +41,7 @@ export class CriterionMetadataService {
       display,
       isInvalid: false,
       isRequiredFilterSet: isFilterRequired,
-      uniqueID: uuidv4(),
+      id: uuidv4(),
       termCodes,
     };
   }
@@ -62,7 +63,7 @@ export class CriterionMetadataService {
     display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
-    uniqueID: string
+    id: string
     termCodes: Array<TerminologyCode>
   } {
     const context = TerminologyCode.fromJson(criteriaProfileData.context);
@@ -77,8 +78,21 @@ export class CriterionMetadataService {
       display,
       isInvalid: false,
       isRequiredFilterSet: isFilterRequired,
-      uniqueID: criterionId,
+      id: criterionId,
       termCodes,
+    };
+  }
+
+  public fromCriterion(criterion: Criterion) {
+    return {
+      isReference: false,
+      context: criterion.getContext(),
+      criterionHash: criterion.getCriterionHash(),
+      display: criterion.getDisplay(),
+      isInvalid: false,
+      isRequiredFilterSet: criterion.getIsRequiredFilterSet(),
+      id: criterion.getId(),
+      termCodes: criterion.getTermCodes(),
     };
   }
 }

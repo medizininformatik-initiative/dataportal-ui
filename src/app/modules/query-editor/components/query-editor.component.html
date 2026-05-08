@@ -1,9 +1,19 @@
 <div class="container">
   <div class="background margin-bottom-3">
     <num-editor-content
-      [criterion]="criterion$ | async"
-      (criterionChanged)="updateCriterion($event)"
+      *ngIf="criterion$ | async as criterion"
+      [criterion]="criterion"
+    ></num-editor-content>
+
+    <num-editor-content
+      *ngIf="dataSelectionProfile$ | async as dataSelectionProfile"
+      [dataSelectionProfile]="dataSelectionProfile"
+    ></num-editor-content>
+    <num-editor-content
+      *ngIf="referenceCriterion$ | async as referenceCriterion"
+      [referenceCriterion]="referenceCriterion"
     ></num-editor-content>
   </div>
-  <num-edit-action-bar (cancel)="onCancel()"> </num-edit-action-bar>
+
+  <num-edit-action-bar (cancel)="onCancel()"></num-edit-action-bar>
 </div>

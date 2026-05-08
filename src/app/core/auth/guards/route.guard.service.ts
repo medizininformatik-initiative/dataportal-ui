@@ -3,14 +3,16 @@ import { CriterionProviderService } from 'src/app/service/Provider/CriterionProv
 import { Injectable } from '@angular/core';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { Observable, of } from 'rxjs';
-import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
 import { PathSegments } from 'src/app/app-paths';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 
 @Injectable({ providedIn: 'root' })
 export class RouteGuard implements CanActivate {
   constructor(
     private criterionProviderService: CriterionProviderService,
     private navigationHelperService: NavigationHelperService,
+    private referenceCriterionProviderService: ReferenceCriterionProviderService,
     private profileService: ProfileProviderService,
     private router: Router
   ) {}
@@ -22,26 +24,53 @@ export class RouteGuard implements CanActivate {
       return this.handleProfile(id);
     } else if (url === PathSegments.criterion) {
       return this.handleCriterion(id);
+    } else if (url === PathSegments.reference) {
+      return this.handleReferenceCriterion(id);
+    } else {
+      this.router.navigate(['']);
+      return of(false);
     }
   }
 
   private handleProfile(id: string) {
-    const canRoute = this.profileService.getOne(id) ? true : false;
-    if (!canRoute) {
+    try {
+      const canRoute = this.profileService.getOne(id) ? true : false;
+      if (!canRoute) {
+        this.navigationHelperService.navigateToDataSelectionSearch();
+        return of(false);
+      }
+      return of(true);
+    } catch {
       this.navigationHelperService.navigateToDataSelectionSearch();
       return of(false);
-    } else {
-      return of(true);
     }
   }
 
   private handleCriterion(id: string) {
-    const canRoute = this.criterionProviderService.getOne(id) ? true : false;
-    if (!canRoute) {
+    try {
+      const canRoute = this.criterionProviderService.getOne(id) ? true : false;
+      if (!canRoute) {
+        this.navigationHelperService.navigateToFeasibilityQuerySearch();
+        return of(false);
+      }
+      return of(true);
+    } catch {
       this.navigationHelperService.navigateToFeasibilityQuerySearch();
       return of(false);
-    } else {
+    }
+  }
+
+  private handleReferenceCriterion(id: string) {
+    try {
+      const canRoute = this.referenceCriterionProviderService.getOne(id) ? true : false;
+      if (!canRoute) {
+        this.navigationHelperService.navigateToFeasibilityQuerySearch();
+        return of(false);
+      }
       return of(true);
+    } catch {
+      this.navigationHelperService.navigateToFeasibilityQuerySearch();
+      return of(false);
     }
   }
 }

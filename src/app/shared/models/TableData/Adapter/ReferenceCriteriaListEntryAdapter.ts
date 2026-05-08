@@ -1,15 +1,16 @@
 import { AbstractTableAdapter } from './AbstractTableAdapter';
-import { CheckboxCellData } from '../cells/CheckboxCellData';
 import { ReferenceCriteriaListEntry } from '../../../../model/Search/ListEntries/ReferenceCriteriaListEntry';
 import { TableCellBuilder } from '../cells/TableCellBuilder';
 import { TableCellType } from '../cells/TableCellType';
 import { TableHeaderData } from '../TableHeaderData';
 import { TableRowData } from '../TableRowData';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
+import { IconCellData } from '../cells/IconCellData';
+import { DisplayCellData } from '../cells/DisplayCellData';
 
 export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<ReferenceCriteriaListEntry> {
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['NAME', 'TERMINOLOGY_CODE'] };
+    return { headers: ['EMPTY', 'NAME', 'TERMINOLOGY_CODE'] };
   }
 
   protected buildRows(listEntries: ReferenceCriteriaListEntry[]): TableRowData[] {
@@ -26,13 +27,20 @@ export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<Refe
   }
 
   private buildCells(listEntry: ReferenceCriteriaListEntry): TableCellType[] {
-    return TableCellBuilder.row(this.checkBoxCell(listEntry), this.terminologyCell(listEntry));
+    return TableCellBuilder.row(
+      this.iconCell(),
+      this.displayCell(listEntry),
+      this.terminologyCell(listEntry)
+    );
   }
 
-  private checkBoxCell(listEntry: ReferenceCriteriaListEntry): CheckboxCellData {
+  private iconCell(): IconCellData {
+    return TableCellBuilder.withIcon('plus');
+  }
+
+  private displayCell(listEntry: ReferenceCriteriaListEntry): DisplayCellData {
     const display = listEntry.getDisplay();
-    const options = { isDisabled: true };
-    return TableCellBuilder.withCheckbox(display, options);
+    return TableCellBuilder.withDisplay(display);
   }
 
   private terminologyCell(listEntry: ReferenceCriteriaListEntry): TableCellType {

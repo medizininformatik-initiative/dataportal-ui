@@ -23,7 +23,7 @@ export class CriterionBuilder {
   private position?: CritGroupPosition;
   private termCodes?: Array<TerminologyCode>;
   private timeRestriction?: AbstractTimeRestriction;
-  private uniqueID?: string;
+  private id?: string;
   private valueFilters?: Array<ValueFilter> = [];
 
   constructor(
@@ -34,7 +34,7 @@ export class CriterionBuilder {
       display: Display
       isInvalid: boolean
       isRequiredFilterSet: boolean
-      uniqueID: string
+      id: string
       termCodes: Array<TerminologyCode>
     }
   ) {
@@ -43,7 +43,7 @@ export class CriterionBuilder {
     this.display = mandatoryFields.display;
     this.isInvalid = mandatoryFields.isInvalid;
     this.isRequiredFilterSet = mandatoryFields.isRequiredFilterSet;
-    this.uniqueID = mandatoryFields.uniqueID;
+    this.id = mandatoryFields.id;
     this.termCodes = mandatoryFields.termCodes;
   }
 
@@ -105,8 +105,8 @@ export class CriterionBuilder {
     return this;
   }
 
-  withUniqueID(uniqueID: string): CriterionBuilder {
-    this.uniqueID = uniqueID;
+  withId(id: string): CriterionBuilder {
+    this.id = id;
     return this;
   }
 
@@ -152,7 +152,7 @@ export class CriterionBuilder {
       this.position,
       this.termCodes,
       this.timeRestriction,
-      this.uniqueID,
+      this.id,
       this.valueFilters
     );
   }
@@ -175,7 +175,7 @@ export class CriterionBuilder {
       this.position,
       this.termCodes,
       this.timeRestriction,
-      this.uniqueID,
+      this.id,
       this.valueFilters
     );
   }

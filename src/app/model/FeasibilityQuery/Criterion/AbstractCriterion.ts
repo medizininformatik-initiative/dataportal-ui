@@ -4,6 +4,8 @@ import { CritGroupPosition } from '../CritGroupPosition';
 import { Display } from '../../DataSelection/Profile/Display';
 import { TerminologyCode } from '../../Terminology/TerminologyCode';
 import { ValueFilter } from './AttributeFilter/ValueFilter';
+import { FilterTypes } from '../../Utilities/FilterTypes';
+import { AbstractQuantityFilter } from './AttributeFilter/Quantity/AbstractQuantityFilter';
 
 /**
  * Abstract class representing a criterion with various filters and properties.
@@ -205,7 +207,7 @@ export abstract class AbstractCriterion {
    *
    * @returns Array of TerminologyCode objects.
    */
-  public getTermCodes(): Array<TerminologyCode> | undefined {
+  public getTermCodes(): Array<TerminologyCode> {
     return this.termCodes;
   }
 
@@ -278,5 +280,63 @@ export abstract class AbstractCriterion {
 
   public getIsRequiredFilterSet(): boolean {
     return this.isRequiredFilterSet;
+  }
+
+  /**
+   * Convenient method to get concept attribute filters.
+   * @returns Array of AttributeFilter containing instances of type CONCEPT.
+   */
+  public getConceptAttributeFilters(): AttributeFilter[] {
+    return this.getAttributeFiltersByType(FilterTypes.CONCEPT);
+  }
+
+  /**
+   * Convenient method to get reference attribute filters.
+   * @returns Array of AttributeFilter containing instances of type REFERENCE.
+   */
+  public getReferenceAttributeFilters(): AttributeFilter[] {
+    return this.getAttributeFiltersByType(FilterTypes.REFERENCE);
+  }
+
+  /**
+   * Convenient method to get quantity attribute filters.
+   * @returns Array of AttributeFilter containing instances of type QUANTITY.
+   */
+  public getQuantityAttributeFilters(): AttributeFilter[] {
+    return this.getAttributeFiltersByType(FilterTypes.QUANTITY);
+  }
+
+  /**
+   * Convenient method to get quantity value filters.
+   * @returns Array of ValueFilter containing instances of type QUANTITY.
+   */
+  public getQuantityValueFilters(): ValueFilter[] {
+    return this.getValueFiltersByType(FilterTypes.QUANTITY);
+  }
+
+  /**
+   * Convenient method to get concept value filters.
+   * @returns Array of ValueFilter containing instances of type CONCEPT.
+   */
+  public getConceptValueFilters(): ValueFilter[] {
+    return this.getValueFiltersByType(FilterTypes.CONCEPT);
+  }
+
+  /**
+   * Helper method to filter attribute filters by type.
+   * @param type
+   * @returns Array of AttributeFilter containing instances of the specified type.
+   */
+  protected getAttributeFiltersByType(type: FilterTypes): AttributeFilter[] {
+    return this.getAttributeFilters().filter((f) => f.getFilterType() === type);
+  }
+
+  /**
+   * Helper method to filter value filters by type.
+   * @param type
+   * @returns Array of ValueFilter containing instances of the specified type.
+   */
+  protected getValueFiltersByType(type: FilterTypes): ValueFilter[] {
+    return this.getValueFilters().filter((f) => f.getFilterType() === type);
   }
 }

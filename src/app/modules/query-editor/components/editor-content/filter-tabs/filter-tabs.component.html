@@ -6,14 +6,21 @@
       [class.active]="selectedIndex === i"
       (click)="selectedIndex = i"
     >
-      {{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.' + item.name | translate }}
+      <ng-container *ngIf="item.display; else defaultLabel">
+        {{ item.display | displayTranslation }}
+      </ng-container>
+
+      <ng-template #defaultLabel>
+        {{ 'EDITOR.CONTENT.TAB_LABEL.' + item.name | translate }}
+      </ng-template>
     </div>
   </div>
 
   <div class="tab-content">
     <ng-container *ngFor="let item of content; let i = index">
       <ng-container *ngIf="selectedIndex === i">
-        <ng-container [ngTemplateOutlet]="item.template"></ng-container>
+        <ng-container [ngTemplateOutlet]="item.template" [ngTemplateOutletContext]="item.context">
+        </ng-container>
       </ng-container>
     </ng-container>
   </div>

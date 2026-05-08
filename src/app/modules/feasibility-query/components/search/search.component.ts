@@ -1,4 +1,4 @@
-import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData';
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
 import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter';
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
@@ -118,7 +118,9 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
       .pipe(
         map((selected) => {
           this.adaptedData.body.rows.forEach((row) => {
-            const checkboxCell = row.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+            const checkboxCell = row.cells.find(
+              (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+            );
             if (checkboxCell) {
               checkboxCell.isSelected = selected.some((item) => item.getId() === row.id);
             }
@@ -145,7 +147,9 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   private uncheckAllRows(): void {
     this.adaptedData?.body.rows.forEach((item) => {
-      const checkboxCell = item.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+      const checkboxCell = item.cells.find(
+        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+      );
       if (checkboxCell) {
         checkboxCell.isSelected = false;
       }

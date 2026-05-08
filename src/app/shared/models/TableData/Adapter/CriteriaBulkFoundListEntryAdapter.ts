@@ -36,7 +36,7 @@ export class CriteriaBulkFoundListEntryAdapter extends AbstractTableAdapter<Crit
   private displayCell(entry: CriteriaBulkEntry) {
     const display = entry.getDisplay();
     const options = { isSelected: true, isDisabled: true };
-    return TableCellBuilder.withCheckbox(display, options);
+    return TableCellBuilder.withCheckboxText(display, options);
   }
 
   private terminologyCell(entry: CriteriaBulkEntry) {

@@ -17,19 +17,16 @@
       {{ 'INFORMATION.CONCEPTS.DESCRIPTION' | translate }}
     </num-information-section>
   </mat-tab>
-  <mat-tab
-    *ngIf="tokenFilter"
-    label="{{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.SINGLE_SEARCH' | translate }}"
-  >
-    <num-shared-concept-filter-copy
+  <mat-tab *ngIf="tokenFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
+    <num-concept-filter
       [conceptFilterId]="tokenFilter.getId()"
       [valueSetUrl]="tokenFilter.getValueSetUrls()"
       [preSelectedConcepts]="tokenFilter.getSelectedTokens()"
       (changedSelectedConcepts)="updateSelectedConcepts($event)"
     >
-    </num-shared-concept-filter-copy>
+    </num-concept-filter>
   </mat-tab>
-  <mat-tab *ngIf="tokenFilter" label="{{ 'EDITOR.CONTENT.PROFILE.TAB_LABEL.BULK' | translate }}">
+  <mat-tab *ngIf="tokenFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
     <num-concept-bulk-search
       [valueSetUrl]="tokenFilter.getValueSetUrls()"
       [preSelectedConcepts]="tokenFilter.getSelectedTokens()"
@@ -39,8 +36,7 @@
   </mat-tab>
   <mat-tab
     [label]="
-      'EDITOR.CONTENT.PROFILE.TAB_LABEL.SELECTED_CONCEPTS'
-        | translate : { count: selectedConcepts.length }
+      'EDITOR.CONTENT.TAB_LABEL.SELECTED_CONCEPTS' | translate : { count: selectedConcepts.length }
     "
     [disabled]="selectedConcepts.length === 0"
   >

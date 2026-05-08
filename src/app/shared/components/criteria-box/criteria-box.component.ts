@@ -1,3 +1,4 @@
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
@@ -5,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service';
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 import { Display } from 'src/app/model/DataSelection/Profile/Display';
 import { FilterChipData } from '../../models/FilterChips/FilterChipData';
@@ -16,8 +18,8 @@ import { FilterChipData } from '../../models/FilterChips/FilterChipData';
   providers: [CriterionFilterChipService],
 })
 export class CriteriaBoxComponent implements OnInit {
-  @Input() criterion: Criterion;
-  @Input() isEditable: boolean;
+  @Input() criterion!: Criterion;
+  @Input() isEditable!: boolean;
 
   menuItems: MenuItemInterface[] = [];
 
@@ -25,13 +27,16 @@ export class CriteriaBoxComponent implements OnInit {
 
   $filterChips: Observable<FilterChipData[]> = of([]);
 
-  system: Display;
+  system!: Display;
 
-  isFilterRequired: boolean;
+  isFilterRequired!: boolean;
+
+  warningSignUrl = 'assets/img/alert-blue-white.png';
 
   constructor(
     private menuService: CriterionMenuItems,
-    private filterChipsService: CriterionFilterChipService
+    private filterChipsService: CriterionFilterChipService,
+    private referenceCriterionProvider: ReferenceCriterionProviderService
   ) {}
 
   ngOnInit() {
@@ -44,16 +49,24 @@ export class CriteriaBoxComponent implements OnInit {
   }
 
   private getMenuItems() {
-    this.menuItems = this.menuService.getMenuItemsForCriterion(this.isRefrenceSet());
+    this.menuItems = this.menuService.getMenuItemsForCriterion();
   }
 
   private getFilterChips() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion);
   }
 
-  private isRefrenceSet(): boolean {
-    return this.criterion
-      .getAttributeFilters()
-      .some((attributeFilter) => attributeFilter.isReferenceSet());
+  public getReferenceCriteriaFromFilter(attributeFilter: AttributeFilter): ReferenceCriterion[] {
+    return attributeFilter
+      .getReference()
+      .getSelectedReferenceIds()
+      .reduce((acc, id) => {
+        try {
+          acc.push(this.referenceCriterionProvider.getOne(id));
+        } catch {
+          // not yet in provider
+        }
+        return acc;
+      }, [] as ReferenceCriterion[]);
   }
 }

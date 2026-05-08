@@ -9,16 +9,23 @@ import { v4 as uuidv4 } from 'uuid';
 import { Display } from '../../DataSelection/Profile/Display';
 
 export class CloneAbstractCriterion {
-  static deepCopyAbstractCriterions(abstractCriterions: AbstractCriterion[]): AbstractCriterion[] {
+  static deepCopyAbstractCriterions(
+    abstractCriterions: AbstractCriterion[],
+    preserveReferenceFilterIds = true
+  ): AbstractCriterion[] {
     return abstractCriterions.map((abstractCriterion) =>
-      this.deepCopyAbstractCriterion(abstractCriterion)
+      this.deepCopyAbstractCriterion(abstractCriterion, preserveReferenceFilterIds)
     );
   }
 
-  static deepCopyAbstractCriterion(abstractCriterion: AbstractCriterion): AbstractCriterion {
+  static deepCopyAbstractCriterion(
+    abstractCriterion: AbstractCriterion,
+    preserveReferenceFilterIds = true
+  ): AbstractCriterion {
     let clonedTimeRestriction;
     const clonedAttributeFilters = CloneAttributeFilter.deepCopyAttributeFilters(
-      abstractCriterion.getAttributeFilters()
+      abstractCriterion.getAttributeFilters(),
+      preserveReferenceFilterIds
     );
     const clonedValueFilters = CloneValueFilter.deepCopyValueFilters(
       abstractCriterion.getValueFilters()
@@ -29,7 +36,10 @@ export class CloneAbstractCriterion {
       );
     }
 
-    const mandatoryFields = this.createMandatoryFields(abstractCriterion);
+    const mandatoryFields = this.createMandatoryFields(
+      abstractCriterion,
+      preserveReferenceFilterIds
+    );
     const criterionBuilder: CriterionBuilder = new CriterionBuilder(mandatoryFields);
     criterionBuilder
       .withAttributeFilters(clonedAttributeFilters)
@@ -41,14 +51,17 @@ export class CloneAbstractCriterion {
       : criterionBuilder.buildCriterion();
   }
 
-  private static createMandatoryFields(abstractCriterion: AbstractCriterion): {
+  private static createMandatoryFields(
+    abstractCriterion: AbstractCriterion,
+    preserveId = false
+  ): {
     isReference: boolean
     context: TerminologyCode
     criterionHash: string
     display: Display
     isInvalid: boolean
     isRequiredFilterSet: boolean
-    uniqueID: string
+    id: string
     termCodes: Array<TerminologyCode>
   } {
     const context = CloneTerminologyCode.deepCopyTerminologyCode(abstractCriterion.getContext());
@@ -65,7 +78,7 @@ export class CloneAbstractCriterion {
       display,
       isInvalid: abstractCriterion.getIsInvalid(),
       isRequiredFilterSet: abstractCriterion.getIsRequiredFilterSet(),
-      uniqueID: uuidv4(),
+      id: preserveId ? abstractCriterion.getId() : uuidv4(),
       termCodes,
     };
   }

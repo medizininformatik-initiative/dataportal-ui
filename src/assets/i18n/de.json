@@ -4,7 +4,6 @@
       "ABOUT": "Über das Portal",
       "ABOUT_MODAL": {
         "BACKEND": "Backend",
-        "BRANCH": "Branch",
         "BUILD_TIME": "Build time",
         "COMMIT": "Commit",
         "COPYRIGHT": "Copyright",
@@ -185,7 +184,14 @@
       "SAVE": "Speichern"
     },
     "CONTENT": {
-      "CRITERION": {},
+      "CRITERION": {
+        "HEADER": {
+          "CONCEPT": "Selektierte Konzepte",
+          "FILTER": "Selektierte Filter",
+          "REFERENCE": "Selektierte Referenzen",
+          "TERMCODES": "Selektierte Terminologie-Codes"
+        }
+      },
       "PROFILE": {
         "FIELDS": {
           "HEADER": "Selektieren Sie Merkmale für ",
@@ -199,18 +205,23 @@
         "SNACKBAR": {
           "SAVED": "Profil erfolgreich gespeichert",
           "SAVING_ERROR": "Fehler beim Speichern des Profils"
-        },
-        "TAB_LABEL": {
-          "BULK": "Bulksuche",
-          "FIELD": "Felder",
-          "FILTER": "Filter",
-          "INFORMATION": "Informationen",
-          "REFERENCE": "Referenzen",
-          "SELECTED_CONCEPTS": "Selektierte Code Filter ({{count}})",
-          "SINGLE_SEARCH": "Einzelsuche",
-          "TIMERESTRICTION": "Zeiteinschränkung",
-          "TOKEN": "Code Filter"
         }
+      },
+      "TAB_LABEL": {
+        "ATTRIBUTEFILTER": "Attributfilter",
+        "BULK": "Bulksuche",
+        "CONCEPT": "Konzepte",
+        "FIELD": "Felder",
+        "FILTER": "Filter",
+        "INFORMATION": "Informationen",
+        "REFERENCE": "Referenzen",
+        "SELECTED_CONCEPTS": "Selektierte Code Filter ({{count}})",
+        "SELECTED_REFERENCES": "Selektierte Referenzen ({{count}})",
+        "SINGLE_SEARCH": "Einzelsuche",
+        "TERMCODE": "Terminologie-Codes",
+        "TIMERESTRICTION": "Zeiteinschränkung",
+        "TOKEN": "Code Filter",
+        "VALUEFILTER": "Valuefilter"
       }
     },
     "HEADER": {
@@ -285,6 +296,7 @@
         "yes-yes-yes-yes": "Verteilte, EU-DSGVO-konforme Analyse, mit Krankenkassendaten und mit Rekontaktierung"
       },
       "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
+      "EDIT_SUCCESS": "Kriterium erfolgreich bearbeitet",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
       "EXCLUSION": "Ausschlusskriterien",
       "FILTER_SELECTION": "Ausgewählte Elemente",
@@ -477,6 +489,7 @@
       "CONTEXT": "Kontext",
       "KDS_MODULE": "KDS-Modul",
       "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
+      "SEARCH": "Suchen...",
       "TERMINOLOGY": "Terminologie"
     },
     "HEADER": {
@@ -537,9 +550,11 @@
       "MIN_LENGTH": "Bitte mindestens drei Buchstaben eingeben"
     },
     "TABLE": {
+      "ADD": "Hinzufügen",
       "AVAILABILITY": "Verfügbarkeit",
       "CONTEXT": "Kontext",
       "DISPLAY": "Anzeige",
+      "EMPTY": "",
       "ICON": "Verwandte Kriterien anzeigen",
       "NAME": "Name",
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
@@ -602,6 +617,7 @@
     "QUERY_EDITOR": "Merkmalselektion - Query Editor",
     "QUERY_EDITOR_CRITERION": "Kohortenselektion - Kriterium Editor",
     "QUERY_EDITOR_FEATURE": "Merkmalselektion - Merkmal Editor",
+    "QUERY_EDITOR_REFERENCE": "Kohortenselektion - Referenz",
     "SAVED_QUERIES": "Gespeicherte Abfragen"
   },
   "VALIDATION": {

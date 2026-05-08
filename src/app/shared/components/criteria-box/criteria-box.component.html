@@ -27,7 +27,7 @@
         fxLayoutAlign="start center"
         style="margin-bottom: 5px"
       >
-        <img src="assets/img/alert-blue-white.png" class="img-layout" />
+        <img [src]="warningSignUrl" class="img-layout" />
         <span class="warning-message">
           {{ 'FEASIBILITY.EDITOR.REQUIRED_FILTER' | translate }}
         </span>
@@ -50,7 +50,7 @@
 </div>
 <div *ngFor="let attributeFilter of criterion.getAttributeFilters()" class="padding-left-7">
   <div *ngIf="attributeFilter?.isReferenceSet()">
-    <div *ngFor="let reference of attributeFilter.getReference().getSelectedReferences()">
+    <div *ngFor="let reference of getReferenceCriteriaFromFilter(attributeFilter)">
       <num-reference-criteria-box
         [criterionId]="criterion.getId()"
         [referenceCriterion]="reference"

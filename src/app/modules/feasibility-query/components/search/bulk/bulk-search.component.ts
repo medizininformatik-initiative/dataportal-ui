@@ -1,5 +1,5 @@
 import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service';
-import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData';
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData';
 import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service';
 import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteria.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -182,7 +182,9 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
       return;
     }
     this.foundCriteriaTableData.body.rows.forEach((row) => {
-      const checkboxCell = row.cells.find((c): c is CheckboxCellData => c.type === 'checkbox');
+      const checkboxCell = row.cells.find(
+        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+      );
       if (checkboxCell) {
         checkboxCell.isSelected = entries.some((item) => item.getId() === row.id);
       }

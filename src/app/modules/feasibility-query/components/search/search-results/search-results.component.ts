@@ -22,6 +22,7 @@ export class SearchResultsComponent {
 
   @Output() selectedRow = new EventEmitter<TableRowData>();
   @Output() rowClicked = new EventEmitter<TableRowData>();
+  @Output() iconClicked = new EventEmitter<TableRowData>();
   @Output() loadMore = new EventEmitter<void>();
   @Output() selectedRelative = new EventEmitter<CriteriaListEntry>();
 

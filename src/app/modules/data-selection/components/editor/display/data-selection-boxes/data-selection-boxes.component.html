@@ -58,11 +58,7 @@
       </ng-container>
     </div>
   </div>
-  <div
-    *ngIf="profile.getReference().getIsReferenceSet()"
-    fxLayout="column"
-    class="reference-container"
-  >
+  <div *ngIf="isReferenced" fxLayout="column" class="reference-container">
     <div class="label-with-info">
       <span class="num-text-accent">{{
         'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
@@ -75,7 +71,7 @@
       ></span>
     </div>
     <div class="reference-toggle-row">
-      <ng-container *ngIf="isReferenced">
+      <ng-container>
         <div
           class="reference-toggle"
           [class.reference-toggle--active]="profile.getReference().getIsReferenceSet()"

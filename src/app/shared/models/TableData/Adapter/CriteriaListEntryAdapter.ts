@@ -1,6 +1,6 @@
 import { AbstractTableAdapter } from './AbstractTableAdapter';
 import { AvailabilityCellData } from '../cells/AvailabilityCellData';
-import { CheckboxCellData } from '../cells/CheckboxCellData';
+import { CheckboxTextCellData } from '../cells/CheckboxTextCellData';
 import { CriteriaListEntry } from '../../../../model/Search/ListEntries/CriteriaListListEntry';
 import { TableCellBuilder } from '../cells/TableCellBuilder';
 import { TableHeaderData } from '../TableHeaderData';
@@ -8,10 +8,15 @@ import { TableRowData } from '../TableRowData';
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
 import { TextCellData } from '../cells/TextCellData';
 import { TableCellType } from '../cells/TableCellType';
+import { IconCellData } from '../cells/IconCellData';
 
 export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListEntry> {
+  constructor() {
+    super();
+  }
+
   protected buildHeaders(): TableHeaderData {
-    const headers = ['NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'];
+    const headers = ['EMPTY', 'NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT'];
     return { headers };
   }
 
@@ -31,6 +36,7 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
 
   private buildCells(listEntry: CriteriaListEntry): TableCellType[] {
     return [
+      this.iconCell(listEntry),
       this.displayCell(listEntry),
       this.availabilityCell(listEntry),
       this.terminologyCell(listEntry),
@@ -39,12 +45,15 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
     ];
   }
 
-  private displayCell(listEntry: CriteriaListEntry): CheckboxCellData {
-    return TableCellBuilder.withCheckbox(listEntry.getDisplay(), {
+  private displayCell(listEntry: CriteriaListEntry): CheckboxTextCellData {
+    return TableCellBuilder.withCheckboxText(listEntry.getDisplay(), {
       isSelected: false,
       isDisabled: listEntry.getSelectable(),
-      icon: 'sitemap',
     });
+  }
+
+  private iconCell(listEntry: CriteriaListEntry): IconCellData {
+    return TableCellBuilder.withIcon('sitemap');
   }
 
   private terminologyCell(listEntry: CriteriaListEntry): TextCellData {

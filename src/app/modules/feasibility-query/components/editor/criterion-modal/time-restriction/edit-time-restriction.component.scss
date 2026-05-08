@@ -11,6 +11,17 @@
 
 .time-restriction-wrapper {
   width: 100%;
+  margin-left: 16px;
+}
+
+.time-restriction-row {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.fill {
+  flex: 1;
 }
 
 .time-restriction-row {

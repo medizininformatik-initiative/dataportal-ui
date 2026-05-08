@@ -1,60 +1,57 @@
-<div fxLayout="column" class="container">
-  <div class="attribute-code-display">{{ attributeCode.getDisplay() }}</div>
-  <num-searchbar icon="search" (searchTextChange)="startElasticSearch($event)"> </num-searchbar>
-  <div
-    class="infinite-scroll"
-    infiniteScroll
-    [infiniteScrollDistance]="0.5"
-    [infiniteScrollThrottle]="50"
-    [scrollWindow]="false"
-    (scrolled)="loadMoreCriteriaSetResults()"
-  >
-    <num-table
-      *ngIf="listItems.length > 0 && adaptedData"
-      class="result-list-container"
-      [tableData]="adaptedData"
-      [searchTermResultList]="listItems"
-      (selectedRow)="setSelectedRowItem($event)"
-    ></num-table>
-  </div>
-  <num-placeholder-box class="no-results-text" *ngIf="!searchResultsFound"
-    >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
-    >"</num-placeholder-box
-  >
-  <button
-    *ngIf="isTableItemsSelected"
-    mat-raised-button
-    class="add-button"
-    color="white"
-    (click)="setSelectedReferenceCriteria()"
-  >
-    {{ 'FEASIBILITY.EDITOR.REFERENCE.ADD' | translate }}
-  </button>
-  <div *ngIf="arrayOfSelectedReferences.length > 0" class="filter-selection">
-    <div class="filter-title">{{ 'FEASIBILITY.EDITOR.REFERENCE.SELECTION' | translate }}</div>
-    <div class="selectedFilterBox">
+<mat-tab-group
+  animationDuration="0ms"
+  class="container"
+  disableRipple="true"
+  mat-stretch-tabs="false"
+  [selectedIndex]="1"
+>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <fa-icon icon="info" class="information-icon"></fa-icon>
+      {{ 'INFORMATION.TAB_LABEL' | translate }}
+    </ng-template>
+    <num-information-section>
+      <span slot="title">{{ 'INFORMATION.REFERENCES.TITLE' | translate }}</span>
+      {{ 'INFORMATION.REFERENCES.DESCRIPTION' | translate }}
+    </num-information-section>
+  </mat-tab>
+  <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
+    <div fxLayout="column" class="container">
+      <div class="attribute-code-display">{{ attributeCode.getDisplay() }}</div>
+      <num-searchbar icon="search" (searchTextChange)="startElasticSearch($event)"> </num-searchbar>
       <div
-        *ngFor="let selectedReferences of arrayOfSelectedReferences; let index = index"
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        class="selectedFilter"
+        class="infinite-scroll"
+        infiniteScroll
+        [infiniteScrollDistance]="0.5"
+        [infiniteScrollThrottle]="50"
+        [scrollWindow]="false"
+        (scrolled)="loadMoreCriteriaSetResults()"
       >
-        <div
-          matTooltipPosition="below"
-          matTooltipShowDelay="300"
-          [matTooltip]="selectedReferences.display | displayTranslation"
-          fxFlex="50"
-          class="display-part"
-        >
-          {{ selectedReferences.display | displayTranslation }}
-        </div>
-        <div fxFlex="50" class="display-part">
-          {{ selectedReferences.terminology }} ({{ selectedReferences.system }})
-        </div>
-        <div fxFlexAlign="end">
-          <button (click)="removeSelectedReference(index)" class="delete-button">entfernen</button>
-        </div>
+        <num-table
+          *ngIf="tableData$ | async as tableData"
+          class="result-list-container"
+          [tableData]="tableData"
+          (iconClicked)="emitIds($event)"
+        ></num-table>
       </div>
+      <num-placeholder-box class="no-results-text" *ngIf="(tableData$ | async) === null">
+        >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+        >"
+      </num-placeholder-box>
     </div>
-  </div>
-</div>
+  </mat-tab>
+  <mat-tab
+    class="height-100"
+    [label]="
+      'EDITOR.CONTENT.TAB_LABEL.SELECTED_REFERENCES'
+        | translate : { count: selectedReferenceCriterion.length }
+    "
+    [disabled]="selectedReferenceCriterion.length === 0"
+  >
+    <num-selected-reference-list
+      *ngIf="selectedReferenceCriterion.length > 0"
+      [selectedReferences]="selectedReferenceCriterion"
+      (changedSelectedReferences)="updateSelectedReferences($event)"
+    ></num-selected-reference-list>
+  </mat-tab>
+</mat-tab-group>

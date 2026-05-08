@@ -85,10 +85,12 @@
 .breadcrumbs-wrapper {
   display: flex;
   align-items: center;
-  padding: 0 24px;
+  padding-left: 24px;
   min-width: 0;
+  margin-right: 8px;
   flex: 1 1 auto;
   height: 100%;
+  overflow: auto;
 }
 
 /* Margin utility (kept for backward compat) */

@@ -26,7 +26,11 @@ export class QuantityRangeComponent implements OnChanges {
   constructor(private quantityFilterFactoryService: QuantityFilterFactoryService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.minValue || changes.maxValue || changes.quantityFilterUnit) {
+    if (
+      (changes.minValue && !changes.minValue.firstChange) ||
+      (changes.maxValue && !changes.maxValue.firstChange) ||
+      (changes.quantityFilterUnit && !changes.quantityFilterUnit.firstChange)
+    ) {
       this.emitQuantityRangeFilter();
     }
   }
@@ -51,8 +55,6 @@ export class QuantityRangeComponent implements OnChanges {
         this.quantityRangeInstance.emit(quantityRangeFilter);
         this.displayWarning = false;
       } else {
-        const emptyFilter = this.quantityFilterFactoryService.createEmptyQuantityFilter();
-        this.quantityRangeInstance.emit(emptyFilter);
         this.displayWarning = true;
       }
     }

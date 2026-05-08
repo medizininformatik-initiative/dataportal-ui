@@ -1,10 +1,13 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service';
-import { distinctUntilChanged, distinctUntilKeyChanged, last, skip, Subscription, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -14,11 +17,10 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   OnDestroy,
+  Input,
   SimpleChanges,
+  OnChanges,
 } from '@angular/core';
-import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType';
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter';
 @Component({
   selector: 'num-profile',
   templateUrl: './profile.component.html',
@@ -31,14 +33,13 @@ import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/P
  * It initializes the profile, updates selected fields, and manages filters.
  * Newly added and stagged references are managed automatically in the StagedProfileService.
  */
-export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
+export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy, OnChanges {
+  @Input()
   profile: DataSelectionProfile;
 
   timeRestrictionFilters: ProfileTimeRestrictionFilter[] = [];
 
   tokenFilter: ProfileTokenFilter;
-
-  stagedProfileServiceSubscription: Subscription;
 
   possibleReferencesServiceSubscription: Subscription;
 
@@ -61,10 +62,24 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     private possibleReferencesService: PossibleReferencesService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.stagedProfileService.initialize(this.profile);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.tokenFilter = this.profile
+      .getFilters()
+      .find(
+        (filter: AbstractProfileFilter) => filter.getUiType() === DataSelectionUIType.CODE
+      ) as ProfileTokenFilter;
+    this.timeRestrictionFilters = this.profile
+      .getFilters()
+      .filter(
+        (filter: AbstractProfileFilter) =>
+          filter.getUiType() === DataSelectionUIType.TIMERESTRICTION
+      ) as ProfileTimeRestrictionFilter[];
+  }
 
   ngOnDestroy(): void {
-    this.stagedProfileServiceSubscription?.unsubscribe();
     this.possibleReferencesServiceSubscription?.unsubscribe();
     this.possibleReferencesService.clearPossibleReferencesMap();
   }
@@ -74,24 +89,10 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
    * Initializes the templates for rendering.
    */
   ngAfterViewInit(): void {
-    this.stagedProfileServiceSubscription?.unsubscribe();
+    this.stagedProfileService.initialize(this.profile);
     this.templates = [];
-    this.stagedProfileServiceSubscription = this.stagedProfileService
-      .getProfileObservable()
-      .pipe(
-        tap((profile) => (this.profile = profile)),
-        tap(() => {
-          this.tokenFilter = this.profile
-            .getFilters()
-            .find((filter) => filter.getUiType() === DataSelectionUIType.CODE) as ProfileTokenFilter;
-          this.cdr.detectChanges();
-        })
-      )
-      .subscribe(() => {
-        if (this.templates.length === 0) {
-          this.updateTemplatesArray();
-        }
-      });
+    this.updateTemplatesArray();
+    this.cdr.detectChanges();
   }
 
   private updateTemplatesArray(): void {
@@ -109,8 +110,8 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   private setTimeRestrictionTemplate(): void {
     this.profile.getFilters().forEach((filter) => {
-      if (filter.getUiType() === DataSelectionUIType.TIMERESTRICTION) {
-        this.timeRestrictionFilters.push(filter as ProfileTimeRestrictionFilter);
+      if (this.isTimeRestrictionFilter(filter)) {
+        this.timeRestrictionFilters.push(filter);
         this.templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' });
       }
     });
@@ -118,8 +119,8 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   private setTokenFilterTemplate(): void {
     this.profile.getFilters().forEach((filter: AbstractProfileFilter) => {
-      if (filter.getUiType() === DataSelectionUIType.CODE) {
-        this.tokenFilter = filter as ProfileTokenFilter;
+      if (this.isTokenFilter(filter)) {
+        this.tokenFilter = filter;
         this.templates.push({ template: this.tokenFilterTemplate, name: 'TOKEN' });
       }
     });
@@ -156,5 +157,15 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   public updateLabel(label: string): void {
     this.stagedProfileService.updateLabel(label);
+  }
+
+  private isTimeRestrictionFilter(
+    filter: AbstractProfileFilter
+  ): filter is ProfileTimeRestrictionFilter {
+    return filter.getUiType() === DataSelectionUIType.TIMERESTRICTION;
+  }
+
+  private isTokenFilter(filter: AbstractProfileFilter): filter is ProfileTokenFilter {
+    return filter.getUiType() === DataSelectionUIType.CODE;
   }
 }

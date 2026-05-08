@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { Observable } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
 
 @Component({
@@ -24,12 +24,19 @@ export class CohortDefinitionComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.feasibilityQueryService.getActiveFeasibilityQuery().subscribe((feasibilityQuery) => {
-      const resultIdsLength = feasibilityQuery.getResultIds().length;
-      this.totalNumberOfPatients = this.resultProviderService
-        .getOne(feasibilityQuery.getResultIds()[resultIdsLength - 1])
-        ?.getTotalNumberOfPatients();
-    });
+    this.feasibilityQueryService
+      .getActiveFeasibilityQuery()
+      .pipe(filter((feasibilityQuery) => !!feasibilityQuery))
+      .subscribe((feasibilityQuery) => {
+        const resultIdsLength = feasibilityQuery.getResultIds().length;
+        if (resultIdsLength === 0) {
+          return;
+        } else {
+          this.totalNumberOfPatients = this.resultProviderService
+            .getOne(feasibilityQuery.getResultIds()[resultIdsLength - 1])
+            ?.getTotalNumberOfPatients();
+        }
+      });
     this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
   }
 

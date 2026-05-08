@@ -1,11 +1,16 @@
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, of, Subscription, switchMap } from 'rxjs';
+import { combineLatest, map, Observable, of, Subscription, switchMap, take, tap } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
+import { data } from 'cypress/types/jquery';
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { PathSegments } from 'src/app/app-paths';
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service';
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
 
 @Component({
   selector: 'num-query-editor',
@@ -15,65 +20,77 @@ import { PossibleReferencesService } from 'src/app/service/PossibleReferences.se
 export class QueryEditorComponent implements OnInit, OnDestroy {
   criterion$: Observable<Criterion>;
 
-  deepCopyCriterion: Criterion;
+  dataSelectionProfile$: Observable<DataSelectionProfile>;
+
+  referenceCriterion$: Observable<ReferenceCriterion>;
 
   id: string;
   type: string;
 
   routeSubscription: Subscription;
 
-  buildProfileSubscription: Subscription;
-
   constructor(
     private criterionProviderService: CriterionProviderService,
     private navigationHelperService: NavigationHelperService,
     private activatedRoute: ActivatedRoute,
-    private possibleReferencesService: PossibleReferencesService
+    private profileProviderService: ProfileProviderService,
+    private possibleReferencesService: PossibleReferencesService,
+    private referenceCriterionProviderService: ReferenceCriterionProviderService
   ) {}
 
   ngOnInit(): void {
-    this.routeSubscription?.unsubscribe();
-    this.routeSubscription = combineLatest([this.activatedRoute.paramMap, this.activatedRoute.url])
-      .pipe(
-        switchMap(([paramMap, url]) => {
-          const id = paramMap.get('id');
-          const type = url[0]?.path;
+    const url = this.activatedRoute.snapshot.url;
 
-          if (id && type) {
-            this.id = id;
-            this.type = type;
-            this.getElementFromProvider();
-            return this.possibleReferencesService.initialize(id);
-          }
-          return of(undefined);
-        })
-      )
-      .subscribe();
+    this.id = url[1]?.path;
+    this.type = url[0]?.path;
+
+    if (this.id && this.type) {
+      this.getElementFromProvider();
+
+      if (this.isProfile()) {
+        this.possibleReferencesService.initialize(this.id).pipe(take(1)).subscribe();
+      }
+    }
   }
 
   ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe();
-    this.buildProfileSubscription?.unsubscribe();
   }
 
   private getElementFromProvider(): void {
     if (this.isCriterion()) {
-      this.getCriterionFromProviderById(this.id);
+      this.getCriterionFromProvider(this.id);
+    } else if (this.isProfile()) {
+      this.getDataSelectionProfileFromProvider(this.id);
+    } else if (this.isReferenceCriterion()) {
+      this.getReferenceCriterionFromProvider(this.id);
     }
   }
 
-  private getCriterionFromProviderById(id: string): void {
-    this.criterion$ = of(this.criterionProviderService.getOne(id));
+  private getDataSelectionProfileFromProvider(id: string): void {
+    this.dataSelectionProfile$ = this.profileProviderService
+      .getAll()
+      .pipe(map((profiles) => profiles.find((profile) => profile.getId() === id)));
   }
 
-  public updateCriterion(criterion: Criterion): void {
-    this.deepCopyCriterion = criterion;
+  private getCriterionFromProvider(id: string): void {
+    this.criterion$ = this.criterionProviderService
+      .getAll()
+      .pipe(map((criteria) => criteria.find((criterion) => criterion.getId() === id)));
+  }
+
+  private getReferenceCriterionFromProvider(id: string): void {
+    this.referenceCriterion$ = this.referenceCriterionProviderService
+      .getAll()
+      .pipe(map((criteria) => criteria.find((criterion) => criterion.getId() === id)));
   }
 
   public onCancel(): void {
     if (this.isProfile()) {
       this.navigationHelperService.navigateToDataSelectionEditor();
     } else if (this.isCriterion()) {
+      this.navigationHelperService.navigateToFeasibilityQueryEditor();
+    } else if (this.isReferenceCriterion()) {
       this.navigationHelperService.navigateToFeasibilityQueryEditor();
     }
   }
@@ -84,5 +101,9 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
 
   private isCriterion(): boolean {
     return this.type === PathSegments.criterion;
+  }
+
+  private isReferenceCriterion(): boolean {
+    return this.type === PathSegments.reference;
   }
 }

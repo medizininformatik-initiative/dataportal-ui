@@ -1,5 +1,12 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
@@ -12,18 +19,19 @@ import { Display } from 'src/app/model/DataSelection/Profile/Display';
   selector: 'num-quantity',
   templateUrl: './quantity.component.html',
   styleUrls: ['./quantity.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuantityComponent implements OnInit {
   FilterTypes: typeof FilterTypes = FilterTypes;
 
   @Input()
-  quantityFilter: AbstractQuantityFilter;
+  quantityFilter!: AbstractQuantityFilter;
 
   @Output()
   quantityFilterChange = new EventEmitter<AbstractQuantityFilter>();
 
   @Input()
-  display: Display;
+  display!: Display;
 
   /**
    * UI conditions
@@ -35,12 +43,12 @@ export class QuantityComponent implements OnInit {
   /**
    * QuantityFilter Instances
    */
-  quantityComparatorFilter: QuantityComparatorFilter;
-  quantityRangeFilter: QuantityRangeFilter;
+  quantityComparatorFilter: QuantityComparatorFilter | undefined = undefined;
+  quantityRangeFilter: QuantityRangeFilter | undefined = undefined;
 
-  selectedQuantityFilterComparator: QuantityComparisonOption;
+  selectedQuantityFilterComparator!: QuantityComparisonOption;
 
-  selectedQuantityFilterUnit: QuantityUnit;
+  selectedQuantityFilterUnit: QuantityUnit | undefined = undefined;
 
   QuantityComparisonOption: typeof QuantityComparisonOption = QuantityComparisonOption;
 

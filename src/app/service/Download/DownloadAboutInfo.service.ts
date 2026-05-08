@@ -24,12 +24,16 @@ export class DownloadAboutInfoService extends AbstractDownloadService {
    */
   public download(filename?: string): void {
     const aboutInfo = this.aboutInfoBuilder.buildAboutInfo();
-    const finalFilename = this.createFilename(
+    const finalFilename = this.fileName(filename);
+    const blob = this.createJsonBlob(aboutInfo);
+    this.triggerDownload(blob, `${finalFilename}${DownloadAboutInfoService.FILE_EXTENSION}`);
+  }
+
+  private fileName(filename?: string): string {
+    return this.createFilename(
       filename,
       DownloadAboutInfoService.FILE_PREFIX,
       DownloadAboutInfoService.LOCALE_FORMAT
     );
-    const blob = this.createJsonBlob(aboutInfo);
-    this.triggerDownload(blob, `${finalFilename}${DownloadAboutInfoService.FILE_EXTENSION}`);
   }
 }

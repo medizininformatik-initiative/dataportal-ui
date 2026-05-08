@@ -9,17 +9,23 @@
     [ngClass]="{ 'table-row-text-color': j > 0 }"
   >
     <div class="row-container" [ngSwitch]="cell.type">
-      <num-checkbox-cell
-        *ngSwitchCase="'checkbox'"
+      <num-checkbox-text-cell
+        *ngSwitchCase="'checkboxText'"
         [cell]="cell"
         (checkboxChange)="onCheckboxSelect(row)"
-      ></num-checkbox-cell>
+      ></num-checkbox-text-cell>
 
       <num-availability-cell *ngSwitchCase="'availability'" [cell]="cell"></num-availability-cell>
 
       <num-display-cell *ngSwitchCase="'display'" [cell]="cell"></num-display-cell>
 
       <num-text-cell *ngSwitchDefault [cell]="cell"></num-text-cell>
+
+      <num-icon-cell
+        *ngSwitchCase="'icon'"
+        [iconData]="cell"
+        (iconClicked)="onIconClick(row)"
+      ></num-icon-cell>
     </div>
   </td>
 </tr>

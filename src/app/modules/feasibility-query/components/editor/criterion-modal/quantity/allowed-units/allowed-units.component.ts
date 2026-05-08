@@ -32,7 +32,10 @@ export class AllowedUnitsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.allowedUnits || changes.selectedUnit) {
+    if (
+      (changes.allowedUnits && !changes.allowedUnits.firstChange) ||
+      (changes.selectedUnit && !changes.selectedUnit.firstChange)
+    ) {
       this.emitQuantityUnitInstance();
     }
   }

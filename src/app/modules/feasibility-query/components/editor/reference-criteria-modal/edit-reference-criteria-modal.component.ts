@@ -38,7 +38,6 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
 
   ngOnInit() {
     this.criterion = this.data.criterion;
-    this.referenceFilter = this.filterAttributeFiltersByTypeReference();
   }
 
   public setSelectedReferenceIds(ids: string[], attributeFilter: AttributeFilter) {
@@ -53,20 +52,17 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
         referenceCriteria.forEach((referenceCriterion) =>
           this.referenceCriterionProvider.setOne(referenceCriterion)
         );
-        const selectedReferenceFilter = this.parentAttributeFilter
+        const currentIds = this.parentAttributeFilter.getReference().getSelectedReferenceIds();
+        const newIds = referenceCriteria.map((rc) => rc.getId());
+        this.parentAttributeFilter
           .getReference()
-          .getSelectedReferences();
-        selectedReferenceFilter.push(...referenceCriteria);
-        this.parentAttributeFilter.getReference().setSelectedReferences(selectedReferenceFilter);
+          .setSelectedReferenceIds([...currentIds, ...newIds]);
       });
-    this.dialogRef.close(CloneAbstractCriterion.deepCopyAbstractCriterion(this.criterion));
+    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(this.criterion);
+    copy.setId(this.criterion.getId());
+    this.dialogRef.close(copy);
   }
 
-  private filterAttributeFiltersByTypeReference(): AttributeFilter[] {
-    return this.criterion
-      .getAttributeFilters()
-      .filter((filter) => filter.getFilterType() === FilterTypes.REFERENCE);
-  }
   closeDialog() {
     this.dialogRef.close();
   }
