@@ -255,5 +255,5 @@ For production deployments, create `config.prod.json` with appropriate values:
 ## Related Documentation
 
 - [Getting Started](./getting-started.md)
-- [Backend Integration](./integration.md)
-- [Feature Flags](./features.md)
+- [Backend Integration]
+- [Feature Flags]

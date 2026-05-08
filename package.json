@@ -13,9 +13,9 @@
     "e2e": "ng e2e",
     "playground": "angular-playground",
     "cypress": "npx cypress open",
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "private": true,
   "dependencies": {
