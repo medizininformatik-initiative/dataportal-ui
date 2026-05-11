@@ -109,21 +109,15 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy, OnCha
   }
 
   private setTimeRestrictionTemplate(): void {
-    this.profile.getFilters().forEach((filter) => {
-      if (this.isTimeRestrictionFilter(filter)) {
-        this.timeRestrictionFilters.push(filter);
-        this.templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' });
-      }
-    });
+    if (this.timeRestrictionFilters.length > 0) {
+      this.templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' });
+    }
   }
 
   private setTokenFilterTemplate(): void {
-    this.profile.getFilters().forEach((filter: AbstractProfileFilter) => {
-      if (this.isTokenFilter(filter)) {
-        this.tokenFilter = filter;
-        this.templates.push({ template: this.tokenFilterTemplate, name: 'TOKEN' });
-      }
-    });
+    if (this.tokenFilter) {
+      this.templates.push({ template: this.tokenFilterTemplate, name: 'TOKEN' });
+    }
   }
 
   private setFieldsTemplate(): void {

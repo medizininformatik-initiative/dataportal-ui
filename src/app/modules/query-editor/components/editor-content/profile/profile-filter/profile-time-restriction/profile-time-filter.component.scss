@@ -1,3 +1,16 @@
 .information-icon {
   margin-right: 8px;
 }
+
+:host {
+  display: flex;
+  height: 100%;
+}
+
+mat-tab-group {
+  flex: 1;
+
+  ::ng-deep .mat-mdc-tab-body-wrapper {
+    flex: 1;
+  }
+}
