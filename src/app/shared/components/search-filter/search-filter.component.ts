@@ -50,7 +50,6 @@ export class SearchFilterComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('Changes detected in SearchFilterComponent:', changes);
     if (changes.filter) {
       this.syncSelectedValues();
     }

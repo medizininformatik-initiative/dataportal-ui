@@ -20,7 +20,6 @@ export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFi
    * @returns An Observable emitting the current list of CriteriaSearchFilter objects.
    */
   public getCriteriaSearchFilters(): Observable<CriteriaSearchFilter[]> {
-    console.log('Getting criteria search filters:', this.criteriaSearchFiltersSubject.getValue());
     return this.criteriaSearchFiltersSubject.asObservable();
   }
 
@@ -30,7 +29,6 @@ export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFi
    * @returns An Observable emitting the current list of CriteriaSearchFilter objects.
    */
   public getCriteriaSearchFiltersValue(): CriteriaSearchFilter[] {
-    console.log('Getting criteria search filters:', this.criteriaSearchFiltersSubject.getValue());
     return this.criteriaSearchFiltersSubject.getValue();
   }
 

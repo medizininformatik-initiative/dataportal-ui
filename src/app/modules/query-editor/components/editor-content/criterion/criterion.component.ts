@@ -116,7 +116,6 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
     this.setQuantityValueFilterTemplate();
     this.setReferenceTemplate();
     this.setTimeRestrictionTemplate();
-    console.log('Templates set in criterion component', this.templates);
   }
 
   private setTimeRestrictionTemplate(): void {
