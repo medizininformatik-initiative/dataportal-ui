@@ -1,13 +1,22 @@
 # Changelog
+## v6.9.1 (2026-05-11)
+
+### Features
+* Improved usability of drop-down filters [#560](https://github.com/medizininformatik-initiative/feasibility-gui/issues/560)
+* Reordered modules, context, and terminology elements for improved logical grouping [#562](https://github.com/medizininformatik-initiative/feasibility-gui/issues/562)
+* Added filter dependency support for dynamic filter relationships [#563](https://github.com/medizininformatik-initiative/feasibility-gui/issues/563)
+
+### Fixed
+* Fix time restriction rendering and tab height in ProfileComponent [#571](https://github.com/medizininformatik-initiative/feasibility-gui/issues/571)
 
 ## v6.9.0 (2026-05-08)
 
 ### Features
 * Implemented full criterion editor page with tabbed attribute filter and value filter, termcodes and timerestriction[#522](https://github.com/medizininformatik-initiative/feasibility-gui/issues/522),[#519](https://github.com/medizininformatik-initiative/feasibility-gui/issues/519)
-* Added filter dependency support for dynamic filter relationships [#563](https://github.com/medizininformatik-initiative/feasibility-gui/issues/563)
+* ~~Added filter dependency support for dynamic filter relationships [#563](https://github.com/medizininformatik-initiative/feasibility-gui/issues/563)~~
 * Added search bar in dropdown for filter in criterion search [#561](https://github.com/medizininformatik-initiative/feasibility-gui/issues/561)
-* Improved usability of drop-down filters [#560](https://github.com/medizininformatik-initiative/feasibility-gui/issues/560)
-* Reordered modules, context, and terminology elements for improved logical grouping [#562](https://github.com/medizininformatik-initiative/feasibility-gui/issues/562)
+* ~~Improved usability of drop-down filters [#560](https://github.com/medizininformatik-initiative/feasibility-gui/issues/560)~~
+* ~~Reordered modules, context, and terminology elements for improved logical grouping [#562](https://github.com/medizininformatik-initiative/feasibility-gui/issues/562)~~
 
 
 ### Changed
