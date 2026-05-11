@@ -4,8 +4,8 @@
   "authRealm": "codex-develop",
   "backendBaseUrl": "http://localhost:8090",
   "copyrightOwner": "FDPG+ Team",
-  "copyrightYear": "2025",
+  "copyrightYear": "2026",
   "email": "info@forschen-fuer-gesundheit.de",
   "stylesheet": "FDPGTheme",
-  "version": "6.9.0"
+  "version": "6.9.1"
 }
