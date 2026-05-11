@@ -17,6 +17,8 @@ export class EditProfileService {
    * Updates the time restriction filter in the given profile.
    * @param profile The profile to update.
    * @param timeRestriction The new time restriction to apply.
+   * @param filterName The name of the filter to update.
+   * @returns
    */
   public updateTimeRestriction(
     profile: DataSelectionProfile,
@@ -43,6 +45,11 @@ export class EditProfileService {
     return profile.getFilters().findIndex((filter) => filter.getType() === 'date');
   }
 
+  /**
+   * Gets all time restriction filters in the profile.
+   * @param profile The profile to search.
+   * @returns An array of time restriction filters.
+   */
   public getTimeRestrictionFilter(profile: DataSelectionProfile): AbstractProfileFilter[] {
     return profile.getFilters().filter((filter) => filter.getType() === 'date');
   }
@@ -57,7 +64,6 @@ export class EditProfileService {
     filter: ProfileTimeRestrictionFilter,
     timeRestriction: AbstractTimeRestriction
   ): ProfileTimeRestrictionFilter {
-    CloneTimeRestriction.deepCopyTimeRestriction(timeRestriction);
     return new ProfileTimeRestrictionFilter(
       filter.getName(),
       filter.getType(),
@@ -65,10 +71,21 @@ export class EditProfileService {
     );
   }
 
+  /**
+   * Gets all token filters in the profile.
+   * @param profile The profile to search.
+   * @returns An array of token filters.
+   */
   public getProfileTokenFilter(profile: DataSelectionProfile): AbstractProfileFilter[] {
     return profile.getFilters().filter((filter) => filter.getType() === 'token');
   }
 
+  /**
+   * Updates the token filter in the given profile.
+   * @param profile The profile to update.
+   * @param tokenFilter The new token filter to apply.
+   * @returns
+   */
   public updateProfileTokenFilter(
     profile: DataSelectionProfile,
     tokenFilter: ProfileTokenFilter
@@ -79,10 +96,20 @@ export class EditProfileService {
     }
   }
 
+  /**
+   * Finds the index of the token filter in the profile.
+   * @param profile The profile to search.
+   * @returns The index of the token filter, or -1 if not found.
+   */
   public getProfileTokenFilterIndex(profile: DataSelectionProfile): number {
     return profile.getFilters().findIndex((filter) => filter.getType() === 'token');
   }
 
+  /**
+   * Creates a new instance of the given profile.
+   * @param profile The profile to copy.
+   * @returns A new instance of the profile.
+   */
   public createNewProfileInstance(profile: DataSelectionProfile): DataSelectionProfile {
     return DataSelectionProfileCloner.deepCopyProfile(profile);
   }

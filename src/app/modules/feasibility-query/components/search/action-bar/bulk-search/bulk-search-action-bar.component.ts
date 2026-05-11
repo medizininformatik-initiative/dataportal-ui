@@ -5,7 +5,7 @@ import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/Feasibilit
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { map, Observable, of, Subscription, take } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SelectedBulkCriteriaService } from 'src/app/service/SelectedBulkCriteria.service';
+import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriteria.service';
 import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
   @Input()
   resultType: 'FOUND' | 'NOTFOUND';
   constructor(
-    private selectedBulkCriteriaService: SelectedBulkCriteriaService,
+    private selectedBulkCriteriaService: SelectedBulkCriteriaProvider,
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
@@ -33,9 +33,9 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.disabledAddToStageButton = this.selectedBulkCriteriaService
-      .getSelectedBulkCriteria()
+      .getSelected()
       .pipe(map((entries) => entries.length === 0));
-    this.listItemArray$ = this.selectedBulkCriteriaService.getSelectedBulkCriteria();
+    this.listItemArray$ = this.selectedBulkCriteriaService.getSelected();
     this.stageArray$ = this.stageProviderService.getAll();
     this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
   }
@@ -47,12 +47,12 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
   public addItemsToStage() {
     this.addToStageSubscription?.unsubscribe();
     this.addToStageSubscription = this.selectedBulkCriteriaService
-      .getSelectedBulkCriteria()
+      .getSelected()
       .pipe(
         take(1),
         map((entries) => {
-          this.selectedBulkCriteriaService.setFoundEntries(entries);
-          this.selectedBulkCriteriaService.removeSelectedBulkCriterion(entries);
+          this.selectedBulkCriteriaService.setSearchResults(entries);
+          this.selectedBulkCriteriaService.deselect(entries);
           const uiProfileId = this.selectedBulkCriteriaService.getUiProfileId();
           const criterion = this.createBulkCriterionService.createBulkCriterion(
             entries,

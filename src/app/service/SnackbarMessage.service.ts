@@ -25,7 +25,7 @@ export class SnackbarMessageService {
 
   /**
    * Displays message when item is removed from stage
-   * @return
+   * @returns
    */
   public displayRemovedFromCriteriaStage(): void {
     this.snackbarService.displayErrorMessageWithNoCode(

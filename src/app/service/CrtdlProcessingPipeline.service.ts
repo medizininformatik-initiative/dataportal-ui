@@ -1,15 +1,13 @@
+import { concatMap, filter, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { CRTDL2UIModelService } from './Translator/CRTDL/CRTDL2UIModel.service';
 import { CRTDLData } from '../model/Interface/CRTDLData';
 import { CRTDLValidationService } from './Validation/CRTDLValidation.service';
-import { catchError, concatMap, filter, map, Observable, of, switchMap, take, tap } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { ProfileUpgradeService } from './Upgrade/ProfileUpgrade.service';
-import { UiCRTDL } from '../model/UiCRTDL';
 import { ErrorLogModalComponent } from '../layout/components/error-log/error-log-modal.component';
-import { ValidationReport } from '../model/Validation/ValidationReport';
+import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DataportalErrorData } from '../core/model/DataportalErrorData';
+import { ProfileUpgradeService } from './Upgrade/ProfileUpgrade.service';
 import { TypeGuard } from './TypeGuard/TypeGuard';
+import { UiCRTDL } from '../model/UiCRTDL';
 
 @Injectable({ providedIn: 'root' })
 export class CrtdlProcessingPipelineService {
@@ -59,12 +57,11 @@ export class CrtdlProcessingPipelineService {
           return of(false);
         }
       }),
-      map((upgraded) => upgraded),
-      tap(() => this.opeValidationReportModal())
+      tap(() => this.openValidationReportModal())
     );
   }
 
-  private opeValidationReportModal(): void {
+  private openValidationReportModal(): void {
     this.matDialog.open(ErrorLogModalComponent);
   }
 }

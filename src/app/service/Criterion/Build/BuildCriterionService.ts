@@ -2,7 +2,7 @@ import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaList
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
 import { finalize, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { SelectedTableItemsService } from '../../SearchTermListItemService.service';
+import { SelectedTableItemsProvider } from '../../Provider/SelectedTableItemsProvider.service';
 import { LoadCriterionService } from '../LoadCriterion.service';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { LoadCriterionService } from '../LoadCriterion.service';
 })
 export class BuildCriterionService {
   constructor(
-    private listItemService: SelectedTableItemsService<CriteriaListEntry>,
+    private listItemService: SelectedTableItemsProvider<CriteriaListEntry>,
     private loadCriterionService: LoadCriterionService
   ) {}
 
@@ -27,7 +27,7 @@ export class BuildCriterionService {
     return this.loadCriterionService.loadCriteria(hashes).pipe(
       finalize(() => {
         if (clearSelection) {
-          this.listItemService.clearSelection();
+          this.listItemService.clear();
         }
       })
     );

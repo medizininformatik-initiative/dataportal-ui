@@ -14,7 +14,7 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.result | /feasibility-query/result}
-   * @returns void
+   * @returns
    */
   public navigateToFeasibilityQueryResult(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.result], {
@@ -25,7 +25,7 @@ export class NavigationHelperService {
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.editor | /feasibility-query/editor}
    * @param id - The query profile identifier
-   * @returns void
+   * @returns
    */
   public navigateToEditProfile(id: string): void {
     this.router.navigate([`${UrlPaths.queryEditor.feature}`, id]);
@@ -41,7 +41,7 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.editor | /feasibility-query/editor}
-   * @returns void
+   * @returns
    */
   public navigateToFeasibilityQueryEditor(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.editor]);
@@ -49,7 +49,7 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.search | /feasibility-query/search}
-   * @returns void
+   * @returns
    */
   public navigateToFeasibilityQuerySearch(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.search]);
@@ -57,7 +57,7 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.dataSelection.editor | /data-selection/editor}
-   * @returns void
+   * @returns
    */
   public navigateToFeasibilityQueryBulkSearch(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.bulkSearch]);
@@ -73,7 +73,7 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.dataSelection.search | /data-selection/search}
-   * @returns void
+   * @returns
    */
   public navigateToDataSelectionSearch(): void {
     this.router.navigate([UrlPaths.dataSelection.search]);
@@ -81,7 +81,7 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.dataQuery.cohortDefinition | /data-query/cohort-definition}
-   * @returns void
+   * @returns
    */
   public navigateToDataQueryCohortDefinition(): void {
     this.router.navigate([UrlPaths.dataQuery.cohortDefinition], {
@@ -91,7 +91,7 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.dataQuery.dataSelection | /data-query/data-selection}
-   * @returns void
+   * @returns
    */
   public navigateToDataQueryDataSelection(): void {
     this.router.navigate([UrlPaths.dataQuery.dataSelection], {
@@ -101,7 +101,7 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link BasePaths.savedQueries | /saved-queries}
-   * @returns void
+   * @returns
    */
   public navigateToSavedQueries(): void {
     this.router.navigate([BasePaths.savedQueries], {

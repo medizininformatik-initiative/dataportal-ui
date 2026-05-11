@@ -9,6 +9,10 @@ import { LoadDataSelectionProfileTreeService } from '../DataSelection/LoadDataSe
 export class DataSelectionProfileResolverService {
   constructor(private loadDataSelectionProfileTreeService: LoadDataSelectionProfileTreeService) {}
 
+  /**
+   * Resolves the data selection profile tree by fetching it from the backend.
+   * @returns An observable containing the data selection profile tree.
+   */
   public resolve(): Observable<DataSelectionProfileTree> {
     return this.loadDataSelectionProfileTreeService.loadProfileTree();
   }

@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter';
 
 @Component({
@@ -6,7 +14,11 @@ import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter';
   templateUrl: './search-filter.component.html',
   styleUrls: ['./search-filter.component.scss'],
 })
-export class SearchFilterComponent implements OnInit {
+export class SearchFilterComponent implements OnInit, OnChanges {
+  isOpenData = {
+    isOpen: false,
+    targetFilter: '',
+  };
   @Input()
   filter: SearchFilter;
 
@@ -15,6 +27,9 @@ export class SearchFilterComponent implements OnInit {
 
   @Output()
   selectedFilterChanged = new EventEmitter<SearchFilter>();
+
+  @Output()
+  isOpen = new EventEmitter<{ isOpen: boolean; targetFilter: string }>();
 
   selectedValues: string[] | string = [];
   searchText = '';
@@ -31,6 +46,17 @@ export class SearchFilterComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.syncSelectedValues();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('Changes detected in SearchFilterComponent:', changes);
+    if (changes.filter) {
+      this.syncSelectedValues();
+    }
+  }
+
+  private syncSelectedValues(): void {
     this.selectedValues = this.multiSelect
       ? this.filter.selectedValues
       : this.filter.selectedValues[0];
@@ -60,5 +86,13 @@ export class SearchFilterComponent implements OnInit {
       return 'SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED';
     }
     return this.getCleanValue(this.selectedValues);
+  }
+
+  public onOpenedChange(isOpen: boolean): void {
+    if (isOpen) {
+      this.isOpenData.isOpen = true;
+      this.isOpenData.targetFilter = this.filter.filterType;
+      this.isOpen.emit(this.isOpenData);
+    }
   }
 }

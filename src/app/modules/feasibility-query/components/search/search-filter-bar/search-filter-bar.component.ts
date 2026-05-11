@@ -12,4 +12,9 @@ export class SearchFilterBarComponent {
   @Input() resetFilterEnabled$: Observable<boolean>;
   @Output() filterChanged = new EventEmitter<SearchFilter>();
   @Output() filterReset = new EventEmitter<void>();
+  @Output() isOpen = new EventEmitter<{ isOpen: boolean; targetFilter: string }>();
+
+  trackByFilterType(_index: number, filter: SearchFilter): string {
+    return filter.filterType;
+  }
 }

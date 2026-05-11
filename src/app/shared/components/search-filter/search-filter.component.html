@@ -11,6 +11,7 @@
     <mat-select
       disableOptionCentering
       (selectionChange)="onSelectionChange()"
+      (openedChange)="onOpenedChange($event)"
       panelClass="example-panel"
       [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter?.filterType | translate"
       [(value)]="selectedValues"
