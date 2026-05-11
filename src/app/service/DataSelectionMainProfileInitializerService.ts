@@ -15,9 +15,8 @@ export class DataSelectionMainProfileInitializerService {
   ) {}
 
   /**
-   * @todo set Profile in DataSelectionProviderService
-   * @param patientProfileUrl
-   * @returns Observable<DataSelectionProfile>
+   * Initializes the patient profile by loading it from the backend using the URL specified in the app settings.
+   * @returns
    */
   public initializePatientProfile(): Observable<DataSelectionProfile> {
     const mainProfileUrl = this.appSettingsProviderService.getDsePatientProfileUrl();

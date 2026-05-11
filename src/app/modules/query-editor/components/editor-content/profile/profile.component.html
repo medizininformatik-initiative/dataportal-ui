@@ -21,7 +21,7 @@
   </ng-template>
 
   <ng-template #timeRestriction>
-    <div *ngFor="let profileTimeFilter of timeRestrictionFilters">
+    <div style="height: 100%" *ngFor="let profileTimeFilter of timeRestrictionFilters">
       <num-profile-time-filter
         [profileTimeRestrictionFilter]="profileTimeFilter"
         (changedProfileTimeRestrictionFilter)="updateProfileFilter($event)"

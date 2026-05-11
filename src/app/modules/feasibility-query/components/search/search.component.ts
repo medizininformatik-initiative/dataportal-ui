@@ -14,7 +14,7 @@ import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-
 import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
+import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 import { TableData } from 'src/app/shared/models/TableData/TableData';
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
@@ -27,6 +27,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service';
+import { filter } from 'lodash';
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -66,12 +69,13 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     public elementRef: ElementRef,
     private cdr: ChangeDetectorRef,
     private searchFilterProvider: FilterProvider,
-    private selectedTableItemsService: SelectedTableItemsService<CriteriaListEntry>,
+    private selectedTableItemsService: SelectedTableItemsProvider<CriteriaListEntry>,
     private searchTermDetailsService: SearchTermDetailsService,
     private searchTermDetailsProviderService: SearchTermDetailsProviderService,
     private criteriaSearchService: CriteriaSearchService,
     private snackbarService: SnackbarService,
-    private navigationHelperService: NavigationHelperService
+    private navigationHelperService: NavigationHelperService,
+    private criteriaFilterFetchService: CriteriaFilterFetchService
   ) {
     this.subscription = this.criteriaSearchService
       .getSearchResults()
@@ -114,7 +118,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
     this.adaptedData = new CriteriaListEntryAdapter().adapt(this.listItems);
     this.searchResultsFound = this.adaptedData.body.rows.length > 0;
     this.selectedTableItemsService
-      .getSelectedTableItems()
+      .getItems()
       .pipe(
         map((selected) => {
           this.adaptedData.body.rows.forEach((row) => {
@@ -136,13 +140,11 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
    * unchecked in the table
    */
   private handleSelectedItemsSubscription(): void {
-    this.selectedTableItemsService
-      .getSelectedTableItems()
-      .subscribe((selectedItems: CriteriaListEntry[]) => {
-        if (selectedItems.length === 0) {
-          this.uncheckAllRows();
-        }
-      });
+    this.selectedTableItemsService.getItems().subscribe((selectedItems: CriteriaListEntry[]) => {
+      if (selectedItems.length === 0) {
+        this.uncheckAllRows();
+      }
+    });
   }
 
   private uncheckAllRows(): void {
@@ -164,16 +166,16 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   public setSelectedRowItem(item: TableRowData): void {
-    const selectedIds = this.selectedTableItemsService.getSelectedIds();
+    const selectedIds = this.selectedTableItemsService.getIds();
     const itemId = item.originalEntry.getId();
     if (selectedIds.includes(itemId)) {
-      this.selectedTableItemsService.removeFromSelection(item.originalEntry as CriteriaListEntry);
+      this.selectedTableItemsService.deselect(item.originalEntry as CriteriaListEntry);
       this.snackbarService.displayErrorMessageWithNoCode(
         'FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE'
       );
     } else {
       this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE');
-      this.selectedTableItemsService.setSelectedTableItem(item.originalEntry as CriteriaListEntry);
+      this.selectedTableItemsService.setActiveItem(item.originalEntry as CriteriaListEntry);
     }
   }
 
@@ -189,19 +191,43 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   public getElasticSearchFilter(): void {
-    this.searchFilters$ = this.searchFilterProvider
-      .getCriteriaSearchFilters()
-      .pipe(
-        map((searchFilters: CriteriaSearchFilter[]) =>
-          searchFilters.map((searchFilter: CriteriaSearchFilter) =>
-            CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
-          )
+    this.searchFilters$ = this.searchFilterProvider.getCriteriaSearchFilters().pipe(
+      map((searchFilters: CriteriaSearchFilter[]) =>
+        searchFilters.map((searchFilter: CriteriaSearchFilter) =>
+          CriteriaSearchFilterAdapter.convertToFilterValues(searchFilter)
         )
-      );
+      ),
+      map((searchFilters: SearchFilter[]) => {
+        const filterOrder: Record<string, number> = {
+          [ElasticSearchFilterTypes.KDS_MODULE]: 0,
+          [ElasticSearchFilterTypes.CONTEXT]: 1,
+          [ElasticSearchFilterTypes.TERMINOLOGY]: 2,
+        };
+        return searchFilters.sort(
+          (a, b) =>
+            filterOrder[a.filterType.toLowerCase()] - filterOrder[b.filterType.toLowerCase()]
+        );
+      })
+    );
+  }
+
+  /**
+   * 1. If no prev filters are selected do nothing
+   * 2. If filters are selected, fetch new filter options for the opened filter, excluding its own current selection from the request parameters
+   * @param event
+   * @returns
+   */
+  public isFilterOpen(event: { isOpen: boolean; targetFilter: string }): void {
+    if (!event.isOpen) {
+      return;
+    }
+    this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText, event.targetFilter);
   }
 
   public setElasticSearchFilter(newFilter: SearchFilter) {
     this.searchWithFilterSubscription?.unsubscribe();
+    const filterType = newFilter.filterType.toLocaleLowerCase();
+    this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText, filterType);
     this.searchFilterProvider.updateFilterSelectedValues(
       newFilter.filterType,
       newFilter.selectedValues

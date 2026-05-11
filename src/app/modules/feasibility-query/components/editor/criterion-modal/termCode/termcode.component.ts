@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
 import { HashService } from '../../../../../../service/Hash.service';
-import { SelectedBulkCriteriaService } from '../../../../../../service/SelectedBulkCriteria.service';
+import { SelectedBulkCriteriaProvider } from '../../../../../../service/SelectedBulkCriteria.service';
 import { CriteriaBulkEntry } from '../../../../../../model/Search/ListEntries/CriteriaBulkEntry';
 
 @Component({
@@ -21,7 +21,7 @@ export class TermcodeComponent implements OnInit {
   bulkEntries: CriteriaBulkEntry[] = [];
   constructor(
     private hashService: HashService,
-    private selectedBulkCriteriaService: SelectedBulkCriteriaService
+    private selectedBulkCriteriaService: SelectedBulkCriteriaProvider
   ) {}
   ngOnInit(): void {
     this.createBulkEntries();
@@ -30,7 +30,7 @@ export class TermcodeComponent implements OnInit {
   private createBulkEntries(): void {
     this.bulkEntries = this.termCodes.map((termCode) => {
       const hash = this.hashService.createCriterionHash(this.context, termCode);
-      return this.selectedBulkCriteriaService.getFoundEntry(hash);
+      return this.selectedBulkCriteriaService.getFoundById(hash);
     });
   }
 

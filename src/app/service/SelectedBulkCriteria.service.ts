@@ -1,113 +1,82 @@
-import { Injectable } from '@angular/core';
-import { TerminologyCode } from '../model/Terminology/TerminologyCode';
+import { AbstractArrayEntityProvider } from './Provider/Abstract/AbstractArrayEntityProvider';
 import { CriteriaBulkEntry } from '../model/Search/ListEntries/CriteriaBulkEntry';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
-/**
- * Service for managing selected bulk criteria entries.
- * Maintains the state of selected criteria and provides observable streams for updates.
- */
 @Injectable({
   providedIn: 'root',
 })
-export class SelectedBulkCriteriaService {
-  private selectedBulkCriteriaTermCodes: BehaviorSubject<CriteriaBulkEntry[]> = new BehaviorSubject<
-    CriteriaBulkEntry[]
-  >([]);
-  private uiProfileId: string;
-
-  private foundEntries: Subject<CriteriaBulkEntry[]> = new Subject<CriteriaBulkEntry[]>();
-  private allFoundEntries: Map<string, CriteriaBulkEntry> = new Map();
-  constructor() {}
+export class SelectedBulkCriteriaProvider extends AbstractArrayEntityProvider<CriteriaBulkEntry> {
+  private uiProfileId: string | undefined;
+  private searchResultsSubject = new Subject<CriteriaBulkEntry[]>();
+  private foundEntriesMap = new Map<string, CriteriaBulkEntry>();
 
   /**
-   * Gets the selected bulk criteria as an Observable.
-   * @returns Observable that emits the current array of selected CriteriaBulkEntry objects
+   * @param entity
+   * @returns
    */
-  public getSelectedBulkCriteria(): Observable<CriteriaBulkEntry[]> {
-    return this.selectedBulkCriteriaTermCodes.asObservable();
+  protected selectId(entity: CriteriaBulkEntry): string {
+    return entity.getId();
   }
 
   /**
-   * Sets the found entries and notifies subscribers.
-   * @param entries - Array of found CriteriaBulkEntry objects
+   * Gets the currently selected criteria bulk entries as an observable.
+   * @returns An observable containing the selected criteria bulk entries.
    */
-  public setFoundEntries(entries: CriteriaBulkEntry[]): void {
-    this.foundEntries.next(entries);
-    entries.forEach((entry) => {
-      this.allFoundEntries.set(entry.getId(), entry);
-    });
+  public getSelected(): Observable<CriteriaBulkEntry[]> {
+    return this.getAll();
   }
 
   /**
-   * Gets the found entries as an Observable.
-   * @returns Observable that emits arrays of found CriteriaBulkEntry objects
+   * Sets the search results for criteria bulk entries and updates the internal map of found entries.
+   * @param entries - The criteria bulk entries to set as search results.
    */
-  public getSelectedFoundEntries(): Observable<CriteriaBulkEntry[]> {
-    return this.foundEntries.asObservable();
+  public setSearchResults(entries: CriteriaBulkEntry[]): void {
+    this.searchResultsSubject.next(entries);
+    entries.forEach((entry) => this.foundEntriesMap.set(entry.getId(), entry));
   }
 
-  public getAllFoundEntries(): Map<string, CriteriaBulkEntry> {
-    return this.allFoundEntries;
-  }
-  public getFoundEntry(id: string): CriteriaBulkEntry {
-    return this.allFoundEntries.get(id);
-  }
   /**
-   * Gets the current UI profile ID.
-   * @returns The UI profile ID string
+   * Gets the search results for criteria bulk entries as an observable.
+   * @returns An observable containing the search results for criteria bulk entries.
    */
-  public getUiProfileId(): string {
+  public getSearchResults(): Observable<CriteriaBulkEntry[]> {
+    return this.searchResultsSubject.asObservable();
+  }
+
+  public getFoundEntriesMap(): Map<string, CriteriaBulkEntry> {
+    return this.foundEntriesMap;
+  }
+
+  public getFoundById(id: string): CriteriaBulkEntry | undefined {
+    return this.foundEntriesMap.get(id);
+  }
+
+  public getUiProfileId(): string | undefined {
     return this.uiProfileId;
   }
 
-  /**
-   * Sets the UI profile ID.
-   * @param uiProfileId - The UI profile ID to set
-   */
   public setUiProfileId(uiProfileId: string): void {
     this.uiProfileId = uiProfileId;
   }
 
-  /**
-   * Adds multiple selected bulk criteria entries.
-   * @param entries - Array of CriteriaBulkEntry objects to add
-   */
-  public addSelectedBulkCriteriaIds(entries: CriteriaBulkEntry[]): void {
-    const currentEntries = this.selectedBulkCriteriaTermCodes.value;
-    this.selectedBulkCriteriaTermCodes.next([...currentEntries, ...entries]);
+  public addSelected(entries: CriteriaBulkEntry[]): void {
+    this.addMany(entries);
   }
 
-  /**
-   * Toggles a selected bulk criterion entry (adds if not present, removes if present).
-   * @param entry - The CriteriaBulkEntry to toggle
-   */
-  public addSelectedBulkCriterion(entry: CriteriaBulkEntry): void {
-    const currentEntries = this.selectedBulkCriteriaTermCodes.value;
-    if (!currentEntries.find((selectedEntry) => selectedEntry.getId() === entry.getId())) {
-      this.selectedBulkCriteriaTermCodes.next([...currentEntries, entry]);
+  public toggle(entry: CriteriaBulkEntry): void {
+    if (this.items.some((e) => this.selectId(e) === entry.getId())) {
+      this.removeOne(entry.getId());
     } else {
-      this.selectedBulkCriteriaTermCodes.next(
-        currentEntries.filter((selectedEntry) => selectedEntry.getId() !== entry.getId())
-      );
+      this.addOne(entry);
     }
   }
 
-  /**
-   * Removes multiple selected bulk criteria entries.
-   * @param entries - Array of CriteriaBulkEntry objects to remove
-   */
-  public removeSelectedBulkCriterion(entries: CriteriaBulkEntry[]): void {
-    const currentEntries = this.selectedBulkCriteriaTermCodes.value;
-    this.selectedBulkCriteriaTermCodes.next(
-      currentEntries.filter((selectedEntry) => !entries.find((entry) => entry.getId() === selectedEntry.getId()))
-    );
+  public deselect(entries: CriteriaBulkEntry[]): void {
+    this.removeMany(entries.map((e) => e.getId()));
   }
 
-  /**
-   * Clears all selected bulk criteria entries.
-   */
-  public clearSelectedBulkCriteriaIds(): void {
-    this.selectedBulkCriteriaTermCodes.next([]);
+  public clear(): void {
+    this.removeAll();
   }
 }

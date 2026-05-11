@@ -2,11 +2,16 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
 import { Injectable } from '@angular/core';
+import { AbstractArrayEntityProvider } from '../../Provider/Abstract/AbstractArrayEntityProvider';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FilterProvider {
+export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFilter> {
+  protected selectId(entity: CriteriaSearchFilter): string {
+    return entity.getName();
+  }
+
   private criteriaSearchFiltersSubject = new BehaviorSubject<CriteriaSearchFilter[]>([]);
 
   /**
@@ -16,6 +21,15 @@ export class FilterProvider {
    */
   public getCriteriaSearchFilters(): Observable<CriteriaSearchFilter[]> {
     return this.criteriaSearchFiltersSubject.asObservable();
+  }
+
+  /**
+   * Gets the current list of CriteriaSearchFilter objects as an Observable.
+   *
+   * @returns An Observable emitting the current list of CriteriaSearchFilter objects.
+   */
+  public getCriteriaSearchFiltersValue(): CriteriaSearchFilter[] {
+    return this.criteriaSearchFiltersSubject.getValue();
   }
 
   /**

@@ -13,7 +13,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
 import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component';
-import { SelectedBulkCriteriaService } from 'src/app/service/SelectedBulkCriteria.service';
+import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriteria.service';
 import { TableData } from 'src/app/shared/models/TableData/TableData';
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
 
@@ -46,7 +46,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
     private bulkCriteriaSearchFilterService: BulkCriteriaSearchFilterService,
     private searchFilterProvider: FilterProvider,
     private bulkCriteriaService: BulkCriteriaService,
-    private selectedBulkCriteriaService: SelectedBulkCriteriaService,
+    private selectedBulkCriteriaService: SelectedBulkCriteriaProvider,
     private navigationHelperService: NavigationHelperService
   ) {
     this.getBulkCriteriaSearchFilter();
@@ -69,7 +69,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    * Submits the bulk search with the current search term input.
    */
   public submitSearch(): void {
-    this.selectedBulkCriteriaService.clearSelectedBulkCriteriaIds();
+    this.selectedBulkCriteriaService.clear();
     this.bulkCriteriaSearchProvider.setSearchText(this.bulkSearchTermInput);
     const searchSub = this.bulkCriteriaService
       .search(this.bulkSearchTermInput)
@@ -105,7 +105,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    */
   public setSelectedRowItem(item: TableRowData): void {
     const criteriaBulkEntry = item.originalEntry as CriteriaBulkEntry;
-    this.selectedBulkCriteriaService.addSelectedBulkCriterion(criteriaBulkEntry);
+    this.selectedBulkCriteriaService.toggle(criteriaBulkEntry);
   }
 
   /**
@@ -137,7 +137,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    */
   private initializeSelectedEntriesSubscription(): void {
     const selectedSub = this.selectedBulkCriteriaService
-      .getSelectedFoundEntries()
+      .getSearchResults()
       .pipe(
         map((entries: CriteriaBulkEntry[]) => {
           this.updateRowSelectionStatus(entries);
@@ -165,7 +165,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    * @param response - The bulk criteria result list from the search
    */
   private handleSearchResults(response: CriteriaBulkResultList): void {
-    this.selectedBulkCriteriaService.addSelectedBulkCriteriaIds(response.getFound());
+    this.selectedBulkCriteriaService.addSelected(response.getFound());
     this.selectedBulkCriteriaService.setUiProfileId(response.getUiProfileId());
     this.foundCriteriaTableData = new CriteriaBulkFoundListEntryAdapter().adapt(response.getFound());
     this.notFoundCriteriaTableData = new CriteriaBulkNotFoundListEntryAdapter().adapt(

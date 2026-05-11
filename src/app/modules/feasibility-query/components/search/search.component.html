@@ -24,6 +24,7 @@
     [resetFilterEnabled$]="resetFilterEnabled$"
     (filterChanged)="setElasticSearchFilter($event)"
     (filterReset)="resetFilter()"
+    (isOpen)="isFilterOpen($event)"
   ></num-criteria-search-filter-bar>
 
   <div class="result-container">

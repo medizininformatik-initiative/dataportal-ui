@@ -6,7 +6,7 @@ import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/Feasibilit
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
 import { map, Observable, of } from 'rxjs';
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
+import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service';
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
 import { StageProviderService } from 'src/app/service/Provider/StageProvider.service';
 
@@ -21,24 +21,24 @@ export class SearchActionBarComponent implements OnInit {
   stageArray$: Observable<Array<string>> = of([]);
 
   constructor(
-    private listItemSelectionService: SelectedTableItemsService<CriteriaListEntry>,
+    private listItemSelectionService: SelectedTableItemsProvider<CriteriaListEntry>,
     private buildCriterionService: BuildCriterionService,
     private stageProviderService: StageProviderService,
     private navigationHelperService: NavigationHelperService,
-    private listItemService: SelectedTableItemsService<CriteriaListEntry>,
+    private listItemService: SelectedTableItemsProvider<CriteriaListEntry>,
     private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
     private feasibilityQueryValidation: FeasibilityQueryValidationService,
     private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
-    this.listItemArray$ = this.listItemSelectionService.getSelectedTableItems();
+    this.listItemArray$ = this.listItemSelectionService.getItems();
     this.stageArray$ = this.stageProviderService.getAll();
     this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
   }
 
   public addItemsToStage() {
-    const ids = this.listItemService.getSelectedIds();
+    const ids = this.listItemService.getIds();
     this.buildCriterionService
       .buildCriteriaFromHashes(ids)
       .pipe(
@@ -50,7 +50,7 @@ export class SearchActionBarComponent implements OnInit {
       )
       .subscribe((criteria: Criterion[]) => {
         this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_COHORT');
-        this.listItemService.clearSelection();
+        this.listItemService.clear();
       });
   }
 

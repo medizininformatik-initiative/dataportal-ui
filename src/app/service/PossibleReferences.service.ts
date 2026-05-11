@@ -1,4 +1,4 @@
-import { BehaviorSubject, map, mapTo, Observable, take, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, take, tap } from 'rxjs';
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
 import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
 import { ElementIdMapService } from './ElementIdMap.service';
@@ -17,7 +17,6 @@ export class PossibleReferencesService {
   private possibleReferencesMapSubject = new BehaviorSubject<
     Map<string, Map<string, PossibleProfileReferenceData[]>>
   >(new Map());
-  private possibleReferencesMap$ = this.possibleReferencesMapSubject.asObservable();
 
   constructor(
     private loadDataSelectionProfilesService: LoadDataSelectionProfilesService,
@@ -29,24 +28,23 @@ export class PossibleReferencesService {
   public initialize(profileId: string): Observable<void> {
     const profile = this.profileProviderService.getOne(profileId);
     const initialMap = new Map<string, Map<string, PossibleProfileReferenceData[]>>();
-    const elementIdMap =
-      this.elementIdMapService.createElementIdMapForPossibleReferencesNew(profile);
+    const elementIdMap = this.elementIdMapService.createReferenceDataMap(profile);
     initialMap.set(profileId, elementIdMap);
-    this.updateStagePossibleProfileRefrencesMap(initialMap);
-    return this.filterPossibleReferences(profile);
+    this.updateReferencesMap(initialMap);
+    return this.rebuildPossibleReferences(profile);
   }
 
   /**
    * Updates the staged reference profile URLs map.
    * @param updatedMap - The updated map to set.
    */
-  public updateStagePossibleProfileRefrencesMap(
+  public updateReferencesMap(
     updatedMap: Map<string, Map<string, PossibleProfileReferenceData[]>>
   ): void {
     this.possibleReferencesMapSubject.next(new Map(updatedMap));
   }
 
-  public filterPossibleReferences(parentProfile: DataSelectionProfile): Observable<void> {
+  public rebuildPossibleReferences(parentProfile: DataSelectionProfile): Observable<void> {
     return this.dataSelectionProviderService.getProfilesFromActiveDataSelection().pipe(
       take(1),
       map((dataSelectionProfiles) => {
@@ -56,28 +54,26 @@ export class PossibleReferencesService {
         dataSelectionProfiles.forEach((profile) => {
           const id = profile.getId();
           const referencedFields = parentProfile.getProfileFields().getReferenceFields();
-          const oldInner = baseMap.get(id) ?? new Map<string, PossibleProfileReferenceData[]>();
-          const newInner = new Map<string, PossibleProfileReferenceData[]>();
+          const existingElementMap =
+            baseMap.get(id) ?? new Map<string, PossibleProfileReferenceData[]>();
+          const newElementMap = new Map<string, PossibleProfileReferenceData[]>();
 
-          oldInner.forEach((_oldRefs, elementId) => {
+          existingElementMap.forEach((_oldRefs, elementId) => {
             const fieldDef = referencedFields.find((f) => f.getElementId() === elementId);
             const urls =
               fieldDef
                 ?.getReferencedProfiles()
                 .map((referencedProfile) => referencedProfile.getUrl()) ?? [];
-            const linkedIds = this.getLinkedProfilesIdsFromSelectedReferenceFields(
-              parentProfile,
-              elementId
-            );
+            const linkedIds = this.getLinkedProfileIds(parentProfile, elementId);
             const existing = this.getExistingProfilesByUrls(urls, id, dataSelectionProfiles);
-            newInner.set(elementId, this.mapProfilesToPossibleReferences(existing, linkedIds));
+            newElementMap.set(elementId, this.mapProfilesWithSelectionState(existing, linkedIds));
           });
-          baseMap.set(id, newInner);
+          baseMap.set(id, newElementMap);
         });
         return baseMap;
       }),
       tap((updatedMap) => this.possibleReferencesMapSubject.next(updatedMap)),
-      mapTo(void 0)
+      map(() => void 0)
     );
   }
 
@@ -85,21 +81,16 @@ export class PossibleReferencesService {
    * Public getter for the possibleReferencesMap$ observable.
    * @returns An observable of the possible references map.
    */
-  public getPossibleReferencesMap(): Observable<
-    Map<string, Map<string, PossibleProfileReferenceData[]>>
-  > {
+  public getReferencesMap(): Observable<Map<string, Map<string, PossibleProfileReferenceData[]>>> {
     return this.possibleReferencesMapSubject.asObservable();
   }
 
-  public getLinkedProfilesIdsFromSelectedReferenceFields(
-    parentProfile: DataSelectionProfile,
-    elementId: string
-  ): string[] {
-    const foudnSelectedReferenceField = parentProfile
+  public getLinkedProfileIds(parentProfile: DataSelectionProfile, elementId: string): string[] {
+    const matchedField = parentProfile
       .getProfileFields()
       .getSelectedReferenceFields()
       ?.find((field) => field.getElementId() === elementId);
-    return foudnSelectedReferenceField?.getLinkedProfileIds() ?? [];
+    return matchedField?.getLinkedProfileIds() ?? [];
   }
 
   /**
@@ -125,16 +116,13 @@ export class PossibleReferencesService {
    * @param profiles - The profiles to map.
    * @returns A list of possible profile references.
    */
-  private mapProfilesToPossibleReferences(
+  private mapProfilesWithSelectionState(
     profiles: DataSelectionProfile[],
     linkedIds: string[]
   ): PossibleProfileReferenceData[] {
     return profiles.map((profile) => {
-      let isSelectd = false;
-      if (linkedIds.length > 0) {
-        isSelectd = linkedIds.includes(profile.getId());
-      }
-      return this.mapProfileToReference(profile, isSelectd);
+      const isSelected = linkedIds.length > 0 && linkedIds.includes(profile.getId());
+      return this.mapProfileToReference(profile, isSelected);
     });
   }
 
@@ -145,14 +133,14 @@ export class PossibleReferencesService {
    */
   private mapProfileToReference(
     profile: DataSelectionProfile,
-    isSelectd: boolean
+    isSelected: boolean
   ): PossibleProfileReferenceData {
     return {
       id: profile.getId(),
       label: profile.getLabel().getOriginal(),
       display: profile.getDisplay(),
       url: profile.getUrl(),
-      isSelected: isSelectd,
+      isSelected,
     };
   }
 
@@ -168,7 +156,7 @@ export class PossibleReferencesService {
     return profiles.map((profile) => this.mapProfileToReference(profile, true));
   }
 
-  public fetchProfilesAndMapToPossibleReferences(
+  public loadAndMapProfiles(
     urls: string[],
     elementId: string,
     parentProfileId: string
@@ -178,22 +166,31 @@ export class PossibleReferencesService {
         this.dataSelectionProviderService.setProfilesInActiveDataSelection(profiles);
         const possibleReferences = this.mapProfilesToReferences(profiles);
         const currentMap = this.possibleReferencesMapSubject.getValue();
-        const outerMap =
-          currentMap.get(parentProfileId) || new Map<string, PossibleProfileReferenceData[]>();
-        const existingReferences = outerMap.get(elementId) || [];
+        const existingReferences = currentMap.get(parentProfileId)?.get(elementId) ?? [];
         const updatedReferences = [...existingReferences, ...possibleReferences];
-        const updatedOuterMap = new Map(outerMap);
-        updatedOuterMap.set(elementId, updatedReferences);
-        const updatedMap = new Map(currentMap);
-        updatedMap.set(parentProfileId, updatedOuterMap);
-        this.possibleReferencesMapSubject.next(updatedMap);
+        this.updateNestedMap(parentProfileId, elementId, updatedReferences);
         return updatedReferences;
       })
     );
   }
 
-  public clearPossibleReferencesMap(): void {
+  public clearReferencesMap(): void {
     this.possibleReferencesMapSubject.next(new Map());
+  }
+
+  private updateNestedMap(
+    profileId: string,
+    elementId: string,
+    references: PossibleProfileReferenceData[]
+  ): void {
+    const currentMap = this.possibleReferencesMapSubject.getValue();
+    const outerMap = new Map(
+      currentMap.get(profileId) ?? new Map<string, PossibleProfileReferenceData[]>()
+    );
+    outerMap.set(elementId, references);
+    const updatedMap = new Map(currentMap);
+    updatedMap.set(profileId, outerMap);
+    this.possibleReferencesMapSubject.next(updatedMap);
   }
 
   /**
@@ -202,17 +199,11 @@ export class PossibleReferencesService {
    * @param elementId - The ID of the element.
    * @param possibleReferences - The array of possible profile reference data to set.
    */
-  public setPossibleReferencesMapElement(
+  public setReferencesMapElement(
     profileId: string,
     elementId: string,
     possibleReferences: PossibleProfileReferenceData[]
   ): void {
-    const currentMap = this.possibleReferencesMapSubject.getValue();
-    const outerMap = currentMap.get(profileId) || new Map<string, PossibleProfileReferenceData[]>();
-    outerMap.set(elementId, possibleReferences);
-
-    const updatedMap = new Map(currentMap);
-    updatedMap.set(profileId, outerMap);
-    this.possibleReferencesMapSubject.next(updatedMap);
+    this.updateNestedMap(profileId, elementId, possibleReferences);
   }
 }

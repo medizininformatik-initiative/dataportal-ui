@@ -19,9 +19,9 @@ export class SearchFilterService {
    * Fetches available filters from the backend and updates the filters subject.
    * @returns An Observable emitting the current list of filters.
    */
-  public fetchFilters(): Observable<Array<CriteriaSearchFilter>> {
+  public fetchFilters(url: string): Observable<Array<CriteriaSearchFilter>> {
     return this.backendService
-      .getSearchFilter()
+      .getSearchFilter(url)
       .pipe(
         map((response: CriteriaSearchFilterData[]) =>
           response
@@ -54,6 +54,6 @@ export class SearchFilterService {
   }
 
   private setFilterType(name: string): ElasticSearchFilterTypes {
-    return ElasticSearchFilterTypes[name.toUpperCase() as keyof typeof FilterTypes];
+    return ElasticSearchFilterTypes[name.toUpperCase() as keyof typeof ElasticSearchFilterTypes];
   }
 }

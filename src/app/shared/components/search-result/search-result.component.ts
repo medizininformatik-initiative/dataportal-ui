@@ -1,5 +1,5 @@
 import { MatDrawer } from '@angular/material/sidenav';
-import { SelectedTableItemsService } from 'src/app/service/SearchTermListItemService.service';
+import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -31,12 +31,12 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
   isOpen = false;
 
   constructor(
-    private listItemService: SelectedTableItemsService<CriteriaListEntry>,
+    private listItemService: SelectedTableItemsProvider<CriteriaListEntry>,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.listItemService.getSelectedTableItem().subscribe((row) => {
+    this.listItemService.getActiveItem().subscribe((row) => {
       this.data = row;
       if (this.isInitialized) {
         this.cdr.detectChanges();
