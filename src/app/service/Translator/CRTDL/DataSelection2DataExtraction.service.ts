@@ -40,7 +40,7 @@ export class DataSelection2DataExtraction {
       attributes,
       filters,
       profile.getLabel().getOriginal(),
-      profile.getReference().getIsReferenceSet() && profile.getReference().getIncludeReferenceOnly()
+      profile.getReference().getIsReferenceSet()
     );
   }
 
