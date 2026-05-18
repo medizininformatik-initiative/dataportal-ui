@@ -105,25 +105,25 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "num-portal-webapp:build",
-            "proxyConfig": "proxy.conf.json"
+            "proxyConfig": "proxy.conf.json",
+            "buildTarget": "num-portal-webapp:build"
           },
           "configurations": {
             "deploy": {
-              "browserTarget": "num-portal-webapp:build:development"
+              "buildTarget": "num-portal-webapp:build:development"
             },
             "development": {
-              "browserTarget": "studio:build:development"
+              "buildTarget": "studio:build:development"
             },
             "mock": {
-              "browserTarget": "num-portal-webapp:build:mock"
+              "buildTarget": "num-portal-webapp:build:mock"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "num-portal-webapp:build"
+            "buildTarget": "num-portal-webapp:build"
           }
         },
         "lint": {
@@ -188,8 +188,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "playground:build",
-            "port": 4201
+            "port": 4201,
+            "buildTarget": "playground:build"
           }
         }
       }
