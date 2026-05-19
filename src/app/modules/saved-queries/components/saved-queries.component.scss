@@ -1,30 +1,13 @@
 :host {
+  display: block;
   width: 100%;
   height: 100%;
 }
 
-.container {
+.page-wrapper {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
-  height: 100px;
-  background-color: white;
-  border-bottom: 1px solid rgba(241, 242, 243, 1);
-}
-
-.width-40 {
-  width: 40%;
-}
-
-.background-color-button {
-  color: white;
-  background-color: #5a79af;
-  margin-right: 10px;
-  width: 100px;
-  height: 30px;
-}
-
-.width-100 {
-  width: 100%;
+  height: 100%;
 }

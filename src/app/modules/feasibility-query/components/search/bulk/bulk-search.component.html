@@ -1,4 +1,4 @@
-<div fxFlexFill fxLayout="column" fxLayoutAlign="start">
+<div class="bulk-container">
   <div>
     <div class="header-container">
       <num-header [showToggle]="true">{{
@@ -12,7 +12,7 @@
       {{ 'FEASIBILITY.BULK_SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
-  <div class="search-container width-100" fxLayout="row" fxLayoutAlign="start center">
+  <div class="search-container">
     <textarea
       class="input-field-area"
       matNativeControl
@@ -43,7 +43,7 @@
   <mat-tab-group
     (selectedTabChange)="tabChange($event)"
     *ngIf="searchResultsFound"
-    style="width: 100%; flex: 1; overflow: auto"
+    class="tab-group-flex"
   >
     <mat-tab
       position="2"

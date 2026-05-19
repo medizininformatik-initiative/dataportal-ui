@@ -1,4 +1,4 @@
-<div class="container" fxLayout="column" fxLayoutAlign="space-between stretch">
+<div class="container">
   <div class="reference-container">
     <ng-container *ngIf="possibleReferences$ | async as possibleReferences; else placeholder">
       <ng-container *ngIf="possibleReferences.length > 0; else placeholder">
@@ -17,7 +17,7 @@
       </num-placeholder-box>
     </ng-template>
   </div>
-  <div fxLayoutAlign="start center">
+  <div class="button-footer">
     <num-button type="blue" (click)="openReferenceModal()">
       {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.ADD' | translate }}
     </num-button>

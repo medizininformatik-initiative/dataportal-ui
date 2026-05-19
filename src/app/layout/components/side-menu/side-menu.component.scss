@@ -1,6 +1,10 @@
 /* Navigation list */
 
 mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 16px 12px 0 12px;
 
@@ -80,6 +84,11 @@ fa-icon svg {
 
 /* Logo row */
 .num-logo-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: auto;
   height: 48px;
 }
 

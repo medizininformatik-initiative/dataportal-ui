@@ -30,8 +30,6 @@
           <div class="selected-fields-box">
             <div
               *ngFor="let selectedField of selectedBasicFields; let index = index"
-              fxLayout="row"
-              fxLayoutAlign="start center"
               class="selected-filter-container"
             >
               <div>
@@ -56,19 +54,13 @@
                   {{ selectedField.getDescription() | displayTranslation }}
                 </span>
               </div>
-              <div
+              <fa-icon
                 *ngIf="!selectedField.getIsRequired()"
-                fxLayout="row"
-                fxFlex="10"
-                fxLayoutAlign="end center"
-              >
-                <fa-icon
-                  [icon]="'times'"
-                  size="1x"
-                  (click)="removeSelectedField(selectedField)"
-                  class="delete-button"
-                ></fa-icon>
-              </div>
+                [icon]="'times'"
+                size="1x"
+                (click)="removeSelectedField(selectedField)"
+                class="delete-button"
+              ></fa-icon>
             </div>
           </div>
         </div>

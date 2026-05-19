@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" class="num-card selection-box">
+<div class="num-card selection-box">
   <div class="display-container border-right-1">
     <div>
       <div class="num-text-accent margin-bottom-2">
@@ -17,36 +17,50 @@
       </div>
     </div>
   </div>
-  <div class="selected-fields-container border-right-1 padding-left-right-1">
+  <div class="header-col border-right-1">
     <div class="label-with-info">
       <span class="num-text-accent">{{
         'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate
       }}</span>
     </div>
-    <div class="filter-chips-container">
-      <num-filter-chips [filterChips]="$fieldsFilterChips | async"> </num-filter-chips>
+    <div class="header-col-chips">
+      <ng-container *ngIf="$fieldsFilterChips | async as chips">
+        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
+        <span *ngIf="chips.length === 0" class="empty-state">{{
+          'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
+        }}</span>
+      </ng-container>
     </div>
   </div>
-  <div fxLayout="column" class="filter-container border-right-1 padding-left-right-1">
+  <div class="header-col border-right-1">
     <div class="label-with-info">
       <span class="num-text-accent">{{
         'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate
       }}</span>
     </div>
-    <div *ngIf="filtersFilterChips$ | async as chips" class="filter-chips-container">
-      <num-filter-chips [filterChips]="chips"> </num-filter-chips>
+    <div class="header-col-chips">
+      <ng-container *ngIf="filtersFilterChips$ | async as chips">
+        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
+        <span *ngIf="chips.length === 0" class="empty-state">{{
+          'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
+        }}</span>
+      </ng-container>
     </div>
   </div>
-  <div fxLayout="column" class="reference-container padding-left-right-1">
-    <div fxLayout="row wrap" fxLayoutAlign="space-between">
-      <div class="label-with-info">
-        <span class="num-text-accent">{{
-          'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate
-        }}</span>
-      </div>
+  <div class="header-col">
+    <div class="label-with-info">
+      <span class="num-text-accent">{{
+        'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate
+      }}</span>
     </div>
-    <div *ngIf="profileReferenceChips" class="filter-chips-container">
-      <num-filter-chips [filterChips]="profileReferenceChips"> </num-filter-chips>
+    <div class="header-col-chips">
+      <num-filter-chips
+        *ngIf="profileReferenceChips?.length > 0"
+        [filterChips]="profileReferenceChips"
+      ></num-filter-chips>
+      <span *ngIf="!profileReferenceChips?.length" class="empty-state">{{
+        'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
+      }}</span>
     </div>
   </div>
 </div>

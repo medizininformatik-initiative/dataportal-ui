@@ -3,25 +3,17 @@
   align-items: center;
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: #6a7483;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  color: var(--color-text-secondary);
   margin-bottom: 8px;
 }
 
 .time-restriction-wrapper {
   width: 100%;
-  margin-left: 16px;
-}
-
-.time-restriction-row {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-}
-
-.fill {
-  flex: 1;
+  padding-left: 16px;
+  padding-top: 16px;
+  align-self: center;
 }
 
 .time-restriction-row {

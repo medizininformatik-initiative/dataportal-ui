@@ -8,6 +8,9 @@
 
 // ── Field row ──────────────────────────────────────────────────
 .selected-filter-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   width: 100%;
   min-height: 49px;
   background-color: white;
@@ -55,6 +58,7 @@
   color: var(--color-text-secondary);
   cursor: pointer;
   flex-shrink: 0;
+  margin-left: auto;
 
   &:hover {
     color: var(--color-accent);

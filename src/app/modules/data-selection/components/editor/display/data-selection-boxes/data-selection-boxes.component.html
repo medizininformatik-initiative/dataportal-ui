@@ -1,9 +1,4 @@
-<div
-  fxLayout="row"
-  fxLayoutAlign="start stretch"
-  class="num-card selection-box"
-  [attr.data-cy]="label | displayTranslation"
->
+<div class="num-card selection-box" [attr.data-cy]="label | displayTranslation">
   <div class="display-container">
     <div class="num-text-body">{{ label | displayTranslation }}</div>
     <div
@@ -58,7 +53,7 @@
       </ng-container>
     </div>
   </div>
-  <div *ngIf="isReferenced" fxLayout="column" class="reference-container">
+  <div *ngIf="isReferenced" class="reference-container">
     <div class="label-with-info">
       <span class="num-text-accent">{{
         'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
@@ -88,7 +83,7 @@
       </ng-container>
     </div>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start start" class="menu-box">
+  <div class="menu-box">
     <num-menu [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
   </div>
 </div>

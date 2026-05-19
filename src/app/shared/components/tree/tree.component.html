@@ -6,7 +6,7 @@
     [style.marginLeft]="calcMarginLeft(level)"
     [attr.data-cy]="node.data.display | displayTranslation"
   >
-    <div fxLayout="row" fxLayoutAlign="start center" class="width-100 node-row">
+    <div class="width-100 node-row">
       <num-checkbox
         *ngIf="node.data.selectable"
         [disabled]="!node.data.isDisabled"
@@ -19,12 +19,7 @@
         class="tree-node"
         [style.marginLeft]="calcMarginLeftTreeNode(level, node.data.selectable)"
       >
-        <div
-          fxLayout="row"
-          fxLayoutAlign="center center"
-          (click)="toggleExpand(node)"
-          class="icon-container"
-        >
+        <div (click)="toggleExpand(node)" class="icon-container">
           <fa-icon *ngIf="!isExpanded(node)" icon="minus" class="icon-collapsed"></fa-icon>
           <fa-icon *ngIf="isExpanded(node)" icon="chevron-up"></fa-icon>
         </div>

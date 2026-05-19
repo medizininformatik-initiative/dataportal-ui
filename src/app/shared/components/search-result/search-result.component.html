@@ -1,7 +1,7 @@
-<mat-drawer-container fxFlexFill>
+<mat-drawer-container class="fill">
   <mat-drawer #drawer position="end" mode="side">
-    <div fxLayout="column" *ngIf="data" class="padding-top-50">
-      <button class="cancel-button" fxLayoutAlign="center end" (click)="drawer.toggle()">
+    <div *ngIf="data" class="drawer-panel">
+      <button class="cancel-button" (click)="drawer.toggle()">
         Back to list
         <fa-icon
           class="close-icon"
@@ -10,17 +10,14 @@
           [fixedWidth]="true"
         ></fa-icon>
       </button>
-      <num-list-item-details fxFlexFill [item]="data" class="padding-left-2">
-      </num-list-item-details>
+      <num-list-item-details class="detail-item" [item]="data"></num-list-item-details>
     </div>
   </mat-drawer>
   <mat-drawer-content *ngIf="searchTermListItems.length > 0" class="content-height-95">
-    <ng-container *ngIf="searchTermListItems.length > 0">
-      <num-result-list
-        [searchTermResultList]="searchTermListItems"
-        [keysToSkip]="keysToSkip"
-        fxFlexFill
-      ></num-result-list>
-    </ng-container>
+    <num-result-list
+      class="fill"
+      [searchTermResultList]="searchTermListItems"
+      [keysToSkip]="keysToSkip"
+    ></num-result-list>
   </mat-drawer-content>
 </mat-drawer-container>

@@ -1,6 +1,9 @@
 /* === Layout Containers === */
 // Core card shape — visual styles live in the global .num-card class (src/styles/general-styles/_ui-classes.scss)
 .selection-box {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
   min-height: 20%;
   margin-bottom: 16px;
 }
@@ -41,6 +44,8 @@
 }
 
 .reference-container {
+  display: flex;
+  flex-direction: column;
   flex: 0 0 10%;
   width: 10%;
   min-width: 80px;
@@ -48,6 +53,10 @@
 }
 
 .menu-box {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex: 0 0 auto;
   align-self: flex-start;
   margin-left: auto;

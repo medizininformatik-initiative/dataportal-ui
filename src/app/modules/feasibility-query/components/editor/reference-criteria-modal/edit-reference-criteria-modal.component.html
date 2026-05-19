@@ -12,7 +12,7 @@
     >
     </num-reference>
   </div>
-  <div *ngFor="let valueFilter of criterion.getValueFilters()" fxLayout="column" class="background">
+  <div *ngFor="let valueFilter of criterion.getValueFilters()" class="background">
     <num-reference
       *ngIf="valueFilter.getReference()"
       [referenceFilter]="valueFilter.getReference()"

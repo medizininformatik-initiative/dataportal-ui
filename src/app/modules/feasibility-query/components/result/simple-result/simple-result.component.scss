@@ -6,8 +6,13 @@
   overflow: auto;
 }
 
-.result-text {
-  font-size: 16px;
+.action-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-left: 10px;
 }
 
 ::ng-deep .mdc-tooltip__surface {
@@ -15,8 +20,4 @@
   font-size: 12px !important;
   box-shadow: 0 11px 15px -4px #0003, 0 24px 38px 5px #00000024, 0 9px 46px 8px #0000001f;
   letter-spacing: 0.5px !important;
-}
-
-.padding-left-button {
-  padding-left: 10px;
 }

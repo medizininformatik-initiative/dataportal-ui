@@ -1,4 +1,4 @@
-<mat-nav-list fxLayout="column" fxFill [ngClass]="{ collapsed: !isSideMenuExpanded }">
+<mat-nav-list [ngClass]="{ collapsed: !isSideMenuExpanded }">
   <ng-container *ngFor="let navItem of mainNavItems">
     <a
       class="num-mat-list-item"
@@ -18,8 +18,7 @@
     </a>
   </ng-container>
 
-  <span fxFlex></span>
-  <div fxLayout="row" fxLayoutAlign="end center" class="num-logo-row">
+  <div class="num-logo-row">
     <button
       type="button"
       [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate"

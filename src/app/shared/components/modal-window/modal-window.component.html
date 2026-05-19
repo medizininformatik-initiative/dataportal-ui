@@ -3,7 +3,7 @@
     <ng-content></ng-content>
   </div>
   <div>
-    <div *ngIf="displaySaveButtons" fxLayout="row" fxLayoutAlign="end center">
+    <div *ngIf="displaySaveButtons" class="button-row">
       <num-button type="blue" class="select-button" [isDisabled]="disabled" (click)="save()">
         {{ 'SHARED_COMPONENTS.MODAL.BUTTON.APPLY' | translate }}
       </num-button>

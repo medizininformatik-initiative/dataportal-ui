@@ -1,3 +1,14 @@
+.values-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.warning-container {
+  position: absolute;
+}
+
 .warning {
   color: red;
   padding-left: 1em;

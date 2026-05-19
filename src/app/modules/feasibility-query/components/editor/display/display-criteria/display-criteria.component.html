@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start" class="criteria-container">
+<div class="criteria-container">
   <div *ngIf="!isEditable" class="lock-div"></div>
   <ng-container #outlet [ngTemplateOutlet]="content"> </ng-container>
   <ng-template #content>
@@ -33,14 +33,9 @@
       </ng-container>
     </div>
   </ng-template>
-  <div
-    *ngIf="(criteriaArray$ | async).length === 0 && isEditable"
-    fxLayout="row"
-    fxLayoutAlign="center center"
-    class="no-selected-criteria"
-  >
-    <div fxLayout="row" fxLayoutAlign="space-around center" class="wrapper">
-      <div fxLayout="row" fxLayoutAlign="center center" class="wrapper-solid-dashed-box">
+  <div *ngIf="(criteriaArray$ | async).length === 0 && isEditable" class="no-selected-criteria">
+    <div class="wrapper">
+      <div class="wrapper-solid-dashed-box">
         <div class="solid-box">
           <fa-icon class="icon drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
         </div>
