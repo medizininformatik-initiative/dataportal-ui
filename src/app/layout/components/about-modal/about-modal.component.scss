@@ -3,7 +3,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, #5a79af 0%, #9bb823 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--num-color--primary-green) 100%);
   color: white;
   font-size: 1.25rem;
   border-radius: 4px;
@@ -31,10 +31,10 @@
 .section-header {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #5a79af;
+  color: var(--color-accent);
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #9bb823;
+  border-bottom: 2px solid var(--num-color--primary-green);
   margin-left: -1rem;
 }
 

@@ -1,12 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { DirectivesModule } from './directives/directives.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LayoutModule } from '../layout/layout.module';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { NgModule } from '@angular/core';
-import { SharedComponentsModule } from './components/shared-components.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common'
+import { DirectivesModule } from './directives/directives.module'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { LayoutModule } from '../layout/layout.module'
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core'
+import { NgModule } from '@angular/core'
+import { SharedComponentsModule } from './components/shared-components.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 export const FORMATS_GERMAN = {
   parse: {
@@ -18,7 +17,7 @@ export const FORMATS_GERMAN = {
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'YYYY',
   },
-};
+}
 
 const SHARED_MODULES = [
   TranslateModule,
@@ -26,13 +25,13 @@ const SHARED_MODULES = [
   ReactiveFormsModule,
   DirectivesModule,
   SharedComponentsModule,
-];
+]
 
-const SHARED_DECLARATIONS = [];
+const SHARED_DECLARATIONS: never[] = []
 
 @NgModule({
   declarations: [...SHARED_DECLARATIONS],
-  imports: [...SHARED_MODULES, CommonModule, LayoutModule, MatMomentDateModule],
+  imports: [...SHARED_MODULES, CommonModule, LayoutModule],
   exports: [...SHARED_MODULES, ...SHARED_DECLARATIONS],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }, // FIXED

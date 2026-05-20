@@ -27,15 +27,15 @@
     &.num-divider-color {
       &--primary,
       &--p {
-        border-color: mat.get-color-from-palette($primary, 400);
+        border-color: mat.m2-get-color-from-palette($primary, 400);
       }
       &--accent,
       &--a {
-        border-color: mat.get-color-from-palette($accent);
+        border-color: mat.m2-get-color-from-palette($accent);
       }
       &--warn,
       &--w {
-        border-color: mat.get-color-from-palette($warn);
+        border-color: mat.m2-get-color-from-palette($warn);
       }
     }
   }

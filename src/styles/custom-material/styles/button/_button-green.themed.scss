@@ -1,4 +1,4 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
 
 @mixin button-green($theme) {
   $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -8,8 +8,8 @@
     min-width: 119px !important;
     line-height: 24px;
     border: none;
-    background-color: mat.get-color-from-palette($primary, 'green');
-    color: mat.get-color-from-palette($primary, 'white');
+    background-color: mat.m2-get-color-from-palette($primary, 'green');
+    color: mat.m2-get-color-from-palette($primary, 'white');
     font-size: 16px;
     display: flex;
     flex-direction: row;
@@ -19,19 +19,19 @@
     gap: 4px;
 
     &:hover:not(.disabled) {
-      color: mat.get-color-from-palette($primary, 'white') !important;
-      background-color: mat.get-color-from-palette($primary, 'green-hover') !important;
+      color: mat.m2-get-color-from-palette($primary, 'white') !important;
+      background-color: mat.m2-get-color-from-palette($primary, 'green-hover') !important;
       box-shadow: $raised-shadow;
     }
 
     &.cdk-keyboard-focused {
-      background: mat.get-color-from-palette($primary, 'green-hover');
+      background: mat.m2-get-color-from-palette($primary, 'green-hover');
     }
 
     &.disabled {
-      background-color: mat.get-color-from-palette($primary, 50);
-      color: mat.get-color-from-palette($primary, 'green');
-      box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'green');
+      background-color: mat.m2-get-color-from-palette($primary, 50);
+      color: mat.m2-get-color-from-palette($primary, 'green');
+      box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($primary, 'green');
       cursor: unset;
     }
 
@@ -40,19 +40,19 @@
     */
     &.outline {
       background-color: transparent;
-      border: 2px solid mat.get-color-from-palette($primary, 'green');
-      color: mat.get-color-from-palette($primary, 'green');
+      border: 2px solid mat.m2-get-color-from-palette($primary, 'green');
+      color: mat.m2-get-color-from-palette($primary, 'green');
       box-shadow: none;
 
       &:hover:not(.disabled) {
-        background-color: rgba(mat.get-color-from-palette($primary, 'green'), 0.08) !important;
-        color: mat.get-color-from-palette($primary, 'green') !important;
+        background-color: rgba(mat.m2-get-color-from-palette($primary, 'green'), 0.08) !important;
+        color: mat.m2-get-color-from-palette($primary, 'green') !important;
         box-shadow: none;
       }
 
       &.disabled {
-        border-color: rgba(mat.get-color-from-palette($primary, 'green'), 0.4);
-        color: rgba(mat.get-color-from-palette($primary, 'green'), 0.4);
+        border-color: rgba(mat.m2-get-color-from-palette($primary, 'green'), 0.4);
+        color: rgba(mat.m2-get-color-from-palette($primary, 'green'), 0.4);
         background-color: transparent;
         box-shadow: none;
         cursor: unset;
@@ -75,9 +75,9 @@
       }
 
       &.disabled {
-        background-color: mat.get-color-from-palette($primary, 50);
-        color: mat.get-color-from-palette($primary, 'green');
-        box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'green');
+        background-color: mat.m2-get-color-from-palette($primary, 50);
+        color: mat.m2-get-color-from-palette($primary, 'green');
+        box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($primary, 'green');
         cursor: not-allowed;
       }
     }

@@ -1,11 +1,11 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
 @mixin language-component_themed($theme) {
   $primary: map-get($theme, primary);
   $additional: map-get($theme, additional);
 
   num-language fa-icon {
-    /*background: mat.get-color-from-palette($primary, 500) !important;*/
-    color: mat.get-contrast-color-from-palette($primary, 500) !important;
+    /*background: mat.m2-get-color-from-palette($primary, 500) !important;*/
+    color: mat.m2-get-contrast-color-from-palette($primary, 500) !important;
   }
 
   .num-mat-lang-toggle-button {
@@ -21,26 +21,26 @@
         font-weight: 400 !important;
 
         &:hover {
-          background: mat.get-color-from-palette($primary, 500);
+          background: mat.m2-get-color-from-palette($primary, 500);
         }
 
         &:focus,
         .cdk-keyboard-focused & {
-          background: mat.get-color-from-palette($primary, 500);
+          background: mat.m2-get-color-from-palette($primary, 500);
         }
       }
     }
     /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
     /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
     .mat-button-toggle-appearance-standard {
-      color: mat.get-contrast-color-from-palette($primary, 500);
+      color: mat.m2-get-contrast-color-from-palette($primary, 500);
       /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &.mat-button-toggle-checked {
-        color: mat.get-color-from-palette($primary, A700);
+        color: mat.m2-get-color-from-palette($primary, A700);
       }
       /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
       &.mat-button-toggle + .mat-button-toggle {
-        border-left: solid 2px mat.get-color-from-palette($primary);
+        border-left: solid 2px mat.m2-get-color-from-palette($primary);
       }
     }
     /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/

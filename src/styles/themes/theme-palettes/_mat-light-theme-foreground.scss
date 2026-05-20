@@ -1,7 +1,8 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
+
 @function mat-light-theme-foreground($primary, $accent, $additional) {
   @return (
-    text: mat.get-color-from-palette($additional, dark-grey),
+    text: mat.m2-get-color-from-palette($additional, dark-grey),
     disabled-button: rgba(white, 0.65),
     // defaults below
     base: black,

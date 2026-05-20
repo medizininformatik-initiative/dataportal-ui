@@ -8,6 +8,7 @@
 @import './styles/base/typography.themed';
 
 /* layout */
+@import './styles/layout/app-layout.themed';
 @import './styles/layout/header.themed';
 @import './styles/layout/footer.themed';
 @import './styles/layout/side-menu.component.themed';
@@ -34,6 +35,7 @@
   @include color-variables_themed($theme);
   @include color-classes_themed($theme);
   @include divider-classes_themed($theme);
+  @include app-layout_themed($theme);
   @include side-menu-component_themed($theme);
   @include language-component_themed($theme);
   @include general_table_themed($theme);
