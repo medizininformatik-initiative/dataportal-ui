@@ -1,8 +1,7 @@
 <div class="container padding-1">
-  <num-patient-count
-    *ngIf="totalNumberOfPatients"
-    [totalNumberOfPatients]="totalNumberOfPatients"
-  ></num-patient-count>
+  @if (totalNumberOfPatients) {
+  <num-patient-count [totalNumberOfPatients]="totalNumberOfPatients"></num-patient-count>
+  }
   <div class="action-row">
     <num-button
       type="green"
@@ -20,6 +19,8 @@
         (queryResultRateLimit$ | async)?.getLimit()
       }})
     </num-button>
-    <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
+    @if (showSpinner) {
+    <num-spinner [countdown]="pollingTime"></num-spinner>
+    }
   </div>
 </div>

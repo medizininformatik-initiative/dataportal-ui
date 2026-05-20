@@ -32,15 +32,6 @@
   gap: 4px;
 }
 
-.link-info {
-  display: flex;
-  align-items: flex-start;
-  gap: 32px;
-  width: 100%;
-  color: var(--color-accent);
-  font-size: var(--font-size-md);
-  justify-content: flex-start;
-}
 .link-field-container {
   display: flex;
   justify-content: space-between;
@@ -60,6 +51,7 @@
   width: 60%;
   color: var(--color-accent);
   font-size: var(--font-size-md);
+  justify-content: flex-start;
 
   .child-badge {
     background-color: var(--color-accent-bg);
@@ -79,37 +71,11 @@
   }
 }
 
-.type-tag {
-  .type-label {
-    background: var(--color-accent-bg);
-    padding: 4px 8px;
-    border-radius: var(--border-radius-card);
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-  }
-}
-
 .actions {
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
-
-  .delete-link {
-    color: var(--color-accent);
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-
-    .icon-trash {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background-size: contain;
-    }
-  }
 
   .icon {
     color: var(--color-accent);

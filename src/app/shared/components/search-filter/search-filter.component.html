@@ -36,9 +36,11 @@
         </div>
       </mat-option>
       <mat-optgroup class="scrollable-options-group">
-        <mat-option *ngFor="let value of filteredData" [value]="value.label">
+        @for (value of filteredData; track value) {
+        <mat-option [value]="value.label">
           {{ value.display | displayTranslation }} ({{ value.count }})
         </mat-option>
+        }
       </mat-optgroup>
     </mat-select>
   </div>

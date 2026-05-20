@@ -1,7 +1,7 @@
 <num-dataportal-header role="banner"></num-dataportal-header>
 <mat-sidenav-container autosize fullscreen class="sidenav-container fix-overlay">
+  @if (showSideNav) {
   <mat-sidenav
-    *ngIf="showSideNav"
     fixedInViewport
     [attr.role]="isHandset ? 'dialog' : 'navigation'"
     [attr.aria-label]="'APPLAYOUT.SIDENAV.LABEL' | translate"
@@ -16,6 +16,7 @@
       (toggleSideMenu)="isSideMenuExpanded = $event"
     ></num-side-menu>
   </mat-sidenav>
+  }
 
   <mat-sidenav-content class="padding-left-4">
     <div role="presentation" class="content-row">

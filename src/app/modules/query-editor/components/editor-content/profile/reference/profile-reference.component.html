@@ -10,11 +10,8 @@
         {{ 'INFORMATION.REFERENCES.EXTENDED_DESCRIPTION' | translate }}
       </num-information-section>
     </mat-tab>
-    <mat-tab
-      class="height-100"
-      *ngFor="let reference of referenceFields"
-      label="{{ reference.getDisplay() | displayTranslation }}"
-    >
+    @for (reference of referenceFields; track reference) {
+    <mat-tab class="height-100" label="{{ reference.getDisplay() | displayTranslation }}">
       <num-reference-field-tab
         [referenceField]="reference"
         [profileId]="profileId"
@@ -22,5 +19,6 @@
       >
       </num-reference-field-tab>
     </mat-tab>
+    }
   </mat-tab-group>
 </div>

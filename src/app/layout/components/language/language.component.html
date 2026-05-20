@@ -1,6 +1,9 @@
 <mat-form-field class="language-select" [attr.data-cy]="'language-select'">
-  <span *ngIf="translate.currentLang === 'de'" class="fi fi-de" matPrefix></span>
-  <span *ngIf="translate.currentLang === 'en'" class="fi fi-gb" matPrefix></span>
+  @if (translate.currentLang === 'de') {
+  <span class="fi fi-de" matPrefix></span>
+  } @if (translate.currentLang === 'en') {
+  <span class="fi fi-gb" matPrefix></span>
+  }
 
   <mat-select
     hideSingleSelectionIndicator

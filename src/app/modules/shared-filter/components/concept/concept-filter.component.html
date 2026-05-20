@@ -6,16 +6,17 @@
   >
   </num-searchbar>
 
+  @if (valueSetUrl?.length > 1) {
   <num-search-filter
-    *ngIf="valueSetUrl?.length > 1"
     [filter]="searchFilter"
     (selectedFilterChanged)="setValueSet($event)"
   ></num-search-filter>
+  } @if (searchResults$ | async; as searchResults) {
   <num-concept-filter-table
     class="overflow"
-    *ngIf="searchResults$ | async as searchResults"
     [valueSetUrl]="valueSetUrl"
     [conceptFilterId]="conceptFilterId"
     (selectedConcept)="toggleConceptSelection($event)"
   ></num-concept-filter-table>
+  }
 </div>

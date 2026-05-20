@@ -18,67 +18,17 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  background: var(--color-accent);
+  transform: translate(-50%, -50%) rotate(var(--_angle, 0deg)) translate(30px);
 }
 
-.dot:nth-child(1) {
-  transform: translate(-50%, -50%) rotate(0deg) translate(30px);
-  opacity: 0.92;
-  background: var(--color-accent);
-}
-.dot:nth-child(2) {
-  transform: translate(-50%, -50%) rotate(30deg) translate(30px);
-  opacity: 0.84;
-  background: var(--color-accent);
-}
-.dot:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(60deg) translate(30px);
-  opacity: 0.75;
-  background: var(--color-accent);
-}
-.dot:nth-child(4) {
-  transform: translate(-50%, -50%) rotate(90deg) translate(30px);
-  opacity: 0.67;
-  background: var(--color-accent);
-}
-.dot:nth-child(5) {
-  transform: translate(-50%, -50%) rotate(120deg) translate(30px);
-  opacity: 0.59;
-  background: var(--color-accent);
-}
-.dot:nth-child(6) {
-  transform: translate(-50%, -50%) rotate(150deg) translate(30px);
-  opacity: 0.51;
-  background: var(--color-accent);
-}
-.dot:nth-child(7) {
-  transform: translate(-50%, -50%) rotate(180deg) translate(30px);
-  opacity: 0.43;
-  background: var(--color-accent);
-}
-.dot:nth-child(8) {
-  transform: translate(-50%, -50%) rotate(210deg) translate(30px);
-  opacity: 0.35;
-  background: var(--color-accent);
-}
-.dot:nth-child(9) {
-  transform: translate(-50%, -50%) rotate(240deg) translate(30px);
-  opacity: 0.26;
-  background: var(--color-accent);
-}
-.dot:nth-child(10) {
-  transform: translate(-50%, -50%) rotate(270deg) translate(30px);
-  opacity: 0.18;
-  background: var(--color-accent);
-}
-.dot:nth-child(11) {
-  transform: translate(-50%, -50%) rotate(300deg) translate(30px);
-  opacity: 0.1;
-  background: var(--color-accent);
-}
-.dot:nth-child(12) {
-  transform: translate(-50%, -50%) rotate(330deg) translate(30px);
-  opacity: 0.05;
-  background: var(--color-accent);
+$dot-opacities: 0.92, 0.84, 0.75, 0.67, 0.59, 0.51, 0.43, 0.35, 0.26, 0.18, 0.1, 0.05;
+
+@for $i from 1 through 12 {
+  .dot:nth-child(#{$i}) {
+    --_angle: #{($i - 1) * 30}deg;
+    opacity: #{nth($dot-opacities, $i)};
+  }
 }
 
 @keyframes rotate {

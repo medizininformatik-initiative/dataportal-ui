@@ -1,32 +1,29 @@
-<div class="error-display-overlay" *ngIf="isVisible" (click)="closeError()">
+@if (isVisible) {
+<div class="error-display-overlay" (click)="closeError()">
   <div class="error-display-container" (click)="$event.stopPropagation()">
     <div class="error-display-header">
       <h3 class="error-title">{{ errorType || 'Error' }}</h3>
       <button class="close-button" (click)="closeError()" aria-label="Close">×</button>
     </div>
-
     <div class="error-display-body">
-      <num-info-tile *ngIf="errorUrl" label="Request URL" [value]="errorUrl" color="red">
-      </num-info-tile>
-
-      <div class="error-list" *ngIf="errorData && errorData.length > 0">
-        <num-info-tile
-          *ngFor="let error of errorData; let i = index"
-          [label]="'Error ' + (i + 1)"
-          [value]="getErrorMessage(error)"
-          color="red"
-        >
-          <div class="error-details" *ngIf="getErrorDetails(error)">
+      @if (errorUrl) {
+      <num-info-tile label="Request URL" [value]="errorUrl" color="red"> </num-info-tile>
+      } @if (errorData && errorData.length > 0) {
+      <div class="error-list">
+        @for (error of errorData; track error; let i = $index) {
+        <num-info-tile [label]="'Error ' + (i + 1)" [value]="getErrorMessage(error)" color="red">
+          @if (getErrorDetails(error)) {
+          <div class="error-details">
             {{ getErrorDetails(error) }}
           </div>
+          }
         </num-info-tile>
+        }
       </div>
-
-      <div class="no-errors" *ngIf="!errorData || errorData.length === 0">
-        No error details available
-      </div>
+      } @if (!errorData || errorData.length === 0) {
+      <div class="no-errors">No error details available</div>
+      }
     </div>
-
     <div class="error-display-footer">
       <num-button type="green" class="action-button" (click)="downloadError()">
         <fa-icon size="lg" [icon]="'download'"></fa-icon>
@@ -35,3 +32,4 @@
     </div>
   </div>
 </div>
+}

@@ -1,22 +1,26 @@
 <mat-nav-list [ngClass]="{ collapsed: !isSideMenuExpanded }">
-  <ng-container *ngFor="let navItem of mainNavItems">
-    <a
-      class="num-mat-list-item"
-      [routerLinkActive]="'num-mat-list-item--active'"
-      mat-list-item
-      [disableRipple]="true"
-      [routerLink]="navItem.routeTo"
-      (click)="menuItemClicked($event, navItem)"
-      [matTooltip]="!isSideMenuExpanded ? (navItem.translationKey | translate) : null"
-      matTooltipPosition="right"
-    >
-      <fa-icon *ngIf="navItem.icon" size="lg" [fixedWidth]="true" [icon]="navItem.icon"></fa-icon>
-      <mat-icon *ngIf="navItem.svgIcon" class="nav-svg-icon" [svgIcon]="navItem.svgIcon"></mat-icon>
-      <div class="navItem-font" *ngIf="isSideMenuExpanded">
-        {{ navItem.translationKey | translate }}
-      </div>
-    </a>
-  </ng-container>
+  @for (navItem of mainNavItems; track navItem) {
+  <a
+    class="num-mat-list-item"
+    [routerLinkActive]="'num-mat-list-item--active'"
+    mat-list-item
+    [disableRipple]="true"
+    [routerLink]="navItem.routeTo"
+    (click)="menuItemClicked($event, navItem)"
+    [matTooltip]="!isSideMenuExpanded ? (navItem.translationKey | translate) : null"
+    matTooltipPosition="right"
+  >
+    @if (navItem.icon) {
+    <fa-icon size="lg" [fixedWidth]="true" [icon]="navItem.icon"></fa-icon>
+    } @if (navItem.svgIcon) {
+    <mat-icon class="nav-svg-icon" [svgIcon]="navItem.svgIcon"></mat-icon>
+    } @if (isSideMenuExpanded) {
+    <div class="navItem-font">
+      {{ navItem.translationKey | translate }}
+    </div>
+    }
+  </a>
+  }
 
   <div class="num-logo-row">
     <button
@@ -25,8 +29,11 @@
       mat-icon-button
       (click)="toggleMenu()"
     >
-      <fa-icon *ngIf="isSideMenuExpanded" size="1x" icon="angle-double-left"></fa-icon>
-      <fa-icon *ngIf="!isSideMenuExpanded" size="1x" icon="angle-double-right"></fa-icon>
+      @if (isSideMenuExpanded) {
+      <fa-icon size="1x" icon="angle-double-left"></fa-icon>
+      } @if (!isSideMenuExpanded) {
+      <fa-icon size="1x" icon="angle-double-right"></fa-icon>
+      }
     </button>
   </div>
 </mat-nav-list>

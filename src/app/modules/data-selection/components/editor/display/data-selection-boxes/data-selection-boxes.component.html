@@ -24,12 +24,11 @@
       ></span>
     </div>
     <div class="filter-chips-container">
-      <ng-container *ngIf="$fieldsFilterChips | async as chips">
-        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
-        <span *ngIf="!chips.length" class="empty-state">{{
-          'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate
-        }}</span>
-      </ng-container>
+      @if ($fieldsFilterChips | async; as chips) { @if (chips.length > 0) {
+      <num-filter-chips [filterChips]="chips"></num-filter-chips>
+      } @if (!chips.length) {
+      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate }}</span>
+      } }
     </div>
   </div>
   <div class="card-col">
@@ -45,15 +44,15 @@
       ></span>
     </div>
     <div class="filter-chips-container">
-      <ng-container *ngIf="filtersFilterChips$ | async as chips">
-        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
-        <span *ngIf="!chips.length" class="empty-state">{{
-          'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
-        }}</span>
-      </ng-container>
+      @if (filtersFilterChips$ | async; as chips) { @if (chips.length > 0) {
+      <num-filter-chips [filterChips]="chips"></num-filter-chips>
+      } @if (!chips.length) {
+      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
+      } }
     </div>
   </div>
-  <div *ngIf="isReferenced" class="reference-container">
+  @if (isReferenced) {
+  <div class="reference-container">
     <div class="label-with-info">
       <span class="num-text-accent">{{
         'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
@@ -83,35 +82,30 @@
       </ng-container>
     </div>
   </div>
+  }
   <div class="menu-box">
     <num-menu [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
   </div>
 </div>
-<ng-container
-  *ngIf="unlinkedRequiredOrRecommendedReferences.length > 0 || selectedReferenceFields.length > 0"
->
-  <num-linked-badge></num-linked-badge>
-</ng-container>
-
-<ng-container *ngIf="unlinkedRequiredOrRecommendedReferences.length > 0">
-  <div
-    *ngFor="let reference of unlinkedRequiredOrRecommendedReferences"
-    class="selection-box-container"
+@if (unlinkedRequiredOrRecommendedReferences.length > 0 || selectedReferenceFields.length > 0) {
+<num-linked-badge></num-linked-badge>
+} @if (unlinkedRequiredOrRecommendedReferences.length > 0) { @for (reference of
+unlinkedRequiredOrRecommendedReferences; track reference) {
+<div class="selection-box-container">
+  <num-profile-reference-tile
+    [unlinkedRequiredOrRecommendedReferences]="reference"
+    [parentId]="profile.getId()"
+    (deleteTrigger)="updateRequiredOrRecommendedReferences()"
   >
-    <num-profile-reference-tile
-      [unlinkedRequiredOrRecommendedReferences]="reference"
-      [parentId]="profile.getId()"
-      (deleteTrigger)="updateRequiredOrRecommendedReferences()"
-    >
-    </num-profile-reference-tile>
-  </div>
-</ng-container>
-<ng-container *ngIf="selectedReferenceFields.length > 0">
-  <div *ngFor="let selectedReference of selectedReferenceFields" class="selection-box-container">
-    <num-profile-reference-tile
-      [filterChips]="profileRefrenceChips"
-      [referenceField]="selectedReference"
-      [parentId]="profile.getId()"
-    ></num-profile-reference-tile>
-  </div>
-</ng-container>
+  </num-profile-reference-tile>
+</div>
+} } @if (selectedReferenceFields.length > 0) { @for (selectedReference of selectedReferenceFields;
+track selectedReference) {
+<div class="selection-box-container">
+  <num-profile-reference-tile
+    [filterChips]="profileRefrenceChips"
+    [referenceField]="selectedReference"
+    [parentId]="profile.getId()"
+  ></num-profile-reference-tile>
+</div>
+} }

@@ -4,10 +4,10 @@
 
 <!-- Build transition for consent box -->
 
-<div *ngIf="consent" class="consent-container" fxLayout="column" fxLayoutAlign="center start">
+@if (consent) {
+<div class="consent-container" fxLayout="column" fxLayoutAlign="center start">
   <!-- Analysis Type Toggle -->
   <num-section-name>{{ 'FEASIBILITY.EDITOR.CONSENT.TITLE' | translate }}</num-section-name>
-
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
     <div class="width-30" [ngClass]="{ 'text-blue': !distributedAnalysis }">
       {{ 'FEASIBILITY.EDITOR.CONSENT.CENTRAL' | translate }}
@@ -20,7 +20,6 @@
       {{ 'FEASIBILITY.EDITOR.CONSENT.DISTRIBUTED' | translate }}
     </div>
   </div>
-
   <!-- GDPR Compliance Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
     <div class="width-30" [ngClass]="{ 'text-blue': !euGdpr }">
@@ -31,7 +30,6 @@
       {{ 'FEASIBILITY.EDITOR.CONSENT.EU_GDPR' | translate }}
     </div>
   </div>
-
   <!-- Insurance Data Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
     <div class="width-30" [ngClass]="{ 'text-blue': !insuranceDataBoolean }">
@@ -45,7 +43,6 @@
       {{ 'FEASIBILITY.EDITOR.CONSENT.WITH_DATA' | translate }}
     </div>
   </div>
-
   <!-- Contact Option Toggle -->
   <div fxLayout="row" fxLayoutAlign="space-between center" class="toggle-row">
     <div class="width-30" [ngClass]="{ 'text-blue': !contact }">
@@ -56,8 +53,8 @@
       {{ 'FEASIBILITY.EDITOR.CONSENT.WITH_CONTACT' | translate }}
     </div>
   </div>
-
   <div class="provisionCodeDisplay">
     {{ 'FEASIBILITY.EDITOR.CONSENT.' + provisionCode | translate }}
   </div>
 </div>
+}

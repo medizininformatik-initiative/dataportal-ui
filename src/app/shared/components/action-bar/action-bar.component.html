@@ -1,30 +1,28 @@
 <div class="container padding-left-right-5px">
-  <ng-container *ngIf="showUpload">
-    <input
-      [attr.data-cy]="'upload-crtdl'"
-      type="file"
-      class="file-input"
-      (change)="upload($event)"
-      #fileUpload
-    />
-    <button
-      (click)="fileUpload.click()"
-      [matTooltip]="
-        uploadDisabled
-          ? ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD_DISABLED' | translate)
-          : ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate)
-      "
-      type="button"
-      class="num-button green icon"
-      [class.disabled]="uploadDisabled"
-      [disabled]="uploadDisabled"
-    >
-      <fa-icon size="lg" [icon]="'upload'"></fa-icon>
-    </button>
-  </ng-container>
-
+  @if (showUpload) {
+  <input
+    [attr.data-cy]="'upload-crtdl'"
+    type="file"
+    class="file-input"
+    (change)="upload($event)"
+    #fileUpload
+  />
   <button
-    *ngIf="showDownload"
+    (click)="fileUpload.click()"
+    [matTooltip]="
+      uploadDisabled
+        ? ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD_DISABLED' | translate)
+        : ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate)
+    "
+    type="button"
+    class="num-button green icon"
+    [class.disabled]="uploadDisabled"
+    [disabled]="uploadDisabled"
+  >
+    <fa-icon size="lg" [icon]="'upload'"></fa-icon>
+  </button>
+  } @if (showDownload) {
+  <button
     (click)="downloadCRTDL()"
     [matTooltip]="
       (downloadAllowed$ | async)
@@ -38,9 +36,8 @@
   >
     <fa-icon size="lg" [icon]="'download'"></fa-icon>
   </button>
-
+  } @if (showSave) {
   <button
-    *ngIf="showSave"
     (click)="onSaveDataQuery()"
     [matTooltip]="
       (downloadAllowed$ | async)
@@ -54,6 +51,7 @@
   >
     <fa-icon size="lg" [icon]="'save'"></fa-icon>
   </button>
+  }
 
   <div class="right">
     <ng-content></ng-content>

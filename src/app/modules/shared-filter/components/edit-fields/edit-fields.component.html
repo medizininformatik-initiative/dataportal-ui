@@ -16,22 +16,23 @@
     <div class="container">
       <div class="main-content-fields">
         <div class="field-box">
-          <div *ngFor="let singleTree of tree">
+          @for (singleTree of tree; track singleTree) {
+          <div>
             <num-tree
               [treeData]="singleTree"
               (selectedCheckbox)="setSelectedFieldElement($event)"
             ></num-tree>
           </div>
+          }
         </div>
-        <div class="sidebar" *ngIf="selectedBasicFields">
+        @if (selectedBasicFields) {
+        <div class="sidebar">
           <num-section-name>
             {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED' | translate }}
           </num-section-name>
           <div class="selected-fields-box">
-            <div
-              *ngFor="let selectedField of selectedBasicFields; let index = index"
-              class="selected-filter-container"
-            >
+            @for (selectedField of selectedBasicFields; track selectedField; let index = $index) {
+            <div class="selected-filter-container">
               <div>
                 <num-checkbox
                   [checked]="selectedField.getMustHave()"
@@ -47,23 +48,25 @@
                 >
                   {{ selectedField.getDisplay() | displayTranslation }}
                 </span>
-                <span
-                  class="field-description"
-                  *ngIf="selectedField.getDescription() | displayTranslation"
-                >
+                @if (selectedField.getDescription() | displayTranslation) {
+                <span class="field-description">
                   {{ selectedField.getDescription() | displayTranslation }}
                 </span>
+                }
               </div>
+              @if (!selectedField.getIsRequired()) {
               <fa-icon
-                *ngIf="!selectedField.getIsRequired()"
                 [icon]="'times'"
                 size="1x"
                 (click)="removeSelectedField(selectedField)"
                 class="delete-button"
               ></fa-icon>
+              }
             </div>
+            }
           </div>
         </div>
+        }
       </div>
     </div>
   </mat-tab>

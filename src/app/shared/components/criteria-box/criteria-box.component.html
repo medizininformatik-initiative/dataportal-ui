@@ -19,19 +19,23 @@
       </div>
     </div>
     <div class="filter-chips-container">
-      <div *ngIf="isFilterRequired" class="warning-row">
+      @if (isFilterRequired) {
+      <div class="warning-row">
         <img [src]="warningSignUrl" class="img-layout" />
         <span class="warning-message">
           {{ 'FEASIBILITY.EDITOR.REQUIRED_FILTER' | translate }}
         </span>
       </div>
+      }
 
       <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
     </div>
   </div>
   <div class="handle-icons">
-    <num-menu *ngIf="isEditable" [menuItems]="menuItems" [id]="criterion.getId()"></num-menu>
-    <div *ngIf="isEditable" class="menu-icon" cdkDragHandle>
+    @if (isEditable) {
+    <num-menu [menuItems]="menuItems" [id]="criterion.getId()"></num-menu>
+    } @if (isEditable) {
+    <div class="menu-icon" cdkDragHandle>
       <fa-icon
         [matTooltip]="'SHARED_COMPONENTS.CRITERIA_BOX.DRAG_ICON_LABEL' | translate"
         class="icon drag-handle"
@@ -39,15 +43,22 @@
         icon="expand-arrows-alt"
       ></fa-icon>
     </div>
+    }
   </div>
 </div>
-<div *ngFor="let attributeFilter of criterion.getAttributeFilters()" class="padding-left-7">
-  <div *ngIf="attributeFilter?.isReferenceSet()">
-    <div *ngFor="let reference of getReferenceCriteriaFromFilter(attributeFilter)">
+@for (attributeFilter of criterion.getAttributeFilters(); track attributeFilter) {
+<div class="padding-left-7">
+  @if (attributeFilter?.isReferenceSet()) {
+  <div>
+    @for (reference of getReferenceCriteriaFromFilter(attributeFilter); track reference) {
+    <div>
       <num-reference-criteria-box
         [criterionId]="criterion.getId()"
         [referenceCriterion]="reference"
       ></num-reference-criteria-box>
     </div>
+    }
   </div>
+  }
 </div>
+}

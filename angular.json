@@ -21,8 +21,8 @@
                   "type": "initial"
                 },
                 {
-                  "maximumError": "20kb",
-                  "maximumWarning": "6kb",
+                  "maximumError": "30kb",
+                  "maximumWarning": "24kb",
                   "type": "anyComponentStyle"
                 }
               ],
@@ -48,8 +48,8 @@
                   "type": "initial"
                 },
                 {
-                  "maximumError": "20kb",
-                  "maximumWarning": "6kb",
+                  "maximumError": "30kb",
+                  "maximumWarning": "24kb",
                   "type": "anyComponentStyle"
                 }
               ],
@@ -64,7 +64,9 @@
           "defaultConfiguration": "development",
           "options": {
             "allowedCommonJsDependencies": [
-              "keycloak-js"
+              "keycloak-js",
+              "file-saver",
+              "iso8601-duration"
             ],
             "aot": true,
             "assets": [

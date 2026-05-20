@@ -15,7 +15,7 @@ li {
   line-height: 22px;
   display: flex;
   align-items: center;
-  color: #000000;
+  color: var(--color-text-primary);
   margin-bottom: 8px;
 }
 
@@ -43,21 +43,21 @@ li {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
-  color: #080707;
+  color: var(--color-text-primary);
 }
 
 .node-sub-label {
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   font-style: normal;
   font-weight: 500;
   font-size: 10px;
   line-height: 12px;
-  color: #5f6266;
+  color: var(--color-text-secondary);
 }
 
 span:hover {
@@ -79,7 +79,7 @@ span:hover {
 
 .icon-container {
   cursor: pointer;
-  background-color: #5a79af;
+  background-color: var(--color-accent);
   color: white;
   height: 18px;
 
@@ -106,15 +106,7 @@ span:hover {
   font-style: italic;
 }
 
-.width-100 {
-  width: 100%;
-}
-
 .width-80 {
-  width: 80%;
-}
-
-.text-oveflow {
   width: 80%;
 }
 

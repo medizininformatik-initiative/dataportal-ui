@@ -1,4 +1,5 @@
-<div *ngIf="timeRestriction" [@.disabled]="disableAnimation" class="time-restriction-wrapper">
+@if (timeRestriction) {
+<div [@.disabled]="disableAnimation" class="time-restriction-wrapper">
   <span class="section-label">
     {{ 'SHARED_FILTER.TIMERESTRICTION.TITLE' | translate }}
   </span>
@@ -9,26 +10,23 @@
       (timeRestrictionTypeChanged)="onTimeRestrictionOptionChange($event)"
     >
     </num-timerestriction-type-selector>
-
     <!--Between Filter-->
-    <ng-container *ngIf="selectedTimeRestrictionType === 'BETWEEN'">
-      <num-between-filter
-        class="fill"
-        (betweenFilterChanged)="emitSelectedTimeRestrictionInstance($event)"
-        [betweenFilter]="timeRestriction"
-      ></num-between-filter>
-    </ng-container>
-
+    @if (selectedTimeRestrictionType === 'BETWEEN') {
+    <num-between-filter
+      class="fill"
+      (betweenFilterChanged)="emitSelectedTimeRestrictionInstance($event)"
+      [betweenFilter]="timeRestriction"
+    ></num-between-filter>
+    }
     <!--After, At, Before Filter-->
-    <ng-container
-      *ngIf="selectedTimeRestrictionType !== 'BETWEEN' && selectedTimeRestrictionType !== 'NONE'"
-    >
-      <num-before-filter
-        class="fill"
-        [timeRestrictionType]="selectedTimeRestrictionType"
-        [selectedDate]="timeRestriction.getAfterDate()"
-        (timeRestrictionInstanceChanged)="emitSelectedTimeRestrictionInstance($event)"
-      ></num-before-filter>
-    </ng-container>
+    @if (selectedTimeRestrictionType !== 'BETWEEN' && selectedTimeRestrictionType !== 'NONE') {
+    <num-before-filter
+      class="fill"
+      [timeRestrictionType]="selectedTimeRestrictionType"
+      [selectedDate]="timeRestriction.getAfterDate()"
+      (timeRestrictionInstanceChanged)="emitSelectedTimeRestrictionInstance($event)"
+    ></num-before-filter>
+    }
   </div>
 </div>
+}

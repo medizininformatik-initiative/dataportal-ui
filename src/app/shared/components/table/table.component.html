@@ -1,4 +1,5 @@
-<table *ngIf="tableData">
+@if (tableData) {
+<table>
   <thead num-table-header class="table-header sticky-header" [tableData]="tableData"></thead>
   <tbody
     num-table-body
@@ -8,3 +9,4 @@
     (iconClicked)="iconClicked.emit($event)"
   ></tbody>
 </table>
+}

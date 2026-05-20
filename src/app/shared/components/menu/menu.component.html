@@ -13,7 +13,8 @@
   <div class="options-header" (click)="$event.stopPropagation()">
     {{ 'SHARED_COMPONENTS.MENU.OPTIONS' | translate }}
   </div>
-  <div *ngFor="let item of menuItems; let isLast = last" data-cy="{{ item.label | translate }}">
+  @for (item of menuItems; track item; let isLast = $last) {
+  <div data-cy="{{ item.label | translate }}">
     <button
       [ngClass]="{
         divider: !isLast,
@@ -28,4 +29,5 @@
       {{ 'SHARED_COMPONENTS.MENU.' + item.label | translate }}
     </button>
   </div>
+  }
 </mat-menu>

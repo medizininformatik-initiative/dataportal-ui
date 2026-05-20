@@ -8,9 +8,11 @@
     </num-header-description>
   </div>
   <div class="tree-container margin-bottom-3">
-    <div *ngFor="let tree of trees">
+    @for (tree of trees; track tree) {
+    <div>
       <num-tree (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
     </div>
+    }
   </div>
 
   <num-action-bar>

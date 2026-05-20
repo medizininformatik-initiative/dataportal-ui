@@ -1,21 +1,21 @@
 <div class="container">
   <div class="reference-container">
-    <ng-container *ngIf="possibleReferences$ | async as possibleReferences; else placeholder">
-      <ng-container *ngIf="possibleReferences.length > 0; else placeholder">
-        <ng-container *ngFor="let possibleReference of possibleReferences">
-          <num-possible-references
-            [posssibleReference]="possibleReference"
-            (selectedProfileId)="updateSelectedPossibleReferences($event)"
-          >
-          </num-possible-references>
-        </ng-container>
-      </ng-container>
-    </ng-container>
-    <ng-template #placeholder>
-      <num-placeholder-box class="width-100 height-100">
-        {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.INFO' | translate }}
-      </num-placeholder-box>
-    </ng-template>
+    @if (possibleReferences$ | async; as possibleReferences) { @if (possibleReferences.length > 0) {
+    @for (possibleReference of possibleReferences; track possibleReference) {
+    <num-possible-references
+      [posssibleReference]="possibleReference"
+      (selectedProfileId)="updateSelectedPossibleReferences($event)"
+    >
+    </num-possible-references>
+    } } @else {
+    <num-placeholder-box class="width-100 height-100">
+      {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.INFO' | translate }}
+    </num-placeholder-box>
+    } } @else {
+    <num-placeholder-box class="width-100 height-100">
+      {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.INFO' | translate }}
+    </num-placeholder-box>
+    }
   </div>
   <div class="button-footer">
     <num-button type="blue" (click)="openReferenceModal()">
