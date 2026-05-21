@@ -162,4 +162,11 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy, OnCha
   private isTokenFilter(filter: AbstractProfileFilter): filter is ProfileTokenFilter {
     return filter.getUiType() === DataSelectionUIType.CODE;
   }
+
+  public trackByTimeRestrictionName(
+    _index: number,
+    profileTimeFilter: ProfileTimeRestrictionFilter
+  ): string | number {
+    return profileTimeFilter.getName() ?? _index;
+  }
 }
