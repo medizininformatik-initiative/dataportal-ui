@@ -17,7 +17,8 @@
       {{ 'INFORMATION.CONCEPTS.DESCRIPTION' | translate }}
     </num-information-section>
   </mat-tab>
-  <mat-tab *ngIf="tokenFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
+  @if (tokenFilter) {
+  <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
     <num-concept-filter
       [conceptFilterId]="tokenFilter.getId()"
       [valueSetUrl]="tokenFilter.getValueSetUrls()"
@@ -26,7 +27,8 @@
     >
     </num-concept-filter>
   </mat-tab>
-  <mat-tab *ngIf="tokenFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
+  } @if (tokenFilter) {
+  <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
     <num-concept-bulk-search
       [valueSetUrl]="tokenFilter.getValueSetUrls()"
       [preSelectedConcepts]="tokenFilter.getSelectedTokens()"
@@ -34,6 +36,7 @@
       (changedSelectedConcepts)="updateSelectedConcepts($event)"
     ></num-concept-bulk-search>
   </mat-tab>
+  }
   <mat-tab
     [label]="
       'EDITOR.CONTENT.TAB_LABEL.SELECTED_CONCEPTS' | translate : { count: selectedConcepts.length }

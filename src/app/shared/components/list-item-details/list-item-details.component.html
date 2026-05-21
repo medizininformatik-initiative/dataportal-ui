@@ -1,110 +1,106 @@
-<ng-container *ngIf="listItemDetails$ | async as listItemDetails">
-  <mat-tab-group class="details-tab-group" animationDuration="0ms">
-    <mat-tab>
-      <ng-template mat-tab-label>
-        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.DETAILS' | translate }}
-      </ng-template>
-
-      <div class="tab-content">
-        <div class="original-item">
-          {{ listItemDetails.getDisplay() | displayTranslation }}
+@if (listItemDetails$ | async; as listItemDetails) {
+<mat-tab-group class="details-tab-group" animationDuration="0ms">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.DETAILS' | translate }}
+    </ng-template>
+    <div class="tab-content">
+      <div class="original-item">
+        {{ listItemDetails.getDisplay() | displayTranslation }}
+      </div>
+      <!-- Automatic Translations -->
+      @if (listItemDetails.getDisplay()?.getTranslations()?.length) {
+      <div class="detail-row divider">
+        <div class="detail-label">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.TRANSLATIONS' | translate }}
         </div>
-
-        <!-- Automatic Translations -->
-        <div
-          *ngIf="listItemDetails.getDisplay()?.getTranslations()?.length"
-          class="detail-row divider"
-        >
-          <div class="detail-label">
-            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.TRANSLATIONS' | translate }}
+        <div class="detail-value">
+          @for (t of listItemDetails.getDisplay().getTranslations(); track t) {
+          <div class="translation-entry">
+            <span
+              class="fi"
+              style="font-size: 14px"
+              [ngClass]="'fi-' + (t.getLanguage() === 'en-US' ? 'gb' : 'de')"
+            ></span>
+            <span [matTooltip]="t.getValue() | displayTranslation" class="num-text-accent">{{
+              t.getValue()
+            }}</span>
           </div>
-          <div class="detail-value">
-            <div
-              *ngFor="let t of listItemDetails.getDisplay().getTranslations()"
-              class="translation-entry"
-            >
-              <span
-                class="fi"
-                style="font-size: 14px"
-                [ngClass]="'fi-' + (t.getLanguage() === 'en-US' ? 'gb' : 'de')"
-              ></span>
-              <span [matTooltip]="t.getValue() | displayTranslation" class="num-text-accent">{{
-                t.getValue()
-              }}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Parents -->
-        <div class="detail-row divider">
-          <div class="detail-label">
-            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
-          </div>
-          <div *ngIf="listItemDetails.getParents().length > 0" class="detail-value">
-            <num-list-item-details-sections
-              [listItemDetails]="listItemDetails.getParents()"
-              (selectedRelative)="getSelectedRelative($event)"
-            >
-            </num-list-item-details-sections>
-          </div>
-          <div class="num-text-accent" *ngIf="listItemDetails.getParents().length === 0">
-            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_PARENTS' | translate }}
-          </div>
-        </div>
-
-        <!-- Children -->
-        <div class="detail-row">
-          <div class="detail-label">
-            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
-          </div>
-          <div *ngIf="listItemDetails.getChildren().length > 0" class="detail-value">
-            <num-list-item-details-sections
-              [listItemDetails]="listItemDetails.getChildren()"
-              (selectedRelative)="getSelectedRelative($event)"
-            >
-            </num-list-item-details-sections>
-          </div>
-          <div class="num-text-accent" *ngIf="listItemDetails.getChildren().length === 0">
-            {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_CHILDREN' | translate }}
-          </div>
+          }
         </div>
       </div>
-    </mat-tab>
-
-    <!-- ── PARENTS tab ─────────────────────────────────────────── -->
-    <mat-tab
-      [disabled]="!listItemDetails.getParents() || listItemDetails.getParents().length === 0"
-    >
-      <ng-template mat-tab-label>
-        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }} ({{
-          listItemDetails.getParents()?.length || 0
-        }})
-      </ng-template>
-      <div class="tab-content">
-        <num-list-item-details-sections
-          [listItemDetails]="listItemDetails.getParents()"
-          (selectedRelative)="getSelectedRelative($event)"
-        >
-        </num-list-item-details-sections>
+      }
+      <!-- Parents -->
+      <div class="detail-row divider">
+        <div class="detail-label">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
+        </div>
+        @if (listItemDetails.getParents().length > 0) {
+        <div class="detail-value">
+          <num-list-item-details-sections
+            [listItemDetails]="listItemDetails.getParents()"
+            (selectedRelative)="getSelectedRelative($event)"
+          >
+          </num-list-item-details-sections>
+        </div>
+        } @if (listItemDetails.getParents().length === 0) {
+        <div class="num-text-accent">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_PARENTS' | translate }}
+        </div>
+        }
       </div>
-    </mat-tab>
-
-    <!-- ── CHILDREN tab ────────────────────────────────────────── -->
-    <mat-tab
-      [disabled]="!listItemDetails.getChildren() || listItemDetails.getChildren().length === 0"
-    >
-      <ng-template mat-tab-label>
-        {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }} ({{
-          listItemDetails.getChildren()?.length || 0
-        }})
-      </ng-template>
-      <div class="tab-content">
-        <num-list-item-details-sections
-          [listItemDetails]="listItemDetails.getChildren()"
-          (selectedRelative)="getSelectedRelative($event)"
-        >
-        </num-list-item-details-sections>
+      <!-- Children -->
+      <div class="detail-row">
+        <div class="detail-label">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
+        </div>
+        @if (listItemDetails.getChildren().length > 0) {
+        <div class="detail-value">
+          <num-list-item-details-sections
+            [listItemDetails]="listItemDetails.getChildren()"
+            (selectedRelative)="getSelectedRelative($event)"
+          >
+          </num-list-item-details-sections>
+        </div>
+        } @if (listItemDetails.getChildren().length === 0) {
+        <div class="num-text-accent">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_CHILDREN' | translate }}
+        </div>
+        }
       </div>
-    </mat-tab>
-  </mat-tab-group>
-</ng-container>
+    </div>
+  </mat-tab>
+  <!-- ── PARENTS tab ─────────────────────────────────────────── -->
+  <mat-tab [disabled]="!listItemDetails.getParents() || listItemDetails.getParents().length === 0">
+    <ng-template mat-tab-label>
+      {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }} ({{
+        listItemDetails.getParents()?.length || 0
+      }})
+    </ng-template>
+    <div class="tab-content">
+      <num-list-item-details-sections
+        [listItemDetails]="listItemDetails.getParents()"
+        (selectedRelative)="getSelectedRelative($event)"
+      >
+      </num-list-item-details-sections>
+    </div>
+  </mat-tab>
+  <!-- ── CHILDREN tab ────────────────────────────────────────── -->
+  <mat-tab
+    [disabled]="!listItemDetails.getChildren() || listItemDetails.getChildren().length === 0"
+  >
+    <ng-template mat-tab-label>
+      {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }} ({{
+        listItemDetails.getChildren()?.length || 0
+      }})
+    </ng-template>
+    <div class="tab-content">
+      <num-list-item-details-sections
+        [listItemDetails]="listItemDetails.getChildren()"
+        (selectedRelative)="getSelectedRelative($event)"
+      >
+      </num-list-item-details-sections>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+}

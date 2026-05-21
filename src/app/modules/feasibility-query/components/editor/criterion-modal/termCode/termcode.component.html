@@ -21,10 +21,10 @@
   </mat-tab>
   <mat-tab label="{{ 'INFORMATION.TERMCODE.TITLE' | translate }}">
     <div class="selected-concept-list">
-      <div *ngFor="let bulkEntry of bulkEntries" class="concept-item">
+      @for (bulkEntry of bulkEntries; track bulkEntry) {
+      <div class="concept-item">
         <span style="width: 60%">{{ bulkEntry.getDisplay() | displayTranslation }}</span>
         <span>{{ bulkEntry.getTermCodes()[0].getCode() }}</span>
-
         <button
           [disabled]="termCodes.length === 1"
           (click)="removeTermCode(bulkEntry.getTermCodes()[0])"
@@ -33,6 +33,7 @@
           {{ 'FEASIBILITY.EDITOR.MODAL.REMOVE' | translate }}
         </button>
       </div>
+      }
     </div>
   </mat-tab>
 </mat-tab-group>

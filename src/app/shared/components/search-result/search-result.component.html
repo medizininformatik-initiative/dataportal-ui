@@ -1,6 +1,7 @@
 <mat-drawer-container class="fill">
   <mat-drawer #drawer position="end" mode="side">
-    <div *ngIf="data" class="drawer-panel">
+    @if (data) {
+    <div class="drawer-panel">
       <button class="cancel-button" (click)="drawer.toggle()">
         Back to list
         <fa-icon
@@ -12,12 +13,15 @@
       </button>
       <num-list-item-details class="detail-item" [item]="data"></num-list-item-details>
     </div>
+    }
   </mat-drawer>
-  <mat-drawer-content *ngIf="searchTermListItems.length > 0" class="content-height-95">
+  @if (searchTermListItems.length > 0) {
+  <mat-drawer-content class="content-height-95">
     <num-result-list
       class="fill"
       [searchTermResultList]="searchTermListItems"
       [keysToSkip]="keysToSkip"
     ></num-result-list>
   </mat-drawer-content>
+  }
 </mat-drawer-container>

@@ -27,17 +27,20 @@
         [scrollWindow]="false"
         (scrolled)="loadMoreCriteriaSetResults()"
       >
+        @if (tableData$ | async; as tableData) {
         <num-table
-          *ngIf="tableData$ | async as tableData"
           class="result-list-container"
           [tableData]="tableData"
           (iconClicked)="emitIds($event)"
         ></num-table>
+        }
       </div>
-      <num-placeholder-box class="no-results-text" *ngIf="(tableData$ | async) === null">
+      @if ((tableData$ | async) === null) {
+      <num-placeholder-box class="no-results-text">
         >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
         >"
       </num-placeholder-box>
+      }
     </div>
   </mat-tab>
   <mat-tab
@@ -48,10 +51,11 @@
     "
     [disabled]="selectedReferenceCriterion.length === 0"
   >
+    @if (selectedReferenceCriterion.length > 0) {
     <num-selected-reference-list
-      *ngIf="selectedReferenceCriterion.length > 0"
       [selectedReferences]="selectedReferenceCriterion"
       (changedSelectedReferences)="updateSelectedReferences($event)"
     ></num-selected-reference-list>
+    }
   </mat-tab>
 </mat-tab-group>

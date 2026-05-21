@@ -1,10 +1,9 @@
 <tr>
-  <th
-    *ngFor="let headerItem of tableData?.header?.headers; let i = index"
-    [style.width.%]="getWidth(i)"
-  >
+  @for (headerItem of tableData?.header?.headers; track headerItem; let i = $index) {
+  <th [style.width.%]="getWidth(i)">
     <div class="header-cell">
       {{ 'SHARED_COMPONENTS.TABLE.' + headerItem | translate }}
     </div>
   </th>
+  }
 </tr>

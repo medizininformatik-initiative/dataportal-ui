@@ -9,23 +9,22 @@
     <div>
       <fa-icon icon="arrow-right" class="arrow-icon"></fa-icon>
     </div>
-    <span *ngIf="parentProfile" class="child-badge">{{
-      parentProfile.getDisplay() | displayTranslation
-    }}</span>
-    <ng-container *ngIf="filterChips && !unlinkedRequiredOrRecommendedReferences">
-      <div class="label-value-group">
-        <div class="label">
-          {{ 'SHARED_COMPONENTS.REFERENCE_TILE.LINKED_FEATURES_LABEL' | translate }}
-        </div>
-        <span class="value">
-          <num-filter-chips
-            [displayBlockTriangle]="false"
-            [filterChips]="filterChips"
-          ></num-filter-chips>
-        </span>
+    @if (parentProfile) {
+    <span class="child-badge">{{ parentProfile.getDisplay() | displayTranslation }}</span>
+    } @if (filterChips && !unlinkedRequiredOrRecommendedReferences) {
+    <div class="label-value-group">
+      <div class="label">
+        {{ 'SHARED_COMPONENTS.REFERENCE_TILE.LINKED_FEATURES_LABEL' | translate }}
       </div>
-    </ng-container>
-    <span *ngIf="unlinkedRequiredOrRecommendedReferences" class="warning-badge">
+      <span class="value">
+        <num-filter-chips
+          [displayBlockTriangle]="false"
+          [filterChips]="filterChips"
+        ></num-filter-chips>
+      </span>
+    </div>
+    } @if (unlinkedRequiredOrRecommendedReferences) {
+    <span class="warning-badge">
       {{ 'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED' | translate }}
       <span
         class="info-icon"
@@ -34,9 +33,11 @@
         [infoTooltipText]="'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED_TOOLTIP_TEXT' | translate"
       ></span>
     </span>
+    }
   </div>
 
-  <span class="checkbox-label" *ngIf="referenceField">
+  @if (referenceField) {
+  <span class="checkbox-label">
     <num-checkbox
       [checked]="referenceField.getMustHave()"
       (checkedChange)="setMustHave($event)"
@@ -51,6 +52,7 @@
       ></span>
     </span>
   </span>
+  }
   <div class="actions" (click)="deleteReferenceLink()">
     {{ 'SHARED_COMPONENTS.REFERENCE_TILE.DELETE' | translate }}
     <fa-icon class="icon" icon="trash" size="lg"></fa-icon>

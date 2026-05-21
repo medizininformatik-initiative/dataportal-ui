@@ -1,31 +1,27 @@
+@for (row of rows; track row) {
 <tr
-  *ngFor="let row of rows"
   [ngClass]="{ 'clickable-row': row.isClickable }"
   class="table-border height-3-rem table-row-hover"
 >
-  <td
-    *ngFor="let cell of row.cells; let j = index"
-    (click)="onRowClick(row)"
-    [ngClass]="{ 'table-row-text-color': j > 0 }"
-  >
-    <div class="row-container" [ngSwitch]="cell.type">
+  @for (cell of row.cells; track cell; let j = $index) {
+  <td (click)="onRowClick(row)" [ngClass]="{ 'table-row-text-color': j > 0 }">
+    <div class="row-container">
+      @switch (cell.type) { @case ('checkboxText') {
       <num-checkbox-text-cell
-        *ngSwitchCase="'checkboxText'"
         [cell]="cell"
         (checkboxChange)="onCheckboxSelect(row)"
       ></num-checkbox-text-cell>
-
-      <num-availability-cell *ngSwitchCase="'availability'" [cell]="cell"></num-availability-cell>
-
-      <num-display-cell *ngSwitchCase="'display'" [cell]="cell"></num-display-cell>
-
-      <num-text-cell *ngSwitchDefault [cell]="cell"></num-text-cell>
-
-      <num-icon-cell
-        *ngSwitchCase="'icon'"
-        [iconData]="cell"
-        (iconClicked)="onIconClick(row)"
-      ></num-icon-cell>
+      } @case ('availability') {
+      <num-availability-cell [cell]="cell"></num-availability-cell>
+      } @case ('display') {
+      <num-display-cell [cell]="cell"></num-display-cell>
+      } @default {
+      <num-text-cell [cell]="cell"></num-text-cell>
+      } @case ('icon') {
+      <num-icon-cell [iconData]="cell" (iconClicked)="onIconClick(row)"></num-icon-cell>
+      } }
     </div>
   </td>
+  }
 </tr>
+}

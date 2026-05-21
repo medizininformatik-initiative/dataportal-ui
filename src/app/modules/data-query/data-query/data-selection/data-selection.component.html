@@ -29,11 +29,13 @@
       ></span>
     </num-header-description>
   </div>
-  <div *ngIf="(isDataSelectionExistent$ | async) === false" class="empty-data-selection-box">
+  @if ((isDataSelectionExistent$ | async) === false) {
+  <div class="empty-data-selection-box">
     <num-placeholder-box>
       {{ 'DATAQUERY.DATASELECTION.EDITOR.EMPTY' | translate }}
     </num-placeholder-box>
   </div>
+  }
   <div class="flex-scroll">
     <num-display-profiles [isEditable]="false"></num-display-profiles>
   </div>

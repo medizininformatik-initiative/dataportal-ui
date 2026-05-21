@@ -11,13 +11,15 @@
       [(ngModel)]="bulkSearchTermInput"
     ></textarea>
     <div class="bulk-search-container">
-      <div class="filter-section" *ngIf="searchFilter">
+      @if (searchFilter) {
+      <div class="filter-section">
         <num-search-filter
           [multiSelect]="false"
           [filter]="searchFilter"
           (selectedFilterChanged)="setValueSet($event)"
         ></num-search-filter>
       </div>
+      }
       <num-button
         [isDisabled]="!selectedValueSet || bulkSearchTermInput.length === 0"
         type="blue"
@@ -26,8 +28,8 @@
       >
     </div>
   </div>
+  @if (foundTableData || notFoundTableData) {
   <mat-tab-group
-    *ngIf="foundTableData || notFoundTableData"
     animationDuration="0ms"
     class="inner-tab-group"
     disableRipple="true"
@@ -36,21 +38,21 @@
     <mat-tab
       [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.FOUND' | translate : { count: foundCount }"
     >
+      @if (foundTableData?.body.rows.length > 0) {
       <num-table
-        *ngIf="foundTableData?.body.rows.length > 0"
         class="result-list-container"
         [tableData]="foundTableData"
         (selectedRow)="addSelectedRow($event)"
       ></num-table>
+      }
     </mat-tab>
     <mat-tab
       [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.NOTFOUND' | translate : { count: notFoundCount }"
     >
-      <num-table
-        *ngIf="notFoundTableData?.body.rows.length > 0"
-        class="result-list-container"
-        [tableData]="notFoundTableData"
-      ></num-table>
+      @if (notFoundTableData?.body.rows.length > 0) {
+      <num-table class="result-list-container" [tableData]="notFoundTableData"></num-table>
+      }
     </mat-tab>
   </mat-tab-group>
+  }
 </div>

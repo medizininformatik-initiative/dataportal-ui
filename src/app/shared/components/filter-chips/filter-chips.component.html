@@ -1,31 +1,26 @@
-<ng-container *ngIf="filterChips.length > 0">
-  <div class="filter-wrapper" *ngFor="let filterChip of filterChips">
-    <ng-container *ngIf="displayBlockTriangle">
-      <div
-        data-cy="{{ filterChip.type | displayTranslation }}"
-        class="block"
-        (click)="toggleTypeExpanded(filterChip)"
-        [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
-      >
-        {{ filterChip.type | displayTranslation }}
-      </div>
-      <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
-    </ng-container>
-
-    <ng-container *ngFor="let chip of filterChip.data; let i = index">
-      <div
-        *ngIf="i < 3"
-        [attr.data-cy]="chip.text | displayTranslation"
-        class="chip-container margin-left-1"
-        [ngClass]="{ expanded: chip.expanded }"
-        (click)="toggleExpanded(chip)"
-      >
-        {{ chip.text | displayTranslation }}
-      </div>
-    </ng-container>
-
-    <div *ngIf="filterChip.data.length > 3" class="chip-container margin-left-1 count-badge">
-      +{{ filterChip.data.length - 3 }}
-    </div>
+@if (filterChips.length > 0) { @for (filterChip of filterChips; track filterChip) {
+<div class="filter-wrapper">
+  @if (displayBlockTriangle) {
+  <div
+    data-cy="{{ filterChip.type | displayTranslation }}"
+    class="block"
+    (click)="toggleTypeExpanded(filterChip)"
+    [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
+  >
+    {{ filterChip.type | displayTranslation }}
   </div>
-</ng-container>
+  <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
+  } @for (chip of filterChip.data; track chip; let i = $index) { @if (i < 3) {
+  <div
+    [attr.data-cy]="chip.text | displayTranslation"
+    class="chip-container margin-left-1"
+    [ngClass]="{ expanded: chip.expanded }"
+    (click)="toggleExpanded(chip)"
+  >
+    {{ chip.text | displayTranslation }}
+  </div>
+  } } @if (filterChip.data.length > 3) {
+  <div class="chip-container margin-left-1 count-badge">+{{ filterChip.data.length - 3 }}</div>
+  }
+</div>
+} }

@@ -8,7 +8,8 @@
     </div>
   </div>
 
-  <div *ngIf="termCodesFilterChips.length > 0" class="header-col border-right-1">
+  @if (termCodesFilterChips.length > 0) {
+  <div class="header-col border-right-1">
     <div class="label-with-info">
       <span class="num-text-accent">{{
         'EDITOR.CONTENT.CRITERION.HEADER.TERMCODES' | translate
@@ -18,6 +19,7 @@
       <num-filter-chips [filterChips]="termCodesFilterChips"></num-filter-chips>
     </div>
   </div>
+  }
 
   <div class="header-col border-right-1">
     <div class="label-with-info">
@@ -25,30 +27,27 @@
         'EDITOR.CONTENT.CRITERION.HEADER.FILTER' | translate
       }}</span>
     </div>
-    <div *ngIf="timeRestrictionFilterChips.length > 0">
+    @if (timeRestrictionFilterChips.length > 0) {
+    <div>
       <num-filter-chips [filterChips]="timeRestrictionFilterChips"> </num-filter-chips>
     </div>
-    <div *ngIf="conceptFilterChips.length > 0">
+    } @if (conceptFilterChips.length > 0) {
+    <div>
       <num-filter-chips [filterChips]="conceptFilterChips"> </num-filter-chips>
     </div>
+    }
     <div class="header-col-chips">
-      <num-filter-chips
-        *ngIf="quantityFilterChips.length > 0"
-        [filterChips]="quantityFilterChips"
-      ></num-filter-chips>
-      <span
-        *ngIf="
-          quantityFilterChips.length === 0 &&
-          conceptFilterChips.length === 0 &&
-          timeRestrictionFilterChips.length === 0
-        "
-        class="empty-state"
-        >{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span
-      >
+      @if (quantityFilterChips.length > 0) {
+      <num-filter-chips [filterChips]="quantityFilterChips"></num-filter-chips>
+      } @if ( quantityFilterChips.length === 0 && conceptFilterChips.length === 0 &&
+      timeRestrictionFilterChips.length === 0 ) {
+      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
+      }
     </div>
   </div>
 
-  <div *ngIf="refernceFilterChips.length > 0" class="header-col">
+  @if (refernceFilterChips.length > 0) {
+  <div class="header-col">
     <div class="label-with-info">
       <span class="num-text-accent">{{
         'EDITOR.CONTENT.CRITERION.HEADER.REFERENCE' | translate
@@ -58,4 +57,5 @@
       <num-filter-chips [filterChips]="refernceFilterChips"></num-filter-chips>
     </div>
   </div>
+  }
 </div>

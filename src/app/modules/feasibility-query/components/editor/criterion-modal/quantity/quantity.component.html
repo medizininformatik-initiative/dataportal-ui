@@ -1,8 +1,8 @@
-<div class="container" *ngIf="quantityFilter">
+@if (quantityFilter) {
+<div class="container">
   <num-section-name>
     {{ display | displayTranslation }}
   </num-section-name>
-
   <div class="filter-row">
     <!-- Comparator Select-->
     <num-quantity-comparision-select
@@ -10,41 +10,39 @@
       (selectedOption)="setSelectedQuantityFilterOption($event)"
     >
     </num-quantity-comparision-select>
-
     <!-- Quantity Range-->
-    <ng-container *ngIf="isBetweenFilter">
-      <num-quantity-range
-        [minValue]="quantityRangeFilter?.getMinValue()"
-        [maxValue]="quantityRangeFilter?.getMaxValue()"
-        [quantityFilterUnit]="selectedQuantityFilterUnit"
-        (quantityRangeInstance)="emitQuantityFilterInstance($event)"
-      >
-      </num-quantity-range>
-    </ng-container>
-
+    @if (isBetweenFilter) {
+    <num-quantity-range
+      [minValue]="quantityRangeFilter?.getMinValue()"
+      [maxValue]="quantityRangeFilter?.getMaxValue()"
+      [quantityFilterUnit]="selectedQuantityFilterUnit"
+      (quantityRangeInstance)="emitQuantityFilterInstance($event)"
+    >
+    </num-quantity-range>
+    }
     <!-- Quantity Comparator-->
-    <ng-container *ngIf="isComparatorFilter">
-      <num-quantity-comparator
-        [value]="quantityComparatorFilter?.getValue()"
-        [quantityFilterUnit]="selectedQuantityFilterUnit"
-        [quantityComparatorType]="selectedQuantityFilterComparator"
-        (quantityComparatorInstance)="emitQuantityFilterInstance($event)"
-      >
-      </num-quantity-comparator>
-    </ng-container>
-
+    @if (isComparatorFilter) {
+    <num-quantity-comparator
+      [value]="quantityComparatorFilter?.getValue()"
+      [quantityFilterUnit]="selectedQuantityFilterUnit"
+      [quantityComparatorType]="selectedQuantityFilterComparator"
+      (quantityComparatorInstance)="emitQuantityFilterInstance($event)"
+    >
+    </num-quantity-comparator>
+    }
     <!-- Quantity Units-->
-    <ng-container *ngIf="!isQuantityNotSet">
-      <num-allowed-units
-        [selectedUnit]="
-          quantityFilter.getSelectedUnit()
-            ? quantityFilter.getSelectedUnit()
-            : quantityFilter.getAllowedUnits()[0]
-        "
-        [allowedUnits]="quantityFilter.getAllowedUnits()"
-        (selectionChange)="setSelectQuantityFilterUnit($event)"
-      >
-      </num-allowed-units>
-    </ng-container>
+    @if (!isQuantityNotSet) {
+    <num-allowed-units
+      [selectedUnit]="
+        quantityFilter.getSelectedUnit()
+          ? quantityFilter.getSelectedUnit()
+          : quantityFilter.getAllowedUnits()[0]
+      "
+      [allowedUnits]="quantityFilter.getAllowedUnits()"
+      (selectionChange)="setSelectQuantityFilterUnit($event)"
+    >
+    </num-allowed-units>
+    }
   </div>
 </div>
+}

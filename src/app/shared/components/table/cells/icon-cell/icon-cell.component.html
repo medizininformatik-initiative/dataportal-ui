@@ -1,5 +1,5 @@
+@if (iconData.icon) {
 <fa-icon
-  *ngIf="iconData.icon"
   matTooltip="{{ 'SHARED_COMPONENTS.TABLE.ICON' | translate }}"
   matTooltipClass="prevent-selection"
   size="1x"
@@ -8,3 +8,4 @@
   (click)="onIconClick()"
 >
 </fa-icon>
+}

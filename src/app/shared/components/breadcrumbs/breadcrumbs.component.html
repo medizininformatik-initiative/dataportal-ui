@@ -1,17 +1,17 @@
 <div class="breadcrumb">
-  <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
-    <div class="breadcrumb-item" [ngClass]="{ active: last }">
-      <a *ngIf="!last" (click)="navigateTo(breadcrumb.url)">
-        {{ breadcrumb.label | displayTranslation }}
-      </a>
-      <div
-        *ngIf="last"
-        class="last-breadcrumb"
-        [matTooltip]="breadcrumb.label | displayTranslation"
-      >
-        {{ breadcrumb.label | displayTranslation }}
-      </div>
-      <div *ngIf="!last" class="breadcrumb-separator">»</div>
+  @for (breadcrumb of breadcrumbs; track breadcrumb; let last = $last) {
+  <div class="breadcrumb-item" [ngClass]="{ active: last }">
+    @if (!last) {
+    <a (click)="navigateTo(breadcrumb.url)">
+      {{ breadcrumb.label | displayTranslation }}
+    </a>
+    } @if (last) {
+    <div class="last-breadcrumb" [matTooltip]="breadcrumb.label | displayTranslation">
+      {{ breadcrumb.label | displayTranslation }}
     </div>
-  </ng-container>
+    } @if (!last) {
+    <div class="breadcrumb-separator">»</div>
+    }
+  </div>
+  }
 </div>

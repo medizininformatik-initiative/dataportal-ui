@@ -1,14 +1,12 @@
 <div class="background">
-  <ng-container *ngIf="dataSelectionProfile">
-    <num-profile class="width-100 height-100" [profile]="dataSelectionProfile"></num-profile>
-  </ng-container>
-  <ng-container *ngIf="criterion">
-    <num-criterion class="width-100 height-100" [criterion]="criterion"></num-criterion>
-  </ng-container>
-  <ng-container *ngIf="referenceCriterion">
-    <num-reference-edit
-      class="width-100 height-100"
-      [referenceCriterion]="referenceCriterion"
-    ></num-reference-edit>
-  </ng-container>
+  @if (dataSelectionProfile) {
+  <num-profile class="width-100 height-100" [profile]="dataSelectionProfile"></num-profile>
+  } @if (criterion) {
+  <num-criterion class="width-100 height-100" [criterion]="criterion"></num-criterion>
+  } @if (referenceCriterion) {
+  <num-reference-edit
+    class="width-100 height-100"
+    [referenceCriterion]="referenceCriterion"
+  ></num-reference-edit>
+  }
 </div>

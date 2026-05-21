@@ -24,12 +24,11 @@
       }}</span>
     </div>
     <div class="header-col-chips">
-      <ng-container *ngIf="$fieldsFilterChips | async as chips">
-        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
-        <span *ngIf="chips.length === 0" class="empty-state">{{
-          'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
-        }}</span>
-      </ng-container>
+      @if ($fieldsFilterChips | async; as chips) { @if (chips.length > 0) {
+      <num-filter-chips [filterChips]="chips"></num-filter-chips>
+      } @if (chips.length === 0) {
+      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
+      } }
     </div>
   </div>
   <div class="header-col border-right-1">
@@ -39,12 +38,11 @@
       }}</span>
     </div>
     <div class="header-col-chips">
-      <ng-container *ngIf="filtersFilterChips$ | async as chips">
-        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
-        <span *ngIf="chips.length === 0" class="empty-state">{{
-          'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
-        }}</span>
-      </ng-container>
+      @if (filtersFilterChips$ | async; as chips) { @if (chips.length > 0) {
+      <num-filter-chips [filterChips]="chips"></num-filter-chips>
+      } @if (chips.length === 0) {
+      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
+      } }
     </div>
   </div>
   <div class="header-col">
@@ -54,13 +52,11 @@
       }}</span>
     </div>
     <div class="header-col-chips">
-      <num-filter-chips
-        *ngIf="profileReferenceChips?.length > 0"
-        [filterChips]="profileReferenceChips"
-      ></num-filter-chips>
-      <span *ngIf="!profileReferenceChips?.length" class="empty-state">{{
-        'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
-      }}</span>
+      @if (profileReferenceChips?.length > 0) {
+      <num-filter-chips [filterChips]="profileReferenceChips"></num-filter-chips>
+      } @if (!profileReferenceChips?.length) {
+      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
+      }
     </div>
   </div>
 </div>
