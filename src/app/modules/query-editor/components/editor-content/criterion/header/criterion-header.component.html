@@ -25,14 +25,26 @@
         'EDITOR.CONTENT.CRITERION.HEADER.FILTER' | translate
       }}</span>
     </div>
+    <div *ngIf="timeRestrictionFilterChips.length > 0">
+      <num-filter-chips [filterChips]="timeRestrictionFilterChips"> </num-filter-chips>
+    </div>
+    <div *ngIf="conceptFilterChips.length > 0">
+      <num-filter-chips [filterChips]="conceptFilterChips"> </num-filter-chips>
+    </div>
     <div class="header-col-chips">
       <num-filter-chips
         *ngIf="quantityFilterChips.length > 0"
         [filterChips]="quantityFilterChips"
       ></num-filter-chips>
-      <span *ngIf="quantityFilterChips.length === 0" class="empty-state">{{
-        'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
-      }}</span>
+      <span
+        *ngIf="
+          quantityFilterChips.length === 0 &&
+          conceptFilterChips.length === 0 &&
+          timeRestrictionFilterChips.length === 0
+        "
+        class="empty-state"
+        >{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span
+      >
     </div>
   </div>
 
