@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core'
+import { Component, ElementRef, OnDestroy, OnInit, inject } from '@angular/core'
 import { DataSelectionFactoryService } from 'src/app/service/DataSelection/Factory/DataSelection.factory.service'
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
@@ -17,6 +17,12 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, TranslateModule],
 })
 export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
+  elementRef = inject(ElementRef)
+  private dataSelectionProviderService = inject(DataSelectionProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
+  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private dataSelectionFactoryService = inject(DataSelectionFactoryService)
+
   isDataSelectionExistent$: Observable<boolean>
   isCohortExistent$: Observable<boolean>
   fileName: string
@@ -26,13 +32,10 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
 
   mainProfileSubscription: Subscription
 
-  constructor(
-    public elementRef: ElementRef,
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private navigationHelperService: NavigationHelperService,
-    private feasibilityQueryValidation: FeasibilityQueryValidationService,
-    private dataSelectionFactoryService: DataSelectionFactoryService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.isDataSelectionExistent$ = this.dataSelectionProviderService

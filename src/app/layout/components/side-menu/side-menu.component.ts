@@ -1,6 +1,6 @@
 import INavItem from '../../models/nav-item.interface'
 import { mainNavItems } from '../../../core/constants/navigation'
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
 import { MatIconRegistry, MatIcon } from '@angular/material/icon'
 import { DomSanitizer } from '@angular/platform-browser'
 import { MatNavList, MatListItem } from '@angular/material/list'
@@ -30,12 +30,21 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class SideMenuComponent implements OnInit {
+  private iconRegistry = inject(MatIconRegistry)
+  private sanitizer = inject(DomSanitizer)
+
   mainNavItems = mainNavItems
   @Input() isSideMenuExpanded = true
 
   @Output() toggleSideMenu = new EventEmitter<boolean>()
 
-  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
+    const iconRegistry = this.iconRegistry
+    const sanitizer = this.sanitizer
+
     iconRegistry.addSvgIcon(
       'cohort-network',
       sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/cohort-network.svg')

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { Observable } from 'rxjs'
 import {
@@ -16,6 +16,8 @@ import {
  */
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
+  private oauthService = inject(OAuthService)
+
   /**
    * List of URL patterns that should be excluded from token injection.
    */
@@ -26,7 +28,10 @@ export class AuthTokenInterceptor implements HttpInterceptor {
    */
   private readonly excludedUrlsRegEx = this.excludedUrls.map((url) => new RegExp('^' + url, 'i'))
 
-  constructor(private oauthService: OAuthService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Intercepts HTTP requests and conditionally adds Authorization header with bearer token.

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { MatDialogRef } from '@angular/material/dialog'
 import { ButtonComponent } from '../button/button.component'
 import { TranslateModule } from '@ngx-translate/core'
@@ -11,7 +11,12 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ButtonComponent, TranslateModule],
 })
 export class ConfirmDeleteModalComponent {
-  constructor(public dialogRef: MatDialogRef<ConfirmDeleteModalComponent>) {}
+  dialogRef = inject<MatDialogRef<ConfirmDeleteModalComponent>>(MatDialogRef)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public cancel() {
     this.dialogRef.close(false)

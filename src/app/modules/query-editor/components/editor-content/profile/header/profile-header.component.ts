@@ -18,6 +18,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core'
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
 import { SearchbarComponent } from '../../../../../../shared/components/search/searchbar.component'
@@ -41,6 +42,11 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ProfileHeaderComponent implements OnInit, OnChanges {
+  private profileProviderService = inject(ProfileProviderService)
+  private fieldsFilterChipsService = inject(DataSelectionFieldsChipsService)
+  private filtersFilterChipsService = inject(DataSelectionFiltersFilterChips)
+  private translation = inject(DisplayTranslationPipe)
+
   @Input()
   profile: DataSelectionProfile
 
@@ -60,12 +66,10 @@ export class ProfileHeaderComponent implements OnInit, OnChanges {
 
   displayExpanded = false
 
-  constructor(
-    private profileProviderService: ProfileProviderService,
-    private fieldsFilterChipsService: DataSelectionFieldsChipsService,
-    private filtersFilterChipsService: DataSelectionFiltersFilterChips,
-    private translation: DisplayTranslationPipe
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.label = this.translation.transform(this.profile.getLabel())

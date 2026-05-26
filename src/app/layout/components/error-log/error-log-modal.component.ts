@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service'
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { Observable, Subject, tap } from 'rxjs'
@@ -27,16 +27,19 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ErrorLogModalComponent implements OnInit, OnDestroy {
+  data = inject<ValidationReport>(MAT_DIALOG_DATA)
+  private errorLogProvider = inject(ErrorLogProviderService)
+
   validationReport: ValidationReport | null = null
   errors: ValidationIssue[] = []
 
   upgrades$: Observable<ProfileUpgrade[] | null>
   private destroy$ = new Subject<void>()
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ValidationReport,
-    private errorLogProvider: ErrorLogProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
   ngOnInit(): void {
     this.validationReport = this.data
     if (this.data instanceof ValidationReport) {

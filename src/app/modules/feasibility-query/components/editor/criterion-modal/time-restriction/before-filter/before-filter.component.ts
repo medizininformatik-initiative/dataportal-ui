@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core'
 import { TimeRestrictionFactoryService } from 'src/app/service/Factory/TimeRestrictionFactory.service'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
@@ -20,6 +21,8 @@ import { DatePickerComponent } from '../../../../../../../shared/components/date
   imports: [DatePickerComponent],
 })
 export class BeforeFilterComponent implements OnInit, OnChanges {
+  private timeRestrictionFactoryService = inject(TimeRestrictionFactoryService)
+
   @Input()
   timeRestrictionType: TimeRestrictionType
 
@@ -29,7 +32,10 @@ export class BeforeFilterComponent implements OnInit, OnChanges {
   @Output()
   timeRestrictionInstanceChanged = new EventEmitter<AbstractTimeRestriction>()
 
-  constructor(private timeRestrictionFactoryService: TimeRestrictionFactoryService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {}
 

@@ -1,16 +1,22 @@
-import { BackendService } from '../Backend.service';
-import { FeasibilityQueryPaths } from '../Paths/FeasibilityQueryPaths';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { SavedFeasibilityQueryResults } from 'src/app/model/Result/SavedFeasibilityQueryResults';
-import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
+import { BackendService } from '../Backend.service'
+import { FeasibilityQueryPaths } from '../Paths/FeasibilityQueryPaths'
+import { HttpClient } from '@angular/common/http'
+import { Injectable, inject } from '@angular/core'
+import { Observable } from 'rxjs'
+import { SavedFeasibilityQueryResults } from 'src/app/model/Result/SavedFeasibilityQueryResults'
+import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeasibilityQueryApiService {
-  constructor(private backendService: BackendService, private http: HttpClient) {}
+  private backendService = inject(BackendService)
+  private http = inject(HttpClient)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    *
@@ -24,7 +30,7 @@ export class FeasibilityQueryApiService {
       {
         observe: 'response',
       }
-    );
+    )
   }
 
   public postSavedFeasibilityQuery(
@@ -35,28 +41,28 @@ export class FeasibilityQueryApiService {
       this.backendService.createUrl(FeasibilityQueryPaths.getBaseUrl()) +
       '/' +
       feasibilityQueryResultID +
-      FeasibilityQueryPaths.SAVE_QUERY;
+      FeasibilityQueryPaths.SAVE_QUERY
 
     return this.http.post<any>(url, savedFeasibilityQuery, {
       headers: this.backendService.getHeaders(),
       observe: 'response',
-    });
+    })
   }
 
   public getStructuredQueryById(id: number): Observable<any> {
     const url = this.backendService.createUrl(
       FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id.toString()
-    );
+    )
     return this.http.get<any>(url, {
       headers: this.backendService.getHeaders(),
-    });
+    })
   }
 
   public getSavedQuerySlotCount(): Observable<any> {
-    const url = this.backendService.createUrl(FeasibilityQueryPaths.SAVED_QUERY_SLOTS);
+    const url = this.backendService.createUrl(FeasibilityQueryPaths.SAVED_QUERY_SLOTS)
     return this.http.get(url, {
       headers: this.backendService.getHeaders(),
-    });
+    })
   }
 
   public putFeasibilityQuery(id: number, updatedObject: object): Observable<any> {
@@ -68,6 +74,6 @@ export class FeasibilityQueryApiService {
       {
         headers: this.backendService.getHeaders(),
       }
-    );
+    )
   }
 }

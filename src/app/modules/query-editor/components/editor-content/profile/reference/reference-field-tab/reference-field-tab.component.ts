@@ -13,6 +13,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  inject,
 } from '@angular/core'
 import { PossibleReferencesComponent } from '../possible-references/possible-references.component'
 import { PlaceholderBoxComponent } from '../../../../../../../shared/components/placeholder-box/placeholder-box.component'
@@ -35,6 +36,10 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
+  private createSelectedReferenceService = inject(CreateSelectedReferenceService)
+  private possibleReferencesService = inject(PossibleReferencesService)
+  private profileReferenceModalService = inject(ProfileReferenceModalService)
+
   @Input()
   referenceField: ReferenceField
 
@@ -56,11 +61,10 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
 
   openModalWindowSubscription: Subscription
 
-  constructor(
-    private createSelectedReferenceService: CreateSelectedReferenceService,
-    private possibleReferencesService: PossibleReferencesService,
-    private profileReferenceModalService: ProfileReferenceModalService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.referencedProfileUrls = this.referenceField

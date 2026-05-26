@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { ConsentService } from '../../../../service/Consent/Consent.service'
 import { DataQueryStorageService } from 'src/app/service/DataQuery/DataQueryStorage.service'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
@@ -21,15 +21,18 @@ import { AsyncPipe } from '@angular/common'
   imports: [SavedQueryTileComponent, AsyncPipe],
 })
 export class FeasibilityComponent implements OnInit, OnDestroy {
+  private dataQueryStorageService = inject(DataQueryStorageService)
+  private navigationHelperService = inject(NavigationHelperService)
+  private resultProviderService = inject(ResultProviderService)
+  private consentService = inject(ConsentService)
+
   savedQueries$: Observable<InterfaceSavedQueryTile[]>
   loadSubscription: Subscription
   loadValidationReportSubscription: Subscription
-  constructor(
-    private dataQueryStorageService: DataQueryStorageService,
-    private navigationHelperService: NavigationHelperService,
-    private resultProviderService: ResultProviderService,
-    private consentService: ConsentService
-  ) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   ngOnInit() {
     this.loadSavedQueries()

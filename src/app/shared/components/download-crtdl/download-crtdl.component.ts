@@ -1,5 +1,5 @@
 import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery'
-import { Component, Inject } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { DownloadCRTDLService } from 'src/app/service/Download/DownloadCRTDL.service'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { SaveFileDataModal } from '../../models/SaveDataModal/SaveFileDataModal'
@@ -16,11 +16,14 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [SaveFileModalComponent, HeaderComponent, TranslateModule],
 })
 export class DownloadCRTDLComponent {
-  constructor(
-    private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
-    @Inject(MAT_DIALOG_DATA) public annotatedStructuredQuery: AnnotatedStructuredQuery,
-    private downloadCRTDLService: DownloadCRTDLService
-  ) {}
+  private dialogRef = inject<MatDialogRef<SaveQueryModalComponent, void>>(MatDialogRef)
+  annotatedStructuredQuery = inject<AnnotatedStructuredQuery>(MAT_DIALOG_DATA)
+  private downloadCRTDLService = inject(DownloadCRTDLService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public downloadCRTDL(data: SaveFileDataModal) {
     this.downloadCRTDLService.download(data.title)

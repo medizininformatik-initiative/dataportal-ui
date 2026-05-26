@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component'
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
@@ -18,6 +18,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [MatTooltip, FontAwesomeModule, AsyncPipe, TranslateModule],
 })
 export class ActionBarComponent implements OnInit {
+  private dialog = inject(MatDialog)
+  private saveDataQueryModalService = inject(SaveDataQueryModalService)
+  private uploadService = inject(UploadService)
+  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
+
   @Input() showUpload = true
   @Input() showDownload = true
   @Input() showSave = true
@@ -27,12 +32,10 @@ export class ActionBarComponent implements OnInit {
   downloadSubscription: Subscription
   saveDataQueryModalSubscription: Subscription
 
-  constructor(
-    private dialog: MatDialog,
-    private saveDataQueryModalService: SaveDataQueryModalService,
-    private uploadService: UploadService,
-    private feasibilityQueryValidationService: FeasibilityQueryValidationService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.canDownload()

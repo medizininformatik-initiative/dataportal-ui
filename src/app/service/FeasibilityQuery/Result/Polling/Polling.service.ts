@@ -1,25 +1,28 @@
-import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { FeasibilityQueryApiService } from '../../../Backend/Api/FeasibilityQueryApi.service';
-import { FeasibilityQueryResultApiService } from '../../../Backend/Api/FeasibilityQueryResultApi.service';
-import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { UIQuery2StructuredQueryService } from '../../../Translator/StructureQuery/UIQuery2StructuredQuery.service';
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
+import { FeasibilityQueryApiService } from '../../../Backend/Api/FeasibilityQueryApi.service'
+import { FeasibilityQueryResultApiService } from '../../../Backend/Api/FeasibilityQueryResultApi.service'
+import { Injectable, inject } from '@angular/core'
+import { map, Observable } from 'rxjs'
+import { UIQuery2StructuredQueryService } from '../../../Translator/StructureQuery/UIQuery2StructuredQuery.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class PollingService {
-  private readonly POLLING_INTERVALL_MILLISECONDS =
-    this.appSettingsProviderService.getResultSummaryPollingInterval();
-  private readonly POLLING_MAXL_MILLISECONDS = this.appSettingsProviderService.getPollingTimeUi();
+  private feasibilityQueryResultApiService = inject(FeasibilityQueryResultApiService)
+  private appSettingsProviderService = inject(AppSettingsProviderService)
+  private feasibilityQueryApiService = inject(FeasibilityQueryApiService)
+  private translator = inject(UIQuery2StructuredQueryService)
 
-  constructor(
-    private feasibilityQueryResultApiService: FeasibilityQueryResultApiService,
-    private appSettingsProviderService: AppSettingsProviderService,
-    private feasibilityQueryApiService: FeasibilityQueryApiService,
-    private translator: UIQuery2StructuredQueryService
-  ) {}
+  private readonly POLLING_INTERVALL_MILLISECONDS =
+    this.appSettingsProviderService.getResultSummaryPollingInterval()
+  private readonly POLLING_MAXL_MILLISECONDS = this.appSettingsProviderService.getPollingTimeUi()
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Retrieves a summary of the query result.
@@ -27,7 +30,7 @@ export class PollingService {
    * @param resultId The ID of the feasibility query result.
    */
   public requestSummaryResult(resultId: string): Observable<any> {
-    return this.feasibilityQueryResultApiService.getSummaryResult(resultId);
+    return this.feasibilityQueryResultApiService.getSummaryResult(resultId)
   }
 
   public getFeasibilityIdFromPollingUrl(query: FeasibilityQuery): Observable<string> {
@@ -35,10 +38,10 @@ export class PollingService {
       .postStructuredQuery(this.translator.translateToStructuredQuery(query))
       .pipe(
         map((result) => {
-          const pollingUrl = result.headers.get('location');
-          return pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1);
+          const pollingUrl = result.headers.get('location')
+          return pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1)
         })
-      );
+      )
   }
 
   /**
@@ -49,8 +52,8 @@ export class PollingService {
     const pollingIntervall =
       this.POLLING_INTERVALL_MILLISECONDS > this.POLLING_MAXL_MILLISECONDS
         ? this.POLLING_MAXL_MILLISECONDS
-        : this.POLLING_INTERVALL_MILLISECONDS;
-    return pollingIntervall * 1000;
+        : this.POLLING_INTERVALL_MILLISECONDS
+    return pollingIntervall * 1000
   }
 
   /**
@@ -58,6 +61,6 @@ export class PollingService {
    * @returns The polling time
    */
   public getPollingTime(): number {
-    return this.POLLING_MAXL_MILLISECONDS * 1000;
+    return this.POLLING_MAXL_MILLISECONDS * 1000
   }
 }

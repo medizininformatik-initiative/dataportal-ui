@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FeasibilityQueryApiService } from 'src/app/service/Backend/Api/FeasibilityQueryApi.service'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
 import { MatDialogRef } from '@angular/material/dialog'
@@ -15,14 +15,17 @@ import { SaveFileModalComponent } from '../../../../../shared/components/save-fi
   imports: [SaveFileModalComponent],
 })
 export class SaveQueryModalComponent implements OnInit, OnDestroy {
+  feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
+  feasibilityQueryApiService = inject(FeasibilityQueryApiService)
+  private dialogRef = inject<MatDialogRef<SaveQueryModalComponent, void>>(MatDialogRef)
+  private saveFeasibilityQueryModalService = inject(SaveFeasibilityQueryModalService)
+
   private subscriptionResult: Subscription
 
-  constructor(
-    public feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    public feasibilityQueryApiService: FeasibilityQueryApiService,
-    private dialogRef: MatDialogRef<SaveQueryModalComponent, void>,
-    private saveFeasibilityQueryModalService: SaveFeasibilityQueryModalService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {}
 

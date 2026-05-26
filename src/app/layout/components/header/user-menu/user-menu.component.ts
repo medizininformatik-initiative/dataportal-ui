@@ -1,5 +1,5 @@
 import { AboutModalComponent } from '../../about-modal/about-modal.component'
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { ErrorLogModalComponent } from '../../error-log/error-log-modal.component'
 import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service'
 import { IUserProfile } from '../../../../shared/models/user/user-profile.interface'
@@ -22,15 +22,18 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [MatFormField, MatSelect, MatBadge, MatOption, FontAwesomeModule, TranslateModule],
 })
 export class UserMenuComponent implements OnInit, OnDestroy {
+  private oauthService = inject(OAuthService)
+  private matDialog = inject(MatDialog)
+  private userProfileService = inject(UserProfileService)
+  private readonly errorLogProvider = inject(ErrorLogProviderService)
+
   profile: IUserProfile
   validationResultSubscription$: Subscription
 
-  constructor(
-    private oauthService: OAuthService,
-    private matDialog: MatDialog,
-    private userProfileService: UserProfileService,
-    private readonly errorLogProvider: ErrorLogProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.initProfile()

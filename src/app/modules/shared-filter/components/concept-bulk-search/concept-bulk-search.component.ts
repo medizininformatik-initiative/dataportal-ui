@@ -3,7 +3,16 @@ import { CodeableConceptBulkEntry } from '../../../../model/Search/ListEntries/C
 import { CodeableConceptBulkFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkFoundEntryAdapter'
 import { CodeableConceptBulkNotFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkNotFoundEntryAdapter'
 import { CodeableConceptBulkResultList } from 'src/app/model/Search/ResultList/CodeableConceptBulkResultList'
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
 import { Observable, of, Subscription, tap } from 'rxjs'
@@ -37,6 +46,10 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges {
+  private selectedConceptFilterService = inject(SelectedConceptFilterProviderService)
+  private bulkSearchService = inject(BulkCodeableConceptSearchEngineService)
+  private conceptSelectionService = inject(ConceptSelectionHelperService)
+
   @Input() valueSetUrl: string[]
   @Input() conceptFilterId: string
   @Input() preSelectedConcepts: Concept[] = []
@@ -54,11 +67,10 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
   foundCount: number
   notFoundCount: number
 
-  constructor(
-    private selectedConceptFilterService: SelectedConceptFilterProviderService,
-    private bulkSearchService: BulkCodeableConceptSearchEngineService,
-    private conceptSelectionService: ConceptSelectionHelperService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnChanges(): void {
     this.initializeComponent()

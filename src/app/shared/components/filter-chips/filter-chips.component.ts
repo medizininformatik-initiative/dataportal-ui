@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { DisplayData } from '../../../model/Interface/DisplayData'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FilterChipData } from '../../models/FilterChips/FilterChipData'
@@ -14,6 +14,8 @@ import { NgClass } from '@angular/common'
   imports: [NgClass, DisplayTranslationPipe],
 })
 export class FilterChipsComponent implements OnInit {
+  private translation = inject(DisplayTranslationPipe)
+
   chipData$: Observable<FilterChipData[]> = of([])
 
   @Input()
@@ -22,7 +24,10 @@ export class FilterChipsComponent implements OnInit {
   @Input()
   displayBlockTriangle = true
 
-  constructor(private translation: DisplayTranslationPipe) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {}
 

@@ -5,7 +5,16 @@ import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service'
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptSelectionHelperService } from '../../../service/ConceptSelection/ConceptSelectionHelper.service'
 import { map, Observable, Subscription, tap } from 'rxjs'
@@ -32,6 +41,11 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy {
+  private activeSearchTermService = inject(ActiveSearchTermService)
+  private conceptSearchService = inject(CodeableConceptSearchService)
+  private selectedConceptProviderService = inject(SelectedConceptFilterProviderService)
+  private conceptSelectionHelperService = inject(ConceptSelectionHelperService)
+
   codeableConceptResultList: CodeableConceptResultList
 
   @Input()
@@ -53,12 +67,10 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
 
   searchText$: Observable<string>
 
-  constructor(
-    private activeSearchTermService: ActiveSearchTermService,
-    private conceptSearchService: CodeableConceptSearchService,
-    private selectedConceptProviderService: SelectedConceptFilterProviderService,
-    private conceptSelectionHelperService: ConceptSelectionHelperService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnChanges() {
     const selectedConcepts = this.selectedConceptProviderService.getSelectedConceptsValue()

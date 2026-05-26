@@ -2,7 +2,7 @@ import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/B
 import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
 import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service'
 import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteria.service'
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry'
 import { CriteriaBulkFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkFoundListEntryAdapter'
 import { CriteriaBulkNotFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkNotFoundListEntryAdapter'
@@ -59,6 +59,13 @@ export type SelectedTab = 'FOUND' | 'NOTFOUND'
   ],
 })
 export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
+  private bulkCriteriaSearchProvider = inject(BulkCriteriaSearchProvider)
+  private bulkCriteriaSearchFilterService = inject(BulkCriteriaSearchFilterService)
+  private searchFilterProvider = inject(FilterProvider)
+  private bulkCriteriaService = inject(BulkCriteriaService)
+  private selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
+  private navigationHelperService = inject(NavigationHelperService)
+
   foundCriteriaTableData: TableData
   notFoundCriteriaTableData: TableData
   searchFilters$: Observable<SearchFilter[]> = of([])
@@ -72,14 +79,10 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription()
   private isInitialized = false
 
-  constructor(
-    private bulkCriteriaSearchProvider: BulkCriteriaSearchProvider,
-    private bulkCriteriaSearchFilterService: BulkCriteriaSearchFilterService,
-    private searchFilterProvider: FilterProvider,
-    private bulkCriteriaService: BulkCriteriaService,
-    private selectedBulkCriteriaService: SelectedBulkCriteriaProvider,
-    private navigationHelperService: NavigationHelperService
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
     this.getBulkCriteriaSearchFilter()
   }
 

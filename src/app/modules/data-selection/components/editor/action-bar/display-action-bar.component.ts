@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
@@ -13,7 +13,12 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, MatTooltip, TranslateModule],
 })
 export class DisplayActionBarComponent implements OnInit {
-  constructor(private navigationHelperService: NavigationHelperService) {}
+  private navigationHelperService = inject(NavigationHelperService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {}
 

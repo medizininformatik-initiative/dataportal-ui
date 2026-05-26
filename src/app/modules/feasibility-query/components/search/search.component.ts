@@ -26,6 +26,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service'
 import { filter } from 'lodash'
@@ -55,6 +56,19 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, AfterViewInit {
+  elementRef = inject(ElementRef)
+  private cdr = inject(ChangeDetectorRef)
+  private searchFilterProvider = inject(FilterProvider)
+  private selectedTableItemsService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
+    SelectedTableItemsProvider
+  )
+  private searchTermDetailsService = inject(SearchTermDetailsService)
+  private searchTermDetailsProviderService = inject(SearchTermDetailsProviderService)
+  private criteriaSearchService = inject(CriteriaSearchService)
+  private snackbarService = inject(SnackbarService)
+  private navigationHelperService = inject(NavigationHelperService)
+  private criteriaFilterFetchService = inject(CriteriaFilterFetchService)
+
   @ViewChild('searchResults') searchResultsComponent: SearchResultsComponent
   listItems: Array<CriteriaListEntry> = []
   adaptedData: TableData
@@ -83,18 +97,10 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   searchButtonEnabled$: Observable<boolean> = of(true)
 
-  constructor(
-    public elementRef: ElementRef,
-    private cdr: ChangeDetectorRef,
-    private searchFilterProvider: FilterProvider,
-    private selectedTableItemsService: SelectedTableItemsProvider<CriteriaListEntry>,
-    private searchTermDetailsService: SearchTermDetailsService,
-    private searchTermDetailsProviderService: SearchTermDetailsProviderService,
-    private criteriaSearchService: CriteriaSearchService,
-    private snackbarService: SnackbarService,
-    private navigationHelperService: NavigationHelperService,
-    private criteriaFilterFetchService: CriteriaFilterFetchService
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
     this.subscription = this.criteriaSearchService
       .getSearchResults()
       .subscribe((results) => this.handleSearchResults(results?.getResults() || []))

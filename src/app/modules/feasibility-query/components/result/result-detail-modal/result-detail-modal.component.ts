@@ -1,5 +1,5 @@
 import { BackendService } from 'src/app/service/Backend/Backend.service'
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter'
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../model/Search/ListEntries/FeasibilityQueryResultDetailstListEntry'
@@ -32,19 +32,22 @@ export class ResultDetailsModalComponentData {}
   ],
 })
 export class ResultDetailModalComponent implements OnInit, OnDestroy {
+  private feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
+  data = inject<ResultDetailsModalComponentData>(MAT_DIALOG_DATA)
+  dialogRef = inject<MatDialogRef<ResultDetailModalComponent>>(MatDialogRef)
+  backend = inject(BackendService)
+  private feasibilityQueryResultService = inject(FeasibilityQueryResultService)
+  private resultProviderService = inject(ResultProviderService)
+
   adaptedData: TableData
   providerSubscription: Subscription
   resultServiceSubscription: Subscription
   activeResultID: string
 
-  constructor(
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    @Inject(MAT_DIALOG_DATA) public data: ResultDetailsModalComponentData,
-    public dialogRef: MatDialogRef<ResultDetailModalComponent>,
-    public backend: BackendService,
-    private feasibilityQueryResultService: FeasibilityQueryResultService,
-    private resultProviderService: ResultProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * We read the last elment of the feasibilityQuery resultIds Array as this one contains the latest Result from the backend

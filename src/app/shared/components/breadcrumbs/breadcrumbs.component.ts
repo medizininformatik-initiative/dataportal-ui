@@ -1,6 +1,6 @@
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { BasePaths, PathSegments } from '../../../app-paths'
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { filter, Subscription } from 'rxjs'
@@ -30,16 +30,19 @@ const BASE_PATH_DEFAULTS: Record<string, string> = {
   imports: [NgClass, MatTooltip, DisplayTranslationPipe],
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
+  private router = inject(Router)
+  private activatedRoute = inject(ActivatedRoute)
+  private profileProviderService = inject(ProfileProviderService)
+  private criterionProviderService = inject(CriterionProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
+
   breadcrumbs: Breadcrumb[] = []
   private sub: Subscription
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private profileProviderService: ProfileProviderService,
-    private criterionProviderService: CriterionProviderService,
-    private navigationHelperService: NavigationHelperService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.breadcrumbs = this.buildBreadcrumb(this.activatedRoute.root)

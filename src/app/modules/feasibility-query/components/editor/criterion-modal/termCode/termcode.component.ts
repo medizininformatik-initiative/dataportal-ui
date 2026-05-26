@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { HashService } from '../../../../../../service/Hash.service'
 import { SelectedBulkCriteriaProvider } from '../../../../../../service/SelectedBulkCriteria.service'
@@ -25,6 +25,9 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
   ],
 })
 export class TermcodeComponent implements OnInit {
+  private hashService = inject(HashService)
+  private selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
+
   @Input()
   termCodes: TerminologyCode[]
   @Input()
@@ -34,10 +37,10 @@ export class TermcodeComponent implements OnInit {
   changedTermCodes = new EventEmitter<TerminologyCode[]>()
 
   bulkEntries: CriteriaBulkEntry[] = []
-  constructor(
-    private hashService: HashService,
-    private selectedBulkCriteriaService: SelectedBulkCriteriaProvider
-  ) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
   ngOnInit(): void {
     this.createBulkEntries()
   }

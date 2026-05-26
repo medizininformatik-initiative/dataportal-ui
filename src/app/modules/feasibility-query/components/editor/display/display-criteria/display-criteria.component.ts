@@ -6,6 +6,7 @@ import {
   ViewChild,
   ViewContainerRef,
   TemplateRef,
+  inject,
 } from '@angular/core'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
@@ -32,6 +33,9 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class DisplayCriteriaComponent implements OnInit, OnDestroy {
+  private queryService = inject(FeasibilityQueryProviderService)
+  criterionProvider = inject(CriterionProviderService)
+
   @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef
   @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>
 
@@ -43,10 +47,10 @@ export class DisplayCriteriaComponent implements OnInit, OnDestroy {
   private querySubscription: Subscription
   private criteriaSubscription: Subscription
 
-  constructor(
-    private queryService: FeasibilityQueryProviderService,
-    public criterionProvider: CriterionProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.criteriaSubscription = this.criterionProvider.getAll().subscribe(() => {

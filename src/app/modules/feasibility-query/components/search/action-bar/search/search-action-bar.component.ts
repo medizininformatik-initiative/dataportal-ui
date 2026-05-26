@@ -1,5 +1,5 @@
 import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCriterionService'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
@@ -24,20 +24,27 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, MatBadge, MatTooltip, AsyncPipe, TranslateModule],
 })
 export class SearchActionBarComponent implements OnInit {
+  private listItemSelectionService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
+    SelectedTableItemsProvider
+  )
+  private buildCriterionService = inject(BuildCriterionService)
+  private stageProviderService = inject(StageProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
+  private listItemService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
+    SelectedTableItemsProvider
+  )
+  private feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
+  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private snackbarService = inject(SnackbarService)
+
   listItemArray$: Observable<CriteriaListEntry[]> = of([])
   isFeasibilityExistent$: Observable<boolean>
   stageArray$: Observable<Array<string>> = of([])
 
-  constructor(
-    private listItemSelectionService: SelectedTableItemsProvider<CriteriaListEntry>,
-    private buildCriterionService: BuildCriterionService,
-    private stageProviderService: StageProviderService,
-    private navigationHelperService: NavigationHelperService,
-    private listItemService: SelectedTableItemsProvider<CriteriaListEntry>,
-    private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
-    private feasibilityQueryValidation: FeasibilityQueryValidationService,
-    private snackbarService: SnackbarService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.listItemArray$ = this.listItemSelectionService.getItems()

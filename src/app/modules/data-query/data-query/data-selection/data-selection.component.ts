@@ -10,6 +10,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  inject,
 } from '@angular/core'
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { MatStepper, MatStep, MatStepLabel } from '@angular/material/stepper'
@@ -40,6 +41,12 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class DataSelectionComponent implements OnInit, OnDestroy {
+  elementRef = inject(ElementRef)
+  private dataSelectionProviderService = inject(DataSelectionProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
+  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private appSettingsProviderService = inject(AppSettingsProviderService)
+
   @Input() showActionBar
   @Output()
   scrollClick = new EventEmitter()
@@ -48,13 +55,10 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   isCohortExistent$: Observable<boolean>
 
   emailLink: string
-  constructor(
-    public elementRef: ElementRef,
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private navigationHelperService: NavigationHelperService,
-    private feasibilityQueryValidation: FeasibilityQueryValidationService,
-    private appSettingsProviderService: AppSettingsProviderService
-  ) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   ngOnInit(): void {
     this.isDataSelectionExistent$ = this.dataSelectionProviderService

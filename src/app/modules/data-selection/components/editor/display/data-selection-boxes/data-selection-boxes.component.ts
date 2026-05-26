@@ -1,5 +1,5 @@
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core'
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
@@ -44,6 +44,13 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
   ],
 })
 export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
+  private fieldsFilterChipsService = inject(DataSelectionFieldsChipsService)
+  private filtersFilterChipsService = inject(DataSelectionFiltersFilterChips)
+  private removeReferenceService = inject(RemoveReferenceService)
+  private menuService = inject(MenuServiceDataSelection)
+  private appSettingsProvider = inject(AppSettingsProviderService)
+  private dataSelectionProviderService = inject(DataSelectionProviderService)
+
   @Input()
   profile: DataSelectionProfile
 
@@ -68,14 +75,10 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
   subs: Subscription
   isReferenced = false
 
-  constructor(
-    private fieldsFilterChipsService: DataSelectionFieldsChipsService,
-    private filtersFilterChipsService: DataSelectionFiltersFilterChips,
-    private removeReferenceService: RemoveReferenceService,
-    private menuService: MenuServiceDataSelection,
-    private appSettingsProvider: AppSettingsProviderService,
-    private dataSelectionProviderService: DataSelectionProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.getFilterChips()

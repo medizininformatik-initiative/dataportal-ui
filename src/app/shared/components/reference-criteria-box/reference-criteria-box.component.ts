@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { FilterChipData } from '../../models/FilterChips/FilterChipData'
@@ -30,6 +30,9 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
   ],
 })
 export class ReferenceCriteriaBoxComponent implements OnInit {
+  private menuService = inject(ReferenceCriterionMenuItems)
+  private filterChipsService = inject(CriterionFilterChipService)
+
   @Input()
   referenceCriterion: ReferenceCriterion
 
@@ -42,10 +45,10 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
 
   translatedSystem: Display
 
-  constructor(
-    private menuService: ReferenceCriterionMenuItems,
-    private filterChipsService: CriterionFilterChipService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.getMenuItems()

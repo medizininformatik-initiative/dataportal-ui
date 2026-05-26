@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service'
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
@@ -16,6 +16,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, AsyncPipe, TranslateModule],
 })
 export class CohortDefinitionActionBarComponent implements OnInit {
+  private routerHelperService = inject(NavigationHelperService)
+  private navigationHelperService = inject(NavigationHelperService)
+  private feasibilityQueryFactoryService = inject(FeasibilityQueryFactoryService)
+  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+
   fileName: string
   isFeasibilityInclusionSet: Observable<boolean>
   isFeasibilityExistent: Observable<boolean>
@@ -23,12 +28,10 @@ export class CohortDefinitionActionBarComponent implements OnInit {
   totalNumberOfPatients: number
   downloadSubscription: Subscription
 
-  constructor(
-    private routerHelperService: NavigationHelperService,
-    private navigationHelperService: NavigationHelperService,
-    private feasibilityQueryFactoryService: FeasibilityQueryFactoryService,
-    private feasibilityQueryValidation: FeasibilityQueryValidationService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.isFeasibilityInclusionSet = this.feasibilityQueryValidation.getIsInclusionSet()

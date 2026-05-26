@@ -1,35 +1,40 @@
-import { ActuatorApiService } from './service/Backend/Api/ActuatorApi.service';
-import { ActuatorInformationService } from './service/Actuator/ActuatorInformation.service';
-import { AppConfigData } from './config/model/AppConfig/AppConfigData';
-import { AppConfigService } from './config/AppConfig.service';
-import { DataportalConfigService } from './config/DataportalConfig.service';
-import { DataSelectionMainProfileInitializerService } from './service/DataSelectionMainProfileInitializerService';
-import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile';
-import { Injectable } from '@angular/core';
-import { OAuthInitService } from './core/auth/OAuthInit.service';
-import { Observable, of, throwError } from 'rxjs';
-import { ProvidersInitService } from './service/Provider/ProvidersInit.service';
-import { TerminologyApiService } from './service/Backend/Api/TerminologyApi.service';
-import { TerminologySystemProvider } from './service/Provider/TerminologySystemProvider.service';
-import { UiProfileData } from './model/Interface/UiProfileData';
-import { UiProfileProviderService } from './service/Provider/UiProfileProvider.service';
-import { UserProfileService } from './service/User/UserProfile.service';
-import { catchError, concatMap, map, tap } from 'rxjs/operators';
+import { ActuatorApiService } from './service/Backend/Api/ActuatorApi.service'
+import { ActuatorInformationService } from './service/Actuator/ActuatorInformation.service'
+import { AppConfigData } from './config/model/AppConfig/AppConfigData'
+import { AppConfigService } from './config/AppConfig.service'
+import { DataportalConfigService } from './config/DataportalConfig.service'
+import { DataSelectionMainProfileInitializerService } from './service/DataSelectionMainProfileInitializerService'
+import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile'
+import { Injectable, inject } from '@angular/core'
+import { OAuthInitService } from './core/auth/OAuthInit.service'
+import { Observable, of, throwError } from 'rxjs'
+import { ProvidersInitService } from './service/Provider/ProvidersInit.service'
+import { TerminologyApiService } from './service/Backend/Api/TerminologyApi.service'
+import { TerminologySystemProvider } from './service/Provider/TerminologySystemProvider.service'
+import { UiProfileData } from './model/Interface/UiProfileData'
+import { UiProfileProviderService } from './service/Provider/UiProfileProvider.service'
+import { UserProfileService } from './service/User/UserProfile.service'
+import { catchError, concatMap, map, tap } from 'rxjs/operators'
 @Injectable({ providedIn: 'root' })
 export class CoreInitService {
-  constructor(
-    private appConfigService: AppConfigService,
-    private dataportalConfigService: DataportalConfigService,
-    private oauthInitService: OAuthInitService,
-    private dataSelectionMainProfileInitializerService: DataSelectionMainProfileInitializerService,
-    private terminologySystemProvider: TerminologySystemProvider,
-    private providersInitService: ProvidersInitService,
-    private actuatorApiService: ActuatorApiService,
-    private userProfileService: UserProfileService,
-    private terminologyApiService: TerminologyApiService,
-    private uiProfileProviderService: UiProfileProviderService,
-    private actuatorInformationService: ActuatorInformationService
-  ) {}
+  private appConfigService = inject(AppConfigService)
+  private dataportalConfigService = inject(DataportalConfigService)
+  private oauthInitService = inject(OAuthInitService)
+  private dataSelectionMainProfileInitializerService = inject(
+    DataSelectionMainProfileInitializerService
+  )
+  private terminologySystemProvider = inject(TerminologySystemProvider)
+  private providersInitService = inject(ProvidersInitService)
+  private actuatorApiService = inject(ActuatorApiService)
+  private userProfileService = inject(UserProfileService)
+  private terminologyApiService = inject(TerminologyApiService)
+  private uiProfileProviderService = inject(UiProfileProviderService)
+  private actuatorInformationService = inject(ActuatorInformationService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * @see Once the pipe has more than nine operators the return type will
@@ -53,10 +58,10 @@ export class CoreInitService {
       concatMap(({ patientProfileResult }) => this.initializeProviders(patientProfileResult)),
       tap(() => console.log('CoreInitService complete')),
       catchError((err) => {
-        console.error('CoreInitService failed:', err);
-        return throwError(() => err);
+        console.error('CoreInitService failed:', err)
+        return throwError(() => err)
       })
-    ) as Observable<AppConfigData>;
+    ) as Observable<AppConfigData>
   }
 
   /**
@@ -67,10 +72,10 @@ export class CoreInitService {
     return this.appConfigService.loadAppConfig().pipe(
       tap((config) => console.log('AppConfig loaded:', !!config)),
       catchError((err) => {
-        console.error('Config load failed:', err);
-        return throwError(() => err);
+        console.error('Config load failed:', err)
+        return throwError(() => err)
       })
-    );
+    )
   }
 
   /**
@@ -82,10 +87,10 @@ export class CoreInitService {
       tap((config) => console.log('Dataportal settings loaded:', !!config)),
       map(() => undefined),
       catchError((err) => {
-        console.error('Dataportal settings load failed:', err);
-        return throwError(() => err);
+        console.error('Dataportal settings load failed:', err)
+        return throwError(() => err)
       })
-    );
+    )
   }
 
   /**
@@ -96,10 +101,10 @@ export class CoreInitService {
     return this.oauthInitService.initOAuth().pipe(
       tap((result) => console.log('OAuth initialized:', result)),
       catchError((err) => {
-        console.error('OAuth init failed:', err);
-        return throwError(() => err);
+        console.error('OAuth init failed:', err)
+        return throwError(() => err)
       })
-    );
+    )
   }
 
   /**
@@ -109,7 +114,7 @@ export class CoreInitService {
   private initUserProfile(): Observable<boolean> {
     return this.userProfileService
       .initializeProfile()
-      .pipe(tap((result) => console.log('UserProfile initialized:', result)));
+      .pipe(tap((result) => console.log('UserProfile initialized:', result)))
   }
 
   /**
@@ -121,10 +126,10 @@ export class CoreInitService {
       map((result) => (typeof result === 'boolean' ? result : true)),
       tap(() => console.log('Backend is up')),
       catchError((err) => {
-        console.error('Backend health check failed:', err);
-        return throwError(() => new Error('Backend is not reachable'));
+        console.error('Backend health check failed:', err)
+        return throwError(() => new Error('Backend is not reachable'))
       })
-    );
+    )
   }
 
   /**
@@ -136,10 +141,10 @@ export class CoreInitService {
       tap((uiProfileData: UiProfileData[]) => this.uiProfileProviderService.setMany(uiProfileData)),
       tap((data: UiProfileData[]) => console.log('UiProfiles data retrieved:', data.length)),
       catchError((err) => {
-        console.error('Failed to retrieve UiProfiles data:', err);
-        return throwError(() => err);
+        console.error('Failed to retrieve UiProfiles data:', err)
+        return throwError(() => err)
       })
-    );
+    )
   }
 
   private loadActuatorInformation(): Observable<boolean> {
@@ -147,10 +152,10 @@ export class CoreInitService {
       tap((info) => console.log('Actuator information loaded:', !!info)),
       map(() => true),
       catchError((err) => {
-        console.error('Failed to load Actuator information:', err);
-        return of(false);
+        console.error('Failed to load Actuator information:', err)
+        return of(false)
       })
-    );
+    )
   }
 
   /**
@@ -166,10 +171,10 @@ export class CoreInitService {
           : throwError(() => new Error('TerminologySystems initialization failed'))
       ),
       catchError((err) => {
-        console.error('TerminologySystems init failed:', err);
-        return throwError(() => err);
+        console.error('TerminologySystems init failed:', err)
+        return throwError(() => err)
       })
-    );
+    )
   }
 
   /**
@@ -186,10 +191,10 @@ export class CoreInitService {
           : throwError(() => new Error('Providers initialization failed'))
       ),
       catchError((err) => {
-        console.error('Providers init failed:', err);
-        return throwError(() => err);
+        console.error('Providers init failed:', err)
+        return throwError(() => err)
       })
-    );
+    )
   }
 
   /**
@@ -200,12 +205,12 @@ export class CoreInitService {
     return this.dataSelectionMainProfileInitializerService.initializePatientProfile().pipe(
       tap((result) => console.log('PatientProfile initialized:', !!result)),
       concatMap((result) =>
-        !!result ? of(result) : throwError(() => new Error('PatientProfile initialization failed'))
+        result ? of(result) : throwError(() => new Error('PatientProfile initialization failed'))
       ),
       catchError((err) => {
-        console.error('PatientProfile init failed:', err);
-        return throwError(() => err);
+        console.error('PatientProfile init failed:', err)
+        return throwError(() => err)
       })
-    );
+    )
   }
 }

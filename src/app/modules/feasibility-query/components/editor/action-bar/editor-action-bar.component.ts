@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { DataQueryValidationService } from 'src/app/service/DataQuery/DataQueryValidation.service'
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
@@ -19,6 +19,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, MatTooltip, AsyncPipe, TranslateModule],
 })
 export class EditorActionBarComponent implements OnInit, OnDestroy {
+  private dataQueryValidation = inject(DataQueryValidationService)
+  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private stageProviderService = inject(StageProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
+
   stageArray$: Observable<Array<string>> = of([])
   isFeasibilityQueryValid$: Observable<boolean>
 
@@ -26,12 +31,10 @@ export class EditorActionBarComponent implements OnInit, OnDestroy {
 
   saveDataQueryModalSubscription: Subscription
 
-  constructor(
-    private dataQueryValidation: DataQueryValidationService,
-    private feasibilityQueryValidation: FeasibilityQueryValidationService,
-    private stageProviderService: StageProviderService,
-    private navigationHelperService: NavigationHelperService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.isFeasibilityQueryValid$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid()

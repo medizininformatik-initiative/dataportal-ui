@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core'
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
@@ -21,6 +22,8 @@ import { ValueSelectComponent } from '../../../../../../../shared/components/val
   imports: [ValueSelectComponent],
 })
 export class QuantityComparatorComponent implements OnChanges, OnInit {
+  private quantityFilterFactoryService = inject(QuantityFilterFactoryService)
+
   @Input()
   value: number
 
@@ -33,7 +36,10 @@ export class QuantityComparatorComponent implements OnChanges, OnInit {
   @Output()
   quantityComparatorInstance = new EventEmitter<QuantityComparatorFilter>()
 
-  constructor(private quantityFilterFactoryService: QuantityFilterFactoryService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {}
 

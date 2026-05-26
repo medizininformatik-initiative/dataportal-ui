@@ -1,18 +1,23 @@
-import { Injectable } from '@angular/core';
-import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service';
+import { Injectable, inject } from '@angular/core'
+import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SnackbarMessageService {
-  constructor(private snackbarService: SnackbarService) {}
+  private snackbarService = inject(SnackbarService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Displays message when item is added to data selection
    * @returns
    */
   public displayAddedToDataSelection(): void {
-    this.snackbarService.displayInfoMessage('DATASELECTION.SNACKBAR.ADDED');
+    this.snackbarService.displayInfoMessage('DATASELECTION.SNACKBAR.ADDED')
   }
 
   /**
@@ -20,7 +25,7 @@ export class SnackbarMessageService {
    * @returns
    */
   public displayAddedToCriteriaStage(): void {
-    this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE');
+    this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE')
   }
 
   /**
@@ -30,7 +35,7 @@ export class SnackbarMessageService {
   public displayRemovedFromCriteriaStage(): void {
     this.snackbarService.displayErrorMessageWithNoCode(
       'FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE'
-    );
+    )
   }
 
   /**
@@ -38,7 +43,7 @@ export class SnackbarMessageService {
    * @returns
    */
   public displayDataDefinitionSaveSuccess(): void {
-    this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.SUCCESS.SAVE');
+    this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.SUCCESS.SAVE')
   }
 
   /**
@@ -46,7 +51,7 @@ export class SnackbarMessageService {
    * @returns
    */
   public displaySavedQueryDeleteSuccess(): void {
-    this.snackbarService.displayInfoMessage('SAVEDQUERIES.SUCCESS.DELETE');
+    this.snackbarService.displayInfoMessage('SAVEDQUERIES.SUCCESS.DELETE')
   }
 
   /**
@@ -54,7 +59,7 @@ export class SnackbarMessageService {
    * @returns
    */
   public displayFeasibilityExecutionSuccess(): void {
-    this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.SUCCESS.EXECUTE');
+    this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.SUCCESS.EXECUTE')
   }
 
   /**
@@ -62,7 +67,7 @@ export class SnackbarMessageService {
    * @returns
    */
   public dataDefinitionUploadError(): void {
-    this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD');
+    this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD')
   }
 
   /**
@@ -70,7 +75,7 @@ export class SnackbarMessageService {
    * @returns
    */
   public crtdlValidationError(): void {
-    this.snackbarService.displayErrorMessageWithNoCode('SNACKBAR.ERROR.UPLOAD');
+    this.snackbarService.displayErrorMessageWithNoCode('SNACKBAR.ERROR.UPLOAD')
   }
 
   /**
@@ -78,7 +83,7 @@ export class SnackbarMessageService {
    * @returns
    */
   public dataDefinitionUploadSuccess(): void {
-    this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD');
+    this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD')
   }
 
   /**
@@ -86,7 +91,7 @@ export class SnackbarMessageService {
    * @returns
    */
   public dataDefinitionDownloadSuccess(): void {
-    this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD');
+    this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD')
   }
 
   /**
@@ -94,6 +99,6 @@ export class SnackbarMessageService {
    * @returns
    */
   public displayCriterionEditSuccess(): void {
-    this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.EDIT_SUCCESS');
+    this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.EDIT_SUCCESS')
   }
 }

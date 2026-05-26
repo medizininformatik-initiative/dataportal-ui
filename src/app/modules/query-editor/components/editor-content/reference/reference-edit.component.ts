@@ -21,6 +21,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { CriterionHeaderComponent } from '../criterion/header/criterion-header.component'
 import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
@@ -47,6 +48,9 @@ import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTrans
   ],
 })
 export class ReferenceEditComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+  private referenceCriterionEditService = inject(EditReferenceCriterionService)
+  private cdr = inject(ChangeDetectorRef)
+
   @Input()
   referenceCriterion!: ReferenceCriterion
 
@@ -84,10 +88,10 @@ export class ReferenceEditComponent implements OnChanges, OnInit, AfterViewInit,
 
   referenceSubscription: Subscription | undefined = undefined
 
-  constructor(
-    private referenceCriterionEditService: EditReferenceCriterionService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.initializeFromCriterion()

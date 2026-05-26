@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { AnalysisType } from 'src/app/model/Utilities/Consent/AnalysisType'
 import { ContactOption } from 'src/app/model/Utilities/Consent/ContactOption'
 import { GdprCompliance } from 'src/app/model/Utilities/Consent/GdprCompliance'
@@ -17,6 +17,8 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [SwitchComponent, SectionNameComponent, NgClass, TranslateModule],
 })
 export class ConsentSwitchesComponent implements OnInit {
+  private consentService = inject(ConsentService)
+
   analysisType = AnalysisType
 
   contactOption = ContactOption
@@ -34,7 +36,10 @@ export class ConsentSwitchesComponent implements OnInit {
 
   consent = true
 
-  constructor(private consentService: ConsentService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.getProvisionCode()

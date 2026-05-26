@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  inject,
+} from '@angular/core'
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
 import { QuantityNotSet } from '../../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet'
@@ -14,6 +22,8 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ValueSelectComponent, TranslateModule],
 })
 export class QuantityRangeComponent implements OnChanges {
+  private quantityFilterFactoryService = inject(QuantityFilterFactoryService)
+
   @Input()
   minValue: number
 
@@ -27,7 +37,10 @@ export class QuantityRangeComponent implements OnChanges {
   quantityRangeInstance: EventEmitter<QuantityRangeFilter | QuantityNotSet> = new EventEmitter()
 
   displayWarning = false
-  constructor(private quantityFilterFactoryService: QuantityFilterFactoryService) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (

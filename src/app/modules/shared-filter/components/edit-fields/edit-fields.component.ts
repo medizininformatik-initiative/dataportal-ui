@@ -1,5 +1,5 @@
 import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField'
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter'
 import { map, Subscription, take } from 'rxjs'
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
@@ -36,6 +36,8 @@ import { DisplayTranslationPipe } from '../../../../shared/pipes/DisplayTranslat
   ],
 })
 export class EditFieldsComponent implements OnInit, OnDestroy {
+  private selectedDataSelectionProfileFieldsService = inject(SelectedProfileFieldsService)
+
   @Input()
   fieldTree: BasicField[]
 
@@ -49,7 +51,10 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
 
   tree: TreeNode[] = []
   deepCopyFieldsSubscription: Subscription
-  constructor(private selectedDataSelectionProfileFieldsService: SelectedProfileFieldsService) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   ngOnInit() {
     this.traversAndUpddateTree()

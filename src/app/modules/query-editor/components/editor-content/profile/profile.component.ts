@@ -20,6 +20,7 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
+  inject,
 } from '@angular/core'
 import { ProfileHeaderComponent } from './header/profile-header.component'
 import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
@@ -53,6 +54,10 @@ import { TranslateModule } from '@ngx-translate/core'
  * Newly added and stagged references are managed automatically in the StagedProfileService.
  */
 export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy, OnChanges {
+  private cdr = inject(ChangeDetectorRef)
+  private stagedProfileService = inject(StagedProfileService)
+  private possibleReferencesService = inject(PossibleReferencesService)
+
   @Input()
   profile: DataSelectionProfile
 
@@ -75,11 +80,10 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy, OnCha
   @ViewChild('information', { static: false, read: TemplateRef })
   readonly informationTemplate: TemplateRef<any>
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private stagedProfileService: StagedProfileService,
-    private possibleReferencesService: PossibleReferencesService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.stagedProfileService.initialize(this.profile)

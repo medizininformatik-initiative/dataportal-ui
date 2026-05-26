@@ -7,6 +7,7 @@ import {
   Input,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { CriteriaListEntry } from '../../../model/Search/ListEntries/CriteriaListListEntry'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
@@ -26,6 +27,11 @@ import { ListItemDetailsComponent } from '../shared-components.module'
   ],
 })
 export class SearchResultComponent implements OnInit, AfterViewInit {
+  private listItemService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
+    SelectedTableItemsProvider
+  )
+  private cdr = inject(ChangeDetectorRef)
+
   @ViewChild('drawer') sidenav: MatDrawer
 
   @Input()
@@ -40,10 +46,10 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
 
   isOpen = false
 
-  constructor(
-    private listItemService: SelectedTableItemsProvider<CriteriaListEntry>,
-    private cdr: ChangeDetectorRef
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.listItemService.getActiveItem().subscribe((row) => {

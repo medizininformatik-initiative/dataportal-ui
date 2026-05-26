@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
@@ -32,6 +32,11 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
   ],
 })
 export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
+  private dataSelectionProviderService = inject(DataSelectionProviderService)
+  private profileProviderService = inject(ProfileProviderService)
+  private profileReferenceChipsService = inject(ProfileReferenceChipsService)
+  private navigationHelperService = inject(NavigationHelperService)
+
   @Input() referenceField: SelectedReferenceField
   @Input() unlinkedRequiredOrRecommendedReferences: ReferenceField
   @Input() parentId?: string
@@ -46,12 +51,10 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
 
   dataSelectionProviderSubscription: Subscription
 
-  constructor(
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private profileProviderService: ProfileProviderService,
-    private profileReferenceChipsService: ProfileReferenceChipsService,
-    private navigationHelperService: NavigationHelperService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.initiliazeDisplayData()

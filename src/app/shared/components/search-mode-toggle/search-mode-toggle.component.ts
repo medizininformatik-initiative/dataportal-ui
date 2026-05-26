@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router'
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
 import { SwitchComponent } from '../switch/switch.component'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -13,13 +13,18 @@ export type SearchMode = 'search' | 'bulk-search'
   imports: [SwitchComponent, TranslateModule],
 })
 export class SearchModeToggleComponent implements OnInit {
+  private activatedRoute = inject(ActivatedRoute)
+
   @Input()
   selectedMode: SearchMode = 'search'
 
   @Output()
   modeChange = new EventEmitter<SearchMode>()
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.activatedRoute.url.subscribe((urlSegments) => {

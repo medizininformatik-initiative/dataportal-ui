@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { ErrorDisplayService } from '../../service/ErrorDisplay/error-display.service'
 import { DataportalErrorPayloadType } from 'src/app/core/model/DataportalErrorPayloadType'
 import { InfoTileComponent } from '../info-tile/info-tile.component'
@@ -14,12 +14,17 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [InfoTileComponent, ButtonComponent, FontAwesomeModule, TranslateModule],
 })
 export class ErrorDisplayComponent implements OnInit {
+  errorDisplayService = inject(ErrorDisplayService)
+
   isVisible = false
   errorData: DataportalErrorPayloadType | null = null
   errorUrl = ''
   errorType = ''
 
-  constructor(public errorDisplayService: ErrorDisplayService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.errorDisplayService.visibility$.subscribe((isVisible) => {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, inject } from '@angular/core'
 import { HeaderDescriptionToggleService } from './header-description-toggle.service'
 import { MatTooltip } from '@angular/material/tooltip'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
@@ -13,7 +13,12 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [MatTooltip, FontAwesomeModule, AsyncPipe, TranslateModule],
 })
 export class HeaderComponent {
+  toggleService = inject(HeaderDescriptionToggleService)
+
   @Input() showToggle = false
 
-  constructor(public toggleService: HeaderDescriptionToggleService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 }

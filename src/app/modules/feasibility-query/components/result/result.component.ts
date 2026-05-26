@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
 import { Observable } from 'rxjs'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
@@ -22,9 +22,14 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ResultComponent implements OnInit, OnDestroy {
+  private feasibilityQueryResultService = inject(FeasibilityQueryResultService)
+
   resultLoaded = false
   hasQueryResult: Observable<boolean>
-  constructor(private feasibilityQueryResultService: FeasibilityQueryResultService) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   ngOnInit() {}
 

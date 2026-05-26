@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter'
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface'
@@ -17,14 +17,18 @@ export class ProfileReferenceModalComponentData {
   imports: [ModalWindowComponent, TreeComponent],
 })
 export class ProfileReferenceModalComponent implements OnInit {
+  data = inject<ProfileReferenceModalComponentData>(MAT_DIALOG_DATA)
+  private dialogRef =
+    inject<MatDialogRef<ProfileReferenceModalComponentData, string[]>>(MatDialogRef)
+
   urlTree: TreeNode[] = []
 
   selectedProfileIds: Set<string> = new Set()
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ProfileReferenceModalComponentData,
-    private dialogRef: MatDialogRef<ProfileReferenceModalComponentData, string[]>
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.selectedProfileIds.clear()

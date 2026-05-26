@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service'
 import { SelectedListItem } from 'src/app/shared/components/selected-items-list/selected-items-list.component'
@@ -12,13 +12,18 @@ import { SelectedItemsListComponent } from '../../../../../shared/components/sel
   imports: [SelectedItemsListComponent],
 })
 export class SelectedConceptListComponent implements OnInit {
+  private conceptProviderService = inject(SelectedConceptFilterProviderService)
+
   @Input()
   selectedConcepts: Concept[] = []
 
   @Output()
   changedSelectedConcepts = new EventEmitter<Concept[]>()
 
-  constructor(private conceptProviderService: SelectedConceptFilterProviderService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {}
 

@@ -5,6 +5,7 @@ import {
   ElementRef,
   OnDestroy,
   Input,
+  inject,
 } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
@@ -24,6 +25,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [CdkDropList, DropGroupDirective, CriteriaBoxComponent, AsyncPipe, TranslateModule],
 })
 export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
+  elementRef = inject(ElementRef)
+  private criterionProviderService = inject(CriterionProviderService)
+  private stageProviderService = inject(StageProviderService)
+  private changeDetectorRef = inject(ChangeDetectorRef)
+
   @Input() isEditable: boolean
   public $criterionUIDMap: Observable<Array<Criterion>>
 
@@ -33,12 +39,10 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
 
   private subscription: Subscription
 
-  constructor(
-    public elementRef: ElementRef,
-    private criterionProviderService: CriterionProviderService,
-    private stageProviderService: StageProviderService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngAfterViewInit() {
     this.getCriterionArray()

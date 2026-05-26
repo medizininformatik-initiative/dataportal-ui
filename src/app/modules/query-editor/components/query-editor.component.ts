@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router'
 import { combineLatest, map, Observable, of, Subscription, switchMap, take, tap } from 'rxjs'
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { data } from 'cypress/types/jquery'
@@ -23,6 +23,13 @@ import { AsyncPipe } from '@angular/common'
   imports: [EditorContentComponent, EditActionBarComponent, AsyncPipe],
 })
 export class QueryEditorComponent implements OnInit, OnDestroy {
+  private criterionProviderService = inject(CriterionProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
+  private activatedRoute = inject(ActivatedRoute)
+  private profileProviderService = inject(ProfileProviderService)
+  private possibleReferencesService = inject(PossibleReferencesService)
+  private referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
+
   criterion$: Observable<Criterion>
 
   dataSelectionProfile$: Observable<DataSelectionProfile>
@@ -34,14 +41,10 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
 
   routeSubscription: Subscription
 
-  constructor(
-    private criterionProviderService: CriterionProviderService,
-    private navigationHelperService: NavigationHelperService,
-    private activatedRoute: ActivatedRoute,
-    private profileProviderService: ProfileProviderService,
-    private possibleReferencesService: PossibleReferencesService,
-    private referenceCriterionProviderService: ReferenceCriterionProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     const url = this.activatedRoute.snapshot.url

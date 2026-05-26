@@ -1,9 +1,9 @@
-import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { Injectable } from '@angular/core';
-import { PollingService } from './Polling.service';
-import { QueryResult } from 'src/app/model/Result/QueryResult';
-import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service';
+import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
+import { Injectable, inject } from '@angular/core'
+import { PollingService } from './Polling.service'
+import { QueryResult } from 'src/app/model/Result/QueryResult'
+import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service'
 import {
   Observable,
   Subject,
@@ -14,18 +14,21 @@ import {
   endWith,
   mergeMap,
   map,
-} from 'rxjs';
+} from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
 })
 export class PollingManagerService {
-  private stopPolling$ = new Subject<void>();
+  private pollingService = inject(PollingService)
+  private queryResultMapperService = inject(QueryResultMapperService)
 
-  constructor(
-    private pollingService: PollingService,
-    private queryResultMapperService: QueryResultMapperService
-  ) {}
+  private stopPolling$ = new Subject<void>()
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Initiates polling for the feasibility query.
@@ -35,7 +38,7 @@ export class PollingManagerService {
   ): Observable<QueryResult | ErrorQueryResult> {
     return this.pollingService
       .getFeasibilityIdFromPollingUrl(feasibilityQuery)
-      .pipe(switchMap((resultId) => this.startPolling(feasibilityQuery, resultId)));
+      .pipe(switchMap((resultId) => this.startPolling(feasibilityQuery, resultId)))
   }
 
   /**
@@ -45,9 +48,9 @@ export class PollingManagerService {
     feasibilityQuery: FeasibilityQuery,
     resultId: string
   ): Observable<QueryResult | ErrorQueryResult> {
-    feasibilityQuery.addResultId(resultId);
-    this.resetStopSignal();
-    return this.pollingProcess(resultId, feasibilityQuery.getId());
+    feasibilityQuery.addResultId(resultId)
+    this.resetStopSignal()
+    return this.pollingProcess(resultId, feasibilityQuery.getId())
   }
 
   /**
@@ -57,8 +60,8 @@ export class PollingManagerService {
     resultId: string,
     feasibilityQueryId: string
   ): Observable<QueryResult | ErrorQueryResult | null> {
-    let lastValidResult: QueryResult | null = null;
-    let lastError: ErrorQueryResult | null = null;
+    let lastValidResult: QueryResult | null = null
+    let lastError: ErrorQueryResult | null = null
 
     return interval(this.pollingService.getPollingInterval()).pipe(
       takeUntil(timer(this.pollingService.getPollingTime() + 200)),
@@ -69,37 +72,37 @@ export class PollingManagerService {
               lastError = this.queryResultMapperService.createErrorQueryResult(
                 result.issues,
                 feasibilityQueryId
-              );
-              return lastError;
+              )
+              return lastError
             } else {
               lastValidResult = this.queryResultMapperService.createQueryResult(
                 false,
                 result,
                 feasibilityQueryId
-              );
-              lastError = null;
-              return lastValidResult;
+              )
+              lastError = null
+              return lastValidResult
             }
           })
         )
       ),
       takeUntil(this.stopPolling$),
       endWith(lastValidResult ?? lastError ?? null)
-    );
+    )
   }
 
   /**
    * Requests polling results and handles errors.
    */
   private requestPollingResult(resultId: string): Observable<any> {
-    return this.pollingService.requestSummaryResult(resultId);
+    return this.pollingService.requestSummaryResult(resultId)
   }
 
   /**
    * Stops polling by emitting a signal.
    */
   public stopPolling(): void {
-    this.stopPolling$.next();
+    this.stopPolling$.next()
   }
 
   /**
@@ -107,7 +110,7 @@ export class PollingManagerService {
    */
   private resetStopSignal(): void {
     if (this.stopPolling$.closed) {
-      this.stopPolling$ = new Subject<void>();
+      this.stopPolling$ = new Subject<void>()
     }
   }
 }

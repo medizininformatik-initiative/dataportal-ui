@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, OnDestroy, OnInit, Output, inject } from '@angular/core'
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
@@ -37,6 +37,12 @@ type QueryResponseType = QueryResult | ErrorQueryResult | null
   ],
 })
 export class SimpleResultComponent implements OnInit, OnDestroy {
+  dialog = inject(MatDialog)
+  private feasibilityQueryResultService = inject(FeasibilityQueryResultService)
+  private queryProviderService = inject(FeasibilityQueryProviderService)
+  private appSettingsProviderService = inject(AppSettingsProviderService)
+  private snackbarService = inject(SnackbarService)
+
   showSpinner = false
 
   pollingTime: number
@@ -61,13 +67,10 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   resultLoaded: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   feasibilityQuery: FeasibilityQuery
-  constructor(
-    public dialog: MatDialog,
-    private feasibilityQueryResultService: FeasibilityQueryResultService,
-    private queryProviderService: FeasibilityQueryProviderService,
-    private appSettingsProviderService: AppSettingsProviderService,
-    private snackbarService: SnackbarService
-  ) {
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {
     this.queryResultRateLimit$ = this.feasibilityQueryResultService.getDetailedResultRateLimit()
     this.pollingTime = this.appSettingsProviderService.getPollingTimeUi()
   }

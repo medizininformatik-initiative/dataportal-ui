@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
 import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { ListItemDetailService } from 'src/app/shared/service/Menu/ListItemDetails/ListItemDetails.service'
@@ -16,6 +16,9 @@ import { DisplayTranslationPipe } from '../../../pipes/DisplayTranslationPipe'
   imports: [MatTooltip, MenuComponent, DisplayTranslationPipe],
 })
 export class ListItemDetailsSectionsComponent implements OnInit {
+  private menuService = inject(ListItemDetailService)
+  private criteriaByIdSearchService = inject(CriteriaByIdSearchService)
+
   @Input()
   listItemDetails: SearchTermRelatives[]
 
@@ -27,10 +30,10 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   @Output()
   selectedRelative: EventEmitter<CriteriaListEntry> = new EventEmitter()
 
-  constructor(
-    private menuService: ListItemDetailService,
-    private criteriaByIdSearchService: CriteriaByIdSearchService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public ngOnInit() {
     this.getMenuItems()

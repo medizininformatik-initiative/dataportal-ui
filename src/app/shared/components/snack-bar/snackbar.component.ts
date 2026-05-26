@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { SnackbarService } from '../../service/Snackbar/Snackbar.service'
 import { NgClass } from '@angular/common'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
@@ -11,10 +11,15 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
   imports: [NgClass, DisplayTranslationPipe],
 })
 export class SnackbarComponent implements OnInit {
+  snackbarService = inject(SnackbarService)
+
   isVisible = false
   message = ''
   color = 'red'
-  constructor(public snackbarService: SnackbarService) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   ngOnInit() {
     this.snackbarService.visibility$.subscribe((isVisible) => {

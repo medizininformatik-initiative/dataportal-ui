@@ -1,5 +1,5 @@
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { MatTooltip } from '@angular/material/tooltip'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
@@ -12,7 +12,12 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [MatTooltip, FontAwesomeModule, TranslateModule],
 })
 export class PortalLinkComponent {
-  constructor(private appSettingsProviderService: AppSettingsProviderService) {}
+  private appSettingsProviderService = inject(AppSettingsProviderService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public navigateToProposalPortal(): void {
     const link = this.appSettingsProviderService.getPortalLink()

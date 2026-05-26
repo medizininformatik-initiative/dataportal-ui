@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
 import { map, Observable, tap } from 'rxjs'
@@ -14,15 +14,18 @@ import { AsyncPipe } from '@angular/common'
   imports: [DataSelectionBoxesComponent, AsyncPipe],
 })
 export class DisplayProfilesComponent implements OnInit {
+  private profileProvider = inject(ProfileProviderService)
+  private dataSelectionProvider = inject(DataSelectionProviderService)
+
   @Input()
   isEditable: boolean
 
   dataSelectionProfileArray$: Observable<Array<DataSelectionProfile>>
 
-  constructor(
-    private profileProvider: ProfileProviderService,
-    private dataSelectionProvider: DataSelectionProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.getDataSelectionProfiles()

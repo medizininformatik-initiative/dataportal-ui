@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
@@ -18,11 +18,14 @@ import { HeaderDescriptionComponent } from 'src/app/shared/components/header-des
   imports: [TranslateModule, HeaderComponent, HeaderDescriptionComponent, ButtonComponent],
 })
 export class DashboardComponent implements OnInit {
-  constructor(
-    private oauthService: OAuthService,
-    public translate: TranslateService,
-    private navigationHelperService: NavigationHelperService
-  ) {}
+  private oauthService = inject(OAuthService)
+  translate = inject(TranslateService)
+  private navigationHelperService = inject(NavigationHelperService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   displayInfoMessage = false
   proposalPortalLink = ''

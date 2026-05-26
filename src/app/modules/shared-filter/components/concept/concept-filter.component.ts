@@ -1,7 +1,16 @@
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service'
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
 import { filter, map, Observable, Subscription } from 'rxjs'
@@ -21,6 +30,10 @@ import { AsyncPipe } from '@angular/common'
   imports: [SearchbarComponent, SearchFilterComponent, ConceptFilterTableComponent, AsyncPipe],
 })
 export class ConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
+  private readonly selectedConceptFilterService = inject(SelectedConceptFilterProviderService)
+  private readonly conceptSearchService = inject(CodeableConceptSearchService)
+  private readonly conceptSelectionService = inject(ConceptSelectionHelperService)
+
   @Input() valueSetUrl: string[]
   @Input() conceptFilterId: string
   @Input() preSelectedConcepts: Concept[] = []
@@ -32,11 +45,10 @@ export class ConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
   private currentSearchTerm = ''
   private subscription = new Subscription()
 
-  constructor(
-    private readonly selectedConceptFilterService: SelectedConceptFilterProviderService,
-    private readonly conceptSearchService: CodeableConceptSearchService,
-    private readonly conceptSelectionService: ConceptSelectionHelperService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.initializeComponent()

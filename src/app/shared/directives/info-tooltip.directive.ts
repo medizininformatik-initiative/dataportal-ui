@@ -8,6 +8,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core'
 import { icon } from '@fortawesome/fontawesome-svg-core'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
@@ -18,16 +19,19 @@ import { InfoTooltipComponent } from '../components/info-tooltip/info-tooltip.co
   standalone: true,
 })
 export class InfoTooltipDirective implements OnInit, OnDestroy {
+  private el = inject<ElementRef<HTMLElement>>(ElementRef)
+  private appRef = inject(ApplicationRef)
+  private environmentInjector = inject(EnvironmentInjector)
+
   @Input() infoTooltipTitle: string
   @Input() infoTooltipText: string
 
   private cardRef: ReturnType<typeof createComponent<InfoTooltipComponent>> | null = null
 
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private appRef: ApplicationRef,
-    private environmentInjector: EnvironmentInjector
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     const rendered = icon(faQuestionCircle)

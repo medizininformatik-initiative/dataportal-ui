@@ -6,6 +6,7 @@ import {
   Input,
   OnInit,
   Output,
+  inject,
 } from '@angular/core'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
@@ -37,6 +38,8 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
   ],
 })
 export class QuantityComponent implements OnInit {
+  private quantityFilterFactoryService = inject(QuantityFilterFactoryService)
+
   FilterTypes: typeof FilterTypes = FilterTypes
 
   @Input()
@@ -67,7 +70,10 @@ export class QuantityComponent implements OnInit {
 
   QuantityComparisonOption: typeof QuantityComparisonOption = QuantityComparisonOption
 
-  constructor(private quantityFilterFactoryService: QuantityFilterFactoryService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.setupFactoryService()

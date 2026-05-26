@@ -22,6 +22,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  inject,
 } from '@angular/core'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
 import { CriterionHeaderComponent } from './header/criterion-header.component'
@@ -51,6 +52,10 @@ import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTrans
   ],
 })
 export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+  private criterionEditService = inject(EditCriterionService)
+  private cdr = inject(ChangeDetectorRef)
+  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+
   @Input()
   criterion!: Criterion
 
@@ -91,11 +96,10 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
 
   referenceSubscription: Subscription | undefined = undefined
 
-  constructor(
-    private criterionEditService: EditCriterionService,
-    private cdr: ChangeDetectorRef,
-    private referenceCriterionProvider: ReferenceCriterionProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.initializeFromCriterion()

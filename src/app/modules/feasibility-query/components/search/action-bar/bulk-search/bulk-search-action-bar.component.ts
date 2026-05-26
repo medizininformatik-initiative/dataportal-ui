@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core'
 import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service'
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry'
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
@@ -21,6 +21,13 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, MatTooltip, AsyncPipe, TranslateModule],
 })
 export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
+  private selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
+  private stageProviderService = inject(StageProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
+  private feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
+  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private createBulkCriterionService = inject(CreateBulkCriterionService)
+
   listItemArray$: Observable<CriteriaBulkEntry[]>
   stageArray$: Observable<string[]>
   isFeasibilityExistent$: Observable<boolean>
@@ -29,14 +36,10 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
 
   @Input()
   resultType: 'FOUND' | 'NOTFOUND'
-  constructor(
-    private selectedBulkCriteriaService: SelectedBulkCriteriaProvider,
-    private stageProviderService: StageProviderService,
-    private navigationHelperService: NavigationHelperService,
-    private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
-    private feasibilityQueryValidation: FeasibilityQueryValidationService,
-    private createBulkCriterionService: CreateBulkCriterionService
-  ) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   ngOnInit() {
     this.disabledAddToStageButton = this.selectedBulkCriteriaService

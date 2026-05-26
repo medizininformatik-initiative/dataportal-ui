@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
 import { DataQueryValidationService } from '../../../service/DataQuery/DataQueryValidation.service'
 import { MatDialogRef } from '@angular/material/dialog'
 import { Observable, Subject } from 'rxjs'
@@ -18,6 +18,9 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [FontAwesomeModule, HeaderComponent, FormsModule, ButtonComponent, TranslateModule],
 })
 export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
+  private dialogRef = inject<MatDialogRef<SaveDataQueryModalComponent>>(MatDialogRef)
+  private dataQueryValidation = inject(DataQueryValidationService)
+
   validatedDataQuery$: Observable<{ feasibilityQuery: boolean; dataSelection: boolean }>
 
   @Input()
@@ -34,10 +37,10 @@ export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>()
 
-  constructor(
-    private dialogRef: MatDialogRef<SaveDataQueryModalComponent>,
-    private dataQueryValidation: DataQueryValidationService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.validatedDataQuery$ = this.dataQueryValidation.validateDataQuery()

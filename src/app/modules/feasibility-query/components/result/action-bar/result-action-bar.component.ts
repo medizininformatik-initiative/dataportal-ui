@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { Subscription } from 'rxjs'
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
@@ -13,12 +13,17 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, TranslateModule],
 })
 export class ResultActionBarComponent implements OnInit, OnDestroy {
+  private navigationHelperService = inject(NavigationHelperService)
+
   @Input()
   hasQueryResult: boolean
 
   saveDataQueryModalSubscription: Subscription
 
-  constructor(private navigationHelperService: NavigationHelperService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {}
 

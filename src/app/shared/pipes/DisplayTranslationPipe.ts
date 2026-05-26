@@ -1,5 +1,5 @@
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { Pipe, PipeTransform } from '@angular/core'
+import { Pipe, PipeTransform, inject } from '@angular/core'
 import { TranslateParser, TranslateService } from '@ngx-translate/core'
 
 @Pipe({
@@ -8,10 +8,10 @@ import { TranslateParser, TranslateService } from '@ngx-translate/core'
   standalone: true,
 })
 export class DisplayTranslationPipe implements PipeTransform {
-  constructor(
-    private translateService: TranslateService,
-    private translateParser: TranslateParser // Inject TranslateParser
-  ) {}
+  private translateService = inject(TranslateService)
+  private translateParser = inject(TranslateParser)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
 
   public transform(value: any, params?: any): string {
     if (!value) {

@@ -10,6 +10,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
@@ -22,9 +23,14 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [FontAwesomeModule, TranslateModule],
 })
 export class SearchbarComponent implements OnInit, OnChanges, OnDestroy {
+  private activeSearchTermService = inject(ActiveSearchTermService)
+
   private readonly debounceTime = 300
   private inputSubject = new Subject<string>()
-  constructor(private activeSearchTermService: ActiveSearchTermService) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   private subscriptions = new Subscription()
 

@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
-import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core'
+import { Directive, ElementRef, HostListener, Input, OnInit, inject } from '@angular/core'
 import { FeasibilityQueryProviderService } from '../../../service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery'
 import { StageProviderService } from '../../../service/Provider/StageProvider.service'
@@ -9,15 +9,18 @@ import { StageProviderService } from '../../../service/Provider/StageProvider.se
   standalone: true,
 })
 export class DropGroupDirective implements OnInit {
+  private queryProviderService = inject(FeasibilityQueryProviderService)
+  private stageProviderService = inject(StageProviderService)
+  private elementRef = inject(ElementRef)
+
   @Input() groupType: string
 
   criteria: string[][] = []
   feasibilityQuery: FeasibilityQuery
-  constructor(
-    private queryProviderService: FeasibilityQueryProviderService,
-    private stageProviderService: StageProviderService,
-    private elementRef: ElementRef
-  ) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   @HostListener('cdkDropListDropped', ['$event'])
   onDrop(event: CdkDragDrop<any[]>) {

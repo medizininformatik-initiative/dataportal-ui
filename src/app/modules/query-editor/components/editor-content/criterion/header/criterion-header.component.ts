@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, inject } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionFilterChipService } from 'src/app/shared/service/FilterChips/Criterion/CriterionFilterChips.service'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
@@ -17,6 +17,8 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
   imports: [FilterChipsComponent, TranslateModule, DisplayTranslationPipe],
 })
 export class CriterionHeaderComponent implements OnChanges, OnInit {
+  private filterChipsService = inject(CriterionFilterChipService)
+
   @Input()
   criterion!: Criterion
 
@@ -32,7 +34,10 @@ export class CriterionHeaderComponent implements OnChanges, OnInit {
 
   system: Display
 
-  constructor(private filterChipsService: CriterionFilterChipService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.iniializeChips()

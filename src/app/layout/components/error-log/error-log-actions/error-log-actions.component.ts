@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { DownloadErrorLogService } from 'src/app/service/Download/DownloadErrroLog.service'
 import { ErrorLogModalComponent } from '../error-log-modal.component'
 import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service'
@@ -15,11 +15,14 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ButtonComponent, MatTooltip, TranslateModule],
 })
 export class ErrorLogActionsComponent {
-  constructor(
-    private readonly errorLogProvider: ErrorLogProviderService,
-    private readonly downloadErrorLogService: DownloadErrorLogService,
-    private readonly dialogRef: MatDialogRef<ErrorLogModalComponent>
-  ) {}
+  private readonly errorLogProvider = inject(ErrorLogProviderService)
+  private readonly downloadErrorLogService = inject(DownloadErrorLogService)
+  private readonly dialogRef = inject<MatDialogRef<ErrorLogModalComponent>>(MatDialogRef)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public clear(): void {
     this.errorLogProvider.clearValidationResult()

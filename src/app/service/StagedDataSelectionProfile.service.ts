@@ -1,14 +1,14 @@
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
-import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner';
-import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service';
-import { Injectable } from '@angular/core';
-import { ProfileProviderService } from './Provider/ProfileProvider.service';
-import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField';
-import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField';
-import { ProfileTimeRestrictionFilter } from '../model/DataSelection/Profile/Filter/ProfileDateFilter';
-import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter';
-import { initial } from 'lodash';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
+import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service'
+import { Injectable, inject } from '@angular/core'
+import { ProfileProviderService } from './Provider/ProfileProvider.service'
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
+import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
+import { ProfileTimeRestrictionFilter } from '../model/DataSelection/Profile/Filter/ProfileDateFilter'
+import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter'
+import { initial } from 'lodash'
 
 /**
  * Service for managing staged profile changes before committing to data selection.
@@ -18,14 +18,17 @@ import { initial } from 'lodash';
   providedIn: 'root',
 })
 export class StagedProfileService {
-  private stagedProfile: DataSelectionProfile;
-  constructor(
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private profileProviderService: ProfileProviderService
-  ) {}
+  private dataSelectionProviderService = inject(DataSelectionProviderService)
+  private profileProviderService = inject(ProfileProviderService)
+
+  private stagedProfile: DataSelectionProfile
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+  constructor() {}
 
   public initialize(profile: DataSelectionProfile): void {
-    this.stagedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
+    this.stagedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
   }
   /**
    * Updates the selected basic fields in the staged profile.
@@ -33,10 +36,10 @@ export class StagedProfileService {
    * @returns
    */
   public updateSelectedBasicFields(selectedBasicFields: SelectedBasicField[]): void {
-    const profile = this.stagedProfile;
+    const profile = this.stagedProfile
     if (profile) {
-      profile.getProfileFields().setSelectedBasicFields(selectedBasicFields);
-      this.buildProfile();
+      profile.getProfileFields().setSelectedBasicFields(selectedBasicFields)
+      this.buildProfile()
     }
   }
 
@@ -46,19 +49,19 @@ export class StagedProfileService {
    * @returns
    */
   public updateSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {
-    const profile = this.stagedProfile;
+    const profile = this.stagedProfile
     if (profile) {
-      profile.getProfileFields().setSelectedReferenceFields(selectedReferenceFields);
-      this.setLinkedProfillesInDataSelectionProvdier();
-      this.buildProfile();
+      profile.getProfileFields().setSelectedReferenceFields(selectedReferenceFields)
+      this.setLinkedProfillesInDataSelectionProvdier()
+      this.buildProfile()
     }
   }
 
   public updateProfileFilter(filter: ProfileTokenFilter | ProfileTimeRestrictionFilter): void {
-    const profile = this.stagedProfile;
+    const profile = this.stagedProfile
     if (profile) {
-      profile.setFilter(filter);
-      this.buildProfile();
+      profile.setFilter(filter)
+      this.buildProfile()
     }
   }
 
@@ -68,10 +71,10 @@ export class StagedProfileService {
    * @returns
    */
   public updateLabel(label: string): void {
-    const profile = this.stagedProfile;
+    const profile = this.stagedProfile
     if (profile) {
-      profile.setLabel(label);
-      this.buildProfile();
+      profile.setLabel(label)
+      this.buildProfile()
     }
   }
   /**
@@ -80,11 +83,11 @@ export class StagedProfileService {
    * @private
    */
   private setLinkedProfillesInDataSelectionProvdier(): Observable<void[]> {
-    const profile = this.stagedProfile;
+    const profile = this.stagedProfile
     if (profile) {
-      const selectedReferenceFields = [...profile.getProfileFields().getSelectedReferenceFields()];
-      const linkedProfileIds = this.getReferencedProfileIds(selectedReferenceFields);
-      return this.getProfilesFromProviderAndSetInDataSelection(linkedProfileIds);
+      const selectedReferenceFields = [...profile.getProfileFields().getSelectedReferenceFields()]
+      const linkedProfileIds = this.getReferencedProfileIds(selectedReferenceFields)
+      return this.getProfilesFromProviderAndSetInDataSelection(linkedProfileIds)
     }
   }
 
@@ -100,13 +103,13 @@ export class StagedProfileService {
     return this.profileProviderService.getAll().pipe(
       map((profileArray: Array<DataSelectionProfile>) =>
         linkedProfileIds.map((id) => {
-          const profile = profileArray.find((p) => p.getId() === id);
+          const profile = profileArray.find((p) => p.getId() === id)
           if (profile) {
-            return this.setProfileInDataSelectionProvider(profile);
+            return this.setProfileInDataSelectionProvider(profile)
           }
         })
       )
-    );
+    )
   }
 
   /**
@@ -118,8 +121,8 @@ export class StagedProfileService {
   private getReferencedProfileIds(selectedReferenceFields: SelectedReferenceField[]): string[] {
     const linkedProfileIds = selectedReferenceFields
       .map((selectedReferenceField) => selectedReferenceField.getLinkedProfileIds())
-      .reduce((acc, ids) => acc.concat(ids), []);
-    return linkedProfileIds;
+      .reduce((acc, ids) => acc.concat(ids), [])
+    return linkedProfileIds
   }
 
   /**
@@ -127,11 +130,11 @@ export class StagedProfileService {
    * @returns Observable of void array for completion tracking
    */
   public buildProfile(): Observable<void[]> {
-    const profile = this.stagedProfile;
-    this.stagedProfile = DataSelectionProfileCloner.deepCopyProfile(profile);
-    this.profileProviderService.setOne(profile);
-    this.setProfileInDataSelectionProvider(profile);
-    return this.setLinkedProfillesInDataSelectionProvdier();
+    const profile = this.stagedProfile
+    this.stagedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
+    this.profileProviderService.setOne(profile)
+    this.setProfileInDataSelectionProvider(profile)
+    return this.setLinkedProfillesInDataSelectionProvdier()
   }
 
   /**
@@ -141,6 +144,6 @@ export class StagedProfileService {
    * @private
    */
   private setProfileInDataSelectionProvider(profile: DataSelectionProfile): void {
-    this.dataSelectionProviderService.setProfileInActiveDataSelection(profile);
+    this.dataSelectionProviderService.setProfileInActiveDataSelection(profile)
   }
 }

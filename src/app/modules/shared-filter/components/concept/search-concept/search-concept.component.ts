@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
@@ -13,6 +13,8 @@ import { SearchbarComponent } from '../../../../../shared/components/search/sear
   imports: [SearchbarComponent],
 })
 export class SearchConceptComponent implements OnDestroy, OnInit {
+  private conceptFilterSearchService = inject(CodeableConceptSearchService)
+
   @Input()
   valueSetUrl: string[]
 
@@ -22,7 +24,10 @@ export class SearchConceptComponent implements OnDestroy, OnInit {
   private searchSubscription: Subscription
   public searchResults: CodeableConceptResultList
 
-  constructor(private conceptFilterSearchService: CodeableConceptSearchService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.startElasticSearch(' ')

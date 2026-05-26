@@ -1,6 +1,6 @@
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { BuildReferenceCriterionService } from 'src/app/service/Criterion/Build/BuildReferenceCriterionService'
-import { Component, HostListener, Inject, OnInit } from '@angular/core'
+import { Component, HostListener, OnInit, inject } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder'
 import { CriterionValidationService } from 'src/app/service/Criterion/Validation/CriterionValidation.deprecated.service'
@@ -21,6 +21,13 @@ import { ReferenceComponent } from './reference/reference.component'
   imports: [ModalWindowComponent, ReferenceComponent],
 })
 export class EditReferenceCriteriaModalComponent implements OnInit {
+  data = inject<EditReferenceCriteriaModalComponent>(MAT_DIALOG_DATA)
+  private dialogRef =
+    inject<MatDialogRef<EditReferenceCriteriaModalComponent, Criterion>>(MatDialogRef)
+  private buildReferenceCriterionService = inject(BuildReferenceCriterionService)
+  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private criterionValidationService = inject(CriterionValidationService)
+
   criterion: Criterion
 
   ids: string[] = []
@@ -28,13 +35,10 @@ export class EditReferenceCriteriaModalComponent implements OnInit {
   parentAttributeFilter: AttributeFilter
   referenceFilter: AttributeFilter[]
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: EditReferenceCriteriaModalComponent,
-    private dialogRef: MatDialogRef<EditReferenceCriteriaModalComponent, Criterion>,
-    private buildReferenceCriterionService: BuildReferenceCriterionService,
-    private referenceCriterionProvider: ReferenceCriterionProviderService,
-    private criterionValidationService: CriterionValidationService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   @HostListener('window:keyup.esc') onKeyUp() {
     this.dialogRef.close()

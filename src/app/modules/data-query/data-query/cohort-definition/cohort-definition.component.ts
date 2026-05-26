@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
@@ -32,17 +32,20 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class CohortDefinitionComponent implements OnInit {
+  private routerHelperService = inject(NavigationHelperService)
+  private feasibilityQueryService = inject(FeasibilityQueryProviderService)
+  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private resultProviderService = inject(ResultProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
+
   fileName: string
   isFeasibilityExistent$: Observable<boolean>
   totalNumberOfPatients: number
 
-  constructor(
-    private routerHelperService: NavigationHelperService,
-    private feasibilityQueryService: FeasibilityQueryProviderService,
-    private feasibilityQueryValidation: FeasibilityQueryValidationService,
-    private resultProviderService: ResultProviderService,
-    private navigationHelperService: NavigationHelperService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.feasibilityQueryService

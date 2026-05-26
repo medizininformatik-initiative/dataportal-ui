@@ -1,27 +1,30 @@
-import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service';
-import { CritGroupPosition } from 'src/app/model/FeasibilityQuery/CritGroupPosition';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { HashService } from '../../Hash.service';
-import { Injectable } from '@angular/core';
-import { ReferenceCriteriaData } from 'src/app/model/Interface/ReferenceCriteriaData';
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service';
-import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { v4 as uuidv4 } from 'uuid';
-import { TimeRestrictionNotSet } from '../../../model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet';
-import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service';
+import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service'
+import { CritGroupPosition } from 'src/app/model/FeasibilityQuery/CritGroupPosition'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { HashService } from '../../Hash.service'
+import { Injectable, inject } from '@angular/core'
+import { ReferenceCriteriaData } from 'src/app/model/Interface/ReferenceCriteriaData'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service'
+import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { v4 as uuidv4 } from 'uuid'
+import { TimeRestrictionNotSet } from '../../../model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
+import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReferenceFilterTranslatorService {
-  constructor(
-    private hashService: HashService,
-    private criteriaProfileProviderService: CriteriaProfileProviderService,
-    private referenceCriterionProviderService: ReferenceCriterionProviderService,
-    private uiTimeRestrictionFactoryService: UITimeRestrictionFactoryService
-  ) {}
+  private hashService = inject(HashService)
+  private criteriaProfileProviderService = inject(CriteriaProfileProviderService)
+  private referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
+  private uiTimeRestrictionFactoryService = inject(UITimeRestrictionFactoryService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Translates a reference filter.
@@ -35,10 +38,10 @@ export class ReferenceFilterTranslatorService {
     criteria: ReferenceCriteriaData[],
     referencedCriteriaSet: string[]
   ): ReferenceFilter {
-    const referenceCriteria = this.createReferenceCriteria(parentId, criteria);
-    const referenceFilter = this.createReferenceFilter(referencedCriteriaSet, referenceCriteria);
-    this.referenceCriterionProviderService.setMany(referenceCriteria);
-    return referenceFilter;
+    const referenceCriteria = this.createReferenceCriteria(parentId, criteria)
+    const referenceFilter = this.createReferenceFilter(referencedCriteriaSet, referenceCriteria)
+    this.referenceCriterionProviderService.setMany(referenceCriteria)
+    return referenceFilter
   }
 
   /**
@@ -55,7 +58,7 @@ export class ReferenceFilterTranslatorService {
       uuidv4(),
       referencedCriteriaSet,
       referenceCriteria.map((r) => r.getId())
-    );
+    )
   }
 
   /**
@@ -70,7 +73,7 @@ export class ReferenceFilterTranslatorService {
   ): ReferenceCriterion[] {
     return criteria.map((referenceCriterion) =>
       this.createSingleReferenceCriterion(parentId, referenceCriterion)
-    );
+    )
   }
 
   /**
@@ -83,15 +86,15 @@ export class ReferenceFilterTranslatorService {
     parentId: string,
     referenceCriterion: ReferenceCriteriaData
   ): ReferenceCriterion {
-    const termCode = TerminologyCode.fromJson(referenceCriterion.termCodes[0]);
-    const contextCode = TerminologyCode.fromJson(referenceCriterion.context);
-    const hash = this.hashService.createCriterionHash(contextCode, termCode);
-    const uiProfile = this.criteriaProfileProviderService.getCriteriaProfileByHash(hash);
+    const termCode = TerminologyCode.fromJson(referenceCriterion.termCodes[0])
+    const contextCode = TerminologyCode.fromJson(referenceCriterion.context)
+    const hash = this.hashService.createCriterionHash(contextCode, termCode)
+    const uiProfile = this.criteriaProfileProviderService.getCriteriaProfileByHash(hash)
     const timeRestriction = !referenceCriterion.timeRestriction
       ? new TimeRestrictionNotSet()
       : this.uiTimeRestrictionFactoryService.createTimeRestrictionForFeasibilityQuery(
           referenceCriterion.timeRestriction
-        );
+        )
 
     return new ReferenceCriterion(
       parentId,
@@ -107,6 +110,6 @@ export class ReferenceFilterTranslatorService {
       timeRestriction,
       uuidv4(),
       []
-    );
+    )
   }
 }

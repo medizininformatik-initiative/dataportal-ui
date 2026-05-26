@@ -1,7 +1,7 @@
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
 import { TimeRestrictionFactoryService } from 'src/app/service/Factory/TimeRestrictionFactory.service'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
 import { DatePickerComponent } from '../../../../../../../shared/components/date-picker/date-picker.component'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -13,6 +13,8 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [DatePickerComponent, TranslateModule],
 })
 export class BetweenFilterComponent implements OnInit {
+  private timeRestrictionFactoryService = inject(TimeRestrictionFactoryService)
+
   @Input()
   betweenFilter: BetweenFilter
 
@@ -25,7 +27,10 @@ export class BetweenFilterComponent implements OnInit {
 
   displayDateWarning = false
 
-  constructor(private timeRestrictionFactoryService: TimeRestrictionFactoryService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.initializeDates()

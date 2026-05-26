@@ -23,6 +23,7 @@ import {
   Output,
   ElementRef,
   EventEmitter,
+  inject,
 } from '@angular/core'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
@@ -52,6 +53,16 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDestroy {
+  elementRef = inject(ElementRef)
+  private loadDataSelectionProfilesService = inject(LoadDataSelectionProfilesService)
+  private dataSelectionProviderService = inject(DataSelectionProviderService)
+  private activeDataSelectionService = inject(ActiveDataSelectionService)
+  private selectedDataSelectionProfileService = inject(SelectedDataSelectionProfileService)
+  private navigationHelperService = inject(NavigationHelperService)
+  private activeRoute = inject(ActivatedRoute)
+  private appSettingsProviderService = inject(AppSettingsProviderService)
+  private snackbarMessageService = inject(SnackbarMessageService)
+
   @ViewChildren(TreeComponent) numTrees!: QueryList<TreeComponent>
   @Input() showActionBar
   @Output() scrollClick = new EventEmitter()
@@ -72,17 +83,10 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   downloadDisabled = true
   emailLink: string
 
-  constructor(
-    public elementRef: ElementRef,
-    private loadDataSelectionProfilesService: LoadDataSelectionProfilesService,
-    private dataSelectionProviderService: DataSelectionProviderService,
-    private activeDataSelectionService: ActiveDataSelectionService,
-    private selectedDataSelectionProfileService: SelectedDataSelectionProfileService,
-    private navigationHelperService: NavigationHelperService,
-    private activeRoute: ActivatedRoute,
-    private appSettingsProviderService: AppSettingsProviderService,
-    private snackbarMessageService: SnackbarMessageService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
     this.$dataSelectionProfileArray = this.dataSelectionProviderService

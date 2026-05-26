@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
 import { ConfirmDeleteService } from '../../service/SavedQueryTile/ConfirmDelete.service'
 import { InterfaceSavedQueryTile } from '../../models/SavedQueryTile/InterfaceSavedQueryTile'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -15,6 +15,8 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [MatTooltip, ButtonComponent, FontAwesomeModule, DatePipe, TranslateModule],
 })
 export class SavedQueryTileComponent implements OnInit {
+  private confirmDeleteService = inject(ConfirmDeleteService)
+
   @Input()
   savedQuery: InterfaceSavedQueryTile
 
@@ -29,7 +31,10 @@ export class SavedQueryTileComponent implements OnInit {
 
   crtdlIsValid: boolean
 
-  constructor(private confirmDeleteService: ConfirmDeleteService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.isValidAndExists()

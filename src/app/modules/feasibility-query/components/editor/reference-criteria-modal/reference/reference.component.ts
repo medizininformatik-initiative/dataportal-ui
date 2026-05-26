@@ -15,6 +15,7 @@ import {
   Input,
   OnInit,
   Output,
+  inject,
 } from '@angular/core'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
@@ -55,6 +56,10 @@ interface selectedItem {
   ],
 })
 export class ReferenceComponent implements OnInit {
+  private activeSearchTermService = inject(ActiveSearchTermService)
+  private snackbarMessageService = inject(SnackbarMessageService)
+  private criteriaSetSearchService = inject(CriteriaSetSearchService)
+
   @Input()
   referenceFilterUri: string
 
@@ -78,11 +83,10 @@ export class ReferenceComponent implements OnInit {
 
   searchtText = ''
 
-  constructor(
-    private activeSearchTermService: ActiveSearchTermService,
-    private snackbarMessageService: SnackbarMessageService,
-    private criteriaSetSearchService: CriteriaSetSearchService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.searchText$ = this.activeSearchTermService.getActiveSearchTerm()

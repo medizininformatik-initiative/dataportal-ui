@@ -2,7 +2,7 @@ import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/Attrib
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { Observable, of } from 'rxjs'
 import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
@@ -40,6 +40,10 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
   ],
 })
 export class CriteriaBoxComponent implements OnInit {
+  private menuService = inject(CriterionMenuItems)
+  private filterChipsService = inject(CriterionFilterChipService)
+  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+
   @Input() criterion!: Criterion
   @Input() isEditable!: boolean
 
@@ -55,11 +59,10 @@ export class CriteriaBoxComponent implements OnInit {
 
   warningSignUrl = 'assets/img/alert-blue-white.png'
 
-  constructor(
-    private menuService: CriterionMenuItems,
-    private filterChipsService: CriterionFilterChipService,
-    private referenceCriterionProvider: ReferenceCriterionProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.system = TerminologySystemDictionary.getNameByUrl(
