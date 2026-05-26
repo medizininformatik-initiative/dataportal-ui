@@ -20,10 +20,12 @@
 }
 
 //@include mat-core();
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 .FDPGTheme {
-  @include mat.core-theme($num-portal-webapp-theme-fdpg);
+  @include mat.elevation-classes();
+  @include mat.app-background();
   @include custom-material_themed($num-portal-webapp-theme-fdpg);
 }
 
