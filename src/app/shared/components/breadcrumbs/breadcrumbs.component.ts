@@ -1,11 +1,14 @@
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BasePaths, PathSegments } from '../../../app-paths';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { filter, Subscription } from 'rxjs';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { BasePaths, PathSegments } from '../../../app-paths'
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { filter, Subscription } from 'rxjs'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { NgClass } from '@angular/common'
+import { MatTooltip } from '@angular/material/tooltip'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 
 interface Breadcrumb {
   label: string | Display
@@ -17,16 +20,18 @@ const BASE_PATH_DEFAULTS: Record<string, string> = {
   [BasePaths.dataSelection]: `/${BasePaths.dataSelection}/${PathSegments.search}`,
   [BasePaths.dataQuery]: `/${BasePaths.dataQuery}`,
   [BasePaths.savedQueries]: `/${BasePaths.savedQueries}`,
-};
+}
 
 @Component({
   selector: 'num-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
+  standalone: true,
+  imports: [NgClass, MatTooltip, DisplayTranslationPipe],
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
-  breadcrumbs: Breadcrumb[] = [];
-  private sub: Subscription;
+  breadcrumbs: Breadcrumb[] = []
+  private sub: Subscription
 
   constructor(
     private router: Router,
@@ -37,62 +42,62 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.breadcrumbs = this.buildBreadcrumb(this.activatedRoute.root);
-    this.appendElementBreadcrumb();
+    this.breadcrumbs = this.buildBreadcrumb(this.activatedRoute.root)
+    this.appendElementBreadcrumb()
     this.sub = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.breadcrumbs = this.buildBreadcrumb(this.activatedRoute.root);
-        this.appendElementBreadcrumb();
-      });
+        this.breadcrumbs = this.buildBreadcrumb(this.activatedRoute.root)
+        this.appendElementBreadcrumb()
+      })
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.sub?.unsubscribe()
   }
 
   navigateTo(url: string): void {
-    const segments = url.replace(/^\//, '').split('/');
-    const basePath = segments[0];
-    const subPath = segments[1];
-    const id = segments[2];
+    const segments = url.replace(/^\//, '').split('/')
+    const basePath = segments[0]
+    const subPath = segments[1]
+    const id = segments[2]
 
     if (basePath === BasePaths.queryEditor) {
       const target =
         subPath === PathSegments.feature
           ? `/${BasePaths.dataSelection}/${PathSegments.editor}`
-          : `/${BasePaths.dataQuery}`;
-      this.router.navigate([target]);
-      return;
+          : `/${BasePaths.dataQuery}`
+      this.router.navigate([target])
+      return
     }
 
-    const targetPath = BASE_PATH_DEFAULTS[basePath] ?? url;
-    this.router.navigate([targetPath]);
+    const targetPath = BASE_PATH_DEFAULTS[basePath] ?? url
+    this.router.navigate([targetPath])
   }
 
   private appendElementBreadcrumb(): void {
-    const segments = this.router.url.replace(/^\//, '').split('/');
+    const segments = this.router.url.replace(/^\//, '').split('/')
     if (segments[0] !== BasePaths.queryEditor) {
-      return;
+      return
     }
-    const subPath = segments[1];
-    const id = segments[2];
+    const subPath = segments[1]
+    const id = segments[2]
     if (!id) {
-      return;
+      return
     }
-    const display = this.resolveQueryEditorId(subPath, id);
+    const display = this.resolveQueryEditorId(subPath, id)
     if (display) {
-      this.breadcrumbs.push({ label: display, url: this.router.url });
+      this.breadcrumbs.push({ label: display, url: this.router.url })
     }
   }
 
   private resolveQueryEditorId(subPath: string, id: string): Display {
     if (subPath === PathSegments.feature) {
-      const profile = this.profileProviderService.getOne(id);
-      return profile.getDisplay();
+      const profile = this.profileProviderService.getOne(id)
+      return profile.getDisplay()
     } else if (subPath === PathSegments.criterion) {
-      const criterion = this.criterionProviderService.getOne(id);
-      return criterion.getDisplay();
+      const criterion = this.criterionProviderService.getOne(id)
+      return criterion.getDisplay()
     }
   }
 
@@ -101,21 +106,21 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
     url: string = '',
     breadcrumbs: Breadcrumb[] = []
   ): Breadcrumb[] {
-    const children: ActivatedRoute[] = route.children;
+    const children: ActivatedRoute[] = route.children
     if (children.length === 0) {
-      return breadcrumbs;
+      return breadcrumbs
     }
     for (const child of children) {
-      const routeURL: string = child.snapshot.url.map((segment) => segment.path).join('/');
+      const routeURL: string = child.snapshot.url.map((segment) => segment.path).join('/')
       if (routeURL !== '') {
-        url += `/${routeURL}`;
-        const label = child.snapshot.data.breadcrumb;
+        url += `/${routeURL}`
+        const label = child.snapshot.data.breadcrumb
         if (label) {
-          breadcrumbs.push({ label, url });
+          breadcrumbs.push({ label, url })
         }
       }
-      return this.buildBreadcrumb(child, url, breadcrumbs);
+      return this.buildBreadcrumb(child, url, breadcrumbs)
     }
-    return breadcrumbs;
+    return breadcrumbs
   }
 }

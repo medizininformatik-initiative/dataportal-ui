@@ -1,23 +1,23 @@
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData';
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
-import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter';
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
-import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
-import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
-import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
-import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
-import { map, Observable, of, Subscription } from 'rxjs';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
-import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component';
-import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails';
-import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
-import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service';
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service';
-import { TableData } from 'src/app/shared/models/TableData/TableData';
-import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
+import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
+import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
+import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service'
+import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
+import { map, Observable, of, Subscription } from 'rxjs'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { SearchResultsComponent } from './search-results/search-results.component'
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
+import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component'
+import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails'
+import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service'
+import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service'
+import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service'
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
+import { TableData } from 'src/app/shared/models/TableData/TableData'
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -26,44 +26,62 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-} from '@angular/core';
-import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service';
-import { filter } from 'lodash';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
+} from '@angular/core'
+import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service'
+import { filter } from 'lodash'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
+import { HeaderComponent } from '../../../../shared/components/header/header.component'
+import { SearchModeToggleComponent } from '../../../../shared/components/search-mode-toggle/search-mode-toggle.component'
+import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
+import { SearchBarComponent } from './search-bar/search-bar.component'
+import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component'
+import { SearchActionBarComponent } from './action-bar/search/search-action-bar.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-feasibility-query-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
+  standalone: true,
+  imports: [
+    HeaderComponent,
+    SearchModeToggleComponent,
+    HeaderDescriptionComponent,
+    SearchBarComponent,
+    SearchFilterBarComponent,
+    SearchResultsComponent,
+    SearchActionBarComponent,
+    TranslateModule,
+  ],
 })
 export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('searchResults') searchResultsComponent: SearchResultsComponent;
-  listItems: Array<CriteriaListEntry> = [];
-  adaptedData: TableData;
-  private subscription: Subscription;
-  private isInitialized = false;
+  @ViewChild('searchResults') searchResultsComponent: SearchResultsComponent
+  listItems: Array<CriteriaListEntry> = []
+  adaptedData: TableData
+  private subscription: Subscription
+  private isInitialized = false
 
-  elasticSearchEnabled = false;
+  elasticSearchEnabled = false
 
-  listIetmDetailsSubscription: Subscription;
+  listIetmDetailsSubscription: Subscription
 
-  selectedDetails$: Observable<SearchTermDetails>;
+  selectedDetails$: Observable<SearchTermDetails>
 
-  searchFilters$: Observable<SearchFilter[]> = of([]);
+  searchFilters$: Observable<SearchFilter[]> = of([])
 
-  searchText$: Observable<string>;
+  searchText$: Observable<string>
 
-  searchText = '';
+  searchText = ''
 
-  searchResultsFound = false;
+  searchResultsFound = false
 
-  searchSubscription: Subscription;
+  searchSubscription: Subscription
 
-  searchWithFilterSubscription: Subscription;
+  searchWithFilterSubscription: Subscription
 
-  resetFilterEnabled$: Observable<boolean> = of(true);
+  resetFilterEnabled$: Observable<boolean> = of(true)
 
-  searchButtonEnabled$: Observable<boolean> = of(true);
+  searchButtonEnabled$: Observable<boolean> = of(true)
 
   constructor(
     public elementRef: ElementRef,
@@ -79,44 +97,44 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   ) {
     this.subscription = this.criteriaSearchService
       .getSearchResults()
-      .subscribe((results) => this.handleSearchResults(results?.getResults() || []));
+      .subscribe((results) => this.handleSearchResults(results?.getResults() || []))
   }
 
   ngOnInit() {
-    this.selectedDetails$ = this.searchTermDetailsProviderService.getSearchTermDetails$();
-    this.searchText$ = this.criteriaSearchService.getActiveSearchTerm();
-    this.resetFilterEnabled$ = this.searchFilterProvider.filtersNotSet();
-    this.handleSelectedItemsSubscription();
-    this.getElasticSearchFilter();
+    this.selectedDetails$ = this.searchTermDetailsProviderService.getSearchTermDetails$()
+    this.searchText$ = this.criteriaSearchService.getActiveSearchTerm()
+    this.resetFilterEnabled$ = this.searchFilterProvider.filtersNotSet()
+    this.handleSelectedItemsSubscription()
+    this.getElasticSearchFilter()
   }
 
   ngAfterViewInit() {
-    this.isInitialized = true;
-    this.cdr.detectChanges();
+    this.isInitialized = true
+    this.cdr.detectChanges()
   }
 
   ngOnDestroy() {
-    this.subscription?.unsubscribe();
-    this.searchSubscription?.unsubscribe();
-    this.searchWithFilterSubscription?.unsubscribe();
-    this.listIetmDetailsSubscription?.unsubscribe();
+    this.subscription?.unsubscribe()
+    this.searchSubscription?.unsubscribe()
+    this.searchWithFilterSubscription?.unsubscribe()
+    this.listIetmDetailsSubscription?.unsubscribe()
   }
 
   public getSelectedRelative(criteriaListEntry: CriteriaListEntry) {
-    this.listIetmDetailsSubscription?.unsubscribe();
+    this.listIetmDetailsSubscription?.unsubscribe()
     this.listIetmDetailsSubscription = this.searchTermDetailsService
       .getDetailsForListItem(criteriaListEntry.getId())
       .subscribe((test) => {
-        this.searchTermDetailsProviderService.setSearchTermDetails(test);
-        this.openSidenav();
-      });
+        this.searchTermDetailsProviderService.setSearchTermDetails(test)
+        this.openSidenav()
+      })
   }
 
   /** Search Result Handling */
   private handleSearchResults(results: CriteriaListEntry[]): void {
-    this.listItems = results;
-    this.adaptedData = new CriteriaListEntryAdapter().adapt(this.listItems);
-    this.searchResultsFound = this.adaptedData.body.rows.length > 0;
+    this.listItems = results
+    this.adaptedData = new CriteriaListEntryAdapter().adapt(this.listItems)
+    this.searchResultsFound = this.adaptedData.body.rows.length > 0
     this.selectedTableItemsService
       .getItems()
       .pipe(
@@ -124,14 +142,14 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
           this.adaptedData.body.rows.forEach((row) => {
             const checkboxCell = row.cells.find(
               (c): c is CheckboxTextCellData => c.type === 'checkboxText'
-            );
+            )
             if (checkboxCell) {
-              checkboxCell.isSelected = selected.some((item) => item.getId() === row.id);
+              checkboxCell.isSelected = selected.some((item) => item.getId() === row.id)
             }
-          });
+          })
         })
       )
-      .subscribe();
+      .subscribe()
   }
 
   /**
@@ -142,52 +160,52 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   private handleSelectedItemsSubscription(): void {
     this.selectedTableItemsService.getItems().subscribe((selectedItems: CriteriaListEntry[]) => {
       if (selectedItems.length === 0) {
-        this.uncheckAllRows();
+        this.uncheckAllRows()
       }
-    });
+    })
   }
 
   private uncheckAllRows(): void {
     this.adaptedData?.body.rows.forEach((item) => {
       const checkboxCell = item.cells.find(
         (c): c is CheckboxTextCellData => c.type === 'checkboxText'
-      );
+      )
       if (checkboxCell) {
-        checkboxCell.isSelected = false;
+        checkboxCell.isSelected = false
       }
-    });
+    })
   }
 
   public startSearch(searchText: string = this.searchText): void {
-    this.searchText = searchText;
-    this.searchWithFilterSubscription?.unsubscribe();
-    this.searchSubscription?.unsubscribe();
-    this.criteriaSearchService.search(searchText).subscribe();
+    this.searchText = searchText
+    this.searchWithFilterSubscription?.unsubscribe()
+    this.searchSubscription?.unsubscribe()
+    this.criteriaSearchService.search(searchText).subscribe()
   }
 
   public setSelectedRowItem(item: TableRowData): void {
-    const selectedIds = this.selectedTableItemsService.getIds();
-    const itemId = item.originalEntry.getId();
+    const selectedIds = this.selectedTableItemsService.getIds()
+    const itemId = item.originalEntry.getId()
     if (selectedIds.includes(itemId)) {
-      this.selectedTableItemsService.deselect(item.originalEntry as CriteriaListEntry);
+      this.selectedTableItemsService.deselect(item.originalEntry as CriteriaListEntry)
       this.snackbarService.displayErrorMessageWithNoCode(
         'FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE'
-      );
+      )
     } else {
-      this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE');
-      this.selectedTableItemsService.setActiveItem(item.originalEntry as CriteriaListEntry);
+      this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE')
+      this.selectedTableItemsService.setActiveItem(item.originalEntry as CriteriaListEntry)
     }
   }
 
   public setClickedRow(row: TableRowData): void {
-    const originalEntry = row.originalEntry as CriteriaListEntry;
-    this.listIetmDetailsSubscription?.unsubscribe();
+    const originalEntry = row.originalEntry as CriteriaListEntry
+    this.listIetmDetailsSubscription?.unsubscribe()
     this.listIetmDetailsSubscription = this.searchTermDetailsService
       .getDetailsForListItem(originalEntry.getId())
       .subscribe((test) => {
-        this.searchTermDetailsProviderService.setSearchTermDetails(test);
-        this.openSidenav();
-      });
+        this.searchTermDetailsProviderService.setSearchTermDetails(test)
+        this.openSidenav()
+      })
   }
 
   public getElasticSearchFilter(): void {
@@ -202,13 +220,13 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
           [ElasticSearchFilterTypes.KDS_MODULE]: 0,
           [ElasticSearchFilterTypes.CONTEXT]: 1,
           [ElasticSearchFilterTypes.TERMINOLOGY]: 2,
-        };
+        }
         return searchFilters.sort(
           (a, b) =>
             filterOrder[a.filterType.toLowerCase()] - filterOrder[b.filterType.toLowerCase()]
-        );
+        )
       })
-    );
+    )
   }
 
   /**
@@ -219,49 +237,49 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
    */
   public isFilterOpen(event: { isOpen: boolean; targetFilter: string }): void {
     if (!event.isOpen) {
-      return;
+      return
     }
-    this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText, event.targetFilter);
+    this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText, event.targetFilter)
   }
 
   public setElasticSearchFilter(newFilter: SearchFilter) {
-    this.searchWithFilterSubscription?.unsubscribe();
-    const filterType = newFilter.filterType.toLocaleLowerCase();
-    this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText, filterType);
+    this.searchWithFilterSubscription?.unsubscribe()
+    const filterType = newFilter.filterType.toLocaleLowerCase()
+    this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText, filterType)
     this.searchFilterProvider.updateFilterSelectedValues(
       newFilter.filterType,
       newFilter.selectedValues
-    );
-    this.startSearch(this.searchText);
+    )
+    this.startSearch(this.searchText)
   }
 
   public resetFilter(): void {
-    this.searchFilterProvider.resetSelectedValues();
-    this.startSearch(this.searchText);
+    this.searchFilterProvider.resetSelectedValues()
+    this.startSearch(this.searchText)
   }
 
   public openSidenav(): void {
-    this.searchResultsComponent?.openSidenav();
+    this.searchResultsComponent?.openSidenav()
   }
 
   public closeSidenav(): void {
-    this.searchResultsComponent?.closeSidenav();
+    this.searchResultsComponent?.closeSidenav()
   }
 
   public loadMoreCriteriaSearchResults() {
-    this.searchWithFilterSubscription?.unsubscribe();
+    this.searchWithFilterSubscription?.unsubscribe()
     this.searchWithFilterSubscription = this.criteriaSearchService
       .loadNextPage(this.searchText)
       .subscribe((result: CriteriaResultList) => {
-        this.handleSearchResults(result.getResults());
-      });
+        this.handleSearchResults(result.getResults())
+      })
   }
 
   public searchModeChange(mode: SearchMode): void {
     if (mode === 'bulk-search') {
-      this.navigationHelperService.navigateToFeasibilityQueryBulkSearch();
+      this.navigationHelperService.navigateToFeasibilityQueryBulkSearch()
     } else if (mode === 'search') {
-      this.navigationHelperService.navigateToFeasibilityQuerySearch();
+      this.navigationHelperService.navigateToFeasibilityQuerySearch()
     }
   }
 }

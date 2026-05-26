@@ -4,7 +4,7 @@
   </span>
   <num-switch
     [isChecked]="selectedMode === 'bulk-search'"
-    (toggle)="onModeChange($event ? 'bulk-search' : 'search')"
+    (toggled)="onModeChange($event ? 'bulk-search' : 'search')"
   ></num-switch>
   <span [class.active]="selectedMode === 'bulk-search'" (click)="onModeChange('bulk-search')">
     {{ 'FEASIBILITY.SEARCH.BULK_SEARCH' | translate }}

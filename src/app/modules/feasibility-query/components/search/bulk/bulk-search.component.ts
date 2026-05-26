@@ -1,23 +1,36 @@
-import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service';
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData';
-import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service';
-import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteria.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry';
-import { CriteriaBulkFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkFoundListEntryAdapter';
-import { CriteriaBulkNotFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkNotFoundListEntryAdapter';
-import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList';
-import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service';
-import { map, Observable, of, Subscription, tap } from 'rxjs';
-import { MatTabChangeEvent } from '@angular/material/tabs';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
-import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component';
-import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriteria.service';
-import { TableData } from 'src/app/shared/models/TableData/TableData';
-import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
+import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service'
+import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteria.service'
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry'
+import { CriteriaBulkFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkFoundListEntryAdapter'
+import { CriteriaBulkNotFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkNotFoundListEntryAdapter'
+import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList'
+import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
+import { map, Observable, of, Subscription, tap } from 'rxjs'
+import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
+import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component'
+import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriteria.service'
+import { TableData } from 'src/app/shared/models/TableData/TableData'
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
+import { HeaderComponent } from '../../../../../shared/components/header/header.component'
+import { SearchModeToggleComponent } from '../../../../../shared/components/search-mode-toggle/search-mode-toggle.component'
+import { HeaderDescriptionComponent } from '../../../../../shared/components/header-description/header-description.component'
+import { MatInput } from '@angular/material/input'
+import { FormsModule } from '@angular/forms'
+import { SearchFilterComponent } from '../../../../../shared/components/search-filter/search-filter.component'
+import { ButtonComponent } from '../../../../../shared/components/button/button.component'
+import { MatTooltip } from '@angular/material/tooltip'
+import { TableComponent } from '../../../../../shared/components/table/table.component'
+import { PlaceholderBoxComponent } from '../../../../../shared/components/placeholder-box/placeholder-box.component'
+import { BulkSearchActionBarComponent } from '../action-bar/bulk-search/bulk-search-action-bar.component'
+import { AsyncPipe } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
-export type SelectedTab = 'FOUND' | 'NOTFOUND';
+export type SelectedTab = 'FOUND' | 'NOTFOUND'
 /**
  * Component for bulk criteria search functionality.
  * Allows users to search for multiple criteria at once and manage selected entries.
@@ -26,20 +39,38 @@ export type SelectedTab = 'FOUND' | 'NOTFOUND';
   selector: 'num-feasibility-query-bulk-search',
   templateUrl: './bulk-search.component.html',
   styleUrls: ['./bulk-search.component.scss'],
+  standalone: true,
+  imports: [
+    HeaderComponent,
+    SearchModeToggleComponent,
+    HeaderDescriptionComponent,
+    MatInput,
+    FormsModule,
+    SearchFilterComponent,
+    ButtonComponent,
+    MatTooltip,
+    MatTabGroup,
+    MatTab,
+    TableComponent,
+    PlaceholderBoxComponent,
+    BulkSearchActionBarComponent,
+    AsyncPipe,
+    TranslateModule,
+  ],
 })
 export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
-  foundCriteriaTableData: TableData;
-  notFoundCriteriaTableData: TableData;
-  searchFilters$: Observable<SearchFilter[]> = of([]);
-  searchResultsFound = false;
-  bulkSearchTermInput: string;
-  filterMap: Map<string, string[]> = new Map<string, string[]>();
-  filterAreSet = false;
-  foundCount: number;
-  notFoundCount: number;
-  searchtype: SelectedTab = 'FOUND';
-  private subscriptions = new Subscription();
-  private isInitialized = false;
+  foundCriteriaTableData: TableData
+  notFoundCriteriaTableData: TableData
+  searchFilters$: Observable<SearchFilter[]> = of([])
+  searchResultsFound = false
+  bulkSearchTermInput: string
+  filterMap: Map<string, string[]> = new Map<string, string[]>()
+  filterAreSet = false
+  foundCount: number
+  notFoundCount: number
+  searchtype: SelectedTab = 'FOUND'
+  private subscriptions = new Subscription()
+  private isInitialized = false
 
   constructor(
     private bulkCriteriaSearchProvider: BulkCriteriaSearchProvider,
@@ -49,42 +80,42 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
     private selectedBulkCriteriaService: SelectedBulkCriteriaProvider,
     private navigationHelperService: NavigationHelperService
   ) {
-    this.getBulkCriteriaSearchFilter();
+    this.getBulkCriteriaSearchFilter()
   }
 
   ngOnInit(): void {
-    this.initializeSelectedEntriesSubscription();
-    this.getBulkCriteriaSearchFilter();
-    this.bulkSearchTermInput = this.bulkCriteriaSearchProvider.getSearchText();
+    this.initializeSelectedEntriesSubscription()
+    this.getBulkCriteriaSearchFilter()
+    this.bulkSearchTermInput = this.bulkCriteriaSearchProvider.getSearchText()
     if (this.shouldAutoSubmitSearch()) {
-      this.submitSearch();
+      this.submitSearch()
     }
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.subscriptions.unsubscribe()
   }
 
   /**
    * Submits the bulk search with the current search term input.
    */
   public submitSearch(): void {
-    this.selectedBulkCriteriaService.clear();
-    this.bulkCriteriaSearchProvider.setSearchText(this.bulkSearchTermInput);
+    this.selectedBulkCriteriaService.clear()
+    this.bulkCriteriaSearchProvider.setSearchText(this.bulkSearchTermInput)
     const searchSub = this.bulkCriteriaService
       .search(this.bulkSearchTermInput)
       .pipe(
         tap((response: CriteriaBulkResultList) => {
-          this.foundCount = response.getFound().length;
-          this.notFoundCount = response.getNotFound().length;
-          this.searchResultsFound = this.foundCount > 0 || this.notFoundCount > 0;
+          this.foundCount = response.getFound().length
+          this.notFoundCount = response.getNotFound().length
+          this.searchResultsFound = this.foundCount > 0 || this.notFoundCount > 0
         })
       )
       .subscribe((response: CriteriaBulkResultList) => {
-        this.handleSearchResults(response);
-      });
+        this.handleSearchResults(response)
+      })
 
-    this.subscriptions.add(searchSub);
+    this.subscriptions.add(searchSub)
   }
 
   /**
@@ -94,9 +125,9 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    */
   public tabChange(tabEvent: MatTabChangeEvent): void {
     if (tabEvent.index === 0) {
-      this.searchtype = 'FOUND';
+      this.searchtype = 'FOUND'
     } else if (tabEvent.index === 1) {
-      this.searchtype = 'NOTFOUND';
+      this.searchtype = 'NOTFOUND'
     }
   }
   /**
@@ -104,8 +135,8 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    * @param item - The table data row that was selected
    */
   public setSelectedRowItem(item: TableRowData): void {
-    const criteriaBulkEntry = item.originalEntry as CriteriaBulkEntry;
-    this.selectedBulkCriteriaService.toggle(criteriaBulkEntry);
+    const criteriaBulkEntry = item.originalEntry as CriteriaBulkEntry
+    this.selectedBulkCriteriaService.toggle(criteriaBulkEntry)
   }
 
   /**
@@ -115,7 +146,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
     this.searchFilters$ = this.bulkCriteriaSearchFilterService.getFilter().pipe(
       tap((searchFilters: SearchFilter[]) => this.populateFilterMap(searchFilters)),
       tap(() => this.updateFilterStatus())
-    );
+    )
   }
 
   /**
@@ -123,13 +154,13 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    * @param newFilter - The new search filter to apply
    */
   public setElasticSearchFilter(newFilter: SearchFilter): void {
-    this.filterMap.set(newFilter.filterType, newFilter.selectedValues as string[]);
-    this.updateFilterStatus();
+    this.filterMap.set(newFilter.filterType, newFilter.selectedValues as string[])
+    this.updateFilterStatus()
     const selectedValues = Array.isArray(newFilter.selectedValues)
       ? newFilter.selectedValues
-      : [newFilter.selectedValues];
+      : [newFilter.selectedValues]
 
-    this.searchFilterProvider.updateFilterSelectedValues(newFilter.filterType, selectedValues);
+    this.searchFilterProvider.updateFilterSelectedValues(newFilter.filterType, selectedValues)
   }
 
   /**
@@ -140,12 +171,12 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
       .getSearchResults()
       .pipe(
         map((entries: CriteriaBulkEntry[]) => {
-          this.updateRowSelectionStatus(entries);
+          this.updateRowSelectionStatus(entries)
         })
       )
-      .subscribe();
+      .subscribe()
 
-    this.subscriptions.add(selectedSub);
+    this.subscriptions.add(selectedSub)
   }
 
   /**
@@ -157,7 +188,7 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
       this.bulkSearchTermInput &&
       this.bulkSearchTermInput.length > 0 &&
       this.filterMap.size > 1
-    );
+    )
   }
 
   /**
@@ -165,12 +196,12 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    * @param response - The bulk criteria result list from the search
    */
   private handleSearchResults(response: CriteriaBulkResultList): void {
-    this.selectedBulkCriteriaService.addSelected(response.getFound());
-    this.selectedBulkCriteriaService.setUiProfileId(response.getUiProfileId());
-    this.foundCriteriaTableData = new CriteriaBulkFoundListEntryAdapter().adapt(response.getFound());
+    this.selectedBulkCriteriaService.addSelected(response.getFound())
+    this.selectedBulkCriteriaService.setUiProfileId(response.getUiProfileId())
+    this.foundCriteriaTableData = new CriteriaBulkFoundListEntryAdapter().adapt(response.getFound())
     this.notFoundCriteriaTableData = new CriteriaBulkNotFoundListEntryAdapter().adapt(
       response.getNotFound()
-    );
+    )
   }
 
   /**
@@ -179,16 +210,16 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    */
   private updateRowSelectionStatus(entries: CriteriaBulkEntry[]): void {
     if (!this.foundCriteriaTableData?.body?.rows) {
-      return;
+      return
     }
     this.foundCriteriaTableData.body.rows.forEach((row) => {
       const checkboxCell = row.cells.find(
         (c): c is CheckboxTextCellData => c.type === 'checkboxText'
-      );
+      )
       if (checkboxCell) {
-        checkboxCell.isSelected = entries.some((item) => item.getId() === row.id);
+        checkboxCell.isSelected = entries.some((item) => item.getId() === row.id)
       }
-    });
+    })
   }
 
   /**
@@ -197,23 +228,23 @@ export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
    */
   private populateFilterMap(searchFilters: SearchFilter[]): void {
     searchFilters.forEach((filter) => {
-      this.filterMap.set(filter.filterType, filter.selectedValues as string[]);
-    });
+      this.filterMap.set(filter.filterType, filter.selectedValues as string[])
+    })
   }
 
   /**
    * Updates the filter status based on whether all filters have selected values.
    */
   private updateFilterStatus(): void {
-    const filterArray = Array.from(this.filterMap);
-    this.filterAreSet = filterArray.every(([key, values]) => values.length > 0);
+    const filterArray = Array.from(this.filterMap)
+    this.filterAreSet = filterArray.every(([key, values]) => values.length > 0)
   }
 
   public searchModeChange(mode: SearchMode): void {
     if (mode === 'bulk-search') {
-      this.navigationHelperService.navigateToFeasibilityQueryBulkSearch();
+      this.navigationHelperService.navigateToFeasibilityQueryBulkSearch()
     } else if (mode === 'search') {
-      this.navigationHelperService.navigateToFeasibilityQuerySearch();
+      this.navigationHelperService.navigateToFeasibilityQuerySearch()
     }
   }
 }

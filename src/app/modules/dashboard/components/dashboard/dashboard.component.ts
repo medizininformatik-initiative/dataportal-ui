@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { OAuthService } from 'angular-oauth2-oidc'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { ButtonComponent } from 'src/app/shared/components/button/button.component'
+import { HeaderComponent } from 'src/app/shared/components/header/header.component'
+import { HeaderDescriptionComponent } from 'src/app/shared/components/header-description/header-description.component'
 
 /**
  * @todo Needs to be refactored
@@ -11,6 +14,8 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'num-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
+  standalone: true,
+  imports: [TranslateModule, HeaderComponent, HeaderDescriptionComponent, ButtonComponent],
 })
 export class DashboardComponent implements OnInit {
   constructor(
@@ -19,32 +24,32 @@ export class DashboardComponent implements OnInit {
     private navigationHelperService: NavigationHelperService
   ) {}
 
-  displayInfoMessage: boolean;
-  proposalPortalLink: string;
+  displayInfoMessage = false
+  proposalPortalLink = ''
 
   ngOnInit(): void {}
 
   public navigateToDataQueryEditor() {
-    this.navigationHelperService.navigateToDataQueryCohortDefinition();
+    this.navigationHelperService.navigateToDataQueryCohortDefinition()
   }
 
   public navigateToQueryBuilderEditor() {
-    this.navigationHelperService.navigateToFeasibilityQueryEditor();
+    this.navigationHelperService.navigateToFeasibilityQueryEditor()
   }
 
   public navigateToDataSelectionEditor() {
-    this.navigationHelperService.navigateToDataSelectionEditor();
+    this.navigationHelperService.navigateToDataSelectionEditor()
   }
 
   public navigateToSavedQueries() {
-    this.navigationHelperService.navigateToSavedQueries();
+    this.navigationHelperService.navigateToSavedQueries()
   }
 
   public openProposalPortalLink(): void {
-    window.open(this.proposalPortalLink, '_blank', 'noopener');
+    window.open(this.proposalPortalLink, '_blank', 'noopener')
   }
 
   public navigateToFeasibilityEditor() {
-    this.navigationHelperService.navigateToFeasibilityQueryEditor();
+    this.navigationHelperService.navigateToFeasibilityQueryEditor()
   }
 }

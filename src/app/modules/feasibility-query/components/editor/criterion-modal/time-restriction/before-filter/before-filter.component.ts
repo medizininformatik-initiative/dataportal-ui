@@ -1,4 +1,4 @@
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import {
   Component,
   EventEmitter,
@@ -7,24 +7,27 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-} from '@angular/core';
-import { TimeRestrictionFactoryService } from 'src/app/service/Factory/TimeRestrictionFactory.service';
-import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
+} from '@angular/core'
+import { TimeRestrictionFactoryService } from 'src/app/service/Factory/TimeRestrictionFactory.service'
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
+import { DatePickerComponent } from '../../../../../../../shared/components/date-picker/date-picker.component'
 
 @Component({
   selector: 'num-before-filter',
   templateUrl: './before-filter.component.html',
   styleUrls: ['./before-filter.component.scss'],
+  standalone: true,
+  imports: [DatePickerComponent],
 })
 export class BeforeFilterComponent implements OnInit, OnChanges {
   @Input()
-  timeRestrictionType: TimeRestrictionType;
+  timeRestrictionType: TimeRestrictionType
 
   @Input()
-  selectedDate = '';
+  selectedDate = ''
 
   @Output()
-  timeRestrictionInstanceChanged = new EventEmitter<AbstractTimeRestriction>();
+  timeRestrictionInstanceChanged = new EventEmitter<AbstractTimeRestriction>()
 
   constructor(private timeRestrictionFactoryService: TimeRestrictionFactoryService) {}
 
@@ -32,14 +35,14 @@ export class BeforeFilterComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.timeRestrictionType) {
-      this.timeRestrictionType = changes.timeRestrictionType.currentValue;
-      this.emitSelectedTimeRestriction();
+      this.timeRestrictionType = changes.timeRestrictionType.currentValue
+      this.emitSelectedTimeRestriction()
     }
   }
 
   public setSelectedDate(selectedDate: string) {
-    this.selectedDate = selectedDate;
-    this.emitSelectedTimeRestriction();
+    this.selectedDate = selectedDate
+    this.emitSelectedTimeRestriction()
   }
 
   public emitSelectedTimeRestriction() {
@@ -47,8 +50,8 @@ export class BeforeFilterComponent implements OnInit, OnChanges {
       const timeRestrictionFilter = this.timeRestrictionFactoryService.createTimeRestrictionFilter(
         this.timeRestrictionType,
         this.selectedDate
-      );
-      this.timeRestrictionInstanceChanged.emit(timeRestrictionFilter);
+      )
+      this.timeRestrictionInstanceChanged.emit(timeRestrictionFilter)
     }
   }
 }

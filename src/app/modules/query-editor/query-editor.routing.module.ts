@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { PathSegments } from 'src/app/app-paths';
-import { QueryEditorComponent } from './components/query-editor.component';
-import { RouteGuard } from 'src/app/core/auth/guards/route.guard.service';
+import { Routes } from '@angular/router'
+import { PathSegments } from 'src/app/app-paths'
 
-const routes: Routes = [
+import { RouteGuard } from 'src/app/core/auth/guards/route.guard.service'
+
+export const QUERY_EDITOR_ROUTES: Routes = [
   {
     path: `${PathSegments.criterion}/:id`,
-    component: QueryEditorComponent,
+    loadComponent: () =>
+      import('./components/query-editor.component').then((m) => m.QueryEditorComponent),
     data: {
       breadcrumb: 'BREADCRUMB.QUERY_EDITOR',
       hideSideNav: false,
@@ -17,7 +17,8 @@ const routes: Routes = [
   },
   {
     path: `${PathSegments.feature}/:id`,
-    component: QueryEditorComponent,
+    loadComponent: () =>
+      import('./components/query-editor.component').then((m) => m.QueryEditorComponent),
     data: {
       hideSideNav: false,
       breadcrumb: 'BREADCRUMB.DATA_SELECTION',
@@ -27,7 +28,8 @@ const routes: Routes = [
   },
   {
     path: `${PathSegments.reference}/:id`,
-    component: QueryEditorComponent,
+    loadComponent: () =>
+      import('./components/query-editor.component').then((m) => m.QueryEditorComponent),
     data: {
       hideSideNav: false,
       breadcrumb: 'BREADCRUMB.QUERY_EDITOR',
@@ -35,10 +37,4 @@ const routes: Routes = [
     },
     canActivate: [RouteGuard],
   },
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class QueryEditorRoutingModule {}
+]

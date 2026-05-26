@@ -1,27 +1,32 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { Subscription } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { Subscription } from 'rxjs'
+import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
+import { ButtonComponent } from '../../../../../shared/components/button/button.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-result-action-bar',
   templateUrl: './result-action-bar.component.html',
   styleUrls: ['./result-action-bar.component.scss'],
+  standalone: true,
+  imports: [ActionBarComponent, ButtonComponent, TranslateModule],
 })
 export class ResultActionBarComponent implements OnInit, OnDestroy {
   @Input()
-  hasQueryResult: boolean;
+  hasQueryResult: boolean
 
-  saveDataQueryModalSubscription: Subscription;
+  saveDataQueryModalSubscription: Subscription
 
   constructor(private navigationHelperService: NavigationHelperService) {}
 
   ngOnInit() {}
 
   ngOnDestroy(): void {
-    this.saveDataQueryModalSubscription?.unsubscribe();
+    this.saveDataQueryModalSubscription?.unsubscribe()
   }
 
   public editStage(): void {
-    this.navigationHelperService.navigateToFeasibilityQueryEditor();
+    this.navigationHelperService.navigateToFeasibilityQueryEditor()
   }
 }

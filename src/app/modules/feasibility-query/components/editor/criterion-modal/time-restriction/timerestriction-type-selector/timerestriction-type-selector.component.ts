@@ -1,22 +1,27 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
+import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
+import { FormsModule } from '@angular/forms'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-timerestriction-type-selector',
   templateUrl: './timerestriction-type-selector.component.html',
   styleUrls: ['./timerestriction-type-selector.component.scss'],
+  standalone: true,
+  imports: [FormsModule, FontAwesomeModule, TranslateModule],
 })
 export class TimerestrictionTypeSelectorComponent {
   @Input()
-  type: TimeRestrictionType;
+  type: TimeRestrictionType
 
-  timeRestrictionOptions: string[] = Object.values(TimeRestrictionType);
+  timeRestrictionOptions: string[] = Object.values(TimeRestrictionType)
 
   @Output()
-  timeRestrictionTypeChanged = new EventEmitter<TimeRestrictionType>();
+  timeRestrictionTypeChanged = new EventEmitter<TimeRestrictionType>()
 
   public onTimeRestrictionOptionChange(timeRestriction: string) {
-    this.type = TimeRestrictionType[timeRestriction as keyof typeof TimeRestrictionType];
-    this.timeRestrictionTypeChanged.emit(this.type);
+    this.type = TimeRestrictionType[timeRestriction as keyof typeof TimeRestrictionType]
+    this.timeRestrictionTypeChanged.emit(this.type)
   }
 }

@@ -1,17 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SavedQueriesComponent } from './components/saved-queries.component';
+import { Routes } from '@angular/router'
 
-const routes: Routes = [
+export const SAVED_QUERIES_ROUTES: Routes = [
   {
     path: '',
-    component: SavedQueriesComponent,
+    loadComponent: () =>
+      import('./components/saved-queries.component').then((m) => m.SavedQueriesComponent),
     data: { title: 'TAB_TITLE.SAVED_QUERIES', breadcrumb: 'BREADCRUMB.SAVED_QUERIES' },
   },
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class SavedQueriesRoutingModule {}
+]

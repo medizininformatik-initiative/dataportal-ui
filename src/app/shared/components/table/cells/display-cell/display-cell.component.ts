@@ -1,11 +1,17 @@
-import { Component, Input } from '@angular/core';
-import { DisplayCellData } from 'src/app/shared/models/TableData/cells/DisplayCellData';
+import { Component, Input } from '@angular/core'
+import { DisplayCellData } from 'src/app/shared/models/TableData/cells/DisplayCellData'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { MatTooltip } from '@angular/material/tooltip'
+import { TranslateModule } from '@ngx-translate/core'
+import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe'
 
 @Component({
   selector: 'num-display-cell',
   templateUrl: './display-cell.component.html',
   styleUrls: ['./display-cell.component.scss'],
+  standalone: true,
+  imports: [FontAwesomeModule, MatTooltip, TranslateModule, DisplayTranslationPipe],
 })
 export class DisplayCellComponent {
-  @Input() cell: DisplayCellData;
+  @Input() cell: DisplayCellData
 }
