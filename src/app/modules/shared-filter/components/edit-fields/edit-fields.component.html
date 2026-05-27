@@ -25,13 +25,13 @@
           </div>
           }
         </div>
-        @if (selectedBasicFields) {
+        @if (selectedBasicFields()) {
         <div class="sidebar">
           <num-section-name>
             {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED' | translate }}
           </num-section-name>
           <div class="selected-fields-box">
-            @for (selectedField of selectedBasicFields; track selectedField; let index = $index) {
+            @for (selectedField of selectedBasicFields(); track selectedField; let index = $index) {
             <div class="selected-filter-container">
               <div>
                 <num-checkbox
