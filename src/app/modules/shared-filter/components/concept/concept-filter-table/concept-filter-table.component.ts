@@ -8,7 +8,7 @@ import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes
 import { Component, OnChanges, OnDestroy, OnInit, inject, input, output } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptSelectionHelperService } from '../../../service/ConceptSelection/ConceptSelectionHelper.service'
-import { map, Observable, Subscription, tap } from 'rxjs'
+import { filter, map, Observable, Subscription, tap } from 'rxjs'
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
@@ -80,6 +80,7 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
     this.conceptSearchService
       .getSearchResults(this.valueSetUrl())
       .pipe(
+        filter((results) => results !== null),
         map((results) => {
           results.getResults().find((entry) => {
             entry.setIsSelected(
