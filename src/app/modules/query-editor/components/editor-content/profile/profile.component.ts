@@ -192,11 +192,4 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy, OnCha
   ): string | number {
     return profileTimeFilter.getName() ?? _index
   }
-
-  public trackByTimeRestrictionName(
-    _index: number,
-    profileTimeFilter: ProfileTimeRestrictionFilter
-  ): string | number {
-    return profileTimeFilter.getName() ?? _index
-  }
 }
