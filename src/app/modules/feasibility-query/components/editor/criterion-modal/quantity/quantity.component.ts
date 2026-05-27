@@ -34,11 +34,11 @@ export class QuantityComponent implements OnInit {
 
   FilterTypes: typeof FilterTypes = FilterTypes
 
-  readonly quantityFilter = input.required<AbstractQuantityFilter>()
+  readonly quantityFilter = input<AbstractQuantityFilter>()
 
   readonly quantityFilterChange = output<AbstractQuantityFilter>()
 
-  readonly display = input.required<Display>()
+  readonly display = input<Display>()
   /**
    * UI conditions
    */

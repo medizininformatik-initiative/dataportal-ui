@@ -19,7 +19,7 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
 export class CriterionHeaderComponent implements OnChanges, OnInit {
   private filterChipsService = inject(CriterionFilterChipService)
 
-  readonly criterion = input.required<Criterion>()
+  readonly criterion = input<Criterion>()
 
   quantityFilterChips: FilterChipData[] = []
 

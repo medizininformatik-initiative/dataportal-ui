@@ -19,7 +19,7 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   private menuService = inject(ListItemDetailService)
   private criteriaByIdSearchService = inject(CriteriaByIdSearchService)
 
-  readonly listItemDetails = input.required<SearchTermRelatives[]>()
+  readonly listItemDetails = input<SearchTermRelatives[]>()
 
   menuItemsTrue: MenuItemInterface[] = []
   menuItemsFalse: MenuItemInterface[] = []

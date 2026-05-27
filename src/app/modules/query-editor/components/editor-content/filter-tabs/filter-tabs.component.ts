@@ -11,7 +11,7 @@ import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTrans
   imports: [NgTemplateOutlet, TranslateModule, DisplayTranslationPipe],
 })
 export class FilterTabsComponent implements OnInit {
-  readonly content = input.required<{ template: TemplateRef<any>; name: string; context?: any }[]>()
+  readonly content = input<{ template: TemplateRef<any>; name: string; context?: any }[]>()
   selectedIndex = 0
 
   constructor() {}

@@ -13,5 +13,5 @@ import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe
   imports: [FontAwesomeModule, MatTooltip, TranslateModule, DisplayTranslationPipe],
 })
 export class DisplayCellComponent {
-  readonly cell = input.required<DisplayCellData>()
+  readonly cell = input<DisplayCellData>()
 }

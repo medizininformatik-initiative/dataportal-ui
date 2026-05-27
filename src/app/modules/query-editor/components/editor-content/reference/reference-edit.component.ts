@@ -51,7 +51,7 @@ export class ReferenceEditComponent implements OnChanges, OnInit, AfterViewInit,
   private referenceCriterionEditService = inject(EditReferenceCriterionService)
   private cdr = inject(ChangeDetectorRef)
 
-  readonly referenceCriterion = input.required<ReferenceCriterion>()
+  readonly referenceCriterion = input<ReferenceCriterion>()
 
   attributeFilters: AbstractAttributeFilters[] = []
 

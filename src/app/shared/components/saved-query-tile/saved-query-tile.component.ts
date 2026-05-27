@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core'
 export class SavedQueryTileComponent implements OnInit {
   private confirmDeleteService = inject(ConfirmDeleteService)
 
-  readonly savedQuery = input.required<InterfaceSavedQueryTile>()
+  readonly savedQuery = input<InterfaceSavedQueryTile>()
 
   readonly deleteQuery = output<string>()
 
