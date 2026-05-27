@@ -1,22 +1,25 @@
-import { DeleteDataQueryService } from './Persistence/DeleteDataQuery.service';
-import { Injectable } from '@angular/core';
-import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile';
-import { Observable } from 'rxjs';
-import { ReadDataQueryService } from './Persistence/ReadDataQuery.service';
-import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModal';
-import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery';
-import { SavedDataQueryService } from './Persistence/SaveDataQuery.service';
-import { SavedUsageStats } from 'src/app/model/Types/SavedUsageStats';
+import { DeleteDataQueryService } from './Persistence/DeleteDataQuery.service'
+import { Injectable, inject } from '@angular/core'
+import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile'
+import { Observable } from 'rxjs'
+import { ReadDataQueryService } from './Persistence/ReadDataQuery.service'
+import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModal'
+import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery'
+import { SavedDataQueryService } from './Persistence/SaveDataQuery.service'
+import { SavedUsageStats } from 'src/app/model/Types/SavedUsageStats'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataQueryStorageService {
-  constructor(
-    private readDataQueryService: ReadDataQueryService,
-    private deleteDataQueryService: DeleteDataQueryService,
-    private saveDataQueryService: SavedDataQueryService
-  ) {}
+  private readDataQueryService = inject(ReadDataQueryService)
+  private deleteDataQueryService = inject(DeleteDataQueryService)
+  private saveDataQueryService = inject(SavedDataQueryService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Returns how many data queries can be saved and how many are already used.
@@ -24,7 +27,7 @@ export class DataQueryStorageService {
    * @returns
    */
   public saveDataQuery(data: SaveDataModal): Observable<SavedUsageStats> {
-    return this.saveDataQueryService.saveDataQuery(data);
+    return this.saveDataQueryService.saveDataQuery(data)
   }
 
   /**
@@ -32,7 +35,7 @@ export class DataQueryStorageService {
    * @returns
    */
   public readDataQueries(): Observable<InterfaceSavedQueryTile[]> {
-    return this.readDataQueryService.readSavedQueries();
+    return this.readDataQueryService.readSavedQueries()
   }
 
   /**
@@ -41,7 +44,7 @@ export class DataQueryStorageService {
    * @returns
    */
   public deleteDataQueryById(id: number): Observable<void> {
-    return this.deleteDataQueryService.deleteDataQueryById(id);
+    return this.deleteDataQueryService.deleteDataQueryById(id)
   }
 
   /**
@@ -50,7 +53,7 @@ export class DataQueryStorageService {
    * @returns
    */
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
-    return this.readDataQueryService.readDataQueryById(id);
+    return this.readDataQueryService.readDataQueryById(id)
   }
 
   /**
@@ -59,6 +62,6 @@ export class DataQueryStorageService {
    * @returns
    */
   public getValidationReportForDataquery(id: number): Observable<boolean> {
-    return this.readDataQueryService.getValidationReportForDataquery(id);
+    return this.readDataQueryService.getValidationReportForDataquery(id)
   }
 }

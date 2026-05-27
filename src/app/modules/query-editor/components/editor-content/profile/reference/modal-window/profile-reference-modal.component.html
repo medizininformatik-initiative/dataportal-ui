@@ -3,11 +3,13 @@
   (cancelButtonSelected)="closeDialog()"
 >
   <div class="container">
-    <div *ngFor="let tree of urlTree">
+    @for (tree of urlTree; track tree) {
+    <div>
       <num-tree
         [treeData]="tree"
         (selectedCheckbox)="setSelectedReferenceFields($event)"
       ></num-tree>
     </div>
+    }
   </div>
 </num-modal-window>

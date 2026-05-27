@@ -1,20 +1,23 @@
-import { concatMap, map, Observable } from 'rxjs';
-import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service';
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile';
-import { DataSelectionProfileData } from 'src/app/model/Interface/DataSelectionProfileData';
-import { Injectable } from '@angular/core';
-import { ProfileInstanceBuilderService } from './Builder/ProfileInstanceBuilder.service';
-import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service';
+import { concatMap, map, Observable } from 'rxjs'
+import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { DataSelectionProfileData } from 'src/app/model/Interface/DataSelectionProfileData'
+import { Injectable, inject } from '@angular/core'
+import { ProfileInstanceBuilderService } from './Builder/ProfileInstanceBuilder.service'
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoadDataSelectionProfilesService {
-  constructor(
-    private dataSelectionApiService: DataSelectionApiService,
-    private profileProvider: ProfileProviderService,
-    private profileInstanceBuilder: ProfileInstanceBuilderService
-  ) {}
+  private dataSelectionApiService = inject(DataSelectionApiService)
+  private profileProvider = inject(ProfileProviderService)
+  private profileInstanceBuilder = inject(ProfileInstanceBuilderService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Fetches data selection profile data from the API, assembles profile objects,
@@ -32,13 +35,13 @@ export class LoadDataSelectionProfilesService {
         this.profileInstanceBuilder.buildProfileInstances(data, markAsReference)
       ),
       concatMap((profiles) => {
-        this.setProfilesInProvider(profiles);
-        return [profiles];
+        this.setProfilesInProvider(profiles)
+        return [profiles]
       })
-    );
+    )
   }
 
   private setProfilesInProvider(profiles: DataSelectionProfile[]): void {
-    profiles.forEach((profile) => this.profileProvider.setOne(profile));
+    profiles.forEach((profile) => this.profileProvider.setOne(profile))
   }
 }

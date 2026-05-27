@@ -1,12 +1,32 @@
+.display-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.display-col {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.display-half {
+  flex: 1 1 50%;
+  min-width: 0;
+}
+
+.inexclusion {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .title-header {
   width: 42.5%;
   font-size: large;
   color: rgba(95, 98, 102, 1);
   margin-bottom: 1em;
-}
-.inexclusion {
-  min-width: 50%;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
 }

@@ -1,23 +1,22 @@
-<div fxLayout="row" class="height-100 width-100">
-  <div fxLayout="column" class="container">
-    <num-searchbar
-      [icon]="'search'"
-      (searchTextChange)="searchConcepts($event)"
-      [label]="'SHARED_FILTER.CONCEPT_FILTER.SEARCH_PLACEHOLDER'"
-    >
-    </num-searchbar>
+<div class="container">
+  <num-searchbar
+    [icon]="'search'"
+    (searchTextChange)="searchConcepts($event)"
+    [label]="'SHARED_FILTER.CONCEPT_FILTER.SEARCH_PLACEHOLDER'"
+  >
+  </num-searchbar>
 
-    <num-search-filter
-      *ngIf="valueSetUrl?.length > 1"
-      [filter]="searchFilter"
-      (selectedFilterChanged)="setValueSet($event)"
-    ></num-search-filter>
-    <num-concept-filter-table
-      style="overflow: auto"
-      *ngIf="searchResults$ | async as searchResults"
-      [valueSetUrl]="valueSetUrl"
-      [conceptFilterId]="conceptFilterId"
-      (selectedConcept)="toggleConceptSelection($event)"
-    ></num-concept-filter-table>
-  </div>
+  @if (valueSetUrl?.length > 1) {
+  <num-search-filter
+    [filter]="searchFilter"
+    (selectedFilterChanged)="setValueSet($event)"
+  ></num-search-filter>
+  } @if (searchResults$ | async; as searchResults) {
+  <num-concept-filter-table
+    class="overflow"
+    [valueSetUrl]="valueSetUrl"
+    [conceptFilterId]="conceptFilterId"
+    (selectedConcept)="toggleConceptSelection($event)"
+  ></num-concept-filter-table>
+  }
 </div>

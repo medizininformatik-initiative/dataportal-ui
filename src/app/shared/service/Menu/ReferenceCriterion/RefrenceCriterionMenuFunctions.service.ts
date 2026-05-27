@@ -1,24 +1,27 @@
-import { CriterionModalService } from 'src/app/service/Criterion/Modal/CriterionModal.service';
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { Injectable } from '@angular/core';
-import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
+import { CriterionModalService } from 'src/app/service/Criterion/Modal/CriterionModal.service'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { Injectable, inject } from '@angular/core'
+import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class RefrenceCriterionMenuFunctionsService {
-  constructor(
-    private criterionProviderService: CriterionProviderService,
-    private editCriterionService: CriterionModalService,
-    private referenceCriterionProvider: ReferenceCriterionProviderService,
-    private navigationHelperService: NavigationHelperService
-  ) {}
+  private criterionProviderService = inject(CriterionProviderService)
+  private editCriterionService = inject(CriterionModalService)
+  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   deleteCriterion(id: string) {
-    const parentID = this.referenceCriterionProvider.getOne(id)?.getParentId();
+    const parentID = this.referenceCriterionProvider.getOne(id)?.getParentId()
     if (!parentID) {
-      throw new Error(`ReferenceCriterion with id ${id} does not have a parent ID.`);
+      throw new Error(`ReferenceCriterion with id ${id} does not have a parent ID.`)
     }
     this.criterionProviderService
       .getOne(parentID)
@@ -28,26 +31,26 @@ export class RefrenceCriterionMenuFunctionsService {
           const updatedIds = attributeFilter
             .getReference()
             .getSelectedReferenceIds()
-            .filter((refId) => refId !== id);
-          attributeFilter.getReference().setSelectedReferenceIds(updatedIds);
+            .filter((refId) => refId !== id)
+          attributeFilter.getReference().setSelectedReferenceIds(updatedIds)
         }
-      });
+      })
 
-    this.referenceCriterionProvider.removeOne(id);
+    this.referenceCriterionProvider.removeOne(id)
   }
 
   public duplicateCriterion(id: string) {
     // Not implemented yet
-    return;
+    return
   }
 
   public applyReferenceCriterionFilter(id: string) {
-    const referenceCriterion = this.referenceCriterionProvider.getOne(id);
-    const criterion = this.criterionProviderService.getOne(referenceCriterion.getParentId());
+    const referenceCriterion = this.referenceCriterionProvider.getOne(id)
+    const criterion = this.criterionProviderService.getOne(referenceCriterion.getParentId())
 
     if (!criterion) {
-      return;
+      return
     }
-    this.navigationHelperService.navigateToEditReferenceCriterion(id);
+    this.navigationHelperService.navigateToEditReferenceCriterion(id)
   }
 }

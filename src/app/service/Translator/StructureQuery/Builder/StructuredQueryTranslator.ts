@@ -1,34 +1,37 @@
-import { ConsentTermCode } from 'src/app/model/Utilities/ConsentTermCode';
-import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { Injectable } from '@angular/core';
-import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery';
-import { StructuredQueryCriterion } from 'src/app/model/StructuredQuery/Criterion/StructuredQueryCriterion';
-import { StructuredQueryCriterionService } from './StructuredQueryCriterion/StructuredQueryCriterion.service';
+import { ConsentTermCode } from 'src/app/model/Utilities/ConsentTermCode'
+import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
+import { Injectable, inject } from '@angular/core'
+import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery'
+import { StructuredQueryCriterion } from 'src/app/model/StructuredQuery/Criterion/StructuredQueryCriterion'
+import { StructuredQueryCriterionService } from './StructuredQueryCriterion/StructuredQueryCriterion.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQueryTranslator {
-  constructor(
-    private criterionProvider: CriterionProviderService,
-    private structuredQueryCriterionService: StructuredQueryCriterionService
-  ) {}
+  private criterionProvider = inject(CriterionProviderService)
+  private structuredQueryCriterionService = inject(StructuredQueryCriterionService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public translateToStructuredQuery(feasibilityQuery: FeasibilityQuery): StructuredQuery {
-    const inclusionCriteria = this.convertInclusionCriteria(feasibilityQuery.getInclusionCriteria());
-    const exclusionCriteria = this.convertExclusionCriteria(feasibilityQuery.getExclusionCriteria());
+    const inclusionCriteria = this.convertInclusionCriteria(feasibilityQuery.getInclusionCriteria())
+    const exclusionCriteria = this.convertExclusionCriteria(feasibilityQuery.getExclusionCriteria())
     const displayName =
-      feasibilityQuery.getDisplay().length > 0 ? feasibilityQuery.getDisplay() : '';
+      feasibilityQuery.getDisplay().length > 0 ? feasibilityQuery.getDisplay() : ''
 
-    const structuredQuery = new StructuredQuery(inclusionCriteria, exclusionCriteria, displayName);
+    const structuredQuery = new StructuredQuery(inclusionCriteria, exclusionCriteria, displayName)
 
     if (feasibilityQuery.getConsent()) {
-      structuredQuery.getInclusionCriteria().push(this.createConsentCriterion());
+      structuredQuery.getInclusionCriteria().push(this.createConsentCriterion())
     }
-    return structuredQuery;
+    return structuredQuery
   }
 
   private convertInclusionCriteria(
@@ -36,7 +39,7 @@ export class StructuredQueryTranslator {
   ): StructuredQueryCriterion[][] | [] {
     return inclusionCriteriaArray.length > 0
       ? this.convertCriterionGroup(inclusionCriteriaArray)
-      : [];
+      : []
   }
 
   private convertExclusionCriteria(
@@ -44,15 +47,15 @@ export class StructuredQueryTranslator {
   ): StructuredQueryCriterion[][] | undefined {
     return exclusionCriteriaArray.length > 0
       ? this.convertCriterionGroup(exclusionCriteriaArray)
-      : undefined;
+      : undefined
   }
 
   private convertCriterionGroup(criterionGroup: string[][]): StructuredQueryCriterion[][] {
     const structuredCriteriaGroup: StructuredQueryCriterion[][] = criterionGroup
       .map((ids: string[]) => this.convertCriteriaIdsToStructuredCriteria(ids))
-      .filter((innerArray) => innerArray.length > 0);
+      .filter((innerArray) => innerArray.length > 0)
 
-    return structuredCriteriaGroup.length > 0 ? structuredCriteriaGroup : undefined;
+    return structuredCriteriaGroup.length > 0 ? structuredCriteriaGroup : undefined
   }
 
   /**
@@ -63,9 +66,9 @@ export class StructuredQueryTranslator {
    */
   private convertCriteriaIdsToStructuredCriteria(ids: string[]): StructuredQueryCriterion[] {
     return ids.map((id) => {
-      const criterion = this.criterionProvider.getCriterionByUID(id);
-      return this.buildStructuredQueryCriterion(criterion);
-    });
+      const criterion = this.criterionProvider.getCriterionByUID(id)
+      return this.buildStructuredQueryCriterion(criterion)
+    })
   }
 
   /**
@@ -75,7 +78,7 @@ export class StructuredQueryTranslator {
    * @returns
    */
   private buildStructuredQueryCriterion(criterion: Criterion): StructuredQueryCriterion {
-    return this.structuredQueryCriterionService.buildStructuredQueryCriterion(criterion);
+    return this.structuredQueryCriterionService.buildStructuredQueryCriterion(criterion)
   }
 
   private createConsentCriterion(): StructuredQueryCriterion[] {
@@ -85,6 +88,6 @@ export class StructuredQueryTranslator {
         undefined,
         ContextTermCode.getContextTermCode()
       ),
-    ];
+    ]
   }
 }

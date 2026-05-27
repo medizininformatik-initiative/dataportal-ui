@@ -1,7 +1,7 @@
 <p class="header-font">
   <ng-content></ng-content>
+  @if (showToggle) {
   <button
-    *ngIf="showToggle"
     class="toggle-btn"
     (click)="toggleService.toggle()"
     [matTooltip]="
@@ -12,4 +12,5 @@
   >
     <fa-icon [icon]="(toggleService.visible$ | async) ? 'eye-slash' : 'eye'"></fa-icon>
   </button>
+  }
 </p>

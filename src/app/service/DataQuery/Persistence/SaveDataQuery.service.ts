@@ -1,29 +1,32 @@
-import { CreateCRTDLService } from '../../Translator/CRTDL/CreateCRTDL.service';
-import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL';
-import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service';
-import { Injectable } from '@angular/core';
-import { map, Observable, switchMap, take } from 'rxjs';
-import { QueryResult } from 'src/app/model/Result/QueryResult';
-import { ResultProviderService } from '../../Provider/ResultProvider.service';
-import { SaveDataModal } from '../../../shared/models/SaveDataModal/SaveDataModal';
-import { SavedUsageStats } from 'src/app/model/Types/SavedUsageStats';
+import { CreateCRTDLService } from '../../Translator/CRTDL/CreateCRTDL.service'
+import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL'
+import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
+import { Injectable, inject } from '@angular/core'
+import { map, Observable, switchMap, take } from 'rxjs'
+import { QueryResult } from 'src/app/model/Result/QueryResult'
+import { ResultProviderService } from '../../Provider/ResultProvider.service'
+import { SaveDataModal } from '../../../shared/models/SaveDataModal/SaveDataModal'
+import { SavedUsageStats } from 'src/app/model/Types/SavedUsageStats'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SavedDataQueryService {
-  constructor(
-    private createCRTDLService: CreateCRTDLService,
-    private resultProvider: ResultProviderService,
-    private dataQueryApiService: DataQueryApiService
-  ) {}
+  private createCRTDLService = inject(CreateCRTDLService)
+  private resultProvider = inject(ResultProviderService)
+  private dataQueryApiService = inject(DataQueryApiService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public saveDataQuery(data: SaveDataModal | null = null): Observable<SavedUsageStats> {
     return this.createCRTDLService.createCRTDLForSave().pipe(
       switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)),
       switchMap((savedDataQueryData) => this.postDataQuery(savedDataQueryData)),
       take(1)
-    );
+    )
   }
 
   private buildSavedDataQueryData(crtdl: CRTDL, data: SaveDataModal | null): Observable<any> {
@@ -34,7 +37,7 @@ export class SavedDataQueryService {
         label: data?.title || '',
         resultSize: result?.getTotalNumberOfPatients() ?? 0,
       }))
-    );
+    )
   }
 
   private createCrtdlJson(crtdl: CRTDL) {
@@ -43,17 +46,17 @@ export class SavedDataQueryService {
       version: crtdl.getVersion(),
       cohortDefinition: crtdl.getCohortDefinition(),
       dataExtraction: crtdl.getDataExtraction(),
-    };
+    }
   }
 
   private getResultSize(): Observable<QueryResult> {
-    return this.resultProvider.getResultOfActiveFeasibilityQuery();
+    return this.resultProvider.getResultOfActiveFeasibilityQuery()
   }
 
   private postDataQuery(data: any): Observable<SavedUsageStats> {
     return this.dataQueryApiService.postDataQuery(data).pipe(
       take(1),
       map((response) => response.body)
-    );
+    )
   }
 }

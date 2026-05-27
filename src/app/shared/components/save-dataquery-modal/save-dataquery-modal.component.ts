@@ -1,55 +1,65 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { DataQueryValidationService } from '../../../service/DataQuery/DataQueryValidation.service';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Observable, Subject } from 'rxjs';
-import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModal';
-import { takeUntil } from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
+import { DataQueryValidationService } from '../../../service/DataQuery/DataQueryValidation.service'
+import { MatDialogRef } from '@angular/material/dialog'
+import { Observable, Subject } from 'rxjs'
+import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModal'
+import { takeUntil } from 'rxjs/operators'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { HeaderComponent } from '../header/header.component'
+import { FormsModule } from '@angular/forms'
+import { ButtonComponent } from '../button/button.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-save-dataquery-modal',
   templateUrl: './save-dataquery-modal.component.html',
   styleUrls: ['./save-dataquery-modal.component.scss'],
+  standalone: true,
+  imports: [FontAwesomeModule, HeaderComponent, FormsModule, ButtonComponent, TranslateModule],
 })
 export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
-  validatedDataQuery$: Observable<{ feasibilityQuery: boolean; dataSelection: boolean }>;
+  private dialogRef = inject<MatDialogRef<SaveDataQueryModalComponent>>(MatDialogRef)
+  private dataQueryValidation = inject(DataQueryValidationService)
+
+  validatedDataQuery$: Observable<{ feasibilityQuery: boolean; dataSelection: boolean }>
 
   @Input()
-  isCommentRequired = false;
+  isCommentRequired = false
 
   @Output()
-  save = new EventEmitter<SaveDataModal>();
+  save = new EventEmitter<SaveDataModal>()
 
   @Output()
-  cancel = new EventEmitter<void>();
+  cancelled = new EventEmitter<void>()
 
-  title = '';
-  comment = '';
+  title = ''
+  comment = ''
 
-  private destroy$ = new Subject<void>();
+  private destroy$ = new Subject<void>()
 
-  constructor(
-    private dialogRef: MatDialogRef<SaveDataQueryModalComponent>,
-    private dataQueryValidation: DataQueryValidationService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.validatedDataQuery$ = this.dataQueryValidation.validateDataQuery();
-    this.validatedDataQuery$.pipe(takeUntil(this.destroy$)).subscribe();
+    this.validatedDataQuery$ = this.dataQueryValidation.validateDataQuery()
+    this.validatedDataQuery$.pipe(takeUntil(this.destroy$)).subscribe()
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   doSave(): void {
     this.dialogRef.close({
       title: this.title,
       comment: this.comment,
-    });
+    })
   }
 
   doDiscard(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 }

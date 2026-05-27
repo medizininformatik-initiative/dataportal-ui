@@ -1,9 +1,9 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
 @mixin mat-expansion-panel_themed($theme) {
   $accent: map-get($theme, accent);
 
   .mat-expansion-indicator::after {
-    color: mat.get-color-from-palette($accent);
+    color: mat.m2-get-color-from-palette($accent);
     padding: 5px !important;
     margin-top: -10px;
     border-width: 0 3.5px 3.5px 0 !important;

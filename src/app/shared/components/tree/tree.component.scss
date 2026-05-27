@@ -1,10 +1,6 @@
 ul {
   list-style-type: none;
   padding-left: 20px;
-}
-
-ul {
-  list-style-type: none;
   margin: 0;
 }
 
@@ -29,6 +25,9 @@ li {
 }
 
 .node-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   min-height: 50px;
   padding: 4px 0;
 }

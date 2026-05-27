@@ -1,13 +1,19 @@
-import { DataportalErrorPayloadType } from './model/DataportalErrorPayloadType';
-import { DataportalErrorType } from './model/DataportalErrorTypes';
-import { ErrorDisplayService } from '../shared/service/ErrorDisplay/error-display.service';
-import { ErrorHandler, Injectable, NgZone } from '@angular/core';
-import { IssueData } from './model/Feasibility/IssueData';
-import { Observable, throwError } from 'rxjs';
-import { ValidationIssueData } from './model/Validation/ValidationIssueData';
+import { DataportalErrorPayloadType } from './model/DataportalErrorPayloadType'
+import { DataportalErrorType } from './model/DataportalErrorTypes'
+import { ErrorDisplayService } from '../shared/service/ErrorDisplay/error-display.service'
+import { ErrorHandler, Injectable, NgZone, inject } from '@angular/core'
+import { IssueData } from './model/Feasibility/IssueData'
+import { Observable, throwError } from 'rxjs'
+import { ValidationIssueData } from './model/Validation/ValidationIssueData'
 @Injectable({ providedIn: 'root' })
 export class DataportalErrorHandlerService implements ErrorHandler {
-  constructor(private zone: NgZone, private errorDisplayService: ErrorDisplayService) {}
+  private zone = inject(NgZone)
+  private errorDisplayService = inject(ErrorDisplayService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public handleError(error: unknown): void {
     this.zone.run(() => {
@@ -16,14 +22,14 @@ export class DataportalErrorHandlerService implements ErrorHandler {
           type: string
           payload: DataportalErrorPayloadType
           url: string
-        };
+        }
         this.errorDisplayService.showError(
           dataportalError.payload,
           dataportalError.type as any,
           dataportalError.url
-        );
+        )
       } else {
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage = error instanceof Error ? error.message : String(error)
         const errorPayload: DataportalErrorPayloadType = [
           {
             message: errorMessage,
@@ -31,10 +37,10 @@ export class DataportalErrorHandlerService implements ErrorHandler {
             code: 'UNKNOWN',
             severity: 'ERROR',
           },
-        ];
-        this.errorDisplayService.showError(errorPayload, 'GENERIC_ERROR' as any, '');
+        ]
+        this.errorDisplayService.showError(errorPayload, 'GENERIC_ERROR' as any, '')
       }
-    });
+    })
   }
 
   private isDataportalError(error: unknown): boolean {
@@ -44,7 +50,7 @@ export class DataportalErrorHandlerService implements ErrorHandler {
       'type' in error &&
       'payload' in error &&
       'url' in error
-    );
+    )
   }
 
   /**
@@ -57,7 +63,7 @@ export class DataportalErrorHandlerService implements ErrorHandler {
     payload: ValidationIssueData[],
     url: string
   ): Observable<never> {
-    return this.throwErrorObject('VALIDATION_ERROR', payload, url);
+    return this.throwErrorObject('VALIDATION_ERROR', payload, url)
   }
 
   /**
@@ -72,7 +78,7 @@ export class DataportalErrorHandlerService implements ErrorHandler {
     url: string,
     retryAfterSeconds?: number
   ): Observable<never> {
-    return this.throwErrorObject('FEASIBILITY_ERROR', payload, url, retryAfterSeconds);
+    return this.throwErrorObject('FEASIBILITY_ERROR', payload, url, retryAfterSeconds)
   }
 
   /**
@@ -80,7 +86,7 @@ export class DataportalErrorHandlerService implements ErrorHandler {
    * @returns
    */
   public throwInternalServerErrorObject(): Observable<never> {
-    return this.throwErrorObject('GENERIC_ERROR', undefined, '');
+    return this.throwErrorObject('GENERIC_ERROR', undefined, '')
   }
 
   /**
@@ -97,6 +103,6 @@ export class DataportalErrorHandlerService implements ErrorHandler {
     url: string,
     retryAfterSeconds?: number
   ): Observable<never> {
-    return throwError(() => ({ type, payload, url, retryAfterSeconds }));
+    return throwError(() => ({ type, payload, url, retryAfterSeconds }))
   }
 }

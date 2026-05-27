@@ -1,34 +1,39 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
+import { Injectable, OnDestroy, inject } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
+import { Observable, Subscription } from 'rxjs'
 import {
   ProfileReferenceModalComponent,
   ProfileReferenceModalComponentData,
-} from 'src/app/modules/query-editor/components/editor-content/profile/reference/modal-window/profile-reference-modal.component';
+} from 'src/app/modules/query-editor/components/editor-content/profile/reference/modal-window/profile-reference-modal.component'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileReferenceModalService implements OnDestroy {
-  dialogSubscription: Subscription;
+  private dialog = inject(MatDialog)
 
-  constructor(private dialog: MatDialog) {}
+  dialogSubscription: Subscription
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnDestroy() {
-    this.dialogSubscription.unsubscribe();
+    this.dialogSubscription.unsubscribe()
   }
 
   public openProfileReferenceModal(
     referencedProfileUrls: string[],
     profileId: string
   ): Observable<string[]> {
-    const data = this.setModalData(referencedProfileUrls, profileId);
+    const data = this.setModalData(referencedProfileUrls, profileId)
     const dialogRef = this.dialog.open(ProfileReferenceModalComponent, {
       disableClose: true,
       data,
-    });
+    })
 
-    return dialogRef.afterClosed();
+    return dialogRef.afterClosed()
   }
 
   private setModalData(
@@ -38,6 +43,6 @@ export class ProfileReferenceModalService implements OnDestroy {
     return {
       referenceUrls: referencedProfileUrls,
       profileId,
-    };
+    }
   }
 }

@@ -1,11 +1,11 @@
-import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service';
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry';
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
-import { CriteriaResultMapperStrategy } from '../Mapping/CriteriaResultMapperStrategy';
-import { CriteriaSearchUrlStrategy } from '../Url/CriteriaSearchUrlStrategy';
-import { Injectable } from '@angular/core';
-import { SearchEngine } from '../../../SearchEngine';
-import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder';
+import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service'
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
+import { CriteriaResultMapperStrategy } from '../Mapping/CriteriaResultMapperStrategy'
+import { CriteriaSearchUrlStrategy } from '../Url/CriteriaSearchUrlStrategy'
+import { Injectable, inject } from '@angular/core'
+import { SearchEngine } from '../../../SearchEngine'
+import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder'
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,16 @@ export class CriteriaSearchEngineService extends AbstractSimpleSearchEngine<
   CriteriaListEntry,
   CriteriaResultList
 > {
-  constructor(protected searchEngine: SearchEngine<CriteriaListEntry, CriteriaResultList>) {
-    super(searchEngine);
+  protected searchEngine: SearchEngine<CriteriaListEntry, CriteriaResultList>
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
+    const searchEngine = inject<SearchEngine<CriteriaListEntry, CriteriaResultList>>(SearchEngine)
+
+    super(searchEngine)
+    this.searchEngine = searchEngine
   }
 
   /**
@@ -34,11 +42,11 @@ export class CriteriaSearchEngineService extends AbstractSimpleSearchEngine<
       this.searchEngine.getContextFilter(),
       this.searchEngine.getKdsModuleFilter(),
       this.searchEngine.getTerminologyFilter()
-    );
-    return urlStrategy.getSearchUrl(pageSize, page);
+    )
+    return urlStrategy.getSearchUrl(pageSize, page)
   }
 
   protected getMapping(): CriteriaResultMapperStrategy {
-    return new CriteriaResultMapperStrategy();
+    return new CriteriaResultMapperStrategy()
   }
 }

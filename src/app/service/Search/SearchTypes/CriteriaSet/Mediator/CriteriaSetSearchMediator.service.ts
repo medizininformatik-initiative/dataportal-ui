@@ -1,10 +1,10 @@
-import { AbstractKeyedSearchMediator } from '../../../Abstract/Mediator/AbstractKeyedSearchMediator';
-import { CriteriaSetSearchEngineService } from '../Engine/CriteriaSetSearchEngine';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
-import { CriteriaSetSearchResultProviderService } from '../Result/CriteriaSetSearchResultProvider.service ';
+import { AbstractKeyedSearchMediator } from '../../../Abstract/Mediator/AbstractKeyedSearchMediator'
+import { CriteriaSetSearchEngineService } from '../Engine/CriteriaSetSearchEngine'
+import { Injectable, inject } from '@angular/core'
+import { Observable } from 'rxjs'
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry'
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList'
+import { CriteriaSetSearchResultProviderService } from '../Result/CriteriaSetSearchResultProvider.service '
 
 /**
  * Mediator service for criteria set searches with support for multiple criteria set filters.
@@ -19,6 +19,12 @@ export class CriteriaSetSearchMediatorService extends AbstractKeyedSearchMediato
   ReferenceCriteriaListEntry,
   ReferenceCriteriaResultList
 > {
+  protected resultProvider: CriteriaSetSearchResultProviderService
+  protected searchEngine: CriteriaSetSearchEngineService
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
   /**
    * Creates an instance of CriteriaSetSearchMediatorService.
    *
@@ -26,11 +32,13 @@ export class CriteriaSetSearchMediatorService extends AbstractKeyedSearchMediato
    * @param searchEngine - The search engine for executing criteria set searches
    * @protected
    */
-  constructor(
-    protected resultProvider: CriteriaSetSearchResultProviderService,
-    protected searchEngine: CriteriaSetSearchEngineService
-  ) {
-    super(resultProvider, searchEngine);
+  constructor() {
+    const resultProvider = inject(CriteriaSetSearchResultProviderService)
+    const searchEngine = inject(CriteriaSetSearchEngineService)
+
+    super(resultProvider, searchEngine)
+    this.resultProvider = resultProvider
+    this.searchEngine = searchEngine
   }
 
   /**
@@ -46,7 +54,7 @@ export class CriteriaSetSearchMediatorService extends AbstractKeyedSearchMediato
     criteriaSetUrls: string[],
     page: number = 0
   ): Observable<ReferenceCriteriaResultList> {
-    return this.searchAndSetProvider(searchText, page, criteriaSetUrls);
+    return this.searchAndSetProvider(searchText, page, criteriaSetUrls)
   }
 
   /**
@@ -62,6 +70,6 @@ export class CriteriaSetSearchMediatorService extends AbstractKeyedSearchMediato
     criteriaSetUrls: string[],
     page: number
   ): Observable<ReferenceCriteriaResultList> {
-    return this.searchAndUpdateProvider(searchText, page, criteriaSetUrls);
+    return this.searchAndUpdateProvider(searchText, page, criteriaSetUrls)
   }
 }

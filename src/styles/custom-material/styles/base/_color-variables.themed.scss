@@ -5,46 +5,30 @@
   $warn: map-get($theme, warn);
   $additional: map-get($theme, additional);
 
-  --num-color--primary: #{mat.get-color-from-palette($primary)};
-  --num-color--primary-100: #{mat.get-color-from-palette($primary, 100)};
-  --num-color--primary-300: #{mat.get-color-from-palette($primary, 300)};
-  --num-color--primary-400: #{mat.get-color-from-palette($primary, 400)};
-  --num-color--primary-900: #{mat.get-color-from-palette($primary, 900)};
-  --num-color--primary-blue: #{mat.get-color-from-palette($accent, 500)};
+  // ── Primary palette exports ────────────────────────────────────────────────
+  // Used by: feasibility-query search component
+  --num-color--primary: #{mat.m2-get-color-from-palette($primary)};
 
-  --num-color--primary-light-green: #{mat.get-color-from-palette($primary, 'green-hover')};
-  --num-color--primary-green: #{mat.get-color-from-palette($primary, 'green')};
-  --num-color--primary-white: #{mat.get-color-from-palette($primary, 'white')};
+  // Used by: dashboard (border/conic gradient), user-menu (icon color)
+  --num-color--primary-blue: #{mat.m2-get-color-from-palette($accent, 500)};
 
-  --num-color--primary-red: #{mat.get-color-from-palette($primary, 'red')};
+  // Used by: data-selection search, editor action bars, bulk-search action bar
+  --num-color--primary-green: #{mat.m2-get-color-from-palette($primary, 'green')};
 
-  // Semantic aliases
-  --num-color--blue: #{mat.get-color-from-palette($accent, 500)};
-  --num-color--blue-hover: #{mat.get-color-from-palette($primary, 'blue-hover')};
-  --num-color--green: #{mat.get-color-from-palette($primary, 'green')};
-  --num-color--red: #{mat.get-color-from-palette($primary, 'red')};
-  --num-color--surface: #{mat.get-color-from-palette($primary, 100)};
-  --num-color--border: #{mat.get-color-from-palette($primary, 300)};
+  // ── Accent palette exports ─────────────────────────────────────────────────
+  // Used by: between-filter (range track fill)
+  --num-color--accent-200: #{mat.m2-get-color-from-palette($accent, 200)};
 
-  --num-color--accent: #{mat.get-color-from-palette($accent, 500)};
-  --num-color--warn: #{mat.get-color-from-palette($warn)};
-  --num-color--background: #{mat.get-color-from-palette($additional, page-background)};
+  // Used by: dashboard (text), selected-items-list, menu (icon), ui-classes (card link)
+  --num-color--accent-400: #{mat.m2-get-color-from-palette($accent, 400)};
 
-  --num-color--accent-50: #{mat.get-color-from-palette($accent, 50)};
-  --num-color--accent-100: #{mat.get-color-from-palette($accent, 100)};
-  --num-color--accent-200: #{mat.get-color-from-palette($accent, 200)};
-  --num-color--accent-300: #{mat.get-color-from-palette($accent, 300)};
-  --num-color--accent-400: #{mat.get-color-from-palette($accent, 400)};
-  --num-color--accent-500: #{mat.get-color-from-palette($accent, 500)};
-  --num-color--accent-600: #{mat.get-color-from-palette($accent, 600)};
-  --num-color--accent-700: #{mat.get-color-from-palette($accent, 700)};
-  --num-color--accent-800: #{mat.get-color-from-palette($accent, 800)};
-  --num-color--accent-900: #{mat.get-color-from-palette($accent, 900)};
-  --num-color--accent-A200: #{mat.get-color-from-palette($accent, A200)};
-  --num-color--accent-A300: #{mat.get-color-from-palette($accent, A300)};
-  --num-color--accent-A700: #{mat.get-color-from-palette($accent, A700)};
+  // Used by: between-filter (range thumb)
+  --num-color--accent-600: #{mat.m2-get-color-from-palette($accent, 600)};
 
-  --num-color--primary-contrast: #{mat.get-contrast-color-from-palette($primary, default)};
-  --num-color--accent-contrast: #{mat.get-contrast-color-from-palette($accent, 500)};
-  --num-color--warn-contrast: #{mat.get-contrast-color-from-palette($warn, default)};
+  // ── Status colours ─────────────────────────────────────────────────────────
+  // Used by: searchbar (validation error colour)
+  --num-color--warn: #{mat.m2-get-color-from-palette($warn)};
+
+  // Used by: searchbar (fallback when --num-color--warn is unavailable)
+  --num-color--red: #{mat.m2-get-color-from-palette($primary, 'red')};
 }

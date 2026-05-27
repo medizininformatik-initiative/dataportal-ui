@@ -1,4 +1,5 @@
-<div class="container" *ngFor="let query of savedQueries$ | async">
+@for (query of savedQueries$ | async; track query) {
+<div class="width-100">
   <num-saved-query-tile
     class="width-100"
     [savedQuery]="query"
@@ -7,3 +8,4 @@
     (deleteQuery)="deleteSavedFeasibility($event)"
   ></num-saved-query-tile>
 </div>
+}

@@ -1,23 +1,25 @@
-import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode';
-import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
-import { Injectable, OnDestroy } from '@angular/core';
-import { StructuredQueryCriterion } from 'src/app/model/StructuredQuery/Criterion/StructuredQueryCriterion';
-import { Subscription } from 'rxjs';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode'
+import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service'
+import { Injectable, OnDestroy, inject } from '@angular/core'
+import { StructuredQueryCriterion } from 'src/app/model/StructuredQuery/Criterion/StructuredQueryCriterion'
+import { Subscription } from 'rxjs'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConsentService implements OnDestroy {
+  private feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
+
   ngOnDestroy(): void {
-    this.activeFeasibilityQuerySusbscription?.unsubscribe();
+    this.activeFeasibilityQuerySusbscription?.unsubscribe()
   }
 
-  private consent = false;
-  private consentTermcode: TerminologyCode;
-  private consentLookUpTableKey: string;
+  private consent = false
+  private consentTermcode: TerminologyCode
+  private consentLookUpTableKey: string
 
-  private activeFeasibilityQuerySusbscription: Subscription;
+  private activeFeasibilityQuerySusbscription: Subscription
   private lookupTable: { [key: string]: { code: string; display: string; system: string } } = {
     'true:true:true:true': {
       code: 'yes-yes-yes-yes',
@@ -115,47 +117,50 @@ export class ConsentService implements OnDestroy {
         'Zentrale, nicht EU-DSGVO konforme Analyse, ohne Krankenkassendaten, und ohne Rekontaktierung',
       system: 'fdpg.consent.combined',
     },
-  };
+  }
 
-  constructor(private feasibilityQueryProviderService: FeasibilityQueryProviderService) {
-    this.setProvisionCode(false, true, false, false);
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
+    this.setProvisionCode(false, true, false, false)
   }
 
   public setFeasibilityQueryConsent() {
-    this.activeFeasibilityQuerySusbscription?.unsubscribe();
+    this.activeFeasibilityQuerySusbscription?.unsubscribe()
     this.activeFeasibilityQuerySusbscription = this.feasibilityQueryProviderService
       .getActiveFeasibilityQuery()
       .subscribe((feasibilityQuery) => {
-        feasibilityQuery.setConsent(this.consent);
-      });
+        feasibilityQuery.setConsent(this.consent)
+      })
   }
 
   public getConsentLookUpTableKey(): string {
-    return this.consentLookUpTableKey;
+    return this.consentLookUpTableKey
   }
 
   public setConsentLookUpTableKey(key: string) {
-    this.consentLookUpTableKey = key;
+    this.consentLookUpTableKey = key
   }
 
   public getConsentTermCode(): TerminologyCode {
-    return this.consentTermcode;
+    return this.consentTermcode
   }
 
   public getConsent() {
-    return this.consent;
+    return this.consent
   }
 
   public setConsent(consent: boolean) {
-    this.consent = consent;
-    this.setFeasibilityQueryConsent();
+    this.consent = consent
+    this.setFeasibilityQueryConsent()
   }
 
   public getConsentStructuredQueryCriterion(): StructuredQueryCriterion {
-    const criterion = new StructuredQueryCriterion();
-    criterion.setContext(ContextTermCode.getContextTermCode());
-    criterion.setTermCodes([this.getConsentTermCode()]);
-    return criterion;
+    const criterion = new StructuredQueryCriterion()
+    criterion.setContext(ContextTermCode.getContextTermCode())
+    criterion.setTermCodes([this.getConsentTermCode()])
+    return criterion
   }
 
   public setProvisionCode(
@@ -164,14 +169,14 @@ export class ConsentService implements OnDestroy {
     insuranceData: boolean,
     contact: boolean
   ) {
-    const key = `${distributedAnalysis}:${euGdpr}:${insuranceData}:${contact}`;
-    this.consentLookUpTableKey = key;
-    this.consentTermcode = this.createTerminologyCode(key);
+    const key = `${distributedAnalysis}:${euGdpr}:${insuranceData}:${contact}`
+    this.consentLookUpTableKey = key
+    this.consentTermcode = this.createTerminologyCode(key)
   }
 
   private createTerminologyCode(key: string) {
-    const termCodeObject = this.lookupTable[key];
-    return new TerminologyCode(termCodeObject.code, termCodeObject.display, termCodeObject.system);
+    const termCodeObject = this.lookupTable[key]
+    return new TerminologyCode(termCodeObject.code, termCodeObject.display, termCodeObject.system)
   }
 
   public getBooleanFlags(provisionsCode: string): {
@@ -182,21 +187,21 @@ export class ConsentService implements OnDestroy {
   } | null {
     for (const key in this.lookupTable) {
       if (Object.prototype.hasOwnProperty.call(this.lookupTable, key)) {
-        const value = this.lookupTable[key];
+        const value = this.lookupTable[key]
 
         if (value.code === provisionsCode) {
           const [distributedAnalysis, euGdpr, insuranceData, contact] = key
             .split(':')
-            .map((v) => v === 'true');
-          return { distributedAnalysis, euGdpr, insuranceData, contact };
+            .map((v) => v === 'true')
+          return { distributedAnalysis, euGdpr, insuranceData, contact }
         }
       }
     }
 
-    return null;
+    return null
   }
   public clearConsent(): void {
-    this.setProvisionCode(false, true, false, false);
-    this.setConsent(false);
+    this.setProvisionCode(false, true, false, false)
+    this.setConsent(false)
   }
 }

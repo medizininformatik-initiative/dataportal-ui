@@ -1,16 +1,14 @@
 <div class="container">
+  @if (profile) {
   <num-profile-header
-    *ngIf="profile"
     class="header-container"
     [profile]="profile"
     (updatedLabel)="updateLabel($event)"
   >
   </num-profile-header>
-  <num-filter-tabs
-    class="filter-tabs-container"
-    *ngIf="templates.length > 0"
-    [content]="templates"
-  ></num-filter-tabs>
+  } @if (templates.length > 0) {
+  <num-filter-tabs class="filter-tabs-container" [content]="templates"></num-filter-tabs>
+  }
 
   <ng-template #fields>
     <num-edit-fields
@@ -21,15 +19,15 @@
   </ng-template>
 
   <ng-template #timeRestriction>
-    <div
-      style="height: 100%"
-      *ngFor="let profileTimeFilter of timeRestrictionFilters; trackBy: trackByTimeRestrictionName"
-    >
+    @for (profileTimeFilter of timeRestrictionFilters; track trackByTimeRestrictionName($index,
+    profileTimeFilter)) {
+    <div style="height: 100%">
       <num-profile-time-filter
         [profileTimeRestrictionFilter]="profileTimeFilter"
         (changedProfileTimeRestrictionFilter)="updateProfileFilter($event)"
       ></num-profile-time-filter>
     </div>
+    }
   </ng-template>
 
   <ng-template #token>

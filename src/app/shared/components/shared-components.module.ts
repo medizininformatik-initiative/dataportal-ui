@@ -1,164 +1,51 @@
-import { ActionBarComponent } from './action-bar/action-bar.component';
-import { AvailabilityCellComponent } from './table/cells/availability-cell/availability-cell.component';
-import { AvailabilityStatusBarComponent } from './availability-status-bar/availability-status-bar.component';
-import { BreadcrumbComponent } from './breadcrumbs/breadcrumbs.component';
-import { ButtonComponent } from 'src/app/shared/components/button/button.component';
-import { CheckboxCellComponent } from './table/cells/checkbox-cell/checkbox-cell.component';
-import { CheckboxComponent } from './checkbox/checkbox.component';
-import { CommonModule } from '@angular/common';
-import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
-import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
-import { DatePickerComponent } from './date-picker/date-picker.component';
-import { DisplayCellComponent } from './table/cells/display-cell/display-cell.component';
-import { DisplayTranslationPipe } from '../pipes/DisplayTranslationPipe';
-import { DownloadCRTDLComponent } from './download-crtdl/download-crtdl.component';
-import { ErrorDisplayComponent } from './error-display/error-display.component';
-import { FilterChipsComponent } from './filter-chips/filter-chips.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from './header/header.component';
-import { HeaderDescriptionComponent } from './header-description/header-description.component';
-import { InformationSectionComponent } from './information-section/information-section.component';
-import { InfoTooltipComponent } from './info-tooltip/info-tooltip.component';
-import { InfoTooltipDirective } from '../directives/info-tooltip.directive';
-import { InfoTileComponent } from './info-tile/info-tile.component';
-import { LinkedBadgeComponent } from './linked-badge/linked-badge.component';
-import { ListItemDetailsComponent } from './list-item-details/list-item-details.component';
-import { ListItemDetailsSectionsComponent } from './list-item-details/list-item-details-sections/list-item-details-sections.component';
-import { LogicSwitchComponent } from './logic-switch/logic-switch.component';
-import { MaterialModule } from 'src/app/layout/material/material.module';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MenuComponent } from './menu/menu.component';
-import { ModalWindowComponent } from './modal-window/modal-window.component';
-import { NgModule } from '@angular/core';
-import { PlaceholderBoxComponent } from './placeholder-box/placeholder-box.component';
-import { ProfileReferenceTileComponent } from './profile-reference-tile/profile-reference-tile.component';
-import { ReferenceCriteriaBoxComponent } from './reference-criteria-box/reference-criteria-box.component';
-import { SaveDataQueryModalComponent } from './save-dataquery-modal/save-dataquery-modal.component';
-import { SavedQueryTileComponent } from './saved-query-tile/saved-query-tile.component';
-import { SaveFileModalComponent } from './save-file-modal/save-file-modal.component';
-import { SearchbarComponent } from './search/searchbar.component';
-import { SearchFilterComponent } from './search-filter/search-filter.component';
-import { SearchModeToggleComponent } from './search-mode-toggle/search-mode-toggle.component';
-import { SearchResultComponent } from './search-result/search-result.component';
-import { SectionNameComponent } from './section-name/section-name.component';
-import { SelectableReferenceTileComponent } from './selectable-reference-tile/selectable-reference-tile.component';
-import { SnackbarComponent } from './snack-bar/snackbar.component';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { SwitchComponent } from './switch/switch.component';
-import { TableBodyComponent } from './table/table-body/table-body.component';
-import { TableComponent } from './table/table.component';
-import { TableHeaderComponent } from './table/table-header/table-header.component';
-import { TextCellComponent } from './table/cells/text-cell/text-cell.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { TreeComponent } from './tree/tree.component';
-import { ValueSelectComponent } from './value-select/value-select.component';
-import { IconCellComponent } from './table/cells/icon-cell/icon-cell.component';
-import { SelectedItemsListComponent } from './selected-items-list/selected-items-list.component';
-import { CheckboxTextCellComponent } from './table/cells/checkbox-text-cell/checkbox-text-cell.component';
-
-const SHARED_DECLARATIONS = [
-  AvailabilityCellComponent,
-  AvailabilityStatusBarComponent,
-  CheckboxCellComponent,
-  CheckboxTextCellComponent,
-  DisplayCellComponent,
-  TableBodyComponent,
-  TableHeaderComponent,
-  TextCellComponent,
-  ActionBarComponent,
-  ButtonComponent,
-  CriteriaBoxComponent,
-  DatePickerComponent,
-  FilterChipsComponent,
-  HeaderComponent,
-  HeaderDescriptionComponent,
-  ListItemDetailsSectionsComponent,
-  ListItemDetailsComponent,
-  LogicSwitchComponent,
-  MenuComponent,
-  ModalWindowComponent,
-  SavedQueryTileComponent,
-  SearchbarComponent,
-  SearchFilterComponent,
-  SearchResultComponent,
-  SectionNameComponent,
-  SpinnerComponent,
-  SnackbarComponent,
-  SwitchComponent,
-  TableComponent,
-  TreeComponent,
-  ValueSelectComponent,
-  BreadcrumbComponent,
-  PlaceholderBoxComponent,
-  SaveFileModalComponent,
-  SaveDataQueryModalComponent,
-  DisplayTranslationPipe,
-  ProfileReferenceTileComponent,
-  LinkedBadgeComponent,
-  SelectableReferenceTileComponent,
-  SearchModeToggleComponent,
-  InformationSectionComponent,
-  DownloadCRTDLComponent,
-  InfoTileComponent,
-  InfoTooltipComponent,
-  InfoTooltipDirective,
-  CheckboxComponent,
-  ErrorDisplayComponent,
-  TableHeaderComponent,
-  TableBodyComponent,
-  IconCellComponent,
-  SelectedItemsListComponent,
-];
-
-@NgModule({
-  declarations: [
-    ...SHARED_DECLARATIONS,
-    AvailabilityStatusBarComponent,
-    ActionBarComponent,
-    CriteriaBoxComponent,
-    DatePickerComponent,
-    HeaderComponent,
-    HeaderDescriptionComponent,
-    ListItemDetailsSectionsComponent,
-    MenuComponent,
-    ModalWindowComponent,
-    ReferenceCriteriaBoxComponent,
-    SavedQueryTileComponent,
-    SearchFilterComponent,
-    SectionNameComponent,
-    SpinnerComponent,
-    SnackbarComponent,
-    SwitchComponent,
-    TreeComponent,
-    ValueSelectComponent,
-    LogicSwitchComponent,
-    BreadcrumbComponent,
-    PlaceholderBoxComponent,
-    SaveFileModalComponent,
-    ConfirmDeleteModalComponent,
-    ProfileReferenceTileComponent,
-    LinkedBadgeComponent,
-    SelectableReferenceTileComponent,
-    ListItemDetailsComponent,
-    SearchModeToggleComponent,
-    InformationSectionComponent,
-    TableHeaderComponent,
-    TableBodyComponent,
-    IconCellComponent,
-  ],
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    MaterialModule,
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    MatTooltipModule,
-  ],
-  exports: [...SHARED_DECLARATIONS],
-  providers: [DisplayTranslationPipe],
-})
-export class SharedComponentsModule {}
+export { ActionBarComponent } from './action-bar/action-bar.component'
+export { AvailabilityCellComponent } from './table/cells/availability-cell/availability-cell.component'
+export { AvailabilityStatusBarComponent } from './availability-status-bar/availability-status-bar.component'
+export { BreadcrumbComponent } from './breadcrumbs/breadcrumbs.component'
+export { ButtonComponent } from 'src/app/shared/components/button/button.component'
+export { CheckboxCellComponent } from './table/cells/checkbox-cell/checkbox-cell.component'
+export { CheckboxComponent } from './checkbox/checkbox.component'
+export { CheckboxTextCellComponent } from './table/cells/checkbox-text-cell/checkbox-text-cell.component'
+export { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component'
+export { CriteriaBoxComponent } from './criteria-box/criteria-box.component'
+export { DatePickerComponent } from './date-picker/date-picker.component'
+export { DisplayCellComponent } from './table/cells/display-cell/display-cell.component'
+export { DisplayTranslationPipe } from '../pipes/DisplayTranslationPipe'
+export { DownloadCRTDLComponent } from './download-crtdl/download-crtdl.component'
+export { ErrorDisplayComponent } from './error-display/error-display.component'
+export { FilterChipsComponent } from './filter-chips/filter-chips.component'
+export { HeaderComponent } from './header/header.component'
+export { HeaderDescriptionComponent } from './header-description/header-description.component'
+export { IconCellComponent } from './table/cells/icon-cell/icon-cell.component'
+export { InformationSectionComponent } from './information-section/information-section.component'
+export { InfoTileComponent } from './info-tile/info-tile.component'
+export { InfoTooltipComponent } from './info-tooltip/info-tooltip.component'
+export { InfoTooltipDirective } from '../directives/info-tooltip.directive'
+export { LinkedBadgeComponent } from './linked-badge/linked-badge.component'
+export { ListItemDetailsComponent } from './list-item-details/list-item-details.component'
+export { ListItemDetailsSectionsComponent } from './list-item-details/list-item-details-sections/list-item-details-sections.component'
+export { LogicSwitchComponent } from './logic-switch/logic-switch.component'
+export { MenuComponent } from './menu/menu.component'
+export { ModalWindowComponent } from './modal-window/modal-window.component'
+export { PlaceholderBoxComponent } from './placeholder-box/placeholder-box.component'
+export { ProfileReferenceTileComponent } from './profile-reference-tile/profile-reference-tile.component'
+export { ReferenceCriteriaBoxComponent } from './reference-criteria-box/reference-criteria-box.component'
+export { SaveDataQueryModalComponent } from './save-dataquery-modal/save-dataquery-modal.component'
+export { SavedQueryTileComponent } from './saved-query-tile/saved-query-tile.component'
+export { SaveFileModalComponent } from './save-file-modal/save-file-modal.component'
+export { SearchbarComponent } from './search/searchbar.component'
+export { SearchFilterComponent } from './search-filter/search-filter.component'
+export { SearchModeToggleComponent } from './search-mode-toggle/search-mode-toggle.component'
+export { SearchResultComponent } from './search-result/search-result.component'
+export { SectionNameComponent } from './section-name/section-name.component'
+export { SelectableReferenceTileComponent } from './selectable-reference-tile/selectable-reference-tile.component'
+export { SelectedItemsListComponent } from './selected-items-list/selected-items-list.component'
+export { SnackbarComponent } from './snack-bar/snackbar.component'
+export { SpinnerComponent } from './spinner/spinner.component'
+export { SwitchComponent } from './switch/switch.component'
+export { TableBodyComponent } from './table/table-body/table-body.component'
+export { TableComponent } from './table/table.component'
+export { TableHeaderComponent } from './table/table-header/table-header.component'
+export { TextCellComponent } from './table/cells/text-cell/text-cell.component'
+export { TreeComponent } from './tree/tree.component'
+export { ValueSelectComponent } from './value-select/value-select.component'

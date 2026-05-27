@@ -18,7 +18,8 @@
       </span>
       <code>{{ error?.getMessage() }} {{ profileUpgrade?.getMessage() }}</code>
     </div>
-    <div *ngIf="error">
+    @if (error) {
+    <div>
       <span class="num-text-accent font-weight-medium">
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
       </span>
@@ -26,22 +27,26 @@
         {{ 'VALIDATION.' + code | translate }}
       </code>
     </div>
-    <div class="error-extra" *ngIf="error?.getCriteriaSetValidationIssue()">
+    } @if (error?.getCriteriaSetValidationIssue()) {
+    <div class="error-extra">
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.TERMCODE' | translate }}
       <code>{{ error?.getCriteriaSetValidationIssue()?.getCriteriaSet() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error?.getValueSetValidationIssue()">
+    } @if (error?.getValueSetValidationIssue()) {
+    <div class="error-extra">
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.VALUE_SETS' | translate }}
       <code>{{ error?.getValueSetValidationIssue()?.getValueSets() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error?.getTimeRestrictionValidationIssue()">
+    } @if (error?.getTimeRestrictionValidationIssue()) {
+    <div class="error-extra">
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.AFTER_DATE' | translate }}
       <code>{{ error?.getTimeRestrictionValidationIssue()?.getAfterDate() | json }}</code>
       <br />
       {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.BEFORE_DATE' | translate }}
       <code>{{ error?.getTimeRestrictionValidationIssue()?.getBeforeDate() | json }}</code>
     </div>
-    <div class="error-extra" *ngIf="error?.getQuantityUnitValidationIssue()">
+    } @if (error?.getQuantityUnitValidationIssue()) {
+    <div class="error-extra">
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.SELECTED' | translate }}
         <code>{{ error?.getQuantityUnitValidationIssue()?.getSelected() }}</code>
@@ -51,7 +56,8 @@
         <code>{{ error?.getQuantityUnitValidationIssue()?.getAllowed() | json }}</code>
       </div>
     </div>
-    <div class="error-extra" *ngIf="error?.getDataExtractionValidationIssue()">
+    } @if (error?.getDataExtractionValidationIssue()) {
+    <div class="error-extra">
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.BEFORE_DATE' | translate }}
         <code>{{ error?.getDataExtractionValidationIssue()?.getStart() }}</code>
@@ -61,7 +67,8 @@
         <code>{{ error?.getDataExtractionValidationIssue()?.getEnd() }}</code>
       </div>
     </div>
-    <div class="error-extra" *ngIf="error?.getQuantityRangeValidationIssue()">
+    } @if (error?.getQuantityRangeValidationIssue()) {
+    <div class="error-extra">
       <div>
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.MIN_VALUE' | translate }}
         <code>{{ error?.getQuantityRangeValidationIssue()?.getMinValue() }}</code>
@@ -71,9 +78,11 @@
         <code>{{ error?.getQuantityRangeValidationIssue()?.getMaxValue() }}</code>
       </div>
     </div>
+    }
 
     <!-- Profile Upgrade Details -->
-    <div *ngIf="profileUpgrade?.getProfileRemoved()">
+    @if (profileUpgrade?.getProfileRemoved()) {
+    <div>
       <span class="num-text-accent font-weight-medium">
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
       </span>
@@ -85,12 +94,11 @@
       >
       </span>
     </div>
-
-    <div *ngIf="profileUpgrade?.getProfileFieldChange() as change">
+    } @if (profileUpgrade?.getProfileFieldChange(); as change) {
+    <div>
       <span class="num-text-accent font-weight-medium">
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
       </span>
-
       <span
         [innerHTML]="
           'APPLAYOUT.HEADER.UPGRADE_LOG.MODAL.ITEM.UPGRADE_FIELDS'
@@ -103,8 +111,8 @@
       >
       </span>
     </div>
-
-    <div *ngIf="profileUpgrade?.getProfileFieldRemoved()">
+    } @if (profileUpgrade?.getProfileFieldRemoved()) {
+    <div>
       <span class="num-text-accent font-weight-medium">
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
       </span>
@@ -119,8 +127,8 @@
       >
       </span>
     </div>
-
-    <div *ngIf="profileUpgrade?.getProfileFilterChange()">
+    } @if (profileUpgrade?.getProfileFilterChange()) {
+    <div>
       <span class="num-text-accent font-weight-medium">
         {{ 'APPLAYOUT.HEADER.ERROR_LOG.MODAL.ITEM.DETAILS' | translate }}
       </span>
@@ -128,5 +136,6 @@
         {{ 'APPLAYOUT.HEADER.UPGRADE_LOG.MODAL.ITEM.UPGRADE_FILTER' | translate }}
       </span>
     </div>
+    }
   </div>
 </div>

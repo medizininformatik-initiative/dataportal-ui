@@ -10,6 +10,9 @@
 }
 
 .criteria-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   position: relative;
 }
 
@@ -21,6 +24,9 @@
 }
 
 .no-selected-criteria {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 200px;
   border: 1px dotted var(--color-accent, #5a79af);
@@ -31,7 +37,7 @@
 }
 
 .solid-box {
-  width: 20%;
+  width: 100%;
   height: 20%;
   background-color: var(--color-accent-bg, rgba(90, 121, 175, 0.2));
   border-radius: var(--border-radius-card);
@@ -41,19 +47,33 @@
 }
 
 .dashed-box {
-  width: 20%;
+  width: 80%;
   height: 20%;
   border: 1px dashed var(--color-accent, #5a79af);
   border-radius: var(--border-radius-card);
   position: absolute;
   top: 50%;
-  left: 23%;
+  left: 76%;
   z-index: 2;
 }
 
 .wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
   height: 100%;
   width: 100%;
+}
+
+.wrapper-solid-dashed-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 30%;
+  height: 100%;
 }
 
 .text-wrapper {

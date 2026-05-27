@@ -1,6 +1,6 @@
-import { AbstractDownloadService } from './AbstractDownload.service';
-import { AboutInfoBuilderService } from '../AboutInfo/AboutInfoBuilder.service';
-import { Injectable } from '@angular/core';
+import { AbstractDownloadService } from './AbstractDownload.service'
+import { AboutInfoBuilderService } from '../AboutInfo/AboutInfoBuilder.service'
+import { Injectable, inject } from '@angular/core'
 
 /**
  * Service for downloading about information as a JSON file.
@@ -10,12 +10,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DownloadAboutInfoService extends AbstractDownloadService {
-  private static readonly FILE_PREFIX = 'about-info';
-  private static readonly LOCALE_FORMAT = 'iso';
-  private static readonly FILE_EXTENSION = '.json';
+  private readonly aboutInfoBuilder = inject(AboutInfoBuilderService)
 
-  constructor(private readonly aboutInfoBuilder: AboutInfoBuilderService) {
-    super();
+  private static readonly FILE_PREFIX = 'about-info'
+  private static readonly LOCALE_FORMAT = 'iso'
+  private static readonly FILE_EXTENSION = '.json'
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
+    super()
   }
 
   /**
@@ -23,10 +28,10 @@ export class DownloadAboutInfoService extends AbstractDownloadService {
    * @param filename - Optional custom filename (without extension)
    */
   public download(filename?: string): void {
-    const aboutInfo = this.aboutInfoBuilder.buildAboutInfo();
-    const finalFilename = this.fileName(filename);
-    const blob = this.createJsonBlob(aboutInfo);
-    this.triggerDownload(blob, `${finalFilename}${DownloadAboutInfoService.FILE_EXTENSION}`);
+    const aboutInfo = this.aboutInfoBuilder.buildAboutInfo()
+    const finalFilename = this.fileName(filename)
+    const blob = this.createJsonBlob(aboutInfo)
+    this.triggerDownload(blob, `${finalFilename}${DownloadAboutInfoService.FILE_EXTENSION}`)
   }
 
   private fileName(filename?: string): string {
@@ -34,6 +39,6 @@ export class DownloadAboutInfoService extends AbstractDownloadService {
       filename,
       DownloadAboutInfoService.FILE_PREFIX,
       DownloadAboutInfoService.LOCALE_FORMAT
-    );
+    )
   }
 }

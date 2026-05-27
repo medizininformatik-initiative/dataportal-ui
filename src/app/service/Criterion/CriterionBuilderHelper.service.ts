@@ -1,50 +1,53 @@
-import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData';
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { AttributeFilterFactoryService } from './AttributeFilterFactory.service';
-import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
-import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder';
-import { CriterionMetadataService } from './CriterionMetadata.service';
-import { Injectable } from '@angular/core';
-import { UiProfileProviderService } from 'src/app/service/Provider/UiProfileProvider.service';
-import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition';
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
-import { UiProfileData } from 'src/app/model/Interface/UiProfileData';
+import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
+import { AttributeFilterFactoryService } from './AttributeFilterFactory.service'
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
+import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder'
+import { CriterionMetadataService } from './CriterionMetadata.service'
+import { Injectable, inject } from '@angular/core'
+import { UiProfileProviderService } from 'src/app/service/Provider/UiProfileProvider.service'
+import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition'
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
+import { UiProfileData } from 'src/app/model/Interface/UiProfileData'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionBuilderHelperService {
-  constructor(
-    private criterionMetadataService: CriterionMetadataService,
-    private uiProfileProviderService: UiProfileProviderService,
-    private attributeFilterFactory: AttributeFilterFactoryService
-  ) {}
+  private criterionMetadataService = inject(CriterionMetadataService)
+  private uiProfileProviderService = inject(UiProfileProviderService)
+  private attributeFilterFactory = inject(AttributeFilterFactoryService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public setBuilderWithCriteriaProfileData(profileData: CriteriaProfileData): CriterionBuilder {
-    const mandatoryFields = this.criterionMetadataService.createMandatoryFields(profileData);
-    const uiProfile = this.uiProfileProviderService.getOne(profileData.uiProfileId);
-    const builder = new CriterionBuilder(mandatoryFields);
-    const valueFilter = this.addValueFilters(uiProfile.valueDefinition);
-    const attributeFilter = this.addAttributeFilters(uiProfile.attributeDefinitions);
+    const mandatoryFields = this.criterionMetadataService.createMandatoryFields(profileData)
+    const uiProfile = this.uiProfileProviderService.getOne(profileData.uiProfileId)
+    const builder = new CriterionBuilder(mandatoryFields)
+    const valueFilter = this.addValueFilters(uiProfile.valueDefinition)
+    const attributeFilter = this.addAttributeFilters(uiProfile.attributeDefinitions)
 
     if (uiProfile.timeRestrictionAllowed) {
-      builder.withTimeRestriction(builder.buildEmptyTimeRestriction());
+      builder.withTimeRestriction(builder.buildEmptyTimeRestriction())
     }
-    builder.withValueFilters(valueFilter);
-    builder.withAttributeFilters(attributeFilter);
-    builder.withRequiredFilter(this.setIsRequiredFilterSet(uiProfile));
-    return builder;
+    builder.withValueFilters(valueFilter)
+    builder.withAttributeFilters(attributeFilter)
+    builder.withRequiredFilter(this.setIsRequiredFilterSet(uiProfile))
+    return builder
   }
 
   private setIsRequiredFilterSet(uiProfile: UiProfileData): boolean {
     if (uiProfile.attributeDefinitions.length > 0) {
       return !uiProfile.attributeDefinitions.some(
         (attributeDefinition: AttributeDefinitionData) => !attributeDefinition.optional
-      );
+      )
     } else if (uiProfile.valueDefinition) {
-      return uiProfile.valueDefinition.optional;
+      return uiProfile.valueDefinition.optional
     } else {
-      return true;
+      return true
     }
   }
 
@@ -61,7 +64,7 @@ export class CriterionBuilderHelperService {
     if (attributeDefinitions.length > 0) {
       return attributeDefinitions.map((attributeDefinition: AttributeDefinitionData) =>
         this.attributeFilterFactory.createAttributeFilter(attributeDefinition)
-      );
+      )
     }
   }
 
@@ -74,8 +77,8 @@ export class CriterionBuilderHelperService {
    */
   private addValueFilters(valueDefinition: ValueDefinitionData): ValueFilter[] | [] {
     if (valueDefinition) {
-      return [this.attributeFilterFactory.createValueFilter(valueDefinition)];
+      return [this.attributeFilterFactory.createValueFilter(valueDefinition)]
     }
-    return [];
+    return []
   }
 }

@@ -1,10 +1,8 @@
 <div class="container">
   <num-criterion-header [criterion]="criterion" class="header-container"> </num-criterion-header>
-  <num-filter-tabs
-    class="filter-tabs-container"
-    *ngIf="templates.length > 0"
-    [content]="templates"
-  ></num-filter-tabs>
+  @if (templates.length > 0) {
+  <num-filter-tabs class="filter-tabs-container" [content]="templates"></num-filter-tabs>
+  }
 
   <ng-template #timeRestriction>
     <num-edit-time-restriction
@@ -44,12 +42,10 @@
   </ng-template>
 
   <ng-template #reference>
-    <div
-      *ngFor="let attributeFilter of referenceFilter; trackBy: trackByAttributeCode"
-      class="background"
-    >
+    @for (attributeFilter of referenceFilter; track trackByAttributeCode($index, attributeFilter)) {
+    <div class="background">
+      @if (attributeFilter.getReference()) {
       <num-reference
-        *ngIf="attributeFilter.getReference()"
         [attributeCode]="attributeFilter.getAttributeCode()"
         [selectedReferenceCriterion]="resolveReferenceCriteria(attributeFilter)"
         [referenceFilterUri]="attributeFilter.getReference().getAllowedReferenceUri()"
@@ -57,30 +53,38 @@
         (changedSelectedReferences)="updateSelectedReferences(attributeFilter, $event)"
       >
       </num-reference>
+      }
     </div>
+    }
   </ng-template>
 
   <ng-template #quantityAttributeFilterTemplate>
-    <div *ngFor="let quantityFilter of quantityAttributeFilter" class="background">
+    @for (quantityFilter of quantityAttributeFilter; track quantityFilter) {
+    <div class="background">
+      @if (quantityFilter) {
       <num-quantity
-        *ngIf="quantityFilter"
         (quantityFilterChange)="updateQuantityAttributeFilter($event, quantityFilter)"
         [quantityFilter]="quantityFilter.getQuantity()"
         [display]="quantityFilter.getDisplay()"
         [attr.data-cy]="quantityFilter.getDisplay() | displayTranslation"
       ></num-quantity>
+      }
     </div>
+    }
   </ng-template>
 
   <ng-template #quantityValueFilterTemplate>
-    <div *ngFor="let quantityFilter of quantityValueFilter" class="background">
+    @for (quantityFilter of quantityValueFilter; track quantityFilter) {
+    <div class="background">
+      @if (quantityFilter) {
       <num-quantity
-        *ngIf="quantityFilter"
         (quantityFilterChange)="updateQuantityValueFilter($event)"
         [quantityFilter]="quantityFilter.getQuantity()"
         [display]="quantityFilter.getDisplay()"
         [attr.data-cy]="quantityFilter.getDisplay() | displayTranslation"
       ></num-quantity>
+      }
     </div>
+    }
   </ng-template>
 </div>

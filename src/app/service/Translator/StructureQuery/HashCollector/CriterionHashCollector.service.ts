@@ -1,18 +1,23 @@
-import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData';
-import { ContextData } from 'src/app/model/Interface/ContextData';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { HashService } from '../../../Hash.service';
-import { Injectable } from '@angular/core';
-import { ReferenceCriteriaData } from 'src/app/model/Interface/ReferenceCriteriaData';
-import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData';
+import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData'
+import { ContextData } from 'src/app/model/Interface/ContextData'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { HashService } from '../../../Hash.service'
+import { Injectable, inject } from '@angular/core'
+import { ReferenceCriteriaData } from 'src/app/model/Interface/ReferenceCriteriaData'
+import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionHashCollectorService {
-  constructor(private hashService: HashService) {}
+  private hashService = inject(HashService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Collects criterion hash from the main criterion
@@ -22,9 +27,9 @@ export class CriterionHashCollectorService {
   public collectHashesFromCriterion(
     structuredQueryCriterion: StructuredQueryCriterionData
   ): string {
-    const contextData = structuredQueryCriterion.context;
-    const termCodeData = structuredQueryCriterion.termCodes[0];
-    return this.createCriterionHash(contextData, termCodeData);
+    const contextData = structuredQueryCriterion.context
+    const termCodeData = structuredQueryCriterion.termCodes[0]
+    return this.createCriterionHash(contextData, termCodeData)
   }
 
   /**
@@ -35,12 +40,12 @@ export class CriterionHashCollectorService {
   public collectHashesFromReferenceFilters(attributeFilterData: AttributeFilterData[]): string[] {
     const referenceFilter = attributeFilterData.find(
       (attributeFilter: AttributeFilterData) => attributeFilter.type === FilterTypes.REFERENCE
-    );
+    )
 
     if (!referenceFilter) {
-      return [];
+      return []
     }
-    return this.createReferenceCriterionHash(referenceFilter.criteria);
+    return this.createReferenceCriterionHash(referenceFilter.criteria)
   }
 
   /**
@@ -51,7 +56,7 @@ export class CriterionHashCollectorService {
   private createReferenceCriterionHash(referenceCriteriaData: ReferenceCriteriaData[]): string[] {
     return referenceCriteriaData.map((reference: ReferenceCriteriaData) =>
       this.createCriterionHash(reference.context, reference.termCodes[0])
-    );
+    )
   }
 
   /**
@@ -61,8 +66,8 @@ export class CriterionHashCollectorService {
    * @returns Criterion hash string
    */
   private createCriterionHash(contextData: ContextData, termCodeData: TerminologyCodeData): string {
-    const context = TerminologyCode.fromJson(contextData);
-    const termCode = TerminologyCode.fromJson(termCodeData);
-    return this.hashService.createCriterionHash(context, termCode);
+    const context = TerminologyCode.fromJson(contextData)
+    const termCode = TerminologyCode.fromJson(termCodeData)
+    return this.hashService.createCriterionHash(context, termCode)
   }
 }

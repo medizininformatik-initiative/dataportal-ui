@@ -1,28 +1,31 @@
-<div class="container" *ngIf="savedQuery">
-  <div fxLayout="column" class="text-layout width-50">
+@if (savedQuery) {
+<div class="container saved-query-tile">
+  <div class="tile-col tile-main">
     <div class="label text-overflow">
       <span matTooltipPosition="below" [matTooltip]="savedQuery.label">
         {{ savedQuery.label }}
       </span>
     </div>
-    <div *ngIf="savedQuery.comment" class="comment text-overflow">
+    @if (savedQuery.comment) {
+    <div class="comment text-overflow">
       <span matTooltipPosition="below" [matTooltip]="savedQuery.comment">
         {{ savedQuery.comment }}
       </span>
     </div>
+    }
   </div>
-  <div class="width-10">
+  <div class="tile-col tile-date">
     {{ ('SAVED_QUERIES.CREATED_AT' | translate) + ' ' + (savedQuery.date | date : 'dd.MM.yyyy') }}
   </div>
-  <div class="width-20">
+  <div class="tile-col tile-patients">
     {{ 'SAVED_QUERIES.PATIENTS' | translate }} {{ savedQuery.totalNumberOfPatients }}
   </div>
-  <div>
+  <div class="tile-col tile-action">
     <num-button type="blue" (click)="onNavigate(savedQuery?.id)">
       {{ 'SAVED_QUERIES.LOAD' | translate }}
     </num-button>
   </div>
-  <div class="height-100" fxFlex="row" fxLayoutAlign="end start" fxFlex="4">
+  <div class="tile-col tile-close">
     <fa-icon
       class="pointer close-icon"
       icon="times"
@@ -31,3 +34,4 @@
     ></fa-icon>
   </div>
 </div>
+}

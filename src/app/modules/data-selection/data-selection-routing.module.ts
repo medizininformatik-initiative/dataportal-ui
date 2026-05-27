@@ -1,11 +1,9 @@
-import { DisplayDataSelectionComponent } from './components/editor/display/display.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SearchDataSelectionComponent } from './components/search/search.component';
-import { PathSegments } from 'src/app/app-paths';
-import { DataSelectionProfileResolverService } from 'src/app/service/Resolver/DataSelectionProfileResolver.servcie';
+import { Routes } from '@angular/router'
 
-const routes: Routes = [
+import { PathSegments } from 'src/app/app-paths'
+import { DataSelectionProfileResolverService } from 'src/app/service/Resolver/DataSelectionProfileResolver.servcie'
+
+export const DATA_SELECTION_ROUTES: Routes = [
   {
     path: '',
     redirectTo: PathSegments.search,
@@ -14,7 +12,8 @@ const routes: Routes = [
   },
   {
     path: PathSegments.search,
-    component: SearchDataSelectionComponent,
+    loadComponent: () =>
+      import('./components/search/search.component').then((m) => m.SearchDataSelectionComponent),
     resolve: {
       preLoadDataSelectionData: DataSelectionProfileResolverService,
     },
@@ -26,17 +25,14 @@ const routes: Routes = [
   },
   {
     path: PathSegments.editor,
-    component: DisplayDataSelectionComponent,
+    loadComponent: () =>
+      import('./components/editor/display/display.component').then(
+        (m) => m.DisplayDataSelectionComponent
+      ),
     data: {
       animation: 'Data_Selection_Editor',
       title: 'TAB_TITLE.DATA_SELECTION.EDITOR',
       breadcrumb: 'BREADCRUMB.DATA_SELECTION_EDITOR',
     },
   },
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class DataSelectionRoutingModule {}
+]

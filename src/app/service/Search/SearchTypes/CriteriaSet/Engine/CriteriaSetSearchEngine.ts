@@ -1,11 +1,11 @@
-import { AbstractKeyedSearchEngineService } from '../../../Abstract/Engine/AbstractKeyedSearchEngine.service';
-import { CriteriaSetResultMapperStrategy } from '../Mapper/CriteriaSetResultMapperStrategy';
-import { CriteriaSetSearchUrlStrategy } from '../Url/CriteriaSetSearchUrlStrategy';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
-import { SearchEngine } from '../../../SearchEngine';
+import { AbstractKeyedSearchEngineService } from '../../../Abstract/Engine/AbstractKeyedSearchEngine.service'
+import { CriteriaSetResultMapperStrategy } from '../Mapper/CriteriaSetResultMapperStrategy'
+import { CriteriaSetSearchUrlStrategy } from '../Url/CriteriaSetSearchUrlStrategy'
+import { Injectable, inject } from '@angular/core'
+import { Observable } from 'rxjs'
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry'
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList'
+import { SearchEngine } from '../../../SearchEngine'
 
 /**
  * Search engine service for criteria set searches with dataset filtering.
@@ -19,6 +19,13 @@ export class CriteriaSetSearchEngineService extends AbstractKeyedSearchEngineSer
   ReferenceCriteriaListEntry,
   ReferenceCriteriaResultList
 > {
+  protected searchEngine: SearchEngine<ReferenceCriteriaListEntry, ReferenceCriteriaResultList>
+  private searchResultProcessorService =
+    inject<SearchEngine<ReferenceCriteriaListEntry, ReferenceCriteriaResultList>>(SearchEngine)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
   /**
    * Creates an instance of CriteriaSetSearchEngineService.
    *
@@ -26,14 +33,12 @@ export class CriteriaSetSearchEngineService extends AbstractKeyedSearchEngineSer
    * @param searchResultProcessorService - Additional search engine for result processing
    * @protected
    */
-  constructor(
-    protected searchEngine: SearchEngine<ReferenceCriteriaListEntry, ReferenceCriteriaResultList>,
-    private searchResultProcessorService: SearchEngine<
-      ReferenceCriteriaListEntry,
-      ReferenceCriteriaResultList
-    >
-  ) {
-    super(searchEngine);
+  constructor() {
+    const searchEngine =
+      inject<SearchEngine<ReferenceCriteriaListEntry, ReferenceCriteriaResultList>>(SearchEngine)
+
+    super(searchEngine)
+    this.searchEngine = searchEngine
   }
 
   /**
@@ -49,9 +54,9 @@ export class CriteriaSetSearchEngineService extends AbstractKeyedSearchEngineSer
     page: number = 0,
     criteriaSetUrls: string[]
   ): Observable<ReferenceCriteriaResultList> {
-    const resultMapper = this.getMapping();
-    const url = this.createUrl(searchText, page, criteriaSetUrls);
-    return this.searchResultProcessorService.fetchAndMapSearchResults(url, resultMapper);
+    const resultMapper = this.getMapping()
+    const url = this.createUrl(searchText, page, criteriaSetUrls)
+    return this.searchResultProcessorService.fetchAndMapSearchResults(url, resultMapper)
   }
 
   /**
@@ -64,7 +69,7 @@ export class CriteriaSetSearchEngineService extends AbstractKeyedSearchEngineSer
    * @returns The constructed search URL as a string
    */
   protected createUrl(searchText: string, page: number = 0, criteriaSetUrls: string[]): string {
-    return new CriteriaSetSearchUrlStrategy(searchText, criteriaSetUrls).getSearchUrl(page);
+    return new CriteriaSetSearchUrlStrategy(searchText, criteriaSetUrls).getSearchUrl(page)
   }
 
   /**
@@ -74,6 +79,6 @@ export class CriteriaSetSearchEngineService extends AbstractKeyedSearchEngineSer
    * @returns An instance of CriteriaSetResultMapperStrategy for result mapping
    */
   protected getMapping(): CriteriaSetResultMapperStrategy {
-    return new CriteriaSetResultMapperStrategy();
+    return new CriteriaSetResultMapperStrategy()
   }
 }

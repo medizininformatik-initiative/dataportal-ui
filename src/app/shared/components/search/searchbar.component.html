@@ -1,14 +1,14 @@
-<div fxLayout="column">
-  <div fxLayout="row" fxLayoutAlign="start center" class="width-100 form-design">
+<div class="searchbar-container">
+  <div class="searchbar-row form-design">
     <fa-icon class="icon-design" [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
     <input
       placeholder="{{ label | translate }}"
       [value]="inputValue"
       (input)="onInput($event)"
-      class="width-100 input-design"
+      class="input-design"
     />
   </div>
-  <span [style.visibility]="showWarning ? 'visible' : 'hidden'" class="search-warning">
+  <span [class.visible]="showWarning" class="search-warning">
     {{ 'SHARED_COMPONENTS.SEARCH.MIN_LENGTH' | translate }}
   </span>
 </div>

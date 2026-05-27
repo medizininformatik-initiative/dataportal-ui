@@ -1,10 +1,10 @@
-import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch';
-import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
-import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
-import { CodeableConceptSearchPaginationService } from './Pagination/CodeableConceptSearchPagination.service';
-import { CodeableConceptSearchResultProviderService } from './Result/CodeableConceptSearchResultProvider.service';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch'
+import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
+import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
+import { CodeableConceptSearchPaginationService } from './Pagination/CodeableConceptSearchPagination.service'
+import { CodeableConceptSearchResultProviderService } from './Result/CodeableConceptSearchResultProvider.service'
+import { Injectable, inject } from '@angular/core'
+import { Observable } from 'rxjs'
 
 /**
  * Service for performing codeable concept searches with value set filtering.
@@ -18,17 +18,21 @@ export class CodeableConceptSearchService extends AbstractKeyedSearch<
   CodeableConceptResultListEntry,
   CodeableConceptResultList
 > {
+  private paginationService = inject(CodeableConceptSearchPaginationService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
   /**
    * Creates an instance of CodeableConceptSearchService.
    *
    * @param resultProvider - The result provider for managing codeable concept search results
    * @param paginationService - The pagination service for handling paginated searches
    */
-  constructor(
-    resultProvider: CodeableConceptSearchResultProviderService,
-    private paginationService: CodeableConceptSearchPaginationService
-  ) {
-    super(resultProvider);
+  constructor() {
+    const resultProvider = inject(CodeableConceptSearchResultProviderService)
+
+    super(resultProvider)
   }
 
   /**
@@ -39,7 +43,7 @@ export class CodeableConceptSearchService extends AbstractKeyedSearch<
    * @returns An Observable that emits the first page of codeable concept search results
    */
   public search(searchText: string, valueSetUrls: string[]): Observable<CodeableConceptResultList> {
-    return this.paginationService.searchFirstPageOfCodeableConcept(searchText, valueSetUrls);
+    return this.paginationService.searchFirstPageOfCodeableConcept(searchText, valueSetUrls)
   }
 
   /**
@@ -53,7 +57,7 @@ export class CodeableConceptSearchService extends AbstractKeyedSearch<
     searchText: string,
     valueSetUrls: string[]
   ): Observable<CodeableConceptResultList> {
-    return this.paginationService.loadNextPageOfCodeableConceptResults(searchText, valueSetUrls);
+    return this.paginationService.loadNextPageOfCodeableConceptResults(searchText, valueSetUrls)
   }
 
   /**

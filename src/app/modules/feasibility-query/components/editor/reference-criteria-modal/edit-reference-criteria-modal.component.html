@@ -3,20 +3,22 @@
   (saveButtonSelected)="saveReferenceCriterion()"
   (cancelButtonSelected)="closeDialog()"
 >
-  <div *ngFor="let attributeFilter of referenceFilter" class="background">
+  @for (attributeFilter of referenceFilter; track attributeFilter) {
+  <div class="background">
+    @if (attributeFilter.getReference()) {
     <num-reference
-      *ngIf="attributeFilter.getReference()"
       [attributeCode]="attributeFilter.getAttributeCode()"
       [referenceFilterUri]="attributeFilter.getReference().getAllowedReferenceUri()"
       (selectedReferenceIds)="setSelectedReferenceIds($event, attributeFilter)"
     >
     </num-reference>
+    }
   </div>
-  <div *ngFor="let valueFilter of criterion.getValueFilters()" fxLayout="column" class="background">
-    <num-reference
-      *ngIf="valueFilter.getReference()"
-      [referenceFilter]="valueFilter.getReference()"
-    >
-    </num-reference>
+  } @for (valueFilter of criterion.getValueFilters(); track valueFilter) {
+  <div class="background">
+    @if (valueFilter.getReference()) {
+    <num-reference [referenceFilter]="valueFilter.getReference()"> </num-reference>
+    }
   </div>
+  }
 </num-modal-window>

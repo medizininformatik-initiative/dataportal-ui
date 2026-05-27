@@ -1,4 +1,7 @@
 .container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   width: 448px;
   min-height: 136px;
   background-color: var(--color-accent-bg);
@@ -26,12 +29,24 @@
 }
 
 .info-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
   height: 100%;
   width: 100%;
-  margin-bottom: 8px; /* 2 × 8px */
+  margin-bottom: 8px;
+}
+
+.handle-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
 }
 
 .menu-icon {
+  align-self: flex-end;
   color: var(--color-accent);
   margin-left: 8px;
   margin-right: 8px;
@@ -65,6 +80,13 @@
 .content {
   width: 100%;
   cursor: grab;
+}
+
+.warning-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
 .img-layout {

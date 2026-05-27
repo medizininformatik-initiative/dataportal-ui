@@ -1,11 +1,11 @@
-import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
-import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
-import { FilterProvider } from './SearchFilterProvider.service';
-import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
+import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
+import { FilterProvider } from './SearchFilterProvider.service'
+import { Injectable, inject } from '@angular/core'
+import { map } from 'rxjs/operators'
+import { Observable } from 'rxjs'
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
 
 /**
  * Service for managing and filtering bulk criteria search filters.
@@ -16,10 +16,15 @@ import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearch
   providedIn: 'root',
 })
 export class BulkCriteriaSearchFilterService {
+  private searchFilterProvider = inject(FilterProvider)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
   /**
    * @param searchFilterProvider - Service for providing criteria search filters
    */
-  constructor(private searchFilterProvider: FilterProvider) {}
+  constructor() {}
 
   /**
    * Retrieves and processes criteria search filters.
@@ -32,7 +37,7 @@ export class BulkCriteriaSearchFilterService {
       map((filters: CriteriaSearchFilter[]) => this.keepContextAndTerminologyFilters(filters)),
       map((filters: CriteriaSearchFilter[]) => this.removePatientFromFilterValues(filters)),
       map((filters: CriteriaSearchFilter[]) => this.convertFiltersToUiModels(filters))
-    );
+    )
   }
 
   /**
@@ -47,7 +52,7 @@ export class BulkCriteriaSearchFilterService {
       (filter) =>
         filter.getName() === ElasticSearchFilterTypes.CONTEXT ||
         filter.getName() === ElasticSearchFilterTypes.TERMINOLOGY
-    );
+    )
   }
 
   /**
@@ -57,10 +62,10 @@ export class BulkCriteriaSearchFilterService {
    */
   private removePatientFromFilterValues(filters: CriteriaSearchFilter[]): CriteriaSearchFilter[] {
     return filters.map((filter) => {
-      const updatedValues = filter.getValues().filter((value) => value.getlabel() !== 'Patient');
-      filter.setValues(updatedValues);
-      return filter;
-    });
+      const updatedValues = filter.getValues().filter((value) => value.getlabel() !== 'Patient')
+      filter.setValues(updatedValues)
+      return filter
+    })
   }
 
   /**
@@ -69,6 +74,6 @@ export class BulkCriteriaSearchFilterService {
    * @returns Array of SearchFilter objects for UI consumption
    */
   private convertFiltersToUiModels(filters: CriteriaSearchFilter[]): SearchFilter[] {
-    return filters.map((filter) => CriteriaSearchFilterAdapter.convertToFilterValues(filter));
+    return filters.map((filter) => CriteriaSearchFilterAdapter.convertToFilterValues(filter))
   }
 }

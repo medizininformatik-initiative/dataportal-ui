@@ -1,7 +1,7 @@
-import { CriteriaSearchResultProviderService } from '../SearchTypes/Criteria/Result/CriteriaSearchResultProvider.service';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
+import { CriteriaSearchResultProviderService } from '../SearchTypes/Criteria/Result/CriteriaSearchResultProvider.service'
+import { Injectable, inject } from '@angular/core'
+import { Observable } from 'rxjs'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +10,14 @@ import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResu
  * @deprecated
  */
 export class SearchResultProvider {
-  constructor(private criteriaResultProvider: CriteriaSearchResultProviderService) {}
+  private criteriaResultProvider = inject(CriteriaSearchResultProviderService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public getCriteriaSearchResults(): Observable<CriteriaResultList | null> {
-    return this.criteriaResultProvider.getSearchResults();
+    return this.criteriaResultProvider.getSearchResults()
   }
 }

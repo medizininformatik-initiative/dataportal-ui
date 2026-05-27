@@ -1,5 +1,5 @@
 <div class="toggle-container">
   <span [ngClass]="{ 'selected-label': !isOrSelected, 'unselected-label': isOrSelected }">and</span>
-  <num-switch (toggle)="test($event)"></num-switch>
+  <num-switch (toggled)="test($event)"></num-switch>
   <span [ngClass]="{ 'selected-label': isOrSelected, 'unselected-label': !isOrSelected }">or</span>
 </div>

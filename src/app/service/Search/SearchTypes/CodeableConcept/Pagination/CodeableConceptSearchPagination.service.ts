@@ -1,9 +1,9 @@
-import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
-import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
-import { CodeableConceptSearchMediatorService } from '../Mediator/CodeableConceptSearchMediator.service';
-import { Injectable } from '@angular/core';
-import { KeyedSearchPagination } from '../../../Abstract/Pagination/AbstractKeyedSearchPagination';
-import { Observable } from 'rxjs';
+import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
+import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
+import { CodeableConceptSearchMediatorService } from '../Mediator/CodeableConceptSearchMediator.service'
+import { Injectable, inject } from '@angular/core'
+import { KeyedSearchPagination } from '../../../Abstract/Pagination/AbstractKeyedSearchPagination'
+import { Observable } from 'rxjs'
 
 /**
  * Pagination service for CodeableConcept searches with support for multiple concept filters.
@@ -19,8 +19,13 @@ export class CodeableConceptSearchPaginationService extends KeyedSearchPaginatio
   CodeableConceptResultListEntry,
   CodeableConceptResultList
 > {
-  constructor(mediatorService: CodeableConceptSearchMediatorService) {
-    super(mediatorService);
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
+    const mediatorService = inject(CodeableConceptSearchMediatorService)
+
+    super(mediatorService)
   }
 
   /**
@@ -33,7 +38,7 @@ export class CodeableConceptSearchPaginationService extends KeyedSearchPaginatio
     searchTerm: string,
     dataSetUrl: string[]
   ): Observable<CodeableConceptResultList> {
-    return this.loadNextPage(searchTerm, dataSetUrl);
+    return this.loadNextPage(searchTerm, dataSetUrl)
   }
 
   /**
@@ -47,7 +52,7 @@ export class CodeableConceptSearchPaginationService extends KeyedSearchPaginatio
     searchTerm: string,
     dataSetUrl: string[]
   ): Observable<CodeableConceptResultList> {
-    return this.searchFirstPage(searchTerm, dataSetUrl);
+    return this.searchFirstPage(searchTerm, dataSetUrl)
   }
 
   /**
@@ -57,6 +62,6 @@ export class CodeableConceptSearchPaginationService extends KeyedSearchPaginatio
    * @returns Observable containing the next page of search results.
    */
   public resetPaginationForConceptFilter(dataSetUrl: string[]): void {
-    this.resetPaginationForKey(dataSetUrl);
+    this.resetPaginationForKey(dataSetUrl)
   }
 }

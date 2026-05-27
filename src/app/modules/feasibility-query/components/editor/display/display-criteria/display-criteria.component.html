@@ -1,46 +1,46 @@
-<div fxLayout="column" fxLayoutAlign="start" class="criteria-container">
-  <div *ngIf="!isEditable" class="lock-div"></div>
+<div class="criteria-container">
+  @if (!isEditable) {
+  <div class="lock-div"></div>
+  }
   <ng-container #outlet [ngTemplateOutlet]="content"> </ng-container>
   <ng-template #content>
-    <div
-      *ngFor="
-        let criterionInnerArray of criteriaArray$ | async;
-        let lastOuter = last;
-        let i = index
-      "
-    >
-      <div *ngFor="let criterion of criterionInnerArray; let lastInner = last; let j = index">
+    @for ( criterionInnerArray of criteriaArray$ | async; track criterionInnerArray; let lastOuter =
+    $last; let i = $index) {
+    <div>
+      @for (criterion of criterionInnerArray; track criterion; let lastInner = $last; let j =
+      $index) {
+      <div>
         <num-criteria-box
           [criterion]="criterionProvider.getOne(criterion)"
           [isEditable]="isEditable"
         ></num-criteria-box>
         <ng-container>
+          @if (!lastInner) {
           <num-bool-logic-switch
             [position]="'inner'"
             [label]="getInnerLabelKey()"
             (switched)="splitInnerArray(i, j)"
-            *ngIf="!lastInner"
           ></num-bool-logic-switch>
+          }
         </ng-container>
       </div>
+      }
       <ng-container>
+        @if (!lastOuter) {
         <num-bool-logic-switch
           [position]="'outer'"
           [label]="getOuterLabelKey()"
           (switched)="joinInnerArrays(i)"
-          *ngIf="!lastOuter"
         ></num-bool-logic-switch>
+        }
       </ng-container>
     </div>
+    }
   </ng-template>
-  <div
-    *ngIf="(criteriaArray$ | async).length === 0 && isEditable"
-    fxLayout="row"
-    fxLayoutAlign="center center"
-    class="no-selected-criteria"
-  >
-    <div fxLayout="row" fxLayoutAlign="space-around center" class="wrapper">
-      <div fxLayout="row" fxLayoutAlign="center center" class="wrapper-solid-dashed-box">
+  @if ((criteriaArray$ | async).length === 0 && isEditable) {
+  <div class="no-selected-criteria">
+    <div class="wrapper">
+      <div class="wrapper-solid-dashed-box">
         <div class="solid-box">
           <fa-icon class="icon drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
         </div>
@@ -49,4 +49,5 @@
       <div class="text-wrapper">{{ 'FEASIBILITY.EDITOR.DRAG_AND_DROP' | translate }}</div>
     </div>
   </div>
+  }
 </div>

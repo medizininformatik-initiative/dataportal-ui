@@ -1,15 +1,15 @@
-import { AbstractAttributeFilters } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters';
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction';
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { CloneAttributeFilter } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/CloneAttributeFilter';
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { EditCriterionService } from 'src/app/service/Criterion/Edit/EditCriterion.service';
-import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
-import { Subscription } from 'rxjs';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter';
+import { AbstractAttributeFilters } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters'
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
+import { CloneAttributeFilter } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/CloneAttributeFilter'
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { EditCriterionService } from 'src/app/service/Criterion/Edit/EditCriterion.service'
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
+import { Subscription } from 'rxjs'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -22,194 +22,217 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
-} from '@angular/core';
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+  inject,
+} from '@angular/core'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { CriterionHeaderComponent } from './header/criterion-header.component'
+import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
+import { EditTimeRestrictionComponent } from '../../../../feasibility-query/components/editor/criterion-modal/time-restriction/edit-time-restriction.component'
+import { ConceptComponent } from '../../../../feasibility-query/components/editor/criterion-modal/concept/concept.component'
+import { TermcodeComponent } from '../../../../feasibility-query/components/editor/criterion-modal/termCode/termcode.component'
+import { ReferenceComponent } from '../../../../feasibility-query/components/editor/reference-criteria-modal/reference/reference.component'
+import { QuantityComponent } from '../../../../feasibility-query/components/editor/criterion-modal/quantity/quantity.component'
+import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTranslationPipe'
 
 @Component({
   selector: 'num-criterion',
   templateUrl: './criterion.component.html',
   styleUrls: ['./criterion.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CriterionHeaderComponent,
+    FilterTabsComponent,
+    EditTimeRestrictionComponent,
+    ConceptComponent,
+    TermcodeComponent,
+    ReferenceComponent,
+    QuantityComponent,
+    DisplayTranslationPipe,
+  ],
 })
 export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+  private criterionEditService = inject(EditCriterionService)
+  private cdr = inject(ChangeDetectorRef)
+  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+
   @Input()
-  criterion!: Criterion;
+  criterion!: Criterion
 
-  attributeFilters: AbstractAttributeFilters[] = [];
+  attributeFilters: AbstractAttributeFilters[] = []
 
-  referenceFilter: AbstractAttributeFilters[] = [];
+  referenceFilter: AbstractAttributeFilters[] = []
 
-  conceptValueFilter: ValueFilter[] = [];
+  conceptValueFilter: ValueFilter[] = []
 
-  conceptAttributeFilter: AttributeFilter[] = [];
+  conceptAttributeFilter: AttributeFilter[] = []
 
-  quantityValueFilter: ValueFilter[] = [];
+  quantityValueFilter: ValueFilter[] = []
 
-  quantityAttributeFilter: AttributeFilter[] = [];
+  quantityAttributeFilter: AttributeFilter[] = []
 
   @ViewChild('timeRestriction', { static: false, read: TemplateRef })
-  timeRestrictionTemplate: TemplateRef<any> | undefined = undefined;
+  timeRestrictionTemplate: TemplateRef<any> | undefined = undefined
 
   @ViewChild('conceptAttributeFilterTemplate', { static: false, read: TemplateRef })
-  conceptAttributeFiltersTemplate: TemplateRef<any> | undefined = undefined;
+  conceptAttributeFiltersTemplate: TemplateRef<any> | undefined = undefined
 
   @ViewChild('conceptValueFiltersTemplate', { static: false, read: TemplateRef })
-  conceptValueFiltersTemplate: TemplateRef<any> | undefined = undefined;
+  conceptValueFiltersTemplate: TemplateRef<any> | undefined = undefined
 
   @ViewChild('termCodes', { static: false, read: TemplateRef })
-  termCodesTemplate: TemplateRef<any> | undefined = undefined;
+  termCodesTemplate: TemplateRef<any> | undefined = undefined
 
   @ViewChild('reference', { static: false, read: TemplateRef })
-  referenceTemplate: TemplateRef<any> | undefined = undefined;
+  referenceTemplate: TemplateRef<any> | undefined = undefined
 
   @ViewChild('quantityAttributeFilterTemplate', { static: false, read: TemplateRef })
-  quantityAttributeFilterTemplate: TemplateRef<any> | undefined = undefined;
+  quantityAttributeFilterTemplate: TemplateRef<any> | undefined = undefined
 
   @ViewChild('quantityValueFilterTemplate', { static: false, read: TemplateRef })
-  quantityValueFilterTemplate: TemplateRef<any> | undefined = undefined;
+  quantityValueFilterTemplate: TemplateRef<any> | undefined = undefined
 
-  templates: any[] = [];
+  templates: any[] = []
 
-  referenceSubscription: Subscription | undefined = undefined;
+  referenceSubscription: Subscription | undefined = undefined
 
-  constructor(
-    private criterionEditService: EditCriterionService,
-    private cdr: ChangeDetectorRef,
-    private referenceCriterionProvider: ReferenceCriterionProviderService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
-    this.initializeFromCriterion();
+    this.initializeFromCriterion()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.initializeFromCriterion();
+    this.initializeFromCriterion()
   }
 
   ngOnDestroy(): void {
-    this.referenceSubscription?.unsubscribe();
+    this.referenceSubscription?.unsubscribe()
   }
 
   private initializeFromCriterion(): void {
-    this.criterionEditService.initialize(this.criterion);
-    this.attributeFilters = this.criterion.getConceptAttributeFilters();
-    this.referenceFilter = this.criterion.getReferenceAttributeFilters();
-    this.quantityAttributeFilter = this.criterion.getQuantityAttributeFilters();
-    this.quantityValueFilter = this.criterion.getQuantityValueFilters();
+    this.criterionEditService.initialize(this.criterion)
+    this.attributeFilters = this.criterion.getConceptAttributeFilters()
+    this.referenceFilter = this.criterion.getReferenceAttributeFilters()
+    this.quantityAttributeFilter = this.criterion.getQuantityAttributeFilters()
+    this.quantityValueFilter = this.criterion.getQuantityValueFilters()
     this.conceptAttributeFilter = CloneAttributeFilter.deepCopyAttributeFilters(
       this.criterion.getConceptAttributeFilters()
-    );
-    this.conceptValueFilter = this.criterion.getConceptValueFilters();
+    )
+    this.conceptValueFilter = this.criterion.getConceptValueFilters()
   }
 
   ngAfterViewInit() {
-    this.templates = [];
-    this.buildTemplates();
-    this.cdr.detectChanges();
+    this.templates = []
+    this.buildTemplates()
+    this.cdr.detectChanges()
   }
 
   private buildTemplates(): void {
-    this.setTermCodesTemplate();
-    this.setConceptAttributeFilterTemplate();
-    this.setConceptValueFilterTemplate();
-    this.setQuantityAttributeFilterTemplate();
-    this.setQuantityValueFilterTemplate();
-    this.setReferenceTemplate();
-    this.setTimeRestrictionTemplate();
+    this.setTermCodesTemplate()
+    this.setConceptAttributeFilterTemplate()
+    this.setConceptValueFilterTemplate()
+    this.setQuantityAttributeFilterTemplate()
+    this.setQuantityValueFilterTemplate()
+    this.setReferenceTemplate()
+    this.setTimeRestrictionTemplate()
   }
 
   private setTimeRestrictionTemplate(): void {
     if (this.criterion.getTimeRestriction()) {
-      this.templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' });
+      this.templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' })
     }
   }
 
   private setTermCodesTemplate(): void {
     if (this.criterion.getTermCodes().length > 1) {
-      this.templates.push({ template: this.termCodesTemplate, name: 'TERMCODE' });
+      this.templates.push({ template: this.termCodesTemplate, name: 'TERMCODE' })
     }
   }
 
   private setReferenceTemplate(): void {
     if (this.referenceFilter.length > 0) {
-      this.templates.push({ template: this.referenceTemplate, name: 'REFERENCE' });
+      this.templates.push({ template: this.referenceTemplate, name: 'REFERENCE' })
     }
   }
 
   private setQuantityValueFilterTemplate(): void {
     if (this.quantityValueFilter.length > 0) {
-      const display = this.quantityValueFilter[0].getDisplay();
-      this.templates.push({ template: this.quantityValueFilterTemplate, display });
+      const display = this.quantityValueFilter[0].getDisplay()
+      this.templates.push({ template: this.quantityValueFilterTemplate, display })
     }
   }
 
   private setQuantityAttributeFilterTemplate(): void {
     if (this.quantityAttributeFilter.length > 0) {
-      const display = this.quantityAttributeFilter[0].getDisplay();
-      this.templates.push({ template: this.quantityAttributeFilterTemplate, display });
+      const display = this.quantityAttributeFilter[0].getDisplay()
+      this.templates.push({ template: this.quantityAttributeFilterTemplate, display })
     }
   }
 
   private setConceptValueFilterTemplate(): void {
     if (this.conceptValueFilter.length > 0) {
-      const display = this.conceptValueFilter[0].getDisplay();
-      this.templates.push({ template: this.conceptValueFiltersTemplate, display });
+      const display = this.conceptValueFilter[0].getDisplay()
+      this.templates.push({ template: this.conceptValueFiltersTemplate, display })
     }
   }
 
   private setConceptAttributeFilterTemplate(): void {
     this.conceptAttributeFilter.forEach((filter, index) => {
-      const display = filter.getDisplay();
+      const display = filter.getDisplay()
       this.templates.push({
         template: this.conceptAttributeFiltersTemplate,
         display,
         context: { $implicit: index },
-      });
-    });
+      })
+    })
   }
 
   public updateConceptAttributeFilter(
     conceptFilter: ConceptFilter,
     attributeFilter: AttributeFilter
   ): void {
-    this.criterionEditService.updateConceptAttributeFilter(conceptFilter, attributeFilter);
+    this.criterionEditService.updateConceptAttributeFilter(conceptFilter, attributeFilter)
   }
 
   public updateQuantityAttributeFilter(
     quantityFilter: AbstractQuantityFilter,
     attributeFilter: AttributeFilter
   ): void {
-    this.criterionEditService.updateQuantityAttributeFilter(quantityFilter, attributeFilter);
+    this.criterionEditService.updateQuantityAttributeFilter(quantityFilter, attributeFilter)
   }
 
   public updateTimeRestriction(timeRestriction: AbstractTimeRestriction): void {
-    this.criterionEditService.updateTimeRestriction(timeRestriction);
+    this.criterionEditService.updateTimeRestriction(timeRestriction)
   }
 
   public updateTermCodes(termCodes: TerminologyCode[]): void {
-    this.criterionEditService.updateTermCodes(termCodes);
+    this.criterionEditService.updateTermCodes(termCodes)
   }
 
   public updateReferenceFilter(id: string, attributeFilter: AttributeFilter): void {
-    this.referenceSubscription?.unsubscribe();
+    this.referenceSubscription?.unsubscribe()
     this.referenceSubscription = this.criterionEditService
       .addReferenceCriteria(id, attributeFilter)
-      .subscribe();
+      .subscribe()
   }
 
   public updateQuantityValueFilter(quantityFilter: AbstractQuantityFilter): void {
-    this.criterionEditService.updateQuantityValueFilter(quantityFilter);
+    this.criterionEditService.updateQuantityValueFilter(quantityFilter)
   }
 
   public updateConceptValueFilter(conceptFilter: ConceptFilter): void {
-    this.criterionEditService.updateConceptValueFilter(conceptFilter);
+    this.criterionEditService.updateConceptValueFilter(conceptFilter)
   }
 
   public updateSelectedReferences(
     attributeFilter: AttributeFilter,
     updatedReferences: ReferenceCriterion[]
   ): void {
-    this.criterionEditService.updateSelectedReferences(attributeFilter, updatedReferences);
+    this.criterionEditService.updateSelectedReferences(attributeFilter, updatedReferences)
   }
 
   public resolveReferenceCriteria(attributeFilter: AttributeFilter): ReferenceCriterion[] {
@@ -218,15 +241,15 @@ export class CriterionComponent implements OnChanges, OnInit, AfterViewInit, OnD
       .getSelectedReferenceIds()
       .reduce((acc, id) => {
         try {
-          acc.push(this.referenceCriterionProvider.getOne(id));
+          acc.push(this.referenceCriterionProvider.getOne(id))
         } catch {
           // not yet in provider
         }
-        return acc;
-      }, [] as ReferenceCriterion[]);
+        return acc
+      }, [] as ReferenceCriterion[])
   }
 
   public trackByAttributeCode(_index: number, attributeFilter: AttributeFilter): string {
-    return attributeFilter.getAttributeCode()?.getCode() ?? String(_index);
+    return attributeFilter.getAttributeCode()?.getCode() ?? String(_index)
   }
 }

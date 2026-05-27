@@ -1,50 +1,45 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
+@use 'sass:map';
+
 @import './colors/accent-theme.palette.scss';
 @import './colors/primary-theme.palette.scss';
 @import 'src/styles/themes/colors/fdpg-accent-theme.palette';
 @import 'src/styles/themes/colors/fdpg-primary-theme.palette';
 @import './colors/additional-theme.palette.scss';
-@import './theme-palettes/mat-light-theme-background';
-@import './theme-palettes/mat-light-theme-foreground';
 @import './typography/typography.config';
 
-@include mat.core();
+// Material 2 palettes (Angular Material 18+)
+$num-portal-webapp-primary-fdpg: mat.m2-define-palette($num-fdpg-primary-palette);
 
-$num-portal-webapp-primary: mat.define-palette($num-primary-palette);
-$num-portal-webapp-accent: mat.define-palette($num-accent-palette);
-$num-portal-webapp-primary-fdpg: mat.define-palette($num-fdpg-primary-palette);
-$num-portal-webapp-accent-fdpg: mat.define-palette($num-fdpg-accent-palette);
-$num-portal-webapp-additional: mat.define-palette($num-additional-palette, warning);
+$num-portal-webapp-accent-fdpg: mat.m2-define-palette($num-fdpg-accent-palette);
 
-$mat-light-theme-fdpg-foreground: mat-light-theme-foreground(
-  $num-portal-webapp-primary-fdpg,
-  $num-portal-webapp-accent,
-  $num-portal-webapp-additional
-);
-$mat-light-theme-background: mat-light-theme-background(
-  $num-portal-webapp-primary,
-  $num-portal-webapp-accent,
-  $num-portal-webapp-additional
-);
-$mat-light-theme-fdpg-background: mat-light-theme-background(
-  $num-portal-webapp-primary-fdpg,
-  $num-portal-webapp-accent,
-  $num-portal-webapp-additional
-);
-@function num-theme-builder($theme) {
-  @if ($theme == 'fdpg') {
-    @return (
-      name: 'fdpg',
+$num-portal-webapp-additional: mat.m2-define-palette($num-additional-palette, warning);
+
+// Proper Angular Material M2 theme (satisfies Angular Material 18 theming API)
+$_fdpg-mat-theme: mat.m2-define-light-theme(
+  (
+    color: (
       primary: $num-portal-webapp-primary-fdpg,
       accent: $num-portal-webapp-accent-fdpg,
       warn: $num-portal-webapp-additional,
-      additional: $num-portal-webapp-additional,
-      is-dark: false,
-      foreground: $mat-light-theme-fdpg-foreground,
-      background: $mat-light-theme-fdpg-background,
-      num-typography: $num-typography
-    );
-  }
-}
+    ),
+    typography: $num-typography,
+    density: 0,
+  )
+);
 
-$num-portal-webapp-theme-fdpg: num-theme-builder('fdpg');
+// Extend the M2 theme with flat custom keys that the application's mixins
+// access via map-get($theme, key) for backward compatibility.
+$num-portal-webapp-theme-fdpg: map.merge(
+  $_fdpg-mat-theme,
+  (
+    primary: $num-portal-webapp-primary-fdpg,
+    accent: $num-portal-webapp-accent-fdpg,
+    warn: $num-portal-webapp-additional,
+    additional: $num-portal-webapp-additional,
+    name: 'fdpg',
+    num-typography: $num-typography,
+    // Expose M2 background map at the top level for the search-input mixin.
+    background: map.get($_fdpg-mat-theme, color, background),
+  )
+);

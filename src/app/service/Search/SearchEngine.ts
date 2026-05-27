@@ -1,12 +1,12 @@
-import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
-import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList';
-import { AbstractResultMapper } from './Abstract/Mapping/AbstractResultMapper';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
-import { FilterProvider } from './Filter/SearchFilterProvider.service';
-import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service';
-import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
+import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList'
+import { AbstractResultMapper } from './Abstract/Mapping/AbstractResultMapper'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
+import { FilterProvider } from './Filter/SearchFilterProvider.service'
+import { Injectable, inject } from '@angular/core'
+import { map, Observable } from 'rxjs'
+import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service'
+import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData'
 
 /**
  * Core search engine service for executing search operations and managing filters.
@@ -20,16 +20,19 @@ import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
   providedIn: 'root',
 })
 export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultList<C>> {
+  private terminologyApiService = inject(TerminologyApiService)
+  private filterProvider = inject(FilterProvider)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
   /**
    * Creates an instance of SearchEngine.
    *
    * @param terminologyApiService - Service for making API calls to the terminology service
    * @param filterProvider - Provider for managing search filters
    */
-  constructor(
-    private terminologyApiService: TerminologyApiService,
-    private filterProvider: FilterProvider
-  ) {}
+  constructor() {}
 
   /**
    * Fetches search results from the API and maps them using the provided mapper.
@@ -44,7 +47,7 @@ export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultL
   ): Observable<T> {
     return this.terminologyApiService
       .getSearchResults<L>(url)
-      .pipe(map((response) => mapper.mapResponseToResultList(response)));
+      .pipe(map((response) => mapper.mapResponseToResultList(response)))
   }
 
   /**
@@ -55,7 +58,7 @@ export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultL
   public getTerminologyFilter(): string {
     return this.filterProvider
       .getSelectedValuesOfType(ElasticSearchFilterTypes.TERMINOLOGY)
-      .join(',');
+      .join(',')
   }
 
   /**
@@ -64,7 +67,7 @@ export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultL
    * @returns Comma-separated string of selected context filter values
    */
   public getContextFilter(): string {
-    return this.filterProvider.getSelectedValuesOfType(ElasticSearchFilterTypes.CONTEXT).join(',');
+    return this.filterProvider.getSelectedValuesOfType(ElasticSearchFilterTypes.CONTEXT).join(',')
   }
 
   /**
@@ -75,7 +78,7 @@ export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultL
   public getAvailabilityFilter(): string {
     return this.filterProvider
       .getSelectedValuesOfType(ElasticSearchFilterTypes.AVAILABILITY)
-      .join(',');
+      .join(',')
   }
 
   /**
@@ -86,6 +89,6 @@ export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultL
   public getKdsModuleFilter(): string {
     return this.filterProvider
       .getSelectedValuesOfType(ElasticSearchFilterTypes.KDS_MODULE)
-      .join(',');
+      .join(',')
   }
 }

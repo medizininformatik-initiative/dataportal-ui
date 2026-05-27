@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
-import { MenuServiceCriterionFunctions } from '../Criterion/MenuServiceCriterionFunctions';
-import { RefrenceCriterionMenuFunctionsService } from './RefrenceCriterionMenuFunctions.service';
+import { Injectable, inject } from '@angular/core'
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
+import { MenuServiceCriterionFunctions } from '../Criterion/MenuServiceCriterionFunctions'
+import { RefrenceCriterionMenuFunctionsService } from './RefrenceCriterionMenuFunctions.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReferenceCriterionMenuItems {
-  constructor(private referenceCriterionMenuFunctions: RefrenceCriterionMenuFunctionsService) {}
+  private referenceCriterionMenuFunctions = inject(RefrenceCriterionMenuFunctionsService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * @todo Labels need to be redefined for translation jsons
@@ -34,6 +39,6 @@ export class ReferenceCriterionMenuItems {
         action: (id: string) =>
           this.referenceCriterionMenuFunctions.applyReferenceCriterionFilter(id),
       },
-    ];
+    ]
   }
 }
