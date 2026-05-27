@@ -1,6 +1,6 @@
-@if (items && items.length > 0) {
+@if (items() && items().length > 0) {
 <div class="selected-items-list">
-  @for (item of items; track item; let i = $index) {
+  @for (item of items(); track item; let i = $index) {
   <div class="item">
     <span class="item-display">{{ item.display | displayTranslation }}</span>
     <span>{{ item.code }}</span>
