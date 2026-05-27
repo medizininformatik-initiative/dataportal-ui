@@ -1,4 +1,4 @@
-@if (quantityFilter) {
+@if (quantityFilter()) {
 <div class="container">
   <num-section-name>
     {{ display() | displayTranslation }}
@@ -6,7 +6,7 @@
   <div class="filter-row">
     <!-- Comparator Select-->
     <num-quantity-comparision-select
-      [existingOption]="quantityFilter.getComparator()"
+      [existingOption]="quantityFilter().getComparator()"
       (selectedOption)="setSelectedQuantityFilterOption($event)"
     >
     </num-quantity-comparision-select>
@@ -34,11 +34,11 @@
     @if (!isQuantityNotSet) {
     <num-allowed-units
       [selectedUnit]="
-        quantityFilter.getSelectedUnit()
-          ? quantityFilter.getSelectedUnit()
-          : quantityFilter.getAllowedUnits()[0]
+        quantityFilter().getSelectedUnit()
+          ? quantityFilter().getSelectedUnit()
+          : quantityFilter().getAllowedUnits()[0]
       "
-      [allowedUnits]="quantityFilter.getAllowedUnits()"
+      [allowedUnits]="quantityFilter().getAllowedUnits()"
       (selectionChange)="setSelectQuantityFilterUnit($event)"
     >
     </num-allowed-units>

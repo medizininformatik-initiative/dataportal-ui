@@ -17,21 +17,21 @@
       {{ 'INFORMATION.CONCEPTS.DESCRIPTION' | translate }}
     </num-information-section>
   </mat-tab>
-  @if (tokenFilter) {
+  @if (tokenFilter()) {
   <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
     <num-concept-filter
-      [conceptFilterId]="tokenFilter.getId()"
-      [valueSetUrl]="tokenFilter.getValueSetUrls()"
-      [preSelectedConcepts]="tokenFilter.getSelectedTokens()"
+      [conceptFilterId]="tokenFilter().getId()"
+      [valueSetUrl]="tokenFilter().getValueSetUrls()"
+      [preSelectedConcepts]="tokenFilter().getSelectedTokens()"
       (changedSelectedConcepts)="updateSelectedConcepts($event)"
     >
     </num-concept-filter>
   </mat-tab>
-  } @if (tokenFilter) {
+  } @if (tokenFilter()) {
   <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
     <num-concept-bulk-search
-      [valueSetUrl]="tokenFilter.getValueSetUrls()"
-      [preSelectedConcepts]="tokenFilter.getSelectedTokens()"
+      [valueSetUrl]="tokenFilter().getValueSetUrls()"
+      [preSelectedConcepts]="tokenFilter().getSelectedTokens()"
       [tabChanged]="tabChanged"
       (changedSelectedConcepts)="updateSelectedConcepts($event)"
     ></num-concept-bulk-search>

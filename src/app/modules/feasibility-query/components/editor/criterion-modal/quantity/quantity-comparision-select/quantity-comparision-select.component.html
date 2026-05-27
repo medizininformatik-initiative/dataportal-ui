@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline" class="operator-part">
   <mat-select
-    [(value)]="existingOption"
+    [value]="existingOption()"
     (selectionChange)="selectQuantityFilterOption($event.value)"
   >
     @for (option of quantityFilterOptionsArray; track option) {

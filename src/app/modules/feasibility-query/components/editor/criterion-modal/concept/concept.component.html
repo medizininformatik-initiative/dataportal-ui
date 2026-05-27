@@ -17,23 +17,23 @@
       {{ 'INFORMATION.CONCEPTS.DESCRIPTION' | translate }}
     </num-information-section>
   </mat-tab>
-  @if (conceptFilter) {
+  @if (conceptFilter()) {
   <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
-    @if (conceptFilter) {
+    @if (conceptFilter()) {
     <num-concept-filter
-      [conceptFilterId]="conceptFilter.getId()"
-      [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
-      [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
+      [conceptFilterId]="conceptFilter().getId()"
+      [preSelectedConcepts]="conceptFilter().getSelectedConcepts()"
+      [valueSetUrl]="conceptFilter().getAllowedConceptUrls()"
       (changedSelectedConcepts)="emitConceptFilter($event)"
     >
     </num-concept-filter>
     }
   </mat-tab>
-  } @if (conceptFilter) {
+  } @if (conceptFilter()) {
   <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
     <num-concept-bulk-search
-      [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
-      [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
+      [valueSetUrl]="conceptFilter().getAllowedConceptUrls()"
+      [preSelectedConcepts]="conceptFilter().getSelectedConcepts()"
       [tabChanged]="tabChanged"
       (changedSelectedConcepts)="emitConceptFilter($event)"
     ></num-concept-bulk-search>

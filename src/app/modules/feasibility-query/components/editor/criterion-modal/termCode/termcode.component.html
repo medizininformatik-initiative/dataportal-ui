@@ -26,7 +26,7 @@
         <span style="width: 60%">{{ bulkEntry.getDisplay() | displayTranslation }}</span>
         <span>{{ bulkEntry.getTermCodes()[0].getCode() }}</span>
         <button
-          [disabled]="termCodes.length === 1"
+          [disabled]="termCodes().length === 1"
           (click)="removeTermCode(bulkEntry.getTermCodes()[0])"
           class="delete-button"
         >

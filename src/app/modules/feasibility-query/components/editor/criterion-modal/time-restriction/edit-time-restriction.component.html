@@ -1,4 +1,4 @@
-@if (timeRestriction) {
+@if (timeRestriction()) {
 <div [@.disabled]="disableAnimation" class="time-restriction-wrapper">
   <span class="section-label">
     {{ 'SHARED_FILTER.TIMERESTRICTION.TITLE' | translate }}
@@ -6,7 +6,7 @@
   <div class="time-restriction-row">
     <!--Time restriction Filter type-->
     <num-timerestriction-type-selector
-      [type]="this.timeRestriction.getType()"
+      [type]="timeRestriction().getType()"
       (timeRestrictionTypeChanged)="onTimeRestrictionOptionChange($event)"
     >
     </num-timerestriction-type-selector>
@@ -15,7 +15,7 @@
     <num-between-filter
       class="fill"
       (betweenFilterChanged)="emitSelectedTimeRestrictionInstance($event)"
-      [betweenFilter]="timeRestriction"
+      [betweenFilter]="timeRestriction()"
     ></num-between-filter>
     }
     <!--After, At, Before Filter-->
@@ -23,7 +23,7 @@
     <num-before-filter
       class="fill"
       [timeRestrictionType]="selectedTimeRestrictionType"
-      [selectedDate]="timeRestriction.getAfterDate()"
+      [selectedDate]="timeRestriction().getAfterDate()"
       (timeRestrictionInstanceChanged)="emitSelectedTimeRestrictionInstance($event)"
     ></num-before-filter>
     }
