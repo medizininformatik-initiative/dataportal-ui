@@ -14,14 +14,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnChanges,
   OnDestroy,
-  OnInit,
-  SimpleChanges,
   TemplateRef,
   ViewChild,
+  computed,
+  effect,
   inject,
   input,
+  signal,
 } from '@angular/core'
 import { CriterionHeaderComponent } from '../criterion/header/criterion-header.component'
 import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
@@ -47,23 +47,37 @@ import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTrans
     DisplayTranslationPipe,
   ],
 })
-export class ReferenceEditComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export class ReferenceEditComponent implements AfterViewInit, OnDestroy {
   private referenceCriterionEditService = inject(EditReferenceCriterionService)
   private cdr = inject(ChangeDetectorRef)
 
   readonly referenceCriterion = input.required<ReferenceCriterion>()
 
-  attributeFilters: AbstractAttributeFilters[] = []
+  readonly attributeFilters = computed<AbstractAttributeFilters[]>(() =>
+    this.referenceCriterion().getConceptAttributeFilters()
+  )
 
-  referenceFilter: AbstractAttributeFilters[] = []
+  readonly referenceFilter = computed<AbstractAttributeFilters[]>(() =>
+    this.referenceCriterion().getReferenceAttributeFilters()
+  )
 
-  conceptValueFilter: ValueFilter[] = []
+  readonly conceptValueFilter = computed<ValueFilter[]>(() =>
+    this.referenceCriterion().getConceptValueFilters()
+  )
 
-  conceptAttributeFilter: AttributeFilter[] = []
+  readonly conceptAttributeFilter = computed<AttributeFilter[]>(() =>
+    CloneAttributeFilter.deepCopyAttributeFilters(
+      this.referenceCriterion().getConceptAttributeFilters()
+    )
+  )
 
-  quantityValueFilter: ValueFilter[] = []
+  readonly quantityValueFilter = computed<ValueFilter[]>(() =>
+    this.referenceCriterion().getQuantityValueFilters()
+  )
 
-  quantityAttributeFilter: AttributeFilter[] = []
+  readonly quantityAttributeFilter = computed<AttributeFilter[]>(() =>
+    this.referenceCriterion().getQuantityAttributeFilters()
+  )
 
   @ViewChild('timeRestriction', { static: false, read: TemplateRef })
   timeRestrictionTemplate: TemplateRef<any> | undefined = undefined
@@ -85,87 +99,81 @@ export class ReferenceEditComponent implements OnChanges, OnInit, AfterViewInit,
 
   templates: any[] = []
 
+  private readonly viewInitialized = signal(false)
+
   referenceSubscription: Subscription | undefined = undefined
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
-  constructor() {}
+  constructor() {
+    effect(() => {
+      this.referenceCriterionEditService.initialize(this.referenceCriterion())
+    })
 
-  ngOnInit() {
-    this.initializeFromCriterion()
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.initializeFromCriterion()
+    effect(() => {
+      if (!this.viewInitialized()) {
+        return
+      }
+      this.templates = this.buildTemplates()
+      this.cdr.markForCheck()
+    })
   }
 
   ngOnDestroy(): void {
     this.referenceSubscription?.unsubscribe()
   }
 
-  private initializeFromCriterion(): void {
-    const referenceCriterion = this.referenceCriterion()
-    this.referenceCriterionEditService.initialize(referenceCriterion)
-    this.attributeFilters = referenceCriterion.getConceptAttributeFilters()
-    this.referenceFilter = referenceCriterion.getReferenceAttributeFilters()
-    this.quantityAttributeFilter = referenceCriterion.getQuantityAttributeFilters()
-    this.quantityValueFilter = referenceCriterion.getQuantityValueFilters()
-    this.conceptAttributeFilter = CloneAttributeFilter.deepCopyAttributeFilters(
-      referenceCriterion.getConceptAttributeFilters()
-    )
-    this.conceptValueFilter = referenceCriterion.getConceptValueFilters()
-  }
-
   ngAfterViewInit() {
-    this.templates = []
-    this.buildTemplates()
+    this.viewInitialized.set(true)
     this.cdr.detectChanges()
   }
 
-  private buildTemplates(): void {
-    this.setConceptAttributeFilterTemplate()
-    this.setConceptValueFilterTemplate()
-    this.setQuantityAttributeFilterTemplate()
-    this.setQuantityValueFilterTemplate()
-    this.setTermCodesTemplate()
-    this.setTimeRestrictionTemplate()
+  private buildTemplates(): any[] {
+    const templates: any[] = []
+    this.setConceptAttributeFilterTemplate(templates)
+    this.setConceptValueFilterTemplate(templates)
+    this.setQuantityAttributeFilterTemplate(templates)
+    this.setQuantityValueFilterTemplate(templates)
+    this.setTermCodesTemplate(templates)
+    this.setTimeRestrictionTemplate(templates)
+    return templates
   }
 
-  private setTimeRestrictionTemplate(): void {
+  private setTimeRestrictionTemplate(templates: any[]): void {
     if (this.referenceCriterion().getTimeRestriction()) {
-      this.templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' })
+      templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' })
     }
   }
 
-  private setTermCodesTemplate(): void {
+  private setTermCodesTemplate(templates: any[]): void {
     if (this.referenceCriterion().getTermCodes().length > 1) {
-      this.templates.push({ template: this.termCodesTemplate, name: 'TERMCODE' })
+      templates.push({ template: this.termCodesTemplate, name: 'TERMCODE' })
     }
   }
 
-  private setQuantityValueFilterTemplate(): void {
-    if (this.quantityValueFilter.length > 0) {
-      this.templates.push({ template: this.quantityValueFilterTemplate, name: 'QUANTITY' })
+  private setQuantityValueFilterTemplate(templates: any[]): void {
+    if (this.quantityValueFilter().length > 0) {
+      templates.push({ template: this.quantityValueFilterTemplate, name: 'QUANTITY' })
     }
   }
 
-  private setQuantityAttributeFilterTemplate(): void {
-    if (this.quantityAttributeFilter.length > 0) {
-      this.templates.push({ template: this.quantityAttributeFilterTemplate, name: 'QUANTITY' })
+  private setQuantityAttributeFilterTemplate(templates: any[]): void {
+    if (this.quantityAttributeFilter().length > 0) {
+      templates.push({ template: this.quantityAttributeFilterTemplate, name: 'QUANTITY' })
     }
   }
 
-  private setConceptValueFilterTemplate(): void {
-    if (this.conceptValueFilter.length > 0) {
-      this.templates.push({ template: this.conceptValueFiltersTemplate, name: 'CONCEPT' })
+  private setConceptValueFilterTemplate(templates: any[]): void {
+    if (this.conceptValueFilter().length > 0) {
+      templates.push({ template: this.conceptValueFiltersTemplate, name: 'CONCEPT' })
     }
   }
 
-  private setConceptAttributeFilterTemplate(): void {
-    this.conceptAttributeFilter.forEach((filter, index) => {
+  private setConceptAttributeFilterTemplate(templates: any[]): void {
+    this.conceptAttributeFilter().forEach((filter, index) => {
       const display = filter.getDisplay()
-      this.templates.push({
+      templates.push({
         template: this.conceptAttributeFiltersTemplate,
         display,
         context: { $implicit: index },

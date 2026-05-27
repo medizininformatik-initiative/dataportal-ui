@@ -1,4 +1,4 @@
-@if (hasFilterChips()) { @for (filterChip of filterChips(); track filterChip) {
+@if (hasFilterChips()) { @for (filterChip of filterChips(); track $index) {
 <div class="filter-wrapper">
   @if (displayBlockTriangle()) {
   <div
