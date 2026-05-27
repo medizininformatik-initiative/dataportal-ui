@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [FontAwesomeModule, MatTooltip, TranslateModule],
 })
 export class IconCellComponent {
-  readonly iconData = input.required<IconCellData>()
+  readonly iconData = input<IconCellData>()
 
   readonly color = input('black')
 

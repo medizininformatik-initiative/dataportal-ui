@@ -38,9 +38,9 @@ import { DisplayTranslationPipe } from '../../../../shared/pipes/DisplayTranslat
 export class EditFieldsComponent implements OnInit, OnDestroy {
   private selectedDataSelectionProfileFieldsService = inject(SelectedProfileFieldsService)
 
-  readonly fieldTree = input.required<BasicField[]>()
+  readonly fieldTree = input<BasicField[]>()
 
-  readonly selectedBasicFields = input.required<SelectedBasicField[]>()
+  readonly selectedBasicFields = input<SelectedBasicField[]>()
 
   readonly updatedSelectedBasicFields = output<SelectedBasicField[]>()
 

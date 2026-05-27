@@ -56,7 +56,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
 
-  readonly criterion = input.required<Criterion>()
+  readonly criterion = input<Criterion>()
 
   readonly attributeFilters = computed<AbstractAttributeFilters[]>(() =>
     this.criterion().getConceptAttributeFilters()

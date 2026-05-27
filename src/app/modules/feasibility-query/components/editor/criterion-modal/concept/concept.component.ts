@@ -30,7 +30,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ConceptComponent {
-  readonly conceptFilter = input.required<ConceptFilter>()
+  readonly conceptFilter = input<ConceptFilter>()
 
   readonly changedConceptFilter = output<ConceptFilter>()
 

@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class TokenFilterComponent {
-  readonly tokenFilter = input.required<ProfileTokenFilter>()
+  readonly tokenFilter = input<ProfileTokenFilter>()
   readonly tokenFilterChanged = output<ProfileTokenFilter>()
   tabChanged = false
   selectedConcepts: Concept[] = []

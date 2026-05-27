@@ -44,8 +44,8 @@ export class CriteriaBoxComponent implements OnInit {
   private filterChipsService = inject(CriterionFilterChipService)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
 
-  readonly criterion = input.required<Criterion>()
-  readonly isEditable = input.required<boolean>()
+  readonly criterion = input<Criterion>()
+  readonly isEditable = input<boolean>()
 
   menuItems: MenuItemInterface[] = []
 

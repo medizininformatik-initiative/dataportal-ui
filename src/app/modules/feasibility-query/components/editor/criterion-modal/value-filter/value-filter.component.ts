@@ -15,7 +15,7 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
   imports: [ConceptComponent, QuantityComponent, DisplayTranslationPipe],
 })
 export class ValueFilterComponent {
-  readonly valueFilter = input.required<ValueFilter>()
+  readonly valueFilter = input<ValueFilter>()
 
   readonly valueFilterChange = output<ValueFilter>()
 

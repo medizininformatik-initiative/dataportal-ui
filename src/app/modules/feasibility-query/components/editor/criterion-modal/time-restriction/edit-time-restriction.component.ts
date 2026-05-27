@@ -20,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class EditTimeRestrictionComponent implements OnInit {
-  readonly timeRestriction = input.required<AbstractTimeRestriction>()
+  readonly timeRestriction = input<AbstractTimeRestriction>()
 
   readonly timeRestrictionChanged = output<AbstractTimeRestriction>()
 

@@ -60,7 +60,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   private stagedProfileService = inject(StagedProfileService)
   private possibleReferencesService = inject(PossibleReferencesService)
 
-  readonly profile = input.required<DataSelectionProfile>()
+  readonly profile = input<DataSelectionProfile>()
 
   readonly tokenFilter = computed(() => {
     return this.profile()

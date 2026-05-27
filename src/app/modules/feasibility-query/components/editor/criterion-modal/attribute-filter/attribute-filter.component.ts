@@ -14,7 +14,7 @@ import { QuantityComponent } from '../quantity/quantity.component'
   imports: [ConceptComponent, QuantityComponent],
 })
 export class AttributeFilterComponent {
-  readonly attributeFilter = input.required<AttributeFilter>()
+  readonly attributeFilter = input<AttributeFilter>()
   readonly attributeFilterChange = output<AttributeFilter>()
 
   public updateConceptFilter(conceptFilter: ConceptFilter): void {

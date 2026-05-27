@@ -51,7 +51,7 @@ export class ReferenceEditComponent implements AfterViewInit, OnDestroy {
   private referenceCriterionEditService = inject(EditReferenceCriterionService)
   private cdr = inject(ChangeDetectorRef)
 
-  readonly referenceCriterion = input.required<ReferenceCriterion>()
+  readonly referenceCriterion = input<ReferenceCriterion>()
 
   readonly attributeFilters = computed<AbstractAttributeFilters[]>(() =>
     this.referenceCriterion().getConceptAttributeFilters()
