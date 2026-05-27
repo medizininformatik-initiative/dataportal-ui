@@ -6,7 +6,7 @@
   >
   </num-searchbar>
 
-  @if (valueSetUrl?.length > 1) {
+  @if (valueSetUrl()?.length > 1) {
   <num-search-filter
     [filter]="searchFilter"
     (filterChange)="setValueSet($event)"
@@ -14,7 +14,7 @@
   } @if (searchResults$ | async; as searchResults) {
   <num-concept-filter-table
     class="overflow"
-    [valueSetUrl]="valueSetUrl"
+    [valueSetUrl]="valueSetUrl()"
     [conceptFilterId]="conceptFilterId()"
     (selectedConcept)="toggleConceptSelection($event)"
   ></num-concept-filter-table>
