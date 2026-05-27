@@ -8,8 +8,8 @@
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
 >
-  @if (icon) {
-  <fa-icon [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
+  @if (icon()) {
+  <fa-icon [icon]="icon()" size="lg" [fixedWidth]="true"></fa-icon>
   }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
@@ -23,8 +23,8 @@
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
 >
-  @if (icon) {
-  <fa-icon [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
+  @if (icon()) {
+  <fa-icon [icon]="icon()" size="lg" [fixedWidth]="true"></fa-icon>
   }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
@@ -38,8 +38,8 @@
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
 >
-  @if (icon) {
-  <fa-icon [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
+  @if (icon()) {
+  <fa-icon [icon]="icon()" size="lg" [fixedWidth]="true"></fa-icon>
   }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
