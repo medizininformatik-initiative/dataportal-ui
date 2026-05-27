@@ -17,7 +17,7 @@
   </mat-tab>
   <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
     <div class="container">
-      <div class="attribute-code-display">{{ attributeCode.getDisplay() }}</div>
+      <div class="attribute-code-display">{{ attributeCode().getDisplay() }}</div>
       <num-searchbar icon="search" (searchTextChange)="startElasticSearch($event)"> </num-searchbar>
       <div
         class="infinite-scroll"

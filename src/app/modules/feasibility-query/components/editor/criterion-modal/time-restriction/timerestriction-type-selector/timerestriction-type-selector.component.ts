@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, model, output } from '@angular/core'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
 import { FormsModule } from '@angular/forms'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
@@ -12,16 +12,14 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [FormsModule, FontAwesomeModule, TranslateModule],
 })
 export class TimerestrictionTypeSelectorComponent {
-  @Input()
-  type: TimeRestrictionType
+  readonly type = model<TimeRestrictionType>()
 
   timeRestrictionOptions: string[] = Object.values(TimeRestrictionType)
 
-  @Output()
-  timeRestrictionTypeChanged = new EventEmitter<TimeRestrictionType>()
+  readonly timeRestrictionTypeChanged = output<TimeRestrictionType>()
 
   public onTimeRestrictionOptionChange(timeRestriction: string) {
-    this.type = TimeRestrictionType[timeRestriction as keyof typeof TimeRestrictionType]
-    this.timeRestrictionTypeChanged.emit(this.type)
+    this.type.set(TimeRestrictionType[timeRestriction as keyof typeof TimeRestrictionType])
+    this.timeRestrictionTypeChanged.emit(this.type())
   }
 }

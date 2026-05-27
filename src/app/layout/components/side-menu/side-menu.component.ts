@@ -1,6 +1,6 @@
 import INavItem from '../../models/nav-item.interface'
 import { mainNavItems } from '../../../core/constants/navigation'
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
+import { Component, computed, inject, model, output } from '@angular/core'
 import { MatIconRegistry, MatIcon } from '@angular/material/icon'
 import { DomSanitizer } from '@angular/platform-browser'
 import { MatNavList, MatListItem } from '@angular/material/list'
@@ -29,17 +29,15 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
   ],
 })
-export class SideMenuComponent implements OnInit {
+export class SideMenuComponent {
   private iconRegistry = inject(MatIconRegistry)
   private sanitizer = inject(DomSanitizer)
 
   mainNavItems = mainNavItems
-  @Input() isSideMenuExpanded = true
+  readonly isSideMenuExpanded = model(true)
+  readonly isCollapsed = computed(() => !this.isSideMenuExpanded())
 
-  @Output() toggleSideMenu = new EventEmitter<boolean>()
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
+  readonly toggleSideMenu = output<boolean>()
 
   constructor() {
     const iconRegistry = this.iconRegistry
@@ -51,15 +49,13 @@ export class SideMenuComponent implements OnInit {
     )
   }
 
-  ngOnInit(): void {}
-
   menuItemClicked($event: Event, item?: INavItem): void {
     const target = $event.currentTarget as HTMLElement
     target.blur()
   }
 
   public toggleMenu(): void {
-    this.isSideMenuExpanded = !this.isSideMenuExpanded
-    this.toggleSideMenu.emit(this.isSideMenuExpanded)
+    this.isSideMenuExpanded.update((expanded) => !expanded)
+    this.toggleSideMenu.emit(this.isSideMenuExpanded())
   }
 }

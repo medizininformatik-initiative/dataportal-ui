@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, OnInit, input, output } from '@angular/core'
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
 import { SelectableReferenceTileComponent } from '../../../../../../../shared/components/selectable-reference-tile/selectable-reference-tile.component'
 
@@ -10,12 +10,9 @@ import { SelectableReferenceTileComponent } from '../../../../../../../shared/co
   imports: [SelectableReferenceTileComponent],
 })
 export class PossibleReferencesComponent implements OnInit {
-  @Input()
-  posssibleReference: PossibleProfileReferenceData
+  readonly posssibleReference = input<PossibleProfileReferenceData>(undefined)
 
-  @Output()
-  selectedProfileId: EventEmitter<PossibleProfileReferenceData> =
-    new EventEmitter<PossibleProfileReferenceData>()
+  readonly selectedProfileId = output<PossibleProfileReferenceData>()
 
   constructor() {}
 

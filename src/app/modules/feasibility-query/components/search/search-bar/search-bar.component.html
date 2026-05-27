@@ -2,15 +2,19 @@
   <num-searchbar
     class="searchbar"
     icon="search"
-    [searchText]="searchText$ | async"
+    [searchText]="searchText$() | async"
     [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
     (searchTextChange)="onSearchTextChange($event)"
   ></num-searchbar>
   <div class="search-button-wrapper">
-    <num-button [isDisabled]="!searchText" type="blue" (click)="onSearch()">
+    <num-button [isDisabled]="!searchText()" type="blue" (click)="onSearch()">
       {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
     </num-button>
-    <num-button [isDisabled]="resetFilterEnabled$ | async" type="blue" (click)="filterReset.emit()">
+    <num-button
+      [isDisabled]="resetFilterEnabled$() | async"
+      type="blue"
+      (click)="filterReset.emit()"
+    >
       {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
     </num-button>
   </div>

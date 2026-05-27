@@ -5,10 +5,10 @@ import {
   ElementRef,
   EnvironmentInjector,
   HostListener,
-  Input,
   OnDestroy,
   OnInit,
   inject,
+  input,
 } from '@angular/core'
 import { icon } from '@fortawesome/fontawesome-svg-core'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
@@ -23,8 +23,8 @@ export class InfoTooltipDirective implements OnInit, OnDestroy {
   private appRef = inject(ApplicationRef)
   private environmentInjector = inject(EnvironmentInjector)
 
-  @Input() infoTooltipTitle: string
-  @Input() infoTooltipText: string
+  readonly infoTooltipTitle = input<string>(undefined)
+  readonly infoTooltipText = input<string>(undefined)
 
   private cardRef: ReturnType<typeof createComponent<InfoTooltipComponent>> | null = null
 
@@ -41,7 +41,8 @@ export class InfoTooltipDirective implements OnInit, OnDestroy {
 
   @HostListener('mouseenter')
   show(): void {
-    if (this.cardRef || !this.infoTooltipText) {
+    const infoTooltipText = this.infoTooltipText()
+    if (this.cardRef || !infoTooltipText) {
       return
     }
 
@@ -49,8 +50,8 @@ export class InfoTooltipDirective implements OnInit, OnDestroy {
       environmentInjector: this.environmentInjector,
     })
 
-    this.cardRef.instance.title = this.infoTooltipTitle
-    this.cardRef.instance.text = this.infoTooltipText
+    this.cardRef.setInput('title', this.infoTooltipTitle())
+    this.cardRef.setInput('text', infoTooltipText)
 
     this.appRef.attachView(this.cardRef.hostView)
     this.cardRef.changeDetectorRef.detectChanges()

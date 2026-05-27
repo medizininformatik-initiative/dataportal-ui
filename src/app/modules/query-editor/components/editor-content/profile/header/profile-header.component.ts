@@ -1,30 +1,21 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter'
+import { AsyncPipe } from '@angular/common'
+import { Component, inject, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core'
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
+import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter'
+import { FilterChipsComponent } from '../../../../../../shared/components/filter-chips/filter-chips.component'
+import { NumPillExpandableDirective } from '../../../../../../shared/directives/num-pill-expandable.directive'
 import { Observable, of } from 'rxjs'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData'
+import { SearchbarComponent } from '../../../../../../shared/components/search/searchbar.component'
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  inject,
-} from '@angular/core'
-import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
-import { SearchbarComponent } from '../../../../../../shared/components/search/searchbar.component'
-import { NumPillExpandableDirective } from '../../../../../../shared/directives/num-pill-expandable.directive'
-import { FilterChipsComponent } from '../../../../../../shared/components/filter-chips/filter-chips.component'
-import { AsyncPipe } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -47,11 +38,9 @@ export class ProfileHeaderComponent implements OnInit, OnChanges {
   private filtersFilterChipsService = inject(DataSelectionFiltersFilterChips)
   private translation = inject(DisplayTranslationPipe)
 
-  @Input()
-  profile: DataSelectionProfile
+  readonly profile = input<DataSelectionProfile>(undefined)
 
-  @Output()
-  updatedLabel: EventEmitter<string> = new EventEmitter<string>()
+  readonly updatedLabel = output<string>()
 
   label: string
   placeholder: string
@@ -72,13 +61,14 @@ export class ProfileHeaderComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit(): void {
-    this.label = this.translation.transform(this.profile.getLabel())
-    this.placeholder = this.translation.transform(this.profile.getDisplay())
-    this.getProfileFieldsChips(this.profile.getProfileFields().getSelectedBasicFields())
+    this.label = this.translation.transform(this.profile().getLabel())
+    this.placeholder = this.translation.transform(this.profile().getDisplay())
+    const profile = this.profile()
+    this.getProfileFieldsChips(profile.getProfileFields().getSelectedBasicFields())
     this.profileReferenceChips = this.getProfileReferenceChips(
-      this.profile.getProfileFields().getSelectedReferenceFields()
+      profile.getProfileFields().getSelectedReferenceFields()
     )
-    this.getProfileFilterChips(this.profile.getFilters())
+    this.getProfileFilterChips(profile.getFilters())
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -88,10 +78,10 @@ export class ProfileHeaderComponent implements OnInit, OnChanges {
       this.getProfileFieldsChips(profile.getProfileFields().getSelectedBasicFields())
     }
     this.profileReferenceChips = this.getProfileReferenceChips(
-      this.profile.getProfileFields().getSelectedReferenceFields()
+      this.profile().getProfileFields().getSelectedReferenceFields()
     )
-    this.label = this.translation.transform(this.profile.getLabel())
-    this.placeholder = this.translation.transform(this.profile.getDisplay())
+    this.label = this.translation.transform(this.profile().getLabel())
+    this.placeholder = this.translation.transform(this.profile().getDisplay())
   }
 
   public getProfileFieldsChips(selectedFields: SelectedBasicField[]): void {
@@ -103,7 +93,7 @@ export class ProfileHeaderComponent implements OnInit, OnChanges {
     if (filter.length > 0) {
       this.filtersFilterChips$ = of(
         this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(
-          this.profile.getFilters()
+          this.profile().getFilters()
         )
       )
     } else {

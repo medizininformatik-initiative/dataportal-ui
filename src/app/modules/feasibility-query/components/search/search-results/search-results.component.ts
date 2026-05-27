@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core'
+import { Component, ViewChild, input, output } from '@angular/core'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav'
 import { Observable } from 'rxjs'
@@ -36,17 +36,17 @@ import { TranslateModule } from '@ngx-translate/core'
 export class SearchResultsComponent {
   @ViewChild('drawer') drawer: MatDrawer
 
-  @Input() listItems: CriteriaListEntry[] = []
-  @Input() adaptedData: TableData
-  @Input() selectedDetails$: Observable<SearchTermDetails>
-  @Input() searchText$: Observable<string>
-  @Input() searchResultsFound = false
+  readonly listItems = input<CriteriaListEntry[]>([])
+  readonly adaptedData = input<TableData>(undefined)
+  readonly selectedDetails$ = input<Observable<SearchTermDetails>>(undefined)
+  readonly searchText$ = input<Observable<string>>(undefined)
+  readonly searchResultsFound = input(false)
 
-  @Output() selectedRow = new EventEmitter<TableRowData>()
-  @Output() rowClicked = new EventEmitter<TableRowData>()
-  @Output() iconClicked = new EventEmitter<TableRowData>()
-  @Output() loadMore = new EventEmitter<void>()
-  @Output() selectedRelative = new EventEmitter<CriteriaListEntry>()
+  readonly selectedRow = output<TableRowData>()
+  readonly rowClicked = output<TableRowData>()
+  readonly iconClicked = output<TableRowData>()
+  readonly loadMore = output<void>()
+  readonly selectedRelative = output<CriteriaListEntry>()
 
   public openSidenav(): void {
     this.drawer?.open()

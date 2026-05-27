@@ -1,10 +1,10 @@
-@if (type === 'blue') {
+@if (type() === 'blue') {
 <button
   class="num-button blue"
-  [ngClass]="isDisabled ? 'disabled' : ''"
+  [ngClass]="isDisabled() ? 'disabled' : ''"
   color="primary"
-  [disabled]="isDisabled"
-  [matTooltip]="tooltip"
+  [disabled]="isDisabled()"
+  [matTooltip]="tooltip()"
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
 >
@@ -13,13 +13,13 @@
   }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
-} @if (type === 'green') {
+} @if (type() === 'green') {
 <button
   class="num-button green"
   color="primary"
-  [ngClass]="isDisabled ? 'disabled' : ''"
-  [disabled]="isDisabled"
-  [matTooltip]="tooltip"
+  [ngClass]="isDisabled() ? 'disabled' : ''"
+  [disabled]="isDisabled()"
+  [matTooltip]="tooltip()"
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
 >
@@ -28,13 +28,13 @@
   }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
-} @if (type === 'red') {
+} @if (type() === 'red') {
 <button
   class="num-button red"
   color="primary"
-  [ngClass]="isDisabled ? 'disabled' : ''"
-  [disabled]="isDisabled"
-  [matTooltip]="tooltip"
+  [ngClass]="isDisabled() ? 'disabled' : ''"
+  [disabled]="isDisabled()"
+  [matTooltip]="tooltip()"
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
 >

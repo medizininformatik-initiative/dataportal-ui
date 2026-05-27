@@ -1,14 +1,6 @@
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, effect, input, output } from '@angular/core'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InformationSectionComponent } from '../../../../../../../shared/components/information-section/information-section.component'
@@ -35,19 +27,15 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
   ],
 })
-export class TokenFilterComponent implements OnInit, OnChanges {
-  @Input() tokenFilter: ProfileTokenFilter
-  @Output() tokenFilterChanged = new EventEmitter<ProfileTokenFilter>()
+export class TokenFilterComponent {
+  readonly tokenFilter = input.required<ProfileTokenFilter>()
+  readonly tokenFilterChanged = output<ProfileTokenFilter>()
   tabChanged = false
   selectedConcepts: Concept[] = []
-  constructor() {}
-
-  ngOnChanges(): void {
-    this.selectedConcepts = this.tokenFilter.getSelectedTokens()
-  }
-
-  ngOnInit(): void {
-    this.selectedConcepts = this.tokenFilter.getSelectedTokens()
+  constructor() {
+    effect(() => {
+      this.selectedConcepts = this.tokenFilter().getSelectedTokens()
+    })
   }
 
   /**
@@ -61,10 +49,10 @@ export class TokenFilterComponent implements OnInit, OnChanges {
 
   private createProfileTokenFilterInstance(concepts: Concept[]): ProfileTokenFilter {
     return new ProfileTokenFilter(
-      this.tokenFilter.getId(),
-      this.tokenFilter.getName(),
-      this.tokenFilter.getType(),
-      this.tokenFilter.getValueSetUrls(),
+      this.tokenFilter().getId(),
+      this.tokenFilter().getName(),
+      this.tokenFilter().getType(),
+      this.tokenFilter().getValueSetUrls(),
       concepts
     )
   }

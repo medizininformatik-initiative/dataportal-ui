@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnChanges, OnInit, inject, input } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionFilterChipService } from 'src/app/shared/service/FilterChips/Criterion/CriterionFilterChips.service'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
@@ -19,8 +19,7 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
 export class CriterionHeaderComponent implements OnChanges, OnInit {
   private filterChipsService = inject(CriterionFilterChipService)
 
-  @Input()
-  criterion!: Criterion
+  readonly criterion = input.required<Criterion>()
 
   quantityFilterChips: FilterChipData[] = []
 
@@ -42,7 +41,7 @@ export class CriterionHeaderComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this.iniializeChips()
     this.system = TerminologySystemDictionary.getNameByUrl(
-      this.criterion.getTermCodes()[0].getSystem()
+      this.criterion().getTermCodes()[0].getSystem()
     )
   }
 
@@ -59,24 +58,24 @@ export class CriterionHeaderComponent implements OnChanges, OnInit {
   }
 
   public getReferenceFilterChips() {
-    this.refernceFilterChips = this.filterChipsService.createReferenceChips(this.criterion)
+    this.refernceFilterChips = this.filterChipsService.createReferenceChips(this.criterion())
   }
 
   private getQuantityFilterChips() {
-    this.quantityFilterChips = this.filterChipsService.generateQuantityChips(this.criterion)
+    this.quantityFilterChips = this.filterChipsService.generateQuantityChips(this.criterion())
   }
 
   private getTimeRestrictionFilterChips() {
     this.timeRestrictionFilterChips = this.filterChipsService.buildTimeRestrictionChips(
-      this.criterion
+      this.criterion()
     )
   }
 
   private getTermCodesFilterChips() {
-    this.termCodesFilterChips = this.filterChipsService.generateTermcodeChips(this.criterion)
+    this.termCodesFilterChips = this.filterChipsService.generateTermcodeChips(this.criterion())
   }
 
   private getConceptFilterChips() {
-    this.conceptFilterChips = this.filterChipsService.generateConceptChips(this.criterion)
+    this.conceptFilterChips = this.filterChipsService.generateConceptChips(this.criterion())
   }
 }

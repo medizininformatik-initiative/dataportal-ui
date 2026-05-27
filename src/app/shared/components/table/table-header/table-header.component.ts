@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input } from '@angular/core'
+import { Component, input } from '@angular/core'
 import { TableData } from '../../../models/TableData/TableData'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -11,11 +11,12 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [TranslateModule],
 })
 export class TableHeaderComponent {
-  @Input() tableData: TableData
+  readonly tableData = input<TableData>(undefined)
 
   public getWidth(index: number): number {
-    const cellType = this.tableData?.body?.rows[0]?.cells[index]?.type
-    const iconOrCheckbox = this.tableData?.body?.rows[0]?.cells?.filter(
+    const cellType = this.tableData()?.body?.rows[0]?.cells[index]?.type
+    const tableData = this.tableData()
+    const iconOrCheckbox = tableData?.body?.rows[0]?.cells?.filter(
       (cell) => cell.type === 'icon' || cell.type === 'checkbox'
     ).length
     const iconOrCheckboxWidth = 2
@@ -30,7 +31,7 @@ export class TableHeaderComponent {
       case 'availability':
         return (
           (100 - iconOrCheckbox * iconOrCheckboxWidth) /
-          (this.tableData?.body?.rows[0]?.cells?.length - iconOrCheckbox)
+          (tableData?.body?.rows[0]?.cells?.length - iconOrCheckbox)
         )
     }
   }

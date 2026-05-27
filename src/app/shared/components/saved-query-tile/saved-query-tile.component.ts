@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
+import { Component, OnInit, inject, input, output } from '@angular/core'
 import { ConfirmDeleteService } from '../../service/SavedQueryTile/ConfirmDelete.service'
 import { InterfaceSavedQueryTile } from '../../models/SavedQueryTile/InterfaceSavedQueryTile'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -17,17 +17,13 @@ import { TranslateModule } from '@ngx-translate/core'
 export class SavedQueryTileComponent implements OnInit {
   private confirmDeleteService = inject(ConfirmDeleteService)
 
-  @Input()
-  savedQuery: InterfaceSavedQueryTile
+  readonly savedQuery = input.required<InterfaceSavedQueryTile>()
 
-  @Output()
-  deleteQuery = new EventEmitter<string>()
+  readonly deleteQuery = output<string>()
 
-  @Output()
-  navigate = new EventEmitter<string>()
+  readonly navigate = output<string>()
 
-  @Output()
-  loadValidationReport = new EventEmitter<string>()
+  readonly loadValidationReport = output<string>()
 
   crtdlIsValid: boolean
 
@@ -50,10 +46,10 @@ export class SavedQueryTileComponent implements OnInit {
 
   public isValidAndExists() {
     this.crtdlIsValid =
-      this.savedQuery.ccdl.exists &&
-      this.savedQuery.ccdl.isValid &&
-      this.savedQuery.dataExtraction.exists &&
-      this.savedQuery.dataExtraction.isValid
+      this.savedQuery().ccdl.exists &&
+      this.savedQuery().ccdl.isValid &&
+      this.savedQuery().dataExtraction.exists &&
+      this.savedQuery().dataExtraction.isValid
   }
 
   public onDelete(id: string) {

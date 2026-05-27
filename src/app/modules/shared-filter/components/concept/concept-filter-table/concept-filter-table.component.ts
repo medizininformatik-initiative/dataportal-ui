@@ -5,16 +5,7 @@ import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service'
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core'
+import { Component, OnChanges, OnDestroy, OnInit, inject, input, output } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptSelectionHelperService } from '../../../service/ConceptSelection/ConceptSelectionHelper.service'
 import { map, Observable, Subscription, tap } from 'rxjs'
@@ -48,14 +39,11 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
 
   codeableConceptResultList: CodeableConceptResultList
 
-  @Input()
-  valueSetUrl: string[]
+  readonly valueSetUrl = input<string[]>(undefined)
 
-  @Input()
-  conceptFilterId: string
+  readonly conceptFilterId = input<string>(undefined)
 
-  @Output()
-  selectedConcept = new EventEmitter<Concept>()
+  readonly selectedConcept = output<Concept>()
 
   adaptedData: TableData
 
@@ -90,7 +78,7 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
 
   ngOnInit() {
     this.conceptSearchService
-      .getSearchResults(this.valueSetUrl)
+      .getSearchResults(this.valueSetUrl())
       .pipe(
         map((results) => {
           results.getResults().find((entry) => {
@@ -160,6 +148,6 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
   }
 
   public loadMoreSearchResults(): void {
-    this.conceptSearchService.loadNextPage(' ', this.valueSetUrl).subscribe()
+    this.conceptSearchService.loadNextPage(' ', this.valueSetUrl()).subscribe()
   }
 }

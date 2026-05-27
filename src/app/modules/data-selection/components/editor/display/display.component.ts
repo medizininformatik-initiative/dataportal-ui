@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit, input } from '@angular/core'
 import { HeaderComponent } from '../../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../../shared/components/header-description/header-description.component'
 import { SectionNameComponent } from '../../../../../shared/components/section-name/section-name.component'
@@ -21,8 +21,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class DisplayDataSelectionComponent implements OnInit {
-  @Input()
-  isEditable: boolean
+  readonly isEditable = input<boolean>(undefined)
 
   constructor() {}
 

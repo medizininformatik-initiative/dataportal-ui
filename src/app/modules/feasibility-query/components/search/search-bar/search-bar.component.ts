@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 import { Observable } from 'rxjs'
 import { SearchbarComponent } from '../../../../../shared/components/search/searchbar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
@@ -13,17 +13,17 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [SearchbarComponent, ButtonComponent, AsyncPipe, TranslateModule],
 })
 export class SearchBarComponent {
-  @Input() searchText$: Observable<string>
-  @Input() searchText = ''
-  @Input() resetFilterEnabled$: Observable<boolean>
-  @Output() searchChanged = new EventEmitter<string>()
-  @Output() filterReset = new EventEmitter<void>()
+  readonly searchText$ = input<Observable<string>>(undefined)
+  readonly searchText = input('')
+  readonly resetFilterEnabled$ = input<Observable<boolean>>(undefined)
+  readonly searchChanged = output<string>()
+  readonly filterReset = output<void>()
 
   public onSearchTextChange(text: string): void {
     this.searchChanged.emit(text)
   }
 
   public onSearch(): void {
-    this.searchChanged.emit(this.searchText)
+    this.searchChanged.emit(this.searchText())
   }
 }

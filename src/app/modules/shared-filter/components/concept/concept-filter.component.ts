@@ -3,13 +3,13 @@ import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service'
 import {
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   inject,
+  input,
+  model,
+  output,
 } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
@@ -34,10 +34,10 @@ export class ConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
   private readonly conceptSearchService = inject(CodeableConceptSearchService)
   private readonly conceptSelectionService = inject(ConceptSelectionHelperService)
 
-  @Input() valueSetUrl: string[]
-  @Input() conceptFilterId: string
-  @Input() preSelectedConcepts: Concept[] = []
-  @Output() changedSelectedConcepts = new EventEmitter<Concept[]>()
+  readonly valueSetUrl = model<string[]>()
+  readonly conceptFilterId = input<string>(undefined)
+  readonly preSelectedConcepts = model<Concept[]>([])
+  readonly changedSelectedConcepts = output<Concept[]>()
 
   searchResults$: Observable<CodeableConceptResultList>
   searchFilter: SearchFilter
@@ -69,8 +69,11 @@ export class ConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public setValueSet(searchFilter: SearchFilter): void {
-    this.valueSetUrl = searchFilter.selectedValues
-    this.searchResults$ = this.conceptSearchService.search(this.currentSearchTerm, this.valueSetUrl)
+    this.valueSetUrl.set(searchFilter.selectedValues)
+    this.searchResults$ = this.conceptSearchService.search(
+      this.currentSearchTerm,
+      this.valueSetUrl()
+    )
   }
 
   private initializeComponent(): void {
@@ -81,20 +84,21 @@ export class ConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private initializeTerminologyFilter(): void {
-    if (this.valueSetUrl?.length > 1) {
-      this.searchFilter = this.conceptSelectionService.createTerminologyFilter(this.valueSetUrl)
+    const urls = this.valueSetUrl()
+    if (urls?.length > 1) {
+      this.searchFilter = this.conceptSelectionService.createTerminologyFilter(urls)
     }
   }
 
   private initializePreSelectedConcepts(): void {
-    const hasPreSelectedConcepts = this.preSelectedConcepts.length >= 0
+    const hasPreSelectedConcepts = this.preSelectedConcepts().length >= 0
     if (hasPreSelectedConcepts) {
-      this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts)
+      this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts())
     }
   }
 
   private setupSearchResults(): void {
-    this.searchResults$ = this.conceptSearchService.getSearchResults(this.valueSetUrl).pipe(
+    this.searchResults$ = this.conceptSearchService.getSearchResults(this.valueSetUrl()).pipe(
       filter((results) => results != null),
       map((results) => {
         results.getResults().find((entry: CodeableConceptResultListEntry) => {
@@ -111,20 +115,19 @@ export class ConceptFilterComponent implements OnInit, OnDestroy, OnChanges {
 
   private performSearch(searchTerm: string): void {
     this.subscription.add(
-      this.conceptSearchService.search(searchTerm, this.valueSetUrl).subscribe()
+      this.conceptSearchService.search(searchTerm, this.valueSetUrl()).subscribe()
     )
   }
 
   public toggleConceptSelection(concept: Concept): void {
-    this.preSelectedConcepts = this.conceptSelectionService.toggleConceptSelection(
-      concept,
-      this.preSelectedConcepts
+    this.preSelectedConcepts.update((prev) =>
+      this.conceptSelectionService.toggleConceptSelection(concept, prev)
     )
     this.emitConceptChanges()
   }
 
   private emitConceptChanges(): void {
-    const clonedConcepts = this.conceptSelectionService.cloneConcepts(this.preSelectedConcepts)
+    const clonedConcepts = this.conceptSelectionService.cloneConcepts(this.preSelectedConcepts())
     this.changedSelectedConcepts.emit(clonedConcepts)
   }
 

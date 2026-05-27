@@ -68,12 +68,12 @@
       <ng-container>
         <div
           class="reference-toggle"
-          [class.reference-toggle--active]="profile.getReference().getIsReferenceSet()"
+          [class.reference-toggle--active]="profile().getReference().getIsReferenceSet()"
         >
           <num-checkbox
-            [disabled]="!isEditable"
-            [checked]="profile.getReference().getIsReferenceSet()"
-            (checkedChange)="toggleIsReferenceSet(profile.getReference())"
+            [disabled]="!isEditable()"
+            [checked]="profile().getReference().getIsReferenceSet()"
+            (checkedChange)="toggleIsReferenceSet(profile().getReference())"
           ></num-checkbox>
           <span class="reference-toggle-text">{{
             'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
@@ -84,7 +84,7 @@
   </div>
   }
   <div class="menu-box">
-    <num-menu [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
+    <num-menu [menuItems]="menuItems" [id]="profile().getId()"></num-menu>
   </div>
 </div>
 @if (unlinkedRequiredOrRecommendedReferences.length > 0 || selectedReferenceFields.length > 0) {
@@ -94,7 +94,7 @@ unlinkedRequiredOrRecommendedReferences; track reference) {
 <div class="selection-box-container">
   <num-profile-reference-tile
     [unlinkedRequiredOrRecommendedReferences]="reference"
-    [parentId]="profile.getId()"
+    [parentId]="profile().getId()"
     (deleteTrigger)="updateRequiredOrRecommendedReferences()"
   >
   </num-profile-reference-tile>
@@ -105,7 +105,7 @@ track selectedReference) {
   <num-profile-reference-tile
     [filterChips]="profileRefrenceChips"
     [referenceField]="selectedReference"
-    [parentId]="profile.getId()"
+    [parentId]="profile().getId()"
   ></num-profile-reference-tile>
 </div>
 } }

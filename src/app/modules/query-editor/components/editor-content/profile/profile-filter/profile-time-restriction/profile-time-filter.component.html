@@ -17,7 +17,7 @@
 
   <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.TIMERESTRICTION' | translate }}">
     <num-edit-time-restriction
-      [timeRestriction]="profileTimeRestrictionFilter.getTimeRestriction()"
+      [timeRestriction]="profileTimeRestrictionFilter().getTimeRestriction()"
       (timeRestrictionChanged)="emitProfileTimeRestriction($event)"
     >
     </num-edit-time-restriction>

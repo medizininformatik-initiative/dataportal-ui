@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 import { SaveFileDataModal } from '../../models/SaveDataModal/SaveFileDataModal'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
@@ -13,14 +13,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [FontAwesomeModule, FormsModule, ButtonComponent, TranslateModule],
 })
 export class SaveFileModalComponent {
-  @Input()
-  isCommentRequired = false
+  readonly isCommentRequired = input(false)
 
-  @Output()
-  save = new EventEmitter<SaveFileDataModal>()
+  readonly save = output<SaveFileDataModal>()
 
-  @Output()
-  cancelled = new EventEmitter<void>()
+  readonly cancelled = output<void>()
 
   title = ''
 
@@ -31,6 +28,7 @@ export class SaveFileModalComponent {
   }
 
   doDiscard(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.cancelled.emit()
   }
 }

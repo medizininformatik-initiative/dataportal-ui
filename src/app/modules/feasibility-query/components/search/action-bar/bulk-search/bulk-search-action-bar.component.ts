@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, input } from '@angular/core'
 import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service'
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry'
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
@@ -34,8 +34,10 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
   disabledAddToStageButton: Observable<boolean> = of(true)
   addToStageSubscription: Subscription
 
-  @Input()
-  resultType: 'FOUND' | 'NOTFOUND'
+  readonly resultType = input<
+    'FOUND' | 'NOTFOUND'
+    /** Inserted by Angular inject() migration for backwards compatibility */
+  >(undefined)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

@@ -1,4 +1,4 @@
-@for (row of rows; track row) {
+@for (row of rows(); track row) {
 <tr
   [ngClass]="{ 'clickable-row': row.isClickable }"
   class="table-border height-3-rem table-row-hover"

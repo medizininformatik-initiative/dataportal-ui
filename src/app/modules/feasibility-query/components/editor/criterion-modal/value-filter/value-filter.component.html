@@ -1,17 +1,17 @@
 <div>
-  @if (valueFilter.isConceptSet()) {
+  @if (valueFilter().isConceptSet()) {
   <num-concept
-    [conceptFilter]="valueFilter.getConcept()"
-    [display]="valueFilter.getDisplay()"
-    [attr.data-cy]="valueFilter.getDisplay() | displayTranslation"
+    [conceptFilter]="valueFilter().getConcept()"
+    [display]="valueFilter().getDisplay()"
+    [attr.data-cy]="valueFilter().getDisplay() | displayTranslation"
     (changedConceptFilter)="updateConceptFilter($event)"
   ></num-concept>
-  } @if (valueFilter.isQuantitySet()) {
+  } @if (valueFilter().isQuantitySet()) {
   <num-quantity
     (quantityFilterChange)="updateQuantityFilter($event)"
-    [quantityFilter]="valueFilter.getQuantity()"
-    [display]="valueFilter.getDisplay()"
-    [attr.data-cy]="valueFilter.getDisplay() | displayTranslation"
+    [quantityFilter]="valueFilter().getQuantity()"
+    [display]="valueFilter().getDisplay()"
+    [attr.data-cy]="valueFilter().getDisplay() | displayTranslation"
   ></num-quantity>
   }
 </div>

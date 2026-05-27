@@ -1,12 +1,12 @@
 <div class="toggle-container">
-  <span [class.active]="selectedMode === 'search'" (click)="onModeChange('search')">
+  <span [class.active]="selectedMode() === 'search'" (click)="onModeChange('search')">
     {{ 'FEASIBILITY.SEARCH.SINGLE_SEARCH' | translate }}
   </span>
   <num-switch
-    [isChecked]="selectedMode === 'bulk-search'"
+    [isChecked]="selectedMode() === 'bulk-search'"
     (toggled)="onModeChange($event ? 'bulk-search' : 'search')"
   ></num-switch>
-  <span [class.active]="selectedMode === 'bulk-search'" (click)="onModeChange('bulk-search')">
+  <span [class.active]="selectedMode() === 'bulk-search'" (click)="onModeChange('bulk-search')">
     {{ 'FEASIBILITY.SEARCH.BULK_SEARCH' | translate }}
   </span>
 </div>

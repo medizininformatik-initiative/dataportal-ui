@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline" class="operator-part">
   <mat-select [(value)]="selectedUnitDisplay" (selectionChange)="onSelectionChange($event.value)">
-    @for (unit of allowedUnits; track unit) {
+    @for (unit of allowedUnits(); track unit) {
     <mat-option [value]="unit.getDisplay()">
       {{ unit.display }}
     </mat-option>

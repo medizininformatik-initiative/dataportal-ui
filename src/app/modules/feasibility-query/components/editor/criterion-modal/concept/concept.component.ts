@@ -2,15 +2,7 @@ import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilte
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { v4 as uuidv4 } from 'uuid'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, effect, input, output } from '@angular/core'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
@@ -37,15 +29,12 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
   ],
 })
-export class ConceptComponent implements OnChanges, OnInit {
-  @Input()
-  conceptFilter: ConceptFilter
+export class ConceptComponent {
+  readonly conceptFilter = input.required<ConceptFilter>()
 
-  @Output()
-  changedConceptFilter = new EventEmitter<ConceptFilter>()
+  readonly changedConceptFilter = output<ConceptFilter>()
 
-  @Input()
-  display: Display
+  readonly display = input<Display>(undefined)
 
   expanded = false
 
@@ -53,20 +42,16 @@ export class ConceptComponent implements OnChanges, OnInit {
 
   selectedConcepts: Concept[] = []
 
-  constructor() {}
-
-  ngOnInit() {
-    this.selectedConcepts = this.conceptFilter.getSelectedConcepts()
-  }
-
-  ngOnChanges(): void {
-    this.selectedConcepts = this.conceptFilter.getSelectedConcepts()
+  constructor() {
+    effect(() => {
+      this.selectedConcepts = this.conceptFilter().getSelectedConcepts()
+    })
   }
 
   public emitConceptFilter(selectedConcepts: Concept[]) {
     const newConceptFilter = new ConceptFilter(
       uuidv4(),
-      this.conceptFilter.getAllowedConceptUrls(),
+      this.conceptFilter().getAllowedConceptUrls(),
       selectedConcepts
     )
     this.changedConceptFilter.emit(newConceptFilter)

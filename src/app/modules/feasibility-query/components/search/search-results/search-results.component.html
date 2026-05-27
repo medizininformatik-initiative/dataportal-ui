@@ -1,7 +1,7 @@
-@if (searchResultsFound) {
+@if (searchResultsFound()) {
 <mat-drawer-container class="results-container">
   <mat-drawer #drawer position="end" mode="side" class="details-drawer">
-    @if (listItems) {
+    @if (listItems()) {
     <div class="details-wrapper">
       <div class="button-align-right">
         <button
@@ -16,14 +16,14 @@
       <div class="details-container">
         <num-list-item-details
           class="details-panel"
-          [listItemDetails$]="selectedDetails$"
+          [listItemDetails$]="selectedDetails$()"
           (selectedRelative)="selectedRelative.emit($event)"
         ></num-list-item-details>
       </div>
     </div>
     }
   </mat-drawer>
-  @if (listItems?.length > 0) {
+  @if (listItems()?.length > 0) {
   <mat-drawer-content
     infiniteScroll
     [infiniteScrollDistance]="0.5"
@@ -35,15 +35,15 @@
       (selectedRow)="selectedRow.emit($event)"
       (rowClicked)="rowClicked.emit($event)"
       (iconClicked)="iconClicked.emit($event)"
-      [tableData]="adaptedData"
+      [tableData]="adaptedData()"
     ></num-table>
   </mat-drawer-content>
   }
 </mat-drawer-container>
-} @if (!searchResultsFound) {
+} @if (!searchResultsFound()) {
 <div class="no-results-box">
   <num-placeholder-box
-    >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+    >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$() | async }}</strong
     >"</num-placeholder-box
   >
 </div>

@@ -14,7 +14,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -22,6 +21,7 @@ import {
   TemplateRef,
   ViewChild,
   inject,
+  input,
 } from '@angular/core'
 import { CriterionHeaderComponent } from '../criterion/header/criterion-header.component'
 import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
@@ -51,8 +51,7 @@ export class ReferenceEditComponent implements OnChanges, OnInit, AfterViewInit,
   private referenceCriterionEditService = inject(EditReferenceCriterionService)
   private cdr = inject(ChangeDetectorRef)
 
-  @Input()
-  referenceCriterion!: ReferenceCriterion
+  readonly referenceCriterion = input.required<ReferenceCriterion>()
 
   attributeFilters: AbstractAttributeFilters[] = []
 
@@ -106,15 +105,16 @@ export class ReferenceEditComponent implements OnChanges, OnInit, AfterViewInit,
   }
 
   private initializeFromCriterion(): void {
-    this.referenceCriterionEditService.initialize(this.referenceCriterion)
-    this.attributeFilters = this.referenceCriterion.getConceptAttributeFilters()
-    this.referenceFilter = this.referenceCriterion.getReferenceAttributeFilters()
-    this.quantityAttributeFilter = this.referenceCriterion.getQuantityAttributeFilters()
-    this.quantityValueFilter = this.referenceCriterion.getQuantityValueFilters()
+    const referenceCriterion = this.referenceCriterion()
+    this.referenceCriterionEditService.initialize(referenceCriterion)
+    this.attributeFilters = referenceCriterion.getConceptAttributeFilters()
+    this.referenceFilter = referenceCriterion.getReferenceAttributeFilters()
+    this.quantityAttributeFilter = referenceCriterion.getQuantityAttributeFilters()
+    this.quantityValueFilter = referenceCriterion.getQuantityValueFilters()
     this.conceptAttributeFilter = CloneAttributeFilter.deepCopyAttributeFilters(
-      this.referenceCriterion.getConceptAttributeFilters()
+      referenceCriterion.getConceptAttributeFilters()
     )
-    this.conceptValueFilter = this.referenceCriterion.getConceptValueFilters()
+    this.conceptValueFilter = referenceCriterion.getConceptValueFilters()
   }
 
   ngAfterViewInit() {
@@ -133,13 +133,13 @@ export class ReferenceEditComponent implements OnChanges, OnInit, AfterViewInit,
   }
 
   private setTimeRestrictionTemplate(): void {
-    if (this.referenceCriterion.getTimeRestriction()) {
+    if (this.referenceCriterion().getTimeRestriction()) {
       this.templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' })
     }
   }
 
   private setTermCodesTemplate(): void {
-    if (this.referenceCriterion.getTermCodes().length > 1) {
+    if (this.referenceCriterion().getTermCodes().length > 1) {
       this.templates.push({ template: this.termCodesTemplate, name: 'TERMCODE' })
     }
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 import { CheckboxCellData } from 'src/app/shared/models/TableData/cells/CheckboxCellData'
 import { CheckboxComponent } from '../../../checkbox/checkbox.component'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -12,9 +12,9 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [CheckboxComponent, MatTooltip, TranslateModule],
 })
 export class CheckboxCellComponent {
-  @Input() cell: CheckboxCellData
+  readonly cell = input.required<CheckboxCellData>()
 
-  @Output() checkboxChange = new EventEmitter<void>()
+  readonly checkboxChange = output<void>()
 
   onCheckboxClick(event: MouseEvent): void {
     event.stopPropagation()

@@ -1,9 +1,9 @@
 <div class="selection-box">
   <div class="criterion-display">
-    {{ criterion.getDisplay() | displayTranslation }}
+    {{ criterion().getDisplay() | displayTranslation }}
     <div class="information-display">
-      {{ criterion.getContext().getDisplay() }}
-      {{ criterion.getTermCodes()[0].getCode() }}
+      {{ criterion().getContext().getDisplay() }}
+      {{ criterion().getTermCodes()[0].getCode() }}
       {{ system | displayTranslation }}
     </div>
   </div>

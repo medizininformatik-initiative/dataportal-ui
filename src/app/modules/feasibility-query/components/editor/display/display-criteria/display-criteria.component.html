@@ -1,5 +1,5 @@
 <div class="criteria-container">
-  @if (!isEditable) {
+  @if (!isEditable()) {
   <div class="lock-div"></div>
   }
   <ng-container #outlet [ngTemplateOutlet]="content"> </ng-container>
@@ -12,7 +12,7 @@
       <div>
         <num-criteria-box
           [criterion]="criterionProvider.getOne(criterion)"
-          [isEditable]="isEditable"
+          [isEditable]="isEditable()"
         ></num-criteria-box>
         <ng-container>
           @if (!lastInner) {
@@ -37,7 +37,7 @@
     </div>
     }
   </ng-template>
-  @if ((criteriaArray$ | async).length === 0 && isEditable) {
+  @if ((criteriaArray$ | async).length === 0 && isEditable()) {
   <div class="no-selected-criteria">
     <div class="wrapper">
       <div class="wrapper-solid-dashed-box">

@@ -1,4 +1,4 @@
-@if (listItemDetails?.length > 0) { @for (item of listItemDetails; track item) {
+@if (listItemDetails()?.length > 0) { @for (item of listItemDetails(); track item) {
 <div (click)="getSelectedRelative(item)" class="mat-divider entry-layout">
   <div class="text-overflow display-name" [matTooltip]="item.getDisplay() | displayTranslation">
     {{ item.getDisplay() | displayTranslation }}

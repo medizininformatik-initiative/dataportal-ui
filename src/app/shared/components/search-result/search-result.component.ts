@@ -4,10 +4,10 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  Input,
   OnInit,
   ViewChild,
   inject,
+  input,
 } from '@angular/core'
 import { CriteriaListEntry } from '../../../model/Search/ListEntries/CriteriaListListEntry'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
@@ -34,11 +34,9 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
 
   @ViewChild('drawer') sidenav: MatDrawer
 
-  @Input()
-  searchTermListItems: CriteriaListEntry[] = []
+  readonly searchTermListItems = input<CriteriaListEntry[]>([])
 
-  @Input()
-  keysToSkip: string[] = []
+  readonly keysToSkip = input<string[]>([])
 
   private isInitialized = false
 

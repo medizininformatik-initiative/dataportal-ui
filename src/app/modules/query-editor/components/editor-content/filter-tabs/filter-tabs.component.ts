@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core'
+import { Component, OnInit, TemplateRef, input } from '@angular/core'
 import { NgTemplateOutlet } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTranslationPipe'
@@ -11,8 +11,7 @@ import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTrans
   imports: [NgTemplateOutlet, TranslateModule, DisplayTranslationPipe],
 })
 export class FilterTabsComponent implements OnInit {
-  @Input()
-  content: { template: TemplateRef<any>; name: string; context?: any }[]
+  readonly content = input.required<{ template: TemplateRef<any>; name: string; context?: any }[]>()
   selectedIndex = 0
 
   constructor() {}

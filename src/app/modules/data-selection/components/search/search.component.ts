@@ -19,11 +19,10 @@ import {
   OnInit,
   QueryList,
   ViewChildren,
-  Input,
-  Output,
   ElementRef,
-  EventEmitter,
   inject,
+  input,
+  output,
 } from '@angular/core'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
@@ -64,8 +63,8 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   private snackbarMessageService = inject(SnackbarMessageService)
 
   @ViewChildren(TreeComponent) numTrees!: QueryList<TreeComponent>
-  @Input() showActionBar
-  @Output() scrollClick = new EventEmitter()
+  readonly showActionBar = input(undefined)
+  readonly scrollClick = output()
   trees: TreeNode[]
 
   crtdlSubscription: Subscription

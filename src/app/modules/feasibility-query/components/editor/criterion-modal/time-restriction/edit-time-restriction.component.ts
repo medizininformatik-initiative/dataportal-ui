@@ -1,5 +1,5 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, OnInit, input, output } from '@angular/core'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
 import { TimeRestrictionNotSet } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
 import { TimerestrictionTypeSelectorComponent } from './timerestriction-type-selector/timerestriction-type-selector.component'
@@ -20,17 +20,15 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class EditTimeRestrictionComponent implements OnInit {
-  @Input()
-  timeRestriction: AbstractTimeRestriction
+  readonly timeRestriction = input.required<AbstractTimeRestriction>()
 
-  @Output()
-  timeRestrictionChanged = new EventEmitter<AbstractTimeRestriction>()
+  readonly timeRestrictionChanged = output<AbstractTimeRestriction>()
 
   selectedTimeRestrictionType: TimeRestrictionType
 
   ngOnInit() {
-    if (this.timeRestriction) {
-      this.selectedTimeRestrictionType = this.timeRestriction.getType()
+    if (this.timeRestriction()) {
+      this.selectedTimeRestrictionType = this.timeRestriction().getType()
     }
   }
 

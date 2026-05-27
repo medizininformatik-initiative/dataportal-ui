@@ -1,13 +1,5 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit, inject, input, output } from '@angular/core'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
@@ -42,14 +34,14 @@ export class QuantityComponent implements OnInit {
 
   FilterTypes: typeof FilterTypes = FilterTypes
 
-  @Input()
-  quantityFilter!: AbstractQuantityFilter
+  readonly quantityFilter = input.required<AbstractQuantityFilter>()
 
-  @Output()
-  quantityFilterChange = new EventEmitter<AbstractQuantityFilter>()
+  readonly quantityFilterChange = output<AbstractQuantityFilter>()
 
-  @Input()
-  display!: Display
+  readonly display = input.required<Display>()
+  /**
+   * UI conditions
+   */
 
   /**
    * UI conditions
@@ -79,22 +71,22 @@ export class QuantityComponent implements OnInit {
     this.setupFactoryService()
     this.initializaFilterType()
     this.initializeUnit()
-    this.selectedQuantityFilterComparator = this.quantityFilter.getComparator()
+    this.selectedQuantityFilterComparator = this.quantityFilter().getComparator()
   }
 
   private setupFactoryService() {
-    this.quantityFilterFactoryService.setAllowedUnits(this.quantityFilter.getAllowedUnits())
-    this.quantityFilterFactoryService.setPrecision(this.quantityFilter.getPrecision())
+    this.quantityFilterFactoryService.setAllowedUnits(this.quantityFilter().getAllowedUnits())
+    this.quantityFilterFactoryService.setPrecision(this.quantityFilter().getPrecision())
   }
 
   private initializaFilterType() {
-    const type: FilterTypes = this.quantityFilter.getType()
+    const type: FilterTypes = this.quantityFilter().getType()
     if (type === FilterTypes.QUANTITY_COMPARATOR) {
-      this.quantityComparatorFilter = this.quantityFilter as QuantityComparatorFilter
+      this.quantityComparatorFilter = this.quantityFilter() as QuantityComparatorFilter
       this.isComparatorFilter = true
     }
     if (type === FilterTypes.QUANTITY_RANGE) {
-      this.quantityRangeFilter = this.quantityFilter as QuantityRangeFilter
+      this.quantityRangeFilter = this.quantityFilter() as QuantityRangeFilter
       this.isBetweenFilter = true
     }
     if (type === FilterTypes.QUANTITY_NOT_SET) {
@@ -103,10 +95,10 @@ export class QuantityComponent implements OnInit {
   }
 
   private initializeUnit() {
-    if (this.quantityFilter.getSelectedUnit()) {
-      this.setSelectQuantityFilterUnit(this.quantityFilter.getSelectedUnit())
+    if (this.quantityFilter().getSelectedUnit()) {
+      this.setSelectQuantityFilterUnit(this.quantityFilter().getSelectedUnit())
     } else {
-      this.setSelectQuantityFilterUnit(this.quantityFilter.getAllowedUnits()[0])
+      this.setSelectQuantityFilterUnit(this.quantityFilter().getAllowedUnits()[0])
     }
   }
 

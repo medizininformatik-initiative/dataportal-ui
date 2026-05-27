@@ -1,7 +1,7 @@
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
 import { TimeRestrictionFactoryService } from 'src/app/service/Factory/TimeRestrictionFactory.service'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
+import { Component, OnInit, inject, input, output } from '@angular/core'
 import { DatePickerComponent } from '../../../../../../../shared/components/date-picker/date-picker.component'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -15,11 +15,9 @@ import { TranslateModule } from '@ngx-translate/core'
 export class BetweenFilterComponent implements OnInit {
   private timeRestrictionFactoryService = inject(TimeRestrictionFactoryService)
 
-  @Input()
-  betweenFilter: BetweenFilter
+  readonly betweenFilter = input<BetweenFilter>(undefined)
 
-  @Output()
-  betweenFilterChanged = new EventEmitter<BetweenFilter>()
+  readonly betweenFilterChanged = output<BetweenFilter>()
 
   beforeDate: string
 
@@ -38,8 +36,8 @@ export class BetweenFilterComponent implements OnInit {
   }
 
   private initializeDates(): void {
-    this.beforeDate = this.betweenFilter.getBeforeDate()
-    this.afterDate = this.betweenFilter.getAfterDate()
+    this.beforeDate = this.betweenFilter().getBeforeDate()
+    this.afterDate = this.betweenFilter().getAfterDate()
   }
 
   public onBeforeDateChange(selectedDate: string) {

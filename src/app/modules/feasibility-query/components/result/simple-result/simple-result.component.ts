@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, inject } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, output } from '@angular/core'
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
@@ -63,8 +63,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   totalNumberOfPatients: number
 
-  @Output()
-  resultLoaded: EventEmitter<boolean> = new EventEmitter<boolean>()
+  readonly resultLoaded = output<boolean>()
 
   feasibilityQuery: FeasibilityQuery
 

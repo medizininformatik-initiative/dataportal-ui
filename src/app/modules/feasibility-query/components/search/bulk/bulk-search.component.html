@@ -28,7 +28,7 @@
     @for (searchFilter of searchFilters$ | async; track searchFilter) {
     <num-search-filter
       [filter]="searchFilter"
-      (selectedFilterChanged)="setElasticSearchFilter($event)"
+      (filterChange)="setElasticSearchFilter($event)"
       [multiSelect]="false"
     ></num-search-filter>
     }

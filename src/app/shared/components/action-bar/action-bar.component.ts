@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, input } from '@angular/core'
 import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component'
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
@@ -23,9 +23,9 @@ export class ActionBarComponent implements OnInit {
   private uploadService = inject(UploadService)
   private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
 
-  @Input() showUpload = true
-  @Input() showDownload = true
-  @Input() showSave = true
+  readonly showUpload = input(true)
+  readonly showDownload = input(true)
+  readonly showSave = input(true)
 
   downloadAllowed$: Observable<boolean>
 
@@ -49,7 +49,7 @@ export class ActionBarComponent implements OnInit {
   private canDownload(): void {
     this.downloadAllowed$ = this.feasibilityQueryValidationService
       .getIsFeasibilityQueryValid()
-      .pipe(map((isValid) => isValid && this.showDownload))
+      .pipe(map((isValid) => isValid && this.showDownload()))
   }
 
   public downloadCRTDL(): void {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, input } from '@angular/core'
 import { DisplayCellData } from 'src/app/shared/models/TableData/cells/DisplayCellData'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -13,5 +13,5 @@ import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe
   imports: [FontAwesomeModule, MatTooltip, TranslateModule, DisplayTranslationPipe],
 })
 export class DisplayCellComponent {
-  @Input() cell: DisplayCellData
+  readonly cell = input.required<DisplayCellData>()
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
+import { Component, OnInit, inject, input, output } from '@angular/core'
 import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { ListItemDetailService } from 'src/app/shared/service/Menu/ListItemDetails/ListItemDetails.service'
@@ -19,16 +19,14 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   private menuService = inject(ListItemDetailService)
   private criteriaByIdSearchService = inject(CriteriaByIdSearchService)
 
-  @Input()
-  listItemDetails: SearchTermRelatives[]
+  readonly listItemDetails = input.required<SearchTermRelatives[]>()
 
   menuItemsTrue: MenuItemInterface[] = []
   menuItemsFalse: MenuItemInterface[] = []
 
   terminology = ''
 
-  @Output()
-  selectedRelative: EventEmitter<CriteriaListEntry> = new EventEmitter()
+  readonly selectedRelative = output<CriteriaListEntry>()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

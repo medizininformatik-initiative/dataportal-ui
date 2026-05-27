@@ -1,16 +1,24 @@
 import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter'
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
+import { HeaderComponent } from '../../../../shared/components/header/header.component'
+import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
 import { map, Observable, of, Subscription } from 'rxjs'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { SearchResultsComponent } from './search-results/search-results.component'
+import { SearchActionBarComponent } from './action-bar/search/search-action-bar.component'
+import { SearchBarComponent } from './search-bar/search-bar.component'
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
+import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component'
 import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component'
+import { SearchModeToggleComponent } from '../../../../shared/components/search-mode-toggle/search-mode-toggle.component'
+import { SearchResultsComponent } from './search-results/search-results.component'
 import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails'
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service'
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service'
@@ -18,6 +26,7 @@ import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTab
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -28,16 +37,6 @@ import {
   ViewChild,
   inject,
 } from '@angular/core'
-import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service'
-import { filter } from 'lodash'
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import { HeaderComponent } from '../../../../shared/components/header/header.component'
-import { SearchModeToggleComponent } from '../../../../shared/components/search-mode-toggle/search-mode-toggle.component'
-import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
-import { SearchBarComponent } from './search-bar/search-bar.component'
-import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component'
-import { SearchActionBarComponent } from './action-bar/search/search-action-bar.component'
-import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-feasibility-query-search',

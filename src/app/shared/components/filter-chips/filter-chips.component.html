@@ -1,6 +1,6 @@
-@if (filterChips.length > 0) { @for (filterChip of filterChips; track filterChip) {
+@if (hasFilterChips()) { @for (filterChip of filterChips(); track filterChip) {
 <div class="filter-wrapper">
-  @if (displayBlockTriangle) {
+  @if (displayBlockTriangle()) {
   <div
     data-cy="{{ filterChip.type | displayTranslation }}"
     class="block"

@@ -1,5 +1,5 @@
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, input } from '@angular/core'
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
@@ -51,11 +51,9 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
   private appSettingsProvider = inject(AppSettingsProviderService)
   private dataSelectionProviderService = inject(DataSelectionProviderService)
 
-  @Input()
-  profile: DataSelectionProfile
+  readonly profile = input<DataSelectionProfile>(undefined)
 
-  @Input()
-  isEditable: boolean
+  readonly isEditable = input<boolean>(undefined)
 
   display: string
   label: Display
@@ -86,8 +84,8 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
     this.getSelectedReferenceFields()
     this.getMenuItems()
     this.displayIsReferenceSet()
-    this.display = this.profile.getDisplay().getOriginal()
-    this.label = this.profile.getLabel()
+    this.display = this.profile().getDisplay().getOriginal()
+    this.label = this.profile().getLabel()
   }
 
   ngOnDestroy(): void {
@@ -95,7 +93,7 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
   }
 
   public getFilterChips(): void {
-    const selectedFields = this.profile.getProfileFields().getSelectedBasicFields()
+    const selectedFields = this.profile().getProfileFields().getSelectedBasicFields()
     this.generateAndStoreFilterChips(selectedFields)
     this.getFilterChipsForProfileFilters()
   }
@@ -106,10 +104,11 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
   }
 
   private getFilterChipsForProfileFilters(): void {
-    if (this.profile.getFilters()) {
+    const profile = this.profile()
+    if (profile.getFilters()) {
       this.filtersFilterChips$ = of(
         this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(
-          this.profile.getFilters()
+          profile.getFilters()
         )
       )
     } else {
@@ -130,7 +129,7 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
               .some((referenceField) =>
                 referenceField
                   .getLinkedProfileIds()
-                  .some((linkedProfileId) => this.profile.getId() === linkedProfileId)
+                  .some((linkedProfileId) => this.profile().getId() === linkedProfileId)
               )
           )
           return this.isReferenced
@@ -147,13 +146,13 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
    * Retrieves all unlinked required or recommended reference fields from the profiles.
    */
   private getRequiredOrRecommendedReferences(): void {
-    const fields = this.profile.getProfileFields()
+    const fields = this.profile().getProfileFields()
     this.unlinkedRequiredOrRecommendedReferences =
       fields.getUnlinkedRequiredOrRecommendedReferences()
   }
 
   public getSelectedReferenceFields(): void {
-    this.selectedReferenceFields = this.profile.getProfileFields().getSelectedReferenceFields()
+    this.selectedReferenceFields = this.profile().getProfileFields().getSelectedReferenceFields()
   }
 
   public deleteProfile(id: string): void {
@@ -164,7 +163,7 @@ export class DataSelectionBoxesComponent implements OnInit, OnDestroy {
   }
   private getMenuItems() {
     const isMainProfile =
-      this.appSettingsProvider.getDsePatientProfileUrl() === this.profile.getUrl()
+      this.appSettingsProvider.getDsePatientProfileUrl() === this.profile().getUrl()
     this.menuItems = this.menuService.getMenuItemsForDataSelection(isMainProfile)
   }
 }

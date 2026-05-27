@@ -1,5 +1,5 @@
 <div class="container">
-  <num-criterion-header [criterion]="referenceCriterion" class="header-container">
+  <num-criterion-header [criterion]="referenceCriterion()" class="header-container">
   </num-criterion-header>
   @if (templates.length > 0) {
   <num-filter-tabs class="filter-tabs-container" [content]="templates"></num-filter-tabs>
@@ -7,7 +7,7 @@
 
   <ng-template #timeRestriction>
     <num-edit-time-restriction
-      [timeRestriction]="referenceCriterion.getTimeRestriction()"
+      [timeRestriction]="referenceCriterion().getTimeRestriction()"
       (timeRestrictionChanged)="updateTimeRestriction($event)"
     ></num-edit-time-restriction>
   </ng-template>
@@ -25,8 +25,8 @@
   <ng-template #termCodes>
     <num-edit-termcode
       class="height-100"
-      [termCodes]="referenceCriterion.getTermCodes()"
-      [context]="referenceCriterion.getContext()"
+      [termCodes]="referenceCriterion().getTermCodes()"
+      [context]="referenceCriterion().getContext()"
       (changedTermCodes)="updateTermCodes($event)"
     >
     </num-edit-termcode>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit, input } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { Subscription } from 'rxjs'
 import { SectionNameComponent } from '../../../../../shared/components/section-name/section-name.component'
@@ -25,7 +25,7 @@ export class DisplayFeasibilityQueryComponent implements OnInit {
   groupType: 'Inclusion' | 'Exclusion'
   querySubscription: Subscription
 
-  @Input() isEditable: boolean
+  readonly isEditable = input<boolean>(undefined)
 
   constructor() {}
 

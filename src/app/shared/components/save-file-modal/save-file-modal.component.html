@@ -10,7 +10,7 @@
       [(ngModel)]="title"
       placeholder="{{ 'SHARED_COMPONENTS.SAVE_MODAL.LABEL' | translate }}"
     />
-    @if (isCommentRequired) {
+    @if (isCommentRequired()) {
     <textarea
       class="field-input field-textarea"
       [(ngModel)]="comment"

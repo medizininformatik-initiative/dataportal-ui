@@ -2,16 +2,7 @@ import { DataSelectionProviderService } from 'src/app/modules/data-selection/ser
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { map, Observable, Subscription } from 'rxjs'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core'
+import { Component, ElementRef, OnDestroy, OnInit, inject, input, output } from '@angular/core'
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { MatStepper, MatStep, MatStepLabel } from '@angular/material/stepper'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
@@ -47,9 +38,8 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
   private appSettingsProviderService = inject(AppSettingsProviderService)
 
-  @Input() showActionBar
-  @Output()
-  scrollClick = new EventEmitter()
+  readonly showActionBar = input(undefined)
+  readonly scrollClick = output()
 
   isDataSelectionExistent$: Observable<boolean>
   isCohortExistent$: Observable<boolean>

@@ -9,13 +9,13 @@
   @if (valueSetUrl?.length > 1) {
   <num-search-filter
     [filter]="searchFilter"
-    (selectedFilterChanged)="setValueSet($event)"
+    (filterChange)="setValueSet($event)"
   ></num-search-filter>
   } @if (searchResults$ | async; as searchResults) {
   <num-concept-filter-table
     class="overflow"
     [valueSetUrl]="valueSetUrl"
-    [conceptFilterId]="conceptFilterId"
+    [conceptFilterId]="conceptFilterId()"
     (selectedConcept)="toggleConceptSelection($event)"
   ></num-concept-filter-table>
   }

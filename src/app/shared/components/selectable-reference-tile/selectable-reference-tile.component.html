@@ -1,8 +1,8 @@
 <div class="link-field-container">
   <div class="link-info">
     <num-checkbox
-      [checked]="possibleReference.isSelected"
-      (checkedChange)="checkboxSelected(possibleReference)"
+      [checked]="possibleReference().isSelected"
+      (checkedChange)="checkboxSelected(possibleReference())"
     ></num-checkbox>
     {{ label }} ( {{ display | displayTranslation }})
   </div>

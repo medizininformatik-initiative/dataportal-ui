@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
-import { Directive, ElementRef, HostListener, Input, OnInit, inject } from '@angular/core'
+import { Directive, ElementRef, HostListener, OnInit, inject, input } from '@angular/core'
 import { FeasibilityQueryProviderService } from '../../../service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery'
 import { StageProviderService } from '../../../service/Provider/StageProvider.service'
@@ -13,7 +13,7 @@ export class DropGroupDirective implements OnInit {
   private stageProviderService = inject(StageProviderService)
   private elementRef = inject(ElementRef)
 
-  @Input() groupType: string
+  readonly groupType = input<string>(undefined)
 
   criteria: string[][] = []
   feasibilityQuery: FeasibilityQuery
@@ -24,7 +24,7 @@ export class DropGroupDirective implements OnInit {
 
   @HostListener('cdkDropListDropped', ['$event'])
   onDrop(event: CdkDragDrop<any[]>) {
-    const groupType = this.groupType || this.elementRef.nativeElement.getAttribute('groupType')
+    const groupType = this.groupType() || this.elementRef.nativeElement.getAttribute('groupType')
     const droppedCriterion: string = event.item.data
     if (event.container.id !== event.previousContainer.id) {
       switch (event.container.id) {

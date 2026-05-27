@@ -3,16 +3,7 @@ import { CodeableConceptBulkEntry } from '../../../../model/Search/ListEntries/C
 import { CodeableConceptBulkFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkFoundEntryAdapter'
 import { CodeableConceptBulkNotFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkNotFoundEntryAdapter'
 import { CodeableConceptBulkResultList } from 'src/app/model/Search/ResultList/CodeableConceptBulkResultList'
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core'
+import { Component, OnChanges, OnDestroy, OnInit, inject, input, output } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
 import { Observable, of, Subscription, tap } from 'rxjs'
@@ -50,11 +41,11 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
   private bulkSearchService = inject(BulkCodeableConceptSearchEngineService)
   private conceptSelectionService = inject(ConceptSelectionHelperService)
 
-  @Input() valueSetUrl: string[]
-  @Input() conceptFilterId: string
-  @Input() preSelectedConcepts: Concept[] = []
-  @Input() tabChanged = false
-  @Output() changedSelectedConcepts = new EventEmitter<Concept[]>()
+  readonly valueSetUrl = input<string[]>(undefined)
+  readonly conceptFilterId = input<string>(undefined)
+  readonly preSelectedConcepts = input<Concept[]>([])
+  readonly tabChanged = input(false)
+  readonly changedSelectedConcepts = output<Concept[]>()
 
   searchResults$: Observable<CodeableConceptBulkResultList> = of(undefined)
   searchFilter: SearchFilter
@@ -66,6 +57,7 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
   private subscription = new Subscription()
   foundCount: number
   notFoundCount: number
+  private localSelectedConcepts: Concept[] = []
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -74,16 +66,16 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
 
   ngOnChanges(): void {
     this.initializeComponent()
-    if (this.tabChanged) {
+    if (this.tabChanged()) {
       this.foundTableData = null
       this.notFoundTableData = null
       this.foundCount = 0
       this.notFoundCount = 0
-      this.tabChanged = false
     }
   }
 
   ngOnInit(): void {
+    this.localSelectedConcepts = [...this.preSelectedConcepts()]
     this.initializePreSelectedConcepts()
   }
 
@@ -105,17 +97,18 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   private initializeTerminologyFilter(): void {
-    const hasValueSetUrls = this.valueSetUrl?.length > 0
+    const valueSetUrl = this.valueSetUrl()
+    const hasValueSetUrls = valueSetUrl?.length > 0
     if (!hasValueSetUrls) {
       return
     }
 
-    this.searchFilter = this.conceptSelectionService.createTerminologyFilter(this.valueSetUrl)
+    this.searchFilter = this.conceptSelectionService.createTerminologyFilter(valueSetUrl)
   }
 
   private initializePreSelectedConcepts(): void {
-    if (this.preSelectedConcepts.length > 0) {
-      this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts)
+    if (this.preSelectedConcepts().length > 0) {
+      this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts())
     }
   }
 
@@ -155,15 +148,15 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   private toggleConceptSelection(concept: Concept[]): void {
-    this.preSelectedConcepts = this.conceptSelectionService.addConceptsToSelection(
+    this.localSelectedConcepts = this.conceptSelectionService.addConceptsToSelection(
       concept,
-      this.preSelectedConcepts
+      this.localSelectedConcepts
     )
     this.emitConceptChanges()
   }
 
   private emitConceptChanges(): void {
-    const clonedConcepts = this.conceptSelectionService.cloneConcepts(this.preSelectedConcepts)
+    const clonedConcepts = this.conceptSelectionService.cloneConcepts(this.localSelectedConcepts)
     this.changedSelectedConcepts.emit(clonedConcepts)
   }
 
@@ -177,7 +170,7 @@ export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges 
     const concept = new Concept(entry.getDisplay(), entry.getTermCode())
     const updatedSelectedConcepts = this.conceptSelectionService.toggleConceptSelection(
       concept,
-      this.preSelectedConcepts
+      this.localSelectedConcepts
     )
 
     this.changedSelectedConcepts.emit(updatedSelectedConcepts)

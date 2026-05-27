@@ -3,9 +3,9 @@
     <ng-content></ng-content>
   </div>
   <div>
-    @if (displaySaveButtons) {
+    @if (displaySaveButtons()) {
     <div class="button-row">
-      <num-button type="blue" class="select-button" [isDisabled]="disabled" (click)="save()">
+      <num-button type="blue" class="select-button" [isDisabled]="disabled()" (click)="save()">
         {{ 'SHARED_COMPONENTS.MODAL.BUTTON.APPLY' | translate }}
       </num-button>
       <num-button type="blue" class="select-button" (click)="cancel()">

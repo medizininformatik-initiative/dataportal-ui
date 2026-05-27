@@ -4,7 +4,7 @@
     (click)="addItemsToStage()"
     matBadgePosition="above after"
     class="margin-right-20"
-    [isDisabled]="(disabledAddToStageButton | async) || resultType === 'NOTFOUND'"
+    [isDisabled]="(disabledAddToStageButton | async) || resultType() === 'NOTFOUND'"
     matTooltip="{{ 'FEASIBILITY.BULK_SEARCH.ACTION_BAR.ADD_TO_STAGE_TOOLTIP' | translate }}"
   >
     {{ 'FEASIBILITY.BULK_SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, input } from '@angular/core'
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { FilterChipData } from '../../models/FilterChips/FilterChipData'
@@ -33,11 +33,9 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
   private menuService = inject(ReferenceCriterionMenuItems)
   private filterChipsService = inject(CriterionFilterChipService)
 
-  @Input()
-  referenceCriterion: ReferenceCriterion
+  readonly referenceCriterion = input<ReferenceCriterion>(undefined)
 
-  @Input()
-  criterionId: string
+  readonly criterionId = input<string>(undefined)
 
   menuItems: MenuItemInterface[] = []
 
@@ -54,7 +52,7 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
     this.getMenuItems()
     this.getFilterChips()
     this.translatedSystem = TerminologySystemDictionary.getNameByUrl(
-      this.referenceCriterion.getTermCodes()[0].getSystem()
+      this.referenceCriterion().getTermCodes()[0].getSystem()
     )
   }
 
@@ -64,7 +62,7 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
 
   private getFilterChips() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(
-      this.referenceCriterion
+      this.referenceCriterion()
     )
   }
 }

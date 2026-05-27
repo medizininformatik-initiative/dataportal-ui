@@ -1,4 +1,4 @@
-<mat-nav-list [ngClass]="{ collapsed: !isSideMenuExpanded }">
+<mat-nav-list [ngClass]="{ collapsed: isCollapsed() }">
   @for (navItem of mainNavItems; track navItem) {
   <a
     class="num-mat-list-item"
@@ -7,14 +7,14 @@
     [disableRipple]="true"
     [routerLink]="navItem.routeTo"
     (click)="menuItemClicked($event, navItem)"
-    [matTooltip]="!isSideMenuExpanded ? (navItem.translationKey | translate) : null"
+    [matTooltip]="isCollapsed() ? (navItem.translationKey | translate) : null"
     matTooltipPosition="right"
   >
     @if (navItem.icon) {
     <fa-icon size="lg" [fixedWidth]="true" [icon]="navItem.icon"></fa-icon>
     } @if (navItem.svgIcon) {
     <mat-icon class="nav-svg-icon" [svgIcon]="navItem.svgIcon"></mat-icon>
-    } @if (isSideMenuExpanded) {
+    } @if (isSideMenuExpanded()) {
     <div class="navItem-font">
       {{ navItem.translationKey | translate }}
     </div>
@@ -29,9 +29,9 @@
       mat-icon-button
       (click)="toggleMenu()"
     >
-      @if (isSideMenuExpanded) {
+      @if (isSideMenuExpanded()) {
       <fa-icon size="1x" icon="angle-double-left"></fa-icon>
-      } @if (!isSideMenuExpanded) {
+      } @if (isCollapsed()) {
       <fa-icon size="1x" icon="angle-double-right"></fa-icon>
       }
     </button>

@@ -3,7 +3,7 @@
   <num-criteria-box
     class="flex-grow"
     [criterion]="criterion"
-    [isEditable]="isEditable"
+    [isEditable]="isEditable()"
   ></num-criteria-box>
   } @if (($criteriaArray | async).length === 0) {
   <div class="no-selected-criteria">

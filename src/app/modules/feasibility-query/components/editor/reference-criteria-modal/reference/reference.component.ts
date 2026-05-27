@@ -8,15 +8,7 @@ import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit, inject, input, output } from '@angular/core'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
@@ -60,20 +52,15 @@ export class ReferenceComponent implements OnInit {
   private snackbarMessageService = inject(SnackbarMessageService)
   private criteriaSetSearchService = inject(CriteriaSetSearchService)
 
-  @Input()
-  referenceFilterUri: string
+  readonly referenceFilterUri = input<string>(undefined)
 
-  @Input()
-  attributeCode: TerminologyCode
+  readonly attributeCode = input<TerminologyCode>(undefined)
 
-  @Input()
-  selectedReferenceCriterion: ReferenceCriterion[] = []
+  readonly selectedReferenceCriterion = input<ReferenceCriterion[]>([])
 
-  @Output()
-  selectedReferenceIds = new EventEmitter<string>()
+  readonly selectedReferenceIds = output<string>()
 
-  @Output()
-  changedSelectedReferences = new EventEmitter<ReferenceCriterion[]>()
+  readonly changedSelectedReferences = output<ReferenceCriterion[]>()
 
   tableData$: Observable<TableData | null>
 
@@ -91,7 +78,7 @@ export class ReferenceComponent implements OnInit {
   ngOnInit() {
     this.searchText$ = this.activeSearchTermService.getActiveSearchTerm()
     this.tableData$ = this.criteriaSetSearchService
-      .getSearchResults([this.referenceFilterUri])
+      .getSearchResults([this.referenceFilterUri()])
       .pipe(
         map((results) => {
           const items = results?.getResults() ?? []
@@ -102,12 +89,13 @@ export class ReferenceComponent implements OnInit {
   }
 
   public startElasticSearch(searchtext: string): void {
-    if (!this.referenceFilterUri?.length) {
+    const referenceFilterUri = this.referenceFilterUri()
+    if (!referenceFilterUri?.length) {
       console.warn('No referenceCriteriaUrl was provided')
       return
     }
     this.searchtText = searchtext
-    this.criteriaSetSearchService.search(searchtext, [this.referenceFilterUri]).subscribe()
+    this.criteriaSetSearchService.search(searchtext, [referenceFilterUri]).subscribe()
   }
 
   public emitIds(item: TableRowData): void {
@@ -118,7 +106,7 @@ export class ReferenceComponent implements OnInit {
 
   public loadMoreCriteriaSetResults(): void {
     this.criteriaSetSearchService
-      .loadNextPage(this.searchtText, [this.referenceFilterUri])
+      .loadNextPage(this.searchtText, [this.referenceFilterUri()])
       .subscribe()
   }
 

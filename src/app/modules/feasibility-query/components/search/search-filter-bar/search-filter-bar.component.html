@@ -1,8 +1,8 @@
 <div class="filter-container">
-  @for (searchFilter of searchFilters$ | async; track trackByFilterType($index, searchFilter)) {
+  @for (searchFilter of searchFilters$() | async; track trackByFilterType($index, searchFilter)) {
   <num-search-filter
     [filter]="searchFilter"
-    (selectedFilterChanged)="filterChanged.emit($event)"
+    (filterChange)="filterChanged.emit($event)"
     (isOpen)="isOpen.emit($event)"
   ></num-search-filter>
   }
