@@ -47,13 +47,13 @@
     class="height-100"
     [label]="
       'EDITOR.CONTENT.TAB_LABEL.SELECTED_REFERENCES'
-        | translate : { count: selectedReferenceCriterion.length }
+        | translate : { count: selectedReferenceCriterion().length }
     "
-    [disabled]="selectedReferenceCriterion.length === 0"
+    [disabled]="selectedReferenceCriterion().length === 0"
   >
-    @if (selectedReferenceCriterion.length > 0) {
+    @if (selectedReferenceCriterion().length > 0) {
     <num-selected-reference-list
-      [selectedReferences]="selectedReferenceCriterion"
+      [selectedReferences]="selectedReferenceCriterion()"
       (changedSelectedReferences)="updateSelectedReferences($event)"
     ></num-selected-reference-list>
     }

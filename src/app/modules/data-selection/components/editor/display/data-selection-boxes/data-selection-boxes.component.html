@@ -82,14 +82,16 @@
       </ng-container>
     </div>
   </div>
-  }
+  } @if (isEditable()) {
   <div class="menu-box">
     <num-menu [menuItems]="menuItems()" [id]="profile().getId()"></num-menu>
   </div>
+  }
 </div>
-@if (unlinkedRequiredOrRecommendedReferences().length > 0 || selectedReferenceFields().length > 0) {
+@if ((unlinkedRequiredOrRecommendedReferences().length > 0 && isEditable()) ||
+selectedReferenceFields().length > 0) {
 <num-linked-badge></num-linked-badge>
-} @if (unlinkedRequiredOrRecommendedReferences().length > 0) { @for (reference of
+} @if (unlinkedRequiredOrRecommendedReferences().length > 0 && isEditable()) { @for (reference of
 unlinkedRequiredOrRecommendedReferences(); track reference) {
 <div class="selection-box-container">
   <num-profile-reference-tile
@@ -102,9 +104,9 @@ unlinkedRequiredOrRecommendedReferences(); track reference) {
 selectedReferenceFields(); track selectedReference) {
 <div class="selection-box-container">
   <num-profile-reference-tile
-    [filterChips]="profileRefrenceChips"
     [referenceField]="selectedReference"
     [parentId]="profile().getId()"
+    [isEditable]="isEditable()"
   ></num-profile-reference-tile>
 </div>
 } }

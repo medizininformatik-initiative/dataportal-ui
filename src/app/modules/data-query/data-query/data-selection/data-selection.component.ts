@@ -38,16 +38,11 @@ export class DataSelectionComponent implements OnInit, OnDestroy {
   private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
   private appSettingsProviderService = inject(AppSettingsProviderService)
 
-  readonly showActionBar = input(undefined)
-  readonly scrollClick = output()
-
   isDataSelectionExistent$: Observable<boolean>
   isCohortExistent$: Observable<boolean>
 
   emailLink: string
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
   constructor() {}
 
   ngOnInit(): void {

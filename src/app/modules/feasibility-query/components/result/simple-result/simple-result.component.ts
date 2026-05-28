@@ -67,8 +67,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   feasibilityQuery: FeasibilityQuery
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
   constructor() {
     this.queryResultRateLimit$ = this.feasibilityQueryResultService.getDetailedResultRateLimit()
     this.pollingTime = this.appSettingsProviderService.getPollingTimeUi()

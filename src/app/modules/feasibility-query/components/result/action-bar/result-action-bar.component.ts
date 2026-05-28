@@ -19,9 +19,6 @@ export class ResultActionBarComponent implements OnInit, OnDestroy {
 
   saveDataQueryModalSubscription: Subscription
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
   constructor() {}
 
   ngOnInit() {}

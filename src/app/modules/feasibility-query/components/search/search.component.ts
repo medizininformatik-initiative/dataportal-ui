@@ -31,7 +31,6 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
   inject,
@@ -55,7 +54,6 @@ import {
   ],
 })
 export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, AfterViewInit {
-  elementRef = inject(ElementRef)
   private cdr = inject(ChangeDetectorRef)
   private searchFilterProvider = inject(FilterProvider)
   private selectedTableItemsService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
@@ -72,7 +70,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   listItems: Array<CriteriaListEntry> = []
   adaptedData: TableData
   private subscription: Subscription
-  private isInitialized = false
 
   elasticSearchEnabled = false
 
@@ -96,9 +93,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   searchButtonEnabled$: Observable<boolean> = of(true)
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
   constructor() {
     this.subscription = this.criteriaSearchService
       .getSearchResults()
@@ -114,7 +108,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   ngAfterViewInit() {
-    this.isInitialized = true
     this.cdr.detectChanges()
   }
 

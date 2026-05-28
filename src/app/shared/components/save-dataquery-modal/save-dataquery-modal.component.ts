@@ -23,8 +23,6 @@ export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
 
   validatedDataQuery$: Observable<{ feasibilityQuery: boolean; dataSelection: boolean }>
 
-  readonly isCommentRequired = input(false)
-
   readonly save = output<SaveDataModal>()
 
   readonly cancelled = output<void>()

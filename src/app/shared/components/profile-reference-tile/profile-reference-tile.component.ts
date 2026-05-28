@@ -41,6 +41,7 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   readonly unlinkedRequiredOrRecommendedReferences = input<ReferenceField>(undefined)
   readonly parentId = input<string>(undefined)
   readonly deleteTrigger = output<boolean>()
+  readonly isEditable = input<boolean>(true)
 
   filterChips: ProfileReferenceChipData[] = []
   type: string
