@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common'
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop'
-import { Component, inject, input, OnInit } from '@angular/core'
+import { Component, computed, inject, input, OnInit } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
 import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service'
@@ -44,40 +44,32 @@ export class CriteriaBoxComponent implements OnInit {
   private filterChipsService = inject(CriterionFilterChipService)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
 
-  readonly criterion = input<Criterion>()
+  readonly criterion = input.required<Criterion>()
   readonly isEditable = input<boolean>()
 
-  menuItems: MenuItemInterface[] = []
+  readonly menuItems = this.menuService.getMenuItemsForCriterion()
 
   referenceCriterion: ReferenceCriterion[] = []
 
   $filterChips: Observable<FilterChipData[]> = of([])
 
-  system!: Display
+  /**
+   * The system is derived from the first term code of the criterion, as this is mandatory. The system is then looked up in the TerminologySystemDictionary to get a user-friendly name for display purposes.
+   */
+  readonly system = computed(() => {
+    return TerminologySystemDictionary.getNameByUrl(this.criterion().getTermCodes()[0].getSystem())
+  })
 
-  isFilterRequired!: boolean
+  /**
+   * A filter is considered required if the criterion does not have a required filter set. This is determined by the getIsRequiredFilterSet method of the Criterion class. If this method returns false, it means that there are required filters that have not been set, and thus the criterion is considered to be in a state where required filters are missing.
+   */
+  readonly isFilterRequired = computed(() => !this.criterion().getIsRequiredFilterSet())
 
-  warningSignUrl = 'assets/img/alert-blue-white.png'
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
+  readonly warningSignUrl = 'assets/img/alert-blue-white.png'
 
   constructor() {}
 
   ngOnInit() {
-    this.system = TerminologySystemDictionary.getNameByUrl(
-      this.criterion().getTermCodes()[0].getSystem()
-    )
-    this.getMenuItems()
-    this.getFilterChips()
-    this.isFilterRequired = !this.criterion().getIsRequiredFilterSet()
-  }
-
-  private getMenuItems() {
-    this.menuItems = this.menuService.getMenuItemsForCriterion()
-  }
-
-  private getFilterChips() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion())
   }
 

@@ -15,11 +15,11 @@
     <div class="info-section">
       <div class="num-info-item">
         {{ criterion().getContext().getDisplay() }}, {{ criterion().getTermCodes()[0].getCode() }},
-        {{ system | displayTranslation }}
+        {{ system() | displayTranslation }}
       </div>
     </div>
     <div class="filter-chips-container">
-      @if (isFilterRequired) {
+      @if (isFilterRequired()) {
       <div class="warning-row">
         <img [src]="warningSignUrl" class="img-layout" />
         <span class="warning-message">
