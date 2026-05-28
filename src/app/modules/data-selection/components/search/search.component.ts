@@ -17,12 +17,11 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  QueryList,
-  ViewChildren,
   ElementRef,
   inject,
   input,
   output,
+  viewChildren,
 } from '@angular/core'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
@@ -62,7 +61,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   private appSettingsProviderService = inject(AppSettingsProviderService)
   private snackbarMessageService = inject(SnackbarMessageService)
 
-  @ViewChildren(TreeComponent) numTrees!: QueryList<TreeComponent>
+  readonly numTrees = viewChildren(TreeComponent)
   readonly showActionBar = input(undefined)
   readonly scrollClick = output()
   trees: TreeNode[]

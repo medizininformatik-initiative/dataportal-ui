@@ -34,8 +34,8 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
-  ViewChild,
   inject,
+  viewChild,
 } from '@angular/core'
 
 @Component({
@@ -68,7 +68,7 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   private navigationHelperService = inject(NavigationHelperService)
   private criteriaFilterFetchService = inject(CriteriaFilterFetchService)
 
-  @ViewChild('searchResults') searchResultsComponent: SearchResultsComponent
+  readonly searchResultsComponent = viewChild<SearchResultsComponent>('searchResults')
   listItems: Array<CriteriaListEntry> = []
   adaptedData: TableData
   private subscription: Subscription
@@ -264,11 +264,11 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   public openSidenav(): void {
-    this.searchResultsComponent?.openSidenav()
+    this.searchResultsComponent()?.openSidenav()
   }
 
   public closeSidenav(): void {
-    this.searchResultsComponent?.closeSidenav()
+    this.searchResultsComponent()?.closeSidenav()
   }
 
   public loadMoreCriteriaSearchResults() {

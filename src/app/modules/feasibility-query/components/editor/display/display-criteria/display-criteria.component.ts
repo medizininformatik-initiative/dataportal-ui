@@ -2,11 +2,11 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewChild,
   ViewContainerRef,
   TemplateRef,
   inject,
   input,
+  viewChild,
 } from '@angular/core'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
@@ -36,8 +36,8 @@ export class DisplayCriteriaComponent implements OnInit, OnDestroy {
   private queryService = inject(FeasibilityQueryProviderService)
   criterionProvider = inject(CriterionProviderService)
 
-  @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef
-  @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>
+  readonly outletRef = viewChild('outlet', { read: ViewContainerRef })
+  readonly contentRef = viewChild('content', { read: TemplateRef })
 
   readonly groupType = input<string>(undefined)
 
@@ -67,8 +67,8 @@ export class DisplayCriteriaComponent implements OnInit, OnDestroy {
   }
 
   public rerender() {
-    this.outletRef.clear()
-    this.outletRef.createEmbeddedView(this.contentRef)
+    this.outletRef().clear()
+    this.outletRef().createEmbeddedView(this.contentRef())
   }
 
   initialize(): void {

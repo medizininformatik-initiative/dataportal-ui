@@ -17,12 +17,12 @@ import {
   Component,
   OnDestroy,
   TemplateRef,
-  ViewChild,
   computed,
   effect,
   inject,
   input,
   signal,
+  viewChild,
 } from '@angular/core'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
 import { CriterionHeaderComponent } from './header/criterion-header.component'
@@ -56,7 +56,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
 
-  readonly criterion = input<Criterion>()
+  readonly criterion = input.required<Criterion>()
 
   readonly attributeFilters = computed<AbstractAttributeFilters[]>(() =>
     this.criterion().getConceptAttributeFilters()
@@ -82,34 +82,32 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
     this.criterion().getQuantityAttributeFilters()
   )
 
-  @ViewChild('timeRestriction', { static: false, read: TemplateRef })
-  timeRestrictionTemplate: TemplateRef<any> | undefined = undefined
+  readonly timeRestrictionTemplate = viewChild('timeRestriction', { read: TemplateRef })
 
-  @ViewChild('conceptAttributeFilterTemplate', { static: false, read: TemplateRef })
-  conceptAttributeFiltersTemplate: TemplateRef<any> | undefined = undefined
+  readonly conceptAttributeFiltersTemplate = viewChild('conceptAttributeFilterTemplate', {
+    read: TemplateRef,
+  })
 
-  @ViewChild('conceptValueFiltersTemplate', { static: false, read: TemplateRef })
-  conceptValueFiltersTemplate: TemplateRef<any> | undefined = undefined
+  readonly conceptValueFiltersTemplate = viewChild('conceptValueFiltersTemplate', {
+    read: TemplateRef,
+  })
 
-  @ViewChild('termCodes', { static: false, read: TemplateRef })
-  termCodesTemplate: TemplateRef<any> | undefined = undefined
+  readonly termCodesTemplate = viewChild('termCodes', { read: TemplateRef })
 
-  @ViewChild('reference', { static: false, read: TemplateRef })
-  referenceTemplate: TemplateRef<any> | undefined = undefined
+  readonly referenceTemplate = viewChild('reference', { read: TemplateRef })
 
-  @ViewChild('quantityAttributeFilterTemplate', { static: false, read: TemplateRef })
-  quantityAttributeFilterTemplate: TemplateRef<any> | undefined = undefined
+  readonly quantityAttributeFilterTemplate = viewChild('quantityAttributeFilterTemplate', {
+    read: TemplateRef,
+  })
 
-  @ViewChild('quantityValueFilterTemplate', { static: false, read: TemplateRef })
-  quantityValueFilterTemplate: TemplateRef<any> | undefined = undefined
+  readonly quantityValueFilterTemplate = viewChild('quantityValueFilterTemplate', {
+    read: TemplateRef,
+  })
 
   templates: any[] = []
   private readonly viewInitialized = signal(false)
 
   referenceSubscription: Subscription | undefined = undefined
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {
     effect(() => {
@@ -151,26 +149,26 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
 
   private setTimeRestrictionTemplate(templates: any[]): void {
     if (this.criterion().getTimeRestriction()) {
-      templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' })
+      templates.push({ template: this.timeRestrictionTemplate(), name: 'TIMERESTRICTION' })
     }
   }
 
   private setTermCodesTemplate(templates: any[]): void {
     if (this.criterion().getTermCodes().length > 1) {
-      templates.push({ template: this.termCodesTemplate, name: 'TERMCODE' })
+      templates.push({ template: this.termCodesTemplate(), name: 'TERMCODE' })
     }
   }
 
   private setReferenceTemplate(templates: any[]): void {
     if (this.referenceFilter().length > 0) {
-      templates.push({ template: this.referenceTemplate, name: 'REFERENCE' })
+      templates.push({ template: this.referenceTemplate(), name: 'REFERENCE' })
     }
   }
 
   private setQuantityValueFilterTemplate(templates: any[]): void {
     if (this.quantityValueFilter().length > 0) {
       templates.push({
-        template: this.quantityValueFilterTemplate,
+        template: this.quantityValueFilterTemplate(),
         display: this.quantityValueFilter()[0].getDisplay(),
       })
     }
@@ -179,7 +177,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
   private setQuantityAttributeFilterTemplate(templates: any[]): void {
     if (this.quantityAttributeFilter().length > 0) {
       templates.push({
-        template: this.quantityAttributeFilterTemplate,
+        template: this.quantityAttributeFilterTemplate(),
         display: this.quantityAttributeFilter()[0].getDisplay(),
       })
     }
@@ -188,7 +186,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
   private setConceptValueFilterTemplate(templates: any[]): void {
     if (this.conceptValueFilter().length > 0) {
       templates.push({
-        template: this.conceptValueFiltersTemplate,
+        template: this.conceptValueFiltersTemplate(),
         display: this.conceptValueFilter()[0].getDisplay(),
       })
     }
@@ -197,7 +195,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
   private setConceptAttributeFilterTemplate(templates: any[]): void {
     this.conceptAttributeFilter().forEach((filter, index) => {
       templates.push({
-        template: this.conceptAttributeFiltersTemplate,
+        template: this.conceptAttributeFiltersTemplate(),
         display: filter.getDisplay(),
         context: { $implicit: index },
       })

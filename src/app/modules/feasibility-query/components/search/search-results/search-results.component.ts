@@ -1,4 +1,4 @@
-import { Component, ViewChild, input, output } from '@angular/core'
+import { Component, input, output, viewChild } from '@angular/core'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav'
 import { Observable } from 'rxjs'
@@ -34,7 +34,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class SearchResultsComponent {
-  @ViewChild('drawer') drawer: MatDrawer
+  readonly drawer = viewChild<MatDrawer>('drawer')
 
   readonly listItems = input<CriteriaListEntry[]>([])
   readonly adaptedData = input<TableData>(undefined)
@@ -49,10 +49,10 @@ export class SearchResultsComponent {
   readonly selectedRelative = output<CriteriaListEntry>()
 
   public openSidenav(): void {
-    this.drawer?.open()
+    this.drawer()?.open()
   }
 
   public closeSidenav(): void {
-    this.drawer?.close()
+    this.drawer()?.close()
   }
 }

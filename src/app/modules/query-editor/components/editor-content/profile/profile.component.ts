@@ -1,4 +1,18 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter'
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  viewChild,
+} from '@angular/core'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType'
 import { EditFieldsComponent } from '../../../../shared-filter/components/edit-fields/edit-fields.component'
@@ -16,22 +30,6 @@ import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile
 import { Subscription } from 'rxjs'
 import { TokenFilterComponent } from './profile-filter/token-filter/token-filter.component'
 import { TranslateModule } from '@ngx-translate/core'
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  TemplateRef,
-  ViewChild,
-  ChangeDetectionStrategy,
-  OnInit,
-  OnDestroy,
-  OnChanges,
-  inject,
-  computed,
-  input,
-  effect,
-  SimpleChanges,
-} from '@angular/core'
 @Component({
   selector: 'num-profile',
   templateUrl: './profile.component.html',
@@ -60,7 +58,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   private stagedProfileService = inject(StagedProfileService)
   private possibleReferencesService = inject(PossibleReferencesService)
 
-  readonly profile = input<DataSelectionProfile>()
+  readonly profile = input.required<DataSelectionProfile>()
 
   readonly tokenFilter = computed(() => {
     return this.profile()
@@ -84,16 +82,11 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   templates: { template: TemplateRef<any>; name: string }[] = []
 
-  @ViewChild('fields', { static: false, read: TemplateRef })
-  readonly fieldsTemplate: TemplateRef<any>
-  @ViewChild('timeRestriction', { static: false, read: TemplateRef })
-  readonly timeRestrictionTemplate: TemplateRef<any>
-  @ViewChild('reference', { static: false, read: TemplateRef })
-  readonly referenceTemplate: TemplateRef<any>
-  @ViewChild('token', { static: false, read: TemplateRef })
-  readonly tokenFilterTemplate: TemplateRef<any>
-  @ViewChild('information', { static: false, read: TemplateRef })
-  readonly informationTemplate: TemplateRef<any>
+  readonly fieldsTemplate = viewChild('fields', { read: TemplateRef })
+  readonly timeRestrictionTemplate = viewChild('timeRestriction', { read: TemplateRef })
+  readonly referenceTemplate = viewChild('reference', { read: TemplateRef })
+  readonly tokenFilterTemplate = viewChild('token', { read: TemplateRef })
+  readonly informationTemplate = viewChild('information', { read: TemplateRef })
 
   ngOnInit(): void {}
 
@@ -123,25 +116,25 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   private setInformationTemplate(): void {
-    this.templates.push({ template: this.informationTemplate, name: 'INFORMATION' })
+    this.templates.push({ template: this.informationTemplate(), name: 'INFORMATION' })
   }
 
   private setTimeRestrictionTemplate(): void {
     if (this.timeRestrictionFilters().length > 0) {
-      this.templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' })
+      this.templates.push({ template: this.timeRestrictionTemplate(), name: 'TIMERESTRICTION' })
     }
   }
 
   private setTokenFilterTemplate(): void {
     if (this.tokenFilter()) {
-      this.templates.push({ template: this.tokenFilterTemplate, name: 'TOKEN' })
+      this.templates.push({ template: this.tokenFilterTemplate(), name: 'TOKEN' })
     }
   }
 
   private setFieldsTemplate(): void {
     const fields = this.profile().getProfileFields().getFieldTree()
     if (fields.length > 0) {
-      this.templates.push({ template: this.fieldsTemplate, name: 'FIELD' })
+      this.templates.push({ template: this.fieldsTemplate(), name: 'FIELD' })
     }
   }
 
@@ -149,7 +142,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     const referenceFields = this.profile().getProfileFields().getReferenceFields()
     if (referenceFields && referenceFields.length > 0) {
       this.possibleReferencesServiceSubscription?.unsubscribe()
-      this.templates.push({ template: this.referenceTemplate, name: 'REFERENCE' })
+      this.templates.push({ template: this.referenceTemplate(), name: 'REFERENCE' })
     }
   }
 

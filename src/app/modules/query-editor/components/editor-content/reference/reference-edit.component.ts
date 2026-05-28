@@ -16,12 +16,12 @@ import {
   Component,
   OnDestroy,
   TemplateRef,
-  ViewChild,
   computed,
   effect,
   inject,
   input,
   signal,
+  viewChild,
 } from '@angular/core'
 import { CriterionHeaderComponent } from '../criterion/header/criterion-header.component'
 import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
@@ -79,23 +79,25 @@ export class ReferenceEditComponent implements AfterViewInit, OnDestroy {
     this.referenceCriterion().getQuantityAttributeFilters()
   )
 
-  @ViewChild('timeRestriction', { static: false, read: TemplateRef })
-  timeRestrictionTemplate: TemplateRef<any> | undefined = undefined
+  readonly timeRestrictionTemplate = viewChild('timeRestriction', { read: TemplateRef })
 
-  @ViewChild('conceptAttributeFilterTemplate', { static: false, read: TemplateRef })
-  conceptAttributeFiltersTemplate: TemplateRef<any> | undefined = undefined
+  readonly conceptAttributeFiltersTemplate = viewChild('conceptAttributeFilterTemplate', {
+    read: TemplateRef,
+  })
 
-  @ViewChild('conceptValueFilterTemplate', { static: false, read: TemplateRef })
-  conceptValueFiltersTemplate: TemplateRef<any> | undefined = undefined
+  readonly conceptValueFiltersTemplate = viewChild('conceptValueFilterTemplate', {
+    read: TemplateRef,
+  })
 
-  @ViewChild('termCodes', { static: false, read: TemplateRef })
-  termCodesTemplate: TemplateRef<any> | undefined = undefined
+  readonly termCodesTemplate = viewChild('termCodes', { read: TemplateRef })
 
-  @ViewChild('quantityAttributeFilterTemplate', { static: false, read: TemplateRef })
-  quantityAttributeFilterTemplate: TemplateRef<any> | undefined = undefined
+  readonly quantityAttributeFilterTemplate = viewChild('quantityAttributeFilterTemplate', {
+    read: TemplateRef,
+  })
 
-  @ViewChild('quantityValueFilterTemplate', { static: false, read: TemplateRef })
-  quantityValueFilterTemplate: TemplateRef<any> | undefined = undefined
+  readonly quantityValueFilterTemplate = viewChild('quantityValueFilterTemplate', {
+    read: TemplateRef,
+  })
 
   templates: any[] = []
 
@@ -142,31 +144,31 @@ export class ReferenceEditComponent implements AfterViewInit, OnDestroy {
 
   private setTimeRestrictionTemplate(templates: any[]): void {
     if (this.referenceCriterion().getTimeRestriction()) {
-      templates.push({ template: this.timeRestrictionTemplate, name: 'TIMERESTRICTION' })
+      templates.push({ template: this.timeRestrictionTemplate(), name: 'TIMERESTRICTION' })
     }
   }
 
   private setTermCodesTemplate(templates: any[]): void {
     if (this.referenceCriterion().getTermCodes().length > 1) {
-      templates.push({ template: this.termCodesTemplate, name: 'TERMCODE' })
+      templates.push({ template: this.termCodesTemplate(), name: 'TERMCODE' })
     }
   }
 
   private setQuantityValueFilterTemplate(templates: any[]): void {
     if (this.quantityValueFilter().length > 0) {
-      templates.push({ template: this.quantityValueFilterTemplate, name: 'QUANTITY' })
+      templates.push({ template: this.quantityValueFilterTemplate(), name: 'QUANTITY' })
     }
   }
 
   private setQuantityAttributeFilterTemplate(templates: any[]): void {
     if (this.quantityAttributeFilter().length > 0) {
-      templates.push({ template: this.quantityAttributeFilterTemplate, name: 'QUANTITY' })
+      templates.push({ template: this.quantityAttributeFilterTemplate(), name: 'QUANTITY' })
     }
   }
 
   private setConceptValueFilterTemplate(templates: any[]): void {
     if (this.conceptValueFilter().length > 0) {
-      templates.push({ template: this.conceptValueFiltersTemplate, name: 'CONCEPT' })
+      templates.push({ template: this.conceptValueFiltersTemplate(), name: 'CONCEPT' })
     }
   }
 
@@ -174,7 +176,7 @@ export class ReferenceEditComponent implements AfterViewInit, OnDestroy {
     this.conceptAttributeFilter().forEach((filter, index) => {
       const display = filter.getDisplay()
       templates.push({
-        template: this.conceptAttributeFiltersTemplate,
+        template: this.conceptAttributeFiltersTemplate(),
         display,
         context: { $implicit: index },
       })
