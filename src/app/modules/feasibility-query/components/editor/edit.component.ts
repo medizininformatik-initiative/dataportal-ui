@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core'
 import { CdkDropListGroup } from '@angular/cdk/drag-drop'
-import { HeaderComponent } from '../../../../shared/components/header/header.component'
-import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
-import { SectionNameComponent } from '../../../../shared/components/section-name/section-name.component'
+import { Component, OnInit } from '@angular/core'
 import { CriteriaStageComponent } from './stage/criteria-stage.component'
 import { DisplayFeasibilityQueryComponent } from './display/display.component'
 import { EditorActionBarComponent } from './action-bar/editor-action-bar.component'
+import { HeaderComponent } from '../../../../shared/components/header/header.component'
+import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
+import { SectionNameComponent } from '../../../../shared/components/section-name/section-name.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
