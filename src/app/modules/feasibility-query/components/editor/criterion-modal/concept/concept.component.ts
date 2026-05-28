@@ -1,15 +1,15 @@
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { v4 as uuidv4 } from 'uuid'
 import { ChangeDetectionStrategy, Component, effect, input, output } from '@angular/core'
-import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
+import { ConceptBulkSearchComponent } from '../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
+import { ConceptFilterComponent } from '../../../../../shared-filter/components/concept/concept-filter.component'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
-import { ConceptFilterComponent } from '../../../../../shared-filter/components/concept/concept-filter.component'
-import { ConceptBulkSearchComponent } from '../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
+import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs'
 import { SelectedConceptListComponent } from '../../../../../shared-filter/components/concept/selected-concept-list/selected-concept-list.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { v4 as uuidv4 } from 'uuid'
 
 @Component({
   selector: 'num-concept',
@@ -30,7 +30,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ConceptComponent {
-  readonly conceptFilter = input<ConceptFilter>()
+  readonly conceptFilter = input.required<ConceptFilter>()
 
   readonly changedConceptFilter = output<ConceptFilter>()
 
