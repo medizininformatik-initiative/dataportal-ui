@@ -1,11 +1,11 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
-import { Component, input, output } from '@angular/core'
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
+import { Component, model } from '@angular/core'
 import { ConceptComponent } from '../concept/concept.component'
-import { QuantityComponent } from '../quantity/quantity.component'
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { QuantityComponent } from '../quantity/quantity.component'
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 
 @Component({
   selector: 'num-value-filter',
@@ -15,9 +15,7 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
   imports: [ConceptComponent, QuantityComponent, DisplayTranslationPipe],
 })
 export class ValueFilterComponent {
-  readonly valueFilter = input<ValueFilter>()
-
-  readonly valueFilterChange = output<ValueFilter>()
+  readonly valueFilter = model.required<ValueFilter>()
 
   public updateConceptFilter(conceptFilter: ConceptFilter) {
     const newValueFilter = new ValueFilter(
@@ -27,7 +25,7 @@ export class ValueFilterComponent {
       this.valueFilter().getQuantity(),
       this.valueFilter().getOptional()
     )
-    this.valueFilterChange.emit(newValueFilter)
+    this.valueFilter.set(newValueFilter)
   }
 
   public updateQuantityFilter(quantityFilter: AbstractQuantityFilter) {
@@ -38,6 +36,6 @@ export class ValueFilterComponent {
       quantityFilter,
       this.valueFilter().getOptional()
     )
-    this.valueFilterChange.emit(newValueFilter)
+    this.valueFilter.set(newValueFilter)
   }
 }

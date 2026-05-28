@@ -1,12 +1,12 @@
 <div class="avail-cell">
-  <span class="avail-label" [style.color]="config.color">
-    {{ config.label }}
+  <span class="avail-label" [style.color]="config().color">
+    {{ config().label }}
   </span>
   <div class="avail-track">
     <div
       class="avail-fill"
       [style.width.%]="animatedPercentage"
-      [style.background]="config.color"
+      [style.background]="config().color"
     ></div>
   </div>
 </div>
