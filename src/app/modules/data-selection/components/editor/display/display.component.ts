@@ -1,9 +1,9 @@
-import { Component, OnInit, input } from '@angular/core'
+import { Component, input, OnInit } from '@angular/core'
+import { DisplayActionBarComponent } from '../action-bar/display-action-bar.component'
+import { DisplayProfilesComponent } from './display-profiles/display-profiles.component'
 import { HeaderComponent } from '../../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../../shared/components/header-description/header-description.component'
 import { SectionNameComponent } from '../../../../../shared/components/section-name/section-name.component'
-import { DisplayProfilesComponent } from './display-profiles/display-profiles.component'
-import { DisplayActionBarComponent } from '../action-bar/display-action-bar.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class DisplayDataSelectionComponent implements OnInit {
-  readonly isEditable = input<boolean>(undefined)
+  readonly isEditable = input<boolean>(true)
 
   constructor() {}
 
