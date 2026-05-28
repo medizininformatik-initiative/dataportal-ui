@@ -1,17 +1,10 @@
-import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav'
-import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service'
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
-  inject,
-  input,
-} from '@angular/core'
+import { Component, computed, effect, inject, input, viewChild } from '@angular/core'
 import { CriteriaListEntry } from '../../../model/Search/ListEntries/CriteriaListListEntry'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { ListItemDetailsComponent } from '../shared-components.module'
+import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav'
+import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service'
+import { toSignal } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'num-search-result',
@@ -26,62 +19,30 @@ import { ListItemDetailsComponent } from '../shared-components.module'
     MatDrawerContent,
   ],
 })
-export class SearchResultComponent implements OnInit, AfterViewInit {
+export class SearchResultComponent {
   private listItemService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
     SelectedTableItemsProvider
   )
-  private cdr = inject(ChangeDetectorRef)
-
-  @ViewChild('drawer') sidenav: MatDrawer
 
   readonly searchTermListItems = input<CriteriaListEntry[]>([])
-
   readonly keysToSkip = input<string[]>([])
 
-  private isInitialized = false
+  readonly data = toSignal(this.listItemService.getActiveItem(), { initialValue: null })
+  readonly isOpen = computed(() => !!this.data())
 
-  data: CriteriaListEntry
+  private readonly sidenav = viewChild<MatDrawer>('drawer')
 
-  isOpen = false
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {}
-
-  ngOnInit() {
-    this.listItemService.getActiveItem().subscribe((row) => {
-      this.data = row
-      if (this.isInitialized) {
-        this.cdr.detectChanges()
-        if (row) {
-          this.openSidenav()
-        } else {
-          this.closeSidenav()
-        }
+  constructor() {
+    effect(() => {
+      const drawer = this.sidenav()
+      if (!drawer) {
+        return
+      }
+      if (this.data()) {
+        drawer.open()
+      } else {
+        drawer.close()
       }
     })
-  }
-
-  ngAfterViewInit() {
-    this.isInitialized = true
-    this.cdr.detectChanges()
-    if (this.data) {
-      this.openSidenav()
-    }
-  }
-
-  openSidenav() {
-    if (this.sidenav) {
-      this.isOpen = true
-      this.sidenav.open()
-    }
-  }
-
-  closeSidenav() {
-    if (this.sidenav) {
-      this.isOpen = false
-      this.sidenav.close()
-    }
   }
 }

@@ -1,13 +1,13 @@
 import { Component, computed, input, model, output } from '@angular/core'
-import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter'
-import { MatFormField } from '@angular/material/form-field'
-import { MatTooltip } from '@angular/material/tooltip'
-import { MatSelect, MatSelectTrigger } from '@angular/material/select'
-import { MatOption, MatOptgroup } from '@angular/material/core'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
+import { MatFormField } from '@angular/material/form-field'
+import { MatOptgroup, MatOption } from '@angular/material/core'
+import { MatSelect, MatSelectTrigger } from '@angular/material/select'
+import { MatTooltip } from '@angular/material/tooltip'
+import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter'
 import { TranslateModule } from '@ngx-translate/core'
-import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 
 @Component({
   selector: 'num-search-filter',

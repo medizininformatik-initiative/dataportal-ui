@@ -1,6 +1,6 @@
 <mat-drawer-container class="fill">
-  <mat-drawer #drawer position="end" mode="side">
-    @if (data) {
+  <mat-drawer #drawer position="end" mode="over">
+    @if (data()) {
     <div class="drawer-panel">
       <button class="cancel-button" (click)="drawer.toggle()">
         Back to list
@@ -11,11 +11,11 @@
           [fixedWidth]="true"
         ></fa-icon>
       </button>
-      <num-list-item-details class="detail-item" [item]="data"></num-list-item-details>
+      <num-list-item-details class="detail-item" [item]="data()"></num-list-item-details>
     </div>
     }
   </mat-drawer>
-  @if (searchTermListItems.length > 0) {
+  @if (searchTermListItems().length > 0) {
   <mat-drawer-content class="content-height-95">
     <num-result-list
       class="fill"

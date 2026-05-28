@@ -1,13 +1,13 @@
-/* eslint-disable @angular-eslint/component-selector */
+import { AvailabilityCellComponent } from '../cells/availability-cell/availability-cell.component'
+import { CheckboxTextCellComponent } from '../cells/checkbox-text-cell/checkbox-text-cell.component'
 import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
 import { Component, input, output } from '@angular/core'
-import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
-import { NgClass } from '@angular/common'
-import { CheckboxTextCellComponent } from '../cells/checkbox-text-cell/checkbox-text-cell.component'
-import { AvailabilityCellComponent } from '../cells/availability-cell/availability-cell.component'
 import { DisplayCellComponent } from '../cells/display-cell/display-cell.component'
 import { IconCellComponent } from '../cells/icon-cell/icon-cell.component'
+import { NgClass } from '@angular/common'
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TextCellComponent } from '../cells/text-cell/text-cell.component'
+/* eslint-disable @angular-eslint/component-selector */
 
 @Component({
   selector: '[num-table-body]',

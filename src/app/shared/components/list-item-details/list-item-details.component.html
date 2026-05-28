@@ -15,7 +15,7 @@
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.TRANSLATIONS' | translate }}
         </div>
         <div class="detail-value">
-          @for (t of listItemDetails.getDisplay().getTranslations(); track t) {
+          @for (t of listItemDetails.getDisplay().getTranslations(); track t.getLanguage()) {
           <div class="translation-entry">
             <span
               class="fi"

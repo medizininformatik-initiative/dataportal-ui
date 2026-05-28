@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router'
-import { Component, OnInit, inject, model, output } from '@angular/core'
+import { Component, inject, model, OnInit, output } from '@angular/core'
 import { SwitchComponent } from '../switch/switch.component'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -18,9 +18,6 @@ export class SearchModeToggleComponent implements OnInit {
   readonly selectedMode = model<SearchMode>('search')
 
   readonly modeChange = output<SearchMode>()
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {}
 
