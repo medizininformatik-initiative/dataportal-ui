@@ -1,10 +1,10 @@
-import { Component, OnInit, input } from '@angular/core'
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { Subscription } from 'rxjs'
-import { SectionNameComponent } from '../../../../../shared/components/section-name/section-name.component'
-import { DisplayCriteriaComponent } from './display-criteria/display-criteria.component'
 import { CdkDropList } from '@angular/cdk/drag-drop'
+import { Component, input, OnInit } from '@angular/core'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { DisplayCriteriaComponent } from './display-criteria/display-criteria.component'
 import { DropGroupDirective } from '../../../../../shared/directives/drop-group/drop-group.directive'
+import { SectionNameComponent } from '../../../../../shared/components/section-name/section-name.component'
+import { Subscription } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({

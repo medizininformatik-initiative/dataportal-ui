@@ -7,7 +7,7 @@
   <ng-template #timeRestriction>
     <num-edit-time-restriction
       [timeRestriction]="criterion().getTimeRestriction()"
-      (timeRestrictionChanged)="updateTimeRestriction($event)"
+      (timeRestrictionChange)="updateTimeRestriction($event)"
     ></num-edit-time-restriction>
   </ng-template>
 

@@ -26,8 +26,6 @@ export class QuantityRangeComponent {
 
   displayWarning = false
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
   constructor() {
     let initialized = false
     effect(() => {

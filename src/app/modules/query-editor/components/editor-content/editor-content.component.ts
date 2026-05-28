@@ -1,9 +1,9 @@
 import { Component, input } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
-import { ProfileComponent } from './profile/profile.component'
 import { CriterionComponent } from './criterion/criterion.component'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { ProfileComponent } from './profile/profile.component'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
 import { ReferenceEditComponent } from './reference/reference-edit.component'
 
 @Component({
