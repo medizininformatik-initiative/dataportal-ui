@@ -11,7 +11,7 @@
     >
     </num-timerestriction-type-selector>
     <!--Between Filter-->
-    @if (selectedTimeRestrictionType === 'BETWEEN') {
+    @if (selectedTimeRestrictionType() === 'BETWEEN') {
     <num-between-filter
       class="fill"
       (betweenFilterChanged)="emitSelectedTimeRestrictionInstance($event)"
@@ -19,10 +19,10 @@
     ></num-between-filter>
     }
     <!--After, At, Before Filter-->
-    @if (selectedTimeRestrictionType !== 'BETWEEN' && selectedTimeRestrictionType !== 'NONE') {
+    @if (selectedTimeRestrictionType() !== 'BETWEEN' && selectedTimeRestrictionType() !== 'NONE') {
     <num-before-filter
       class="fill"
-      [timeRestrictionType]="selectedTimeRestrictionType"
+      [timeRestrictionType]="selectedTimeRestrictionType()"
       [selectedDate]="timeRestriction().getAfterDate()"
       (timeRestrictionInstanceChanged)="emitSelectedTimeRestrictionInstance($event)"
     ></num-before-filter>

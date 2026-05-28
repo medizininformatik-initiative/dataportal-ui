@@ -1,10 +1,10 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
-import { Component, OnInit, input, output } from '@angular/core'
-import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
-import { TimeRestrictionNotSet } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
-import { TimerestrictionTypeSelectorComponent } from './timerestriction-type-selector/timerestriction-type-selector.component'
-import { BetweenFilterComponent } from './between-filter/between-filter.component'
 import { BeforeFilterComponent } from './before-filter/before-filter.component'
+import { BetweenFilterComponent } from './between-filter/between-filter.component'
+import { Component, effect, model, signal } from '@angular/core'
+import { TimeRestrictionNotSet } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
+import { TimerestrictionTypeSelectorComponent } from './timerestriction-type-selector/timerestriction-type-selector.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -19,29 +19,30 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
   ],
 })
-export class EditTimeRestrictionComponent implements OnInit {
-  readonly timeRestriction = input<AbstractTimeRestriction>()
+export class EditTimeRestrictionComponent {
+  readonly timeRestriction = model<AbstractTimeRestriction>()
 
-  readonly timeRestrictionChanged = output<AbstractTimeRestriction>()
+  readonly selectedTimeRestrictionType = signal<TimeRestrictionType | undefined>(undefined)
 
-  selectedTimeRestrictionType: TimeRestrictionType
-
-  ngOnInit() {
-    if (this.timeRestriction()) {
-      this.selectedTimeRestrictionType = this.timeRestriction().getType()
-    }
+  constructor() {
+    effect(() => {
+      const type = this.timeRestriction()?.getType()
+      if (type !== undefined) {
+        this.selectedTimeRestrictionType.set(type)
+      }
+    })
   }
 
   public onTimeRestrictionOptionChange(timeRestriction: string) {
-    this.selectedTimeRestrictionType =
-      TimeRestrictionType[timeRestriction as keyof typeof TimeRestrictionType]
+    const type = TimeRestrictionType[timeRestriction as keyof typeof TimeRestrictionType]
+    this.selectedTimeRestrictionType.set(type)
 
-    if (this.selectedTimeRestrictionType === TimeRestrictionType.NONE) {
-      this.timeRestrictionChanged.emit(new TimeRestrictionNotSet())
+    if (type === TimeRestrictionType.NONE) {
+      this.timeRestriction.set(new TimeRestrictionNotSet())
     }
   }
 
   public emitSelectedTimeRestrictionInstance(timeRestrictionInstance: AbstractTimeRestriction) {
-    return this.timeRestrictionChanged.emit(timeRestrictionInstance)
+    this.timeRestriction.set(timeRestrictionInstance)
   }
 }
