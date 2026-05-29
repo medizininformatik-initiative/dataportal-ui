@@ -11,24 +11,24 @@
       [(ngModel)]="bulkSearchTermInput"
     ></textarea>
     <div class="bulk-search-container">
-      @if (searchFilter) {
+      @if (searchFilter()) {
       <div class="filter-section">
         <num-search-filter
           [multiSelect]="false"
-          [filter]="searchFilter"
+          [filter]="searchFilter()"
           (filterChange)="setValueSet($event)"
         ></num-search-filter>
       </div>
       }
       <num-button
-        [isDisabled]="!selectedValueSet || bulkSearchTermInput.length === 0"
+        [isDisabled]="!selectedValueSet() || bulkSearchTermInput.length === 0"
         type="blue"
         (click)="bulkSearch()"
         >Suchen</num-button
       >
     </div>
   </div>
-  @if (foundTableData || notFoundTableData) {
+  @if (foundTableData() || notFoundTableData()) {
   <mat-tab-group
     animationDuration="0ms"
     class="inner-tab-group"
@@ -36,21 +36,23 @@
     mat-stretch-tabs="true"
   >
     <mat-tab
-      [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.FOUND' | translate : { count: foundCount }"
+      [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.FOUND' | translate : { count: foundCount() }"
     >
-      @if (foundTableData?.body.rows.length > 0) {
+      @if (foundTableData()?.body.rows.length > 0) {
       <num-table
         class="result-list-container"
-        [tableData]="foundTableData"
+        [tableData]="foundTableData()"
         (selectedRow)="addSelectedRow($event)"
       ></num-table>
       }
     </mat-tab>
     <mat-tab
-      [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.NOTFOUND' | translate : { count: notFoundCount }"
+      [label]="
+        'SHARED_FILTER.CONCEPT_FILTER.BULK.NOTFOUND' | translate : { count: notFoundCount() }
+      "
     >
-      @if (notFoundTableData?.body.rows.length > 0) {
-      <num-table class="result-list-container" [tableData]="notFoundTableData"></num-table>
+      @if (notFoundTableData()?.body.rows.length > 0) {
+      <num-table class="result-list-container" [tableData]="notFoundTableData()"></num-table>
       }
     </mat-tab>
   </mat-tab-group>
