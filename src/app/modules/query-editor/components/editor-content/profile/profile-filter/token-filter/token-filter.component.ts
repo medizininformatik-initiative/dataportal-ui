@@ -1,11 +1,11 @@
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
-import { ChangeDetectionStrategy, Component, effect, input, output } from '@angular/core'
-import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
+import { ConceptBulkSearchComponent } from '../../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
+import { ConceptFilterComponent } from '../../../../../../shared-filter/components/concept/concept-filter.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InformationSectionComponent } from '../../../../../../../shared/components/information-section/information-section.component'
-import { ConceptFilterComponent } from '../../../../../../shared-filter/components/concept/concept-filter.component'
-import { ConceptBulkSearchComponent } from '../../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
+import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs'
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
 import { SelectedConceptListComponent } from '../../../../../../shared-filter/components/concept/selected-concept-list/selected-concept-list.component'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -28,13 +28,14 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class TokenFilterComponent {
-  readonly tokenFilter = input<ProfileTokenFilter>()
+  readonly tokenFilter = input.required<ProfileTokenFilter>()
   readonly tokenFilterChanged = output<ProfileTokenFilter>()
   tabChanged = false
-  selectedConcepts: Concept[] = []
+  readonly selectedConcepts = signal<Concept[]>([])
+
   constructor() {
     effect(() => {
-      this.selectedConcepts = this.tokenFilter().getSelectedTokens()
+      this.selectedConcepts.set(this.tokenFilter().getSelectedTokens())
     })
   }
 
