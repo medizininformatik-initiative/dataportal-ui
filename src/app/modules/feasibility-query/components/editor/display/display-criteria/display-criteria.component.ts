@@ -1,12 +1,12 @@
 import {
   Component,
-  Input,
   OnDestroy,
   OnInit,
-  ViewChild,
   ViewContainerRef,
   TemplateRef,
   inject,
+  input,
+  viewChild,
 } from '@angular/core'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
@@ -36,12 +36,12 @@ export class DisplayCriteriaComponent implements OnInit, OnDestroy {
   private queryService = inject(FeasibilityQueryProviderService)
   criterionProvider = inject(CriterionProviderService)
 
-  @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef
-  @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>
+  readonly outletRef = viewChild('outlet', { read: ViewContainerRef })
+  readonly contentRef = viewChild('content', { read: TemplateRef })
 
-  @Input() groupType: string
+  readonly groupType = input<string>(undefined)
 
-  @Input() isEditable: boolean
+  readonly isEditable = input<boolean>(undefined)
 
   criteriaArray$: Observable<string[][]>
   private querySubscription: Subscription
@@ -67,17 +67,18 @@ export class DisplayCriteriaComponent implements OnInit, OnDestroy {
   }
 
   public rerender() {
-    this.outletRef.clear()
-    this.outletRef.createEmbeddedView(this.contentRef)
+    this.outletRef().clear()
+    this.outletRef().createEmbeddedView(this.contentRef())
   }
 
   initialize(): void {
-    if (this.groupType === 'Inclusion') {
+    const groupType = this.groupType()
+    if (groupType === 'Inclusion') {
       this.criteriaArray$ = this.queryService
         .getActiveFeasibilityQuery()
         .pipe(map((feasibilityQuery) => feasibilityQuery.getInclusionCriteria()))
     }
-    if (this.groupType === 'Exclusion') {
+    if (groupType === 'Exclusion') {
       this.criteriaArray$ = this.queryService
         .getActiveFeasibilityQuery()
         .pipe(map((feasibilityQuery) => feasibilityQuery.getExclusionCriteria()))
@@ -85,11 +86,11 @@ export class DisplayCriteriaComponent implements OnInit, OnDestroy {
   }
 
   getInnerLabelKey(): 'AND' | 'OR' {
-    return this.groupType === 'Inclusion' ? 'OR' : 'AND'
+    return this.groupType() === 'Inclusion' ? 'OR' : 'AND'
   }
 
   getOuterLabelKey(): 'AND' | 'OR' {
-    return this.groupType === 'Exclusion' ? 'OR' : 'AND'
+    return this.groupType() === 'Exclusion' ? 'OR' : 'AND'
   }
 
   splitInnerArray(i: number, j: number): void {
@@ -98,18 +99,20 @@ export class DisplayCriteriaComponent implements OnInit, OnDestroy {
     this.queryService
       .getActiveFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
-        if (this.groupType === 'Inclusion') {
+        const groupType = this.groupType()
+        if (groupType === 'Inclusion') {
           tempcrit = this.splitInnerArray2(query.getInclusionCriteria(), i, j)
         }
-        if (this.groupType === 'Exclusion') {
+        if (groupType === 'Exclusion') {
           tempcrit = this.splitInnerArray2(query.getExclusionCriteria(), i, j)
         }
       })
       .unsubscribe()
-    if (this.groupType === 'Inclusion') {
+    const groupType = this.groupType()
+    if (groupType === 'Inclusion') {
       this.queryService.setInclusionCriteria(tempcrit)
     }
-    if (this.groupType === 'Exclusion') {
+    if (groupType === 'Exclusion') {
       this.queryService.setExclusionCriteria(tempcrit)
     }
   }
@@ -120,18 +123,20 @@ export class DisplayCriteriaComponent implements OnInit, OnDestroy {
     this.queryService
       .getActiveFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
-        if (this.groupType === 'Inclusion') {
+        const groupType = this.groupType()
+        if (groupType === 'Inclusion') {
           tempcrit = this.joinInnerArrays2(query.getInclusionCriteria(), i)
         }
-        if (this.groupType === 'Exclusion') {
+        if (groupType === 'Exclusion') {
           tempcrit = this.joinInnerArrays2(query.getExclusionCriteria(), i)
         }
       })
       .unsubscribe()
-    if (this.groupType === 'Inclusion') {
+    const groupType = this.groupType()
+    if (groupType === 'Inclusion') {
       this.queryService.setInclusionCriteria(tempcrit)
     }
-    if (this.groupType === 'Exclusion') {
+    if (groupType === 'Exclusion') {
       this.queryService.setExclusionCriteria(tempcrit)
     }
   }

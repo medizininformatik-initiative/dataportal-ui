@@ -1,8 +1,8 @@
 <!-- switch.component.html -->
 <label class="switch">
-  <input type="checkbox" [checked]="isChecked" (change)="toggleSwitch($event)" />
+  <input type="checkbox" [checked]="isChecked()" (change)="toggleSwitch($event)" />
   <span
     class="slider round"
-    [ngClass]="{ 'move-left': isChecked, 'move-right': !isChecked }"
+    [ngClass]="{ 'move-left': isChecked(), 'move-right': !isChecked() }"
   ></span>
 </label>

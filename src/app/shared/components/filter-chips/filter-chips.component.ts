@@ -1,8 +1,6 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
-import { DisplayData } from '../../../model/Interface/DisplayData'
+import { Component, computed, effect, inject, input } from '@angular/core'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FilterChipData } from '../../models/FilterChips/FilterChipData'
-import { Observable, of } from 'rxjs'
 import { FilterChipPropertyData } from '../../models/FilterChips/FilterChipPropertyData'
 import { NgClass } from '@angular/common'
 
@@ -13,37 +11,31 @@ import { NgClass } from '@angular/common'
   standalone: true,
   imports: [NgClass, DisplayTranslationPipe],
 })
-export class FilterChipsComponent implements OnInit {
+export class FilterChipsComponent {
   private translation = inject(DisplayTranslationPipe)
 
-  chipData$: Observable<FilterChipData[]> = of([])
+  readonly filterChips = input<FilterChipData[]>([])
+  readonly displayBlockTriangle = input(true)
+  readonly hasFilterChips = computed(() => this.filterChips().length > 0)
 
-  @Input()
-  filterChips: FilterChipData[] = []
-
-  @Input()
-  displayBlockTriangle = true
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  constructor() {
+    effect(() => {
+      this.filterChips().forEach((chip) => {
+        chip.twoLineDisplay = chip.typeExpanded ? this.getTrimmedLength(chip.type) > 22 : false
+      })
+    })
+  }
 
   public toggleExpanded(chip: FilterChipPropertyData) {
     chip.expanded = !chip.expanded
   }
-  public toggleTypeExpanded(chip) {
+
+  public toggleTypeExpanded(chip: FilterChipData) {
     chip.typeExpanded = !chip.typeExpanded
-    if (chip.typeExpanded) {
-      chip.twoLineDisplay = this.getLength(chip.type) > 22
-    } else {
-      chip.twoLineDisplay = false
-    }
+    chip.twoLineDisplay = chip.typeExpanded ? this.getTrimmedLength(chip.type) > 22 : false
   }
 
-  public getLength(display: DisplayData): number {
-    return this.translation.transform(display).length
+  public getTrimmedLength(display: FilterChipData['type']): number {
+    return this.translation.transform(display).trim().length
   }
 }

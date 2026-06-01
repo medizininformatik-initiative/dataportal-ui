@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit, model } from '@angular/core'
 
 @Component({
   selector: 'num-spinner',
@@ -7,8 +7,7 @@ import { Component, Input, OnInit } from '@angular/core'
   standalone: true,
 })
 export class SpinnerComponent implements OnInit {
-  @Input()
-  countdown: number
+  readonly countdown = model<number>()
 
   ngOnInit(): void {
     this.startCountdown()
@@ -16,11 +15,11 @@ export class SpinnerComponent implements OnInit {
 
   startCountdown(): void {
     const interval = setInterval(() => {
-      if (this.countdown > 0) {
-        this.countdown--
+      if (this.countdown() > 0) {
+        this.countdown.update((v) => v - 1)
       } else {
         clearInterval(interval)
-        this.countdown = 0
+        this.countdown.set(0)
       }
     }, 1000)
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
+import { Component, OnInit, inject, input, output } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service'
 import { SelectedListItem } from 'src/app/shared/components/selected-items-list/selected-items-list.component'
@@ -14,11 +14,9 @@ import { SelectedItemsListComponent } from '../../../../../shared/components/sel
 export class SelectedConceptListComponent implements OnInit {
   private conceptProviderService = inject(SelectedConceptFilterProviderService)
 
-  @Input()
-  selectedConcepts: Concept[] = []
+  readonly selectedConcepts = input<Concept[]>([])
 
-  @Output()
-  changedSelectedConcepts = new EventEmitter<Concept[]>()
+  readonly changedSelectedConcepts = output<Concept[]>()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -28,14 +26,14 @@ export class SelectedConceptListComponent implements OnInit {
   ngOnInit(): void {}
 
   get listItems(): SelectedListItem[] {
-    return this.selectedConcepts.map((c) => ({
+    return this.selectedConcepts().map((c) => ({
       display: c.getDisplay(),
       code: c.getTerminologyCode().getCode(),
     }))
   }
 
   public removeAtIndex(index: number): void {
-    const concept = this.selectedConcepts[index]
+    const concept = this.selectedConcepts()[index]
     this.conceptProviderService.removeConcept(concept)
     this.changedSelectedConcepts.emit(this.conceptProviderService.getSelectedConceptsValue())
   }

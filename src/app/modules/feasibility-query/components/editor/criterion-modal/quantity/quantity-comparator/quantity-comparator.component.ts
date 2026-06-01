@@ -1,12 +1,13 @@
 import {
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
-  Output,
-  SimpleChanges,
+  effect,
   inject,
+  input,
+  model,
+  output,
+  untracked,
 } from '@angular/core'
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
@@ -21,48 +22,44 @@ import { ValueSelectComponent } from '../../../../../../../shared/components/val
   standalone: true,
   imports: [ValueSelectComponent],
 })
-export class QuantityComparatorComponent implements OnChanges, OnInit {
+export class QuantityComparatorComponent {
   private quantityFilterFactoryService = inject(QuantityFilterFactoryService)
 
-  @Input()
-  value: number
+  readonly value = model<number>()
 
-  @Input()
-  quantityComparatorType: QuantityComparisonOption
+  readonly quantityComparatorType = input<QuantityComparisonOption>(undefined)
 
-  @Input()
-  quantityFilterUnit: QuantityUnit
+  readonly quantityFilterUnit = input<QuantityUnit>(undefined)
 
-  @Output()
-  quantityComparatorInstance = new EventEmitter<QuantityComparatorFilter>()
+  readonly quantityComparatorInstance = output<QuantityComparatorFilter>()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
-  constructor() {}
-
-  ngOnInit() {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      (changes.value && !changes.value.firstChange && this.value != null) ||
-      (changes.quantityFilterUnit && !changes.quantityFilterUnit.firstChange) ||
-      (changes.quantityComparatorType && !changes.quantityComparatorType.firstChange)
-    ) {
-      this.emitComparatorInstance()
-    }
+  constructor() {
+    let initialized = false
+    effect(() => {
+      const val = this.value()
+      this.quantityFilterUnit()
+      this.quantityComparatorType()
+      if (initialized && val != null) {
+        untracked(() => this.emitComparatorInstance())
+      }
+      initialized = true
+    })
   }
 
   public setValue(newValue: number): void {
-    this.value = newValue
+    this.value.set(newValue)
     this.emitComparatorInstance()
   }
 
   private emitComparatorInstance(): void {
-    if (this.value != null) {
+    const val = this.value()
+    if (val != null) {
       const quantityComparator = this.quantityFilterFactoryService.createQuantityComparatorFilter(
-        this.value,
-        this.quantityComparatorType
+        val,
+        this.quantityComparatorType()
       )
       this.quantityComparatorInstance.emit(quantityComparator)
     }

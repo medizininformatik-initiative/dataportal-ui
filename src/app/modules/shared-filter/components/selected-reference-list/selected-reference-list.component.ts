@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
+import { Component, OnChanges, OnInit, input, output } from '@angular/core'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
 import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry'
 import { SelectedListItem } from 'src/app/shared/components/selected-items-list/selected-items-list.component'
@@ -12,11 +12,9 @@ import { SelectedItemsListComponent } from '../../../../shared/components/select
   imports: [SelectedItemsListComponent],
 })
 export class SelectedReferenceListComponent implements OnInit, OnChanges {
-  @Input()
-  selectedReferences: ReferenceCriterion[] = []
+  readonly selectedReferences = input<ReferenceCriterion[]>([])
 
-  @Output()
-  changedSelectedReferences = new EventEmitter<ReferenceCriterion[]>()
+  readonly changedSelectedReferences = output<ReferenceCriterion[]>()
 
   constructor() {}
 
@@ -25,14 +23,14 @@ export class SelectedReferenceListComponent implements OnInit, OnChanges {
   ngOnChanges(): void {}
 
   get listItems(): SelectedListItem[] {
-    return this.selectedReferences.map((ref) => ({
+    return this.selectedReferences().map((ref) => ({
       display: ref.getDisplay(),
       code: ref.getTermCodes()[0].getCode(),
     }))
   }
 
   public removeAtIndex(index: number): void {
-    const updatedReferences = this.selectedReferences.filter((_, i) => i !== index)
+    const updatedReferences = this.selectedReferences().filter((_, i) => i !== index)
     this.changedSelectedReferences.emit(updatedReferences)
   }
 }

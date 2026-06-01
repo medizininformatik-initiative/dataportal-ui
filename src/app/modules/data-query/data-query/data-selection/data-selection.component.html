@@ -29,7 +29,7 @@
       ></span>
     </num-header-description>
   </div>
-  @if ((isDataSelectionExistent$ | async) === false) {
+  @if (isDataSelectionExistent() === false) {
   <div class="empty-data-selection-box">
     <num-placeholder-box>
       {{ 'DATAQUERY.DATASELECTION.EDITOR.EMPTY' | translate }}

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 
 @Component({
   selector: 'num-checkbox',
@@ -7,14 +7,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
   standalone: true,
 })
 export class CheckboxComponent {
-  @Input() checked = false
-  @Input() disabled = false
-  @Output() checkedChange = new EventEmitter<boolean>()
+  readonly checked = input(false)
+  readonly disabled = input(false)
+  readonly checkedChange = output<boolean>()
 
   toggle(event: MouseEvent): void {
     event.stopPropagation()
-    if (!this.disabled) {
-      this.checkedChange.emit(!this.checked)
+    if (!this.disabled()) {
+      this.checkedChange.emit(!this.checked())
     }
   }
 }

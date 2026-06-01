@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 import { IconCellData } from 'src/app/shared/models/TableData/cells/IconCellData'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -11,19 +11,15 @@ import { TranslateModule } from '@ngx-translate/core'
   standalone: true,
   imports: [FontAwesomeModule, MatTooltip, TranslateModule],
 })
-export class IconCellComponent implements OnInit {
-  @Input()
-  iconData: IconCellData
+export class IconCellComponent {
+  readonly iconData = input<IconCellData>()
 
-  @Input()
-  color = 'black'
+  readonly color = input('black')
 
-  @Output()
-  iconClicked = new EventEmitter<void>()
+  readonly iconClicked = output<void>()
 
   public onIconClick(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.iconClicked.emit()
   }
-
-  ngOnInit(): void {}
 }

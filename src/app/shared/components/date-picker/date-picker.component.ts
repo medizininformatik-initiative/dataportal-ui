@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, model, output } from '@angular/core'
 import { MatInput } from '@angular/material/input'
 import {
   MatDatepickerInput,
@@ -25,13 +25,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
   ],
 })
 export class DatePickerComponent {
-  @Output()
-  dateChanged: EventEmitter<string> = new EventEmitter<string>()
+  readonly dateChanged = output<string>()
 
-  @Input()
-  selectedDate = ''
+  readonly selectedDate = model('')
 
   public emitSelectedDate(): void {
-    this.dateChanged.emit(this.selectedDate)
+    this.dateChanged.emit(this.selectedDate())
   }
 }

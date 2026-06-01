@@ -1,9 +1,6 @@
 import { AvailabilityStatusType } from 'src/app/model/Availability/AvailabilityStatusType'
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import {
-  STATUS_CONFIG,
-  StatusConfig,
-} from 'src/app/shared/models/AvailabilityStatus/AvailabilityStatus'
+import { Component, computed, effect, input, signal } from '@angular/core'
+import { STATUS_CONFIG } from 'src/app/shared/models/AvailabilityStatus/AvailabilityStatus'
 
 @Component({
   selector: 'num-availability-status-bar',
@@ -11,24 +8,20 @@ import {
   styleUrls: ['./availability-status-bar.component.scss'],
   standalone: true,
 })
-export class AvailabilityStatusBarComponent implements OnChanges, OnInit {
-  @Input() status: AvailabilityStatusType = 'unknown'
+export class AvailabilityStatusBarComponent {
+  readonly status = input<AvailabilityStatusType>('unknown')
 
-  animatedPercentage = 0
+  readonly animatedPercentage = signal(0)
 
-  get config(): StatusConfig {
-    return STATUS_CONFIG[this.status]
-  }
+  readonly config = computed(() => STATUS_CONFIG[this.status()])
 
-  constructor() {}
+  constructor() {
+    effect(() => {
+      const percentage = this.config().percentage
 
-  ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.status) {
       setTimeout(() => {
-        this.animatedPercentage = STATUS_CONFIG[this.status].percentage
+        this.animatedPercentage.set(percentage)
       }, 50)
-    }
+    })
   }
 }

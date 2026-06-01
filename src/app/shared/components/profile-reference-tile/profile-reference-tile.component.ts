@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, input, output } from '@angular/core'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
@@ -37,10 +37,11 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   private profileReferenceChipsService = inject(ProfileReferenceChipsService)
   private navigationHelperService = inject(NavigationHelperService)
 
-  @Input() referenceField: SelectedReferenceField
-  @Input() unlinkedRequiredOrRecommendedReferences: ReferenceField
-  @Input() parentId?: string
-  @Output() deleteTrigger = new EventEmitter<boolean>()
+  readonly referenceField = input<SelectedReferenceField>()
+  readonly unlinkedRequiredOrRecommendedReferences = input<ReferenceField>(undefined)
+  readonly parentId = input<string>(undefined)
+  readonly deleteTrigger = output<boolean>()
+  readonly isEditable = input<boolean>(true)
 
   filterChips: ProfileReferenceChipData[] = []
   type: string
@@ -66,7 +67,7 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   }
 
   private initiliazeDisplayData(): void {
-    const field = this.referenceField || this.unlinkedRequiredOrRecommendedReferences
+    const field = this.referenceField() || this.unlinkedRequiredOrRecommendedReferences()
 
     if (!field) {
       return
@@ -78,38 +79,38 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   }
 
   private initiliazeDisplayDataFiletrChips() {
-    if (this.referenceField) {
+    if (this.referenceField()) {
       this.filterChips.push(
-        this.profileReferenceChipsService.getProfileReferenceChips(this.referenceField)
+        this.profileReferenceChipsService.getProfileReferenceChips(this.referenceField())
       )
     }
   }
 
   public navigateToProfile(): void {
-    const idToUse = this.parentId ?? ''
+    const idToUse = this.parentId() ?? ''
     this.navigationHelperService.navigateToEditProfile(idToUse)
   }
 
   public setMustHave(checked: boolean) {
-    if (this.referenceField) {
-      this.referenceField.setMustHave(checked)
+    if (this.referenceField()) {
+      this.referenceField().setMustHave(checked)
       this.updateReferenceField()
     }
   }
 
   public deleteReferenceLink(): void {
-    const profile = this.profileProviderService.getOne(this.parentId)
-    if (this.unlinkedRequiredOrRecommendedReferences) {
+    const profile = this.profileProviderService.getOne(this.parentId())
+    if (this.unlinkedRequiredOrRecommendedReferences()) {
       const profileFields = profile.getProfileFields().getReferenceFields()
       const foundField = profileFields.find(
         (field: ReferenceField) =>
-          field.getElementId() === this.unlinkedRequiredOrRecommendedReferences.getElementId()
+          field.getElementId() === this.unlinkedRequiredOrRecommendedReferences().getElementId()
       )
       if (foundField) {
         foundField.setRecommended(false)
         this.updateProfile(profile)
       }
-    } else if (this.referenceField) {
+    } else if (this.referenceField()) {
       const selectedReferences = profile.getProfileFields().getSelectedReferenceFields()
       const index = this.getIndexOfSelectedReferenceField(selectedReferences)
 
@@ -122,13 +123,13 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   }
 
   private updateReferenceField(): void {
-    const profile = this.profileProviderService.getOne(this.parentId)
+    const profile = this.profileProviderService.getOne(this.parentId())
     const selectedReferences = profile.getProfileFields().getSelectedReferenceFields()
     const index = this.getIndexOfSelectedReferenceField(selectedReferences)
 
     if (index !== -1) {
       selectedReferences[index] = SelectedReferenceFieldsCloner.deepCopySelectedReferenceField(
-        this.referenceField
+        this.referenceField()
       )
       this.updateProfile(profile)
     }
@@ -143,7 +144,8 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
 
   private getIndexOfSelectedReferenceField(selectedReferences: SelectedReferenceField[]): number {
     const index = selectedReferences.findIndex(
-      (field: SelectedReferenceField) => field.getElementId() === this.referenceField.getElementId()
+      (field: SelectedReferenceField) =>
+        field.getElementId() === this.referenceField().getElementId()
     )
     return index
   }

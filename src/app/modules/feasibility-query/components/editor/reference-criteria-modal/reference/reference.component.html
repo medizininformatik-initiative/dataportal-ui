@@ -17,7 +17,7 @@
   </mat-tab>
   <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
     <div class="container">
-      <div class="attribute-code-display">{{ attributeCode.getDisplay() }}</div>
+      <div class="attribute-code-display">{{ attributeCode().getDisplay() }}</div>
       <num-searchbar icon="search" (searchTextChange)="startElasticSearch($event)"> </num-searchbar>
       <div
         class="infinite-scroll"
@@ -47,13 +47,13 @@
     class="height-100"
     [label]="
       'EDITOR.CONTENT.TAB_LABEL.SELECTED_REFERENCES'
-        | translate : { count: selectedReferenceCriterion.length }
+        | translate : { count: selectedReferenceCriterion().length }
     "
-    [disabled]="selectedReferenceCriterion.length === 0"
+    [disabled]="selectedReferenceCriterion().length === 0"
   >
-    @if (selectedReferenceCriterion.length > 0) {
+    @if (selectedReferenceCriterion().length > 0) {
     <num-selected-reference-list
-      [selectedReferences]="selectedReferenceCriterion"
+      [selectedReferences]="selectedReferenceCriterion()"
       (changedSelectedReferences)="updateSelectedReferences($event)"
     ></num-selected-reference-list>
     }

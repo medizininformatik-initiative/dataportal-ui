@@ -1,16 +1,24 @@
 import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { CriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaListEntryAdapter'
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
+import { HeaderComponent } from '../../../../shared/components/header/header.component'
+import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
 import { map, Observable, of, Subscription } from 'rxjs'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { SearchResultsComponent } from './search-results/search-results.component'
+import { SearchActionBarComponent } from './action-bar/search/search-action-bar.component'
+import { SearchBarComponent } from './search-bar/search-bar.component'
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
+import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component'
 import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component'
+import { SearchModeToggleComponent } from '../../../../shared/components/search-mode-toggle/search-mode-toggle.component'
+import { SearchResultsComponent } from './search-results/search-results.component'
 import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails'
 import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service'
 import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service'
@@ -18,26 +26,16 @@ import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTab
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
-  ViewChild,
   inject,
+  viewChild,
 } from '@angular/core'
-import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service'
-import { filter } from 'lodash'
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import { HeaderComponent } from '../../../../shared/components/header/header.component'
-import { SearchModeToggleComponent } from '../../../../shared/components/search-mode-toggle/search-mode-toggle.component'
-import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
-import { SearchBarComponent } from './search-bar/search-bar.component'
-import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component'
-import { SearchActionBarComponent } from './action-bar/search/search-action-bar.component'
-import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-feasibility-query-search',
@@ -56,7 +54,6 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, AfterViewInit {
-  elementRef = inject(ElementRef)
   private cdr = inject(ChangeDetectorRef)
   private searchFilterProvider = inject(FilterProvider)
   private selectedTableItemsService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
@@ -69,11 +66,10 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   private navigationHelperService = inject(NavigationHelperService)
   private criteriaFilterFetchService = inject(CriteriaFilterFetchService)
 
-  @ViewChild('searchResults') searchResultsComponent: SearchResultsComponent
+  readonly searchResultsComponent = viewChild<SearchResultsComponent>('searchResults')
   listItems: Array<CriteriaListEntry> = []
   adaptedData: TableData
   private subscription: Subscription
-  private isInitialized = false
 
   elasticSearchEnabled = false
 
@@ -97,9 +93,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
 
   searchButtonEnabled$: Observable<boolean> = of(true)
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
   constructor() {
     this.subscription = this.criteriaSearchService
       .getSearchResults()
@@ -115,7 +108,6 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   ngAfterViewInit() {
-    this.isInitialized = true
     this.cdr.detectChanges()
   }
 
@@ -265,11 +257,11 @@ export class FeasibilityQuerySearchComponent implements OnInit, OnDestroy, After
   }
 
   public openSidenav(): void {
-    this.searchResultsComponent?.openSidenav()
+    this.searchResultsComponent()?.openSidenav()
   }
 
   public closeSidenav(): void {
-    this.searchResultsComponent?.closeSidenav()
+    this.searchResultsComponent()?.closeSidenav()
   }
 
   public loadMoreCriteriaSearchResults() {

@@ -1,9 +1,9 @@
-@for (row of rows; track row) {
+@for (row of rows(); track row.id) {
 <tr
   [ngClass]="{ 'clickable-row': row.isClickable }"
   class="table-border height-3-rem table-row-hover"
 >
-  @for (cell of row.cells; track cell; let j = $index) {
+  @for (cell of row.cells; track j; let j = $index) {
   <td (click)="onRowClick(row)" [ngClass]="{ 'table-row-text-color': j > 0 }">
     <div class="row-container">
       @switch (cell.type) { @case ('checkboxText') {

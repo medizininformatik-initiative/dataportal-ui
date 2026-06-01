@@ -5,9 +5,9 @@ import {
   ElementRef,
   EnvironmentInjector,
   HostListener,
-  Input,
   OnDestroy,
   inject,
+  input,
 } from '@angular/core'
 import { InfoTooltipComponent } from './info-tooltip.component'
 
@@ -19,8 +19,8 @@ export class InfoTooltipDirective implements OnDestroy {
   private appRef = inject(ApplicationRef)
   private environmentInjector = inject(EnvironmentInjector)
 
-  @Input() infoTooltipTitle: string
-  @Input() infoTooltipText: string
+  readonly infoTooltipTitle = input<string>()
+  readonly infoTooltipText = input<string>()
 
   private cardRef: ReturnType<typeof createComponent<InfoTooltipComponent>> | null = null
 
@@ -31,7 +31,7 @@ export class InfoTooltipDirective implements OnDestroy {
 
   @HostListener('mouseenter')
   show(): void {
-    if (this.cardRef || !this.infoTooltipText) {
+    if (this.cardRef || !this.infoTooltipText()) {
       return
     }
 
@@ -39,8 +39,8 @@ export class InfoTooltipDirective implements OnDestroy {
       environmentInjector: this.environmentInjector,
     })
 
-    this.cardRef.instance.title = this.infoTooltipTitle
-    this.cardRef.instance.text = this.infoTooltipText
+    this.cardRef.setInput('title', this.infoTooltipTitle())
+    this.cardRef.setInput('text', this.infoTooltipText())
 
     this.appRef.attachView(this.cardRef.hostView)
     this.cardRef.changeDetectorRef.detectChanges()

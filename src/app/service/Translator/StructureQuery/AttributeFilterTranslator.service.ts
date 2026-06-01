@@ -1,11 +1,12 @@
 import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData'
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData'
+import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service'
 import { AttributeFiltersBuilder } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFiltersBuilder'
 import { ConceptFilterTranslatorService } from './ConceptFilterTranslator.service'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { QuantityFilterTranslatorService } from './QuantityFilterTranslator.service'
 import { ReferenceFilterTranslatorService } from './ReferenceFilterTranslator.service'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
@@ -13,7 +14,6 @@ import { TerminologyCodeBaseData } from 'src/app/model/Interface/TerminologyBase
 import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition'
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 import { ValueFilterData } from 'src/app/model/Interface/ValueFilterData'
-import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service'
 
 @Injectable({
   providedIn: 'root',

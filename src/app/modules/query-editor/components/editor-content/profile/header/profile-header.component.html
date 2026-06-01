@@ -6,14 +6,14 @@
       </div>
       <num-searchbar
         icon="pencil-alt"
-        [label]="placeholder"
+        [label]="placeholder()"
         [minLength]="0"
-        [searchText]="label"
+        [searchText]="label()"
         (searchTextChange)="setLabel($event)"
       >
       </num-searchbar>
       <div class="num-pill" numPillExpandable>
-        {{ profile.getDisplay().getOriginal() }}
+        {{ profile().getDisplay().getOriginal() }}
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
       }}</span>
     </div>
     <div class="header-col-chips">
-      @if ($fieldsFilterChips | async; as chips) { @if (chips.length > 0) {
+      @if ($fieldsFilterChips() | async; as chips) { @if (chips.length > 0) {
       <num-filter-chips [filterChips]="chips"></num-filter-chips>
       } @if (chips.length === 0) {
       <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
@@ -38,7 +38,7 @@
       }}</span>
     </div>
     <div class="header-col-chips">
-      @if (filtersFilterChips$ | async; as chips) { @if (chips.length > 0) {
+      @if (filtersFilterChips$() | async; as chips) { @if (chips.length > 0) {
       <num-filter-chips [filterChips]="chips"></num-filter-chips>
       } @if (chips.length === 0) {
       <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
@@ -52,9 +52,9 @@
       }}</span>
     </div>
     <div class="header-col-chips">
-      @if (profileReferenceChips?.length > 0) {
-      <num-filter-chips [filterChips]="profileReferenceChips"></num-filter-chips>
-      } @if (!profileReferenceChips?.length) {
+      @if (profileReferenceChips()?.length > 0) {
+      <num-filter-chips [filterChips]="profileReferenceChips()"></num-filter-chips>
+      } @if (!profileReferenceChips()?.length) {
       <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
       }
     </div>

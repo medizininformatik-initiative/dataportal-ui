@@ -1,5 +1,5 @@
 import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField'
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, input, output } from '@angular/core'
 import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter'
 import { map, Subscription, take } from 'rxjs'
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
@@ -38,25 +38,24 @@ import { DisplayTranslationPipe } from '../../../../shared/pipes/DisplayTranslat
 export class EditFieldsComponent implements OnInit, OnDestroy {
   private selectedDataSelectionProfileFieldsService = inject(SelectedProfileFieldsService)
 
-  @Input()
-  fieldTree: BasicField[]
+  readonly fieldTree = input<BasicField[]>()
 
-  @Input()
-  selectedBasicFields: SelectedBasicField[]
+  readonly selectedBasicFields = input<SelectedBasicField[]>()
 
-  @Output()
-  updatedSelectedBasicFields: EventEmitter<SelectedBasicField[]> = new EventEmitter<
-    SelectedBasicField[]
-  >()
+  readonly updatedSelectedBasicFields = output<SelectedBasicField[]>()
 
   tree: TreeNode[] = []
   deepCopyFieldsSubscription: Subscription
+  private localFieldTree: BasicField[] = []
+  private localSelectedBasicFields: SelectedBasicField[] = []
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
   constructor() {}
 
   ngOnInit() {
+    this.localFieldTree = [...this.fieldTree()]
+    this.localSelectedBasicFields = [...this.selectedBasicFields()]
     this.traversAndUpddateTree()
     this.buildTreeFromProfileFields()
   }
@@ -66,7 +65,7 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   }
 
   private buildTreeFromProfileFields(): void {
-    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.fieldTree)
+    this.selectedDataSelectionProfileFieldsService.setDeepCopyFields(this.localFieldTree)
     this.deepCopyFieldsSubscription?.unsubscribe()
     this.deepCopyFieldsSubscription = this.selectedDataSelectionProfileFieldsService
       .getDeepCopyBasicFields()
@@ -81,15 +80,15 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   }
 
   public setSelectedChildrenFields() {
-    this.selectedBasicFields.forEach((field) => {
+    this.localSelectedBasicFields.forEach((field) => {
       this.selectedDataSelectionProfileFieldsService.addToSelection(field)
     })
   }
 
   public traversAndUpddateTree() {
     this.selectedDataSelectionProfileFieldsService.updateSelectionStatus(
-      this.fieldTree,
-      this.selectedBasicFields
+      this.localFieldTree,
+      this.localSelectedBasicFields
     )
   }
 
@@ -107,7 +106,7 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   }
 
   private getIndexInSelectedFields(elementId: string): number {
-    return this.selectedBasicFields.findIndex(
+    return this.localSelectedBasicFields.findIndex(
       (selectedField) => selectedField.getSelectedField().getElementId() === elementId
     )
   }
@@ -121,30 +120,30 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
     const index = this.getIndexInSelectedFields(node.getElementId())
     if (index !== -1) {
       this.spliceAndEmit(index)
-      this.fieldTree = this.selectedDataSelectionProfileFieldsService.updateNodeInDeepCopy(
-        this.fieldTree,
+      this.localFieldTree = this.selectedDataSelectionProfileFieldsService.updateNodeInDeepCopy(
+        this.localFieldTree,
         node.getSelectedField(),
         false
       )
-      this.tree = FieldsTreeAdapter.fromTree(this.fieldTree)
+      this.tree = FieldsTreeAdapter.fromTree(this.localFieldTree)
     }
   }
 
   private spliceAndEmit(index: number): void {
-    this.selectedBasicFields.splice(index, 1)
+    this.localSelectedBasicFields.splice(index, 1)
     this.emitUpdatedSelectedFields()
   }
 
   private addNodeToSelectedFields(node: BasicField): void {
     const selectedField = new SelectedBasicField(node, false)
-    this.selectedBasicFields.push(selectedField)
+    this.localSelectedBasicFields.push(selectedField)
     this.selectedDataSelectionProfileFieldsService.addToSelection(selectedField)
     this.emitUpdatedSelectedFields()
   }
 
   private emitUpdatedSelectedFields(): void {
     const clonedSelectedFields = SelectedBasicFieldCloner.deepCopySelectedBasicFields(
-      this.selectedBasicFields
+      this.localSelectedBasicFields
     )
     this.updatedSelectedBasicFields.emit(clonedSelectedFields)
     this.traversAndUpddateTree()

@@ -4,8 +4,8 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  Input,
   inject,
+  input,
 } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
@@ -30,7 +30,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   private stageProviderService = inject(StageProviderService)
   private changeDetectorRef = inject(ChangeDetectorRef)
 
-  @Input() isEditable: boolean
+  readonly isEditable = input<boolean>(undefined)
   public $criterionUIDMap: Observable<Array<Criterion>>
 
   public $stageUIDMap: Observable<Array<string>>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
 import { MatFormField } from '@angular/material/form-field'
 import { MatSelect } from '@angular/material/select'
@@ -15,11 +15,9 @@ import { TranslateModule } from '@ngx-translate/core'
 export class QuantityComparisionSelectComponent {
   quantityFilterOptionsArray: string[] = Object.values(QuantityComparisonOption)
 
-  @Input()
-  existingOption: QuantityComparisonOption = QuantityComparisonOption.NONE
+  readonly existingOption = input<QuantityComparisonOption>(QuantityComparisonOption.NONE)
 
-  @Output()
-  selectedOption = new EventEmitter<string>()
+  readonly selectedOption = output<string>()
 
   selectQuantityFilterOption(option: string) {
     this.selectedOption.emit(option)

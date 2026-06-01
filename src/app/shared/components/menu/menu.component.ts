@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit, input } from '@angular/core'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
@@ -22,11 +22,9 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class MenuComponent implements OnInit {
-  @Input()
-  id: string
+  readonly id = input<string>(undefined)
 
-  @Input()
-  menuItems: MenuItemInterface[] = []
+  readonly menuItems = input<MenuItemInterface[]>([])
 
   constructor() {}
 

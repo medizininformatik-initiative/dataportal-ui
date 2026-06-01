@@ -1,5 +1,5 @@
 <div class="container padding-left-right-5px">
-  @if (showUpload) {
+  @if (showUpload()) {
   <input
     [attr.data-cy]="'upload-crtdl'"
     type="file"
@@ -21,7 +21,7 @@
   >
     <fa-icon size="lg" [icon]="'upload'"></fa-icon>
   </button>
-  } @if (showDownload) {
+  } @if (showDownload()) {
   <button
     (click)="downloadCRTDL()"
     [matTooltip]="
@@ -36,7 +36,7 @@
   >
     <fa-icon size="lg" [icon]="'download'"></fa-icon>
   </button>
-  } @if (showSave) {
+  } @if (showSave()) {
   <button
     (click)="onSaveDataQuery()"
     [matTooltip]="

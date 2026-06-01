@@ -1,16 +1,16 @@
 <div
   class="bool-logic-switch"
   [ngClass]="{
-    'is-inner': position === 'inner',
-    'is-outer': position === 'outer'
+    'is-inner': position() === 'inner',
+    'is-outer': position() === 'outer'
   }"
   (click)="switch()"
 >
-  <span class="switch-label" [ngClass]="{ active: label === 'AND' }">
+  <span class="switch-label" [ngClass]="{ active: label() === 'AND' }">
     {{ 'FEASIBILITY.EDITOR.SWITCH.LABEL_AND' | translate }}
   </span>
-  <div class="switch-indicator" [ngClass]="{ 'slide-right': label === 'OR' }"></div>
-  <span class="switch-label" [ngClass]="{ active: label === 'OR' }">
+  <div class="switch-indicator" [ngClass]="{ 'slide-right': label() === 'OR' }"></div>
+  <span class="switch-label" [ngClass]="{ active: label() === 'OR' }">
     {{ 'FEASIBILITY.EDITOR.SWITCH.LABEL_OR' | translate }}
   </span>
 </div>

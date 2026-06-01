@@ -1,6 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core'
-import { TabTitleService } from './service/TabTitle.service'
 import { AppLayoutComponent } from './layout/components/app-layout/app-layout.component'
+import { Component, inject, OnInit } from '@angular/core'
+import { TabTitleService } from './service/TabTitle.service'
 
 @Component({
   selector: 'num-root',
@@ -13,9 +13,6 @@ export class AppComponent implements OnInit {
   private tabTitleService1 = inject(TabTitleService)
 
   title = 'num-portal-webapp'
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
   constructor() {}
 
   ngOnInit() {

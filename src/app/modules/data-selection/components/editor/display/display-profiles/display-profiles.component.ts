@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, input } from '@angular/core'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
 import { map, Observable, tap } from 'rxjs'
@@ -17,8 +17,7 @@ export class DisplayProfilesComponent implements OnInit {
   private profileProvider = inject(ProfileProviderService)
   private dataSelectionProvider = inject(DataSelectionProviderService)
 
-  @Input()
-  isEditable: boolean
+  readonly isEditable = input<boolean>(undefined)
 
   dataSelectionProfileArray$: Observable<Array<DataSelectionProfile>>
 

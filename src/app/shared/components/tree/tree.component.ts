@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { AfterViewInit, Component, OnInit, input, output } from '@angular/core'
 import { TreeNode } from '../../models/TreeNode/TreeNodeInterface'
 import { NgTemplateOutlet } from '@angular/common'
 import { CheckboxComponent } from '../checkbox/checkbox.component'
@@ -20,11 +20,9 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
   ],
 })
 export class TreeComponent implements OnInit {
-  @Input()
-  treeData: TreeNode
+  readonly treeData = input<TreeNode>(undefined)
 
-  @Output()
-  selectedCheckbox: EventEmitter<TreeNode> = new EventEmitter()
+  readonly selectedCheckbox = output<TreeNode>()
 
   expandedNodes: Set<any> = new Set()
 

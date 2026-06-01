@@ -1,25 +1,25 @@
 <div
   cdkDrag
-  [cdkDragData]="criterion.getId()"
-  [attr.data-cy]="criterion.getDisplay() | displayTranslation"
+  [cdkDragData]="criterion().getId()"
+  [attr.data-cy]="criterion().getDisplay() | displayTranslation"
   class="container margin-bottom-2 margin-right-2"
 >
   <div class="content" cdkDragHandle>
     <div
       matTooltipPosition="below"
-      [matTooltip]="criterion.getDisplay() | displayTranslation"
+      [matTooltip]="criterion().getDisplay() | displayTranslation"
       class="title-section"
     >
-      {{ criterion.getDisplay() | displayTranslation }}
+      {{ criterion().getDisplay() | displayTranslation }}
     </div>
     <div class="info-section">
       <div class="num-info-item">
-        {{ criterion.getContext().getDisplay() }}, {{ criterion.getTermCodes()[0].getCode() }},
-        {{ system | displayTranslation }}
+        {{ criterion().getContext().getDisplay() }}, {{ criterion().getTermCodes()[0].getCode() }},
+        {{ system() | displayTranslation }}
       </div>
     </div>
     <div class="filter-chips-container">
-      @if (isFilterRequired) {
+      @if (isFilterRequired()) {
       <div class="warning-row">
         <img [src]="warningSignUrl" class="img-layout" />
         <span class="warning-message">
@@ -32,9 +32,9 @@
     </div>
   </div>
   <div class="handle-icons">
-    @if (isEditable) {
-    <num-menu [menuItems]="menuItems" [id]="criterion.getId()"></num-menu>
-    } @if (isEditable) {
+    @if (isEditable()) {
+    <num-menu [menuItems]="menuItems" [id]="criterion().getId()"></num-menu>
+    } @if (isEditable()) {
     <div class="menu-icon" cdkDragHandle>
       <fa-icon
         [matTooltip]="'SHARED_COMPONENTS.CRITERIA_BOX.DRAG_ICON_LABEL' | translate"
@@ -46,14 +46,14 @@
     }
   </div>
 </div>
-@for (attributeFilter of criterion.getAttributeFilters(); track attributeFilter) {
+@for (attributeFilter of criterion().getAttributeFilters(); track attributeFilter) {
 <div class="padding-left-7">
   @if (attributeFilter?.isReferenceSet()) {
   <div>
     @for (reference of getReferenceCriteriaFromFilter(attributeFilter); track reference) {
     <div>
       <num-reference-criteria-box
-        [criterionId]="criterion.getId()"
+        [criterionId]="criterion().getId()"
         [referenceCriterion]="reference"
       ></num-reference-criteria-box>
     </div>

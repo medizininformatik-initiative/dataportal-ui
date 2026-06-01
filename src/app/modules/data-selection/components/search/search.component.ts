@@ -12,19 +12,7 @@ import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelecti
 import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
 import { TreeComponent } from 'src/app/shared/components/tree/tree.component'
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface'
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  QueryList,
-  ViewChildren,
-  Input,
-  Output,
-  ElementRef,
-  EventEmitter,
-  inject,
-} from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
 import { TreeComponent as TreeComponent_1 } from '../../../../shared/components/tree/tree.component'
@@ -52,8 +40,7 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
   ],
 })
-export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDestroy {
-  elementRef = inject(ElementRef)
+export class SearchDataSelectionComponent implements OnInit, OnDestroy {
   private loadDataSelectionProfilesService = inject(LoadDataSelectionProfilesService)
   private dataSelectionProviderService = inject(DataSelectionProviderService)
   private activeDataSelectionService = inject(ActiveDataSelectionService)
@@ -63,16 +50,9 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   private appSettingsProviderService = inject(AppSettingsProviderService)
   private snackbarMessageService = inject(SnackbarMessageService)
 
-  @ViewChildren(TreeComponent) numTrees!: QueryList<TreeComponent>
-  @Input() showActionBar
-  @Output() scrollClick = new EventEmitter()
   trees: TreeNode[]
 
-  crtdlSubscription: Subscription
-
   dataSelectionProfileSubscription: Subscription
-
-  dataSelectionProfileTreeSubscription: Subscription
 
   selectedDataSelectionProfileUrls: Set<string> = new Set()
 
@@ -80,11 +60,7 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
 
   $dataSelectionProfileTreeNodeArray: Observable<DataSelectionProfileTreeNode[]>
 
-  downloadDisabled = true
   emailLink: string
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {}
 
@@ -117,12 +93,8 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
   }
 
   ngOnDestroy() {
-    this.crtdlSubscription?.unsubscribe()
     this.dataSelectionProfileSubscription?.unsubscribe()
-    this.dataSelectionProfileTreeSubscription?.unsubscribe()
   }
-
-  ngAfterViewInit() {}
 
   private handleSelectedItemsSubscription(): void {
     this.selectedDataSelectionProfileService
@@ -173,7 +145,6 @@ export class SearchDataSelectionComponent implements OnInit, AfterViewInit, OnDe
             dataSelectionId,
             dataSelectionProfile
           )
-          this.downloadDisabled = false
         })
         this.snackbarMessageService.displayAddedToDataSelection()
       })

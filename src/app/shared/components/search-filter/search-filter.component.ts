@@ -1,21 +1,13 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core'
-import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter'
-import { MatFormField } from '@angular/material/form-field'
-import { MatTooltip } from '@angular/material/tooltip'
-import { MatSelect, MatSelectTrigger } from '@angular/material/select'
-import { MatOption, MatOptgroup } from '@angular/material/core'
+import { Component, computed, input, model, output } from '@angular/core'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
+import { MatFormField } from '@angular/material/form-field'
+import { MatOptgroup, MatOption } from '@angular/material/core'
+import { MatSelect, MatSelectTrigger } from '@angular/material/select'
+import { MatTooltip } from '@angular/material/tooltip'
+import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter'
 import { TranslateModule } from '@ngx-translate/core'
-import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 
 @Component({
   selector: 'num-search-filter',
@@ -35,60 +27,60 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
     DisplayTranslationPipe,
   ],
 })
-export class SearchFilterComponent implements OnInit, OnChanges {
+export class SearchFilterComponent {
   isOpenData = {
     isOpen: false,
     targetFilter: '',
   }
-  @Input()
-  filter: SearchFilter
+  readonly filter = model<SearchFilter | undefined>(undefined)
 
-  @Input()
-  multiSelect = true
+  readonly multiSelect = input(true)
 
-  @Output()
-  selectedFilterChanged = new EventEmitter<SearchFilter>()
+  readonly isOpen = output<{
+    isOpen: boolean
+    targetFilter: string
+  }>()
 
-  @Output()
-  isOpen = new EventEmitter<{ isOpen: boolean; targetFilter: string }>()
+  readonly selectedValues = computed<string[] | string>(() => {
+    const filter = this.filter()
+    if (!filter) {
+      return this.multiSelect() ? [] : ''
+    }
 
-  selectedValues: string[] | string = []
+    return this.multiSelect() ? filter.selectedValues : filter.selectedValues[0] ?? ''
+  })
+
   searchText = ''
 
   get filteredData() {
+    const filter = this.filter()
+    if (!filter) {
+      return []
+    }
+
     if (!this.searchText) {
-      return this.filter.data
+      return filter.data
     }
     const query = this.searchText.toLowerCase()
-    return this.filter.data.filter((item) => item.label.toLowerCase().includes(query))
+    return filter.data.filter((item) => item.label.toLowerCase().includes(query))
   }
 
   translatedLabel: { translatedSystem: string; count: number; url: string }[] = []
   constructor() {}
 
-  ngOnInit(): void {
-    this.syncSelectedValues()
-  }
+  public onSelectionChange(selectedValues: string[] | string): void {
+    const normalizedValues = Array.isArray(selectedValues) ? selectedValues : [selectedValues]
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.filter) {
-      this.syncSelectedValues()
-    }
-  }
+    this.filter.update((currentFilter) => {
+      if (!currentFilter) {
+        return currentFilter
+      }
 
-  private syncSelectedValues(): void {
-    this.selectedValues = this.multiSelect
-      ? this.filter.selectedValues
-      : this.filter.selectedValues[0]
-  }
-
-  public onSelectionChange(): void {
-    const normalizedValues = Array.isArray(this.selectedValues)
-      ? this.selectedValues
-      : [this.selectedValues]
-
-    this.filter.selectedValues = normalizedValues
-    this.selectedFilterChanged.emit(this.filter)
+      return {
+        ...currentFilter,
+        selectedValues: normalizedValues,
+      }
+    })
   }
 
   public getCleanValue(value: string | string[]): string {
@@ -99,19 +91,18 @@ export class SearchFilterComponent implements OnInit, OnChanges {
   }
 
   public getTooltipText(): string {
-    if (
-      !this.selectedValues ||
-      (Array.isArray(this.selectedValues) && this.selectedValues?.length === 0)
-    ) {
+    const selectedValues = this.selectedValues()
+    if (!selectedValues || (Array.isArray(selectedValues) && selectedValues.length === 0)) {
       return 'SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED'
     }
-    return this.getCleanValue(this.selectedValues)
+    return this.getCleanValue(selectedValues)
   }
 
   public onOpenedChange(isOpen: boolean): void {
+    const filter = this.filter()
     if (isOpen) {
       this.isOpenData.isOpen = true
-      this.isOpenData.targetFilter = this.filter.filterType
+      this.isOpenData.targetFilter = filter?.filterType ?? ''
       this.isOpen.emit(this.isOpenData)
     }
   }

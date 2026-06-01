@@ -2,9 +2,11 @@ import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData
 import { ConceptHashCollectorService } from './ConceptHashCollector.service'
 import { ConsentService } from 'src/app/service/Consent/Consent.service'
 import { CriterionHashCollectorService } from './CriterionHashCollector.service'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
+import { ReferenceCriteriaData } from 'src/app/model/Interface/ReferenceCriteriaData'
 import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { ValueFilterData } from 'src/app/model/Interface/ValueFilterData'
 
 export interface HashCollection {
   readonly criteriaHashes: string[]
@@ -23,9 +25,6 @@ export class CollectCRTDLHashesService {
     criteriaHashes: [],
     conceptHashes: [],
   }
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {}
 
@@ -66,6 +65,16 @@ export class CollectCRTDLHashesService {
     this.collectCriterionHashFromCriterion(structuredQueryCriterion)
     this.collectConceptHashesFromAttributeFilters(structuredQueryCriterion)
     this.collectConceptHashesFromValueFilter(structuredQueryCriterion)
+
+    const referenceAttributeFilter = structuredQueryCriterion.attributeFilters?.find(
+      (attributeFilterData) => attributeFilterData.criteria
+    )
+    if (referenceAttributeFilter) {
+      referenceAttributeFilter?.criteria.forEach((referenceCriterion) => {
+        this.collectConceptHashesFromReferenceCriterionFromAttributeFilters(referenceCriterion)
+        this.collectConceptHashesFromReferenceCriterionFromValueFilters(referenceCriterion)
+      })
+    }
   }
 
   /**
@@ -74,7 +83,8 @@ export class CollectCRTDLHashesService {
   private collectCriterionHashesFromReferenceFilters(
     structuredQueryCriterion: StructuredQueryCriterionData
   ): void {
-    const attributeFilterData: AttributeFilterData[] = structuredQueryCriterion.attributeFilters
+    const attributeFilterData: AttributeFilterData[] | undefined =
+      structuredQueryCriterion.attributeFilters
     if (!attributeFilterData) {
       return
     }
@@ -100,7 +110,8 @@ export class CollectCRTDLHashesService {
   private collectConceptHashesFromAttributeFilters(
     structuredQueryCriterion: StructuredQueryCriterionData
   ): void {
-    const attributeFilters: AttributeFilterData[] = structuredQueryCriterion.attributeFilters
+    const attributeFilters: AttributeFilterData[] | undefined =
+      structuredQueryCriterion.attributeFilters
     if (!attributeFilters) {
       return
     }
@@ -115,7 +126,31 @@ export class CollectCRTDLHashesService {
   private collectConceptHashesFromValueFilter(
     structuredQueryCriterion: StructuredQueryCriterionData
   ): void {
-    const valueFilter = structuredQueryCriterion.valueFilter
+    const valueFilter: ValueFilterData | undefined = structuredQueryCriterion.valueFilter
+    if (!valueFilter) {
+      return
+    }
+    const valueConceptHashes = this.conceptHashCollector.collectFromValueFilter(valueFilter)
+    this.hashes.conceptHashes.push(...valueConceptHashes)
+  }
+
+  private collectConceptHashesFromReferenceCriterionFromAttributeFilters(
+    structuredQueryCriterion: ReferenceCriteriaData
+  ): void {
+    const attributeFilters: AttributeFilterData[] | undefined =
+      structuredQueryCriterion?.attributeFilters
+    if (!attributeFilters) {
+      return
+    }
+    const attributeConceptHashes =
+      this.conceptHashCollector.collectFromAttributeFilters(attributeFilters)
+    this.hashes.conceptHashes.push(...attributeConceptHashes)
+  }
+
+  private collectConceptHashesFromReferenceCriterionFromValueFilters(
+    structuredQueryCriterion: ReferenceCriteriaData
+  ): void {
+    const valueFilter: ValueFilterData | undefined = structuredQueryCriterion?.valueFilter
     if (!valueFilter) {
       return
     }

@@ -1,14 +1,14 @@
 <div class="selection-box">
   <div class="criterion-display">
-    {{ criterion.getDisplay() | displayTranslation }}
+    {{ criterion().getDisplay() | displayTranslation }}
     <div class="information-display">
-      {{ criterion.getContext().getDisplay() }}
-      {{ criterion.getTermCodes()[0].getCode() }}
-      {{ system | displayTranslation }}
+      {{ criterion().getContext().getDisplay() }}
+      {{ criterion().getTermCodes()[0].getCode() }}
+      {{ system() | displayTranslation }}
     </div>
   </div>
 
-  @if (termCodesFilterChips.length > 0) {
+  @if (termCodesFilterChips().length > 0) {
   <div class="header-col border-right-1">
     <div class="label-with-info">
       <span class="num-text-accent">{{
@@ -16,7 +16,7 @@
       }}</span>
     </div>
     <div class="header-col-chips">
-      <num-filter-chips [filterChips]="termCodesFilterChips"></num-filter-chips>
+      <num-filter-chips [filterChips]="termCodesFilterChips()"></num-filter-chips>
     </div>
   </div>
   }
@@ -27,26 +27,26 @@
         'EDITOR.CONTENT.CRITERION.HEADER.FILTER' | translate
       }}</span>
     </div>
-    @if (timeRestrictionFilterChips.length > 0) {
+    @if (timeRestrictionFilterChips().length > 0) {
     <div>
-      <num-filter-chips [filterChips]="timeRestrictionFilterChips"> </num-filter-chips>
+      <num-filter-chips [filterChips]="timeRestrictionFilterChips()"> </num-filter-chips>
     </div>
-    } @if (conceptFilterChips.length > 0) {
+    } @if (conceptFilterChips().length > 0) {
     <div>
-      <num-filter-chips [filterChips]="conceptFilterChips"> </num-filter-chips>
+      <num-filter-chips [filterChips]="conceptFilterChips()"> </num-filter-chips>
     </div>
     }
     <div class="header-col-chips">
-      @if (quantityFilterChips.length > 0) {
-      <num-filter-chips [filterChips]="quantityFilterChips"></num-filter-chips>
-      } @if ( quantityFilterChips.length === 0 && conceptFilterChips.length === 0 &&
-      timeRestrictionFilterChips.length === 0 ) {
+      @if (quantityFilterChips().length > 0) {
+      <num-filter-chips [filterChips]="quantityFilterChips()"></num-filter-chips>
+      } @if ( quantityFilterChips().length === 0 && conceptFilterChips().length === 0 &&
+      timeRestrictionFilterChips().length === 0 ) {
       <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
       }
     </div>
   </div>
 
-  @if (refernceFilterChips.length > 0) {
+  @if (refernceFilterChips().length > 0) {
   <div class="header-col">
     <div class="label-with-info">
       <span class="num-text-accent">{{
@@ -54,7 +54,7 @@
       }}</span>
     </div>
     <div class="header-col-chips">
-      <num-filter-chips [filterChips]="refernceFilterChips"></num-filter-chips>
+      <num-filter-chips [filterChips]="refernceFilterChips()"></num-filter-chips>
     </div>
   </div>
   }

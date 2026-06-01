@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 import { ButtonComponent } from '../button/button.component'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -10,17 +10,13 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ButtonComponent, TranslateModule],
 })
 export class ModalWindowComponent {
-  @Input()
-  disabled = false
+  readonly disabled = input(false)
 
-  @Input()
-  displaySaveButtons = true
+  readonly displaySaveButtons = input(true)
 
-  @Output()
-  cancelButtonSelected = new EventEmitter()
+  readonly cancelButtonSelected = output()
 
-  @Output()
-  saveButtonSelected = new EventEmitter()
+  readonly saveButtonSelected = output()
 
   public save() {
     this.saveButtonSelected.emit()

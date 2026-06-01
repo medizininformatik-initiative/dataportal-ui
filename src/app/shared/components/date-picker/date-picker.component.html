@@ -3,7 +3,8 @@
     class="date-input"
     matInput
     [matDatepicker]="dateStartPicker"
-    [(ngModel)]="selectedDate"
+    [ngModel]="selectedDate()"
+    (ngModelChange)="selectedDate.set($event)"
     (dateChange)="emitSelectedDate()"
     placeholder="dd.mm.yyyy"
   />

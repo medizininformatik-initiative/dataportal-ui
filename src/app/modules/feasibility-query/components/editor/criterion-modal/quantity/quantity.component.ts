@@ -1,26 +1,27 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
+import { AllowedUnitsComponent } from './allowed-units/allowed-units.component'
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
+  computed,
+  effect,
   inject,
+  input,
+  model,
+  signal,
 } from '@angular/core'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { QuantityComparatorComponent } from './quantity-comparator/quantity-comparator.component'
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
+import { QuantityComparisionSelectComponent } from './quantity-comparision-select/quantity-comparision-select.component'
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
+import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service'
+import { QuantityRangeComponent } from './quantity-range/quantity-range.component'
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
-import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { SectionNameComponent } from '../../../../../../shared/components/section-name/section-name.component'
-import { QuantityComparisionSelectComponent } from './quantity-comparision-select/quantity-comparision-select.component'
-import { QuantityRangeComponent } from './quantity-range/quantity-range.component'
-import { QuantityComparatorComponent } from './quantity-comparator/quantity-comparator.component'
-import { AllowedUnitsComponent } from './allowed-units/allowed-units.component'
-import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
 
 @Component({
   selector: 'num-quantity',
@@ -37,105 +38,64 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
     DisplayTranslationPipe,
   ],
 })
-export class QuantityComponent implements OnInit {
+export class QuantityComponent {
   private quantityFilterFactoryService = inject(QuantityFilterFactoryService)
 
-  FilterTypes: typeof FilterTypes = FilterTypes
+  readonly quantityFilter = model<AbstractQuantityFilter>()
+  readonly display = input<Display>()
 
-  @Input()
-  quantityFilter!: AbstractQuantityFilter
+  readonly selectedQuantityFilterComparator = signal<QuantityComparisonOption | undefined>(
+    undefined
+  )
+  readonly selectedQuantityFilterUnit = signal<QuantityUnit | undefined>(undefined)
 
-  @Output()
-  quantityFilterChange = new EventEmitter<AbstractQuantityFilter>()
+  readonly isQuantityNotSet = computed(
+    () => this.selectedQuantityFilterComparator() === QuantityComparisonOption.NONE
+  )
+  readonly isBetweenFilter = computed(
+    () => this.selectedQuantityFilterComparator() === QuantityComparisonOption.BETWEEN
+  )
+  readonly isComparatorFilter = computed(
+    () =>
+      this.selectedQuantityFilterComparator() !== QuantityComparisonOption.BETWEEN &&
+      this.selectedQuantityFilterComparator() !== QuantityComparisonOption.NONE &&
+      this.selectedQuantityFilterComparator() !== undefined
+  )
 
-  @Input()
-  display!: Display
+  readonly quantityComparatorFilter = computed<QuantityComparatorFilter | undefined>(() => {
+    const f = this.quantityFilter()
+    return f?.getType() === FilterTypes.QUANTITY_COMPARATOR
+      ? (f as QuantityComparatorFilter)
+      : undefined
+  })
 
-  /**
-   * UI conditions
-   */
-  isQuantityNotSet = false
-  isBetweenFilter = false
-  isComparatorFilter = false
+  readonly quantityRangeFilter = computed<QuantityRangeFilter | undefined>(() => {
+    const f = this.quantityFilter()
+    return f?.getType() === FilterTypes.QUANTITY_RANGE ? (f as QuantityRangeFilter) : undefined
+  })
 
-  /**
-   * QuantityFilter Instances
-   */
-  quantityComparatorFilter: QuantityComparatorFilter | undefined = undefined
-  quantityRangeFilter: QuantityRangeFilter | undefined = undefined
-
-  selectedQuantityFilterComparator!: QuantityComparisonOption
-
-  selectedQuantityFilterUnit: QuantityUnit | undefined = undefined
-
-  QuantityComparisonOption: typeof QuantityComparisonOption = QuantityComparisonOption
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {}
-
-  ngOnInit() {
-    this.setupFactoryService()
-    this.initializaFilterType()
-    this.initializeUnit()
-    this.selectedQuantityFilterComparator = this.quantityFilter.getComparator()
-  }
-
-  private setupFactoryService() {
-    this.quantityFilterFactoryService.setAllowedUnits(this.quantityFilter.getAllowedUnits())
-    this.quantityFilterFactoryService.setPrecision(this.quantityFilter.getPrecision())
-  }
-
-  private initializaFilterType() {
-    const type: FilterTypes = this.quantityFilter.getType()
-    if (type === FilterTypes.QUANTITY_COMPARATOR) {
-      this.quantityComparatorFilter = this.quantityFilter as QuantityComparatorFilter
-      this.isComparatorFilter = true
-    }
-    if (type === FilterTypes.QUANTITY_RANGE) {
-      this.quantityRangeFilter = this.quantityFilter as QuantityRangeFilter
-      this.isBetweenFilter = true
-    }
-    if (type === FilterTypes.QUANTITY_NOT_SET) {
-      this.isQuantityNotSet = true
-    }
-  }
-
-  private initializeUnit() {
-    if (this.quantityFilter.getSelectedUnit()) {
-      this.setSelectQuantityFilterUnit(this.quantityFilter.getSelectedUnit())
-    } else {
-      this.setSelectQuantityFilterUnit(this.quantityFilter.getAllowedUnits()[0])
-    }
+  constructor() {
+    effect(() => {
+      const filter = this.quantityFilter()
+      if (!filter) return
+      this.quantityFilterFactoryService.setAllowedUnits(filter.getAllowedUnits())
+      this.quantityFilterFactoryService.setPrecision(filter.getPrecision())
+      this.selectedQuantityFilterComparator.set(filter.getComparator())
+      const unit = filter.getSelectedUnit() ?? filter.getAllowedUnits()[0]
+      this.selectedQuantityFilterUnit.set(unit)
+      this.quantityFilterFactoryService.setQuantityUnit(unit)
+    })
   }
 
   public setSelectedQuantityFilterOption(option: QuantityComparisonOption): void {
-    this.selectedQuantityFilterComparator =
-      QuantityComparisonOption[option as keyof typeof QuantityComparisonOption]
+    this.selectedQuantityFilterComparator.set(option)
     if (option === QuantityComparisonOption.NONE) {
-      const emptyQuantityFilter = this.quantityFilterFactoryService.createEmptyQuantityFilter()
-      this.updateConditions()
-      this.quantityFilterChange.emit(emptyQuantityFilter)
+      this.quantityFilter.set(this.quantityFilterFactoryService.createEmptyQuantityFilter())
     }
-    this.updateConditions()
-  }
-
-  private updateConditions() {
-    this.isBetweenFilter =
-      this.selectedQuantityFilterComparator === QuantityComparisonOption.BETWEEN
-    this.isComparatorFilter =
-      this.selectedQuantityFilterComparator !== QuantityComparisonOption.BETWEEN &&
-      this.selectedQuantityFilterComparator !== QuantityComparisonOption.NONE
-    this.isQuantityNotSet = this.selectedQuantityFilterComparator === QuantityComparisonOption.NONE
   }
 
   public setSelectQuantityFilterUnit(selectedUnit: QuantityUnit) {
-    this.selectedQuantityFilterUnit = selectedUnit
+    this.selectedQuantityFilterUnit.set(selectedUnit)
     this.quantityFilterFactoryService.setQuantityUnit(selectedUnit)
-  }
-
-  public emitQuantityFilterInstance(quantityFilter: AbstractQuantityFilter) {
-    this.quantityFilterChange.emit(quantityFilter)
   }
 }

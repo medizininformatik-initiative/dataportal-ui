@@ -13,6 +13,10 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
 import { ModalWindowComponent } from '../../../../../shared/components/modal-window/modal-window.component'
 import { ReferenceComponent } from './reference/reference.component'
+
+/**
+ * @deprecated This component is deprecated and will be removed in future versions. Please use the ReferenceCriteriaModalComponent instead.
+ */
 @Component({
   selector: 'num-edit-reference-criteria',
   templateUrl: './edit-reference-criteria-modal.component.html',

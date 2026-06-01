@@ -1,4 +1,4 @@
-@if (listItemDetails$ | async; as listItemDetails) {
+@if (listItemDetails$() | async; as listItemDetails) {
 <mat-tab-group class="details-tab-group" animationDuration="0ms">
   <mat-tab>
     <ng-template mat-tab-label>
@@ -15,7 +15,7 @@
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.TRANSLATIONS' | translate }}
         </div>
         <div class="detail-value">
-          @for (t of listItemDetails.getDisplay().getTranslations(); track t) {
+          @for (t of listItemDetails.getDisplay().getTranslations(); track t.getLanguage()) {
           <div class="translation-entry">
             <span
               class="fi"

@@ -8,12 +8,11 @@ import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fiel
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
-  Output,
   inject,
+  input,
+  output,
 } from '@angular/core'
 import { PossibleReferencesComponent } from '../possible-references/possible-references.component'
 import { PlaceholderBoxComponent } from '../../../../../../../shared/components/placeholder-box/placeholder-box.component'
@@ -40,18 +39,13 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   private possibleReferencesService = inject(PossibleReferencesService)
   private profileReferenceModalService = inject(ProfileReferenceModalService)
 
-  @Input()
-  referenceField: ReferenceField
+  readonly referenceField = input<ReferenceField>(undefined)
 
-  @Input()
-  profileId: string
+  readonly profileId = input<string>(undefined)
 
-  @Input()
-  selectedField: SelectedReferenceField
+  readonly selectedField = input<SelectedReferenceField>(undefined)
 
-  @Output()
-  selectedProfileAsReference: EventEmitter<SelectedReferenceField> =
-    new EventEmitter<SelectedReferenceField>()
+  readonly selectedProfileAsReference = output<SelectedReferenceField>()
 
   possibleReferences$: Observable<PossibleProfileReferenceData[]>
 
@@ -67,10 +61,10 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    this.referencedProfileUrls = this.referenceField
+    this.referencedProfileUrls = this.referenceField()
       .getReferencedProfiles()
       .map((profile) => profile.getUrl())
-    this.elementId = this.referenceField.getElementId()
+    this.elementId = this.referenceField().getElementId()
     this.loadPossibleReferences()
   }
 
@@ -80,20 +74,20 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
 
   private loadPossibleReferences(): void {
     this.possibleReferences$ = this.possibleReferencesService.getReferencesMap().pipe(
-      filter((innerMap) => innerMap.has(this.profileId)),
-      map((innerMap) => innerMap.get(this.profileId).get(this.elementId))
+      filter((innerMap) => innerMap.has(this.profileId())),
+      map((innerMap) => innerMap.get(this.profileId()).get(this.elementId))
     )
   }
 
   public openReferenceModal(): void {
     this.openModalWindowSubscription?.unsubscribe()
     this.openModalWindowSubscription = this.profileReferenceModalService
-      .openProfileReferenceModal(this.referencedProfileUrls, this.profileId)
+      .openProfileReferenceModal(this.referencedProfileUrls, this.profileId())
       .pipe(
         take(1),
         filter((urls) => urls.length > 0),
         switchMap((urls: string[]) =>
-          this.possibleReferencesService.loadAndMapProfiles(urls, this.elementId, this.profileId)
+          this.possibleReferencesService.loadAndMapProfiles(urls, this.elementId, this.profileId())
         )
       )
       .subscribe((possibleProfileReferenceData: PossibleProfileReferenceData[]) =>
@@ -105,7 +99,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
     const selectedFields: SelectedReferenceField =
       this.createSelectedReferenceService.mapPossibleReferencesToSelectedReferences(
         selected,
-        this.referenceField
+        this.referenceField()
       )
     this.selectedProfileAsReference.emit(selectedFields)
   }
@@ -115,8 +109,8 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
       .getReferencesMap()
       .pipe(
         take(1),
-        filter((innerMap) => innerMap.has(this.profileId)),
-        map((innerMap) => innerMap.get(this.profileId).get(this.elementId)),
+        filter((innerMap) => innerMap.has(this.profileId())),
+        map((innerMap) => innerMap.get(this.profileId()).get(this.elementId)),
         tap((possibleReferences) => {
           if (possibleReferences) {
             const foundPossibleRefrence = possibleReferences.find((ref) => ref.id === test.id)
@@ -130,7 +124,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
       )
       .subscribe((possibleReferences) => {
         this.possibleReferencesService.setReferencesMapElement(
-          this.profileId,
+          this.profileId(),
           this.elementId,
           possibleReferences
         )

@@ -2,29 +2,18 @@ import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm
 import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
 import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept'
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter'
-import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service'
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core'
+import { Component, DestroyRef, effect, inject, input, output } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
-import { ConceptSelectionHelperService } from '../../../service/ConceptSelection/ConceptSelectionHelper.service'
-import { map, Observable, Subscription, tap } from 'rxjs'
+import { filter, map, switchMap } from 'rxjs'
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
+import { PlaceholderBoxComponent } from '../../../../../shared/components/placeholder-box/placeholder-box.component'
 import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service'
+import { TableComponent } from '../../../../../shared/components/table/table.component'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
-import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
-import { TableComponent } from '../../../../../shared/components/table/table.component'
-import { PlaceholderBoxComponent } from '../../../../../shared/components/placeholder-box/placeholder-box.component'
-import { AsyncPipe } from '@angular/common'
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -32,89 +21,59 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './concept-filter-table.component.html',
   styleUrls: ['./concept-filter-table.component.scss'],
   standalone: true,
-  imports: [
-    InfiniteScrollDirective,
-    TableComponent,
-    PlaceholderBoxComponent,
-    AsyncPipe,
-    TranslateModule,
-  ],
+  imports: [InfiniteScrollDirective, TableComponent, PlaceholderBoxComponent, TranslateModule],
 })
-export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy {
-  private activeSearchTermService = inject(ActiveSearchTermService)
-  private conceptSearchService = inject(CodeableConceptSearchService)
-  private selectedConceptProviderService = inject(SelectedConceptFilterProviderService)
-  private conceptSelectionHelperService = inject(ConceptSelectionHelperService)
+export class ConceptFilterTableComponent {
+  private readonly destroyRef = inject(DestroyRef)
+  private readonly activeSearchTermService = inject(ActiveSearchTermService)
+  private readonly conceptSearchService = inject(CodeableConceptSearchService)
+  private readonly selectedConceptProviderService = inject(SelectedConceptFilterProviderService)
 
-  codeableConceptResultList: CodeableConceptResultList
+  readonly valueSetUrl = input<string[] | undefined>(undefined)
+  readonly conceptFilterId = input<string | undefined>(undefined)
+  readonly selectedConcept = output<Concept>()
 
-  @Input()
-  valueSetUrl: string[]
+  readonly searchText = toSignal(this.activeSearchTermService.getActiveSearchTerm(), {
+    initialValue: '',
+  })
 
-  @Input()
-  conceptFilterId: string
-
-  @Output()
-  selectedConcept = new EventEmitter<Concept>()
-
-  adaptedData: TableData
-
-  selectedConcepts: Concept[] = []
-
-  private subscription: Subscription = new Subscription()
-
-  private subscription2: Subscription = new Subscription()
-
-  searchText$: Observable<string>
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {}
-
-  ngOnChanges() {
-    const selectedConcepts = this.selectedConceptProviderService.getSelectedConceptsValue()
-    this.adaptedData?.body.rows.forEach((row) => {
-      const entry = row.originalEntry as CodeableConceptResultListEntry
-      const checkboxCell = row.cells.find(
-        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
-      )
-      if (checkboxCell) {
-        checkboxCell.isSelected = this.conceptSelectionHelperService.isConceptSelected(
-          entry.getConcept(),
-          selectedConcepts
+  readonly adaptedData = toSignal<TableData | undefined>(
+    toObservable(this.valueSetUrl).pipe(
+      filter((urls) => urls !== undefined),
+      switchMap((urls) =>
+        this.conceptSearchService.getSearchResults(urls).pipe(
+          filter((results) => results !== null),
+          map((results) => {
+            results.getResults().forEach((entry) => {
+              entry.setIsSelected(
+                this.selectedConceptProviderService.isConceptSelected(
+                  entry.getConcept().getTerminologyCode()
+                )
+              )
+            })
+            return new CodeableConceptListEntryAdapter().adapt(results.getResults())
+          })
         )
-      }
+      )
+    ),
+    { initialValue: undefined }
+  )
+
+  private selectedConcepts: Concept[] = []
+
+  private readonly serviceSelectedConcepts =
+    this.selectedConceptProviderService.getSelectedConcepts()
+
+  constructor() {
+    effect(() => {
+      this.conceptFilterId() // track conceptFilterId changes
+      this.serviceSelectedConcepts() // track service concept changes
+      this.updateCheckboxSelection()
     })
   }
 
-  ngOnInit() {
-    this.conceptSearchService
-      .getSearchResults(this.valueSetUrl)
-      .pipe(
-        map((results) => {
-          results.getResults().find((entry) => {
-            entry.setIsSelected(
-              this.selectedConceptProviderService.isConceptSelected(
-                entry.getConcept().getTerminologyCode()
-              )
-            )
-          })
-          return results
-        }),
-        map((results) => {
-          this.adaptedData = new CodeableConceptListEntryAdapter().adapt(results.getResults())
-        })
-      )
-      .subscribe(() => {
-        this.updateCheckboxSelection()
-      })
-
-    this.searchText$ = this.activeSearchTermService.getActiveSearchTerm()
-  }
-
   private updateCheckboxSelection(): void {
-    this.adaptedData?.body.rows.forEach((row) => {
+    this.adaptedData()?.body.rows.forEach((row) => {
       const listEntry = row.originalEntry as CodeableConceptResultListEntry
       const concept = CloneConcept.deepCopyConcept(listEntry.getConcept())
       this.clearSelectedConceptArray()
@@ -127,12 +86,7 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
     })
   }
 
-  ngOnDestroy() {
-    this.subscription?.unsubscribe()
-    this.subscription2?.unsubscribe()
-  }
-
-  public addSelectedRow(item: TableRowData) {
+  public addSelectedRow(item: TableRowData): void {
     const entry = item.originalEntry as CodeableConceptResultListEntry
     const concept = CloneConcept.deepCopyConcept(entry.getConcept())
     if (this.selectedConceptProviderService.findConcept(concept)) {
@@ -142,7 +96,6 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
       const foundConcept = this.selectedConcepts.find(
         (c) => c.getTerminologyCode().getCode() === concept.getTerminologyCode().getCode()
       )
-
       if (foundConcept) {
         this.selectedConcepts = this.selectedConcepts.filter(
           (c) => c.getTerminologyCode().getCode() !== concept.getTerminologyCode().getCode()
@@ -155,11 +108,16 @@ export class ConceptFilterTableComponent implements OnInit, OnChanges, OnDestroy
     this.selectedConcept.emit(concept)
   }
 
-  private clearSelectedConceptArray() {
+  private clearSelectedConceptArray(): void {
     this.selectedConcepts = []
   }
 
   public loadMoreSearchResults(): void {
-    this.conceptSearchService.loadNextPage(' ', this.valueSetUrl).subscribe()
+    const urls = this.valueSetUrl()
+    if (!urls) return
+    this.conceptSearchService
+      .loadNextPage(' ', urls)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe()
   }
 }

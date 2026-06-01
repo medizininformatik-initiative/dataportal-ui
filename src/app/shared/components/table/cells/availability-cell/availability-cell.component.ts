@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, input } from '@angular/core'
 import { AvailabilityCellData } from 'src/app/shared/models/TableData/cells/AvailabilityCellData'
 import { AvailabilityStatusBarComponent } from '../../../availability-status-bar/availability-status-bar.component'
 
@@ -10,5 +10,5 @@ import { AvailabilityStatusBarComponent } from '../../../availability-status-bar
   imports: [AvailabilityStatusBarComponent],
 })
 export class AvailabilityCellComponent {
-  @Input() cell: AvailabilityCellData
+  readonly cell = input<AvailabilityCellData>(undefined)
 }

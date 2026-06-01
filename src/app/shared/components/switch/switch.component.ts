@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
+import { Component, OnInit, model, output } from '@angular/core'
 import { NgClass } from '@angular/common'
 
 @Component({
@@ -9,11 +9,9 @@ import { NgClass } from '@angular/common'
   imports: [NgClass],
 })
 export class SwitchComponent implements OnInit {
-  @Input()
-  isChecked = true
+  readonly isChecked = model(true)
 
-  @Output()
-  toggled: EventEmitter<boolean> = new EventEmitter<boolean>()
+  readonly toggled = output<boolean>()
 
   constructor() {}
 
@@ -21,8 +19,8 @@ export class SwitchComponent implements OnInit {
 
   public toggleSwitch(event: Event): void {
     const input = event.target as HTMLInputElement
-    this.isChecked = input.checked
+    this.isChecked.set(input.checked)
 
-    this.toggled.emit(this.isChecked)
+    this.toggled.emit(this.isChecked())
   }
 }

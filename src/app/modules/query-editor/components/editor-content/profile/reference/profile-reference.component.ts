@@ -1,15 +1,7 @@
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, input, output } from '@angular/core'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
@@ -35,10 +27,10 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
   ],
 })
 export class ProfileReferenceComponent implements OnInit, OnDestroy {
-  @Input() referenceFields: ReferenceField[]
-  @Input() profileId: string
-  @Input() selectedReferenceFields: SelectedReferenceField[] = []
-  @Output() updatedSelectedReferenceFields = new EventEmitter<SelectedReferenceField[]>()
+  readonly referenceFields = input<ReferenceField[]>(undefined)
+  readonly profileId = input<string>(undefined)
+  readonly selectedReferenceFields = input<SelectedReferenceField[]>([])
+  readonly updatedSelectedReferenceFields = output<SelectedReferenceField[]>()
 
   constructor() {}
 
@@ -55,26 +47,26 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
     const index = this.findSelectedField(referencedField)
     if (len > 0) {
       if (index !== -1) {
-        this.selectedReferenceFields[index] = selectedReferenceField
+        this.selectedReferenceFields()[index] = selectedReferenceField
       } else {
-        this.selectedReferenceFields.push(selectedReferenceField)
+        this.selectedReferenceFields().push(selectedReferenceField)
       }
     } else if (index !== -1) {
-      this.selectedReferenceFields.splice(index, 1)
+      this.selectedReferenceFields().splice(index, 1)
     }
 
     this.emitUpdatedFields()
   }
 
   private findSelectedField(referencedField: ReferenceField): number | undefined {
-    return this.selectedReferenceFields.findIndex(
+    return this.selectedReferenceFields().findIndex(
       (field) => field.getElementId() === referencedField.getElementId()
     )
   }
 
   private emitUpdatedFields(): void {
     const clonedFields = SelectedReferenceFieldsCloner.deepCopySelectedReferenceFields(
-      this.selectedReferenceFields
+      this.selectedReferenceFields()
     )
     this.updatedSelectedReferenceFields.emit(clonedFields)
   }

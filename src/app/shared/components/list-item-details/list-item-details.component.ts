@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, OnInit, input, output } from '@angular/core'
 import { CriteriaListEntry } from '../../../model/Search/ListEntries/CriteriaListListEntry'
 import { Observable } from 'rxjs'
 import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails'
@@ -34,14 +34,11 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 export class ListItemDetailsComponent implements OnInit {
   isOpen = false
 
-  @Input()
-  selectedTableItemId: string
+  readonly selectedTableItemId = input<string>(undefined)
 
-  @Input()
-  listItemDetails$: Observable<SearchTermDetails>
+  readonly listItemDetails$ = input<Observable<SearchTermDetails>>(undefined)
 
-  @Output()
-  selectedRelative: EventEmitter<CriteriaListEntry> = new EventEmitter()
+  readonly selectedRelative = output<CriteriaListEntry>()
 
   constructor() {}
 

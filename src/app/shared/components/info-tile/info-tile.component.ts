@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit, input } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -9,9 +9,9 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [TranslateModule],
 })
 export class InfoTileComponent implements OnInit {
-  @Input() value = ''
-  @Input() label: string
-  @Input() color: 'default' | 'red' = 'default'
+  readonly value = input('')
+  readonly label = input<string>(undefined)
+  readonly color = input<'default' | 'red'>('default')
 
   constructor() {}
 

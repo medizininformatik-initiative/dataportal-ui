@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
+import { Component, OnInit, inject, input, model, output } from '@angular/core'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { HashService } from '../../../../../../service/Hash.service'
 import { SelectedBulkCriteriaProvider } from '../../../../../../service/SelectedBulkCriteria.service'
@@ -28,13 +28,10 @@ export class TermcodeComponent implements OnInit {
   private hashService = inject(HashService)
   private selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
 
-  @Input()
-  termCodes: TerminologyCode[]
-  @Input()
-  context: TerminologyCode
+  readonly termCodes = model<TerminologyCode[]>()
+  readonly context = input<TerminologyCode>(undefined)
 
-  @Output()
-  changedTermCodes = new EventEmitter<TerminologyCode[]>()
+  readonly changedTermCodes = output<TerminologyCode[]>()
 
   bulkEntries: CriteriaBulkEntry[] = []
 
@@ -46,22 +43,24 @@ export class TermcodeComponent implements OnInit {
   }
 
   private createBulkEntries(): void {
-    this.bulkEntries = this.termCodes.map((termCode) => {
-      const hash = this.hashService.createCriterionHash(this.context, termCode)
+    this.bulkEntries = this.termCodes().map((termCode) => {
+      const hash = this.hashService.createCriterionHash(this.context(), termCode)
       return this.selectedBulkCriteriaService.getFoundById(hash)
     })
   }
 
   public removeTermCode(termCodeToRemove: TerminologyCode): void {
-    this.termCodes = this.termCodes.filter(
-      (termCode: TerminologyCode) =>
-        !(
-          termCode.getCode() === termCodeToRemove.getCode() &&
-          termCode.getSystem() === termCodeToRemove.getSystem()
-        )
+    this.termCodes.update((codes) =>
+      codes.filter(
+        (termCode: TerminologyCode) =>
+          !(
+            termCode.getCode() === termCodeToRemove.getCode() &&
+            termCode.getSystem() === termCodeToRemove.getSystem()
+          )
+      )
     )
     this.createBulkEntries()
-    this.changedTermCodes.emit(this.termCodes)
+    this.changedTermCodes.emit(this.termCodes())
   }
 
   public onTermCodesChange(updatedTermCodes: TerminologyCode[]): void {

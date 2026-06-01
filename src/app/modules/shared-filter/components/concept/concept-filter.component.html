@@ -6,16 +6,16 @@
   >
   </num-searchbar>
 
-  @if (valueSetUrl?.length > 1) {
+  @if (valueSetUrl()?.length > 1) {
   <num-search-filter
-    [filter]="searchFilter"
-    (selectedFilterChanged)="setValueSet($event)"
+    [filter]="searchFilter()"
+    (filterChange)="setValueSet($event)"
   ></num-search-filter>
-  } @if (searchResults$ | async; as searchResults) {
+  } @if (searchResults()) {
   <num-concept-filter-table
     class="overflow"
-    [valueSetUrl]="valueSetUrl"
-    [conceptFilterId]="conceptFilterId"
+    [valueSetUrl]="activeUrls()"
+    [conceptFilterId]="conceptFilterId()"
     (selectedConcept)="toggleConceptSelection($event)"
   ></num-concept-filter-table>
   }

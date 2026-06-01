@@ -15,9 +15,6 @@ import { TranslateModule } from '@ngx-translate/core'
 export class DisplayActionBarComponent implements OnInit {
   private navigationHelperService = inject(NavigationHelperService)
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
   constructor() {}
 
   ngOnInit(): void {}

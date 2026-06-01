@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core'
-import { NgClass, NgTemplateOutlet } from '@angular/common'
-import { MatTooltip } from '@angular/material/tooltip'
+import { Component, input } from '@angular/core'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { MatTooltip } from '@angular/material/tooltip'
+import { NgClass, NgTemplateOutlet } from '@angular/common'
 
 @Component({
   selector: 'num-button',
@@ -12,8 +12,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 export class ButtonComponent {
   constructor() {}
 
-  @Input() icon?: string
-  @Input() type?: 'blue' | 'green' | 'red' = 'blue'
-  @Input() isDisabled?: boolean
-  @Input() tooltip?: string
+  readonly icon = input<string>()
+  readonly type = input<'blue' | 'green' | 'red'>('blue')
+  readonly isDisabled = input<boolean>(false)
+  readonly tooltip = input<string>(undefined)
 }

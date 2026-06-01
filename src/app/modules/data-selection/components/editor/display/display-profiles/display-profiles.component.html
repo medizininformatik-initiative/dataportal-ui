@@ -1,7 +1,7 @@
 <div class="container">
   @for (profile of dataSelectionProfileArray$ | async; track profile) {
   <div class="selection-box-container">
-    <num-data-selection-boxes [profile]="profile" [isEditable]="isEditable" class="box-container">
+    <num-data-selection-boxes [profile]="profile" [isEditable]="isEditable()" class="box-container">
     </num-data-selection-boxes>
   </div>
   }

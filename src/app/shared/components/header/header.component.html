@@ -1,6 +1,6 @@
 <p class="header-font">
   <ng-content></ng-content>
-  @if (showToggle) {
+  @if (showToggle()) {
   <button
     class="toggle-btn"
     (click)="toggleService.toggle()"

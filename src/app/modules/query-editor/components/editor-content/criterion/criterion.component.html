@@ -1,21 +1,23 @@
 <div class="container">
-  <num-criterion-header [criterion]="criterion" class="header-container"> </num-criterion-header>
+  <num-criterion-header [criterion]="criterion()" class="header-container"> </num-criterion-header>
   @if (templates.length > 0) {
   <num-filter-tabs class="filter-tabs-container" [content]="templates"></num-filter-tabs>
   }
 
   <ng-template #timeRestriction>
     <num-edit-time-restriction
-      [timeRestriction]="criterion.getTimeRestriction()"
-      (timeRestrictionChanged)="updateTimeRestriction($event)"
+      [timeRestriction]="criterion().getTimeRestriction()"
+      (timeRestrictionChange)="updateTimeRestriction($event)"
     ></num-edit-time-restriction>
   </ng-template>
 
   <ng-template #conceptAttributeFilterTemplate let-index>
     <div class="width-100">
       <num-concept
-        [conceptFilter]="conceptAttributeFilter[index].getConcept()"
-        (changedConceptFilter)="updateConceptAttributeFilter($event, conceptAttributeFilter[index])"
+        [conceptFilter]="conceptAttributeFilter()[index].getConcept()"
+        (changedConceptFilter)="
+          updateConceptAttributeFilter($event, conceptAttributeFilter()[index])
+        "
       >
       </num-concept>
     </div>
@@ -24,8 +26,8 @@
   <ng-template #conceptValueFiltersTemplate>
     <div class="width-100">
       <num-concept
-        [conceptFilter]="conceptValueFilter[0].getConcept()"
-        (changedConceptFilter)="updateConceptValueFilter($event, conceptValueFilter[0])"
+        [conceptFilter]="conceptValueFilter()[0].getConcept()"
+        (changedConceptFilter)="updateConceptValueFilter($event, conceptValueFilter()[0])"
       >
       </num-concept>
     </div>
@@ -34,15 +36,16 @@
   <ng-template #termCodes>
     <num-edit-termcode
       class="height-100"
-      [termCodes]="criterion.getTermCodes()"
-      [context]="criterion.getContext()"
+      [termCodes]="criterion().getTermCodes()"
+      [context]="criterion().getContext()"
       (changedTermCodes)="updateTermCodes($event)"
     >
     </num-edit-termcode>
   </ng-template>
 
   <ng-template #reference>
-    @for (attributeFilter of referenceFilter; track trackByAttributeCode($index, attributeFilter)) {
+    @for (attributeFilter of referenceFilter(); track trackByAttributeCode($index, attributeFilter))
+    {
     <div class="background">
       @if (attributeFilter.getReference()) {
       <num-reference
@@ -59,7 +62,7 @@
   </ng-template>
 
   <ng-template #quantityAttributeFilterTemplate>
-    @for (quantityFilter of quantityAttributeFilter; track quantityFilter) {
+    @for (quantityFilter of quantityAttributeFilter(); track quantityFilter) {
     <div class="background">
       @if (quantityFilter) {
       <num-quantity
@@ -74,7 +77,7 @@
   </ng-template>
 
   <ng-template #quantityValueFilterTemplate>
-    @for (quantityFilter of quantityValueFilter; track quantityFilter) {
+    @for (quantityFilter of quantityValueFilter(); track quantityFilter) {
     <div class="background">
       @if (quantityFilter) {
       <num-quantity

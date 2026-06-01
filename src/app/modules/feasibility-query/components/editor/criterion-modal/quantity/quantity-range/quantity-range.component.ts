@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-  inject,
-} from '@angular/core'
+import { Component, effect, inject, input, model, output, untracked } from '@angular/core'
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
 import { QuantityNotSet } from '../../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet'
@@ -21,53 +13,50 @@ import { TranslateModule } from '@ngx-translate/core'
   standalone: true,
   imports: [ValueSelectComponent, TranslateModule],
 })
-export class QuantityRangeComponent implements OnChanges {
+export class QuantityRangeComponent {
   private quantityFilterFactoryService = inject(QuantityFilterFactoryService)
 
-  @Input()
-  minValue: number
+  readonly minValue = model<number>()
 
-  @Input()
-  maxValue: number
+  readonly maxValue = model<number>()
 
-  @Input()
-  quantityFilterUnit: QuantityUnit
+  readonly quantityFilterUnit = input<QuantityUnit>(undefined)
 
-  @Output()
-  quantityRangeInstance: EventEmitter<QuantityRangeFilter | QuantityNotSet> = new EventEmitter()
+  readonly quantityRangeInstance = output<QuantityRangeFilter | QuantityNotSet>()
 
   displayWarning = false
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-  constructor() {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      (changes.minValue && !changes.minValue.firstChange) ||
-      (changes.maxValue && !changes.maxValue.firstChange) ||
-      (changes.quantityFilterUnit && !changes.quantityFilterUnit.firstChange)
-    ) {
-      this.emitQuantityRangeFilter()
-    }
+  constructor() {
+    let initialized = false
+    effect(() => {
+      this.minValue()
+      this.maxValue()
+      this.quantityFilterUnit()
+      if (initialized) {
+        untracked(() => this.emitQuantityRangeFilter())
+      }
+      initialized = true
+    })
   }
 
   public setMaxValue(value: number): void {
-    this.maxValue = value
+    this.maxValue.set(value)
     this.emitQuantityRangeFilter()
   }
 
   public setMinValue(value: number): void {
-    this.minValue = value
+    this.minValue.set(value)
     this.emitQuantityRangeFilter()
   }
 
   private emitQuantityRangeFilter(): void {
-    if (this.minValue != null && this.maxValue != null && this.quantityFilterUnit) {
-      if (this.minValue <= this.maxValue) {
+    const min = this.minValue()
+    const max = this.maxValue()
+    if (min != null && max != null && this.quantityFilterUnit()) {
+      if (min <= max) {
         const quantityRangeFilter = this.quantityFilterFactoryService.createQuantityRangeFilter(
-          this.minValue,
-          this.maxValue
+          min,
+          max
         )
         this.quantityRangeInstance.emit(quantityRangeFilter)
         this.displayWarning = false

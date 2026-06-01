@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, input, output } from '@angular/core'
 import { DataQueryValidationService } from '../../../service/DataQuery/DataQueryValidation.service'
 import { MatDialogRef } from '@angular/material/dialog'
 import { Observable, Subject } from 'rxjs'
@@ -23,14 +23,9 @@ export class SaveDataQueryModalComponent implements OnInit, OnDestroy {
 
   validatedDataQuery$: Observable<{ feasibilityQuery: boolean; dataSelection: boolean }>
 
-  @Input()
-  isCommentRequired = false
+  readonly save = output<SaveDataModal>()
 
-  @Output()
-  save = new EventEmitter<SaveDataModal>()
-
-  @Output()
-  cancelled = new EventEmitter<void>()
+  readonly cancelled = output<void>()
 
   title = ''
   comment = ''

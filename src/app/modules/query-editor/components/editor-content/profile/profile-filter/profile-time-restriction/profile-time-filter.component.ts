@@ -1,5 +1,5 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, OnInit, input, output } from '@angular/core'
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
@@ -23,18 +23,16 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ProfileTimeFilterComponent implements OnInit {
-  @Input()
-  profileTimeRestrictionFilter: ProfileTimeRestrictionFilter
+  readonly profileTimeRestrictionFilter = input<ProfileTimeRestrictionFilter>(undefined)
 
-  @Output()
-  changedProfileTimeRestrictionFilter = new EventEmitter<ProfileTimeRestrictionFilter>()
+  readonly changedProfileTimeRestrictionFilter = output<ProfileTimeRestrictionFilter>()
 
   ngOnInit(): void {}
 
   public emitProfileTimeRestriction(timeRestriction: AbstractTimeRestriction): void {
     const updatedFilter = new ProfileTimeRestrictionFilter(
-      this.profileTimeRestrictionFilter.getName(),
-      this.profileTimeRestrictionFilter.getType(),
+      this.profileTimeRestrictionFilter().getName(),
+      this.profileTimeRestrictionFilter().getType(),
       timeRestriction
     )
     this.changedProfileTimeRestrictionFilter.emit(updatedFilter)

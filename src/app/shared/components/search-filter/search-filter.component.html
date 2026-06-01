@@ -2,26 +2,26 @@
   <div
     class="select-wrapper"
     [matTooltip]="
-      selectedValues?.length === 0
+      selectedValues()?.length === 0
         ? ('SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED' | translate)
         : ''
     "
   >
     <mat-select
       disableOptionCentering
-      (selectionChange)="onSelectionChange()"
+      (selectionChange)="onSelectionChange($event.value)"
       (openedChange)="onOpenedChange($event)"
       panelClass="example-panel"
-      [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter?.filterType | translate"
-      [(value)]="selectedValues"
-      [multiple]="multiSelect"
+      [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter()?.filterType | translate"
+      [value]="selectedValues()"
+      [multiple]="multiSelect()"
     >
       <mat-select-trigger
-        [matTooltip]="getCleanValue(selectedValues)"
+        [matTooltip]="getCleanValue(selectedValues())"
         matTooltipPosition="below"
         matTooltipShowDelay="300"
       >
-        {{ getCleanValue(selectedValues) }}
+        {{ getCleanValue(selectedValues()) }}
       </mat-select-trigger>
       <mat-option disabled class="select-search-option">
         <div class="select-search-wrapper">
@@ -36,7 +36,7 @@
         </div>
       </mat-option>
       <mat-optgroup class="scrollable-options-group">
-        @for (value of filteredData; track value) {
+        @for (value of filteredData; track value.label) {
         <mat-option [value]="value.label">
           {{ value.display | displayTranslation }} ({{ value.count }})
         </mat-option>

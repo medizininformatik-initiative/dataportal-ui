@@ -1,19 +1,11 @@
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-} from '@angular/core'
-import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
+import { ConceptBulkSearchComponent } from '../../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
+import { ConceptFilterComponent } from '../../../../../../shared-filter/components/concept/concept-filter.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InformationSectionComponent } from '../../../../../../../shared/components/information-section/information-section.component'
-import { ConceptFilterComponent } from '../../../../../../shared-filter/components/concept/concept-filter.component'
-import { ConceptBulkSearchComponent } from '../../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
+import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs'
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
 import { SelectedConceptListComponent } from '../../../../../../shared-filter/components/concept/selected-concept-list/selected-concept-list.component'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -35,19 +27,16 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
   ],
 })
-export class TokenFilterComponent implements OnInit, OnChanges {
-  @Input() tokenFilter: ProfileTokenFilter
-  @Output() tokenFilterChanged = new EventEmitter<ProfileTokenFilter>()
+export class TokenFilterComponent {
+  readonly tokenFilter = input.required<ProfileTokenFilter>()
+  readonly tokenFilterChanged = output<ProfileTokenFilter>()
   tabChanged = false
-  selectedConcepts: Concept[] = []
-  constructor() {}
+  readonly selectedConcepts = signal<Concept[]>([])
 
-  ngOnChanges(): void {
-    this.selectedConcepts = this.tokenFilter.getSelectedTokens()
-  }
-
-  ngOnInit(): void {
-    this.selectedConcepts = this.tokenFilter.getSelectedTokens()
+  constructor() {
+    effect(() => {
+      this.selectedConcepts.set(this.tokenFilter().getSelectedTokens())
+    })
   }
 
   /**
@@ -61,10 +50,10 @@ export class TokenFilterComponent implements OnInit, OnChanges {
 
   private createProfileTokenFilterInstance(concepts: Concept[]): ProfileTokenFilter {
     return new ProfileTokenFilter(
-      this.tokenFilter.getId(),
-      this.tokenFilter.getName(),
-      this.tokenFilter.getType(),
-      this.tokenFilter.getValueSetUrls(),
+      this.tokenFilter().getId(),
+      this.tokenFilter().getName(),
+      this.tokenFilter().getType(),
+      this.tokenFilter().getValueSetUrls(),
       concepts
     )
   }

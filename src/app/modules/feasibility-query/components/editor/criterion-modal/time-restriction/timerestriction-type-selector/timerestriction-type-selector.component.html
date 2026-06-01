@@ -1,7 +1,7 @@
 <div class="type-select-wrapper">
   <select
     class="type-select"
-    [(ngModel)]="type"
+    [ngModel]="type()"
     (change)="onTimeRestrictionOptionChange($any($event.target).value)"
   >
     @for (option of timeRestrictionOptions; track option) {

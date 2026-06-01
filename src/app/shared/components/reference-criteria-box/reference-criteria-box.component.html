@@ -2,15 +2,15 @@
   <div class="content criteria-box-main">
     <div
       matTooltipPosition="below"
-      [matTooltip]="referenceCriterion.getDisplay() | displayTranslation"
+      [matTooltip]="referenceCriterion().getDisplay() | displayTranslation"
       class="title-section"
     >
-      {{ referenceCriterion.getDisplay() | displayTranslation }}
+      {{ referenceCriterion().getDisplay() | displayTranslation }}
     </div>
     <div class="info-section criteria-box-info">
       <div class="info-item">
-        {{ referenceCriterion.getDisplay() | displayTranslation }},
-        {{ referenceCriterion.getTermCodes()[0].getCode() }},
+        {{ referenceCriterion().getDisplay() | displayTranslation }},
+        {{ referenceCriterion().getTermCodes()[0].getCode() }},
         {{ translatedSystem | displayTranslation }}
       </div>
     </div>
@@ -19,6 +19,6 @@
     </div>
   </div>
   <div class="handle-icons criteria-box-menu">
-    <num-menu [menuItems]="menuItems" [id]="referenceCriterion.getId()"></num-menu>
+    <num-menu [menuItems]="menuItems" [id]="referenceCriterion().getId()"></num-menu>
   </div>
 </div>

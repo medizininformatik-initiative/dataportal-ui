@@ -13,7 +13,7 @@
   <div class="options-header" (click)="$event.stopPropagation()">
     {{ 'SHARED_COMPONENTS.MENU.OPTIONS' | translate }}
   </div>
-  @for (item of menuItems; track item; let isLast = $last) {
+  @for (item of menuItems(); track item; let isLast = $last) {
   <div data-cy="{{ item.label | translate }}">
     <button
       [ngClass]="{
@@ -23,7 +23,7 @@
       }"
       mat-menu-item
       [disabled]="item.disabled"
-      (click)="item.action(id)"
+      (click)="item.action(id())"
     >
       <fa-icon [icon]="item.icon" size="sm" class="icon-color"></fa-icon>
       {{ 'SHARED_COMPONENTS.MENU.' + item.label | translate }}

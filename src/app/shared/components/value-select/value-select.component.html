@@ -1,4 +1,4 @@
 <mat-form-field appearance="outline" class="min-part">
-  <mat-label>{{ label | translate }}</mat-label>
-  <input id="input" matInput type="number" [(ngModel)]="value" (ngModelChange)="emitValue()" />
+  <mat-label>{{ label() | translate }}</mat-label>
+  <input id="input" matInput type="number" [ngModel]="value()" (ngModelChange)="onChange($event)" />
 </mat-form-field>

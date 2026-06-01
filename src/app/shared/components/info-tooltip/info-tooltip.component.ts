@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, input } from '@angular/core'
 
 @Component({
   selector: 'num-info-tooltip-card',
@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core'
   standalone: true,
 })
 export class InfoTooltipComponent {
-  @Input() title: string
-  @Input() text: string
+  readonly title = input<string>()
+  readonly text = input<string>()
 }

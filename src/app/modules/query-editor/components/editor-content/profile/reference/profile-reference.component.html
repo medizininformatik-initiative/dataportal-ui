@@ -10,11 +10,11 @@
         {{ 'INFORMATION.REFERENCES.EXTENDED_DESCRIPTION' | translate }}
       </num-information-section>
     </mat-tab>
-    @for (reference of referenceFields; track reference) {
+    @for (reference of referenceFields(); track reference) {
     <mat-tab class="height-100" label="{{ reference.getDisplay() | displayTranslation }}">
       <num-reference-field-tab
         [referenceField]="reference"
-        [profileId]="profileId"
+        [profileId]="profileId()"
         (selectedProfileAsReference)="setSelectedReference($event, reference)"
       >
       </num-reference-field-tab>

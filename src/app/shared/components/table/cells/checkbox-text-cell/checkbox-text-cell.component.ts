@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
 import { CheckboxComponent } from '../../../checkbox/checkbox.component'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -13,15 +13,16 @@ import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe
   imports: [CheckboxComponent, MatTooltip, TranslateModule, DisplayTranslationPipe],
 })
 export class CheckboxTextCellComponent {
-  @Input() cell: CheckboxTextCellData
+  readonly cell = input<CheckboxTextCellData>(undefined)
 
-  @Output() checkboxChange = new EventEmitter<void>()
+  readonly checkboxChange = output<void>()
 
   onCheckboxClick(event: MouseEvent): void {
     event.stopPropagation()
   }
 
   onCheckboxChange(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.checkboxChange.emit()
   }
 }

@@ -11,7 +11,7 @@
     </div>
     @if (parentProfile) {
     <span class="child-badge">{{ parentProfile.getDisplay() | displayTranslation }}</span>
-    } @if (filterChips && !unlinkedRequiredOrRecommendedReferences) {
+    } @if (filterChips && !unlinkedRequiredOrRecommendedReferences()) {
     <div class="label-value-group">
       <div class="label">
         {{ 'SHARED_COMPONENTS.REFERENCE_TILE.LINKED_FEATURES_LABEL' | translate }}
@@ -23,7 +23,7 @@
         ></num-filter-chips>
       </span>
     </div>
-    } @if (unlinkedRequiredOrRecommendedReferences) {
+    } @if (unlinkedRequiredOrRecommendedReferences()) {
     <span class="warning-badge">
       {{ 'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED' | translate }}
       <span
@@ -36,11 +36,12 @@
     }
   </div>
 
-  @if (referenceField) {
+  @if (referenceField()) {
   <span class="checkbox-label">
     <num-checkbox
-      [checked]="referenceField.getMustHave()"
+      [checked]="referenceField().getMustHave()"
       (checkedChange)="setMustHave($event)"
+      [disabled]="!isEditable()"
     ></num-checkbox>
     <span>
       {{ 'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}
@@ -52,10 +53,13 @@
       ></span>
     </span>
   </span>
-  }
+  } @if (isEditable()) {
   <div class="actions" (click)="deleteReferenceLink()">
     {{ 'SHARED_COMPONENTS.REFERENCE_TILE.DELETE' | translate }}
     <fa-icon class="icon" icon="trash" size="lg"></fa-icon>
     <!--<num-button type="blue" (click)="navigateToProfile()">bearbeiten</num-button>-->
   </div>
+  } @else {
+  <div class="placeholder"></div>
+  }
 </div>
