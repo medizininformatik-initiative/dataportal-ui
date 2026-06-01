@@ -1,19 +1,3 @@
-import {
-  APP_INITIALIZER,
-  ApplicationConfig,
-  ErrorHandler,
-  importProvidersFrom,
-} from '@angular/core'
-import { provideAnimations } from '@angular/platform-browser/animations'
-import {
-  HTTP_INTERCEPTORS,
-  HttpClient,
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http'
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core'
-import { provideRouter } from '@angular/router'
-import { routes } from './app-routing.module'
 import { AuthTokenInterceptor } from './core/interceptors/AuthToken.interceptor'
 import { CoreInitService } from './CoreInit.service'
 import { DataportalErrorHandlerService } from './core/DataportalErrorHandlerService'
@@ -21,9 +5,26 @@ import { DisplayTranslationPipe } from './shared/pipes/DisplayTranslationPipe'
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome'
 import { FONT_AWESOME_ICONS } from './layout/font-awesome-icons'
 import { HttpErrorInterceptor } from './core/interceptors/HttpError.interceptor'
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core'
 import { OAuthModule } from 'angular-oauth2-oidc'
+import { provideAnimations } from '@angular/platform-browser/animations'
+import { provideRouter } from '@angular/router'
+import { routes } from './app-routing.module'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  importProvidersFrom,
+  inject,
+  provideAppInitializer,
+} from '@angular/core'
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http'
 
 export const HttpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   new TranslateHttpLoader(http)
@@ -40,37 +41,31 @@ const DATE_FORMATS_GERMAN = {
   },
 }
 
+function initializeFontAwesome(): void {
+  inject(FaIconLibrary).addIcons(...FONT_AWESOME_ICONS)
+}
+
+function provideTranslateModule() {
+  return TranslateModule.forRoot({
+    defaultLanguage: 'de',
+    loader: {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient],
+    },
+  })
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
-    provideNativeDateAdapter(),
+    provideNativeDateAdapter(DATE_FORMATS_GERMAN),
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
-    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS_GERMAN },
-    importProvidersFrom(
-      OAuthModule.forRoot(),
-      TranslateModule.forRoot({
-        defaultLanguage: 'de',
-        loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient],
-        },
-      })
-    ),
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      deps: [CoreInitService],
-      useFactory: (initService: CoreInitService) => () => initService.init(),
-    },
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      deps: [FaIconLibrary],
-      useFactory: (library: FaIconLibrary) => () => library.addIcons(...FONT_AWESOME_ICONS),
-    },
+    importProvidersFrom(OAuthModule.forRoot(), provideTranslateModule()),
+    provideAppInitializer(() => inject(CoreInitService).init()),
+    provideAppInitializer(() => initializeFontAwesome()),
     { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: DataportalErrorHandlerService },
