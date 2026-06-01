@@ -8,7 +8,7 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder'
 import { CriterionMetadataService } from '../../Criterion/CriterionMetadata.service'
 import { HashService } from '../../Hash.service'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { UiProfileProviderService } from '../../Provider/UiProfileProvider.service'
@@ -28,9 +28,6 @@ export class CriterionTranslatorService {
   private uiProfileProviderService = inject(UiProfileProviderService)
   private uiTimeRestrictionFactoryService = inject(UITimeRestrictionFactoryService)
   private attributeFilterFactoryService = inject(AttributeFilterFactoryService)
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {}
 
