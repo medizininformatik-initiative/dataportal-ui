@@ -61,10 +61,8 @@ export class ConceptFilterTableComponent {
 
   private selectedConcepts: Concept[] = []
 
-  private readonly serviceSelectedConcepts = toSignal(
-    this.selectedConceptProviderService.getSelectedConcepts(),
-    { initialValue: [] }
-  )
+  private readonly serviceSelectedConcepts =
+    this.selectedConceptProviderService.getSelectedConcepts()
 
   constructor() {
     effect(() => {

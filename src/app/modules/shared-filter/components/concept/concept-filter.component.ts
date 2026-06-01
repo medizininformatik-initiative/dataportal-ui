@@ -43,7 +43,7 @@ export class ConceptFilterComponent {
 
   private readonly currentSearchTerm = signal('')
   private readonly overrideUrls = signal<string[] | undefined>(undefined)
-  private readonly activeUrls = computed(() => this.overrideUrls() ?? this.valueSetUrl())
+  readonly activeUrls = computed(() => this.overrideUrls() ?? this.valueSetUrl())
 
   readonly searchFilter = computed<SearchFilter | undefined>(() => {
     const urls = this.valueSetUrl()
@@ -55,16 +55,7 @@ export class ConceptFilterComponent {
       switchMap((urls) =>
         this.conceptSearchService.getSearchResults(urls).pipe(
           filter((results) => results != null),
-          map((results) => {
-            results.getResults().forEach((entry: CodeableConceptResultListEntry) => {
-              entry.setIsSelected(
-                this.selectedConceptFilterService.isConceptSelected(
-                  entry.getConcept().getTerminologyCode()
-                )
-              )
-            })
-            return results
-          })
+          map((results) => this.applySelectionState(results))
         )
       )
     ),
@@ -72,27 +63,8 @@ export class ConceptFilterComponent {
   )
 
   constructor() {
-    effect(() => {
-      const concepts = this.preSelectedConcepts()
-      this.selectedConceptFilterService.initializeSelectedConcepts(concepts)
-      this.searchResults()
-        ?.getResults()
-        .forEach((entry) => {
-          entry.setIsSelected(
-            this.selectedConceptFilterService.isConceptSelected(
-              entry.getConcept().getTerminologyCode()
-            )
-          )
-        })
-    })
-
-    combineLatest([toObservable(this.activeUrls), toObservable(this.currentSearchTerm)])
-      .pipe(
-        switchMap(([urls, term]) => this.conceptSearchService.search(term, urls)),
-        takeUntilDestroyed()
-      )
-      .subscribe()
-
+    effect(() => this.syncPreSelectedConcepts())
+    this.setupSearchTrigger()
     this.destroyRef.onDestroy(() => this.selectedConceptFilterService.clearSelectedConceptFilter())
   }
 
@@ -106,14 +78,47 @@ export class ConceptFilterComponent {
   }
 
   public toggleConceptSelection(concept: Concept): void {
-    this.preSelectedConcepts.update((prev) =>
+    this.preSelectedConcepts.update((prev: Concept[]) =>
       this.conceptSelectionService.toggleConceptSelection(concept, prev)
     )
-    this.emitConceptChanges()
+    this.changedSelectedConcepts.emit(this.cloneCurrentConcepts())
   }
 
-  private emitConceptChanges(): void {
-    const clonedConcepts = this.conceptSelectionService.cloneConcepts(this.preSelectedConcepts())
-    this.changedSelectedConcepts.emit(clonedConcepts)
+  private syncPreSelectedConcepts(): void {
+    const concepts = this.preSelectedConcepts()
+    this.selectedConceptFilterService.initializeSelectedConcepts(concepts)
+    this.applySelectionStateToCurrentResults()
+  }
+
+  private applySelectionStateToCurrentResults(): void {
+    this.searchResults()
+      ?.getResults()
+      .forEach((entry) => this.updateEntrySelection(entry))
+  }
+
+  private applySelectionState(results: CodeableConceptResultList): CodeableConceptResultList {
+    results
+      .getResults()
+      .forEach((entry: CodeableConceptResultListEntry) => this.updateEntrySelection(entry))
+    return results
+  }
+
+  private updateEntrySelection(entry: CodeableConceptResultListEntry): void {
+    const terminologyCode = entry.getConcept().getTerminologyCode()
+    const isSelected = this.selectedConceptFilterService.isConceptSelected(terminologyCode)
+    entry.setIsSelected(isSelected)
+  }
+
+  private setupSearchTrigger(): void {
+    combineLatest([toObservable(this.activeUrls), toObservable(this.currentSearchTerm)])
+      .pipe(
+        switchMap(([urls, term]) => this.conceptSearchService.search(term, urls)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe()
+  }
+
+  private cloneCurrentConcepts(): Concept[] {
+    return this.conceptSelectionService.cloneConcepts(this.preSelectedConcepts())
   }
 }

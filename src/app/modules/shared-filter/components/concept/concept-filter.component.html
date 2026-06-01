@@ -14,7 +14,7 @@
   } @if (searchResults()) {
   <num-concept-filter-table
     class="overflow"
-    [valueSetUrl]="valueSetUrl()"
+    [valueSetUrl]="activeUrls()"
     [conceptFilterId]="conceptFilterId()"
     (selectedConcept)="toggleConceptSelection($event)"
   ></num-concept-filter-table>
