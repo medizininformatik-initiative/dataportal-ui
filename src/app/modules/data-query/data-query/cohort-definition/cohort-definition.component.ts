@@ -1,16 +1,15 @@
-import { AsyncPipe } from '@angular/common'
 import { CohortDefinitionActionBarComponent } from './action-bar/cohort-definition-action-bar.component'
-import { Component, inject, OnInit } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { DisplayFeasibilityQueryComponent } from '../../../feasibility-query/components/editor/display/display.component'
-import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
-import { filter, Observable } from 'rxjs'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
+import { map } from 'rxjs'
 import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { PlaceholderBoxComponent } from '../../../../shared/components/placeholder-box/placeholder-box.component'
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
+import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -27,48 +26,31 @@ import { TranslateModule } from '@ngx-translate/core'
     DisplayFeasibilityQueryComponent,
     PlaceholderBoxComponent,
     CohortDefinitionActionBarComponent,
-    AsyncPipe,
     TranslateModule,
   ],
 })
-export class CohortDefinitionComponent implements OnInit {
-  private routerHelperService = inject(NavigationHelperService)
-  private feasibilityQueryService = inject(FeasibilityQueryProviderService)
-  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
-  private resultProviderService = inject(ResultProviderService)
-  private navigationHelperService = inject(NavigationHelperService)
+export class CohortDefinitionComponent {
+  private readonly navigationHelperService = inject(NavigationHelperService)
+  private readonly feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private readonly resultProviderService = inject(ResultProviderService)
 
-  fileName: string
-  isFeasibilityExistent$: Observable<boolean>
-  totalNumberOfPatients: number
+  readonly isFeasibilityExistent = toSignal(
+    this.feasibilityQueryValidation.getIsFeasibilityQuerySet(),
+    { initialValue: false }
+  )
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
+  readonly totalNumberOfPatients = toSignal(
+    this.resultProviderService
+      .getResultOfActiveFeasibilityQuery()
+      .pipe(map((result) => result?.getTotalNumberOfPatients() ?? 0)),
+    { initialValue: 0 }
+  )
 
-  constructor() {}
-
-  ngOnInit() {
-    this.feasibilityQueryService
-      .getActiveFeasibilityQuery()
-      .pipe(filter((feasibilityQuery) => !!feasibilityQuery))
-      .subscribe((feasibilityQuery) => {
-        const resultIdsLength = feasibilityQuery.getResultIds().length
-        if (resultIdsLength === 0) {
-          return
-        } else {
-          this.totalNumberOfPatients = this.resultProviderService
-            .getOne(feasibilityQuery.getResultIds()[resultIdsLength - 1])
-            ?.getTotalNumberOfPatients()
-        }
-      })
-    this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet()
+  public sendQuery(): void {
+    this.navigationHelperService.navigateToFeasibilityQueryResult()
   }
 
-  public sendQuery() {
-    this.routerHelperService.navigateToFeasibilityQueryResult()
-  }
-
-  public navigatToDataQueryDataSelection() {
+  public navigatToDataQueryDataSelection(): void {
     this.navigationHelperService.navigateToDataQueryDataSelection()
   }
 }
