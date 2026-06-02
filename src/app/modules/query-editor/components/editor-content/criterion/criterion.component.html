@@ -49,7 +49,7 @@
     <div class="background">
       @if (attributeFilter.getReference()) {
       <num-reference
-        [attributeCode]="attributeFilter.getAttributeCode()"
+        [display]="attributeFilter.getDisplay()"
         [selectedReferenceCriterion]="resolveReferenceCriteria(attributeFilter)"
         [referenceFilterUri]="attributeFilter.getReference().getAllowedReferenceUri()"
         (selectedReferenceIds)="updateReferenceFilter($event, attributeFilter)"

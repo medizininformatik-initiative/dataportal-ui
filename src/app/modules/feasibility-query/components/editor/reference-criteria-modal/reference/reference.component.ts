@@ -19,6 +19,10 @@ import { PlaceholderBoxComponent } from '../../../../../../shared/components/pla
 import { SelectedReferenceListComponent } from '../../../../../shared-filter/components/selected-reference-list/selected-reference-list.component'
 import { AsyncPipe } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import {
+  DisplayTranslationPipe,
+  SectionNameComponent,
+} from 'src/app/shared/components/shared-components.module'
 
 interface selectedItem {
   id: string
@@ -45,6 +49,8 @@ interface selectedItem {
     SelectedReferenceListComponent,
     AsyncPipe,
     TranslateModule,
+    SectionNameComponent,
+    DisplayTranslationPipe,
   ],
 })
 export class ReferenceComponent implements OnInit {
@@ -54,7 +60,7 @@ export class ReferenceComponent implements OnInit {
 
   readonly referenceFilterUri = input<string>(undefined)
 
-  readonly attributeCode = input<TerminologyCode>(undefined)
+  readonly display = input<Display>(undefined)
 
   readonly selectedReferenceCriterion = input<ReferenceCriterion[]>([])
 
@@ -69,9 +75,6 @@ export class ReferenceComponent implements OnInit {
   searchText$: Observable<string>
 
   searchtText = ''
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {}
 
