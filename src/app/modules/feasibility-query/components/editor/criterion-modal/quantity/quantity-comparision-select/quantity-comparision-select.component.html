@@ -2,6 +2,7 @@
   <mat-select
     [value]="existingOption()"
     (selectionChange)="selectQuantityFilterOption($event.value)"
+    class="mat-select"
   >
     @for (option of quantityFilterOptionsArray; track option) {
     <mat-option [value]="option">
