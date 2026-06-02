@@ -11,6 +11,17 @@
   user-select: none;
   position: relative;
   box-sizing: border-box;
+  z-index: 10;
+
+  &.is-outer {
+    height: 29px;
+    top: 0px;
+  }
+
+  &.is-inner {
+    //height: 0px;
+    top: -18px;
+  }
 }
 
 .switch-label {

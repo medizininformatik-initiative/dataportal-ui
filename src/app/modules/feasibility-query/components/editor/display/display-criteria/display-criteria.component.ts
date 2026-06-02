@@ -12,7 +12,7 @@ import { CriterionProviderService } from 'src/app/service/Provider/CriterionProv
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
 import { map, Observable, Subscription } from 'rxjs'
-import { NgTemplateOutlet, AsyncPipe } from '@angular/common'
+import { NgTemplateOutlet, AsyncPipe, NgClass } from '@angular/common'
 import { CriteriaBoxComponent } from '../../../../../../shared/components/criteria-box/criteria-box.component'
 import { BoolLogicSwitchComponent } from '../bool-logic-switch/bool-logic-switch.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
@@ -30,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core'
     FontAwesomeModule,
     AsyncPipe,
     TranslateModule,
+    NgClass,
   ],
 })
 export class DisplayCriteriaComponent implements OnInit, OnDestroy {
