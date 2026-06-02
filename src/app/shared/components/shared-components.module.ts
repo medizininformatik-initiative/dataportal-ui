@@ -36,7 +36,6 @@ export { SaveFileModalComponent } from './save-file-modal/save-file-modal.compon
 export { SearchbarComponent } from './search/searchbar.component'
 export { SearchFilterComponent } from './search-filter/search-filter.component'
 export { SearchModeToggleComponent } from './search-mode-toggle/search-mode-toggle.component'
-export { SearchResultComponent } from './search-result/search-result.component'
 export { SectionNameComponent } from './section-name/section-name.component'
 export { SelectableReferenceTileComponent } from './selectable-reference-tile/selectable-reference-tile.component'
 export { SelectedItemsListComponent } from './selected-items-list/selected-items-list.component'
