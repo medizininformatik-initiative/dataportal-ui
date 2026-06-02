@@ -8,9 +8,6 @@ import { MenuServiceCriterionFunctions } from './MenuServiceCriterionFunctions'
 export class CriterionMenuItems {
   private menuServiceCriterionFunctions = inject(MenuServiceCriterionFunctions)
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
   constructor() {}
 
   /**

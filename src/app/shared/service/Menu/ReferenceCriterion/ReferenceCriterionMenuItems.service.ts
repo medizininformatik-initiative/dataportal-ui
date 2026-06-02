@@ -1,6 +1,5 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
-import { MenuServiceCriterionFunctions } from '../Criterion/MenuServiceCriterionFunctions'
 import { RefrenceCriterionMenuFunctionsService } from './RefrenceCriterionMenuFunctions.service'
 
 @Injectable({
@@ -9,22 +8,19 @@ import { RefrenceCriterionMenuFunctionsService } from './RefrenceCriterionMenuFu
 export class ReferenceCriterionMenuItems {
   private referenceCriterionMenuFunctions = inject(RefrenceCriterionMenuFunctionsService)
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
   constructor() {}
 
   /**
-   * @todo Labels need to be redefined for translation jsons
    * @returns Array of Menu functions for a criterion box
    */
   public getMenuItemsForRefrenceCriterion(): MenuItemInterface[] {
     return [
       {
         disabled: false,
-        icon: 'trash',
-        label: 'DELETE',
-        action: (id: string) => this.referenceCriterionMenuFunctions.deleteCriterion(id),
+        icon: 'pencil-alt',
+        label: 'EDIT',
+        action: (id: string) =>
+          this.referenceCriterionMenuFunctions.applyReferenceCriterionFilter(id),
       },
       {
         disabled: true,
@@ -34,10 +30,9 @@ export class ReferenceCriterionMenuItems {
       },
       {
         disabled: false,
-        icon: 'filter',
-        label: 'APPLY_FILTERS',
-        action: (id: string) =>
-          this.referenceCriterionMenuFunctions.applyReferenceCriterionFilter(id),
+        icon: 'trash',
+        label: 'DELETE',
+        action: (id: string) => this.referenceCriterionMenuFunctions.deleteCriterion(id),
       },
     ]
   }

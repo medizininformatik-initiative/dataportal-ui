@@ -20,10 +20,16 @@ export class MenuServiceDataSelection {
     return [
       {
         disabled: false,
-        icon: 'wrench',
+        icon: 'pencil-alt',
         label: 'EDIT',
         action: (id: string) =>
           this.menuServiceDataSelectionFunctions.redirectToDataSelectionEditPage(id),
+      },
+      {
+        disabled: isMainProfile,
+        icon: 'clone',
+        label: 'DUPLICATE',
+        action: (id: string) => this.menuServiceDataSelectionFunctions.cloneDataSelectionObject(id),
       },
       {
         disabled: isMainProfile,
@@ -31,12 +37,6 @@ export class MenuServiceDataSelection {
         label: 'DELETE',
         action: (url: string) =>
           this.menuServiceDataSelectionFunctions.deleteDataSelectionObject(url),
-      },
-      {
-        disabled: isMainProfile,
-        icon: 'clone',
-        label: 'DUPLICATE',
-        action: (id: string) => this.menuServiceDataSelectionFunctions.cloneDataSelectionObject(id),
       },
     ]
   }
