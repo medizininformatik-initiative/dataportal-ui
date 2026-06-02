@@ -26,7 +26,6 @@
     }
 
     .mat-drawer-side {
-      top: 108px !important;
       bottom: 0 !important;
       border-right: none;
       overflow: hidden;
@@ -35,7 +34,9 @@
         overflow: hidden;
       }
     }
-
+    mat-sidenav.mat-drawer-side {
+      top: 108px !important;
+    }
     // ── Sidenav panel sizing ───────────────────────────────────────────────
     mat-sidenav {
       &.expanded {
