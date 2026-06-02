@@ -17,24 +17,28 @@
       {{ 'INFORMATION.CONCEPTS.DESCRIPTION' | translate }}
     </num-information-section>
   </mat-tab>
-  <mat-tab *ngIf="conceptFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
+  @if (conceptFilter()) {
+  <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
+    @if (conceptFilter()) {
     <num-concept-filter
-      *ngIf="conceptFilter"
-      [conceptFilterId]="conceptFilter.getId()"
-      [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
-      [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
+      [conceptFilterId]="conceptFilter().getId()"
+      [preSelectedConcepts]="conceptFilter().getSelectedConcepts()"
+      [valueSetUrl]="conceptFilter().getAllowedConceptUrls()"
       (changedSelectedConcepts)="emitConceptFilter($event)"
     >
     </num-concept-filter>
+    }
   </mat-tab>
-  <mat-tab *ngIf="conceptFilter" label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
+  } @if (conceptFilter()) {
+  <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
     <num-concept-bulk-search
-      [valueSetUrl]="conceptFilter.getAllowedConceptUrls()"
-      [preSelectedConcepts]="conceptFilter.getSelectedConcepts()"
+      [valueSetUrl]="conceptFilter().getAllowedConceptUrls()"
+      [preSelectedConcepts]="conceptFilter().getSelectedConcepts()"
       [tabChanged]="tabChanged"
       (changedSelectedConcepts)="emitConceptFilter($event)"
     ></num-concept-bulk-search>
   </mat-tab>
+  }
   <mat-tab
     [label]="
       'EDITOR.CONTENT.TAB_LABEL.SELECTED_CONCEPTS' | translate : { count: selectedConcepts.length }

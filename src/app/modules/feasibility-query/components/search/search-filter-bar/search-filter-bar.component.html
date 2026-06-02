@@ -1,10 +1,11 @@
 <div class="filter-container">
+  @for (searchFilter of searchFilters$() | async; track trackByFilterType($index, searchFilter)) {
   <num-search-filter
-    *ngFor="let searchFilter of searchFilters$ | async; trackBy: trackByFilterType"
     [filter]="searchFilter"
-    (selectedFilterChanged)="filterChanged.emit($event)"
+    (filterChange)="filterChanged.emit($event)"
     (isOpen)="isOpen.emit($event)"
   ></num-search-filter>
+  }
   <span
     class="info-icon"
     numInfoTooltip

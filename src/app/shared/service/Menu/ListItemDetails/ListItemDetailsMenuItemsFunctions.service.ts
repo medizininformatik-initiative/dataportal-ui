@@ -1,37 +1,40 @@
-import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service';
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList';
-import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub';
-import { Injectable } from '@angular/core';
-import { map, switchMap, take } from 'rxjs';
-import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service';
-import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service';
-import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service';
-import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCriterionService';
+import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
+import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
+import { Injectable, inject } from '@angular/core'
+import { map, switchMap, take } from 'rxjs'
+import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service'
+import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service'
+import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
+import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCriterionService'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ListItemDetailsMenuItemsFunctionsService {
-  constructor(
-    private searchService: CriteriaByIdSearchService,
-    private criteriaSearchService: CriteriaSearchService,
-    private criterionService: BuildCriterionService,
-    private searchTermDetailsService: SearchTermDetailsService,
-    private feasibilityQueryProviderHub: FeasibilityQueryProviderHub,
-    private searchTermDetailsProviderService: SearchTermDetailsProviderService,
-    private snackbarMessageService: SnackbarMessageService
-  ) {}
+  private searchService = inject(CriteriaByIdSearchService)
+  private criteriaSearchService = inject(CriteriaSearchService)
+  private criterionService = inject(BuildCriterionService)
+  private searchTermDetailsService = inject(SearchTermDetailsService)
+  private feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
+  private searchTermDetailsProviderService = inject(SearchTermDetailsProviderService)
+  private snackbarMessageService = inject(SnackbarMessageService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   public showCriteriaInResultList(id: string) {
-    this.searchService.search(id).pipe(take(1)).subscribe();
+    this.searchService.search(id).pipe(take(1)).subscribe()
     this.searchTermDetailsService
       .getDetailsForListItem(id)
       .pipe(take(1))
       .subscribe((test) => {
-        this.searchTermDetailsProviderService.setSearchTermDetails(test);
-      });
+        this.searchTermDetailsProviderService.setSearchTermDetails(test)
+      })
   }
 
   public addToStage(id: string) {
@@ -39,11 +42,11 @@ export class ListItemDetailsMenuItemsFunctionsService {
       .buildCriteriaFromHashes([id])
       .pipe(
         map((criteria: Criterion[]) => {
-          this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria);
-          this.feasibilityQueryProviderHub.addCriteriaToStage(criteria);
+          this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria)
+          this.feasibilityQueryProviderHub.addCriteriaToStage(criteria)
         })
       )
-      .subscribe(() => this.snackbarMessageService.displayAddedToCriteriaStage());
+      .subscribe(() => this.snackbarMessageService.displayAddedToCriteriaStage())
   }
 
   public searchCriteria(id: string) {
@@ -60,13 +63,13 @@ export class ListItemDetailsMenuItemsFunctionsService {
           if (resultList.getResults().length > 0) {
             return this.searchTermDetailsService.getDetailsForListItem(
               resultList.getResults()[0].getId()
-            );
+            )
           }
-          return [];
+          return []
         })
       )
       .subscribe((test) => {
-        this.searchTermDetailsProviderService.setSearchTermDetails(test);
-      });
+        this.searchTermDetailsProviderService.setSearchTermDetails(test)
+      })
   }
 }

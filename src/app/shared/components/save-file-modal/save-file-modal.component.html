@@ -10,12 +10,13 @@
       [(ngModel)]="title"
       placeholder="{{ 'SHARED_COMPONENTS.SAVE_MODAL.LABEL' | translate }}"
     />
+    @if (isCommentRequired()) {
     <textarea
-      *ngIf="isCommentRequired"
       class="field-input field-textarea"
       [(ngModel)]="comment"
       placeholder="{{ 'SAVED_QUERIES.COMMENT' | translate }}"
     ></textarea>
+    }
   </div>
 
   <div class="save-dialog-footer">

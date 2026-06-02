@@ -9,8 +9,8 @@
     min-width: 125px !important;
     line-height: 24px;
     border: none;
-    background-color: mat.get-color-from-palette($accent, 500);
-    color: mat.get-color-from-palette($primary, 'white');
+    background-color: mat.m2-get-color-from-palette($accent, 500);
+    color: mat.m2-get-color-from-palette($primary, 'white');
     font-size: 16px;
     display: flex;
     flex-direction: row;
@@ -21,18 +21,18 @@
 
     &:hover:not(.disabled) {
       color: white !important;
-      background: mat.get-color-from-palette($primary, 'blue-hover') !important;
+      background: mat.m2-get-color-from-palette($primary, 'blue-hover') !important;
       box-shadow: $raised-shadow;
     }
 
     &.cdk-keyboard-focused {
-      background: mat.get-color-from-palette($primary, 'blue-hover');
+      background: mat.m2-get-color-from-palette($primary, 'blue-hover');
     }
 
     &.disabled {
-      background-color: mat.get-color-from-palette($primary, 50);
-      color: mat.get-color-from-palette($accent, 500);
-      box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($accent, 500);
+      background-color: mat.m2-get-color-from-palette($primary, 50);
+      color: mat.m2-get-color-from-palette($accent, 500);
+      box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($accent, 500);
       cursor: unset;
     }
 
@@ -49,9 +49,9 @@
       }
 
       &.disabled {
-        background-color: mat.get-color-from-palette($primary, 50);
-        color: mat.get-color-from-palette($accent, 500);
-        box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($accent, 500);
+        background-color: mat.m2-get-color-from-palette($primary, 50);
+        color: mat.m2-get-color-from-palette($accent, 500);
+        box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($accent, 500);
         cursor: not-allowed;
       }
     }

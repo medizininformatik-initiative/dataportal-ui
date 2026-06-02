@@ -1,61 +1,174 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
 @mixin side-menu-component_themed($theme) {
   $accent: map-get($theme, accent);
   $primary: map-get($theme, primary);
   $name: map-get($theme, name);
 
-  .mdc-list-item__primary-text {
-    display: flex;
-  }
-  .mdc-list-item.mdc-list-item--with-one-line {
-    height: 40px !important;
-  }
-  @if ($name == 'fdpg') {
-    .mat-mdc-nav-list {
-      background: transparent !important;
-    }
-    .num-logo-row a {
-      color: mat.get-contrast-color-from-palette($primary, 200) !important;
-    }
-    .num-mat-list-item {
-      color: #5f6266 !important;
-    }
-  }
+  num-side-menu {
+    mat-nav-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 16px 12px 0 12px;
 
-  .num-logo-row button:hover {
-    background: mat.get-color-from-palette($accent, 200) !important;
-    color: mat.get-contrast-color-from-palette($accent, 200) !important;
-  }
-  @if ($name == 'fdpg') {
+      &.collapsed {
+        .num-mat-list-item {
+          justify-content: center;
+          padding-left: 0;
+          padding-right: 0;
+          gap: 0;
+        }
+
+        .navItem-font {
+          display: none !important;
+        }
+
+        fa-icon,
+        .nav-svg-icon {
+          margin: 0 auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+
+    .mdc-list-item__primary-text {
+      display: flex;
+    }
+
+    .mdc-list-item.mdc-list-item--with-one-line {
+      height: 40px !important;
+    }
+
     .num-mat-list-item {
-      font-family: 'Titillium Web', sans-serif !important;
-      font-size: 16px !important;
-      font-weight: 600 !important;
-      line-height: 24px !important;
-      letter-spacing: normal !important;
-      background: #ffffff !important;
-      border-radius: 5px !important;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 8px 16px;
+      gap: 4px;
+      width: 100%;
+      min-height: 40px;
+      height: auto;
+      background: #ffffff;
+      border-radius: 5px;
+      margin-bottom: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: visible;
 
       &--active {
-        background: #f1f2f3 !important;
-        color: #5f6266 !important;
-        font-weight: 600 !important;
+        background-color: #f1f2f3;
+        color: rgba(95, 98, 102, 1);
+
+        .navItem-font {
+          color: #5f6266;
+        }
+
+        fa-icon {
+          color: #206fa8;
+        }
       }
-      &--active div {
-        color: #5f6266 !important;
-        font-weight: 600 !important;
+    }
+
+    fa-icon {
+      color: #5d707f;
+      margin-right: 0;
+
+      svg {
+        vertical-align: middle;
       }
-      &--active fa-icon {
-        color: rgba(90, 121, 175, 1) !important;
+    }
+
+    .nav-svg-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 32px;
+      flex-shrink: 0;
+
+      svg {
+        width: 100%;
+        height: 100%;
       }
-      &:hover {
-        background: #e8ebf0 !important;
-        color: #5f6266 !important;
+    }
+
+    .num-logo-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: auto;
+      height: 48px;
+
+      button {
+        width: auto;
+        background: transparent !important;
+        padding: 0;
+
+        &:hover {
+          background: mat.m2-get-color-from-palette($accent, 200) !important;
+          color: mat.m2-get-contrast-color-from-palette($accent, 200) !important;
+        }
+      }
+    }
+
+    .navItem-font {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: #5f6266 !important;
+      padding-left: 7px;
+      white-space: nowrap;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    @if ($name == 'fdpg') {
+      .mat-mdc-nav-list {
+        background: transparent !important;
       }
 
-      &:focus {
-        background: #f1f2f3 !important;
+      .num-logo-row a {
+        color: mat.m2-get-contrast-color-from-palette($primary, 200) !important;
+      }
+
+      .num-mat-list-item {
         color: #5f6266 !important;
+        font-family: 'Titillium Web', sans-serif !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        line-height: 24px !important;
+        letter-spacing: normal !important;
+        background: #ffffff !important;
+        border-radius: 5px !important;
+
+        &--active {
+          background: #f1f2f3 !important;
+          color: #5f6266 !important;
+          font-weight: 600 !important;
+
+          div {
+            color: #5f6266 !important;
+            font-weight: 600 !important;
+          }
+
+          fa-icon {
+            color: rgba(90, 121, 175, 1) !important;
+          }
+        }
+
+        &:hover {
+          background: #e8ebf0 !important;
+          color: #5f6266 !important;
+        }
+
+        &:focus {
+          background: #f1f2f3 !important;
+          color: #5f6266 !important;
+        }
       }
     }
   }

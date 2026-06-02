@@ -1,13 +1,96 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
 @mixin header_themed($theme) {
   $accent: map-get($theme, accent);
   $primary: map-get($theme, primary);
   $name: map-get($theme, name);
 
-  num-dataportal-header mat-toolbar {
-    --mat-toolbar-container-background-color: #f1f2f3;
-    --mat-toolbar-container-text-color: #000000;
-    background: #ffffff !important;
-    color: #000000 !important;
+  num-dataportal-header {
+    mat-toolbar {
+      --mat-toolbar-container-background-color: #f1f2f3;
+      --mat-toolbar-container-text-color: #000000;
+      background: #ffffff !important;
+      color: #000000 !important;
+      height: 104px;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      padding: 0;
+      width: 95%;
+    }
+
+    .mat-toolbar-single-row {
+      padding-left: 0 !important;
+    }
+
+    .toolbar {
+      background: transparent;
+      font-size: 16px;
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+
+      fa-icon {
+        padding-left: 16px;
+      }
+    }
+
+    .logo-wrapper {
+      width: 320px;
+      min-width: 320px;
+    }
+
+    .FDPGTheme {
+      width: 208px;
+      max-width: 208px;
+      height: 104px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex: 1 1 auto;
+      min-width: 0;
+      height: 100%;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-shrink: 0;
+      gap: 8px;
+      padding-right: 16px;
+    }
+
+    .user-button {
+      background-color: var(--color-accent) !important;
+      border-radius: 19px;
+      min-width: 104px;
+      color: #ffffff !important;
+      padding: 8px 16px;
+      font-family: 'Open Sans', sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 19px;
+    }
+
+    .breadcrumbs-wrapper {
+      display: flex;
+      align-items: center;
+      padding-left: 24px;
+      min-width: 0;
+      margin-right: 8px;
+      flex: 1 1 auto;
+      height: 100%;
+      overflow: auto;
+    }
+
+    .margin-right {
+      margin-right: 16px;
+    }
   }
 }

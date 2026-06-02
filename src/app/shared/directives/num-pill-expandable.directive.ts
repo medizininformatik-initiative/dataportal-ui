@@ -1,4 +1,4 @@
-import { Directive, HostBinding, HostListener, Input } from '@angular/core';
+import { Directive, HostBinding, HostListener, model } from '@angular/core'
 
 /**
  * Directive to toggle the 'expanded' class on .num-pill elements when clicked.
@@ -7,15 +7,16 @@ import { Directive, HostBinding, HostListener, Input } from '@angular/core';
  */
 @Directive({
   selector: '[numPillExpandable]',
+  standalone: true,
 })
 export class NumPillExpandableDirective {
-  @Input() expanded = false;
+  readonly expanded = model(false)
 
   @HostBinding('class.expanded') get isExpanded() {
-    return this.expanded;
+    return this.expanded()
   }
 
   @HostListener('click') toggleExpand() {
-    this.expanded = !this.expanded;
+    this.expanded.update((v) => !v)
   }
 }

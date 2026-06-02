@@ -1,10 +1,10 @@
-import { AboutInfoData } from 'src/app/model/Interface/AboutInfo/AboutInfoData';
-import { ActuatorInformationService } from '../Actuator/ActuatorInformation.service';
-import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service';
-import { BackendInfoData } from 'src/app/model/Interface/AboutInfo/BakcendInfoData';
-import { GitInformationData } from 'src/app/model/Interface/ActuatorInfoData/GitData/GitInformationData';
-import { Injectable } from '@angular/core';
-import { UiInfoData } from 'src/app/model/Interface/AboutInfo/UiInfoData';
+import { AboutInfoData } from 'src/app/model/Interface/AboutInfo/AboutInfoData'
+import { ActuatorInformationService } from '../Actuator/ActuatorInformation.service'
+import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service'
+import { BackendInfoData } from 'src/app/model/Interface/AboutInfo/BakcendInfoData'
+import { GitInformationData } from 'src/app/model/Interface/ActuatorInfoData/GitData/GitInformationData'
+import { Injectable, inject } from '@angular/core'
+import { UiInfoData } from 'src/app/model/Interface/AboutInfo/UiInfoData'
 
 /**
  * Service responsible for building the about information data structure.
@@ -14,21 +14,24 @@ import { UiInfoData } from 'src/app/model/Interface/AboutInfo/UiInfoData';
   providedIn: 'root',
 })
 export class AboutInfoBuilderService {
-  constructor(
-    private readonly actuatorInformationService: ActuatorInformationService,
-    private readonly appSettingsProviderService: AppSettingsProviderService
-  ) {}
+  private readonly actuatorInformationService = inject(ActuatorInformationService)
+  private readonly appSettingsProviderService = inject(AppSettingsProviderService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Creates a complete AboutInfo object from all available data sources.
    * @returns The complete about information data structure
    */
   public buildAboutInfo(): AboutInfoData {
-    const actuatorInfo = this.actuatorInformationService.getActuatorInfoValue();
+    const actuatorInfo = this.actuatorInformationService.getActuatorInfoValue()
     if (!actuatorInfo) {
       throw new Error(
         'Actuator information is not available. Ensure it is loaded before building about info.'
-      );
+      )
     }
     return {
       timestamp: new Date().toISOString(),
@@ -37,7 +40,7 @@ export class AboutInfoBuilderService {
       ontology: {
         version: actuatorInfo.terminology.ontologyTag,
       },
-    };
+    }
   }
 
   /**
@@ -50,7 +53,7 @@ export class AboutInfoBuilderService {
       version: this.appSettingsProviderService.getVersion(),
       copyright: `${this.appSettingsProviderService.getCopyrightOwner()} @${this.appSettingsProviderService.getCopyrightYear()}`,
       email: this.appSettingsProviderService.getEmail(),
-    };
+    }
   }
 
   /**
@@ -60,13 +63,13 @@ export class AboutInfoBuilderService {
    * @private
    */
   private buildBackendInfo(gitInformation: GitInformationData): BackendInfoData {
-    const backendBuildTime = this.buildBackendBuildTime(gitInformation);
+    const backendBuildTime = this.buildBackendBuildTime(gitInformation)
     return {
       version: gitInformation?.build?.version,
       buildTime: backendBuildTime,
       commit: gitInformation?.commit?.id?.abbrev,
       fullCommit: gitInformation?.commit?.id?.full,
-    };
+    }
   }
 
   /**
@@ -76,6 +79,6 @@ export class AboutInfoBuilderService {
    * @private
    */
   private buildBackendBuildTime(gitInformation: GitInformationData): string {
-    return gitInformation?.build?.time ? new Date(gitInformation.build.time).toLocaleString() : '';
+    return gitInformation?.build?.time ? new Date(gitInformation.build.time).toLocaleString() : ''
   }
 }

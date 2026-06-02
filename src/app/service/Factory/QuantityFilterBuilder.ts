@@ -1,22 +1,22 @@
-import { Injectable } from '@angular/core';
-import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
-import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
-import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
+import { Injectable, inject } from '@angular/core'
+import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
+import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet'
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuantityFilterBuilder {
-  private precision: number;
-  private quantityUnit: QuantityUnit;
-  private allowedUnits: QuantityUnit[];
+  private precision: number
+  private quantityUnit: QuantityUnit
+  private allowedUnits: QuantityUnit[]
 
   constructor(allowedUnits: QuantityUnit[], precision: number, quantityUnit: QuantityUnit) {
-    this.precision = precision;
-    this.allowedUnits = allowedUnits;
-    this.quantityUnit = quantityUnit;
+    this.precision = precision
+    this.allowedUnits = allowedUnits
+    this.quantityUnit = quantityUnit
   }
 
   public buildQuantityComparatorFilter(
@@ -29,7 +29,7 @@ export class QuantityFilterBuilder {
       this.precision,
       comparator,
       value
-    );
+    )
   }
 
   public buildQuantityRangeFilter(minValue: number, maxValue: number): QuantityRangeFilter {
@@ -39,10 +39,10 @@ export class QuantityFilterBuilder {
       this.precision,
       minValue,
       maxValue
-    );
+    )
   }
 
   public buildEmptyQuantityFilter(): QuantityNotSet {
-    return new QuantityNotSet(this.allowedUnits, undefined, this.precision);
+    return new QuantityNotSet(this.allowedUnits, undefined, this.precision)
   }
 }

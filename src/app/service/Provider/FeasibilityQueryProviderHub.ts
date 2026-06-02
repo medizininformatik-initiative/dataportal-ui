@@ -1,25 +1,28 @@
-import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { CriterionProviderService } from './CriterionProvider.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { FeasibilityQueryProviderService } from './FeasibilityQueryProvider.service';
-import { Injectable } from '@angular/core';
-import { QueryResult } from 'src/app/model/Result/QueryResult';
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { ReferenceCriterionProviderService } from './ReferenceCriterionProvider.service';
-import { ResultProviderService } from './ResultProvider.service';
-import { StageProviderService } from './StageProvider.service';
+import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { CriterionProviderService } from './CriterionProvider.service'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
+import { FeasibilityQueryProviderService } from './FeasibilityQueryProvider.service'
+import { Injectable, inject } from '@angular/core'
+import { QueryResult } from 'src/app/model/Result/QueryResult'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { ReferenceCriterionProviderService } from './ReferenceCriterionProvider.service'
+import { ResultProviderService } from './ResultProvider.service'
+import { StageProviderService } from './StageProvider.service'
 
 @Injectable({ providedIn: 'root' })
 export class FeasibilityQueryProviderHub {
-  constructor(
-    private stageProviderService: StageProviderService,
-    private feasibilityQueryProviderService: FeasibilityQueryProviderService,
-    private criterionProviderService: CriterionProviderService,
-    private activeFEasibilityQueryProviderService: ActiveFeasibilityQueryService,
-    private referenceCriterionProviderService: ReferenceCriterionProviderService,
-    private queryResultProviderService: ResultProviderService
-  ) {}
+  private stageProviderService = inject(StageProviderService)
+  private feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
+  private criterionProviderService = inject(CriterionProviderService)
+  private activeFEasibilityQueryProviderService = inject(ActiveFeasibilityQueryService)
+  private referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
+  private queryResultProviderService = inject(ResultProviderService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Adds multiple criteria to a stage.
@@ -27,8 +30,8 @@ export class FeasibilityQueryProviderHub {
    * @param criterions Array of Criterion objects
    */
   public addCriteriaToStage(criterions: Criterion[]): void {
-    const ids = criterions.map((criterion) => criterion.getId());
-    this.stageProviderService.addMany(ids);
+    const ids = criterions.map((criterion) => criterion.getId())
+    this.stageProviderService.addMany(ids)
   }
 
   /**
@@ -37,7 +40,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add
    */
   public addCriterionToStage(criterion: Criterion): void {
-    this.stageProviderService.addOne(criterion.getId());
+    this.stageProviderService.addOne(criterion.getId())
   }
 
   /**
@@ -46,7 +49,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add
    */
   public addCriterionByIdToStage(id: string): void {
-    this.stageProviderService.addOne(id);
+    this.stageProviderService.addOne(id)
   }
 
   /**
@@ -55,7 +58,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add
    */
   public addCriterionToCriterionProvider(criterion: Criterion): void {
-    this.criterionProviderService.setOne(criterion);
+    this.criterionProviderService.setOne(criterion)
   }
 
   /**
@@ -64,7 +67,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add
    */
   public addCriterionToByIdCriterionProvider(criterion: Criterion): void {
-    this.criterionProviderService.setOne(criterion);
+    this.criterionProviderService.setOne(criterion)
   }
 
   /**
@@ -73,7 +76,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterions Array of Criterion objects
    */
   public addCriteriaToCriterionProvider(criterions: Criterion[]): void {
-    this.criterionProviderService.setMany(criterions);
+    this.criterionProviderService.setMany(criterions)
   }
 
   /**
@@ -85,7 +88,7 @@ export class FeasibilityQueryProviderHub {
     this.feasibilityQueryProviderService.setFeasibilityQueryByID(
       feasibilityQuery,
       feasibilityQuery.getId()
-    );
+    )
   }
 
   /**
@@ -94,7 +97,7 @@ export class FeasibilityQueryProviderHub {
    * @param query The active feasibility query object
    */
   public addActiveFeasibilityQuery(feasibilityQuery: FeasibilityQuery): void {
-    this.activeFEasibilityQueryProviderService.setActiveFeasibilityQueryID(feasibilityQuery.getId());
+    this.activeFEasibilityQueryProviderService.setActiveFeasibilityQueryID(feasibilityQuery.getId())
   }
 
   /**
@@ -103,7 +106,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterion The Criterion object to add as a reference
    */
   public addReferenceCriterion(refernceCriterion: ReferenceCriterion): void {
-    this.referenceCriterionProviderService.setOne(refernceCriterion);
+    this.referenceCriterionProviderService.setOne(refernceCriterion)
   }
 
   /**
@@ -112,7 +115,7 @@ export class FeasibilityQueryProviderHub {
    * @param criterions Array of Criterion objects to add as references
    */
   public addReferenceCriteria(referenceCriteria: ReferenceCriterion[]): void {
-    this.referenceCriterionProviderService.setMany(referenceCriteria);
+    this.referenceCriterionProviderService.setMany(referenceCriteria)
   }
 
   /**
@@ -121,6 +124,6 @@ export class FeasibilityQueryProviderHub {
    * @param result The query result object
    */
   public addQueryResult(result: QueryResult): void {
-    this.queryResultProviderService.setOne(result);
+    this.queryResultProviderService.setOne(result)
   }
 }

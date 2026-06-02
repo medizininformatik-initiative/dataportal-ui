@@ -1,4 +1,4 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
 
 @mixin button-cancel($theme) {
   $primary: map-get($theme, primary);
@@ -21,24 +21,24 @@
     justify-content: center;
     gap: 10px;
     box-shadow: $raised-shadow;
-    border: 1px solid mat.get-color-from-palette($accent, 200);
-    background: mat.get-color-from-palette($primary, 50);
-    color: mat.get-color-from-palette($accent, 600);
+    border: 1px solid mat.m2-get-color-from-palette($accent, 200);
+    background: mat.m2-get-color-from-palette($primary, 50);
+    color: mat.m2-get-color-from-palette($accent, 600);
 
     &:hover:not(.disabled) {
-      background: mat.get-color-from-palette($primary, 100);
-      color: mat.get-color-from-palette($accent, 400);
+      background: mat.m2-get-color-from-palette($primary, 100);
+      color: mat.m2-get-color-from-palette($accent, 400);
       box-shadow: rgba(81, 112, 168, 0.13) 0 4px 16px;
     }
 
     &.cdk-keyboard-focused {
-      background: mat.get-color-from-palette($primary, 100);
+      background: mat.m2-get-color-from-palette($primary, 100);
     }
 
     &.disabled {
-      background: mat.get-color-from-palette($primary, 50);
-      color: mat.get-color-from-palette($primary, 400);
-      border-color: mat.get-color-from-palette($primary, 300);
+      background: mat.m2-get-color-from-palette($primary, 50);
+      color: mat.m2-get-color-from-palette($primary, 400);
+      border-color: mat.m2-get-color-from-palette($primary, 300);
       box-shadow: none;
       cursor: unset;
     }

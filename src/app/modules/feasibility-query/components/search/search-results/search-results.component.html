@@ -1,30 +1,30 @@
-<mat-drawer-container *ngIf="searchResultsFound" class="results-container">
+@if (searchResultsFound()) {
+<mat-drawer-container class="results-container">
   <mat-drawer #drawer position="end" mode="side" class="details-drawer">
-    <ng-container *ngIf="listItems">
-      <div class="details-wrapper">
-        <div class="button-align-right">
-          <button
-            [matTooltip]="'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate"
-            (click)="closeSidenav()"
-            class="num-button cancel"
-          >
-            {{ 'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate }}
-            <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
-          </button>
-        </div>
-        <div class="details-container">
-          <num-list-item-details
-            class="details-panel"
-            [listItemDetails$]="selectedDetails$"
-            (selectedRelative)="selectedRelative.emit($event)"
-          ></num-list-item-details>
-        </div>
+    @if (listItems()) {
+    <div class="details-wrapper">
+      <div class="button-align-right">
+        <button
+          [matTooltip]="'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate"
+          (click)="closeSidenav()"
+          class="num-button cancel"
+        >
+          {{ 'FEASIBILITY.SEARCH.CLOSE_DETAILS' | translate }}
+          <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
+        </button>
       </div>
-    </ng-container>
+      <div class="details-container">
+        <num-list-item-details
+          class="details-panel"
+          [listItemDetails$]="selectedDetails$()"
+          (selectedRelative)="selectedRelative.emit($event)"
+        ></num-list-item-details>
+      </div>
+    </div>
+    }
   </mat-drawer>
-
+  @if (listItems()?.length > 0) {
   <mat-drawer-content
-    *ngIf="listItems?.length > 0"
     infiniteScroll
     [infiniteScrollDistance]="0.5"
     [infiniteScrollThrottle]="50"
@@ -35,14 +35,16 @@
       (selectedRow)="selectedRow.emit($event)"
       (rowClicked)="rowClicked.emit($event)"
       (iconClicked)="iconClicked.emit($event)"
-      [tableData]="adaptedData"
+      [tableData]="adaptedData()"
     ></num-table>
   </mat-drawer-content>
+  }
 </mat-drawer-container>
-
-<div *ngIf="!searchResultsFound" class="no-results-box">
+} @if (!searchResultsFound()) {
+<div class="no-results-box">
   <num-placeholder-box
-    >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
+    >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$() | async }}</strong
     >"</num-placeholder-box
   >
 </div>
+}

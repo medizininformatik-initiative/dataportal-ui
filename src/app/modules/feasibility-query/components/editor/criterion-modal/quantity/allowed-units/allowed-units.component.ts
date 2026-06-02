@@ -1,53 +1,39 @@
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
-import { CloneQuantityUnit } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Quantity/CloneQuantityUnit';
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
+import { Component, OnInit, input, model, output } from '@angular/core'
+import { CloneQuantityUnit } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Quantity/CloneQuantityUnit'
+import { MatFormField } from '@angular/material/form-field'
+import { MatSelect } from '@angular/material/select'
+import { MatOption } from '@angular/material/core'
 
 @Component({
   selector: 'num-allowed-units',
   templateUrl: './allowed-units.component.html',
   styleUrls: ['./allowed-units.component.scss'],
+  standalone: true,
+  imports: [MatFormField, MatSelect, MatOption],
 })
-export class AllowedUnitsComponent implements OnInit, OnChanges {
-  @Input()
-  allowedUnits: QuantityUnit[] = [];
+export class AllowedUnitsComponent implements OnInit {
+  readonly allowedUnits = input<QuantityUnit[]>([])
 
-  @Input()
-  selectedUnit: QuantityUnit;
+  readonly selectedUnit = model<QuantityUnit>()
 
-  @Output()
-  selectionChange = new EventEmitter<QuantityUnit>();
+  readonly selectionChange = output<QuantityUnit>()
 
-  selectedUnitDisplay: string;
+  selectedUnitDisplay: string
 
   ngOnInit() {
-    this.selectedUnitDisplay = this.selectedUnit.getDisplay();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      (changes.allowedUnits && !changes.allowedUnits.firstChange) ||
-      (changes.selectedUnit && !changes.selectedUnit.firstChange)
-    ) {
-      this.emitQuantityUnitInstance();
-    }
+    this.selectedUnitDisplay = this.selectedUnit()?.getDisplay() ?? ''
   }
 
   onSelectionChange(selectedValue: string) {
-    this.selectedUnit = this.allowedUnits.find((unit) => unit.getDisplay() === selectedValue);
-    if (this.selectedUnit) {
-      this.emitQuantityUnitInstance();
+    const unit = this.allowedUnits().find((u) => u.getDisplay() === selectedValue)
+    if (unit) {
+      this.selectedUnit.set(unit)
+      this.emitQuantityUnitInstance()
     }
   }
 
   private emitQuantityUnitInstance() {
-    this.selectionChange.emit(CloneQuantityUnit.deepCopyQuantityUnit(this.selectedUnit));
+    this.selectionChange.emit(CloneQuantityUnit.deepCopyQuantityUnit(this.selectedUnit()))
   }
 }

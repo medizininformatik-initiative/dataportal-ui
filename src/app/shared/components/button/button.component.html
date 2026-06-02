@@ -1,43 +1,48 @@
+@if (type() === 'blue') {
 <button
   class="num-button blue"
-  [ngClass]="isDisabled ? 'disabled' : ''"
+  [ngClass]="isDisabled() ? 'disabled' : ''"
   color="primary"
-  [disabled]="isDisabled"
-  *ngIf="type === 'blue'"
-  [matTooltip]="tooltip"
+  [disabled]="isDisabled()"
+  [matTooltip]="tooltip()"
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
 >
-  <fa-icon *ngIf="icon" [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
+  @if (icon()) {
+  <fa-icon [icon]="icon()" size="lg" [fixedWidth]="true"></fa-icon>
+  }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
-
+} @if (type() === 'green') {
 <button
   class="num-button green"
   color="primary"
-  [ngClass]="isDisabled ? 'disabled' : ''"
-  [disabled]="isDisabled"
-  *ngIf="type === 'green'"
-  [matTooltip]="tooltip"
+  [ngClass]="isDisabled() ? 'disabled' : ''"
+  [disabled]="isDisabled()"
+  [matTooltip]="tooltip()"
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
 >
-  <fa-icon *ngIf="icon" [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
+  @if (icon()) {
+  <fa-icon [icon]="icon()" size="lg" [fixedWidth]="true"></fa-icon>
+  }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
-
+} @if (type() === 'red') {
 <button
   class="num-button red"
   color="primary"
-  [ngClass]="isDisabled ? 'disabled' : ''"
-  [disabled]="isDisabled"
-  *ngIf="type === 'red'"
-  [matTooltip]="tooltip"
+  [ngClass]="isDisabled() ? 'disabled' : ''"
+  [disabled]="isDisabled()"
+  [matTooltip]="tooltip()"
   [matTooltipPosition]="'above'"
   [matTooltipShowDelay]="300"
 >
-  <fa-icon *ngIf="icon" [icon]="icon" size="lg" [fixedWidth]="true"></fa-icon>
+  @if (icon()) {
+  <fa-icon [icon]="icon()" size="lg" [fixedWidth]="true"></fa-icon>
+  }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
+}
 
 <ng-template #content><ng-content></ng-content></ng-template>

@@ -1,12 +1,7 @@
-import { EditFeasibilityQueryComponent } from './components/editor/edit.component';
-import { FeasibilityQuerySearchComponent } from './components/search/search.component';
-import { NgModule } from '@angular/core';
-import { PathSegments } from 'src/app/app-paths';
-import { ResultComponent } from './components/result/result.component';
-import { RouterModule, Routes } from '@angular/router';
-import { FeasibilityQueryBulkSearchComponent } from './components/search/bulk/bulk-search.component';
+import { PathSegments } from 'src/app/app-paths'
+import { Routes } from '@angular/router'
 
-const routes: Routes = [
+export const FEASIBILITY_QUERY_ROUTES: Routes = [
   {
     path: '',
     redirectTo: PathSegments.search,
@@ -19,7 +14,8 @@ const routes: Routes = [
   },
   {
     path: PathSegments.editor,
-    component: EditFeasibilityQueryComponent,
+    loadComponent: () =>
+      import('./components/editor/edit.component').then((m) => m.EditFeasibilityQueryComponent),
     data: {
       animation: 'Feasibility_Editor',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.EDITOR',
@@ -28,7 +24,8 @@ const routes: Routes = [
   },
   {
     path: PathSegments.result,
-    component: ResultComponent,
+    loadComponent: () =>
+      import('./components/result/result.component').then((m) => m.ResultComponent),
     data: {
       animation: 'Feasibility_Result',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.RESULT',
@@ -37,7 +34,8 @@ const routes: Routes = [
   },
   {
     path: PathSegments.search,
-    component: FeasibilityQuerySearchComponent,
+    loadComponent: () =>
+      import('./components/search/search.component').then((m) => m.FeasibilityQuerySearchComponent),
     data: {
       animation: 'Feasibility_Search',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
@@ -46,17 +44,14 @@ const routes: Routes = [
   },
   {
     path: PathSegments.bulkSearch,
-    component: FeasibilityQueryBulkSearchComponent,
+    loadComponent: () =>
+      import('./components/search/bulk/bulk-search.component').then(
+        (m) => m.FeasibilityQueryBulkSearchComponent
+      ),
     data: {
       animation: 'Feasibility_Bulk_Search',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
       breadcrumb: 'BREADCRUMB.FEASIBILITY_QUERY_BULK_SEARCH',
     },
   },
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class FeasibilityQueryRoutingModule {}
+]

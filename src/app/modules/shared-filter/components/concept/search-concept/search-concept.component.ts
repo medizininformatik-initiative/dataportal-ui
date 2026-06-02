@@ -1,51 +1,40 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service';
+import { Component, OnDestroy, OnInit, inject, input } from '@angular/core'
+import { Subscription } from 'rxjs'
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service'
+import { SearchbarComponent } from '../../../../../shared/components/search/searchbar.component'
 
 @Component({
   selector: 'num-search-concept',
   templateUrl: './search-concept.component.html',
   styleUrls: ['./search-concept.component.scss'],
+  standalone: true,
+  imports: [SearchbarComponent],
 })
 export class SearchConceptComponent implements OnDestroy, OnInit {
-  @Input()
-  valueSetUrl: string[];
+  private conceptFilterSearchService = inject(CodeableConceptSearchService)
 
-  @Input()
-  conceptFilterId: string;
+  readonly valueSetUrl = input.required<string[]>()
 
-  private searchSubscription: Subscription;
-  public searchResults: CodeableConceptResultList;
+  readonly conceptFilterId = input<string>()
 
-  constructor(private conceptFilterSearchService: CodeableConceptSearchService) {}
+  private searchSubscription: Subscription | undefined
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.startElasticSearch(' ');
-  }
-  /**
-   * Initiates a search and handles the results.
-   *
-   * @param searchtext The text to search for.
-   */
-  public startElasticSearch(searchtext: string): void {
-    this.searchSubscription?.unsubscribe();
-    this.searchSubscription = this.conceptFilterSearchService
-      .search(searchtext, this.valueSetUrl)
-      .subscribe(
-        (result) => {
-          this.searchResults = result;
-        },
-        (error) => {
-          console.error('Search error:', error);
-        }
-      );
+    this.startSearch(' ')
   }
 
   ngOnDestroy(): void {
     if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
+      this.searchSubscription.unsubscribe()
     }
+  }
+
+  public startSearch(searchtext: string): void {
+    this.searchSubscription?.unsubscribe()
+    this.searchSubscription = this.conceptFilterSearchService
+      .search(searchtext, this.valueSetUrl())
+      .subscribe()
   }
 }

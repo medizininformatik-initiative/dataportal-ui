@@ -34,3 +34,11 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

@@ -1,4 +1,18 @@
 # Changelog
+
+## v7.0.0 (2026-06-02)
+
+### Features
+* Upgraded Angular framework from version 15 to version 19 [#574](https://github.com/medizininformatik-initiative/feasibility-gui/issues/574)
+  * Adopted modern Angular APIs including standalone components, Signals, signal inputs/outputs, the `inject()` API, and template control flow (`@if`, `@for`)
+  * Refactored component state management and improved component encapsulation
+  * Modernized application bootstrap, dependency injection, and HTTP client configuration
+  * Reduced boilerplate and improved maintainability across the codebase
+
+### Fixed
+* Fixed missing `includeReferenceOnly` attribute in exported CRTDL files [#573](https://github.com/medizininformatik-initiative/feasibility-gui/issues/573)
+
+
 ## v6.9.1 (2026-05-11)
 
 ### Features
@@ -9,10 +23,11 @@
 ### Fixed
 * Fix time restriction rendering and tab height in ProfileComponent [#571](https://github.com/medizininformatik-initiative/feasibility-gui/issues/571)
 
+
 ## v6.9.0 (2026-05-08)
 
 ### Features
-* Implemented full criterion editor page with tabbed attribute filter and value filter, termcodes and timerestriction[#522](https://github.com/medizininformatik-initiative/feasibility-gui/issues/522),[#519](https://github.com/medizininformatik-initiative/feasibility-gui/issues/519)
+* Implemented full criterion editor page with tabbed attribute filter and value filter, termcodes and timerestriction [#522](https://github.com/medizininformatik-initiative/feasibility-gui/issues/522), [#519](https://github.com/medizininformatik-initiative/feasibility-gui/issues/519)
 * ~~Added filter dependency support for dynamic filter relationships [#563](https://github.com/medizininformatik-initiative/feasibility-gui/issues/563)~~
 * Added search bar in dropdown for filter in criterion search [#561](https://github.com/medizininformatik-initiative/feasibility-gui/issues/561)
 * ~~Improved usability of drop-down filters [#560](https://github.com/medizininformatik-initiative/feasibility-gui/issues/560)~~

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BasePaths, UrlPaths } from '../app-paths';
-import { Router } from '@angular/router';
+import { Injectable, inject } from '@angular/core'
+import { BasePaths, UrlPaths } from '../app-paths'
+import { Router } from '@angular/router'
 
 /**
  * Service for handling navigation throughout the application.
@@ -10,7 +10,12 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class NavigationHelperService {
-  constructor(private router: Router) {}
+  private router = inject(Router)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.result | /feasibility-query/result}
@@ -19,7 +24,7 @@ export class NavigationHelperService {
   public navigateToFeasibilityQueryResult(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.result], {
       state: { preventReset: true, startPolling: true },
-    });
+    })
   }
 
   /**
@@ -28,15 +33,15 @@ export class NavigationHelperService {
    * @returns
    */
   public navigateToEditProfile(id: string): void {
-    this.router.navigate([`${UrlPaths.queryEditor.feature}`, id]);
+    this.router.navigate([`${UrlPaths.queryEditor.feature}`, id])
   }
 
   public navigateToEditCriterion(id: string): void {
-    this.router.navigate([`${UrlPaths.queryEditor.criteria}`, id]);
+    this.router.navigate([`${UrlPaths.queryEditor.criteria}`, id])
   }
 
   public navigateToEditReferenceCriterion(id: string): void {
-    this.router.navigate([`${UrlPaths.queryEditor.reference}`, id]);
+    this.router.navigate([`${UrlPaths.queryEditor.reference}`, id])
   }
 
   /**
@@ -44,7 +49,7 @@ export class NavigationHelperService {
    * @returns
    */
   public navigateToFeasibilityQueryEditor(): void {
-    this.router.navigate([UrlPaths.feasibilityQuery.editor]);
+    this.router.navigate([UrlPaths.feasibilityQuery.editor])
   }
 
   /**
@@ -52,7 +57,7 @@ export class NavigationHelperService {
    * @returns
    */
   public navigateToFeasibilityQuerySearch(): void {
-    this.router.navigate([UrlPaths.feasibilityQuery.search]);
+    this.router.navigate([UrlPaths.feasibilityQuery.search])
   }
 
   /**
@@ -60,7 +65,7 @@ export class NavigationHelperService {
    * @returns
    */
   public navigateToFeasibilityQueryBulkSearch(): void {
-    this.router.navigate([UrlPaths.feasibilityQuery.bulkSearch]);
+    this.router.navigate([UrlPaths.feasibilityQuery.bulkSearch])
   }
 
   /**
@@ -68,7 +73,7 @@ export class NavigationHelperService {
    * @returns
    */
   public navigateToDataSelectionEditor(): void {
-    this.router.navigate([UrlPaths.dataSelection.editor]);
+    this.router.navigate([UrlPaths.dataSelection.editor])
   }
 
   /**
@@ -76,7 +81,7 @@ export class NavigationHelperService {
    * @returns
    */
   public navigateToDataSelectionSearch(): void {
-    this.router.navigate([UrlPaths.dataSelection.search]);
+    this.router.navigate([UrlPaths.dataSelection.search])
   }
 
   /**
@@ -86,7 +91,7 @@ export class NavigationHelperService {
   public navigateToDataQueryCohortDefinition(): void {
     this.router.navigate([UrlPaths.dataQuery.cohortDefinition], {
       state: { preventReset: true },
-    });
+    })
   }
 
   /**
@@ -96,7 +101,7 @@ export class NavigationHelperService {
   public navigateToDataQueryDataSelection(): void {
     this.router.navigate([UrlPaths.dataQuery.dataSelection], {
       state: { preventReset: true },
-    });
+    })
   }
 
   /**
@@ -106,6 +111,6 @@ export class NavigationHelperService {
   public navigateToSavedQueries(): void {
     this.router.navigate([BasePaths.savedQueries], {
       state: { preventReset: true },
-    });
+    })
   }
 }

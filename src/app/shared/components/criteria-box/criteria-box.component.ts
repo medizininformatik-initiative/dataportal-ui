@@ -1,59 +1,76 @@
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
-import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service';
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
-import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service';
-import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { FilterChipData } from '../../models/FilterChips/FilterChipData';
+import { AsyncPipe } from '@angular/common'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
+import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop'
+import { Component, computed, inject, input, OnInit } from '@angular/core'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
+import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { FilterChipData } from '../../models/FilterChips/FilterChipData'
+import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { MatTooltip } from '@angular/material/tooltip'
+import { MenuComponent } from '../menu/menu.component'
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
+import { Observable, of } from 'rxjs'
+import { ReferenceCriteriaBoxComponent } from '../reference-criteria-box/reference-criteria-box.component'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-criteria-box',
   templateUrl: './criteria-box.component.html',
   styleUrls: ['./criteria-box.component.scss'],
   providers: [CriterionFilterChipService],
+  standalone: true,
+  imports: [
+    CdkDrag,
+    CdkDragHandle,
+    MatTooltip,
+    FilterChipsComponent,
+    MenuComponent,
+    FontAwesomeModule,
+    ReferenceCriteriaBoxComponent,
+    AsyncPipe,
+    TranslateModule,
+    DisplayTranslationPipe,
+  ],
 })
 export class CriteriaBoxComponent implements OnInit {
-  @Input() criterion!: Criterion;
-  @Input() isEditable!: boolean;
+  private menuService = inject(CriterionMenuItems)
+  private filterChipsService = inject(CriterionFilterChipService)
+  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
 
-  menuItems: MenuItemInterface[] = [];
+  readonly criterion = input.required<Criterion>()
+  readonly isEditable = input<boolean>()
 
-  referenceCriterion: ReferenceCriterion[] = [];
+  readonly menuItems = this.menuService.getMenuItemsForCriterion()
 
-  $filterChips: Observable<FilterChipData[]> = of([]);
+  referenceCriterion: ReferenceCriterion[] = []
 
-  system!: Display;
+  $filterChips: Observable<FilterChipData[]> = of([])
 
-  isFilterRequired!: boolean;
+  /**
+   * The system is derived from the first term code of the criterion, as this is mandatory. The system is then looked up in the TerminologySystemDictionary to get a user-friendly name for display purposes.
+   */
+  readonly system = computed(() => {
+    return TerminologySystemDictionary.getNameByUrl(this.criterion().getTermCodes()[0].getSystem())
+  })
 
-  warningSignUrl = 'assets/img/alert-blue-white.png';
+  /**
+   * A filter is considered required if the criterion does not have a required filter set. This is determined by the getIsRequiredFilterSet method of the Criterion class. If this method returns false, it means that there are required filters that have not been set, and thus the criterion is considered to be in a state where required filters are missing.
+   */
+  readonly isFilterRequired = computed(() => !this.criterion().getIsRequiredFilterSet())
 
-  constructor(
-    private menuService: CriterionMenuItems,
-    private filterChipsService: CriterionFilterChipService,
-    private referenceCriterionProvider: ReferenceCriterionProviderService
-  ) {}
+  readonly warningSignUrl = 'assets/img/alert-blue-white.png'
+
+  constructor() {}
 
   ngOnInit() {
-    this.system = TerminologySystemDictionary.getNameByUrl(
-      this.criterion.getTermCodes()[0].getSystem()
-    );
-    this.getMenuItems();
-    this.getFilterChips();
-    this.isFilterRequired = !this.criterion.getIsRequiredFilterSet();
-  }
-
-  private getMenuItems() {
-    this.menuItems = this.menuService.getMenuItemsForCriterion();
-  }
-
-  private getFilterChips() {
-    this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion);
+    this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion())
   }
 
   public getReferenceCriteriaFromFilter(attributeFilter: AttributeFilter): ReferenceCriterion[] {
@@ -62,11 +79,11 @@ export class CriteriaBoxComponent implements OnInit {
       .getSelectedReferenceIds()
       .reduce((acc, id) => {
         try {
-          acc.push(this.referenceCriterionProvider.getOne(id));
+          acc.push(this.referenceCriterionProvider.getOne(id))
         } catch {
           // not yet in provider
         }
-        return acc;
-      }, [] as ReferenceCriterion[]);
+        return acc
+      }, [] as ReferenceCriterion[])
   }
 }

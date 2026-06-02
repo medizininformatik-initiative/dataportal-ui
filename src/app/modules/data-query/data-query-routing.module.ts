@@ -1,11 +1,8 @@
-import { CohortDefinitionComponent } from './data-query/cohort-definition/cohort-definition.component';
-import { DataSelectionComponent } from './data-query/data-selection/data-selection.component';
-import { LoadQueryIntoEditorFromUrlService } from 'src/app/service/Resolver/LoadQueryIntoEditorFromUrl.service';
-import { NgModule } from '@angular/core';
-import { PathSegments } from 'src/app/app-paths';
-import { RouterModule, Routes } from '@angular/router';
+import { LoadQueryIntoEditorFromUrlService } from 'src/app/service/Resolver/LoadQueryIntoEditorFromUrl.service'
+import { PathSegments } from 'src/app/app-paths'
+import { Routes } from '@angular/router'
 
-const routes: Routes = [
+export const DATA_QUERY_ROUTES: Routes = [
   {
     path: '',
     redirectTo: PathSegments.cohortDefinition,
@@ -17,7 +14,10 @@ const routes: Routes = [
     resolve: {
       preLoadedQuery: LoadQueryIntoEditorFromUrlService,
     },
-    component: CohortDefinitionComponent,
+    loadComponent: () =>
+      import('./data-query/cohort-definition/cohort-definition.component').then(
+        (m) => m.CohortDefinitionComponent
+      ),
     data: {
       animation: 'Cohort',
       title: 'TAB_TITLE.DATA_QUERY.COHORT_DEFINITION',
@@ -26,7 +26,10 @@ const routes: Routes = [
   },
   {
     path: PathSegments.cohortDefinition,
-    component: CohortDefinitionComponent,
+    loadComponent: () =>
+      import('./data-query/cohort-definition/cohort-definition.component').then(
+        (m) => m.CohortDefinitionComponent
+      ),
     data: {
       animation: 'Cohort',
       title: 'TAB_TITLE.DATA_QUERY.COHORT_DEFINITION',
@@ -35,17 +38,14 @@ const routes: Routes = [
   },
   {
     path: PathSegments.dataSelection,
-    component: DataSelectionComponent,
+    loadComponent: () =>
+      import('./data-query/data-selection/data-selection.component').then(
+        (m) => m.DataSelectionComponent
+      ),
     data: {
       animation: 'DataSelection',
       title: 'TAB_TITLE.DATA_QUERY.DATA_SELECTION',
       breadcrumb: 'BREADCRUMB.DATA_QUERY_DATA_SELECTION',
     },
   },
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class DataQueryRoutingModule {}
+]

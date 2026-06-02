@@ -1,19 +1,22 @@
-import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
-import { FilterProvider } from './SearchFilterProvider.service';
-import { Injectable } from '@angular/core';
-import { SearchFilterService } from './SearchFilter.service';
-import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder';
-import { TerminologyPaths } from '../../Backend/Paths/TerminologyPaths';
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
+import { FilterProvider } from './SearchFilterProvider.service'
+import { Injectable, inject } from '@angular/core'
+import { SearchFilterService } from './SearchFilter.service'
+import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder'
+import { TerminologyPaths } from '../../Backend/Paths/TerminologyPaths'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriteriaFilterFetchService {
-  constructor(
-    private searchFilterService: SearchFilterService,
-    private filterProvider: FilterProvider
-  ) {}
+  private searchFilterService = inject(SearchFilterService)
+  private filterProvider = inject(FilterProvider)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Builds a filter request URL from the current search context, fetches updated
@@ -28,41 +31,41 @@ export class CriteriaFilterFetchService {
    * @param targetFilter The filter type that is the target of the request.
    */
   public fetchAndUpdateFilters(searchText: string, targetFilter: string): void {
-    const url = this.buildUrl(searchText, targetFilter?.toLocaleLowerCase());
+    const url = this.buildUrl(searchText, targetFilter?.toLocaleLowerCase())
     this.searchFilterService.fetchFilters(url).subscribe((fetchedFilters) => {
-      this.mergeFiltersIntoProvider(fetchedFilters);
-    });
+      this.mergeFiltersIntoProvider(fetchedFilters)
+    })
   }
 
   private buildUrl(searchText: string, targetFilter?: string): string {
-    const currentFilters = this.filterProvider.getCriteriaSearchFiltersValue();
+    const currentFilters = this.filterProvider.getCriteriaSearchFiltersValue()
     const builder = new SearchUrlBuilder(TerminologyPaths.SEARCH_FILTER_ENDPOINT).withSearchTerm(
       searchText
-    );
+    )
 
     if (targetFilter) {
-      builder.withTargetFilter(targetFilter);
+      builder.withTargetFilter(targetFilter)
     }
 
     const filtersToApply = targetFilter
       ? currentFilters.filter((f) => f.getName() !== targetFilter)
-      : currentFilters;
+      : currentFilters
 
     filtersToApply
       .filter((f) => f.getSelectedValues().length > 0)
       .forEach((f) => {
-        const values = f.getSelectedValues().join(', ');
-        const name = f.getName();
+        const values = f.getSelectedValues().join(', ')
+        const name = f.getName()
         if (name === ElasticSearchFilterTypes.CONTEXT) {
-          builder.withContext(values);
+          builder.withContext(values)
         } else if (name === ElasticSearchFilterTypes.KDS_MODULE) {
-          builder.withKds(values);
+          builder.withKds(values)
         } else if (name === ElasticSearchFilterTypes.TERMINOLOGY) {
-          builder.withTerminology(values);
+          builder.withTerminology(values)
         }
-      });
+      })
 
-    return builder.buildUrl();
+    return builder.buildUrl()
   }
 
   /**
@@ -70,13 +73,13 @@ export class CriteriaFilterFetchService {
    * @param fetchedFilters
    */
   private mergeFiltersIntoProvider(fetchedFilters: CriteriaSearchFilter[]): void {
-    const currentFilters = this.filterProvider.getCriteriaSearchFiltersValue();
+    const currentFilters = this.filterProvider.getCriteriaSearchFiltersValue()
     fetchedFilters.forEach((fetchedFilter) => {
-      const existing = currentFilters.find((f) => f.getName() === fetchedFilter.getName());
+      const existing = currentFilters.find((f) => f.getName() === fetchedFilter.getName())
       if (existing) {
-        existing.setValues(fetchedFilter.getValues());
+        existing.setValues(fetchedFilter.getValues())
       }
-    });
-    this.filterProvider.setCriteriaSearchFilters([...currentFilters]);
+    })
+    this.filterProvider.setCriteriaSearchFilters([...currentFilters])
   }
 }

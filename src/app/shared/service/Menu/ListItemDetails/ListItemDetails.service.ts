@@ -1,12 +1,17 @@
-import { Injectable } from '@angular/core';
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
-import { ListItemDetailsMenuItemsFunctionsService } from './ListItemDetailsMenuItemsFunctions.service';
+import { Injectable, inject } from '@angular/core'
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
+import { ListItemDetailsMenuItemsFunctionsService } from './ListItemDetailsMenuItemsFunctions.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ListItemDetailService {
-  constructor(private listItemDetailsFunctionService: ListItemDetailsMenuItemsFunctionsService) {}
+  private listItemDetailsFunctionService = inject(ListItemDetailsMenuItemsFunctionsService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * @todo Labels need to be redefined for translation jsons
@@ -32,6 +37,6 @@ export class ListItemDetailService {
         label: 'ADD',
         action: (id: string) => this.listItemDetailsFunctionService.addToStage(id),
       },
-    ];
+    ]
   }
 }

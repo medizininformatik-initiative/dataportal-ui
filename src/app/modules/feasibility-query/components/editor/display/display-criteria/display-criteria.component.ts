@@ -1,156 +1,180 @@
 import {
   Component,
-  Input,
   OnDestroy,
   OnInit,
-  ViewChild,
   ViewContainerRef,
   TemplateRef,
-} from '@angular/core';
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
-import { map, Observable, Subscription } from 'rxjs';
+  inject,
+  input,
+  viewChild,
+} from '@angular/core'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
+import { map, Observable, Subscription } from 'rxjs'
+import { NgTemplateOutlet, AsyncPipe, NgClass } from '@angular/common'
+import { CriteriaBoxComponent } from '../../../../../../shared/components/criteria-box/criteria-box.component'
+import { BoolLogicSwitchComponent } from '../bool-logic-switch/bool-logic-switch.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-display-criteria',
   templateUrl: './display-criteria.component.html',
   styleUrls: ['./display-criteria.component.scss'],
+  standalone: true,
+  imports: [
+    NgTemplateOutlet,
+    CriteriaBoxComponent,
+    BoolLogicSwitchComponent,
+    FontAwesomeModule,
+    AsyncPipe,
+    TranslateModule,
+    NgClass,
+  ],
 })
 export class DisplayCriteriaComponent implements OnInit, OnDestroy {
-  @ViewChild('outlet', { read: ViewContainerRef }) outletRef: ViewContainerRef;
-  @ViewChild('content', { read: TemplateRef }) contentRef: TemplateRef<any>;
+  private queryService = inject(FeasibilityQueryProviderService)
+  criterionProvider = inject(CriterionProviderService)
 
-  @Input() groupType: string;
+  readonly outletRef = viewChild('outlet', { read: ViewContainerRef })
+  readonly contentRef = viewChild('content', { read: TemplateRef })
 
-  @Input() isEditable: boolean;
+  readonly groupType = input<string>(undefined)
 
-  criteriaArray$: Observable<string[][]>;
-  private querySubscription: Subscription;
-  private criteriaSubscription: Subscription;
+  readonly isEditable = input<boolean>(undefined)
 
-  constructor(
-    private queryService: FeasibilityQueryProviderService,
-    public criterionProvider: CriterionProviderService
-  ) {}
+  criteriaArray$: Observable<string[][]>
+  private querySubscription: Subscription
+  private criteriaSubscription: Subscription
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit() {
     this.criteriaSubscription = this.criterionProvider.getAll().subscribe(() => {
-      this.initialize();
+      this.initialize()
       setTimeout(() => {
-        this.rerender();
-      }, 50);
-    });
+        this.rerender()
+      }, 50)
+    })
   }
 
   ngOnDestroy() {
-    this.querySubscription?.unsubscribe();
-    this.criteriaSubscription?.unsubscribe();
+    this.querySubscription?.unsubscribe()
+    this.criteriaSubscription?.unsubscribe()
   }
 
   public rerender() {
-    this.outletRef.clear();
-    this.outletRef.createEmbeddedView(this.contentRef);
+    this.outletRef().clear()
+    this.outletRef().createEmbeddedView(this.contentRef())
   }
 
   initialize(): void {
-    if (this.groupType === 'Inclusion') {
+    const groupType = this.groupType()
+    if (groupType === 'Inclusion') {
       this.criteriaArray$ = this.queryService
         .getActiveFeasibilityQuery()
-        .pipe(map((feasibilityQuery) => feasibilityQuery.getInclusionCriteria()));
+        .pipe(map((feasibilityQuery) => feasibilityQuery.getInclusionCriteria()))
     }
-    if (this.groupType === 'Exclusion') {
+    if (groupType === 'Exclusion') {
       this.criteriaArray$ = this.queryService
         .getActiveFeasibilityQuery()
-        .pipe(map((feasibilityQuery) => feasibilityQuery.getExclusionCriteria()));
+        .pipe(map((feasibilityQuery) => feasibilityQuery.getExclusionCriteria()))
     }
   }
 
   getInnerLabelKey(): 'AND' | 'OR' {
-    return this.groupType === 'Inclusion' ? 'OR' : 'AND';
+    return this.groupType() === 'Inclusion' ? 'OR' : 'AND'
   }
 
   getOuterLabelKey(): 'AND' | 'OR' {
-    return this.groupType === 'Exclusion' ? 'OR' : 'AND';
+    return this.groupType() === 'Exclusion' ? 'OR' : 'AND'
   }
 
   splitInnerArray(i: number, j: number): void {
-    let tempcrit: string[][] = [];
+    let tempcrit: string[][] = []
 
     this.queryService
       .getActiveFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
-        if (this.groupType === 'Inclusion') {
-          tempcrit = this.splitInnerArray2(query.getInclusionCriteria(), i, j);
+        const groupType = this.groupType()
+        if (groupType === 'Inclusion') {
+          tempcrit = this.splitInnerArray2(query.getInclusionCriteria(), i, j)
         }
-        if (this.groupType === 'Exclusion') {
-          tempcrit = this.splitInnerArray2(query.getExclusionCriteria(), i, j);
+        if (groupType === 'Exclusion') {
+          tempcrit = this.splitInnerArray2(query.getExclusionCriteria(), i, j)
         }
       })
-      .unsubscribe();
-    if (this.groupType === 'Inclusion') {
-      this.queryService.setInclusionCriteria(tempcrit);
+      .unsubscribe()
+    const groupType = this.groupType()
+    if (groupType === 'Inclusion') {
+      this.queryService.setInclusionCriteria(tempcrit)
     }
-    if (this.groupType === 'Exclusion') {
-      this.queryService.setExclusionCriteria(tempcrit);
+    if (groupType === 'Exclusion') {
+      this.queryService.setExclusionCriteria(tempcrit)
     }
   }
 
   joinInnerArrays(i: number): void {
-    let tempcrit: string[][] = [];
+    let tempcrit: string[][] = []
 
     this.queryService
       .getActiveFeasibilityQuery()
       .subscribe((query: FeasibilityQuery) => {
-        if (this.groupType === 'Inclusion') {
-          tempcrit = this.joinInnerArrays2(query.getInclusionCriteria(), i);
+        const groupType = this.groupType()
+        if (groupType === 'Inclusion') {
+          tempcrit = this.joinInnerArrays2(query.getInclusionCriteria(), i)
         }
-        if (this.groupType === 'Exclusion') {
-          tempcrit = this.joinInnerArrays2(query.getExclusionCriteria(), i);
+        if (groupType === 'Exclusion') {
+          tempcrit = this.joinInnerArrays2(query.getExclusionCriteria(), i)
         }
       })
-      .unsubscribe();
-    if (this.groupType === 'Inclusion') {
-      this.queryService.setInclusionCriteria(tempcrit);
+      .unsubscribe()
+    const groupType = this.groupType()
+    if (groupType === 'Inclusion') {
+      this.queryService.setInclusionCriteria(tempcrit)
     }
-    if (this.groupType === 'Exclusion') {
-      this.queryService.setExclusionCriteria(tempcrit);
+    if (groupType === 'Exclusion') {
+      this.queryService.setExclusionCriteria(tempcrit)
     }
   }
 
   public splitInnerArray2(critGroup: string[][], i: number, j: number): string[][] {
-    const critGroupTemp: string[][] = [];
+    const critGroupTemp: string[][] = []
 
-    let index = 0;
+    let index = 0
     critGroup.forEach((subarray) => {
       if (index === i) {
-        critGroupTemp.push(subarray.slice(0, j + 1));
-        critGroupTemp.push(subarray.slice(j + 1));
+        critGroupTemp.push(subarray.slice(0, j + 1))
+        critGroupTemp.push(subarray.slice(j + 1))
       } else {
-        critGroupTemp.push(subarray);
+        critGroupTemp.push(subarray)
       }
-      index++;
-    });
+      index++
+    })
 
-    return critGroupTemp;
+    return critGroupTemp
   }
 
   public joinInnerArrays2(critGroup: string[][], i: number): string[][] {
-    const critGroupTemp: string[][] = [];
+    const critGroupTemp: string[][] = []
 
-    let index = 0;
-    let subarrayTemp;
+    let index = 0
+    let subarrayTemp
     critGroup.forEach((subarray) => {
       if (index === i) {
-        subarrayTemp = subarray;
+        subarrayTemp = subarray
       } else if (index === i + 1) {
-        critGroupTemp.push(subarrayTemp.concat(subarray));
+        critGroupTemp.push(subarrayTemp.concat(subarray))
       } else {
-        critGroupTemp.push(subarray);
+        critGroupTemp.push(subarray)
       }
-      index++;
-    });
+      index++
+    })
 
-    return critGroupTemp;
+    return critGroupTemp
   }
 }

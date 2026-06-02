@@ -1,27 +1,71 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
+  "cli": {
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
+  },
   "newProjectRoot": "projects",
   "projects": {
     "num-portal-webapp": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "num",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "configurations": {
+            "deploy": {
+              "budgets": [
+                {
+                  "maximumError": "15mb",
+                  "maximumWarning": "10mb",
+                  "type": "initial"
+                },
+                {
+                  "maximumError": "20kb",
+                  "maximumWarning": "6kb",
+                  "type": "anyComponentStyle"
+                }
+              ],
+              "buildOptimizer": true,
+              "extractLicenses": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.deploy.ts"
+                }
+              ],
+              "namedChunks": false,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "vendorChunk": false
+            },
+            "development": {
+              "budgets": [
+                {
+                  "maximumError": "16mb",
+                  "maximumWarning": "10mb",
+                  "type": "initial"
+                },
+                {
+                  "maximumError": "20kb",
+                  "maximumWarning": "6kb",
+                  "type": "anyComponentStyle"
+                }
+              ],
+              "buildOptimizer": false,
+              "extractLicenses": true,
+              "namedChunks": true,
+              "optimization": false,
+              "sourceMap": true,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "development",
           "options": {
-            "outputPath": "dist/num-portal-webapp",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "keycloak-js"
+            ],
             "aot": true,
             "assets": [
               "src/favicon.ico",
@@ -42,88 +86,21 @@
                 "output": "./vs/base"
               }
             ],
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "outputPath": "dist/num-portal-webapp",
+            "polyfills": "src/polyfills.ts",
+            "scripts": [],
             "styles": [
               "src/styles/styles.scss"
             ],
-            "scripts": [],
-            "allowedCommonJsDependencies": [
-              "keycloak-js"
-            ]
-          },
-          "configurations": {
-            "deploy": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.deploy.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-               "maximumWarning": "10mb",
-                "maximumError": "15mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "20kb"
-                }
-              ]
-            },
-            "development": {
-              "optimization": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "10mb",
-                  "maximumError": "16mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "20kb"
-                }
-              ]
-            }
-          },
-          "defaultConfiguration": "development"
-          
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "num-portal-webapp:build",
-            "proxyConfig": "proxy.conf.json"
-          },
-          "configurations": {
-            "deploy": {
-              "browserTarget": "num-portal-webapp:build:development"
-            },
-            "development": {
-              "browserTarget": "studio:build:development"
-            },
-            "mock": {
-              "browserTarget": "num-portal-webapp:build:mock"
-            }
+            "tsConfig": "tsconfig.app.json"
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "num-portal-webapp:build"
+            "buildTarget": "num-portal-webapp:build"
           }
         },
         "lint": {
@@ -135,70 +112,35 @@
             ]
           }
         },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "num-portal-webapp:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "num-portal-webapp:serve:production"
-            }
-          }
-        }
-      }
-    },
-    "playground": {
-      "root": "play",
-      "sourceRoot": "src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/playground",
-            "index": "src/index.html",
-            "main": "src/main.playground.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.playground.json",
-            "aot": false,
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": false
-            }
-          }
-        },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "deploy": {
+              "buildTarget": "num-portal-webapp:build:development"
+            },
+            "development": {
+              "buildTarget": "studio:build:development"
+            },
+            "mock": {
+              "buildTarget": "num-portal-webapp:build:mock"
+            }
+          },
           "options": {
-            "browserTarget": "playground:build",
-            "port": 4201
+            "buildTarget": "num-portal-webapp:build",
+            "proxyConfig": "proxy.conf.json"
           }
         }
-      }
+      },
+      "prefix": "num",
+      "projectType": "application",
+      "root": "",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "src"
     }
   },
-  "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ],
-    "analytics": false
-  }
+  "version": 1
 }

@@ -1,50 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service';
-import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service';
-import { filter, Observable } from 'rxjs';
-import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service';
+import { CohortDefinitionActionBarComponent } from './action-bar/cohort-definition-action-bar.component'
+import { Component, inject } from '@angular/core'
+import { DisplayFeasibilityQueryComponent } from '../../../feasibility-query/components/editor/display/display.component'
+import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
+import { HeaderComponent } from '../../../../shared/components/header/header.component'
+import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
+import { map } from 'rxjs'
+import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { PlaceholderBoxComponent } from '../../../../shared/components/placeholder-box/placeholder-box.component'
+import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-cohort-definition',
   templateUrl: './cohort-definition.component.html',
   styleUrls: ['./cohort-definition.component.scss'],
+  standalone: true,
+  imports: [
+    MatStepper,
+    MatStep,
+    MatStepLabel,
+    HeaderComponent,
+    HeaderDescriptionComponent,
+    DisplayFeasibilityQueryComponent,
+    PlaceholderBoxComponent,
+    CohortDefinitionActionBarComponent,
+    TranslateModule,
+  ],
 })
-export class CohortDefinitionComponent implements OnInit {
-  fileName: string;
-  isFeasibilityExistent$: Observable<boolean>;
-  totalNumberOfPatients: number;
+export class CohortDefinitionComponent {
+  private readonly navigationHelperService = inject(NavigationHelperService)
+  private readonly feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private readonly resultProviderService = inject(ResultProviderService)
 
-  constructor(
-    private routerHelperService: NavigationHelperService,
-    private feasibilityQueryService: FeasibilityQueryProviderService,
-    private feasibilityQueryValidation: FeasibilityQueryValidationService,
-    private resultProviderService: ResultProviderService,
-    private navigationHelperService: NavigationHelperService
-  ) {}
+  readonly isFeasibilityExistent = toSignal(
+    this.feasibilityQueryValidation.getIsFeasibilityQuerySet(),
+    { initialValue: false }
+  )
 
-  ngOnInit() {
-    this.feasibilityQueryService
-      .getActiveFeasibilityQuery()
-      .pipe(filter((feasibilityQuery) => !!feasibilityQuery))
-      .subscribe((feasibilityQuery) => {
-        const resultIdsLength = feasibilityQuery.getResultIds().length;
-        if (resultIdsLength === 0) {
-          return;
-        } else {
-          this.totalNumberOfPatients = this.resultProviderService
-            .getOne(feasibilityQuery.getResultIds()[resultIdsLength - 1])
-            ?.getTotalNumberOfPatients();
-        }
-      });
-    this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet();
+  readonly totalNumberOfPatients = toSignal(
+    this.resultProviderService
+      .getResultOfActiveFeasibilityQuery()
+      .pipe(map((result) => result?.getTotalNumberOfPatients() ?? 0)),
+    { initialValue: 0 }
+  )
+
+  public sendQuery(): void {
+    this.navigationHelperService.navigateToFeasibilityQueryResult()
   }
 
-  public sendQuery() {
-    this.routerHelperService.navigateToFeasibilityQueryResult();
-  }
-
-  public navigatToDataQueryDataSelection() {
-    this.navigationHelperService.navigateToDataQueryDataSelection();
+  public navigatToDataQueryDataSelection(): void {
+    this.navigationHelperService.navigateToDataQueryDataSelection()
   }
 }

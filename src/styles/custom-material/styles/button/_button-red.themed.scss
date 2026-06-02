@@ -1,4 +1,4 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
 
 @mixin button-red($theme) {
   $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -8,8 +8,8 @@
     min-width: 207px !important;
     line-height: 24px;
     border: none;
-    background-color: mat.get-color-from-palette($primary, 'red');
-    color: mat.get-color-from-palette($primary, 'white');
+    background-color: mat.m2-get-color-from-palette($primary, 'red');
+    color: mat.m2-get-color-from-palette($primary, 'white');
     font-size: 16px;
     display: flex;
     flex-direction: row;
@@ -20,18 +20,18 @@
 
     &:hover:not(.disabled) {
       color: white !important;
-      background: mat.get-color-from-palette($primary, 'red-hover') !important;
+      background: mat.m2-get-color-from-palette($primary, 'red-hover') !important;
       box-shadow: $raised-shadow;
     }
 
     &.cdk-keyboard-focused {
-      background: mat.get-color-from-palette($primary, 'red-hover');
+      background: mat.m2-get-color-from-palette($primary, 'red-hover');
     }
 
     &.disabled {
-      background-color: mat.get-color-from-palette($primary, 50);
-      color: mat.get-color-from-palette($primary, 'red');
-      box-shadow: 0px 0px 1px 1px mat.get-color-from-palette($primary, 'red');
+      background-color: mat.m2-get-color-from-palette($primary, 50);
+      color: mat.m2-get-color-from-palette($primary, 'red');
+      box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($primary, 'red');
       cursor: unset;
     }
   }

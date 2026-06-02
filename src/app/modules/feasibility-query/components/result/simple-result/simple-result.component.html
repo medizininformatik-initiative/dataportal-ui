@@ -1,12 +1,11 @@
-<div fxLayout="column" class="container padding-1">
-  <num-patient-count
-    *ngIf="totalNumberOfPatients"
-    [totalNumberOfPatients]="totalNumberOfPatients"
-  ></num-patient-count>
-  <div class="margin-top-3 padding-left-button" fxLayout="row" fxLayoutAlign="start center">
+<div class="container padding-1">
+  @if (totalNumberOfPatients) {
+  <num-patient-count [totalNumberOfPatients]="totalNumberOfPatients"></num-patient-count>
+  }
+  <div class="action-row">
     <num-button
       type="green"
-      class="padding-3"
+      class="button-dialog-result-details"
       [isDisabled]="
         !loadedResult || isQueryExpired || (queryResultRateLimit$ | async)?.getRemaining() === 0
       "
@@ -14,13 +13,14 @@
       [matTooltip]="'FEASIBILITY.RESULT.DETAILS_TOOLTIP' | translate"
       matTooltipPosition="right"
       (click)="openDialogResultDetails()"
-      class="button-dialog-result-details"
     >
       {{ 'FEASIBILITY.RESULT.DETAILS_BUTTON' | translate }}
       ({{ (queryResultRateLimit$ | async)?.getRemainingCalls() }}/{{
         (queryResultRateLimit$ | async)?.getLimit()
       }})
     </num-button>
-    <num-spinner *ngIf="showSpinner" [countdown]="pollingTime"></num-spinner>
+    @if (showSpinner) {
+    <num-spinner [countdown]="pollingTime"></num-spinner>
+    }
   </div>
 </div>

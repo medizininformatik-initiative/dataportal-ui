@@ -1,7 +1,7 @@
-import { AbstractDownloadService } from './AbstractDownload.service';
-import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRTDL.service';
-import { FileSaverService } from 'ngx-filesaver';
-import { Injectable } from '@angular/core';
+import { AbstractDownloadService } from './AbstractDownload.service'
+import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRTDL.service'
+import { FileSaverService } from 'ngx-filesaver'
+import { Injectable, inject } from '@angular/core'
 
 /**
  * Service for downloading CRTDL (Common Research Data Transfer Language) files.
@@ -11,11 +11,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DownloadCRTDLService extends AbstractDownloadService {
-  constructor(
-    private createCRTDLService: CreateCRTDLService,
-    private fileSaverService: FileSaverService
-  ) {
-    super();
+  private createCRTDLService = inject(CreateCRTDLService)
+  private fileSaverService = inject(FileSaverService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
+    super()
   }
 
   /**
@@ -27,10 +30,10 @@ export class DownloadCRTDLService extends AbstractDownloadService {
     this.createCRTDLService
       .createCRTDL()
       .subscribe((crtdl) => {
-        const finalFilename = super.createFilename(filename, 'CRDTL');
-        const blob = super.createTextBlob(JSON.stringify(crtdl));
-        this.fileSaverService.save(blob, `${finalFilename}.json`);
+        const finalFilename = super.createFilename(filename, 'CRDTL')
+        const blob = super.createTextBlob(JSON.stringify(crtdl))
+        this.fileSaverService.save(blob, `${finalFilename}.json`)
       })
-      .unsubscribe();
+      .unsubscribe()
   }
 }

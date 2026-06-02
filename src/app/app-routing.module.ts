@@ -1,9 +1,8 @@
-import { BasePaths } from './app-paths';
-import { CriteriaSearchDataResolverService } from './service/Resolver/CriteriaSearchDataResolver.service';
-import { CriteriaSearchFilterResolverService } from './service/Resolver/CriteriaSearchFilterResolver.service';
-import { DataProtectionComponent } from './site/data-protection/data-protection.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { BasePaths } from './app-paths'
+import { CriteriaSearchDataResolverService } from './service/Resolver/CriteriaSearchDataResolver.service'
+import { CriteriaSearchFilterResolverService } from './service/Resolver/CriteriaSearchFilterResolver.service'
+
+import { Routes } from '@angular/router'
 
 export const routes: Routes = [
   {
@@ -21,9 +20,9 @@ export const routes: Routes = [
       animation: 'QueryEditorPage',
     },
     loadChildren: () =>
-      import(
-        /* webpackChunkName: "QueryEditor.Module" */ './modules/query-editor/query-editor.module'
-      ).then((m) => m.QueryEditorModule),
+      import('./modules/query-editor/query-editor.routing.module').then(
+        (m) => m.QUERY_EDITOR_ROUTES
+      ),
   },
   {
     path: BasePaths.dataQuery,
@@ -35,9 +34,7 @@ export const routes: Routes = [
       title: 'TAB_TITLE.DATA_QUERY.INDEX',
     },
     loadChildren: () =>
-      import(
-        /* webpackChunkName: "DataQuery.Module" */ './modules/data-query/data-query.module'
-      ).then((m) => m.DataQueryModule),
+      import('./modules/data-query/data-query-routing.module').then((m) => m.DATA_QUERY_ROUTES),
   },
   {
     path: BasePaths.feasibilityQuery,
@@ -53,9 +50,9 @@ export const routes: Routes = [
       title: 'TAB_TITLE.FEASIBILITY_QUERY.INDEX',
     },
     loadChildren: () =>
-      import(
-        /* webpackChunkName: "FeasibilityQuery.Module" */ './modules/feasibility-query/feasibility-query.module'
-      ).then((m) => m.FeasibilityQueryModule),
+      import('./modules/feasibility-query/feasibility-query-routing.module').then(
+        (m) => m.FEASIBILITY_QUERY_ROUTES
+      ),
   },
   {
     path: BasePaths.dataSelection,
@@ -67,9 +64,9 @@ export const routes: Routes = [
       title: 'TAB_TITLE.DATA_SELECTION.INDEX',
     },
     loadChildren: () =>
-      import(
-        /* webpackChunkName: "DataSelection.Module" */ './modules/data-selection/data-selection.module'
-      ).then((m) => m.DataSelectionModule),
+      import('./modules/data-selection/data-selection-routing.module').then(
+        (m) => m.DATA_SELECTION_ROUTES
+      ),
   },
   {
     path: 'saved-queries',
@@ -81,13 +78,16 @@ export const routes: Routes = [
       title: 'TAB_TITLE.SAVED_QUERIES',
     },
     loadChildren: () =>
-      import(
-        /* webpackChunkName: "SavedQueries.Module" */ './modules/saved-queries/saved-queries.module'
-      ).then((m) => m.SavedQueriesModule),
+      import('./modules/saved-queries/saved-queries-routing.module').then(
+        (m) => m.SAVED_QUERIES_ROUTES
+      ),
   },
   {
     path: 'data-protection',
-    component: DataProtectionComponent,
+    loadComponent: () =>
+      import('./site/data-protection/data-protection.component').then(
+        (m) => m.DataProtectionComponent
+      ),
     data: {
       breadcrumb: 'BREADCRUMB.DATA_PROTECTION',
       animation: 'DataProtectionPage',
@@ -96,14 +96,4 @@ export const routes: Routes = [
   },
   { path: '', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
   { path: '**', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
-];
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      enableTracing: false,
-    }),
-  ],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}
+]

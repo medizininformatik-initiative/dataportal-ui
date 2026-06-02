@@ -1,16 +1,17 @@
 <div>
+  @if (valueFilter().isConceptSet()) {
   <num-concept
-    *ngIf="valueFilter.isConceptSet()"
-    [conceptFilter]="valueFilter.getConcept()"
-    [display]="valueFilter.getDisplay()"
-    [attr.data-cy]="valueFilter.getDisplay() | displayTranslation"
+    [conceptFilter]="valueFilter().getConcept()"
+    [display]="valueFilter().getDisplay()"
+    [attr.data-cy]="valueFilter().getDisplay() | displayTranslation"
     (changedConceptFilter)="updateConceptFilter($event)"
   ></num-concept>
+  } @if (valueFilter().isQuantitySet()) {
   <num-quantity
-    *ngIf="valueFilter.isQuantitySet()"
     (quantityFilterChange)="updateQuantityFilter($event)"
-    [quantityFilter]="valueFilter.getQuantity()"
-    [display]="valueFilter.getDisplay()"
-    [attr.data-cy]="valueFilter.getDisplay() | displayTranslation"
+    [quantityFilter]="valueFilter().getQuantity()"
+    [display]="valueFilter().getDisplay()"
+    [attr.data-cy]="valueFilter().getDisplay() | displayTranslation"
   ></num-quantity>
+  }
 </div>

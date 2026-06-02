@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core'
+import { OAuthService } from 'angular-oauth2-oidc'
+import { Observable } from 'rxjs'
 import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpContext,
-} from '@angular/common/http';
+} from '@angular/common/http'
 
 /**
  * HTTP interceptor that automatically adds OAuth bearer tokens to outgoing requests.
@@ -16,17 +16,22 @@ import {
  */
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
+  private oauthService = inject(OAuthService)
+
   /**
    * List of URL patterns that should be excluded from token injection.
    */
-  private readonly excludedUrls = ['assets', '/assets', 'http://localhost:8080/'];
+  private readonly excludedUrls = ['assets', '/assets', 'http://localhost:8080/']
 
   /**
    * Pre-compiled regular expressions for URL matching.
    */
-  private readonly excludedUrlsRegEx = this.excludedUrls.map((url) => new RegExp('^' + url, 'i'));
+  private readonly excludedUrlsRegEx = this.excludedUrls.map((url) => new RegExp('^' + url, 'i'))
 
-  constructor(private oauthService: OAuthService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Intercepts HTTP requests and conditionally adds Authorization header with bearer token.
@@ -35,13 +40,13 @@ export class AuthTokenInterceptor implements HttpInterceptor {
    * @returns Observable of HTTP events from the modified or original request
    */
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const shouldExclude = this.excludedUrlsRegEx.some((regex) => regex.test(req.url));
+    const shouldExclude = this.excludedUrlsRegEx.some((regex) => regex.test(req.url))
     if (shouldExclude) {
-      return next.handle(req);
+      return next.handle(req)
     }
 
-    const modifiedRequest = this.attachTokenIfAvailable(req);
-    return next.handle(modifiedRequest);
+    const modifiedRequest = this.attachTokenIfAvailable(req)
+    return next.handle(modifiedRequest)
   }
 
   /**
@@ -50,15 +55,15 @@ export class AuthTokenInterceptor implements HttpInterceptor {
    * @returns Modified request with token or original request if no token available
    */
   private attachTokenIfAvailable(req: HttpRequest<any>): HttpRequest<any> {
-    const token = this.getValidToken();
+    const token = this.getValidToken()
     if (!token) {
-      console.warn('No valid token found, request will no have Authorization header');
-      return req;
+      console.warn('No valid token found, request will no have Authorization header')
+      return req
     }
-    const header = `Bearer ${token}`;
+    const header = `Bearer ${token}`
     return req.clone({
       setHeaders: { Authorization: header },
-    });
+    })
   }
 
   /**
@@ -66,11 +71,11 @@ export class AuthTokenInterceptor implements HttpInterceptor {
    * @returns Access token string if valid, otherwise null
    */
   private getValidToken(): string | null {
-    const token = this.oauthService.getAccessToken();
+    const token = this.oauthService.getAccessToken()
 
     if (token && typeof token === 'string' && this.oauthService.hasValidAccessToken()) {
-      return token;
+      return token
     }
-    return null;
+    return null
   }
 }

@@ -1,10 +1,10 @@
-import { AbstractKeyedSearchMediator } from '../../../Abstract/Mediator/AbstractKeyedSearchMediator';
-import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList';
-import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry';
-import { CodeableConceptSearchEngineService } from '../Engine/CodeableConceptSearchEngine.service';
-import { CodeableConceptSearchResultProviderService } from '../Result/CodeableConceptSearchResultProvider.service';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { AbstractKeyedSearchMediator } from '../../../Abstract/Mediator/AbstractKeyedSearchMediator'
+import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
+import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
+import { CodeableConceptSearchEngineService } from '../Engine/CodeableConceptSearchEngine.service'
+import { CodeableConceptSearchResultProviderService } from '../Result/CodeableConceptSearchResultProvider.service'
+import { Injectable, inject } from '@angular/core'
+import { Observable } from 'rxjs'
 
 /**
  * Mediator service for CodeableConcept searches with support for multiple concept filters.
@@ -20,11 +20,19 @@ export class CodeableConceptSearchMediatorService extends AbstractKeyedSearchMed
   CodeableConceptResultListEntry,
   CodeableConceptResultList
 > {
-  constructor(
-    protected resultProvider: CodeableConceptSearchResultProviderService,
-    protected searchEngine: CodeableConceptSearchEngineService
-  ) {
-    super(resultProvider, searchEngine);
+  protected resultProvider: CodeableConceptSearchResultProviderService
+  protected searchEngine: CodeableConceptSearchEngineService
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
+    const resultProvider = inject(CodeableConceptSearchResultProviderService)
+    const searchEngine = inject(CodeableConceptSearchEngineService)
+
+    super(resultProvider, searchEngine)
+    this.resultProvider = resultProvider
+    this.searchEngine = searchEngine
   }
 
   /**
@@ -40,7 +48,7 @@ export class CodeableConceptSearchMediatorService extends AbstractKeyedSearchMed
     valueSetUrls: string[],
     page: number = 0
   ): Observable<CodeableConceptResultList> {
-    return this.searchAndSetProvider(searchText, page, valueSetUrls);
+    return this.searchAndSetProvider(searchText, page, valueSetUrls)
   }
 
   /**
@@ -56,6 +64,6 @@ export class CodeableConceptSearchMediatorService extends AbstractKeyedSearchMed
     valueSetUrls: string[],
     page: number
   ): Observable<CodeableConceptResultList> {
-    return this.searchAndUpdateProvider(searchText, page, valueSetUrls);
+    return this.searchAndUpdateProvider(searchText, page, valueSetUrls)
   }
 }

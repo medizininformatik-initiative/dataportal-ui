@@ -1,4 +1,4 @@
-<ng-container *ngTemplateOutlet="tree; context: { node: treeData, level: 0 }"> </ng-container>
+<ng-container *ngTemplateOutlet="tree; context: { node: treeData(), level: 0 }"> </ng-container>
 
 <ng-template #tree let-node="node" let-level="level">
   <div
@@ -6,29 +6,28 @@
     [style.marginLeft]="calcMarginLeft(level)"
     [attr.data-cy]="node.data.display | displayTranslation"
   >
-    <div fxLayout="row" fxLayoutAlign="start center" class="width-100 node-row">
+    <div class="width-100 node-row">
+      @if (node.data.selectable) {
       <num-checkbox
-        *ngIf="node.data.selectable"
         [disabled]="!node.data.isDisabled"
         [checked]="node?.data.isCheckboxSelected"
         (checkedChange)="checkboxSelected(node)"
         [style.marginLeft]="calcMarginLeftCheckbox(level)"
       ></num-checkbox>
+      } @if (node?.children && node.children.length > 0) {
       <div
-        *ngIf="node?.children && node.children.length > 0"
         class="tree-node"
         [style.marginLeft]="calcMarginLeftTreeNode(level, node.data.selectable)"
       >
-        <div
-          fxLayout="row"
-          fxLayoutAlign="center center"
-          (click)="toggleExpand(node)"
-          class="icon-container"
-        >
-          <fa-icon *ngIf="!isExpanded(node)" icon="minus" class="icon-collapsed"></fa-icon>
-          <fa-icon *ngIf="isExpanded(node)" icon="chevron-up"></fa-icon>
+        <div (click)="toggleExpand(node)" class="icon-container">
+          @if (!isExpanded(node)) {
+          <fa-icon icon="minus" class="icon-collapsed"></fa-icon>
+          } @if (isExpanded(node)) {
+          <fa-icon icon="chevron-up"></fa-icon>
+          }
         </div>
       </div>
+      }
       <div class="node-display-container width-80">
         <span
           (click)="checkboxSelected(node)"
@@ -38,29 +37,31 @@
           [matTooltip]="node.data.display | displayTranslation"
           >{{ node.data.display | displayTranslation }}</span
         >
-        <div *ngIf="node.data.description" class="field-description">
+        @if (node.data.description) {
+        <div class="field-description">
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
             {{ node.data.description | displayTranslation }}
           </span>
         </div>
-        <div
-          *ngIf="node.data.displayFieldsInfo?.getOriginals().length > 0"
-          class="field-description"
-        >
+        } @if (node.data.displayFieldsInfo?.getOriginals().length > 0) {
+        <div class="field-description">
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">
             {{ node.data.displayFieldsInfo | displayTranslation }}
           </span>
         </div>
+        }
       </div>
     </div>
   </div>
-  <ul *ngIf="isExpanded(node) && node.children && node.children.length > 0">
-    <ng-container *ngFor="let child of node.children">
-      <li>
-        <ng-container
-          *ngTemplateOutlet="tree; context: { node: child, level: level + 1 }"
-        ></ng-container>
-      </li>
-    </ng-container>
+  @if (isExpanded(node) && node.children && node.children.length > 0) {
+  <ul>
+    @for (child of node.children; track child) {
+    <li>
+      <ng-container
+        *ngTemplateOutlet="tree; context: { node: child, level: level + 1 }"
+      ></ng-container>
+    </li>
+    }
   </ul>
+  }
 </ng-template>

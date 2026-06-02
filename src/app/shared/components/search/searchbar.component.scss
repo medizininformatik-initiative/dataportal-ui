@@ -1,3 +1,20 @@
+/* Container for the searchbar */
+.searchbar-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.25rem;
+}
+
+/* Row for icon and input */
+.searchbar-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+
 /* Overlay layer */
 .show-above-overlay {
   z-index: 2000;
@@ -8,6 +25,8 @@
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-card);
   background-color: #fff;
+  width: 100%;
+  transition: background-color 0.5s;
 
   &:focus-within {
     outline: none !important;
@@ -16,13 +35,12 @@
     border-color: var(--color-accent);
     background-color: var(--color-accent-bg);
     box-shadow: 0 0 8px -4px var(--color-accent);
-    transition: background-color 0.5s;
   }
 }
 
 /* Input field */
 .input-design {
-  flex: 1;
+  flex: 1 1 0%;
   height: 42px;
   font-size: var(--font-size-md);
   color: var(--color-text-primary);
@@ -31,6 +49,7 @@
   text-overflow: ellipsis;
   border: none;
   background: transparent;
+  min-width: 0;
 
   &:focus {
     outline: none !important;
@@ -52,4 +71,8 @@
 /* Warning message */
 .search-warning {
   color: var(--num-color--warn, var(--num-color--red, #b30519));
+  visibility: hidden;
+}
+.search-warning.visible {
+  visibility: visible;
 }

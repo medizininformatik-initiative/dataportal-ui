@@ -1,32 +1,32 @@
-<div fxLayout="row" fxLayoutAlign="start" class="height-100 padding-bottom-3">
-  <div fxLayout="column" fxLayoutAlign="start" fxFlex="50">
+<div class="display-row height-100 padding-bottom-3">
+  <div class="display-col display-half">
     <num-section-name>
       {{ 'FEASIBILITY.EDITOR.INCLUSION' | translate }}
     </num-section-name>
-    <div fxLayout="column" class="inexclusion margin-right-2">
+    <div class="inexclusion margin-right-2">
       <num-display-criteria
         id="Inclusion"
         class="inexclusion"
         cdkDropList
         numAppDropGroup
         groupType="Inclusion"
-        [isEditable]="isEditable"
+        [isEditable]="isEditable()"
       >
       </num-display-criteria>
     </div>
   </div>
-  <div fxLayout="column" fxFlex="50" class="inexclusion">
+  <div class="display-col display-half">
     <num-section-name>
       {{ 'FEASIBILITY.EDITOR.EXCLUSION' | translate }}
     </num-section-name>
-    <div fxLayout="column" class="inexclusion">
+    <div class="inexclusion">
       <num-display-criteria
         id="Exclusion"
         class="inexclusion"
         cdkDropList
         numAppDropGroup
         groupType="Exclusion"
-        [isEditable]="isEditable"
+        [isEditable]="isEditable()"
       >
       </num-display-criteria>
     </div>

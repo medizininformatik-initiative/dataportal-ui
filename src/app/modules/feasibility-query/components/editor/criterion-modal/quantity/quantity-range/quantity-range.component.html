@@ -1,7 +1,7 @@
-<div fxLayout="row">
+<div class="values-row">
   <!--Min Value-->
   <num-value-select
-    [value]="minValue"
+    [value]="minValue()"
     (selectedValue)="setMinValue($event)"
     [label]="'FEASIBILITY.EDITOR.QUANTITY.MIN'"
   ></num-value-select>
@@ -10,11 +10,13 @@
 
   <!--Max Value-->
   <num-value-select
-    [value]="maxValue"
+    [value]="maxValue()"
     (selectedValue)="setMaxValue($event)"
     [label]="'FEASIBILITY.EDITOR.QUANTITY.MAX'"
   ></num-value-select>
 </div>
-<div *ngIf="displayWarning" fxLayout="column" style="position: absolute">
+@if (displayWarning) {
+<div class="warning-container">
   <span class="warning">{{ 'FEASIBILITY.HINT.MINIMUM_GREATER_MAXIMUM' | translate }}</span>
 </div>
+}

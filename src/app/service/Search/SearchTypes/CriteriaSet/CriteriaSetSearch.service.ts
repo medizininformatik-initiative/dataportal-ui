@@ -1,10 +1,10 @@
-import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch';
-import { CriteriaSetSearchPaginationService } from './Pagination/CriteriaSetSearchPagination.service';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
-import { CriteriaSetSearchResultProviderService } from './Result/CriteriaSetSearchResultProvider.service ';
+import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch'
+import { CriteriaSetSearchPaginationService } from './Pagination/CriteriaSetSearchPagination.service'
+import { Injectable, inject } from '@angular/core'
+import { Observable } from 'rxjs'
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry'
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList'
+import { CriteriaSetSearchResultProviderService } from './Result/CriteriaSetSearchResultProvider.service '
 
 /**
  * Service for performing criteria set searches with criteria set filtering.
@@ -18,17 +18,23 @@ export class CriteriaSetSearchService extends AbstractKeyedSearch<
   ReferenceCriteriaListEntry,
   ReferenceCriteriaResultList
 > {
+  private resultProvider: CriteriaSetSearchResultProviderService
+  private paginationService = inject(CriteriaSetSearchPaginationService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
   /**
    * Creates an instance of CriteriaSetSearchService.
    *
    * @param resultProvider - The result provider for managing criteria set search results
    * @param paginationService - The pagination service for handling paginated searches
    */
-  constructor(
-    private resultProvider: CriteriaSetSearchResultProviderService,
-    private paginationService: CriteriaSetSearchPaginationService
-  ) {
-    super(resultProvider);
+  constructor() {
+    const resultProvider = inject(CriteriaSetSearchResultProviderService)
+
+    super(resultProvider)
+    this.resultProvider = resultProvider
   }
 
   /**
@@ -42,7 +48,7 @@ export class CriteriaSetSearchService extends AbstractKeyedSearch<
     searchText: string,
     criteriaSetUrls: string[]
   ): Observable<ReferenceCriteriaResultList> {
-    return this.paginationService.searchFirstPageOfCriteriaSet(searchText, criteriaSetUrls);
+    return this.paginationService.searchFirstPageOfCriteriaSet(searchText, criteriaSetUrls)
   }
 
   /**
@@ -56,7 +62,7 @@ export class CriteriaSetSearchService extends AbstractKeyedSearch<
     searchText: string,
     criteriaSetUrls: string[]
   ): Observable<ReferenceCriteriaResultList> {
-    return this.paginationService.loadNextPageOfCriteriaSetResults(searchText, criteriaSetUrls);
+    return this.paginationService.loadNextPageOfCriteriaSetResults(searchText, criteriaSetUrls)
   }
 
   /**
@@ -67,6 +73,6 @@ export class CriteriaSetSearchService extends AbstractKeyedSearch<
    * @param searchTerm - The search term to set
    */
   protected setSearchTerm(searchTerm: string): void {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented')
   }
 }

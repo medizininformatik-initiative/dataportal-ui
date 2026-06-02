@@ -3,13 +3,15 @@
     <ng-content></ng-content>
   </div>
   <div>
-    <div *ngIf="displaySaveButtons" fxLayout="row" fxLayoutAlign="end center">
-      <num-button type="blue" class="select-button" [isDisabled]="disabled" (click)="save()">
+    @if (displaySaveButtons()) {
+    <div class="button-row">
+      <num-button type="blue" class="select-button" [isDisabled]="disabled()" (click)="save()">
         {{ 'SHARED_COMPONENTS.MODAL.BUTTON.APPLY' | translate }}
       </num-button>
       <num-button type="blue" class="select-button" (click)="cancel()">
         {{ 'SHARED_COMPONENTS.MODAL.BUTTON.CANCEL' | translate }}
       </num-button>
     </div>
+    }
   </div>
 </div>

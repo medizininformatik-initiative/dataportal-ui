@@ -1,155 +1,150 @@
-import { BulkCodeableConceptSearchEngineService } from 'src/app/service/Search/SearchTypes/BulkCodeableConcept/BulkCodeableConceptSearchEngine';
-import { CodeableConceptBulkEntry } from '../../../../model/Search/ListEntries/CodeableConceptBulkEntry';
-import { CodeableConceptBulkFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkFoundEntryAdapter';
-import { CodeableConceptBulkNotFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkNotFoundEntryAdapter';
-import { CodeableConceptBulkResultList } from 'src/app/model/Search/ResultList/CodeableConceptBulkResultList';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept';
-import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service';
-import { Observable, of, Subscription, tap } from 'rxjs';
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter';
-import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service';
-import { TableData } from 'src/app/shared/models/TableData/TableData';
-import { TableRowData } from 'src/app/shared/models/TableData/TableRowData';
+import { BulkCodeableConceptSearchEngineService } from 'src/app/service/Search/SearchTypes/BulkCodeableConcept/BulkCodeableConceptSearchEngine'
+import { ButtonComponent } from '../../../../shared/components/button/button.component'
+import { CodeableConceptBulkEntry } from '../../../../model/Search/ListEntries/CodeableConceptBulkEntry'
+import { CodeableConceptBulkFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkFoundEntryAdapter'
+import { CodeableConceptBulkNotFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkNotFoundEntryAdapter'
+import {
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core'
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
+import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
+import { FormsModule } from '@angular/forms'
+import { MatInput } from '@angular/material/input'
+import { MatTab, MatTabGroup } from '@angular/material/tabs'
+import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
+import { SearchFilterComponent } from '../../../../shared/components/search-filter/search-filter.component'
+import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service'
+import { Subscription } from 'rxjs'
+import { TableComponent } from '../../../../shared/components/table/table.component'
+import { TableData } from 'src/app/shared/models/TableData/TableData'
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
+import { TranslateModule } from '@ngx-translate/core'
+import { CodeableConceptBulkResultList } from 'src/app/model/Search/ResultList/CodeableConceptBulkResultList'
 
 @Component({
   selector: 'num-concept-bulk-search',
   templateUrl: './concept-bulk-search.component.html',
   styleUrls: ['./concept-bulk-search.component.scss'],
   providers: [ConceptSelectionHelperService],
+  standalone: true,
+  imports: [
+    MatInput,
+    FormsModule,
+    SearchFilterComponent,
+    ButtonComponent,
+    MatTabGroup,
+    MatTab,
+    TableComponent,
+    TranslateModule,
+  ],
 })
-export class ConceptBulkSearchComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() valueSetUrl: string[];
-  @Input() conceptFilterId: string;
-  @Input() preSelectedConcepts: Concept[] = [];
-  @Input() tabChanged = false;
-  @Output() changedSelectedConcepts = new EventEmitter<Concept[]>();
+export class ConceptBulkSearchComponent {
+  private selectedConceptFilterService = inject(SelectedConceptFilterProviderService)
+  private bulkSearchService = inject(BulkCodeableConceptSearchEngineService)
+  private conceptSelectionService = inject(ConceptSelectionHelperService)
 
-  searchResults$: Observable<CodeableConceptBulkResultList> = of(undefined);
-  searchFilter: SearchFilter;
-  notFoundTableData: TableData;
-  foundTableData: TableData;
-  bulkSearchTermInput = '';
-  searchSubscription: Subscription;
-  selectedValueSet: string;
-  private subscription = new Subscription();
-  foundCount: number;
-  notFoundCount: number;
+  readonly valueSetUrl = input<string[] | undefined>(undefined)
+  readonly preSelectedConcepts = input<Concept[]>([])
+  readonly tabChanged = input(false)
+  readonly changedSelectedConcepts = output<Concept[]>()
 
-  constructor(
-    private selectedConceptFilterService: SelectedConceptFilterProviderService,
-    private bulkSearchService: BulkCodeableConceptSearchEngineService,
-    private conceptSelectionService: ConceptSelectionHelperService
-  ) {}
-
-  ngOnChanges(): void {
-    this.initializeComponent();
-    if (this.tabChanged) {
-      this.foundTableData = null;
-      this.notFoundTableData = null;
-      this.foundCount = 0;
-      this.notFoundCount = 0;
-      this.tabChanged = false;
+  readonly searchFilter = computed<SearchFilter | undefined>(() => {
+    const urls = this.valueSetUrl()
+    if (!urls?.length) {
+      return undefined
     }
+    return this.conceptSelectionService.createTerminologyFilter(urls)
+  })
+
+  readonly selectedValueSet = signal<string | undefined>(undefined)
+  readonly foundTableData = signal<TableData | undefined>(undefined)
+  readonly notFoundTableData = signal<TableData | undefined>(undefined)
+  readonly foundCount = computed(() => this.foundTableData()?.body.rows.length ?? 0)
+  readonly notFoundCount = computed(() => this.notFoundTableData()?.body.rows.length ?? 0)
+  private readonly selectedConcepts = signal<Concept[]>([])
+
+  bulkSearchTermInput = ''
+  private searchSubscription?: Subscription
+
+  constructor() {
+    // Keep local selection in sync with the input and initialize the provider
+    effect(() => {
+      const preSelected = this.preSelectedConcepts()
+      this.selectedConcepts.set([...preSelected])
+      if (preSelected.length > 0) {
+        this.selectedConceptFilterService.initializeSelectedConcepts(preSelected)
+      }
+    })
+
+    // Clear result tables on tab switch
+    effect(() => {
+      if (this.tabChanged()) {
+        this.foundTableData.set(undefined)
+        this.notFoundTableData.set(undefined)
+      }
+    })
+
+    inject(DestroyRef).onDestroy(() => {
+      this.searchSubscription?.unsubscribe()
+      this.selectedConceptFilterService.clearSelectedConceptFilter()
+    })
   }
 
-  ngOnInit(): void {
-    this.initializePreSelectedConcepts();
-  }
-
-  ngOnDestroy(): void {
-    this.cleanup();
-  }
-
-  public setValueSet(searchFilter: SearchFilter): void {
-    this.selectedValueSet = searchFilter.selectedValues[0];
+  public setValueSet(filter: SearchFilter): void {
+    this.selectedValueSet.set(filter.selectedValues[0])
   }
 
   public bulkSearch(): void {
-    this.performBulkSearch();
-  }
+    this.searchSubscription?.unsubscribe()
 
-  private initializeComponent(): void {
-    this.initializeTerminologyFilter();
-    this.initializePreSelectedConcepts();
-  }
-
-  private initializeTerminologyFilter(): void {
-    const hasValueSetUrls = this.valueSetUrl?.length > 0;
-    if (!hasValueSetUrls) {
-      return;
-    }
-
-    this.searchFilter = this.conceptSelectionService.createTerminologyFilter(this.valueSetUrl);
-  }
-
-  private initializePreSelectedConcepts(): void {
-    if (this.preSelectedConcepts.length > 0) {
-      this.selectedConceptFilterService.initializeSelectedConcepts(this.preSelectedConcepts);
-    }
-  }
-
-  private performBulkSearch(): void {
-    this.searchSubscription?.unsubscribe();
     this.searchSubscription = this.bulkSearchService
-      .search(this.bulkSearchTermInput, this.selectedValueSet)
-      .pipe(
-        tap((resultList) => {
-          this.foundCount = resultList.getFound().length;
-          this.notFoundCount = resultList.getNotFound().length;
-        }),
-        tap((resultList) => this.adaptData(resultList))
-      )
+      .search(this.bulkSearchTermInput, this.selectedValueSet() ?? '')
       .subscribe((resultList) => {
-        const concepts = resultList
-          .getFound()
-          .map((entry) => new Concept(entry.getDisplay(), entry.getTermCode()));
-        this.toggleConceptSelection(concepts);
-      });
+        this.updateTableData(resultList)
+        this.updateSelectedConcepts(resultList.getFound())
+      })
   }
 
-  private adaptData(resultList: CodeableConceptBulkResultList): void {
-    const found = resultList.getFound();
-    const notFound = resultList.getNotFound();
+  private updateTableData(resultList: CodeableConceptBulkResultList): void {
+    const found = resultList.getFound()
+    const notFound = resultList.getNotFound()
 
-    if (found.length > 0) {
-      this.foundTableData = new CodeableConceptBulkFoundEntryAdapter().adapt(found);
-    } else {
-      this.foundTableData = null;
-    }
-    if (notFound.length > 0) {
-      this.notFoundTableData = new CodeableConceptBulkNotFoundEntryAdapter().adapt(notFound);
-    } else {
-      this.notFoundTableData = null;
-    }
+    this.foundTableData.set(
+      found.length ? new CodeableConceptBulkFoundEntryAdapter().adapt(found) : undefined
+    )
+
+    this.notFoundTableData.set(
+      notFound.length ? new CodeableConceptBulkNotFoundEntryAdapter().adapt(notFound) : undefined
+    )
   }
 
-  private toggleConceptSelection(concept: Concept[]): void {
-    this.preSelectedConcepts = this.conceptSelectionService.addConceptsToSelection(
-      concept,
-      this.preSelectedConcepts
-    );
-    this.emitConceptChanges();
-  }
+  private updateSelectedConcepts(found: CodeableConceptBulkEntry[]): void {
+    const concepts = found.map((entry) => new Concept(entry.getDisplay(), entry.getTermCode()))
 
-  private emitConceptChanges(): void {
-    const clonedConcepts = this.conceptSelectionService.cloneConcepts(this.preSelectedConcepts);
-    this.changedSelectedConcepts.emit(clonedConcepts);
-  }
+    const updated = this.conceptSelectionService.addConceptsToSelection(
+      concepts,
+      this.selectedConcepts()
+    )
 
-  private cleanup(): void {
-    this.subscription.unsubscribe();
-    this.selectedConceptFilterService.clearSelectedConceptFilter();
+    this.selectedConcepts.set(updated)
+    this.changedSelectedConcepts.emit(this.conceptSelectionService.cloneConcepts(updated))
   }
 
   public addSelectedRow(item: TableRowData): void {
-    const entry = item.originalEntry as CodeableConceptBulkEntry;
-    const concept = new Concept(entry.getDisplay(), entry.getTermCode());
-    const updatedSelectedConcepts = this.conceptSelectionService.toggleConceptSelection(
+    const entry = item.originalEntry as CodeableConceptBulkEntry
+    const concept = new Concept(entry.getDisplay(), entry.getTermCode())
+    const updated = this.conceptSelectionService.toggleConceptSelection(
       concept,
-      this.preSelectedConcepts
-    );
-
-    this.changedSelectedConcepts.emit(updatedSelectedConcepts);
+      this.selectedConcepts()
+    )
+    this.selectedConcepts.set(updated)
+    this.changedSelectedConcepts.emit(this.conceptSelectionService.cloneConcepts(updated))
   }
 }

@@ -1,11 +1,12 @@
+@if (cell().icon) {
 <fa-icon
-  *ngIf="cell.icon"
   matTooltip="{{ 'SHARED_COMPONENTS.TABLE.ICON' | translate }}"
   matTooltipClass="prevent-selection"
   size="1x"
-  [icon]="cell.icon"
+  [icon]="cell().icon"
   class="cursor-click"
 ></fa-icon>
-<div class="info-column" matTooltip="{{ cell.value | displayTranslation }}">
-  {{ cell.value | displayTranslation }}
+}
+<div class="info-column" matTooltip="{{ cell().value | displayTranslation }}">
+  {{ cell().value | displayTranslation }}
 </div>

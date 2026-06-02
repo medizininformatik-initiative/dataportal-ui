@@ -1,17 +1,22 @@
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
-import { CriterionValidationService } from '../Validation/CriterionValidation.deprecated.service';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { Injectable } from '@angular/core';
-import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter';
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { CriterionValidationService } from '../Validation/CriterionValidation.deprecated.service'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { Injectable, inject } from '@angular/core'
+import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditAttributeFilterService {
-  constructor(private criterionValidationService: CriterionValidationService) {}
+  private criterionValidationService = inject(CriterionValidationService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Returns an updated attribute filter list with the provided concept applied
@@ -22,23 +27,23 @@ export class EditAttributeFilterService {
     conceptFilter: ConceptFilter,
     attributeFilter: AttributeFilter
   ): AttributeFilter[] {
-    const filters = [...criterion.getAttributeFilters()];
+    const filters = [...criterion.getAttributeFilters()]
     const updated = this.buildAttributeFilter(
       attributeFilter,
       FilterTypes.CONCEPT,
       conceptFilter,
       undefined
-    );
+    )
     const index = filters.findIndex(
       (existing) =>
         attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
-    );
+    )
     if (index !== -1) {
-      filters[index] = updated;
+      filters[index] = updated
     } else {
-      filters.push(updated);
+      filters.push(updated)
     }
-    return filters;
+    return filters
   }
 
   /**
@@ -50,24 +55,24 @@ export class EditAttributeFilterService {
     referenceFilter: ReferenceFilter,
     attributeFilter: AttributeFilter
   ): AttributeFilter[] {
-    const filters = [...criterion.getAttributeFilters()];
+    const filters = [...criterion.getAttributeFilters()]
     const updated = this.buildAttributeFilter(
       attributeFilter,
       FilterTypes.REFERENCE,
       undefined,
       undefined,
       referenceFilter
-    );
+    )
     const index = filters.findIndex(
       (existing) =>
         attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
-    );
+    )
     if (index !== -1) {
-      filters[index] = updated;
+      filters[index] = updated
     } else {
-      filters.push(updated);
+      filters.push(updated)
     }
-    return filters;
+    return filters
   }
 
   /**
@@ -79,27 +84,27 @@ export class EditAttributeFilterService {
     quantityFilter: AbstractQuantityFilter,
     attributeFilter: AttributeFilter
   ): AttributeFilter[] {
-    const filters = [...criterion.getAttributeFilters()];
+    const filters = [...criterion.getAttributeFilters()]
     const updated = this.buildAttributeFilter(
       attributeFilter,
       FilterTypes.QUANTITY,
       undefined,
       quantityFilter
-    );
+    )
     const index = filters.findIndex(
       (existing) =>
         attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
-    );
+    )
     if (index !== -1) {
-      filters[index] = updated;
+      filters[index] = updated
     } else {
-      filters.push(updated);
+      filters.push(updated)
     }
-    return filters;
+    return filters
   }
 
   public isFilterRequired(criterion: Criterion): boolean {
-    return this.criterionValidationService.setIsFilterRequired(criterion);
+    return this.criterionValidationService.setIsFilterRequired(criterion)
   }
 
   private buildAttributeFilter(
@@ -117,6 +122,6 @@ export class EditAttributeFilterService {
       quantityFilter,
       referenceFilter,
       attributeFilter.getOptional()
-    );
+    )
   }
 }

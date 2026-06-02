@@ -1,62 +1,57 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component';
-import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service';
-import { map, Observable, Subscription } from 'rxjs';
-import { UploadService } from 'src/app/service/Upload/Upload.service';
+import { AsyncPipe } from '@angular/common'
+import { combineLatest, map, Observable, Subscription } from 'rxjs'
+import { Component, inject, input, OnInit } from '@angular/core'
+import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component'
+import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
+import { MatTooltip } from '@angular/material/tooltip'
+import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service'
+import { toObservable } from '@angular/core/rxjs-interop'
+import { TranslateModule } from '@ngx-translate/core'
+import { UploadService } from 'src/app/service/Upload/Upload.service'
 
 @Component({
   selector: 'num-action-bar',
   templateUrl: './action-bar.component.html',
   styleUrls: ['./action-bar.component.scss'],
+  standalone: true,
+  imports: [MatTooltip, FontAwesomeModule, AsyncPipe, TranslateModule],
 })
-export class ActionBarComponent implements OnInit {
-  @Input() showUpload = true;
-  @Input() showDownload = true;
-  @Input() showSave = true;
+export class ActionBarComponent {
+  private dialog = inject(MatDialog)
 
-  downloadAllowed$: Observable<boolean>;
+  private saveDataQueryModalService = inject(SaveDataQueryModalService)
 
-  downloadSubscription: Subscription;
-  saveDataQueryModalSubscription: Subscription;
+  private uploadService = inject(UploadService)
 
-  constructor(
-    private dialog: MatDialog,
-    private saveDataQueryModalService: SaveDataQueryModalService,
-    private uploadService: UploadService,
-    private feasibilityQueryValidationService: FeasibilityQueryValidationService
-  ) {}
+  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
 
-  ngOnInit(): void {
-    this.canDownload();
-  }
+  readonly showUpload = input(true)
+  readonly showDownload = input(true)
+  readonly showSave = input(true)
+
+  readonly downloadAllowed$ = combineLatest([
+    this.feasibilityQueryValidationService.getIsFeasibilityQueryValid(),
+
+    toObservable(this.showDownload),
+  ]).pipe(map(([isValid, showDownload]) => isValid && showDownload))
 
   public upload(event: Event): void {
-    const file: File = (event.target as HTMLInputElement).files[0];
-    this.uploadService.uploadCRTDL(file);
-  }
+    const file: File = (event.target as HTMLInputElement).files[0]
 
-  private canDownload(): void {
-    this.downloadAllowed$ = this.feasibilityQueryValidationService
-      .getIsFeasibilityQueryValid()
-      .pipe(map((isValid) => isValid && this.showDownload));
+    this.uploadService.uploadCRTDL(file)
   }
 
   public downloadCRTDL(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    this.downloadSubscription?.unsubscribe();
-    this.downloadSubscription = this.dialog
-      .open(DownloadCRTDLComponent, dialogConfig)
-      .afterClosed()
-      .subscribe((isCancelled: boolean) => {});
+    const dialogConfig = new MatDialogConfig()
+
+    dialogConfig.autoFocus = true
+
+    this.dialog.open(DownloadCRTDLComponent, dialogConfig).afterClosed().subscribe()
   }
 
   public onSaveDataQuery(): void {
-    this.saveDataQueryModalSubscription?.unsubscribe();
-    this.saveDataQueryModalSubscription = this.saveDataQueryModalService
-      .openSaveDataQueryModal()
-      .subscribe();
+    this.saveDataQueryModalService.openSaveDataQueryModal().subscribe()
   }
 }

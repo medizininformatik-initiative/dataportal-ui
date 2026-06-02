@@ -1,14 +1,15 @@
 <div class="container">
+  @if (attributeFilter().isConceptSet()) {
   <num-concept
     class="height-100"
-    *ngIf="attributeFilter.isConceptSet()"
-    [display]="attributeFilter.getDisplay()"
-    [conceptFilter]="attributeFilter.getConcept()"
+    [display]="attributeFilter().getDisplay()"
+    [conceptFilter]="attributeFilter().getConcept()"
     (changedConceptFilter)="updateConceptFilter($event)"
   ></num-concept>
+  } @if (attributeFilter().getQuantity()) {
   <num-quantity
-    *ngIf="attributeFilter.getQuantity()"
     (quantityFilterChange)="updateQuantityFilter($event)"
-    [quantityFilter]="attributeFilter.getQuantity()"
+    [quantityFilter]="attributeFilter().getQuantity()"
   ></num-quantity>
+  }
 </div>

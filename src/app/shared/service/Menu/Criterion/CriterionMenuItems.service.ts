@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface';
-import { MenuServiceCriterionFunctions } from './MenuServiceCriterionFunctions';
+import { Injectable, inject } from '@angular/core'
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
+import { MenuServiceCriterionFunctions } from './MenuServiceCriterionFunctions'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionMenuItems {
-  constructor(private menuServiceCriterionFunctions: MenuServiceCriterionFunctions) {}
+  private menuServiceCriterionFunctions = inject(MenuServiceCriterionFunctions)
+
+  constructor() {}
 
   /**
    * @returns Array of Menu functions for a criterion box
@@ -31,6 +33,6 @@ export class CriterionMenuItems {
         label: 'DELETE',
         action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
       },
-    ];
+    ]
   }
 }

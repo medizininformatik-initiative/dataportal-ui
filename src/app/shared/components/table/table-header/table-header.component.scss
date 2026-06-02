@@ -5,6 +5,12 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+.header-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .sticky-header {
   background-color: #fff;
   position: sticky;

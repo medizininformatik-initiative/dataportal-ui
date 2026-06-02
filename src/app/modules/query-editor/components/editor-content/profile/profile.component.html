@@ -1,37 +1,38 @@
 <div class="container">
+  @if (profile()) {
   <num-profile-header
-    *ngIf="profile"
     class="header-container"
-    [profile]="profile"
+    [profile]="profile()"
     (updatedLabel)="updateLabel($event)"
   >
   </num-profile-header>
-  <num-filter-tabs
-    class="filter-tabs-container"
-    *ngIf="templates.length > 0"
-    [content]="templates"
-  ></num-filter-tabs>
+  } @if (templates.length > 0) {
+  <num-filter-tabs class="filter-tabs-container" [content]="templates"></num-filter-tabs>
+  }
 
   <ng-template #fields>
     <num-edit-fields
-      [fieldTree]="profile.getProfileFields().getFieldTree()"
-      [selectedBasicFields]="profile.getProfileFields().getSelectedBasicFields()"
+      [fieldTree]="profile().getProfileFields().getFieldTree()"
+      [selectedBasicFields]="profile().getProfileFields().getSelectedBasicFields()"
       (updatedSelectedBasicFields)="updateSelectedFields($event)"
     ></num-edit-fields>
   </ng-template>
 
   <ng-template #timeRestriction>
-    <div style="height: 100%" *ngFor="let profileTimeFilter of timeRestrictionFilters">
+    @for (profileTimeFilter of timeRestrictionFilters(); track trackByTimeRestrictionName($index,
+    profileTimeFilter)) {
+    <div style="height: 100%">
       <num-profile-time-filter
         [profileTimeRestrictionFilter]="profileTimeFilter"
         (changedProfileTimeRestrictionFilter)="updateProfileFilter($event)"
       ></num-profile-time-filter>
     </div>
+    }
   </ng-template>
 
   <ng-template #token>
     <num-token-filter
-      [tokenFilter]="tokenFilter"
+      [tokenFilter]="tokenFilter()"
       (tokenFilterChanged)="updateProfileFilter($event)"
     ></num-token-filter>
   </ng-template>
@@ -39,9 +40,9 @@
   <ng-template #reference>
     <num-profile-reference
       class="width-100"
-      [referenceFields]="profile.getProfileFields().getReferenceFields()"
-      [selectedReferenceFields]="profile.getProfileFields().getSelectedReferenceFields()"
-      [profileId]="profile.getId()"
+      [referenceFields]="profile().getProfileFields().getReferenceFields()"
+      [selectedReferenceFields]="profile().getProfileFields().getSelectedReferenceFields()"
+      [profileId]="profile().getId()"
       (updatedSelectedReferenceFields)="updateSelectedReferenceFields($event)"
     ></num-profile-reference>
   </ng-template>

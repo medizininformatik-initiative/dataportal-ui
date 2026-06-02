@@ -1,17 +1,20 @@
-import { combineLatest, map, Observable, switchMap } from 'rxjs';
-import { CriterionValidationManagerService } from '../Criterion/Validation/CriterionValidationManager.service';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service';
-import { Injectable } from '@angular/core';
+import { combineLatest, map, Observable, switchMap } from 'rxjs'
+import { CriterionValidationManagerService } from '../Criterion/Validation/CriterionValidationManager.service'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
+import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service'
+import { Injectable, inject } from '@angular/core'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeasibilityQueryValidationService {
-  constructor(
-    private feasibilityQueryProvider: FeasibilityQueryProviderService,
-    private criterionValidationManagerService: CriterionValidationManagerService
-  ) {}
+  private feasibilityQueryProvider = inject(FeasibilityQueryProviderService)
+  private criterionValidationManagerService = inject(CriterionValidationManagerService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    *
@@ -22,7 +25,7 @@ export class FeasibilityQueryValidationService {
       switchMap((feasibilityQuery) =>
         this.criterionValidationManagerService.getMissingRequiredFilterCriteria(feasibilityQuery)
       )
-    );
+    )
   }
 
   /**
@@ -34,7 +37,7 @@ export class FeasibilityQueryValidationService {
       map((feasibilityQuery) =>
         this.criterionValidationManagerService.getInvalidCriteria(feasibilityQuery)
       )
-    );
+    )
   }
 
   /**
@@ -46,7 +49,7 @@ export class FeasibilityQueryValidationService {
       map((feasibilityQuery) =>
         this.criterionValidationManagerService.isInclusionSet(feasibilityQuery)
       )
-    );
+    )
   }
 
   /**
@@ -58,7 +61,7 @@ export class FeasibilityQueryValidationService {
       map((feasibilityQuery) =>
         this.criterionValidationManagerService.isFeasibilityQuerySet(feasibilityQuery)
       )
-    );
+    )
   }
 
   /**
@@ -77,7 +80,7 @@ export class FeasibilityQueryValidationService {
         ([noMissingCriteria, noInvalidCriteria, isInclusionSet]) =>
           noMissingCriteria && noInvalidCriteria && isInclusionSet
       )
-    );
+    )
   }
 
   /**
@@ -85,6 +88,6 @@ export class FeasibilityQueryValidationService {
    * @returns Observable<FeasibilityQuery>
    */
   private getActiveFeasibilityQuery(): Observable<FeasibilityQuery> {
-    return this.feasibilityQueryProvider.getActiveFeasibilityQuery();
+    return this.feasibilityQueryProvider.getActiveFeasibilityQuery()
   }
 }

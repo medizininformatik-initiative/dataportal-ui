@@ -1,12 +1,14 @@
 <div class="type-select-wrapper">
   <select
     class="type-select"
-    [(ngModel)]="type"
+    [ngModel]="type()"
     (change)="onTimeRestrictionOptionChange($any($event.target).value)"
   >
-    <option *ngFor="let option of timeRestrictionOptions" [value]="option">
+    @for (option of timeRestrictionOptions; track option) {
+    <option [value]="option">
       {{ 'SHARED_FILTER.TIMERESTRICTION.' + option | translate }}
     </option>
+    }
   </select>
   <fa-icon icon="chevron-down" class="select-chevron"></fa-icon>
 </div>

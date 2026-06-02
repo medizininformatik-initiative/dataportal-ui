@@ -1,9 +1,9 @@
 <span
   class="checkbox"
-  [class.checked]="checked"
-  [class.disabled]="disabled"
+  [class.checked]="checked()"
+  [class.disabled]="disabled()"
   (click)="toggle($event)"
   role="checkbox"
-  [attr.aria-checked]="checked"
-  [attr.aria-disabled]="disabled"
+  [attr.aria-checked]="checked()"
+  [attr.aria-disabled]="disabled()"
 ></span>

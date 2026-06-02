@@ -1,17 +1,12 @@
-<div
-  fxLayout="row"
-  fxLayoutAlign="start stretch"
-  class="num-card selection-box"
-  [attr.data-cy]="label | displayTranslation"
->
+<div class="num-card selection-box" [attr.data-cy]="label() | displayTranslation">
   <div class="display-container">
-    <div class="num-text-body">{{ label | displayTranslation }}</div>
+    <div class="num-text-body">{{ label() | displayTranslation }}</div>
     <div
       class="num-pill"
       [class.expanded]="displayExpanded"
       (click)="displayExpanded = !displayExpanded"
     >
-      {{ display }}
+      {{ display() }}
     </div>
   </div>
   <div class="card-col">
@@ -29,12 +24,11 @@
       ></span>
     </div>
     <div class="filter-chips-container">
-      <ng-container *ngIf="$fieldsFilterChips | async as chips">
-        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
-        <span *ngIf="!chips.length" class="empty-state">{{
-          'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate
-        }}</span>
-      </ng-container>
+      @if (fieldsFilterChips().length > 0) {
+      <num-filter-chips [filterChips]="fieldsFilterChips()"></num-filter-chips>
+      } @if (!fieldsFilterChips().length) {
+      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate }}</span>
+      }
     </div>
   </div>
   <div class="card-col">
@@ -50,15 +44,15 @@
       ></span>
     </div>
     <div class="filter-chips-container">
-      <ng-container *ngIf="filtersFilterChips$ | async as chips">
-        <num-filter-chips *ngIf="chips.length > 0" [filterChips]="chips"></num-filter-chips>
-        <span *ngIf="!chips.length" class="empty-state">{{
-          'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate
-        }}</span>
-      </ng-container>
+      @if (filtersFilterChips().length > 0) {
+      <num-filter-chips [filterChips]="filtersFilterChips()"></num-filter-chips>
+      } @if (!filtersFilterChips().length) {
+      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
+      }
     </div>
   </div>
-  <div *ngIf="isReferenced" fxLayout="column" class="reference-container">
+  @if (isReferenced) {
+  <div class="reference-container">
     <div class="label-with-info">
       <span class="num-text-accent">{{
         'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
@@ -74,12 +68,12 @@
       <ng-container>
         <div
           class="reference-toggle"
-          [class.reference-toggle--active]="profile.getReference().getIsReferenceSet()"
+          [class.reference-toggle--active]="profile().getReference().getIsReferenceSet()"
         >
           <num-checkbox
-            [disabled]="!isEditable"
-            [checked]="profile.getReference().getIsReferenceSet()"
-            (checkedChange)="toggleIsReferenceSet(profile.getReference())"
+            [disabled]="!isEditable()"
+            [checked]="profile().getReference().getIsReferenceSet()"
+            (checkedChange)="toggleIsReferenceSet(profile().getReference())"
           ></num-checkbox>
           <span class="reference-toggle-text">{{
             'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
@@ -88,35 +82,31 @@
       </ng-container>
     </div>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start start" class="menu-box">
-    <num-menu [menuItems]="menuItems" [id]="profile.getId()"></num-menu>
+  } @if (isEditable()) {
+  <div class="menu-box">
+    <num-menu [menuItems]="menuItems()" [id]="profile().getId()"></num-menu>
   </div>
+  }
 </div>
-<ng-container
-  *ngIf="unlinkedRequiredOrRecommendedReferences.length > 0 || selectedReferenceFields.length > 0"
->
-  <num-linked-badge></num-linked-badge>
-</ng-container>
-
-<ng-container *ngIf="unlinkedRequiredOrRecommendedReferences.length > 0">
-  <div
-    *ngFor="let reference of unlinkedRequiredOrRecommendedReferences"
-    class="selection-box-container"
+@if ((unlinkedRequiredOrRecommendedReferences().length > 0 && isEditable()) ||
+selectedReferenceFields().length > 0) {
+<num-linked-badge></num-linked-badge>
+} @if (unlinkedRequiredOrRecommendedReferences().length > 0 && isEditable()) { @for (reference of
+unlinkedRequiredOrRecommendedReferences(); track reference) {
+<div class="selection-box-container">
+  <num-profile-reference-tile
+    [unlinkedRequiredOrRecommendedReferences]="reference"
+    [parentId]="profile().getId()"
   >
-    <num-profile-reference-tile
-      [unlinkedRequiredOrRecommendedReferences]="reference"
-      [parentId]="profile.getId()"
-      (deleteTrigger)="updateRequiredOrRecommendedReferences()"
-    >
-    </num-profile-reference-tile>
-  </div>
-</ng-container>
-<ng-container *ngIf="selectedReferenceFields.length > 0">
-  <div *ngFor="let selectedReference of selectedReferenceFields" class="selection-box-container">
-    <num-profile-reference-tile
-      [filterChips]="profileRefrenceChips"
-      [referenceField]="selectedReference"
-      [parentId]="profile.getId()"
-    ></num-profile-reference-tile>
-  </div>
-</ng-container>
+  </num-profile-reference-tile>
+</div>
+} } @if (selectedReferenceFields().length > 0) { @for (selectedReference of
+selectedReferenceFields(); track selectedReference) {
+<div class="selection-box-container">
+  <num-profile-reference-tile
+    [referenceField]="selectedReference"
+    [parentId]="profile().getId()"
+    [isEditable]="isEditable()"
+  ></num-profile-reference-tile>
+</div>
+} }

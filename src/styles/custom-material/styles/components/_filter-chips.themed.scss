@@ -1,4 +1,4 @@
-@use 'node_modules/@angular/material' as mat;
+@use '@angular/material' as mat;
 
 @mixin filter-chips_themed($theme) {
   $primary: map-get($theme, primary);
@@ -15,9 +15,9 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 24px;
-      color: mat.get-color-from-palette($accent, 500);
+      color: mat.m2-get-color-from-palette($accent, 500);
       background: transparent;
-      border: 1px solid rgba(mat.get-color-from-palette($accent, 500), 0.2);
+      border: 1px solid rgba(mat.m2-get-color-from-palette($accent, 500), 0.2);
       border-radius: 4px;
       margin-bottom: 4px;
       cursor: pointer;
@@ -38,8 +38,8 @@
       }
 
       &.count-badge {
-        background-color: rgba(mat.get-color-from-palette($accent, 500), 0.3);
-        color: mat.get-color-from-palette($accent, 500);
+        background-color: rgba(mat.m2-get-color-from-palette($accent, 500), 0.3);
+        color: mat.m2-get-color-from-palette($accent, 500);
         font-weight: bold;
         padding: 0 8px;
         min-width: auto;
@@ -54,8 +54,8 @@
       padding: 0 8px;
       height: 24px;
       border-radius: 4px 0 0 4px;
-      border: 1px solid mat.get-color-from-palette($accent, 500);
-      background: mat.get-color-from-palette($accent, 500);
+      border: 1px solid mat.m2-get-color-from-palette($accent, 500);
+      background: mat.m2-get-color-from-palette($accent, 500);
       font-family: 'Open Sans', sans-serif;
       font-style: normal;
       font-weight: 700;
@@ -63,7 +63,7 @@
       line-height: 16px;
       letter-spacing: -0.03em;
       text-transform: uppercase;
-      color: mat.get-color-from-palette($primary, 'white');
+      color: mat.m2-get-color-from-palette($primary, 'white');
       cursor: pointer;
       white-space: nowrap;
       overflow: hidden;
@@ -88,7 +88,7 @@
     }
 
     .block-triangle {
-      color: mat.get-color-from-palette($accent, 500);
+      color: mat.m2-get-color-from-palette($accent, 500);
       border-left: 12px solid;
       border-top: 12px solid transparent;
       border-bottom: 12px solid transparent;

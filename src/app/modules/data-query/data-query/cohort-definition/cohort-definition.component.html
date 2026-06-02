@@ -23,14 +23,15 @@
     </num-header-description>
   </div>
   <div class="feasibility-container margin-bottom-3">
-    <ng-container *ngIf="isFeasibilityExistent$ | async">
-      <num-display-feasibility-query [isEditable]="false"></num-display-feasibility-query>
-    </ng-container>
-    <ng-container *ngIf="(isFeasibilityExistent$ | async) === false" class="empty-cohort-box">
+    @if (isFeasibilityExistent()) {
+    <num-display-feasibility-query [isEditable]="false"></num-display-feasibility-query>
+    } @if (isFeasibilityExistent() === false) {
+    <ng-container class="empty-cohort-box">
       <num-placeholder-box>
         {{ 'DATAQUERY.COHORT.EMPTY' | translate }}
       </num-placeholder-box>
     </ng-container>
+    }
   </div>
   <num-cohort-definition-action-bar></num-cohort-definition-action-bar>
 </div>

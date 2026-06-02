@@ -3,18 +3,6 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
-  "plugins": ["prefer-arrow-functions"],
-  "rules": {
-    "prefer-arrow-functions/prefer-arrow-functions": [
-      "warn",
-      {
-        "classPropertiesAllowed": false,
-        "disallowPrototype": false,
-        "returnStyle": "unchanged",
-        "singleReturnOnly": false
-      }
-    ]
-  },
   "overrides": [
     {
       "files": [
@@ -28,12 +16,15 @@
         "createDefaultProgram": true
       },
       "extends": [
-        "plugin:@angular-eslint/ng-cli-compat",
-        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended"
       ],
       "rules": {
         "jsdoc/newline-after-description": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+"@typescript-eslint/no-unused-vars": "warn",
+"@angular-eslint/no-empty-lifecycle-method": "off",
 
         "max-len": "off",
         "semi": 0,

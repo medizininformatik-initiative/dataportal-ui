@@ -1,9 +1,9 @@
-import { CriteriaSetSearchMediatorService } from '../Mediator/CriteriaSetSearchMediator.service';
-import { Injectable } from '@angular/core';
-import { KeyedSearchPagination } from '../../../Abstract/Pagination/AbstractKeyedSearchPagination';
-import { Observable } from 'rxjs';
-import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry';
-import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList';
+import { CriteriaSetSearchMediatorService } from '../Mediator/CriteriaSetSearchMediator.service'
+import { Injectable, inject } from '@angular/core'
+import { KeyedSearchPagination } from '../../../Abstract/Pagination/AbstractKeyedSearchPagination'
+import { Observable } from 'rxjs'
+import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry'
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList'
 
 /**
  * Pagination service for criteria set searches with support for multiple criteria set filters.
@@ -18,13 +18,18 @@ export class CriteriaSetSearchPaginationService extends KeyedSearchPagination<
   ReferenceCriteriaListEntry,
   ReferenceCriteriaResultList
 > {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
   /**
    * Creates an instance of CriteriaSetSearchPaginationService.
    *
    * @param mediatorService - The mediator service for coordinating criteria set searches
    */
-  constructor(mediatorService: CriteriaSetSearchMediatorService) {
-    super(mediatorService);
+  constructor() {
+    const mediatorService = inject(CriteriaSetSearchMediatorService)
+
+    super(mediatorService)
   }
 
   /**
@@ -38,7 +43,7 @@ export class CriteriaSetSearchPaginationService extends KeyedSearchPagination<
     searchTerm: string,
     criteriaSetUrls: string[]
   ): Observable<ReferenceCriteriaResultList> {
-    return this.loadNextPage(searchTerm, criteriaSetUrls);
+    return this.loadNextPage(searchTerm, criteriaSetUrls)
   }
 
   /**
@@ -52,6 +57,6 @@ export class CriteriaSetSearchPaginationService extends KeyedSearchPagination<
     searchTerm: string,
     criteriaSetUrls: string[]
   ): Observable<ReferenceCriteriaResultList> {
-    return this.searchFirstPage(searchTerm, criteriaSetUrls);
+    return this.searchFirstPage(searchTerm, criteriaSetUrls)
   }
 }

@@ -1,61 +1,67 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
-import { QuantityNotSet } from '../../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
-import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service';
+import { Component, effect, inject, input, model, output, untracked } from '@angular/core'
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
+import { QuantityNotSet } from '../../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet'
+import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service'
+import { ValueSelectComponent } from '../../../../../../../shared/components/value-select/value-select.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-quantity-range',
   templateUrl: './quantity-range.component.html',
   styleUrls: ['./quantity-range.component.scss'],
+  standalone: true,
+  imports: [ValueSelectComponent, TranslateModule],
 })
-export class QuantityRangeComponent implements OnChanges {
-  @Input()
-  minValue: number;
+export class QuantityRangeComponent {
+  private quantityFilterFactoryService = inject(QuantityFilterFactoryService)
 
-  @Input()
-  maxValue: number;
+  readonly minValue = model<number>()
 
-  @Input()
-  quantityFilterUnit: QuantityUnit;
+  readonly maxValue = model<number>()
 
-  @Output()
-  quantityRangeInstance: EventEmitter<QuantityRangeFilter | QuantityNotSet> = new EventEmitter();
+  readonly quantityFilterUnit = input<QuantityUnit>(undefined)
 
-  displayWarning = false;
-  constructor(private quantityFilterFactoryService: QuantityFilterFactoryService) {}
+  readonly quantityRangeInstance = output<QuantityRangeFilter | QuantityNotSet>()
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      (changes.minValue && !changes.minValue.firstChange) ||
-      (changes.maxValue && !changes.maxValue.firstChange) ||
-      (changes.quantityFilterUnit && !changes.quantityFilterUnit.firstChange)
-    ) {
-      this.emitQuantityRangeFilter();
-    }
+  displayWarning = false
+
+  constructor() {
+    let initialized = false
+    effect(() => {
+      this.minValue()
+      this.maxValue()
+      this.quantityFilterUnit()
+      if (initialized) {
+        untracked(() => this.emitQuantityRangeFilter())
+      }
+      initialized = true
+    })
   }
 
   public setMaxValue(value: number): void {
-    this.maxValue = value;
-    this.emitQuantityRangeFilter();
+    this.maxValue.set(value)
+    this.emitQuantityRangeFilter()
   }
 
   public setMinValue(value: number): void {
-    this.minValue = value;
-    this.emitQuantityRangeFilter();
+    this.minValue.set(value)
+    this.emitQuantityRangeFilter()
   }
 
   private emitQuantityRangeFilter(): void {
-    if (this.minValue != null && this.maxValue != null && this.quantityFilterUnit) {
-      if (this.minValue <= this.maxValue) {
+    const min = this.minValue()
+    const max = this.maxValue()
+    if (min != null && max != null && this.quantityFilterUnit()) {
+      if (min <= max) {
         const quantityRangeFilter = this.quantityFilterFactoryService.createQuantityRangeFilter(
-          this.minValue,
-          this.maxValue
-        );
-        this.quantityRangeInstance.emit(quantityRangeFilter);
-        this.displayWarning = false;
+          min,
+          max
+        )
+        this.quantityRangeInstance.emit(quantityRangeFilter)
+        this.displayWarning = false
       } else {
-        this.displayWarning = true;
+        this.displayWarning = true
       }
     }
   }

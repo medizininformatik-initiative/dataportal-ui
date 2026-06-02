@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
-import { LoadReferenceCriterionService } from '../LoadReferenceCriterion.service';
-import { Observable } from 'rxjs';
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion';
+import { Injectable, inject } from '@angular/core'
+import { LoadReferenceCriterionService } from '../LoadReferenceCriterion.service'
+import { Observable } from 'rxjs'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
 
 @Injectable({
   providedIn: 'root',
 })
 export class BuildReferenceCriterionService {
-  constructor(private loadReferenceCriterionService: LoadReferenceCriterionService) {}
+  private loadReferenceCriterionService = inject(LoadReferenceCriterionService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Creates reference criteria based on the provided hashes and parent ID.
@@ -19,6 +24,6 @@ export class BuildReferenceCriterionService {
     hashes: string[],
     parentId: string
   ): Observable<ReferenceCriterion[]> {
-    return this.loadReferenceCriterionService.loadReferenceCriteria(hashes, parentId);
+    return this.loadReferenceCriterionService.loadReferenceCriteria(hashes, parentId)
   }
 }

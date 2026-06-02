@@ -1,46 +1,53 @@
-import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter';
-import { TimeRestrictionFactoryService } from 'src/app/service/Factory/TimeRestrictionFactory.service';
-import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
+import { TimeRestrictionFactoryService } from 'src/app/service/Factory/TimeRestrictionFactory.service'
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
+import { Component, OnInit, inject, input, output } from '@angular/core'
+import { DatePickerComponent } from '../../../../../../../shared/components/date-picker/date-picker.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-between-filter',
   templateUrl: './between-filter.component.html',
   styleUrls: ['./between-filter.component.scss'],
+  standalone: true,
+  imports: [DatePickerComponent, TranslateModule],
 })
 export class BetweenFilterComponent implements OnInit {
-  @Input()
-  betweenFilter: BetweenFilter;
+  private timeRestrictionFactoryService = inject(TimeRestrictionFactoryService)
 
-  @Output()
-  betweenFilterChanged = new EventEmitter<BetweenFilter>();
+  readonly betweenFilter = input<BetweenFilter>(undefined)
 
-  beforeDate: string;
+  readonly betweenFilterChanged = output<BetweenFilter>()
 
-  afterDate: string;
+  beforeDate: string
 
-  displayDateWarning = false;
+  afterDate: string
 
-  constructor(private timeRestrictionFactoryService: TimeRestrictionFactoryService) {}
+  displayDateWarning = false
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.initializeDates();
-    this.emitInstance();
+    this.initializeDates()
+    this.emitInstance()
   }
 
   private initializeDates(): void {
-    this.beforeDate = this.betweenFilter.getBeforeDate();
-    this.afterDate = this.betweenFilter.getAfterDate();
+    this.beforeDate = this.betweenFilter().getBeforeDate()
+    this.afterDate = this.betweenFilter().getAfterDate()
   }
 
   public onBeforeDateChange(selectedDate: string) {
-    this.beforeDate = selectedDate;
-    this.emitInstance();
+    this.beforeDate = selectedDate
+    this.emitInstance()
   }
 
   public onAfterDateChange(selectedDate: string) {
-    this.afterDate = selectedDate;
-    this.emitInstance();
+    this.afterDate = selectedDate
+    this.emitInstance()
   }
 
   public emitInstance() {
@@ -51,11 +58,11 @@ export class BetweenFilterComponent implements OnInit {
             TimeRestrictionType.BETWEEN,
             this.afterDate,
             this.beforeDate
-          ) as BetweenFilter;
-        this.betweenFilterChanged.emit(timeRestrictionFilter);
-        this.displayDateWarning = false;
+          ) as BetweenFilter
+        this.betweenFilterChanged.emit(timeRestrictionFilter)
+        this.displayDateWarning = false
       } else {
-        this.displayDateWarning = true;
+        this.displayDateWarning = true
       }
     }
   }

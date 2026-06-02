@@ -5,6 +5,13 @@
   background-color: #fff;
 }
 
+.select-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Utility spacing */
 .padding-top-20 {
   padding-top: 16px; // snapped to 8-point (from 10px)
@@ -105,7 +112,7 @@
 ::ng-deep .scrollable-options-group {
   display: block;
   overflow-y: auto;
-  max-height: 200px;
+  max-height: 40vh;
 
   .mat-mdc-optgroup-label {
     display: none;

@@ -1,27 +1,21 @@
-<div class="container" *ngIf="content && content.length > 0">
+@if (content() && content().length > 0) {
+<div class="container">
   <div class="tabs-container">
-    <div
-      class="tab"
-      *ngFor="let item of content; let i = index"
-      [class.active]="selectedIndex === i"
-      (click)="selectedIndex = i"
-    >
-      <ng-container *ngIf="item.display; else defaultLabel">
-        {{ item.display | displayTranslation }}
-      </ng-container>
-
-      <ng-template #defaultLabel>
-        {{ 'EDITOR.CONTENT.TAB_LABEL.' + item.name | translate }}
-      </ng-template>
+    @for (item of content(); track i; let i = $index) {
+    <div class="tab" [class.active]="selectedIndex === i" (click)="selectedIndex = i">
+      @if (item.display) {
+      {{ item.display | displayTranslation }}
+      } @else {
+      {{ 'EDITOR.CONTENT.TAB_LABEL.' + item.name | translate }}
+      }
     </div>
+    }
   </div>
-
   <div class="tab-content">
-    <ng-container *ngFor="let item of content; let i = index">
-      <ng-container *ngIf="selectedIndex === i">
-        <ng-container [ngTemplateOutlet]="item.template" [ngTemplateOutletContext]="item.context">
-        </ng-container>
-      </ng-container>
+    @for (item of content(); track i; let i = $index) { @if (selectedIndex === i) {
+    <ng-container [ngTemplateOutlet]="item.template" [ngTemplateOutletContext]="item.context">
     </ng-container>
+    } }
   </div>
 </div>
+}

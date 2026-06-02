@@ -1,16 +1,21 @@
-import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { HashService } from '../Hash.service';
-import { Injectable } from '@angular/core';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { v4 as uuidv4 } from 'uuid';
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion';
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { HashService } from '../Hash.service'
+import { Injectable, inject } from '@angular/core'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { v4 as uuidv4 } from 'uuid'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionMetadataService {
-  constructor(private hashService: HashService) {}
+  private hashService = inject(HashService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * Creates the mandatory fields (metadata) for a criterion.
@@ -28,11 +33,11 @@ export class CriterionMetadataService {
     id: string
     termCodes: Array<TerminologyCode>
   } {
-    const context = TerminologyCode.fromJson(criteriaProfileData.context);
-    const termCodes = criteriaProfileData.termCodes.map(TerminologyCode.fromJson);
-    const display = Display.fromJson(criteriaProfileData.display);
-    const criterionHash = this.hashService.createCriterionHash(context, termCodes[0]);
-    const isFilterRequired = true; //!this.setIsRequiredFilterSet(criteriaProfileData);
+    const context = TerminologyCode.fromJson(criteriaProfileData.context)
+    const termCodes = criteriaProfileData.termCodes.map(TerminologyCode.fromJson)
+    const display = Display.fromJson(criteriaProfileData.display)
+    const criterionHash = this.hashService.createCriterionHash(context, termCodes[0])
+    const isFilterRequired = true //!this.setIsRequiredFilterSet(criteriaProfileData);
 
     return {
       isReference: false,
@@ -43,7 +48,7 @@ export class CriterionMetadataService {
       isRequiredFilterSet: isFilterRequired,
       id: uuidv4(),
       termCodes,
-    };
+    }
   }
 
   /**
@@ -66,10 +71,10 @@ export class CriterionMetadataService {
     id: string
     termCodes: Array<TerminologyCode>
   } {
-    const context = TerminologyCode.fromJson(criteriaProfileData.context);
-    const display = Display.fromJson(criteriaProfileData.display);
-    const criterionHash = this.hashService.createCriterionHash(context, termCodes[0]);
-    const isFilterRequired = true;
+    const context = TerminologyCode.fromJson(criteriaProfileData.context)
+    const display = Display.fromJson(criteriaProfileData.display)
+    const criterionHash = this.hashService.createCriterionHash(context, termCodes[0])
+    const isFilterRequired = true
 
     return {
       isReference: false,
@@ -80,7 +85,7 @@ export class CriterionMetadataService {
       isRequiredFilterSet: isFilterRequired,
       id: criterionId,
       termCodes,
-    };
+    }
   }
 
   public fromCriterion(criterion: Criterion) {
@@ -93,6 +98,6 @@ export class CriterionMetadataService {
       isRequiredFilterSet: criterion.getIsRequiredFilterSet(),
       id: criterion.getId(),
       termCodes: criterion.getTermCodes(),
-    };
+    }
   }
 }

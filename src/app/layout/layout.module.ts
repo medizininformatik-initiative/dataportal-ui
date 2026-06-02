@@ -1,53 +1,13 @@
-import { AboutModalComponent } from './components/about-modal/about-modal.component';
-import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { CommonModule } from '@angular/common';
-import { DirectivesModule } from '../shared/directives/directives.module';
-import { ErrorLogModalComponent } from './components/error-log/error-log-modal.component';
-import { ErrorLogHeaderComponent } from './components/error-log/error-log-header/error-log-header.component';
-import { ErrorLogItemComponent } from './components/error-log/error-log-item/error-log-item.component';
-import { ErrorLogActionsComponent } from './components/error-log/error-log-actions/error-log-actions.component';
-import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FONT_AWESOME_ICONS } from './font-awesome-icons';
-import { HeaderComponent } from './components/header/header.component';
-import { LanguageComponent } from './components/language/language.component';
-import { MaterialModule } from './material/material.module';
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { SharedComponentsModule } from '../shared/components/shared-components.module';
-import { SideMenuComponent } from './components/side-menu/side-menu.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { UserMenuComponent } from './components/header/user-menu/user-menu.component';
-import { PortalLinkComponent } from './components/header/portal-link/portal-link.component';
-
-const SHARED_MODULES = [MaterialModule, FlexLayoutModule, FontAwesomeModule];
-
-@NgModule({
-  declarations: [
-    AppLayoutComponent,
-    HeaderComponent,
-    SideMenuComponent,
-    LanguageComponent,
-    AboutModalComponent,
-    ErrorLogModalComponent,
-    ErrorLogHeaderComponent,
-    ErrorLogItemComponent,
-    ErrorLogActionsComponent,
-    UserMenuComponent,
-    PortalLinkComponent,
-  ],
-  imports: [
-    ...SHARED_MODULES,
-    CommonModule,
-    RouterModule,
-    TranslateModule,
-    DirectivesModule,
-    SharedComponentsModule,
-  ],
-  exports: [...SHARED_MODULES, AppLayoutComponent],
-})
-export class LayoutModule {
-  constructor(library: FaIconLibrary) {
-    library.addIcons(...FONT_AWESOME_ICONS);
-  }
-}
+// Layout components — all standalone; import each directly
+export { AboutModalComponent } from './components/about-modal/about-modal.component'
+export { AppLayoutComponent } from './components/app-layout/app-layout.component'
+export { ErrorLogModalComponent } from './components/error-log/error-log-modal.component'
+export { ErrorLogHeaderComponent } from './components/error-log/error-log-header/error-log-header.component'
+export { ErrorLogItemComponent } from './components/error-log/error-log-item/error-log-item.component'
+export { ErrorLogActionsComponent } from './components/error-log/error-log-actions/error-log-actions.component'
+export { HeaderComponent } from './components/header/header.component'
+export { LanguageComponent } from './components/language/language.component'
+export { SideMenuComponent } from './components/side-menu/side-menu.component'
+export { UserMenuComponent } from './components/header/user-menu/user-menu.component'
+export { PortalLinkComponent } from './components/header/portal-link/portal-link.component'
+export { FONT_AWESOME_ICONS } from './font-awesome-icons'

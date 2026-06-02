@@ -1,13 +1,18 @@
-import { AbstractDownloadService } from './AbstractDownload.service';
-import { Injectable } from '@angular/core';
-import { ValidationReportBuilderService } from '../Validation/ValidationReportBuilder.service';
+import { AbstractDownloadService } from './AbstractDownload.service'
+import { Injectable, inject } from '@angular/core'
+import { ValidationReportBuilderService } from '../Validation/ValidationReportBuilder.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DownloadErrorLogService extends AbstractDownloadService {
-  constructor(private readonly validationReportBuilder: ValidationReportBuilderService) {
-    super();
+  private readonly validationReportBuilder = inject(ValidationReportBuilderService)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {
+    super()
   }
 
   /**
@@ -15,9 +20,9 @@ export class DownloadErrorLogService extends AbstractDownloadService {
    * @param filename - Optional custom filename (without extension)
    */
   public download(filename?: string): void {
-    const errorLogData = this.validationReportBuilder.buildValidationReportData();
-    const finalFilename = this.createFilename(filename, 'validation-errors', 'iso');
-    const blob = this.createJsonBlob(errorLogData);
-    this.triggerDownload(blob, `${finalFilename}.json`);
+    const errorLogData = this.validationReportBuilder.buildValidationReportData()
+    const finalFilename = this.createFilename(filename, 'validation-errors', 'iso')
+    const blob = this.createJsonBlob(errorLogData)
+    this.triggerDownload(blob, `${finalFilename}.json`)
   }
 }

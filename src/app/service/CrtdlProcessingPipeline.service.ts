@@ -1,22 +1,25 @@
-import { concatMap, filter, map, Observable, of, switchMap, take, tap } from 'rxjs';
-import { CRTDL2UIModelService } from './Translator/CRTDL/CRTDL2UIModel.service';
-import { CRTDLData } from '../model/Interface/CRTDLData';
-import { CRTDLValidationService } from './Validation/CRTDLValidation.service';
-import { ErrorLogModalComponent } from '../layout/components/error-log/error-log-modal.component';
-import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ProfileUpgradeService } from './Upgrade/ProfileUpgrade.service';
-import { TypeGuard } from './TypeGuard/TypeGuard';
-import { UiCRTDL } from '../model/UiCRTDL';
+import { concatMap, filter, map, Observable, of, switchMap, take, tap } from 'rxjs'
+import { CRTDL2UIModelService } from './Translator/CRTDL/CRTDL2UIModel.service'
+import { CRTDLData } from '../model/Interface/CRTDLData'
+import { CRTDLValidationService } from './Validation/CRTDLValidation.service'
+import { ErrorLogModalComponent } from '../layout/components/error-log/error-log-modal.component'
+import { Injectable, inject } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
+import { ProfileUpgradeService } from './Upgrade/ProfileUpgrade.service'
+import { TypeGuard } from './TypeGuard/TypeGuard'
+import { UiCRTDL } from '../model/UiCRTDL'
 
 @Injectable({ providedIn: 'root' })
 export class CrtdlProcessingPipelineService {
-  constructor(
-    private validationService: CRTDLValidationService,
-    private profileUpgradeService: ProfileUpgradeService,
-    private translatorService: CRTDL2UIModelService,
-    private matDialog: MatDialog
-  ) {}
+  private validationService = inject(CRTDLValidationService)
+  private profileUpgradeService = inject(ProfileUpgradeService)
+  private translatorService = inject(CRTDL2UIModelService)
+  private matDialog = inject(MatDialog)
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[])
+
+  constructor() {}
 
   /**
    * 1. Validates the CRTDL. If valid, proceeds to translation. If not valid, proceeds to upgrade.
@@ -36,7 +39,7 @@ export class CrtdlProcessingPipelineService {
         this.translatorService.createCRTDLFromJson(validCrtdl as CRTDLData)
       ),
       take(1)
-    );
+    )
   }
 
   /**
@@ -52,16 +55,16 @@ export class CrtdlProcessingPipelineService {
           return this.validationService.validate(upgraded.crtdl).pipe(
             filter((isValid) => isValid),
             map(() => upgraded.crtdl)
-          );
+          )
         } else {
-          return of(false);
+          return of(false)
         }
       }),
       tap(() => this.openValidationReportModal())
-    );
+    )
   }
 
   private openValidationReportModal(): void {
-    this.matDialog.open(ErrorLogModalComponent);
+    this.matDialog.open(ErrorLogModalComponent)
   }
 }

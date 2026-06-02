@@ -16,8 +16,10 @@
     </num-information-section>
   </mat-tab>
   <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.SINGLE_SEARCH' | translate }}">
-    <div fxLayout="column" class="container">
-      <div class="attribute-code-display">{{ attributeCode.getDisplay() }}</div>
+    <div class="container">
+      <num-section-name class="attribute-code-display">{{
+        display() | displayTranslation
+      }}</num-section-name>
       <num-searchbar icon="search" (searchTextChange)="startElasticSearch($event)"> </num-searchbar>
       <div
         class="infinite-scroll"
@@ -27,31 +29,35 @@
         [scrollWindow]="false"
         (scrolled)="loadMoreCriteriaSetResults()"
       >
+        @if (tableData$ | async; as tableData) {
         <num-table
-          *ngIf="tableData$ | async as tableData"
           class="result-list-container"
           [tableData]="tableData"
           (iconClicked)="emitIds($event)"
         ></num-table>
+        }
       </div>
-      <num-placeholder-box class="no-results-text" *ngIf="(tableData$ | async) === null">
+      @if ((tableData$ | async) === null) {
+      <num-placeholder-box class="no-results-text">
         >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$ | async }}</strong
         >"
       </num-placeholder-box>
+      }
     </div>
   </mat-tab>
   <mat-tab
     class="height-100"
     [label]="
       'EDITOR.CONTENT.TAB_LABEL.SELECTED_REFERENCES'
-        | translate : { count: selectedReferenceCriterion.length }
+        | translate : { count: selectedReferenceCriterion().length }
     "
-    [disabled]="selectedReferenceCriterion.length === 0"
+    [disabled]="selectedReferenceCriterion().length === 0"
   >
+    @if (selectedReferenceCriterion().length > 0) {
     <num-selected-reference-list
-      *ngIf="selectedReferenceCriterion.length > 0"
-      [selectedReferences]="selectedReferenceCriterion"
+      [selectedReferences]="selectedReferenceCriterion()"
       (changedSelectedReferences)="updateSelectedReferences($event)"
     ></num-selected-reference-list>
+    }
   </mat-tab>
 </mat-tab-group>
