@@ -2,6 +2,7 @@ import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterio
 import { BeforeFilterComponent } from './before-filter/before-filter.component'
 import { BetweenFilterComponent } from './between-filter/between-filter.component'
 import { Component, effect, model, signal } from '@angular/core'
+import { SectionNameComponent } from 'src/app/shared/components/section-name/section-name.component'
 import { TimeRestrictionNotSet } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
 import { TimerestrictionTypeSelectorComponent } from './timerestriction-type-selector/timerestriction-type-selector.component'
@@ -17,6 +18,7 @@ import { TranslateModule } from '@ngx-translate/core'
     BetweenFilterComponent,
     BeforeFilterComponent,
     TranslateModule,
+    SectionNameComponent,
   ],
 })
 export class EditTimeRestrictionComponent {

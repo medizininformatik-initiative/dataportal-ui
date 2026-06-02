@@ -1,8 +1,8 @@
 @if (timeRestriction()) {
 <div [@.disabled]="disableAnimation" class="time-restriction-wrapper">
-  <span class="section-label">
+  <num-section-name>
     {{ 'SHARED_FILTER.TIMERESTRICTION.TITLE' | translate }}
-  </span>
+  </num-section-name>
   <div class="time-restriction-row">
     <!--Time restriction Filter type-->
     <num-timerestriction-type-selector
