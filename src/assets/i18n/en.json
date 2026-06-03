@@ -18,7 +18,7 @@
         "LABEL": "Log",
         "MODAL": {
           "CLEAR": "Clear Error Log",
-          "DESCRIPTION": "The following validation issues were found:- If you have any questions please contact <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
+          "DESCRIPTION": "The following validation issues were found. If you have any questions, please contact <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
           "DOWNLOAD": "Download Log",
           "HEADER": "Log",
           "ITEM": {
@@ -168,7 +168,7 @@
         "JUMP_TO_DATASELECTION_TOOLTIP": "Navigate to editor to edit selected features"
       },
       "HEADER": "Feature Selection",
-      "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do, please register at ",
+      "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
       "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
       "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
       "INFOTEXT": "Select criteria to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
@@ -392,15 +392,16 @@
       "CLOSE_DETAILS": "Close",
       "EMPTY": "Sorry, we could not find any results for ",
       "HEADER": "Criteria search",
-      "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide.If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU ” or other criteria from the “EINWILLIGUNG” module.",
-      "INFO_TOOLTIP": "<b>Context:</b> Describes the medical context of a search term, e.g. diagnosis, procedure, or laboratory value.<br><br><b>Terminology:</b> Indicates which medical classification system a term comes from, e.g. ICD-10, OPS, or LOINC.<br><br><b>KDS Module:</b> Refers to the section of the MII core dataset where the data is structured, e.g. diagnosis, medication, or laboratory data.",
+      "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD-10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide. If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU” or other criteria from the “EINWILLIGUNG” module.",
+      "FILTER_HEADING": "Refine Your Search:",
+      "INFO_TOOLTIP": "<b>CDS Modules:</b> Refers to the section of the MII core dataset where the data is structured, e.g. diagnosis, medication, or laboratory data.<br><br><b>Context:</b> Describes the medical context of a search term, e.g. diagnosis, procedure, or laboratory value.<br><br><b>Terminology:</b> Indicates which medical classification system a term comes from, e.g. ICD-10, OPS, or LOINC.",
       "LABEL": "Enter code or search term",
       "SEARCHBAR": "Search for term or terminology code",
       "SEARCH_BUTTON": "Search",
       "SINGLE_SEARCH": "Single Search",
       "SNACKBAR": {
         "ADDED_TO_COHORT": "Criteria added to cohort selection",
-        "ADDED_TO_STAGE": "Criterion was selected ",
+        "ADDED_TO_STAGE": "Criterion was selected",
         "REMOVED_FROM_STAGE": "Criterion was removed"
       },
       "TOOLTIP_TITLE": "Search filter"

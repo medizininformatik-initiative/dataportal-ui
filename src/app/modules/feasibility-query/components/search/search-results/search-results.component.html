@@ -16,8 +16,8 @@
       <div class="details-container">
         <num-list-item-details
           class="details-panel"
-          [listItemDetails$]="selectedDetails$()"
-          (selectedRelative)="selectedRelative.emit($event)"
+          [listItemDetails$]="selectedDetails$"
+          (selectedRelative)="getSelectedRelative($event)"
         ></num-list-item-details>
       </div>
     </div>
@@ -29,12 +29,11 @@
     [infiniteScrollDistance]="0.5"
     [infiniteScrollThrottle]="50"
     [scrollWindow]="false"
-    (scrolled)="loadMore.emit()"
+    (scrolled)="loadMoreCriteriaSearchResults()"
   >
     <num-table
-      (selectedRow)="selectedRow.emit($event)"
-      (rowClicked)="rowClicked.emit($event)"
-      (iconClicked)="iconClicked.emit($event)"
+      (selectedRow)="setSelectedRowItem($event)"
+      (rowClicked)="setClickedRow($event)"
       [tableData]="adaptedData()"
     ></num-table>
   </mat-drawer-content>
@@ -43,7 +42,7 @@
 } @if (!searchResultsFound()) {
 <div class="no-results-box">
   <num-placeholder-box
-    >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText$() | async }}</strong
+    >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "<strong>{{ searchText() }}</strong
     >"</num-placeholder-box
   >
 </div>

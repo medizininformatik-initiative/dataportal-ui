@@ -1,12 +1,14 @@
-<div class="toggle-container">
-  <span [class.active]="selectedMode() === 'search'" (click)="onModeChange('search')">
-    {{ 'FEASIBILITY.SEARCH.SINGLE_SEARCH' | translate }}
-  </span>
-  <num-switch
-    [isChecked]="selectedMode() === 'bulk-search'"
-    (toggled)="onModeChange($event ? 'bulk-search' : 'search')"
-  ></num-switch>
-  <span [class.active]="selectedMode() === 'bulk-search'" (click)="onModeChange('bulk-search')">
-    {{ 'FEASIBILITY.SEARCH.BULK_SEARCH' | translate }}
-  </span>
-</div>
+<mat-button-toggle-group
+  class="mode-toggle"
+  [value]="selectedMode()"
+  (change)="onModeChange($event.value)"
+>
+  <mat-button-toggle value="search">
+    <fa-icon icon="search"></fa-icon>
+    <span>{{ 'FEASIBILITY.SEARCH.SINGLE_SEARCH' | translate }}</span>
+  </mat-button-toggle>
+  <mat-button-toggle value="bulk-search">
+    <fa-icon icon="clipboard-list"></fa-icon>
+    <span>{{ 'FEASIBILITY.SEARCH.BULK_SEARCH' | translate }}</span>
+  </mat-button-toggle>
+</mat-button-toggle-group>
