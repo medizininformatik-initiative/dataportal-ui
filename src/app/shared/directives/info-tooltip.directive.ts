@@ -25,6 +25,7 @@ export class InfoTooltipDirective implements OnInit, OnDestroy {
 
   readonly infoTooltipTitle = input<string>(undefined)
   readonly infoTooltipText = input<string>(undefined)
+  readonly infoTooltipPosition = input<'top' | 'bottom'>('top')
 
   private cardRef: ReturnType<typeof createComponent<InfoTooltipComponent>> | null = null
 
@@ -84,14 +85,18 @@ export class InfoTooltipDirective implements OnInit, OnDestroy {
     const rect = this.el.nativeElement.getBoundingClientRect()
     const cardWidth = 294
 
-    // Center above the trigger, 8px gap
+    // Center horizontally over the trigger, clamped within viewport
     let left = rect.left + rect.width / 2 - cardWidth / 2
-
-    // Keep within viewport horizontally
     left = Math.max(8, Math.min(left, window.innerWidth - cardWidth - 8))
 
     domEl.style.left = `${left}px`
-    domEl.style.top = `${rect.top - 8}px`
-    domEl.style.transform = 'translateY(-100%)'
+
+    if (this.infoTooltipPosition() === 'bottom') {
+      domEl.style.top = `${rect.bottom + 8}px`
+      domEl.style.transform = 'none'
+    } else {
+      domEl.style.top = `${rect.top - 8}px`
+      domEl.style.transform = 'translateY(-100%)'
+    }
   }
 }
