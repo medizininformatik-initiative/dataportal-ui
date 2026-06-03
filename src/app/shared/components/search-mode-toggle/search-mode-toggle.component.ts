@@ -1,6 +1,5 @@
 import { ActivatedRoute } from '@angular/router'
 import { Component, inject, model, OnInit, output } from '@angular/core'
-import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -11,7 +10,7 @@ export type SearchMode = 'search' | 'bulk-search'
   templateUrl: './search-mode-toggle.component.html',
   styleUrls: ['./search-mode-toggle.component.scss'],
   standalone: true,
-  imports: [MatButtonToggleModule, FontAwesomeModule, TranslateModule],
+  imports: [FontAwesomeModule, TranslateModule],
 })
 export class SearchModeToggleComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute)
