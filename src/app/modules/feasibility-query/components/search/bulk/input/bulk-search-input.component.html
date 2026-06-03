@@ -1,0 +1,25 @@
+<textarea
+  class="input-field-area"
+  name="searchText"
+  rows="8"
+  placeholder="{{ 'FEASIBILITY.BULK_SEARCH.INPUT_PLACEHOLDER' | translate }}"
+  [ngModel]="searchText()"
+  (ngModelChange)="searchText.set($event)"
+></textarea>
+
+<div class="filter-bar">
+  @for (filter of searchFilters(); track filter.filterType) {
+  <num-search-filter
+    [filter]="filter"
+    (filterChange)="setElasticSearchFilter($event)"
+    [multiSelect]="false"
+  ></num-search-filter>
+  }
+  <num-button
+    (click)="searchTextOutput.emit(searchText())"
+    [isDisabled]="!canSubmit()"
+    matTooltip="{{ 'FEASIBILITY.BULK_SEARCH.SEARCH_BUTTON_TOOLTIP' | translate }}"
+  >
+    {{ 'FEASIBILITY.SEARCH.SEARCH_BUTTON' | translate }}
+  </num-button>
+</div>

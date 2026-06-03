@@ -1,0 +1,32 @@
+@if (hasResults()) {
+<mat-tab-group (selectedTabChange)="onTabChange($event)" class="tab-group-flex">
+  <mat-tab
+    [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.FOUND' | translate : { count: foundCount() }"
+    [disabled]="!foundCount()"
+  >
+    @if (foundCriteriaTableData()) {
+    <num-table
+      (selectedRow)="setSelectedRowItem($event)"
+      [tableData]="foundCriteriaTableData()"
+    ></num-table>
+    }
+  </mat-tab>
+  <mat-tab
+    [label]="'SHARED_FILTER.CONCEPT_FILTER.BULK.NOTFOUND' | translate : { count: notFoundCount() }"
+    [disabled]="!notFoundCount()"
+  >
+    @if (notFoundCriteriaTableData()) {
+    <num-table
+      (selectedRow)="setSelectedRowItem($event)"
+      [tableData]="notFoundCriteriaTableData()"
+    ></num-table>
+    }
+  </mat-tab>
+</mat-tab-group>
+} @else {
+<div class="no-results-box">
+  <num-placeholder-box class="no-results-text">{{
+    'FEASIBILITY.BULK_SEARCH.PLACEHOLDER' | translate
+  }}</num-placeholder-box>
+</div>
+}
