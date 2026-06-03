@@ -1,0 +1,38 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+  margin-top: 24px;
+}
+
+.faq-header {
+  flex-shrink: 0;
+  padding-bottom: 4px;
+}
+
+.faq-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.faq-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: rgb(27, 27, 27);
+  margin-bottom: 4px;
+}
+
+mat-expansion-panel {
+  margin-bottom: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+mat-panel-title {
+  font-weight: 600;
+  color: rgb(27, 27, 27);
+}
