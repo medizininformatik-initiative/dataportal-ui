@@ -13,8 +13,8 @@
     @for (searchFilter of searchFilters(); track trackByFilterType($index, searchFilter)) {
     <num-search-filter
       [filter]="searchFilter"
-      (filterChange)="setElasticSearchFilter($event)"
-      (isOpen)="isFilterOpen($event)"
+      (filterChange)="onFilterChange($event)"
+      (isOpen)="onFilterOpen($event)"
     ></num-search-filter>
     }
   </div>
