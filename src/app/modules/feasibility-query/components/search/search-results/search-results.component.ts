@@ -21,6 +21,7 @@ import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
 
 @Component({
   selector: 'num-criteria-search-results',
@@ -47,7 +48,7 @@ export class SearchResultsComponent implements OnDestroy {
   )
   private searchTermDetailsService = inject(SearchTermDetailsService)
   private searchTermDetailsProviderService = inject(SearchTermDetailsProviderService)
-  private snackbarService = inject(SnackbarService)
+  private snackbarService = inject(SnackbarMessageService)
 
   readonly drawer = viewChild<MatDrawer>('drawer')
 
@@ -98,11 +99,9 @@ export class SearchResultsComponent implements OnDestroy {
     const itemId = item.originalEntry.getId()
     if (selectedIds.includes(itemId)) {
       this.selectedTableItemsService.deselect(item.originalEntry as CriteriaListEntry)
-      this.snackbarService.displayErrorMessageWithNoCode(
-        'FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE'
-      )
+      this.snackbarService.displayRemovedFromCriteriaStage()
     } else {
-      this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE')
+      this.snackbarService.displayAddedToCriteriaStage()
       this.selectedTableItemsService.setActiveItem(item.originalEntry as CriteriaListEntry)
     }
   }
@@ -125,10 +124,7 @@ export class SearchResultsComponent implements OnDestroy {
     this.loadMoreSubscription?.unsubscribe()
     this.loadMoreSubscription = this.criteriaSearchService
       .loadNextPage(this.searchText())
-      .subscribe((result: CriteriaResultList) => {
-        // results are pushed to the provider and picked up via toSignal
-        void result
-      })
+      .subscribe()
   }
 
   public openSidenav(): void {
