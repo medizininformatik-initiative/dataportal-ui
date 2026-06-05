@@ -26,16 +26,29 @@ export class CriteriaSearchService extends AbstractSimpleSearch<
     super(resultProvider)
   }
 
+  /**
+   * Starts a new search with the given search term and sets the search term as active.
+   * @param {string} searchTerm
+   * @returns {Observable<CriteriaResultList>}
+   */
   public search(searchTerm: string): Observable<CriteriaResultList> {
     this.setSearchTerm(searchTerm)
     return this.paginator.searchFirstPage(searchTerm)
   }
 
+  /**
+   * @param {string} searchTerm
+   * @returns {Observable<CriteriaResultList>}
+   */
   public loadNextPage(searchTerm: string): Observable<CriteriaResultList> {
     this.setSearchTerm(searchTerm)
     return this.paginator.loadNextPage(searchTerm)
   }
 
+  /**
+   *
+   * @returns {Observable<CriteriaResultList>
+   */
   public getSearchResults(): Observable<CriteriaResultList> {
     return this.resultProviderService.getSearchResults()
   }

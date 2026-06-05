@@ -1,9 +1,9 @@
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { finalize, Observable } from 'rxjs'
-import { Injectable, inject } from '@angular/core'
-import { SelectedTableItemsProvider } from '../../Provider/SelectedTableItemsProvider.service'
+import { inject, Injectable } from '@angular/core'
 import { LoadCriterionService } from '../LoadCriterion.service'
+import { SelectedTableItemsProvider } from '../../Provider/SelectedTableItemsProvider.service'
 
 @Injectable({
   providedIn: 'root',
@@ -14,16 +14,13 @@ export class BuildCriterionService {
   )
   private loadCriterionService = inject(LoadCriterionService)
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
   constructor() {}
 
   /**
    * Loads criteria based on the provided hashes and optionally clears the pre-stage selection.
-   * @param hashes
-   * @param clearSelection
-   * @returns
+   * @param {string[]} hashes
+   * @param {boolean} clearSelection
+   * @returns {Observable<Criterion[]>}
    */
   public buildCriteriaFromHashes(
     hashes: string[],
