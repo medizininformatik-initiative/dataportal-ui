@@ -1,10 +1,9 @@
 <num-action-bar class="bottom">
-  @if (listItemArray$ | async; as listItemArray) {
   <num-button
     type="green"
     (click)="addItemsToStage()"
-    [isDisabled]="!listItemArray.length"
-    [matBadge]="listItemArray.length"
+    [isDisabled]="!selectedItems().length"
+    [matBadge]="selectedItems().length"
     matBadgePosition="above after"
     matTooltip="{{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE_TOOLTIP' | translate }}"
     class="margin-right-3"
@@ -14,13 +13,12 @@
   <num-button
     icon="arrow-down"
     type="green"
-    [isDisabled]="(stageArray$ | async)?.length === 0 && (isFeasibilityExistent$ | async) === false"
+    [isDisabled]="!canViewStage()"
     (click)="navigateToEditor()"
-    [matBadge]="(stageArray$ | async)?.length"
+    [matBadge]="stageItems().length"
     matBadgePosition="above after"
     matTooltip="{{ 'FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE_TOOLTIP' | translate }}"
   >
     {{ 'FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE' | translate }}
   </num-button>
-  }
 </num-action-bar>
