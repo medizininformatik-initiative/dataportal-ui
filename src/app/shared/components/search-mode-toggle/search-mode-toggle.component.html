@@ -1,7 +1,7 @@
 <div class="mode-toggle" role="tablist" aria-label="Search mode selection">
   <button
     type="button"
-    class="mode-toggle__option"
+    class="mode-toggle__option search"
     role="tab"
     [class.mode-toggle__option--active]="selectedMode() === 'search'"
     [attr.aria-selected]="selectedMode() === 'search'"
@@ -13,7 +13,7 @@
 
   <button
     type="button"
-    class="mode-toggle__option"
+    class="mode-toggle__option bulksearch"
     role="tab"
     [class.mode-toggle__option--active]="selectedMode() === 'bulk-search'"
     [attr.aria-selected]="selectedMode() === 'bulk-search'"

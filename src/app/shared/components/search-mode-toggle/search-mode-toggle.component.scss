@@ -2,13 +2,19 @@
   display: inline-block;
 }
 
+.search {
+  border-radius: 99px 5px 5px 99px;
+}
+
+.bulksearch {
+  border-radius: 5px 99px 99px 5px;
+}
+
 .mode-toggle {
   display: inline-grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   border-radius: 999px;
   background: var(--color-accent-bg);
-  padding: 3px;
-  gap: 3px;
   box-shadow: var(--shadow-card);
 }
 
@@ -20,7 +26,6 @@
   min-height: 30px;
   padding: 0 12px;
   border: 0;
-  border-radius: 999px;
   background: transparent;
   color: var(--color-text-secondary);
   cursor: pointer;
