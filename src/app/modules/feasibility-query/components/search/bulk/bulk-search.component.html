@@ -13,7 +13,7 @@
     </num-header-description>
   </div>
 
-  <num-bulk-search-input (search)="submitSearch($event)"></num-bulk-search-input>
+  <num-bulk-search-input (searchTextOutput)="submitSearch($event)"></num-bulk-search-input>
 
   <num-bulk-search-results
     [result]="rawResult()"

@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core'
+import { Component, DestroyRef, inject } from '@angular/core'
 import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service'
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
@@ -7,6 +7,7 @@ import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchF
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
 import { InfoTooltipDirective } from '../../../../../shared/directives/info-tooltip.directive'
 import { map } from 'rxjs'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
 import { SearchFilterComponent } from '../../../../../shared/components/search-filter/search-filter.component'
 import { SectionNameComponent } from 'src/app/shared/components/section-name/section-name.component'
@@ -24,8 +25,9 @@ export class SearchFilterBarComponent {
   private filterProvider = inject(FilterProvider)
   private criteriaFilterFetchService = inject(CriteriaFilterFetchService)
   private criteriaSearchService = inject(CriteriaSearchService)
+  private readonly destroyRef = inject(DestroyRef)
 
-  private rawFilters = toSignal(
+  readonly searchFilters = toSignal(
     this.filterProvider.getCriteriaSearchFilters().pipe(
       map((filters: CriteriaSearchFilter[]) =>
         filters.map((f) => CriteriaSearchFilterAdapter.convertToFilterValues(f))
@@ -45,39 +47,40 @@ export class SearchFilterBarComponent {
     { initialValue: [] as SearchFilter[] }
   )
 
-  readonly resetFilterEnabled = toSignal(this.filterProvider.filtersNotSet(), {
+  readonly canResetFilters = toSignal(this.filterProvider.filtersNotSet(), {
     initialValue: true,
   })
 
-  readonly searchFilters = computed(() => this.rawFilters())
-
-  private readonly activeSearchText = toSignal(this.criteriaSearchService.getActiveSearchTerm(), {
+  private readonly searchText = toSignal(this.criteriaSearchService.getActiveSearchTerm(), {
     initialValue: '',
   })
 
-  public setElasticSearchFilter(newFilter: SearchFilter): void {
+  public onFilterChange(newFilter: SearchFilter): void {
     const filterType = newFilter.filterType.toLocaleLowerCase()
-    this.criteriaFilterFetchService.fetchAndUpdateFilters(this.activeSearchText(), filterType)
+    this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText(), filterType)
     this.filterProvider.updateFilterSelectedValues(
       newFilter.filterType as ElasticSearchFilterTypes,
       newFilter.selectedValues
     )
-    this.criteriaSearchService.search(this.activeSearchText()).subscribe()
+    this.criteriaSearchService
+      .search(this.searchText())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe()
   }
 
-  public resetFilter(): void {
+  public onResetFilters(): void {
     this.filterProvider.resetSelectedValues()
-    this.criteriaSearchService.search(this.activeSearchText()).subscribe()
+    this.criteriaSearchService
+      .search(this.searchText())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe()
   }
 
-  public isFilterOpen(event: { isOpen: boolean; targetFilter: string }): void {
+  public onFilterOpen(event: { isOpen: boolean; targetFilter: string }): void {
     if (!event.isOpen) {
       return
     }
-    this.criteriaFilterFetchService.fetchAndUpdateFilters(
-      this.activeSearchText(),
-      event.targetFilter
-    )
+    this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText(), event.targetFilter)
   }
 
   trackByFilterType(_index: number, filter: SearchFilter): string {
