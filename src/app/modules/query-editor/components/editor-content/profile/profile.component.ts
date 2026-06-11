@@ -10,6 +10,7 @@ import {
   input,
   OnDestroy,
   OnInit,
+  signal,
   TemplateRef,
   viewChild,
 } from '@angular/core'
@@ -78,9 +79,11 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     })
   }
 
+  readonly activeFieldTabId = signal(history.state?.activeTab)
+
   possibleReferencesServiceSubscription: Subscription
 
-  templates: { template: TemplateRef<any>; name: string }[] = []
+  templates: { template: TemplateRef<any>; name: string; active?: boolean }[] = []
 
   readonly fieldsTemplate = viewChild('fields', { read: TemplateRef })
   readonly timeRestrictionTemplate = viewChild('timeRestriction', { read: TemplateRef })
@@ -142,7 +145,12 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     const referenceFields = this.profile().getProfileFields().getReferenceFields()
     if (referenceFields && referenceFields.length > 0) {
       this.possibleReferencesServiceSubscription?.unsubscribe()
-      this.templates.push({ template: this.referenceTemplate(), name: 'REFERENCE' })
+      const activeTab = this.activeFieldTabId() ?? referenceFields[0].getElementId()
+      this.templates.push({
+        template: this.referenceTemplate(),
+        name: 'REFERENCE',
+        active: activeTab,
+      })
     }
   }
 
