@@ -45,7 +45,7 @@ export class DataSelectionBoxesComponent {
   private appSettingsProvider = inject(AppSettingsProviderService)
   private dataSelectionProviderService = inject(DataSelectionProviderService)
 
-  readonly profile = input<DataSelectionProfile>()
+  readonly profile = input.required<DataSelectionProfile>()
   readonly isEditable = input<boolean>()
 
   displayExpanded = false
@@ -65,11 +65,11 @@ export class DataSelectionBoxesComponent {
   })
 
   readonly unlinkedRequiredOrRecommendedReferences = computed(
-    () => this.profile()?.getProfileFields().getUnlinkedRequiredOrRecommendedReferences() ?? []
+    () => this.profile().getProfileFields().getUnlinkedRequiredOrRecommendedReferences() ?? []
   )
 
   readonly selectedReferenceFields = computed(
-    () => this.profile()?.getProfileFields().getSelectedReferenceFields() ?? []
+    () => this.profile().getProfileFields().getSelectedReferenceFields() ?? []
   )
 
   readonly menuItems = computed<MenuItemInterface[]>(() => {
