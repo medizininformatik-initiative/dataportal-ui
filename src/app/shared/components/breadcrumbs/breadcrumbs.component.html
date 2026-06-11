@@ -1,5 +1,5 @@
 <div class="breadcrumb">
-  @for (breadcrumb of breadcrumbs; track breadcrumb.url; let last = $last) {
+  @for (breadcrumb of breadcrumbs; track breadcrumb.url + '-' + $index; let last = $last) {
   <div class="breadcrumb-item" [ngClass]="{ active: last }">
     @if (!last) {
     <a (click)="navigateTo(breadcrumb.url)">
