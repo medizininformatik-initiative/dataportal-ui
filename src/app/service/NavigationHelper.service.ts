@@ -32,8 +32,8 @@ export class NavigationHelperService {
    * @param id - The query profile identifier
    * @returns
    */
-  public navigateToEditProfile(id: string): void {
-    this.router.navigate([`${UrlPaths.queryEditor.feature}`, id])
+  public navigateToEditProfile(id: string, state?: { activeTab: string }): void {
+    this.router.navigate([`${UrlPaths.queryEditor.feature}`, id], { state })
   }
 
   public navigateToEditCriterion(id: string): void {
