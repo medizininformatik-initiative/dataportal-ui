@@ -30,7 +30,7 @@ import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
 import { EditTimeRestrictionComponent } from '../../../../feasibility-query/components/editor/criterion-modal/time-restriction/edit-time-restriction.component'
 import { ConceptComponent } from '../../../../feasibility-query/components/editor/criterion-modal/concept/concept.component'
 import { TermcodeComponent } from '../../../../feasibility-query/components/editor/criterion-modal/termCode/termcode.component'
-import { ReferenceComponent } from '../../../../feasibility-query/components/editor/reference-criteria-modal/reference/reference.component'
+import { ReferenceComponent } from '../../../../feasibility-query/components/editor/reference/reference.component'
 import { QuantityComponent } from '../../../../feasibility-query/components/editor/criterion-modal/quantity/quantity.component'
 import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTranslationPipe'
 
