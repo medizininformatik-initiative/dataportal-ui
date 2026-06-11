@@ -1,7 +1,15 @@
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner'
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, input, output } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  computed,
+  input,
+  output,
+} from '@angular/core'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
@@ -31,7 +39,18 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
   readonly profileId = input<string>(undefined)
   readonly selectedReferenceFields = input<SelectedReferenceField[]>([])
   readonly updatedSelectedReferenceFields = output<SelectedReferenceField[]>()
+  readonly activeFieldTabId = input<string>(undefined)
 
+  readonly selectedIndex = computed(() => {
+    if (this.activeFieldTabId() === undefined) {
+      return 1
+    } else {
+      const index = this.referenceFields().findIndex(
+        (ref) => ref.getElementId() === this.activeFieldTabId()
+      )
+      return index >= 0 ? index + 1 : 1
+    }
+  })
   constructor() {}
 
   ngOnInit(): void {}
