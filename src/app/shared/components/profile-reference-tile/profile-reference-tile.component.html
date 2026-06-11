@@ -4,14 +4,14 @@
       <div class="label plain-label">
         {{ 'SHARED_COMPONENTS.REFERENCE_TILE.LINK_FIELD_LABEL' | translate }}
       </div>
-      <span class="value">{{ display | displayTranslation }} ({{ elementId }})</span>
+      <span class="value">{{ display() | displayTranslation }} ({{ elementId() }})</span>
     </div>
     <div>
       <fa-icon icon="arrow-right" class="arrow-icon"></fa-icon>
     </div>
     @if (parentProfile) {
     <span class="child-badge">{{ parentProfile.getDisplay() | displayTranslation }}</span>
-    } @if (filterChips && !unlinkedRequiredOrRecommendedReferences()) {
+    } @if (filterChips.length > 0 && !unlinkedRequiredOrRecommendedReferences()) {
     <div class="label-value-group">
       <div class="label">
         {{ 'SHARED_COMPONENTS.REFERENCE_TILE.LINKED_FEATURES_LABEL' | translate }}
@@ -54,11 +54,11 @@
     </span>
   </span>
   } @if (isEditable()) {
-  <div class="actions" (click)="deleteReferenceLink()">
-    {{ 'SHARED_COMPONENTS.REFERENCE_TILE.DELETE' | translate }}
-    <fa-icon class="icon" icon="trash" size="lg"></fa-icon>
-    <!--<num-button type="blue" (click)="navigateToProfile()">bearbeiten</num-button>-->
-  </div>
+  <num-menu
+    [menuItems]="menuItems()"
+    [id]="parentId()"
+    [args]="{ elementId: this.elementId() }"
+  ></num-menu>
   } @else {
   <div class="placeholder"></div>
   }
