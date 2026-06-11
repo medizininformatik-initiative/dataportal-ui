@@ -1,45 +1,32 @@
-import { Component, OnInit, inject, input } from '@angular/core'
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
-import { map, Observable, tap } from 'rxjs'
-import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { Component, computed, inject, input } from '@angular/core'
 import { DataSelectionBoxesComponent } from '../data-selection-boxes/data-selection-boxes.component'
-import { AsyncPipe } from '@angular/common'
+import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { toSignal } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'num-display-profiles',
   templateUrl: './display-profiles.component.html',
   styleUrls: ['./display-profiles.component.scss'],
   standalone: true,
-  imports: [DataSelectionBoxesComponent, AsyncPipe],
+  imports: [DataSelectionBoxesComponent],
 })
-export class DisplayProfilesComponent implements OnInit {
+export class DisplayProfilesComponent {
   private profileProvider = inject(ProfileProviderService)
   private dataSelectionProvider = inject(DataSelectionProviderService)
 
   readonly isEditable = input<boolean>(undefined)
 
-  dataSelectionProfileArray$: Observable<Array<DataSelectionProfile>>
+  readonly activeDataSelection = toSignal(this.dataSelectionProvider.getActiveDataSelection(), {
+    initialValue: null,
+  })
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
+  readonly profiles = computed(() => {
+    const dataSelection = this.activeDataSelection()
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.getDataSelectionProfiles()
-  }
-
-  /**
-   * @todo add rerender of ui component
-   */
-  private getDataSelectionProfiles() {
-    this.dataSelectionProfileArray$ = this.dataSelectionProvider
-      .getActiveDataSelection()
-      .pipe(
-        map((dataSelection) =>
-          dataSelection.getProfiles().map((profile) => this.profileProvider.getOne(profile.getId()))
-        )
-      )
-  }
+    if (!dataSelection?.getProfiles()) {
+      return []
+    }
+    return dataSelection.getProfiles()
+  })
 }
