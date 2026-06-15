@@ -8,7 +8,8 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InfoTooltipDirective } from '../../directives/info-tooltip.directive'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { MenuComponent } from '../menu/menu.component'
+import { MenuProfileReference } from '../../service/Menu/DataSelection/MenuProfileReference.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { ProfileReferenceChipData } from '../../models/FilterChips/ProfileReferenceChipData'
 import { ProfileReferenceChipsService } from '../../service/FilterChips/DataSelection/ProfileReferenceChips.service'
@@ -16,8 +17,6 @@ import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/Refre
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner'
 import { TranslateModule } from '@ngx-translate/core'
-import { MenuComponent } from '../menu/menu.component'
-import { MenuProfileReference } from '../../service/Menu/DataSelection/MenuProfileReference.service'
 @Component({
   selector: 'num-profile-reference-tile',
   templateUrl: './profile-reference-tile.component.html',
@@ -37,7 +36,6 @@ export class ProfileReferenceTileComponent implements OnInit {
   private dataSelectionProviderService = inject(DataSelectionProviderService)
   private profileProviderService = inject(ProfileProviderService)
   private profileReferenceChipsService = inject(ProfileReferenceChipsService)
-  private navigationHelperService = inject(NavigationHelperService)
   private profileReferenceMenuService = inject(MenuProfileReference)
 
   readonly referenceField = input<SelectedReferenceField>()
@@ -54,10 +52,8 @@ export class ProfileReferenceTileComponent implements OnInit {
   )
   display: Signal<Display> = computed(() => this.field()?.getDisplay())
   elementId: Signal<string> = computed(() => this.field()?.getElementId() ?? undefined)
-  parentProfile: DataSelectionProfile
-  parentProfileSelectedReferences: SelectedReferenceField[] = []
 
-  menuItems: Signal<ReturnType<MenuProfileReference['getMenuItems']>> = computed(() => {
+  readonly menuItems: Signal<ReturnType<MenuProfileReference['getMenuItems']>> = computed(() => {
     const idToUse = this.parentId() ?? ''
     return this.profileReferenceMenuService.getMenuItems(idToUse, { elementId: this.elementId() })
   })
@@ -77,40 +73,11 @@ export class ProfileReferenceTileComponent implements OnInit {
     }
   }
 
-  public navigateToProfile(): void {
-    const idToUse = this.parentId() ?? ''
-    this.navigationHelperService.navigateToEditProfile(idToUse, { activeTab: this.elementId() })
-  }
-
   public setMustHave(checked: boolean) {
     if (this.referenceField()) {
       this.referenceField().setMustHave(checked)
       this.updateReferenceField()
     }
-  }
-
-  public deleteReferenceLink(): void {
-    const profile = this.profileProviderService.getOne(this.parentId())
-    if (this.unlinkedRequiredOrRecommendedReferences()) {
-      const profileFields = profile.getProfileFields().getReferenceFields()
-      const foundField = profileFields.find(
-        (field: ReferenceField) =>
-          field.getElementId() === this.unlinkedRequiredOrRecommendedReferences().getElementId()
-      )
-      if (foundField) {
-        foundField.setRecommended(false)
-        this.updateProfile(profile)
-      }
-    } else if (this.referenceField()) {
-      const selectedReferences = profile.getProfileFields().getSelectedReferenceFields()
-      const index = this.getIndexOfSelectedReferenceField(selectedReferences)
-
-      if (index !== -1) {
-        selectedReferences.splice(index, 1)
-        this.updateProfile(profile)
-      }
-    }
-    this.deleteTrigger.emit(true)
   }
 
   private updateReferenceField(): void {
