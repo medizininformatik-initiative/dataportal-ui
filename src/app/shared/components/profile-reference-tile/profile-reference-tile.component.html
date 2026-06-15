@@ -9,9 +9,7 @@
     <div>
       <fa-icon icon="arrow-right" class="arrow-icon"></fa-icon>
     </div>
-    @if (parentProfile) {
-    <span class="child-badge">{{ parentProfile.getDisplay() | displayTranslation }}</span>
-    } @if (filterChips.length > 0 && !unlinkedRequiredOrRecommendedReferences()) {
+    @if (filterChips.length > 0 && !unlinkedRequiredOrRecommendedReferences()) {
     <div class="label-value-group">
       <div class="label">
         {{ 'SHARED_COMPONENTS.REFERENCE_TILE.LINKED_FEATURES_LABEL' | translate }}
