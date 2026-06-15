@@ -47,7 +47,7 @@ export class DataSelectionBoxesComponent {
   private appSettingsProvider = inject(AppSettingsProviderService)
   private dataSelectionProviderService = inject(DataSelectionProviderService)
 
-  readonly profile = input.required<DataSelectionProfile>()
+  readonly profile = input<DataSelectionProfile>()
   readonly isEditable = input<boolean>()
 
   displayExpanded = false
