@@ -18,7 +18,7 @@
         "LABEL": "Protokoll",
         "MODAL": {
           "CLEAR": "Fehlerprotokoll löschen",
-          "DESCRIPTION": "Folgende Validierungsprobleme wurden gefunden- bei Fragen wenden Sie sich bitte an <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
+          "DESCRIPTION": "Folgende Validierungsprobleme wurden gefunden. Bei Fragen wenden Sie sich bitte an <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
           "DOWNLOAD": "Protokoll herunterladen",
           "HEADER": "Protokoll",
           "ITEM": {
@@ -42,14 +42,14 @@
       "PROPOSAL_PORTAL": "Antragsportal",
       "PROPOSAL_PORTAL_TOOLTIP": "Antragsportal in einem neuen Tab öffnen",
       "UPGRADE_LOG": {
-        "LABEL": "Upgrade Log",
+        "LABEL": "Upgrade-Protokoll",
         "MODAL": {
           "DESCRIPTION": "Die folgenden Änderungen wurden automatisch vorgenommen - bei Fragen wenden Sie sich bitte an <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
-          "HEADER": "Upgrade Log",
+          "HEADER": "Upgrade-Protokoll",
           "ITEM": {
-            "REMOVED_FIELDS": "Das Merkmal Feld <code>{{ replaced }}</code> wurde entfernt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
+            "REMOVED_FIELDS": "Das Feld <code>{{ replaced }}</code> wurde entfernt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
             "REMOVED_PROFILE": "Das Profil <code>{{ profileName }}</code> wurde entfernt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
-            "UPGRADE_FIELDS": "Das Merkmal Feld <code>{{ replaced }}</code> wurde ersetzt durch <code>{{ replacedWith }}</code>. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
+            "UPGRADE_FIELDS": "Das Feld <code>{{ replaced }}</code> wurde durch <code>{{ replacedWith }}</code> ersetzt. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an.",
             "UPGRADE_FILTER": "Der Filter wurde aktualisiert. Bitte überprüfen Sie Ihre Selektionen und passen Sie sie gegebenenfalls an."
           }
         }
@@ -112,7 +112,7 @@
       },
       "ERROR": {
         "DOWNLOAD": "Es wurde keine Kohorte definiert, Download nicht möglich.",
-        "UPLOAD": "Datendefintion konnte nicht hochgeladen werden"
+        "UPLOAD": "Datendefinition konnte nicht hochgeladen werden"
       },
       "HEADER": "Merkmalselektion",
       "SAVE": {
@@ -174,7 +174,7 @@
       "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie erforschen möchten, und laden Sie die Datendefinition herunter. Sie können die Datei dann als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen. Diese Datei ist maschinenlesbar und darf nicht verändert werden."
     },
     "SNACKBAR": {
-      "ADDED": "Zur Datenselektion erfolgreich hinzugefügt"
+      "ADDED": "Erfolgreich zur Datenselektion hinzugefügt"
     }
   },
   "EDITOR": {
@@ -200,7 +200,7 @@
         },
         "REFERENCE": {
           "ADD": "Neues Merkmal hinzufügen",
-          "INFO": "Klicken Sie auf neues Merkmal hinzufügen, um ein neues Merkmal zu erstellen"
+          "INFO": "Klicken Sie auf „Neues Merkmal hinzufügen“, um ein neues Merkmal zu erstellen"
         },
         "SNACKBAR": {
           "SAVED": "Profil erfolgreich gespeichert",
@@ -215,13 +215,13 @@
         "FILTER": "Filter",
         "INFORMATION": "Informationen",
         "REFERENCE": "Referenzen",
-        "SELECTED_CONCEPTS": "Selektierte Code Filter ({{count}})",
+        "SELECTED_CONCEPTS": "Selektierte Code-Filter ({{count}})",
         "SELECTED_REFERENCES": "Selektierte Referenzen ({{count}})",
         "SINGLE_SEARCH": "Einzelsuche",
         "TERMCODE": "Terminologie-Codes",
         "TIMERESTRICTION": "Zeiteinschränkung",
-        "TOKEN": "Code Filter",
-        "VALUEFILTER": "Valuefilter"
+        "TOKEN": "Code-Filter",
+        "VALUEFILTER": "Wertefilter"
       }
     },
     "HEADER": {
@@ -235,8 +235,8 @@
     "FEAS-10001": "Ihr Account wurde wegen zu vieler Abfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
     "FEAS-10002": "Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut.",
     "FEAS-10003": "Sie haben zu viele Abfragen gestellt, bitte warten Sie und probieren Sie es erneut.",
-    "FEAS-10004": "Die Ergebnismenge ist zu klein → Ergebnis wird nicht angezeigt.",
-    "FEAS-10005": "Die Anzahl der Standorte, die geantwortet haben, ist zu klein → Detailergebnis wird nicht angezeigt.",
+    "FEAS-10004": "Die Ergebnismenge ist zu klein. Das Ergebnis wird nicht angezeigt.",
+    "FEAS-10005": "Die Anzahl der antwortenden Standorte ist zu klein. Das Detailergebnis wird nicht angezeigt.",
     "FEAS-10006": "Sie haben zu viele Kohorten gespeichert, bitte löschen Sie Kohortenselektionen, bevor Sie weitere speichern.",
     "VAL-20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden."
   },
@@ -248,7 +248,7 @@
         "VIEW_STAGE": "Kohortenselektion anzeigen",
         "VIEW_STAGE_TOOLTIP": "Zum Editor navigieren, um die bereitgestellten Elemente anzuzeigen"
       },
-      "HEADER": "Bulk Suche",
+      "HEADER": "Bulksuche",
       "HEADER_INFO": "Hier können Sie mehrere Codes gleichzeitig zu einem Kriterium verknüpfen. Fügen Sie eine Liste (Tab- oder Komma-getrennt) von Kodierungen eines spezifischen Systems (z. B. LOINC, ICD-10, OPS) ein und spezifizieren Sie den Kontext (z. B. Laboruntersuchung, Diagnose, Prozedur). Die Suche verknüpft die Kriterien als \"oder\".",
       "INPUT_PLACEHOLDER": "Geben Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
       "PLACEHOLDER": "Fügen Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
@@ -258,7 +258,7 @@
       "ACTION_BAR": {
         "BACK_TO_SEARCH": "Zur Einzelsuche",
         "BACK_TO_SEARCH_TOOLTIP": "Zur Suchansicht zurückkehren",
-        "BULK_SEARCH": "Zur Bulk Suche",
+        "BULK_SEARCH": "Zur Bulksuche",
         "BULK_SEARCH_TOOLTIP": "Zur Bulksuche navigieren, um mehrere Kriterien auf einmal hinzuzufügen",
         "DATA_REQUEST": "Datendefinition",
         "RETRY_AFTER": "Bitte warten {{seconds}} Sekunden",
@@ -297,7 +297,7 @@
       },
       "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
       "EDIT_SUCCESS": "Kriterium erfolgreich bearbeitet",
-      "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
+      "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse zu ",
       "EXCLUSION": "Ausschlusskriterien",
       "FILTER_SELECTION": "Ausgewählte Elemente",
       "HEADER": "Kriterieneditor",
@@ -313,8 +313,8 @@
         "AND": "und",
         "BETWEEN": "zwischen",
         "EQUAL": "gleich",
-        "GREATER_THAN": "größer",
-        "LESS_THAN": "kleiner",
+        "GREATER_THAN": "größer als",
+        "LESS_THAN": "kleiner als",
         "MANDATORY_HINT": "Pflichtfeld",
         "MAX": "Max",
         "MIN": "Min",
@@ -374,15 +374,16 @@
         "VIEW_STAGE": "Kohortenselektion anzeigen",
         "VIEW_STAGE_TOOLTIP": "Zum Editor navigieren, um die bereitgestellten Elemente anzuzeigen"
       },
-      "BULK_SEARCH": "Bulk Suche",
+      "BULK_SEARCH": "Bulksuche",
       "BUTTON": {
         "RESET": "Filter zurücksetzen"
       },
       "CLOSE_DETAILS": "Schließen",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
+      "FILTER_HEADING": "Suche verfeinern:",
       "HEADER": "Kriteriensuche",
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen. Wenn Sie die Rohdaten, pseudonymisiert, lokal analysieren möchten, fügen Sie das Kriterium \"MDAT wissenschaftlich nutzen EU DSGVO NIVEAU\" oder weitere Kriterien aus dem Modul \"EINWILLIGUNG\" hinzu.",
-      "INFO_TOOLTIP": "<b>Kontext:</b> Beschreibt den medizinischen Zusammenhang eines Suchbegriffs, z. B. Diagnose, Prozedur oder Laborwert.<br><br><b>Terminologie:</b> Gibt an, aus welchem medizinischen Klassifikationssystem ein Begriff stammt, z. B. ICD-10, OPS oder LOINC.<br><br><b>KDS-Modul:</b> Bezeichnet den Bereich des MII-Kerndatensatzes, in dem die Daten strukturiert gespeichert sind.",
+      "INFO_TOOLTIP": "<b>KDS-Module:</b> Bezeichnet den Bereich des MII-Kerndatensatzes, in dem die Daten strukturiert gespeichert sind.<br><br><b>Kontext:</b> Beschreibt den medizinischen Zusammenhang eines Suchbegriffs, z. B. Diagnose, Prozedur oder Laborwert.<br><br><b>Terminologie:</b> Gibt an, aus welchem medizinischen Klassifikationssystem ein Begriff stammt, z. B. ICD-10, OPS oder LOINC.",
       "LABEL": "Code oder Suchbegriff eingeben",
       "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
       "SEARCH_BUTTON": "Suchen",
@@ -405,7 +406,7 @@
       "TITLE": "Was sind Felder?"
     },
     "REFERENCES": {
-      "DESCRIPTION": "Referenzen verknüpfen verschiedene FHIR-Ressourcen miteinander. Beispielsweise kann eine Observation (Laborwert) auf einen Patient oder eine Condition (Diagnose) referenzieren. Durch die Auswahl von Referenzfeldern können Sie komplexe Beziehungen zwischen verschiedenen medizinischen Daten abbilden und so mehrstufige Suchanfragen erstellen.",
+      "DESCRIPTION": "Referenzen verknüpfen verschiedene FHIR-Ressourcen miteinander. Beispielsweise kann eine Observation (Laborwert) auf einen Patienten oder eine Condition (Diagnose) referenzieren. Durch die Auswahl von Referenzfeldern können Sie komplexe Beziehungen zwischen verschiedenen medizinischen Daten abbilden und so mehrstufige Suchanfragen erstellen.",
       "EXTENDED_DESCRIPTION": "Referenzen ermöglichen es, Beziehungen zwischen verschiedenen Ressourcen in FHIR-Profilen herzustellen. Sie dienen dazu, Verknüpfungen zu anderen Profilen oder Ressourcen herzustellen, um komplexe Datenstrukturen abzubilden. In einem FHIR-Profil können Referenzfelder definiert werden, die auf andere Profile verweisen. Dadurch wird sichergestellt, dass die referenzierten Ressourcen den definierten Standards und Anforderungen entsprechen. Referenzen sind essenziell für die Interoperabilität und Konsistenz medizinischer Daten in FHIR-basierten Systemen.",
       "TAB_TITLE": "Was sind Referenzen?",
       "TITLE": "Was sind Referenzen?"
@@ -422,7 +423,7 @@
     },
     "TOKEN_FILTER": {
       "DESCRIPTION": "Token-Filter ermöglichen die Auswahl standardisierter medizinischer Begriffe (Konzepte) aus Terminologiesystemen wie ICD-10, SNOMED CT oder LOINC. Diese Codes beschreiben Diagnosen, Befunde oder Laborwerte eindeutig und maschinenlesbar. Sie können einzelne Codes suchen, mehrere Codes gleichzeitig hinzufügen (Bulk-Search) oder aus vordefinierten ValueSets auswählen. Dadurch werden Suchanfragen präzise und interoperabel.",
-      "TITLE": "Was ist ein Konzepte?"
+      "TITLE": "Was ist ein Token-Filter?"
     }
   },
   "LANGUAGE": {
@@ -614,9 +615,9 @@
       "RESULT": "Machbarkeitsabfrage - Ergebnis",
       "SEARCH": "Machbarkeitsabfrage - Suche"
     },
-    "QUERY_EDITOR": "Merkmalselektion - Query Editor",
-    "QUERY_EDITOR_CRITERION": "Kohortenselektion - Kriterium Editor",
-    "QUERY_EDITOR_FEATURE": "Merkmalselektion - Merkmal Editor",
+    "QUERY_EDITOR": "Merkmalselektion - Abfrageeditor",
+    "QUERY_EDITOR_CRITERION": "Kohortenselektion - Kriterieneditor",
+    "QUERY_EDITOR_FEATURE": "Merkmalselektion - Merkmaleditor",
     "QUERY_EDITOR_REFERENCE": "Kohortenselektion - Referenz",
     "SAVED_QUERIES": "Gespeicherte Abfragen"
   },
@@ -628,15 +629,15 @@
     "20003": "Die Zeitbeschränkung ist ungültig. beforeDate darf nicht vor afterDate liegen.",
     "20004": "Die ausgewählte Einheit ist ungültig.",
     "20005": "Der ausgewählte Wert liegt nicht innerhalb der definierten Grenzen.",
-    "20006": "Der ausgewählte Code ist nicht Teil der referenzierten criteria sets.",
-    "20007": "Der ausgewählte Code ist nicht Teil der referenzierten value sets.",
+    "20006": "Der ausgewählte Code ist nicht Teil der referenzierten Criteria Sets.",
+    "20007": "Der ausgewählte Code ist nicht Teil der referenzierten Value Sets.",
     "20008": "Der minimale Wert muss kleiner als der maximale Wert sein.",
-    "50001": "UiProfil wurde nicht gefunden.",
-    "1000001": "Code-Filter wurde im value set nicht gefunden.",
+    "50001": "UI-Profil wurde nicht gefunden.",
+    "1000001": "Code-Filter wurde im Value Set nicht gefunden.",
     "2000001": "Attributgruppe mit groupReference wurde nicht gefunden.",
     "2000002": "attributeRef wurde im Ontologieprofil der Attributgruppe nicht gefunden.",
-    "2000003": "Code-Filter wurde im value set nicht gefunden.",
-    "2000004": "Code-Filter wurde im value set nicht gefunden.",
+    "2000003": "Code-Filter wurde im Value Set nicht gefunden.",
+    "2000004": "Code-Filter wurde im Value Set nicht gefunden.",
     "2000005": "Verknüpfte Gruppe fehlt für Attribut vom Typ Referenz.",
     "2000006": "Verknüpfte Gruppe wurde in CRTDL nicht gefunden.",
     "2000007": "Das Enddatum muss nach dem Startdatum liegen.",
