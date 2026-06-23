@@ -110,6 +110,10 @@
     "DATASELECTION": {
       "HEADER": "Create Data Selection",
       "BUTTON": "Go to Editor"
+    },
+    "UPLOAD_DATADEFINITION": {
+      "HEADER": "Upload of existing Data Definition",
+      "BUTTON": "Open File Selection"
     }
   },
   "BREADCRUMB": {

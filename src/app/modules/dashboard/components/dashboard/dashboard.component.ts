@@ -6,6 +6,9 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
 import { HeaderDescriptionComponent } from 'src/app/shared/components/header-description/header-description.component'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { TranslateModule } from '@ngx-translate/core'
+import { UploadService } from '../../../../service/Upload/Upload.service'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: 'num-dashboard',
@@ -18,11 +21,16 @@ import { TranslateModule } from '@ngx-translate/core'
     HeaderDescriptionComponent,
     ButtonComponent,
     DashboardFaqComponent,
+    FontAwesomeModule,
+    MatTooltip,
   ],
 })
 export class DashboardComponent implements OnInit {
   private appSettingsProviderService = inject(AppSettingsProviderService)
   private navigationHelperService = inject(NavigationHelperService)
+
+  private uploadService = inject(UploadService)
+  public uploadDisabled: boolean = false
 
   ngOnInit(): void {}
 
@@ -51,5 +59,10 @@ export class DashboardComponent implements OnInit {
 
   public navigateToFeasibilityEditor() {
     this.navigationHelperService.navigateToFeasibilityQueryEditor()
+  }
+
+  public upload(event: Event): void {
+    const file: File = (event.target as HTMLInputElement).files[0]
+    this.uploadService.uploadCRTDL(file)
   }
 }
