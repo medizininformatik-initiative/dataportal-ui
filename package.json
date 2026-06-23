@@ -11,7 +11,10 @@
     "lint:fix": "ng lint --fix",
     "pretty-quick": "pretty-quick --pattern \"src/**/*.{scss,html}\"",
     "e2e": "ng e2e",
-    "cypress": "npx cypress open"
+    "cypress": "npx cypress open",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "private": true,
   "dependencies": {
@@ -93,7 +96,8 @@
     "ts-jest": "^29.4.11",
     "ts-node": "~10.4.0",
     "typescript": "~5.8.3",
-    "uuid": "~9.0.0"
+    "uuid": "~9.0.0",
+    "vitepress": "^2.0.0-alpha.15"
   },
   "husky": {
     "hooks": {
