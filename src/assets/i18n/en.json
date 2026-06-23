@@ -564,6 +564,14 @@
     "TABLE": {
       "ADD": "Add",
       "AVAILABILITY": "Availability",
+      "AVAILABILITY_STATUS": {
+        "UNKNOWN": "Unknown",
+        "VERY_LOW": "Very low",
+        "LOW": "Low",
+        "MEDIUM": "Medium",
+        "HIGH": "High",
+        "VERY_HIGH": "Very high"
+      },
       "CONTEXT": "Context",
       "DISPLAY": "Display",
       "EMPTY": "",

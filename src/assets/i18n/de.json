@@ -553,6 +553,14 @@
     "TABLE": {
       "ADD": "Hinzufügen",
       "AVAILABILITY": "Verfügbarkeit",
+      "AVAILABILITY_STATUS": {
+        "UNKNOWN": "Unbekannt",
+        "VERY_LOW": "Sehr niedrig",
+        "LOW": "Niedrig",
+        "MEDIUM": "Mittel",
+        "HIGH": "Hoch",
+        "VERY_HIGH": "Sehr hoch"
+      },
       "CONTEXT": "Kontext",
       "DISPLAY": "Anzeige",
       "EMPTY": "",
