@@ -1,7 +1,7 @@
 export type AvailabilityStatusType =
-  | 'unknown'
-  | 'very low'
-  | 'low'
-  | 'medium'
-  | 'high'
-  | 'very high';
+  | 'UNKNOWN'
+  | 'VERY_LOW'
+  | 'LOW'
+  | 'MEDIUM'
+  | 'HIGH'
+  | 'VERY_HIGH'
