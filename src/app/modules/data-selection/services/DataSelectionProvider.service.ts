@@ -135,5 +135,6 @@ export class DataSelectionProviderService {
   public clearDataSelection(): void {
     const dataSelection: DataSelection = new DataSelection([], uuidv4())
     this.setDataSelectionByUID(dataSelection.getId(), dataSelection, true)
+    this.activeDataSelection.setActiveDataSelectionID(dataSelection.getId())
   }
 }
