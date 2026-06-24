@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 20px;
+  width: 45%;
 }
 
 .label-value-group .label {
@@ -76,6 +77,10 @@
     border-radius: var(--border-radius-card);
     font-size: var(--font-size-sm);
     font-weight: 500;
+    cursor: pointer;
+  }
+  .warning-badge:hover {
+    text-decoration: underline;
   }
 }
 

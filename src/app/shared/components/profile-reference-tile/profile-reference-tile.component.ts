@@ -17,6 +17,7 @@ import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/Refre
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner'
 import { TranslateModule } from '@ngx-translate/core'
+import { MenuProfileReferenceFunctionsService } from '../../service/Menu/DataSelection/MenuProfileReferenceFunctions.service'
 @Component({
   selector: 'num-profile-reference-tile',
   templateUrl: './profile-reference-tile.component.html',
@@ -37,6 +38,7 @@ export class ProfileReferenceTileComponent implements OnInit {
   private profileProviderService = inject(ProfileProviderService)
   private profileReferenceChipsService = inject(ProfileReferenceChipsService)
   private profileReferenceMenuService = inject(MenuProfileReference)
+  private menuServiceDataSelectionFunctions = inject(MenuProfileReferenceFunctionsService)
 
   readonly referenceField = input<SelectedReferenceField>()
   readonly unlinkedRequiredOrRecommendedReferences = input<ReferenceField>(undefined)
@@ -105,5 +107,11 @@ export class ProfileReferenceTileComponent implements OnInit {
         field.getElementId() === this.referenceField().getElementId()
     )
     return index
+  }
+
+  navigateToReferenceField(): void {
+    this.menuServiceDataSelectionFunctions.navigate(this.parentId(), {
+      elementId: this.elementId(),
+    })
   }
 }

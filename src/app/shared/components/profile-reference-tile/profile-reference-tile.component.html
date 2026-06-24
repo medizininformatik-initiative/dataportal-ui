@@ -22,7 +22,7 @@
       </span>
     </div>
     } @if (unlinkedRequiredOrRecommendedReferences()) {
-    <span class="warning-badge">
+    <span class="warning-badge" (click)="navigateToReferenceField()">
       {{ 'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED' | translate }}
       <span
         class="info-icon"
