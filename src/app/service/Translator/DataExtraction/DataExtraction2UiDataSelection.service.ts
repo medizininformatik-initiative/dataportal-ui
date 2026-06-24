@@ -201,7 +201,7 @@ export class DataExtraction2UiDataSelectionService {
     externProfiles: AttributeGroupsData[]
   ): void {
     const remainingExternProfiles = [...externProfiles]
-
+    this.idMap = []
     dataSelectionProfiles.forEach((profile) => {
       const url = profile.getUrl()
       const index = remainingExternProfiles.findIndex((extern) => extern.groupReference === url)
