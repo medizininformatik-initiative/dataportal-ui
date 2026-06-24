@@ -27,7 +27,10 @@
       @if (fieldsFilterChips().length > 0) {
       <num-filter-chips [filterChips]="fieldsFilterChips()"></num-filter-chips>
       } @if (!fieldsFilterChips().length) {
-      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate }}</span>
+      <num-missing-filter
+        [missingElementType]="'DATASELECTION_FIELD'"
+        [elementId]="profile().getId()"
+      ></num-missing-filter>
       }
     </div>
   </div>
