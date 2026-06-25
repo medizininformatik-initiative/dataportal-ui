@@ -106,6 +106,6 @@ export const routes: Routes = [
       title: 'TAB_TITLE.DATA_PROTECTION',
     },
   },
-  { path: '', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
-  { path: '**', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
+  { path: '', redirectTo: BasePaths.home, pathMatch: 'full' },
+  { path: '**', redirectTo: BasePaths.home, pathMatch: 'full' },
 ]
