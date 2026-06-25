@@ -3,6 +3,9 @@ import { TranslateModule } from '@ngx-translate/core'
 import { MenuServiceCriterionFunctions } from '../../service/Menu/Criterion/MenuServiceCriterionFunctions'
 import { MenuServiceDataSelectionFunctions } from '../../service/Menu/DataSelection/MenuServiceDataSelectionFunctions'
 
+/**
+ * @todo implemnent also for not linked in features
+ */
 export type MissingElement =
   | 'CRITERIUM_FILTER'
   | 'DATASELECTION_FILTER'
