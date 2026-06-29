@@ -97,7 +97,7 @@ export class ProfileReferenceTileComponent implements OnInit {
 
   private updateProfile(profile: DataSelectionProfile): void {
     const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
-    this.profileProviderService.addOne(updatedProfile)
+    this.profileProviderService.setOne(updatedProfile)
     this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile)
   }
 
