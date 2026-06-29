@@ -1,40 +1,21 @@
-import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
 import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service'
 import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteria.service'
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry'
-import { CriteriaBulkFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkFoundListEntryAdapter'
-import { CriteriaBulkNotFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkNotFoundListEntryAdapter'
+import { Component, DestroyRef, inject, signal } from '@angular/core'
 import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList'
-import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
-import { map, Observable, of, Subscription, tap } from 'rxjs'
-import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
 import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component'
 import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriteria.service'
-import { TableData } from 'src/app/shared/models/TableData/TableData'
-import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
-import { HeaderComponent } from '../../../../../shared/components/header/header.component'
-import { SearchModeToggleComponent } from '../../../../../shared/components/search-mode-toggle/search-mode-toggle.component'
-import { HeaderDescriptionComponent } from '../../../../../shared/components/header-description/header-description.component'
-import { MatInput } from '@angular/material/input'
-import { FormsModule } from '@angular/forms'
-import { SearchFilterComponent } from '../../../../../shared/components/search-filter/search-filter.component'
-import { ButtonComponent } from '../../../../../shared/components/button/button.component'
-import { MatTooltip } from '@angular/material/tooltip'
-import { TableComponent } from '../../../../../shared/components/table/table.component'
-import { PlaceholderBoxComponent } from '../../../../../shared/components/placeholder-box/placeholder-box.component'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { BulkSearchActionBarComponent } from '../action-bar/bulk-search/bulk-search-action-bar.component'
-import { AsyncPipe } from '@angular/common'
+import { BulkSearchInputComponent } from './input/bulk-search-input.component'
+import { BulkSearchResultsComponent, SelectedTab } from './results/bulk-search-results.component'
+import { HeaderComponent } from '../../../../../shared/components/header/header.component'
+import { HeaderDescriptionComponent } from '../../../../../shared/components/header-description/header-description.component'
+import { SearchModeToggleComponent } from '../../../../../shared/components/search-mode-toggle/search-mode-toggle.component'
 import { TranslateModule } from '@ngx-translate/core'
 
-export type SelectedTab = 'FOUND' | 'NOTFOUND'
-/**
- * Component for bulk criteria search functionality.
- * Allows users to search for multiple criteria at once and manage selected entries.
- */
+export type { SelectedTab }
+
 @Component({
   selector: 'num-feasibility-query-bulk-search',
   templateUrl: './bulk-search.component.html',
@@ -44,209 +25,39 @@ export type SelectedTab = 'FOUND' | 'NOTFOUND'
     HeaderComponent,
     SearchModeToggleComponent,
     HeaderDescriptionComponent,
-    MatInput,
-    FormsModule,
-    SearchFilterComponent,
-    ButtonComponent,
-    MatTooltip,
-    MatTabGroup,
-    MatTab,
-    TableComponent,
-    PlaceholderBoxComponent,
+    BulkSearchInputComponent,
+    BulkSearchResultsComponent,
     BulkSearchActionBarComponent,
-    AsyncPipe,
     TranslateModule,
   ],
 })
-export class FeasibilityQueryBulkSearchComponent implements OnInit, OnDestroy {
-  private bulkCriteriaSearchProvider = inject(BulkCriteriaSearchProvider)
-  private bulkCriteriaSearchFilterService = inject(BulkCriteriaSearchFilterService)
-  private searchFilterProvider = inject(FilterProvider)
-  private bulkCriteriaService = inject(BulkCriteriaService)
-  private selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
-  private navigationHelperService = inject(NavigationHelperService)
+export class FeasibilityQueryBulkSearchComponent {
+  private readonly destroyRef = inject(DestroyRef)
+  private readonly bulkCriteriaSearchProvider = inject(BulkCriteriaSearchProvider)
+  private readonly bulkCriteriaService = inject(BulkCriteriaService)
+  private readonly selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
+  private readonly navigationHelperService = inject(NavigationHelperService)
 
-  foundCriteriaTableData: TableData
-  notFoundCriteriaTableData: TableData
-  searchFilters$: Observable<SearchFilter[]> = of([])
-  searchResultsFound = false
-  bulkSearchTermInput: string
-  filterMap: Map<string, string[]> = new Map<string, string[]>()
-  filterAreSet = false
-  foundCount: number
-  notFoundCount: number
-  searchtype: SelectedTab = 'FOUND'
-  private subscriptions = new Subscription()
-  private isInitialized = false
+  readonly rawResult = signal<CriteriaBulkResultList | null>(null)
+  readonly searchtype = signal<SelectedTab>('FOUND')
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {
-    this.getBulkCriteriaSearchFilter()
-  }
-
-  ngOnInit(): void {
-    this.initializeSelectedEntriesSubscription()
-    this.getBulkCriteriaSearchFilter()
-    this.bulkSearchTermInput = this.bulkCriteriaSearchProvider.getSearchText()
-    if (this.shouldAutoSubmitSearch()) {
-      this.submitSearch()
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe()
-  }
-
-  /**
-   * Submits the bulk search with the current search term input.
-   */
-  public submitSearch(): void {
+  submitSearch(text: string): void {
     this.selectedBulkCriteriaService.clear()
-    this.bulkCriteriaSearchProvider.setSearchText(this.bulkSearchTermInput)
-    const searchSub = this.bulkCriteriaService
-      .search(this.bulkSearchTermInput)
-      .pipe(
-        tap((response: CriteriaBulkResultList) => {
-          this.foundCount = response.getFound().length
-          this.notFoundCount = response.getNotFound().length
-          this.searchResultsFound = this.foundCount > 0 || this.notFoundCount > 0
-        })
-      )
+    this.bulkCriteriaSearchProvider.setSearchText(text)
+    this.bulkCriteriaService
+      .search(text)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((response: CriteriaBulkResultList) => {
-        this.handleSearchResults(response)
+        this.selectedBulkCriteriaService.addSelected(response.getFound())
+        this.selectedBulkCriteriaService.setUiProfileId(response.getUiProfileId())
+        this.rawResult.set(response)
       })
-
-    this.subscriptions.add(searchSub)
   }
 
-  /**
-   * Found tab equal index 0
-   * NotFound tab equal index 1
-   * @param tabEvent
-   */
-  public tabChange(tabEvent: MatTabChangeEvent): void {
-    if (tabEvent.index === 0) {
-      this.searchtype = 'FOUND'
-    } else if (tabEvent.index === 1) {
-      this.searchtype = 'NOTFOUND'
-    }
-  }
-  /**
-   * Sets the selected row item in the bulk criteria selection.
-   * @param item - The table data row that was selected
-   */
-  public setSelectedRowItem(item: TableRowData): void {
-    const criteriaBulkEntry = item.originalEntry as CriteriaBulkEntry
-    this.selectedBulkCriteriaService.toggle(criteriaBulkEntry)
-  }
-
-  /**
-   * Retrieves and sets up the bulk criteria search filters.
-   */
-  public getBulkCriteriaSearchFilter(): void {
-    this.searchFilters$ = this.bulkCriteriaSearchFilterService.getFilter().pipe(
-      tap((searchFilters: SearchFilter[]) => this.populateFilterMap(searchFilters)),
-      tap(() => this.updateFilterStatus())
-    )
-  }
-
-  /**
-   * Updates the elastic search filter with new values.
-   * @param newFilter - The new search filter to apply
-   */
-  public setElasticSearchFilter(newFilter: SearchFilter): void {
-    this.filterMap.set(newFilter.filterType, newFilter.selectedValues as string[])
-    this.updateFilterStatus()
-    const selectedValues = Array.isArray(newFilter.selectedValues)
-      ? newFilter.selectedValues
-      : [newFilter.selectedValues]
-
-    this.searchFilterProvider.updateFilterSelectedValues(newFilter.filterType, selectedValues)
-  }
-
-  /**
-   * Initializes the subscription for selected entries updates.
-   */
-  private initializeSelectedEntriesSubscription(): void {
-    const selectedSub = this.selectedBulkCriteriaService
-      .getSearchResults()
-      .pipe(
-        map((entries: CriteriaBulkEntry[]) => {
-          this.updateRowSelectionStatus(entries)
-        })
-      )
-      .subscribe()
-
-    this.subscriptions.add(selectedSub)
-  }
-
-  /**
-   * Determines if the search should be auto-submitted on initialization.
-   * @returns True if search should be submitted automatically
-   */
-  private shouldAutoSubmitSearch(): boolean {
-    return !!(
-      this.bulkSearchTermInput &&
-      this.bulkSearchTermInput.length > 0 &&
-      this.filterMap.size > 1
-    )
-  }
-
-  /**
-   * Handles the search results by updating selected criteria and adapted data.
-   * @param response - The bulk criteria result list from the search
-   */
-  private handleSearchResults(response: CriteriaBulkResultList): void {
-    this.selectedBulkCriteriaService.addSelected(response.getFound())
-    this.selectedBulkCriteriaService.setUiProfileId(response.getUiProfileId())
-    this.foundCriteriaTableData = new CriteriaBulkFoundListEntryAdapter().adapt(response.getFound())
-    this.notFoundCriteriaTableData = new CriteriaBulkNotFoundListEntryAdapter().adapt(
-      response.getNotFound()
-    )
-  }
-
-  /**
-   * Updates the checkbox selection status for table rows based on selected entries.
-   * @param entries - Array of selected criteria bulk entries
-   */
-  private updateRowSelectionStatus(entries: CriteriaBulkEntry[]): void {
-    if (!this.foundCriteriaTableData?.body?.rows) {
-      return
-    }
-    this.foundCriteriaTableData.body.rows.forEach((row) => {
-      const checkboxCell = row.cells.find(
-        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
-      )
-      if (checkboxCell) {
-        checkboxCell.isSelected = entries.some((item) => item.getId() === row.id)
-      }
-    })
-  }
-
-  /**
-   * Populates the filter map from search filters.
-   * @param searchFilters - Array of search filters
-   */
-  private populateFilterMap(searchFilters: SearchFilter[]): void {
-    searchFilters.forEach((filter) => {
-      this.filterMap.set(filter.filterType, filter.selectedValues as string[])
-    })
-  }
-
-  /**
-   * Updates the filter status based on whether all filters have selected values.
-   */
-  private updateFilterStatus(): void {
-    const filterArray = Array.from(this.filterMap)
-    this.filterAreSet = filterArray.every(([key, values]) => values.length > 0)
-  }
-
-  public searchModeChange(mode: SearchMode): void {
+  searchModeChange(mode: SearchMode): void {
     if (mode === 'bulk-search') {
       this.navigationHelperService.navigateToFeasibilityQueryBulkSearch()
-    } else if (mode === 'search') {
+    } else {
       this.navigationHelperService.navigateToFeasibilityQuerySearch()
     }
   }

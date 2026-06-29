@@ -1,4 +1,4 @@
-import { AvailabilityStatusType } from './AvailabilityStatusType';
+import { AvailabilityStatusType } from './AvailabilityStatusType'
 
 export class Availability {
   /**
@@ -6,19 +6,19 @@ export class Availability {
    * Values that do not match any of the predefined thresholds will default to 'unknown'.
    */
   private static readonly MAP: Record<number, AvailabilityStatusType> = {
-    0: 'unknown',
-    10: 'very low',
-    100: 'low',
-    1000: 'medium',
-    10000: 'high',
-    100000: 'very high',
-    1000000: 'very high',
-  };
+    0: 'UNKNOWN',
+    10: 'VERY_LOW',
+    100: 'LOW',
+    1000: 'MEDIUM',
+    10000: 'HIGH',
+    100000: 'VERY_HIGH',
+    1000000: 'VERY_HIGH',
+  }
 
   constructor(private readonly value: number) {}
 
   public getValue(): number {
-    return this.value;
+    return this.value
   }
 
   /**
@@ -27,6 +27,6 @@ export class Availability {
    * @returns The availability status.
    */
   public getStatus(): AvailabilityStatusType {
-    return Availability.MAP[this.value] ?? 'unknown';
+    return Availability.MAP[this.value] ?? 'UNKNOWN'
   }
 }

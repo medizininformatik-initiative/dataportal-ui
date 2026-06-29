@@ -1,19 +1,19 @@
+import { ActionBarComponent } from '../../../../../../shared/components/action-bar/action-bar.component'
 import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCriterionService'
-import { Component, OnInit, inject } from '@angular/core'
+import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
+import { Component, computed, DestroyRef, inject } from '@angular/core'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
-import { map, Observable, of } from 'rxjs'
+import { MatBadge } from '@angular/material/badge'
+import { MatTooltip } from '@angular/material/tooltip'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service'
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
 import { StageProviderService } from 'src/app/service/Provider/StageProvider.service'
-import { ActionBarComponent } from '../../../../../../shared/components/action-bar/action-bar.component'
-import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
-import { MatBadge } from '@angular/material/badge'
-import { MatTooltip } from '@angular/material/tooltip'
-import { AsyncPipe } from '@angular/common'
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
+import { tap } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -21,55 +21,54 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './search-action-bar.component.html',
   styleUrls: ['./search-action-bar.component.scss'],
   standalone: true,
-  imports: [ActionBarComponent, ButtonComponent, MatBadge, MatTooltip, AsyncPipe, TranslateModule],
+  imports: [ActionBarComponent, ButtonComponent, MatBadge, MatTooltip, TranslateModule],
 })
-export class SearchActionBarComponent implements OnInit {
-  private listItemSelectionService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
+export class SearchActionBarComponent {
+  private readonly listItemService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
     SelectedTableItemsProvider
   )
-  private buildCriterionService = inject(BuildCriterionService)
-  private stageProviderService = inject(StageProviderService)
-  private navigationHelperService = inject(NavigationHelperService)
-  private listItemService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
-    SelectedTableItemsProvider
+  private readonly buildCriterionService = inject(BuildCriterionService)
+  private readonly stageProviderService = inject(StageProviderService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
+  private readonly feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
+  private readonly feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private readonly snackbarService = inject(SnackbarService)
+  private readonly destroyRef = inject(DestroyRef)
+
+  readonly selectedItems = toSignal(this.listItemService.getItems(), {
+    initialValue: [] as CriteriaListEntry[],
+  })
+
+  readonly stageItems = toSignal(this.stageProviderService.getAll(), {
+    initialValue: [] as string[],
+  })
+
+  readonly isFeasibilityExistent = toSignal(
+    this.feasibilityQueryValidation.getIsFeasibilityQuerySet(),
+    { initialValue: false }
   )
-  private feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
-  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
-  private snackbarService = inject(SnackbarService)
 
-  listItemArray$: Observable<CriteriaListEntry[]> = of([])
-  isFeasibilityExistent$: Observable<boolean>
-  stageArray$: Observable<Array<string>> = of([])
+  readonly canViewStage = computed(
+    () => this.stageItems().length > 0 || this.isFeasibilityExistent()
+  )
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {}
-
-  ngOnInit() {
-    this.listItemArray$ = this.listItemSelectionService.getItems()
-    this.stageArray$ = this.stageProviderService.getAll()
-    this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet()
-  }
-
-  public addItemsToStage() {
+  public addItemsToStage(): void {
     const ids = this.listItemService.getIds()
     this.buildCriterionService
-      .buildCriteriaFromHashes(ids)
+      .buildCriteriaFromHashes(ids, true)
       .pipe(
-        map((criteria: Criterion[]) => {
+        tap((criteria: Criterion[]) => {
           this.feasibilityQueryProviderHub.addCriteriaToCriterionProvider(criteria)
           this.feasibilityQueryProviderHub.addCriteriaToStage(criteria)
-          return criteria
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((criteria: Criterion[]) => {
+      .subscribe(() =>
         this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_COHORT')
-        this.listItemService.clear()
-      })
+      )
   }
 
-  public navigateToEditor() {
+  public navigateToEditor(): void {
     this.navigationHelperService.navigateToFeasibilityQueryEditor()
   }
 }
