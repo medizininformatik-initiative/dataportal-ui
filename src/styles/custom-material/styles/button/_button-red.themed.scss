@@ -5,7 +5,7 @@
   $primary: map-get($theme, primary);
 
   .num-button.red {
-    min-width: 207px !important;
+    min-width: 119px !important;
     line-height: 24px;
     border: none;
     background-color: mat.m2-get-color-from-palette($primary, 'red');
@@ -33,6 +33,26 @@
       color: mat.m2-get-color-from-palette($primary, 'red');
       box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($primary, 'red');
       cursor: unset;
+    }
+
+    &.icon {
+      min-width: 50px !important;
+      width: 50px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      fa-icon {
+        margin: 0;
+      }
+
+      &.disabled {
+        background-color: mat.m2-get-color-from-palette($primary, 50);
+        color: mat.m2-get-color-from-palette($primary, 'red');
+        box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($primary, 'red');
+        cursor: not-allowed;
+      }
     }
   }
 }
