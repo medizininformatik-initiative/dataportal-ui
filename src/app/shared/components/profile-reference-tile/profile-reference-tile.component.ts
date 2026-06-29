@@ -138,7 +138,7 @@ export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   private updateProfile(profile: DataSelectionProfile): void {
     this.dataSelectionProviderSubscription?.unsubscribe()
     const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
-    this.profileProviderService.addOne(updatedProfile)
+    this.profileProviderService.setOne(updatedProfile)
     this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile)
   }
 
