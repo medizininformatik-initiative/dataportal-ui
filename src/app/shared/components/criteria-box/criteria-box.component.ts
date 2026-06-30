@@ -19,6 +19,7 @@ import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/Ref
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { TranslateModule } from '@ngx-translate/core'
+import { MissingFilterComponent } from '../missing-filter/missing-filter.component'
 
 @Component({
   selector: 'num-criteria-box',
@@ -37,6 +38,7 @@ import { TranslateModule } from '@ngx-translate/core'
     AsyncPipe,
     TranslateModule,
     DisplayTranslationPipe,
+    MissingFilterComponent,
   ],
 })
 export class CriteriaBoxComponent implements OnInit {

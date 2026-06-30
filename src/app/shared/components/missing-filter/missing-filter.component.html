@@ -1,0 +1,6 @@
+<div class="warning-row">
+  <img [src]="warningSignUrl" class="img-layout" />
+  <span class="warning-message" (click)="navigateToEditPage()">
+    {{ warningMessage() | translate }}
+  </span>
+</div>

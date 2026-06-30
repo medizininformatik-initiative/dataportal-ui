@@ -19,6 +19,7 @@ import { ProfileReferenceTileComponent } from '../../../../../../shared/componen
 import { RemoveReferenceService } from 'src/app/service/RemoveReference.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { MissingFilterComponent } from '../../../../../../shared/components/missing-filter/missing-filter.component'
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -35,6 +36,7 @@ import { TranslateModule } from '@ngx-translate/core'
     ProfileReferenceTileComponent,
     TranslateModule,
     DisplayTranslationPipe,
+    MissingFilterComponent,
   ],
 })
 export class DataSelectionBoxesComponent {
