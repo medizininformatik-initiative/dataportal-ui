@@ -1,6 +1,7 @@
 <div class="warning-row">
-  <img [src]="warningSignUrl" class="img-layout" />
-  <span class="warning-message" (click)="navigateToEditPage()">
-    {{ warningMessage() | translate }}
+  <ng-content select="[icon]"></ng-content>
+  <span class="warning-message">
+    <ng-content select="[message]"></ng-content>
   </span>
+  <ng-content select="[tooltip]"></ng-content>
 </div>
