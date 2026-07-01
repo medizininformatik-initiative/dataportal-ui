@@ -1,13 +1,14 @@
 .linked-badge {
   display: inline-flex;
   align-items: center;
-  width: 170px;
+  width: 208px;
   height: 29px;
   background: #ffffff;
   border-radius: 20px;
   position: relative;
-  top: -24px;
+  top: -14px;
   margin-left: 3%;
+  box-shadow: var(--shadow-card);
 
   .icon {
     display: flex;
@@ -26,6 +27,7 @@
     background: var(--color-accent-border);
     border-radius: 10px;
     margin-right: 8px;
+    margin-left: 8px;
   }
 
   .text {

@@ -26,6 +26,8 @@ export class MenuComponent implements OnInit {
 
   readonly menuItems = input<MenuItemInterface[]>([])
 
+  readonly args = input<Record<string, unknown>>({})
+
   constructor() {}
 
   ngOnInit() {}

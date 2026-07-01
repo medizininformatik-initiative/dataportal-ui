@@ -21,8 +21,7 @@ export class MenuServiceDataSelectionFunctions {
 
   constructor() {}
 
-  public redirectToDataSelectionEditPage(id: string) {
-    //this.stagedProfileService.initialize(id);
+  public redirectToDataSelectionEditPage(id: string, args?: Record<string, unknown>) {
     this.navigationHelperService.navigateToEditProfile(id)
   }
   /**

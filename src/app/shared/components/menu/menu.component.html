@@ -23,7 +23,7 @@
       }"
       mat-menu-item
       [disabled]="item.disabled"
-      (click)="item.action(id())"
+      (click)="item.action(id(), args())"
     >
       <fa-icon [icon]="item.icon" size="sm" class="icon-color"></fa-icon>
       {{ 'SHARED_COMPONENTS.MENU.' + item.label | translate }}

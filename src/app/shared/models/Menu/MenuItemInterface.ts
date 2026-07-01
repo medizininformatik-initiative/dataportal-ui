@@ -3,5 +3,5 @@ export interface MenuItemInterface {
   icon: string
   label: string
   type?: 'primary' | 'default'
-  action: (id: string) => void
+  action: (id: string, args?: Record<string, unknown>) => void
 }

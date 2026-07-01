@@ -30,9 +30,9 @@ import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
 import { EditTimeRestrictionComponent } from '../../../../feasibility-query/components/editor/criterion-modal/time-restriction/edit-time-restriction.component'
 import { ConceptComponent } from '../../../../feasibility-query/components/editor/criterion-modal/concept/concept.component'
 import { TermcodeComponent } from '../../../../feasibility-query/components/editor/criterion-modal/termCode/termcode.component'
-import { ReferenceComponent } from '../../../../feasibility-query/components/editor/reference/reference.component'
 import { QuantityComponent } from '../../../../feasibility-query/components/editor/criterion-modal/quantity/quantity.component'
 import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTranslationPipe'
+import { ReferenceComponent } from 'src/app/modules/feasibility-query/components/editor/reference/reference.component'
 
 @Component({
   selector: 'num-criterion',
@@ -46,9 +46,9 @@ import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTrans
     EditTimeRestrictionComponent,
     ConceptComponent,
     TermcodeComponent,
-    ReferenceComponent,
     QuantityComponent,
     DisplayTranslationPipe,
+    ReferenceComponent,
   ],
 })
 export class CriterionComponent implements AfterViewInit, OnDestroy {

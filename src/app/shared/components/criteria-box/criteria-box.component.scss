@@ -81,3 +81,9 @@
   width: 100%;
   cursor: grab;
 }
+
+.img-layout {
+  height: 24px; /* multiple of 4 */
+  width: 32px; /* multiple of 4 */
+  margin-right: 8px;
+}
