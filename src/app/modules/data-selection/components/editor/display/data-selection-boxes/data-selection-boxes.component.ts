@@ -14,12 +14,13 @@ import { map } from 'rxjs'
 import { MenuComponent } from '../../../../../../shared/components/menu/menu.component'
 import { MenuItemInterface } from '../../../../../../shared/models/Menu/MenuItemInterface'
 import { MenuServiceDataSelection } from '../../../../../../shared/service/Menu/DataSelection/MenuServiceDataSelection.service'
+import { MissingFilterComponent } from '../../../../../../shared/components/missing-filter/missing-filter.component'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference'
 import { ProfileReferenceTileComponent } from '../../../../../../shared/components/profile-reference-tile/profile-reference-tile.component'
 import { RemoveReferenceService } from 'src/app/service/RemoveReference.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
-import { MissingFilterComponent } from '../../../../../../shared/components/missing-filter/missing-filter.component'
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -46,6 +47,7 @@ export class DataSelectionBoxesComponent {
   private menuService = inject(MenuServiceDataSelection)
   private appSettingsProvider = inject(AppSettingsProviderService)
   private dataSelectionProviderService = inject(DataSelectionProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
 
   readonly profile = input<DataSelectionProfile>()
   readonly isEditable = input<boolean>()
@@ -113,5 +115,9 @@ export class DataSelectionBoxesComponent {
 
   public deleteProfile(id: string): void {
     this.removeReferenceService.delete(id)
+  }
+
+  public navigate(): void {
+    this.navigationHelperService.navigateToEditProfile(this.profile().getId())
   }
 }
