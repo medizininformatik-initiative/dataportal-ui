@@ -21,6 +21,7 @@ import { ProfileReferenceTileComponent } from '../../../../../../shared/componen
 import { RemoveReferenceService } from 'src/app/service/RemoveReference.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -38,6 +39,7 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
     DisplayTranslationPipe,
     MissingFilterComponent,
+    MatTooltip,
   ],
 })
 export class DataSelectionBoxesComponent {
