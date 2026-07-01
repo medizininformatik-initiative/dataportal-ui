@@ -12,14 +12,14 @@ import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MenuComponent } from '../menu/menu.component'
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
+import { MissingFilterComponent } from '../missing-filter/missing-filter.component'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { Observable, of } from 'rxjs'
 import { ReferenceCriteriaBoxComponent } from '../reference-criteria-box/reference-criteria-box.component'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { TranslateModule } from '@ngx-translate/core'
-import { MissingFilterComponent } from '../missing-filter/missing-filter.component'
 
 @Component({
   selector: 'num-criteria-box',
@@ -45,6 +45,7 @@ export class CriteriaBoxComponent implements OnInit {
   private menuService = inject(CriterionMenuItems)
   private filterChipsService = inject(CriterionFilterChipService)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
 
   readonly criterion = input.required<Criterion>()
   readonly isEditable = input<boolean>()
@@ -87,5 +88,9 @@ export class CriteriaBoxComponent implements OnInit {
         }
         return acc
       }, [] as ReferenceCriterion[])
+  }
+
+  public navigateToEditPage() {
+    this.navigationHelperService.navigateToEditCriterion(this.criterion().getId())
   }
 }

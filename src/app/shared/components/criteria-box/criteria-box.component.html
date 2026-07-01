@@ -20,12 +20,13 @@
     </div>
     <div class="filter-chips-container">
       @if (isFilterRequired()) {
-      <num-missing-filter
-        [missingElementType]="'CRITERIUM_FILTER'"
-        [elementId]="criterion().getId()"
-      ></num-missing-filter>
+      <num-missing-filter>
+        <span message (click)="navigateToEditPage()">
+          {{ 'FEASIBILITY.EDITOR.REQUIRED_FILTER' | translate }}
+        </span>
+        <img icon [src]="warningSignUrl" class="img-layout" />
+      </num-missing-filter>
       }
-
       <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
     </div>
   </div>
