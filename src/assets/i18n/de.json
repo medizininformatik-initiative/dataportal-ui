@@ -141,7 +141,7 @@
         "APPLIED_REFERENCES": "Referenzierte Merkmale",
         "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenzierte Merkmale sind verknüpfte Profile, die automatisch mitgeliefert werden, wenn das aktuelle Merkmal in der Anfrage enthalten ist. Sie können nicht einzeln abgewählt werden.",
         "APPLIED_REFERENCES_TOOLTIP_TITLE": "Referenzierte Merkmale",
-        "LINKED": "Verknüpfungsfeld",
+        "LINKED": "Referenzfeld",
         "NO_FIELDS": "Es wurden keine Felder für das Merkmal {{ feature }} ausgewählt.",
         "NO_FIELDS_TOOLTIP_TEXT": "Hier klicken und Felder für das Merkmal {{ feature }} auswählen",
         "NO_FILTERS": "Keine angewendet",
@@ -532,14 +532,14 @@
       "ELEMENT_ID_TOOLTIP": "Dieser Pfad gibt die Position des Feldes innerhalb des FHIR-Profils an.",
       "LINKED_FEATURES_LABEL": "Verknüpfte Merkmale",
       "LINK_FIELD_LABEL": "Verknüpfungsfeld",
-      "NOTLINKED_TOOLTIP_TEXT": "Diese FHIR-Referenz ist erforderlich oder empfohlen, wurde aber noch nicht mit einem Profil in der Selektion verknüpft. Verknüpfen Sie sie, um zugehörige Daten in Ihre Abfrage einzubeziehen.",
-      "NOTLINKED_TOOLTIP_TITLE": "Referenz nicht verknüpft",
-      "NOT_LINKED": "Mindestens ein Merkmal enthält einen Link, der nicht gesetzt wurde. Bitte setzen oder entfernen Sie den Link",
+      "NOT_LINKED": "Dieses Referenzfeld enthält einen nicht gesetzten Verweis auf ein weiteres Merkmal. Bitte setzen oder entfernen Sie den Verweis.",
+      "NOT_LINKED_TOOLTIP_TEXT": "Diese FHIR-Referenz ist erforderlich oder empfohlen, wurde aber noch nicht mit einem Profil in der Selektion verknüpft. Verknüpfen Sie sie, um zugehörige Daten in Ihre Abfrage einzubeziehen.",
+      "NOT_LINKED_TOOLTIP_TITLE": "Referenz nicht verknüpft",
       "REQUIRED": "Erforderlich",
       "REQUIRED_HELPER": "Wenn aktiviert, muss diese Referenz im verknüpften Profil vorhanden sein.",
       "REQUIRED_TOOLTIP_TEXT": "Wenn aktiviert, muss diese Referenz im verknüpften Profil vorhanden sein, damit die Abfrage übereinstimmt. Wenn deaktiviert, ist die Referenz optional.",
       "REQUIRED_TOOLTIP_TITLE": "Erforderliche Referenz",
-      "WARNING_TOOLTIP": "Klicken Sie hier, um die Referenz zu bearbeiten und mit einem Profil zu verknüpfen."
+      "WARNING_TOOLTIP": "Klicken Sie hier, um das Referenzfeld zu bearbeiten und mit einem Merkmal zu verknüpfen."
     },
     "SAVE_MODAL": {
       "CANCEL": "Abbrechen",
