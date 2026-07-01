@@ -10,6 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InfoTooltipDirective } from '../../directives/info-tooltip.directive'
 import { MenuComponent } from '../menu/menu.component'
 import { MenuProfileReference } from '../../service/Menu/DataSelection/MenuProfileReference.service'
+import { MenuProfileReferenceFunctionsService } from '../../service/Menu/DataSelection/MenuProfileReferenceFunctions.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { ProfileReferenceChipData } from '../../models/FilterChips/ProfileReferenceChipData'
 import { ProfileReferenceChipsService } from '../../service/FilterChips/DataSelection/ProfileReferenceChips.service'
@@ -17,7 +18,9 @@ import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/Refre
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner'
 import { TranslateModule } from '@ngx-translate/core'
-import { MenuProfileReferenceFunctionsService } from '../../service/Menu/DataSelection/MenuProfileReferenceFunctions.service'
+import { MissingFilterComponent } from '../missing-filter/missing-filter.component'
+import { A11yModule } from '@angular/cdk/a11y'
+import { MatTooltip } from '@angular/material/tooltip'
 @Component({
   selector: 'num-profile-reference-tile',
   templateUrl: './profile-reference-tile.component.html',
@@ -30,7 +33,9 @@ import { MenuProfileReferenceFunctionsService } from '../../service/Menu/DataSel
     CheckboxComponent,
     TranslateModule,
     DisplayTranslationPipe,
-    MenuComponent,
+    MissingFilterComponent,
+    A11yModule,
+    MatTooltip,
   ],
 })
 export class ProfileReferenceTileComponent implements OnInit {
@@ -113,5 +118,29 @@ export class ProfileReferenceTileComponent implements OnInit {
     this.menuServiceDataSelectionFunctions.navigate(this.parentId(), {
       elementId: this.elementId(),
     })
+  }
+
+  public deleteReferenceLink(): void {
+    const profile = this.profileProviderService.getOne(this.parentId())
+    if (this.unlinkedRequiredOrRecommendedReferences()) {
+      const profileFields = profile.getProfileFields().getReferenceFields()
+      const foundField = profileFields.find(
+        (field: ReferenceField) =>
+          field.getElementId() === this.unlinkedRequiredOrRecommendedReferences().getElementId()
+      )
+      if (foundField) {
+        foundField.setRecommended(false)
+        this.updateProfile(profile)
+      }
+    } else if (this.referenceField()) {
+      const selectedReferences = profile.getProfileFields().getSelectedReferenceFields()
+      const index = this.getIndexOfSelectedReferenceField(selectedReferences)
+
+      if (index !== -1) {
+        selectedReferences.splice(index, 1)
+        this.updateProfile(profile)
+      }
+    }
+    this.deleteTrigger.emit(true)
   }
 }
