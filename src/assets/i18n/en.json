@@ -141,7 +141,7 @@
         "APPLIED_REFERENCES": "Referenced features",
         "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenced profiles are linked profiles that are automatically included when the current profile is part of the request. They cannot be deselected individually.",
         "APPLIED_REFERENCES_TOOLTIP_TITLE": "Applied References",
-        "LINKED": "Linked field",
+        "LINKED": "Reference field",
         "NO_FIELDS": "No fields have been selected for the feature {{ feature }}. Please select at least one field for each feature",
         "NO_FIELDS_TOOLTIP_TEXT": "Click here to select fields for feature {{ feature }}.",
         "NO_FILTERS": "None applied",
@@ -543,14 +543,14 @@
       "ELEMENT_ID_TOOLTIP": "This path identifies the location of the field within the FHIR profile",
       "LINKED_FEATURES_LABEL": "Linked features",
       "LINK_FIELD_LABEL": "Link field",
-      "NOTLINKED": "At least one feature contains a link, which has not been set. Please set or remove the link",
-      "NOTLINKED_TOOLTIP_TEXT": "This FHIR reference is required or recommended but has not yet been linked to a profile in the selection. Link it to include related data in your query.",
-      "NOTLINKED_TOOLTIP_TITLE": "Reference not linked",
+      "NOT_LINKED": "This reference field contains an unresolved reference to another feature. Please set or remove the reference.",
+      "NOT_LINKED_TOOLTIP_TEXT": "This FHIR reference is required or recommended but has not yet been linked to a feature in the selection. Link it to include related data in your query.",
+      "NOT_LINKED_TOOLTIP_TITLE": "Reference not linked",
       "REQUIRED": "Required",
       "REQUIRED_HELPER": "If enabled, this reference must be present in the linked profile.",
       "REQUIRED_TOOLTIP_TEXT": "If checked, this reference must be present in the linked profile for the query to match. Unchecking makes the reference optional.",
       "REQUIRED_TOOLTIP_TITLE": "Required reference",
-      "WARNING_TOOLTIP": "Click here to edit the reference and link it to a profile."
+      "WARNING_TOOLTIP": "Click here to edit the reference field and link it to a feature."
     },
     "SAVE_MODAL": {
       "CANCEL": "Cancel",
