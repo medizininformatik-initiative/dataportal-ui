@@ -32,6 +32,7 @@ import { ConceptComponent } from '../../../../feasibility-query/components/edito
 import { TermcodeComponent } from '../../../../feasibility-query/components/editor/criterion-modal/termCode/termcode.component'
 import { QuantityComponent } from '../../../../feasibility-query/components/editor/criterion-modal/quantity/quantity.component'
 import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTranslationPipe'
+import { ReferenceComponent } from 'src/app/modules/feasibility-query/components/editor/reference/reference.component'
 
 @Component({
   selector: 'num-criterion',
@@ -47,6 +48,7 @@ import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTrans
     TermcodeComponent,
     QuantityComponent,
     DisplayTranslationPipe,
+    ReferenceComponent,
   ],
 })
 export class CriterionComponent implements AfterViewInit, OnDestroy {
