@@ -49,6 +49,9 @@ export class FilterChipsComponent {
   }
 
   public getOverflowTooltip(chips: FilterChipPropertyData[]): string {
-    return chips.map((chip) => this.translation.transform(chip.text)).join(' • ')
+    return chips
+      .slice(this.maxVisible())
+      .map((chip) => this.translation.transform(chip.text))
+      .join(' • ')
   }
 }
