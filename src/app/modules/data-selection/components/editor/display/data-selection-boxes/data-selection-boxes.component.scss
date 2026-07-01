@@ -1,8 +1,8 @@
 /* === Layout Containers === */
 // Core card shape — visual styles live in the global .num-card class (src/styles/general-styles/_ui-classes.scss)
 .selection-box {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
   align-items: stretch;
   min-height: 104px;
   margin-bottom: 16px;
@@ -13,59 +13,25 @@
   margin-bottom: 8px;
 }
 
-.display-container,
-.card-col,
-.reference-container {
+.card-col {
+  min-width: 0;
+  padding: 12px 16px;
   font-size: var(--font-size-md);
   color: var(--color-text-primary);
 }
 
-.display-container {
-  border-right: 1px solid var(--border-color);
-  padding: 20px;
-  flex: 0 0 220px;
-  min-width: 0;
-}
-
-.display-container > span {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  line-clamp: 6;
-  -webkit-box-orient: vertical;
-}
-
-.card-col {
-  border-right: 1px solid var(--border-color);
-  flex: 0 0 28%;
-  width: 28%;
-  min-width: 0;
-  padding: 8px 16px;
-}
-
-.reference-container {
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 10%;
-  width: 10%;
-  min-width: 80px;
-  padding: 16px 12px;
+// Left-side dividers between adjacent rendered card-cols — no floating right borders.
+// menu-box stays border-free as the last element in the row.
+.card-col ~ .card-col {
+  border-left: 1px solid var(--border-color);
 }
 
 .menu-box {
+  grid-column: 5;
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  flex: 0 0 auto;
-  align-self: flex-start;
-  margin-left: auto;
-  padding: 1em;
-}
-
-// padding-1 kept as a utility for potential inner elements
-.padding-1 {
-  padding: 1%;
+  padding: 0.75em;
 }
 
 .filter-chips-container {
