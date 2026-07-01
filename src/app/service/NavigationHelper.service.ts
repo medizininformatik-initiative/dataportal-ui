@@ -113,4 +113,8 @@ export class NavigationHelperService {
       state: { preventReset: true },
     })
   }
+
+  public getCurrentNavigation(): string {
+    return this.router.getCurrentNavigation()?.extras.state?.['activeTab']
+  }
 }
