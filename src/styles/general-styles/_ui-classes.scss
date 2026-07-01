@@ -73,6 +73,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
+  width: fit-content;
   transition: white-space 0.15s ease, var(--transition-shadow), border-color 0.2s ease;
 
   &.expanded {
