@@ -141,7 +141,7 @@
         "APPLIED_REFERENCES": "Referenzierte Merkmale",
         "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenzierte Merkmale sind verknüpfte Profile, die automatisch mitgeliefert werden, wenn das aktuelle Merkmal in der Anfrage enthalten ist. Sie können nicht einzeln abgewählt werden.",
         "APPLIED_REFERENCES_TOOLTIP_TITLE": "Referenzierte Merkmale",
-        "LINKED": "Verknüpft",
+        "LINKED": "Verknüpfungsfeld",
         "NO_FIELDS": "Keine Felder eingeschlossen",
         "NO_FILTERS": "Keine angewendet",
         "OPTIONAL": "Optional",
@@ -527,16 +527,18 @@
       }
     },
     "REFERENCE_TILE": {
-      "DELETE": "Löschen",
+      "DELETE": "Referenzfeld löschen",
+      "ELEMENT_ID_TOOLTIP": "Dieser Pfad gibt die Position des Feldes innerhalb des FHIR-Profils an.",
       "LINKED_FEATURES_LABEL": "Verknüpfte Merkmale",
       "LINK_FIELD_LABEL": "Verknüpfungsfeld",
-      "NOTLINKED": "Nicht verknüpft",
       "NOTLINKED_TOOLTIP_TEXT": "Diese FHIR-Referenz ist erforderlich oder empfohlen, wurde aber noch nicht mit einem Profil in der Selektion verknüpft. Verknüpfen Sie sie, um zugehörige Daten in Ihre Abfrage einzubeziehen.",
       "NOTLINKED_TOOLTIP_TITLE": "Referenz nicht verknüpft",
+      "NOT_LINKED": "Mindestens ein Merkmal enthält einen Link, der nicht gesetzt wurde. Bitte setzen oder entfernen Sie den Link",
       "REQUIRED": "Erforderlich",
       "REQUIRED_HELPER": "Wenn aktiviert, muss diese Referenz im verknüpften Profil vorhanden sein.",
       "REQUIRED_TOOLTIP_TEXT": "Wenn aktiviert, muss diese Referenz im verknüpften Profil vorhanden sein, damit die Abfrage übereinstimmt. Wenn deaktiviert, ist die Referenz optional.",
-      "REQUIRED_TOOLTIP_TITLE": "Erforderliche Referenz"
+      "REQUIRED_TOOLTIP_TITLE": "Erforderliche Referenz",
+      "WARNING_TOOLTIP": "Klicken Sie hier, um die Referenz zu bearbeiten und mit einem Profil zu verknüpfen."
     },
     "SAVE_MODAL": {
       "CANCEL": "Abbrechen",
@@ -554,12 +556,12 @@
       "ADD": "Hinzufügen",
       "AVAILABILITY": "Verfügbarkeit",
       "AVAILABILITY_STATUS": {
-        "UNKNOWN": "Unbekannt",
-        "VERY_LOW": "Sehr niedrig",
+        "HIGH": "Hoch",
         "LOW": "Niedrig",
         "MEDIUM": "Mittel",
-        "HIGH": "Hoch",
-        "VERY_HIGH": "Sehr hoch"
+        "UNKNOWN": "Unbekannt",
+        "VERY_HIGH": "Sehr hoch",
+        "VERY_LOW": "Sehr niedrig"
       },
       "CONTEXT": "Kontext",
       "DISPLAY": "Anzeige",
