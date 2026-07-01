@@ -28,8 +28,18 @@
       <num-filter-chips [filterChips]="fieldsFilterChips()"></num-filter-chips>
       } @if (!fieldsFilterChips().length) {
       <num-missing-filter>
-        <span message (click)="navigate()">
-          {{ 'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate }}
+        <span
+          [matTooltip]="
+            'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS_TOOLTIP_TEXT'
+              | translate : { feature: label() | displayTranslation }
+          "
+          message
+          (click)="navigate()"
+        >
+          {{
+            'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS'
+              | translate : { feature: label() | displayTranslation }
+          }}
         </span>
       </num-missing-filter>
       }
