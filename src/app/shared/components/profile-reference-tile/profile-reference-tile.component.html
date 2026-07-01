@@ -1,10 +1,14 @@
 <div class="link-field-container">
   <div class="link-info">
     <div class="label-value-group">
-      <div class="label plain-label">
-        {{ 'SHARED_COMPONENTS.REFERENCE_TILE.LINK_FIELD_LABEL' | translate }}
-      </div>
-      <span class="value">{{ display() | displayTranslation }} ({{ elementId() }})</span>
+      <span class="num-text-body">{{ display() | displayTranslation }} </span>
+
+      <span
+        [matTooltip]="'SHARED_COMPONENTS.REFERENCE_TILE.ELEMENT_ID_TOOLTIP' | translate"
+        class="value"
+      >
+        ({{ elementId() }})</span
+      >
     </div>
     <div>
       <fa-icon icon="arrow-right" class="arrow-icon"></fa-icon>
@@ -22,42 +26,54 @@
       </span>
     </div>
     } @if (unlinkedRequiredOrRecommendedReferences()) {
-    <span class="warning-badge" (click)="navigateToReferenceField()">
-      {{ 'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED' | translate }}
-      <span
-        class="info-icon"
-        numInfoTooltip
-        [infoTooltipTitle]="'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED_TOOLTIP_TITLE' | translate"
-        [infoTooltipText]="'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED_TOOLTIP_TEXT' | translate"
-      ></span>
-    </span>
+    <div class="margin-right-4 missing-filter-border missing-link">
+      <num-missing-filter>
+        <span
+          message
+          (click)="navigateToReferenceField()"
+          [matTooltip]="'SHARED_COMPONENTS.REFERENCE_TILE.WARNING_TOOLTIP' | translate"
+        >
+          {{ 'SHARED_COMPONENTS.REFERENCE_TILE.NOT_LINKED' | translate }}
+        </span>
+        <span
+          class="padding-right-2"
+          tooltip
+          numInfoTooltip
+          [infoTooltipTitle]="
+            'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED_TOOLTIP_TITLE' | translate
+          "
+          [infoTooltipText]="'SHARED_COMPONENTS.REFERENCE_TILE.NOTLINKED_TOOLTIP_TEXT' | translate"
+        ></span>
+      </num-missing-filter>
+    </div>
+
+    } @if (referenceField()) {
+    <div class="checkbox-label">
+      <num-checkbox
+        [checked]="referenceField().getMustHave()"
+        (checkedChange)="setMustHave($event)"
+        [disabled]="!isEditable()"
+      ></num-checkbox>
+      <span>
+        {{ 'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}
+        <span
+          class="info-icon"
+          numInfoTooltip
+          [infoTooltipTitle]="'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED_TOOLTIP_TITLE' | translate"
+          [infoTooltipText]="'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED_TOOLTIP_TEXT' | translate"
+        ></span>
+      </span>
+    </div>
+    } @if (isEditable()) {
+    <div
+      class="actions"
+      (click)="deleteReferenceLink()"
+      [matTooltip]="'SHARED_COMPONENTS.REFERENCE_TILE.DELETE' | translate"
+    >
+      <fa-icon class="icon" icon="trash" size="lg"></fa-icon>
+    </div>
+    } @else {
+    <div class="placeholder"></div>
     }
   </div>
-
-  @if (referenceField()) {
-  <span class="checkbox-label">
-    <num-checkbox
-      [checked]="referenceField().getMustHave()"
-      (checkedChange)="setMustHave($event)"
-      [disabled]="!isEditable()"
-    ></num-checkbox>
-    <span>
-      {{ 'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED' | translate }}
-      <span
-        class="info-icon"
-        numInfoTooltip
-        [infoTooltipTitle]="'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED_TOOLTIP_TITLE' | translate"
-        [infoTooltipText]="'SHARED_COMPONENTS.REFERENCE_TILE.REQUIRED_TOOLTIP_TEXT' | translate"
-      ></span>
-    </span>
-  </span>
-  } @if (isEditable()) {
-  <num-menu
-    [menuItems]="menuItems()"
-    [id]="parentId()"
-    [args]="{ elementId: this.elementId() }"
-  ></num-menu>
-  } @else {
-  <div class="placeholder"></div>
-  }
 </div>
