@@ -1,5 +1,5 @@
 <div class="num-card selection-box" [attr.data-cy]="label() | displayTranslation">
-  <div class="display-container">
+  <div class="card-col">
     <div class="num-text-body">{{ label() | displayTranslation }}</div>
     <div
       class="num-pill"
@@ -27,10 +27,11 @@
       @if (fieldsFilterChips().length > 0) {
       <num-filter-chips [filterChips]="fieldsFilterChips()"></num-filter-chips>
       } @if (!fieldsFilterChips().length) {
-      <num-missing-filter
-        [missingElementType]="'DATASELECTION_FIELD'"
-        [elementId]="profile().getId()"
-      ></num-missing-filter>
+      <num-missing-filter>
+        <span message (click)="navigate()">
+          {{ 'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate }}
+        </span>
+      </num-missing-filter>
       }
     </div>
   </div>
