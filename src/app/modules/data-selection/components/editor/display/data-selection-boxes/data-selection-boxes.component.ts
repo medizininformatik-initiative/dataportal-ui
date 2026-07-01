@@ -10,7 +10,7 @@ import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData
 import { FilterChipsComponent } from '../../../../../../shared/components/filter-chips/filter-chips.component'
 import { InfoTooltipDirective } from '../../../../../../shared/directives/info-tooltip.directive'
 import { LinkedBadgeComponent } from '../../../../../../shared/components/linked-badge/linked-badge.component'
-import { map } from 'rxjs'
+import { map, tap } from 'rxjs'
 import { MenuComponent } from '../../../../../../shared/components/menu/menu.component'
 import { MenuItemInterface } from '../../../../../../shared/models/Menu/MenuItemInterface'
 import { MenuServiceDataSelection } from '../../../../../../shared/service/Menu/DataSelection/MenuServiceDataSelection.service'
@@ -86,23 +86,29 @@ export class DataSelectionBoxesComponent {
 
   private readonly activeDataSelection$ = this.dataSelectionProviderService.getActiveDataSelection()
 
-  readonly isReferenced = toSignal(
-    this.activeDataSelection$.pipe(
-      map((dataSelection) =>
-        dataSelection.getProfiles().some((profile) =>
-          profile
-            .getProfileFields()
-            .getSelectedReferenceFields()
-            .some((referenceField) =>
-              referenceField
-                .getLinkedProfileIds()
-                .some((linkedProfileId) => this.profile()?.getId() === linkedProfileId)
-            )
-        )
-      )
-    ),
-    { initialValue: false }
-  )
+  readonly activeDataSelection = toSignal(this.activeDataSelection$, {
+    initialValue: undefined,
+  })
+
+  readonly isReferenced = computed(() => {
+    const dataSelection = this.activeDataSelection()
+    const profile = this.profile()
+
+    if (!dataSelection || !profile) {
+      return false
+    }
+
+    return dataSelection.getProfiles().some((selectionProfile) =>
+      selectionProfile
+        .getProfileFields()
+        .getSelectedReferenceFields()
+        .some((selectedReferenceField) => {
+          return selectedReferenceField
+            .getLinkedProfileIds()
+            .some((linkedProfileId) => profile.getId() === linkedProfileId)
+        })
+    )
+  })
 
   constructor() {
     effect(() => {
