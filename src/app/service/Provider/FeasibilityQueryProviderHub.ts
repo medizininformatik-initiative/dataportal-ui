@@ -85,7 +85,7 @@ export class FeasibilityQueryProviderHub {
    * @param query The feasibility query object
    */
   public addFeasibilityQuery(feasibilityQuery: FeasibilityQuery): void {
-    this.feasibilityQueryProviderService.setFeasibilityQueryByID(
+    this.feasibilityQueryProviderService.setFeasibilityQueryById(
       feasibilityQuery,
       feasibilityQuery.getId()
     )
