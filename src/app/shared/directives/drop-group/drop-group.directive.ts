@@ -1,7 +1,8 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop'
-import { Directive, ElementRef, HostListener, inject, input, OnInit } from '@angular/core'
+import { Directive, HostListener, inject, input, OnInit } from '@angular/core'
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery'
-import { FeasibilityQueryFacadeService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryFacade.service'
+import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
 import { StageProviderService } from '../../../service/Provider/StageProvider.service'
 
 @Directive({
@@ -9,7 +10,8 @@ import { StageProviderService } from '../../../service/Provider/StageProvider.se
   standalone: true,
 })
 export class DropGroupDirective implements OnInit {
-  private facade = inject(FeasibilityQueryFacadeService) // ← replaces both queryProviderService and criterionProvider
+  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
+  private feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
   private stageProviderService = inject(StageProviderService) // ← untouched, stage is outside the facade
 
   readonly groupType = input<string>(undefined)
@@ -18,9 +20,11 @@ export class DropGroupDirective implements OnInit {
   feasibilityQuery: FeasibilityQuery
 
   ngOnInit() {
-    this.facade.getActiveFeasibilityQuery().subscribe((feasibilityQuery) => {
-      this.feasibilityQuery = feasibilityQuery
-    })
+    this.feasibilityQueryProviderService
+      .getActiveFeasibilityQuery()
+      .subscribe((feasibilityQuery) => {
+        this.feasibilityQuery = feasibilityQuery
+      })
   }
 
   @HostListener('cdkDropListDropped', ['$event'])
@@ -67,13 +71,13 @@ export class DropGroupDirective implements OnInit {
   private addToInclusion(droppedCriterion: string, currentIndex: number): void {
     this.criteria = this.feasibilityQuery.getInclusionCriteria()
     this.addCriterionToInnerArray(this.criteria, droppedCriterion, currentIndex)
-    this.facade.setInclusionCriteria(this.criteria)
+    this.feasibilityQueryProviderService.setInclusionCriteria(this.criteria)
   }
 
   private addToExclusion(droppedCriterion: string, currentIndex: number): void {
     this.criteria = this.feasibilityQuery.getExclusionCriteria()
     this.addCriterionToInnerArray(this.criteria, droppedCriterion, currentIndex)
-    this.facade.setExclusionCriteria(this.criteria)
+    this.feasibilityQueryProviderService.setExclusionCriteria(this.criteria)
   }
 
   private deleteFromInclusion(droppedCriterion: string): void {
@@ -81,7 +85,7 @@ export class DropGroupDirective implements OnInit {
       this.feasibilityQuery.getInclusionCriteria(),
       droppedCriterion
     )
-    this.facade.setInclusionCriteria(criteria)
+    this.feasibilityQueryProviderService.setInclusionCriteria(criteria)
   }
 
   private deleteFromExclusion(droppedCriterion: string): void {
@@ -89,7 +93,7 @@ export class DropGroupDirective implements OnInit {
       this.feasibilityQuery.getExclusionCriteria(),
       droppedCriterion
     )
-    this.facade.setExclusionCriteria(criteria)
+    this.feasibilityQueryProviderService.setExclusionCriteria(criteria)
   }
 
   private moveCriterionInInclusion(
@@ -99,7 +103,7 @@ export class DropGroupDirective implements OnInit {
   ): void {
     this.criteria = this.feasibilityQuery.getInclusionCriteria()
     this.moveCriterion(criterionID, previousIndex, currentIndex)
-    this.facade.setInclusionCriteria(this.criteria)
+    this.feasibilityQueryProviderService.setInclusionCriteria(this.criteria)
   }
 
   private moveCriterionInExclusion(
@@ -109,7 +113,7 @@ export class DropGroupDirective implements OnInit {
   ): void {
     this.criteria = this.feasibilityQuery.getExclusionCriteria()
     this.moveCriterion(criterionID, previousIndex, currentIndex)
-    this.facade.setExclusionCriteria(this.criteria)
+    this.feasibilityQueryProviderService.setExclusionCriteria(this.criteria)
   }
 
   // ─── Pure logic — untouched ──────────────────────────────────────────────────
