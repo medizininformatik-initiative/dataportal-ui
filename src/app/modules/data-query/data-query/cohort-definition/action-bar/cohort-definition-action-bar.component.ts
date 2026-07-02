@@ -1,11 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core'
-import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service'
-import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { Observable, Subscription } from 'rxjs'
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
-import { AsyncPipe } from '@angular/common'
+import { Component, inject } from '@angular/core'
+import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -13,31 +11,15 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './cohort-definition-action-bar.component.html',
   styleUrls: ['./cohort-definition-action-bar.component.scss'],
   standalone: true,
-  imports: [ActionBarComponent, ButtonComponent, AsyncPipe, TranslateModule],
+  imports: [ActionBarComponent, ButtonComponent, TranslateModule],
 })
-export class CohortDefinitionActionBarComponent implements OnInit {
+export class CohortDefinitionActionBarComponent {
   private routerHelperService = inject(NavigationHelperService)
   private navigationHelperService = inject(NavigationHelperService)
   private feasibilityQueryFactoryService = inject(FeasibilityQueryFactoryService)
-  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
 
-  fileName: string
-  isFeasibilityInclusionSet: Observable<boolean>
-  isFeasibilityExistent: Observable<boolean>
-  isFeasibilityQueryValid: Observable<boolean>
-  totalNumberOfPatients: number
-  downloadSubscription: Subscription
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {}
-
-  ngOnInit() {
-    this.isFeasibilityInclusionSet = this.feasibilityQueryValidation.getIsInclusionSet()
-    this.isFeasibilityExistent = this.feasibilityQueryValidation.getIsFeasibilityQuerySet()
-    this.isFeasibilityQueryValid = this.feasibilityQueryValidation.getIsFeasibilityQueryValid()
-  }
+  readonly isFeasibilityQueryValid = this.feasibilityQueryValidationService.isFeasibilityQueryValid
 
   public sendQuery(): void {
     this.routerHelperService.navigateToFeasibilityQueryResult()
