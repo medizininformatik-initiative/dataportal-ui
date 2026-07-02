@@ -104,7 +104,7 @@ export class CRTDL2UIModelService {
   }
 
   private setFeasibilityQueryProvider(feasibilityQuery: FeasibilityQuery): void {
-    this.feasibilityQueryService.setFeasibilityQueryByID(
+    this.feasibilityQueryService.setFeasibilityQueryById(
       feasibilityQuery,
       feasibilityQuery.getId(),
       true
