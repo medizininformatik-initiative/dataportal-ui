@@ -1,13 +1,13 @@
-import { AbstractCriterion } from './AbstractCriterion';
-import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
-import { AttributeFilter } from './AttributeFilter/AttributeFilter';
-import { CritGroupPosition } from '../CritGroupPosition';
-import { Display } from '../../DataSelection/Profile/Display';
-import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { ValueFilter } from './AttributeFilter/ValueFilter';
+import { AbstractCriterion } from './AbstractCriterion'
+import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction'
+import { AttributeFilter } from './AttributeFilter/AttributeFilter'
+import { CritGroupPosition } from '../CritGroupPosition'
+import { Display } from '../../DataSelection/Profile/Display'
+import { TerminologyCode } from '../../Terminology/TerminologyCode'
+import { ValueFilter } from './AttributeFilter/ValueFilter'
 
 export class ReferenceCriterion extends AbstractCriterion {
-  private parentId: string;
+  private parentId: string
 
   constructor(
     parentId: string,
@@ -16,7 +16,6 @@ export class ReferenceCriterion extends AbstractCriterion {
     context: TerminologyCode,
     criterionHash: string,
     display: Display,
-    isInvalid: boolean,
     isRequiredFilterSet: boolean,
     position: CritGroupPosition,
     termCodes: Array<TerminologyCode>,
@@ -30,23 +29,22 @@ export class ReferenceCriterion extends AbstractCriterion {
       context,
       criterionHash,
       display,
-      isInvalid,
       isRequiredFilterSet,
       position,
       termCodes,
       timeRestriction,
       uniqueID,
       valueFilters
-    );
+    )
 
-    this.parentId = parentId;
+    this.parentId = parentId
   }
 
   public getParentId(): string {
-    return this.parentId;
+    return this.parentId
   }
 
   public setParentId(parentId: string): void {
-    this.parentId = parentId;
+    this.parentId = parentId
   }
 }
