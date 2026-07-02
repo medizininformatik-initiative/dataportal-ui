@@ -22,6 +22,8 @@ import { RemoveReferenceService } from 'src/app/service/RemoveReference.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatTooltip } from '@angular/material/tooltip'
+import { DataDefinitionValidationService } from 'src/app/service/Validation/DataDefinitionValidation.service'
+import { DataSelectionValidationService } from 'src/app/service/Validation/DataSelectionValidation.service'
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -50,6 +52,8 @@ export class DataSelectionBoxesComponent {
   private appSettingsProvider = inject(AppSettingsProviderService)
   private dataSelectionProviderService = inject(DataSelectionProviderService)
   private navigationHelperService = inject(NavigationHelperService)
+  private validationService = inject(DataSelectionValidationService)
+  private readonly dataDefinitionValidationService = inject(DataDefinitionValidationService)
 
   readonly profile = input<DataSelectionProfile>()
   readonly isEditable = input<boolean>()
@@ -115,6 +119,7 @@ export class DataSelectionBoxesComponent {
       const fields = this.profile()?.getProfileFields()?.getSelectedBasicFields() ?? []
       this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(fields)
     })
+    this.validationService.isDataSelectionValid()
   }
 
   public toggleIsReferenceSet(reference: ProfileReference): void {

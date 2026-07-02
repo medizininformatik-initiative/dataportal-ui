@@ -2,16 +2,16 @@ import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { CriterionValidationService } from '../Validation/CriterionValidation.deprecated.service'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { Injectable, inject } from '@angular/core'
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
+import { FeasibilityQueryValidationService } from '../Validation/FeasibilityQueryValidationService.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditAttributeFilterService {
-  private criterionValidationService = inject(CriterionValidationService)
+  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -104,7 +104,7 @@ export class EditAttributeFilterService {
   }
 
   public isFilterRequired(criterion: Criterion): boolean {
-    return this.criterionValidationService.setIsFilterRequired(criterion)
+    return this.feasibilityQueryValidationService.isFilterRequired(criterion)
   }
 
   private buildAttributeFilter(

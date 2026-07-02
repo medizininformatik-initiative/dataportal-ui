@@ -18,7 +18,7 @@ export class FeasibilityQueryFactoryService {
 
   public instantiate(): FeasibilityQuery {
     const feasibilityQuery = new FeasibilityQuery(uuidv4())
-    this.feasibilityQueryService.setFeasibilityQueryByID(
+    this.feasibilityQueryService.setFeasibilityQueryById(
       feasibilityQuery,
       feasibilityQuery.getId(),
       true

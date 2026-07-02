@@ -1,14 +1,10 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { DataQueryValidationService } from 'src/app/service/DataQuery/DataQueryValidation.service'
-import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { Observable, of, Subscription } from 'rxjs'
-import { StageProviderService } from '../../../../../service/Provider/StageProvider.service'
-import { ValidDataQuery } from 'src/app/model/Types/ValidDataQuery'
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
+import { Component, inject, OnInit } from '@angular/core'
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
 import { MatTooltip } from '@angular/material/tooltip'
-import { AsyncPipe } from '@angular/common'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { Observable, of } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -16,34 +12,18 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './editor-action-bar.component.html',
   styleUrls: ['./editor-action-bar.component.scss'],
   standalone: true,
-  imports: [ActionBarComponent, ButtonComponent, MatTooltip, AsyncPipe, TranslateModule],
+  imports: [ActionBarComponent, ButtonComponent, MatTooltip, TranslateModule],
 })
-export class EditorActionBarComponent implements OnInit, OnDestroy {
-  private dataQueryValidation = inject(DataQueryValidationService)
+export class EditorActionBarComponent implements OnInit {
   private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
-  private stageProviderService = inject(StageProviderService)
   private navigationHelperService = inject(NavigationHelperService)
 
   stageArray$: Observable<Array<string>> = of([])
-  isFeasibilityQueryValid$: Observable<boolean>
-
-  validDataQuery$: Observable<ValidDataQuery>
-
-  saveDataQueryModalSubscription: Subscription
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
+  readonly isFeasibilityQueryValid = this.feasibilityQueryValidation.isFeasibilityQueryValid
 
   constructor() {}
 
-  ngOnInit() {
-    this.isFeasibilityQueryValid$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid()
-    this.validDataQuery$ = this.dataQueryValidation.validateDataQuery()
-  }
-
-  ngOnDestroy() {
-    this.saveDataQueryModalSubscription?.unsubscribe()
-  }
+  ngOnInit() {}
 
   public navigateToSearch() {
     this.navigationHelperService.navigateToFeasibilityQuerySearch()
