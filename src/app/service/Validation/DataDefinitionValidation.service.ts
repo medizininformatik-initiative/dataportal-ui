@@ -12,18 +12,18 @@ export class DataDefinitionValidationService {
   constructor() {}
 
   /**
-   * Returns true if both the criterion and data selection are valid, false otherwise.
+   * Returns true if both the feasibility query and data selection are valid, false otherwise.
    * @returns {boolean}
    */
   public isDataDefinitionValid(): boolean {
-    return this.isCriterionValid() && this.isDataSelectionValid()
+    return this.isFeasibilityQueryValid() && this.isDataSelectionValid()
   }
 
   /**
-   * Returns true if the criterion is valid, false otherwise.
+   * Returns true if the feasibility query is valid, false otherwise.
    * @returns {boolean}
    */
-  private isCriterionValid(): boolean {
+  private isFeasibilityQueryValid(): boolean {
     return this.feasibilityQueryValidationService.isFeasibilityQueryValid()
   }
 
