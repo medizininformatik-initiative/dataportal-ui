@@ -1,0 +1,21 @@
+<div class="label-with-info">
+  <span class="num-text-accent">{{ 'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate }}</span>
+  <span
+    class="info-icon"
+    numInfoTooltip
+    [infoTooltipTitle]="'DATASELECTION.EDITOR.DISPLAY.REFERENCE_TOOLTIP_TITLE' | translate"
+    [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.REFERENCE_TOOLTIP_TEXT' | translate"
+  ></span>
+</div>
+<div class="reference-toggle-row">
+  <div class="reference-toggle" [class.reference-toggle--active]="reference().getIsReferenceSet()">
+    <num-checkbox
+      [disabled]="!isEditable()"
+      [checked]="reference().getIsReferenceSet()"
+      (checkedChange)="isReferenceSetChange.emit($event)"
+    ></num-checkbox>
+    <span class="reference-toggle-text">
+      {{ 'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate }}
+    </span>
+  </div>
+</div>
