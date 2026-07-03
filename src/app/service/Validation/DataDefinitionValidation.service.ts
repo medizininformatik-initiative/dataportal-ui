@@ -1,7 +1,18 @@
 import { inject, Injectable } from '@angular/core'
-import { DataSelectionValidationService } from './DataSelectionValidation.service'
-import { FeasibilityQueryValidationService } from '../Criterion/Validation/FeasibilityQueryValidationService.service'
+import {
+  DataSelectionValidationService,
+  ValidationContext,
+} from './DataSelectionValidation.service'
+import {
+  FeasibilityQueryValidationService,
+  ValidationState,
+} from '../Criterion/Validation/FeasibilityQueryValidationService.service'
 
+export interface DataDefinitionValidationStatus {
+  dataSelectionValidationState: ValidationContext[]
+  feasibilityQueryValidationState: ValidationState
+  isDataDefinitionValid: boolean
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -10,6 +21,20 @@ export class DataDefinitionValidationService {
   private readonly feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
 
   constructor() {}
+
+  /**
+   *
+   * @returns {}
+   */
+  public getDataDefinitionValidationStatus(): DataDefinitionValidationStatus {
+    const dataSelectionValidationState = this.dataSelectionValidationService.validationContexts()
+    const feasibilityQueryValidationState = this.feasibilityQueryValidationService.validationState()
+    return {
+      dataSelectionValidationState,
+      feasibilityQueryValidationState,
+      isDataDefinitionValid: this.isDataDefinitionValid(),
+    }
+  }
 
   /**
    * Returns true if both the feasibility query and data selection are valid, false otherwise.
