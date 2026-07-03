@@ -36,6 +36,18 @@ export class DataSelectionValidationService {
   })
 
   /**
+   * @returns {ValidationContext[]} An array of validation contexts for each profile in the active data selection.
+   */
+  readonly validationContexts: Signal<ValidationContext[]> = computed(() => {
+    const dataSelection = this.activeDataSelection()
+
+    if (!dataSelection) {
+      return []
+    }
+    return this.validateProfiles(dataSelection.getProfiles())
+  })
+
+  /**
    * @returns {boolean} true if the active data selection is valid, false otherwise.
    */
   readonly isDataSelectionValid: Signal<boolean> = computed(() => {
