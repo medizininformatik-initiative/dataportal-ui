@@ -1,10 +1,9 @@
 import { CheckAndUpgradeCCDLService } from '../../Upgrade/CheckAndUpgradeCCDL.service'
 import { concatMap, map, Observable, switchMap } from 'rxjs'
-import { CRTDL2UIModelService } from '../../Translator/CRTDL/CRTDL2UIModel.service'
 import { CrtdlProcessingPipelineService } from '../../CrtdlProcessingPipeline.service'
 import { CRTDLValidationService } from '../../Validation/CRTDLValidation.service'
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile'
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery'
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData'
@@ -22,9 +21,6 @@ export class ReadDataQueryService {
   private validationService = inject(CRTDLValidationService)
   private checkAndUpgradeCCDLService = inject(CheckAndUpgradeCCDLService)
   private crtdlProcessingPipelineService = inject(CrtdlProcessingPipelineService)
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {}
 

@@ -1,5 +1,5 @@
 import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service'
-import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs'
+import { BehaviorSubject, filter, map, Observable, of, switchMap } from 'rxjs'
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery'
 import { inject, Injectable } from '@angular/core'
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service'
@@ -60,20 +60,20 @@ export class FeasibilityQueryProviderService {
    */
   public getFeasibilityQueryByID(id: string): Observable<FeasibilityQuery> {
     return this.feasibilityQueryMapSubject.pipe(
-      map((feasibilityQueryMap) => feasibilityQueryMap.get(id))
+      filter((feasibilityQueryMap) => feasibilityQueryMap.has(id)),
+      map((feasibilityQueryMap) => feasibilityQueryMap.get(id)!)
     )
   }
 
   public getActiveFeasibilityQuery(): Observable<FeasibilityQuery> {
-    return this.activeFeasibilityQuery
-      .getActiveFeasibilityQueryIdObservable()
-      .pipe(
-        switchMap((id) =>
-          this.feasibilityQueryMapSubject.pipe(
-            map((feasibilityQueryMap) => feasibilityQueryMap.get(id))
-          )
+    return this.activeFeasibilityQuery.getActiveFeasibilityQueryIdObservable().pipe(
+      switchMap((id) =>
+        this.feasibilityQueryMapSubject.pipe(
+          filter((feasibilityQueryMap) => feasibilityQueryMap.has(id)),
+          map((feasibilityQueryMap) => feasibilityQueryMap.get(id)!)
         )
       )
+    )
   }
   /**
    * Retrieves the current feasibility query map as an observable.

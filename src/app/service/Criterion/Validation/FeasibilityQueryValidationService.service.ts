@@ -1,12 +1,12 @@
 import { AbstractAttributeFilters } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters'
 import { computed, inject, Injectable } from '@angular/core'
-import { toSignal } from '@angular/core/rxjs-interop'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
-import { FilterTypesService } from '../../FilterTypes.service'
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
+import { FilterTypesService } from '../../FilterTypes.service'
 import { map } from 'rxjs'
+import { toSignal } from '@angular/core/rxjs-interop'
 
 interface ValidationState {
   criterionIdsWithMissingFilters: string[]
@@ -19,10 +19,9 @@ const INITIAL_STATE: ValidationState = {
 }
 @Injectable({ providedIn: 'root' })
 export class FeasibilityQueryValidationService {
-  private readonly criterionService = inject(CriterionProviderService)
   private readonly filterTypeService = inject(FilterTypesService)
   private readonly feasibilityQueryService = inject(FeasibilityQueryProviderService)
-  private criterionProvider = inject(CriterionProviderService)
+  private readonly criterionProvider = inject(CriterionProviderService)
 
   private readonly activeFeasibilityQuery = toSignal<FeasibilityQuery | null>(
     this.feasibilityQueryService.getActiveFeasibilityQuery().pipe(map((query) => query ?? null)),
@@ -37,7 +36,10 @@ export class FeasibilityQueryValidationService {
     const feasibilityQuery = this.activeFeasibilityQuery()
     const criteria = this.criteria()
 
-    if (!feasibilityQuery) return INITIAL_STATE
+    if (!feasibilityQuery) {
+      return INITIAL_STATE
+    }
+
     return this.buildValidationState(feasibilityQuery, criteria)
   })
 
@@ -90,8 +92,6 @@ export class FeasibilityQueryValidationService {
     const result =
       this.hasRequiredUnsetFilters(criterion.getValueFilters()) ||
       this.hasRequiredUnsetFilters(criterion.getAttributeFilters())
-
-    //criterion.setIsRequiredFilterSet(!result)
     return result
   }
 
