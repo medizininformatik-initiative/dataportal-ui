@@ -8,7 +8,7 @@ import { FilterTypesService } from '../../FilterTypes.service'
 import { map } from 'rxjs'
 import { toSignal } from '@angular/core/rxjs-interop'
 
-interface ValidationState {
+export interface ValidationState {
   criterionIdsWithMissingFilters: string[]
   hasInclusionCriteria: boolean
 }
@@ -32,7 +32,7 @@ export class FeasibilityQueryValidationService {
     initialValue: [],
   })
 
-  private readonly validationState = computed<ValidationState>(() => {
+  public readonly validationState = computed<ValidationState>(() => {
     const feasibilityQuery = this.activeFeasibilityQuery()
     const criteria = this.criteria()
 
