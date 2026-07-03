@@ -8,6 +8,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { UploadService } from 'src/app/service/Upload/Upload.service'
+import { ValidationModalComponent } from '../validation-modal/validation-modal.component'
 
 @Component({
   selector: 'num-action-bar',
@@ -22,6 +23,7 @@ export class ActionBarComponent {
   private uploadService = inject(UploadService)
   private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
   private readonly dataDefinitionValidationService = inject(DataDefinitionValidationService)
+  private readonly matDialog = inject(MatDialog)
 
   readonly showUpload = input(true)
   readonly showDownload = input(true)
@@ -53,5 +55,9 @@ export class ActionBarComponent {
 
   public onSaveDataQuery(): void {
     this.saveDataQueryModalService.openSaveDataQueryModal().subscribe()
+  }
+
+  public openValidationModal(): void {
+    this.matDialog.open(ValidationModalComponent)
   }
 }

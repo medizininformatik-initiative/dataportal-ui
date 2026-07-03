@@ -56,6 +56,7 @@
   <button
     type="button"
     class="num-button icon"
+    (click)="openValidationModal()"
     [class.green]="isDataDefinitionValid()"
     [class.red]="!isDataDefinitionValid()"
     [matTooltip]="
