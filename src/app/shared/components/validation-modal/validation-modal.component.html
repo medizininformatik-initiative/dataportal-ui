@@ -1,0 +1,100 @@
+<num-modal-window [displaySaveButtons]="false">
+  <div class="validation-status">
+    <div class="status-header">
+      <h2>Validation Status</h2>
+
+      <span
+        class="badge"
+        [class.success]="validationStatus().isDataDefinitionValid"
+        [class.error]="!validationStatus().isDataDefinitionValid"
+      >
+        {{ validationStatus().isDataDefinitionValid ? '✔ Valid' : '✖ Invalid' }}
+      </span>
+    </div>
+
+    <section class="status-section">
+      <h3>Data Selection</h3>
+
+      @for ( validation of validationStatus().dataSelectionValidationState; track
+      validation.profileId ) {
+      <div class="status-card">
+        <div class="status-item">
+          <span class="status-key">Profile</span>
+          <span class="status-value">{{ validation.profileId }}</span>
+        </div>
+
+        <div class="status-item">
+          <span class="status-key">Valid</span>
+
+          <span
+            class="badge"
+            [class.success]="validation.isValid"
+            [class.error]="!validation.isValid"
+          >
+            {{ validation.isValid ? '✔ Valid' : '✖ Invalid' }}
+          </span>
+        </div>
+
+        <div class="status-item">
+          <span class="status-key">State</span>
+
+          <span class="state">
+            @switch (validation.state) { @case (0) { Missing References } @case (1) { Complete }
+            @case (2) { References Only } @case (3) { Empty Selection } }
+          </span>
+        </div>
+
+        @if (validation.referenceFieldIds?.length) {
+        <div class="status-item column">
+          <span class="status-key">Missing Reference IDs</span>
+
+          <ul class="reference-list">
+            @for (id of validation.referenceFieldIds; track id) {
+            <li>{{ id }}</li>
+            }
+          </ul>
+        </div>
+        }
+      </div>
+      }
+    </section>
+
+    <section class="status-section">
+      <h3>Feasibility Query</h3>
+
+      @if (validationStatus().feasibilityQueryValidationState; as feasibility) {
+      <div class="status-card">
+        <div class="status-item">
+          <span class="status-key">Has Inclusion Criteria</span>
+
+          <span
+            class="badge"
+            [class.success]="feasibility.hasInclusionCriteria"
+            [class.error]="!feasibility.hasInclusionCriteria"
+          >
+            {{ feasibility.hasInclusionCriteria ? '✔ Present' : '✖ Missing' }}
+          </span>
+        </div>
+
+        <div class="status-item column">
+          <span class="status-key">Criteria Missing Filters</span>
+
+          @if (feasibility.criterionIdsWithMissingFilters.length) {
+          <ul class="reference-list">
+            @for ( id of feasibility.criterionIdsWithMissingFilters; track id ) {
+            <li>{{ id }}</li>
+            }
+          </ul>
+          } @else {
+          <span class="empty-state">None 🎉</span>
+          }
+        </div>
+      </div>
+      } @else {
+      <div class="status-card">
+        <span class="empty-state">No feasibility validation available.</span>
+      </div>
+      }
+    </section>
+  </div>
+</num-modal-window>
