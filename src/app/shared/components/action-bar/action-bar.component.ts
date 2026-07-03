@@ -1,12 +1,13 @@
-import { Component, computed, inject, input } from '@angular/core'
+import { Component, computed, effect, inject, input } from '@angular/core'
+import { DataDefinitionValidationService } from 'src/app/service/Validation/DataDefinitionValidation.service'
 import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component'
+import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { MatTooltip } from '@angular/material/tooltip'
 import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { UploadService } from 'src/app/service/Upload/Upload.service'
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-action-bar',
@@ -17,24 +18,24 @@ import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Val
 })
 export class ActionBarComponent {
   private dialog = inject(MatDialog)
-
   private saveDataQueryModalService = inject(SaveDataQueryModalService)
-
   private uploadService = inject(UploadService)
-
   private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
+  private readonly dataDefinitionValidationService = inject(DataDefinitionValidationService)
 
   readonly showUpload = input(true)
   readonly showDownload = input(true)
   readonly showSave = input(true)
 
   readonly downloadAllowed = computed(() => {
-    console.log(
-      'Feasibility query valid:',
-      this.feasibilityQueryValidationService.isFeasibilityQueryValid()
-    )
     return this.feasibilityQueryValidationService.isFeasibilityQueryValid() && this.showDownload()
   })
+
+  readonly isDataDefinitionValid = computed(() =>
+    this.dataDefinitionValidationService.isDataDefinitionValid()
+  )
+
+  constructor() {}
 
   public upload(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0]

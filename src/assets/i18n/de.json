@@ -465,10 +465,12 @@
       },
       "DOWNLOAD": "Herunterladen",
       "DOWNLOAD_DISABLED": "Keine Machbarkeitsabfrage wurde definiert",
+      "INVALID_DATA_DEFINITION_TOOLTIP": "Die Datendefinition ist ungültig. Hier klicken, um weitere Informationen zu erhalten.",
       "SAVE": "Speichern",
       "SAVE_DISABLED": "Keine Daten zum Speichern",
       "UPLOAD": "Hochladen",
-      "UPLOAD_DISABLED": "Hochladen nicht verfügbar"
+      "UPLOAD_DISABLED": "Hochladen nicht verfügbar",
+      "VALID_DATA_DEFINITION_TOOLTIP": "Die Datendefinition ist gültig"
     },
     "CHIPS": {
       "CONTEXT": "Kontext",

@@ -476,10 +476,12 @@
       },
       "DOWNLOAD": "Download",
       "DOWNLOAD_DISABLED": "No feasibility query was defined",
+      "INVALID_DATA_DEFINITION_TOOLTIP": "The data definition is invalid. Please click here to view the validation report for details.",
       "SAVE": "Save",
       "SAVE_DISABLED": "No data to save",
       "UPLOAD": "Upload",
-      "UPLOAD_DISABLED": "Upload not available"
+      "UPLOAD_DISABLED": "Upload not available",
+      "VALID_DATA_DEFINITION_TOOLTIP": "The data definition is valid."
     },
     "CHIPS": {
       "CONTEXT": "Context",
