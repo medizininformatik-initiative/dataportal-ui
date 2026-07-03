@@ -2,7 +2,6 @@ import { computed, inject, Injectable, Signal } from '@angular/core'
 import { DataSelectionMainProfileProviderService } from '../DataSelectionMainProfileProvider.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
-import { ProfileProviderService } from '../Provider/ProfileProvider.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 
 export enum ValidationStateType {
@@ -50,6 +49,8 @@ export class DataSelectionValidationService {
     }
     return this.validateProfiles(dataSelection.getProfiles()).every((context) => context.isValid)
   })
+
+  constructor() {}
 
   private validateProfiles(profiles: DataSelectionProfile[]): ValidationContext[] {
     return profiles.map((profile: DataSelectionProfile) => {
