@@ -1,4 +1,3 @@
-import { CriterionModalService } from 'src/app/service/Criterion/Modal/CriterionModal.service'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service'
@@ -9,7 +8,6 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 })
 export class RefrenceCriterionMenuFunctionsService {
   private criterionProviderService = inject(CriterionProviderService)
-  private editCriterionService = inject(CriterionModalService)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
   private navigationHelperService = inject(NavigationHelperService)
 

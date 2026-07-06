@@ -1,0 +1,25 @@
+.warning-row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.img-layout {
+  height: 24px; /* multiple of 4 */
+  width: 32px; /* multiple of 4 */
+  margin-right: 8px;
+}
+
+.warning-message {
+  color: var(--num-color--red);
+  font-size: var(--font-size-md);
+  margin-top: 8px;
+  line-height: 24px;
+  font-style: italic;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.warning-message:hover {
+  text-decoration: underline;
+}

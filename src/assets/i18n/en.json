@@ -18,7 +18,7 @@
         "LABEL": "Log",
         "MODAL": {
           "CLEAR": "Clear Error Log",
-          "DESCRIPTION": "The following validation issues were found:- If you have any questions please contact <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
+          "DESCRIPTION": "The following validation issues were found. If you have any questions, please contact <a href=\"mailto:info@forschen-fuer-gesundheit.de\">info@forschen-fuer-gesundheit.de</a>",
           "DOWNLOAD": "Download Log",
           "HEADER": "Log",
           "ITEM": {
@@ -141,8 +141,9 @@
         "APPLIED_REFERENCES": "Referenced features",
         "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenced profiles are linked profiles that are automatically included when the current profile is part of the request. They cannot be deselected individually.",
         "APPLIED_REFERENCES_TOOLTIP_TITLE": "Applied References",
-        "LINKED": "Linked",
-        "NO_FIELDS": "No fields included",
+        "LINKED": "Reference field",
+        "NO_FIELDS": "No fields have been selected for the feature {{ feature }}. Please select at least one field for each feature",
+        "NO_FIELDS_TOOLTIP_TEXT": "Click here to select fields for feature {{ feature }}.",
         "NO_FILTERS": "None applied",
         "OPTIONAL": "Optional",
         "REFERENCE": "Only if referenced",
@@ -168,7 +169,7 @@
         "JUMP_TO_DATASELECTION_TOOLTIP": "Navigate to editor to edit selected features"
       },
       "HEADER": "Feature Selection",
-      "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do, please register at ",
+      "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
       "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
       "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
       "INFOTEXT": "Select criteria to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
@@ -391,16 +392,17 @@
       },
       "CLOSE_DETAILS": "Close",
       "EMPTY": "Sorry, we could not find any results for ",
+      "FILTER_HEADING": "Refine Your Search:",
       "HEADER": "Criteria search",
-      "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide.If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU ” or other criteria from the “EINWILLIGUNG” module.",
-      "INFO_TOOLTIP": "<b>Context:</b> Describes the medical context of a search term, e.g. diagnosis, procedure, or laboratory value.<br><br><b>Terminology:</b> Indicates which medical classification system a term comes from, e.g. ICD-10, OPS, or LOINC.<br><br><b>KDS Module:</b> Refers to the section of the MII core dataset where the data is structured, e.g. diagnosis, medication, or laboratory data.",
+      "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD-10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide. If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU” or other criteria from the “EINWILLIGUNG” module.",
+      "INFO_TOOLTIP": "<b>CDS Modules:</b> Refers to the section of the MII core dataset where the data is structured, e.g. diagnosis, medication, or laboratory data.<br><br><b>Context:</b> Describes the medical context of a search term, e.g. diagnosis, procedure, or laboratory value.<br><br><b>Terminology:</b> Indicates which medical classification system a term comes from, e.g. ICD-10, OPS, or LOINC.",
       "LABEL": "Enter code or search term",
       "SEARCHBAR": "Search for term or terminology code",
       "SEARCH_BUTTON": "Search",
       "SINGLE_SEARCH": "Single Search",
       "SNACKBAR": {
         "ADDED_TO_COHORT": "Criteria added to cohort selection",
-        "ADDED_TO_STAGE": "Criterion was selected ",
+        "ADDED_TO_STAGE": "Criterion was selected",
         "REMOVED_FROM_STAGE": "Criterion was removed"
       },
       "TOOLTIP_TITLE": "Search filter"
@@ -537,16 +539,18 @@
       }
     },
     "REFERENCE_TILE": {
-      "DELETE": "Delete",
+      "DELETE": "Delete reference field",
+      "ELEMENT_ID_TOOLTIP": "This path identifies the location of the field within the FHIR profile",
       "LINKED_FEATURES_LABEL": "Linked features",
       "LINK_FIELD_LABEL": "Link field",
-      "NOTLINKED": "Not linked",
-      "NOTLINKED_TOOLTIP_TEXT": "This FHIR reference is required or recommended but has not yet been linked to a profile in the selection. Link it to include related data in your query.",
-      "NOTLINKED_TOOLTIP_TITLE": "Reference not linked",
+      "NOT_LINKED": "This reference field contains an unresolved reference to another feature. Please set or remove the reference.",
+      "NOT_LINKED_TOOLTIP_TEXT": "This FHIR reference is required or recommended but has not yet been linked to a feature in the selection. Link it to include related data in your query.",
+      "NOT_LINKED_TOOLTIP_TITLE": "Reference not linked",
       "REQUIRED": "Required",
       "REQUIRED_HELPER": "If enabled, this reference must be present in the linked profile.",
       "REQUIRED_TOOLTIP_TEXT": "If checked, this reference must be present in the linked profile for the query to match. Unchecking makes the reference optional.",
-      "REQUIRED_TOOLTIP_TITLE": "Required reference"
+      "REQUIRED_TOOLTIP_TITLE": "Required reference",
+      "WARNING_TOOLTIP": "Click here to edit the reference field and link it to a feature."
     },
     "SAVE_MODAL": {
       "CANCEL": "Cancel",
@@ -563,6 +567,14 @@
     "TABLE": {
       "ADD": "Add",
       "AVAILABILITY": "Availability",
+      "AVAILABILITY_STATUS": {
+        "HIGH": "High",
+        "LOW": "Low",
+        "MEDIUM": "Medium",
+        "UNKNOWN": "Unknown",
+        "VERY_HIGH": "Very high",
+        "VERY_LOW": "Very low"
+      },
       "CONTEXT": "Context",
       "DISPLAY": "Display",
       "EMPTY": "",

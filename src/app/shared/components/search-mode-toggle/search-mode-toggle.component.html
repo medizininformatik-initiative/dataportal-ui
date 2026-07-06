@@ -1,12 +1,25 @@
-<div class="toggle-container">
-  <span [class.active]="selectedMode() === 'search'" (click)="onModeChange('search')">
-    {{ 'FEASIBILITY.SEARCH.SINGLE_SEARCH' | translate }}
-  </span>
-  <num-switch
-    [isChecked]="selectedMode() === 'bulk-search'"
-    (toggled)="onModeChange($event ? 'bulk-search' : 'search')"
-  ></num-switch>
-  <span [class.active]="selectedMode() === 'bulk-search'" (click)="onModeChange('bulk-search')">
-    {{ 'FEASIBILITY.SEARCH.BULK_SEARCH' | translate }}
-  </span>
+<div class="mode-toggle" role="tablist" aria-label="Search mode selection">
+  <button
+    type="button"
+    class="mode-toggle__option search"
+    role="tab"
+    [class.mode-toggle__option--active]="selectedMode() === 'search'"
+    [attr.aria-selected]="selectedMode() === 'search'"
+    (click)="onModeChange('search')"
+  >
+    <fa-icon icon="search"></fa-icon>
+    <span>{{ 'FEASIBILITY.SEARCH.SINGLE_SEARCH' | translate }}</span>
+  </button>
+
+  <button
+    type="button"
+    class="mode-toggle__option bulksearch"
+    role="tab"
+    [class.mode-toggle__option--active]="selectedMode() === 'bulk-search'"
+    [attr.aria-selected]="selectedMode() === 'bulk-search'"
+    (click)="onModeChange('bulk-search')"
+  >
+    <fa-icon icon="clipboard-list"></fa-icon>
+    <span>{{ 'FEASIBILITY.SEARCH.BULK_SEARCH' | translate }}</span>
+  </button>
 </div>

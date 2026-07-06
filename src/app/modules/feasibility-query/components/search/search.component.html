@@ -11,35 +11,12 @@
     </num-header-description>
   </div>
 
-  <num-criteria-search-bar
-    [searchText$]="searchText$"
-    [searchText]="searchText"
-    [resetFilterEnabled$]="resetFilterEnabled$"
-    (searchChanged)="startSearch($event)"
-    (filterReset)="resetFilter()"
-  ></num-criteria-search-bar>
+  <num-criteria-search-bar></num-criteria-search-bar>
 
-  <num-criteria-search-filter-bar
-    [searchFilters$]="searchFilters$"
-    [resetFilterEnabled$]="resetFilterEnabled$"
-    (filterChanged)="setElasticSearchFilter($event)"
-    (filterReset)="resetFilter()"
-    (isOpen)="isFilterOpen($event)"
-  ></num-criteria-search-filter-bar>
+  <num-criteria-search-filter-bar></num-criteria-search-filter-bar>
 
   <div class="result-container">
-    <num-criteria-search-results
-      #searchResults
-      [listItems]="listItems"
-      [adaptedData]="adaptedData"
-      [selectedDetails$]="selectedDetails$"
-      [searchText$]="searchText$"
-      [searchResultsFound]="searchResultsFound"
-      (selectedRow)="setSelectedRowItem($event)"
-      (rowClicked)="setClickedRow($event)"
-      (loadMore)="loadMoreCriteriaSearchResults()"
-      (selectedRelative)="getSelectedRelative($event)"
-    ></num-criteria-search-results>
+    <num-criteria-search-results></num-criteria-search-results>
   </div>
 
   <div>

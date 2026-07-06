@@ -30,7 +30,6 @@ import { TranslateModule } from '@ngx-translate/core'
     FontAwesomeModule,
     AsyncPipe,
     TranslateModule,
-    NgClass,
   ],
 })
 export class DisplayCriteriaComponent implements OnInit, OnDestroy {

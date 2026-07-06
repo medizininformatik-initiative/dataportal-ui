@@ -1,5 +1,5 @@
 <div class="num-card selection-box" [attr.data-cy]="label() | displayTranslation">
-  <div class="display-container">
+  <div class="card-col">
     <div class="num-text-body">{{ label() | displayTranslation }}</div>
     <div
       class="num-pill"
@@ -27,7 +27,21 @@
       @if (fieldsFilterChips().length > 0) {
       <num-filter-chips [filterChips]="fieldsFilterChips()"></num-filter-chips>
       } @if (!fieldsFilterChips().length) {
-      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate }}</span>
+      <num-missing-filter>
+        <span
+          [matTooltip]="
+            'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS_TOOLTIP_TEXT'
+              | translate : { feature: label() | displayTranslation }
+          "
+          message
+          (click)="navigate()"
+        >
+          {{
+            'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS'
+              | translate : { feature: label() | displayTranslation }
+          }}
+        </span>
+      </num-missing-filter>
       }
     </div>
   </div>
@@ -51,8 +65,8 @@
       }
     </div>
   </div>
-  @if (isReferenced) {
-  <div class="reference-container">
+  @if (isReferenced()) {
+  <div class="card-col">
     <div class="label-with-info">
       <span class="num-text-accent">{{
         'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate

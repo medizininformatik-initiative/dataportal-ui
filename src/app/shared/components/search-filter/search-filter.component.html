@@ -4,8 +4,10 @@
     [matTooltip]="
       selectedValues()?.length === 0
         ? ('SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED' | translate)
-        : ''
+        : getCleanValue(selectedValues())
     "
+    matTooltipPosition="below"
+    matTooltipShowDelay="300"
   >
     <mat-select
       disableOptionCentering
@@ -16,11 +18,7 @@
       [value]="selectedValues()"
       [multiple]="multiSelect()"
     >
-      <mat-select-trigger
-        [matTooltip]="getCleanValue(selectedValues())"
-        matTooltipPosition="below"
-        matTooltipShowDelay="300"
-      >
+      <mat-select-trigger>
         {{ getCleanValue(selectedValues()) }}
       </mat-select-trigger>
       <mat-option disabled class="select-search-option">

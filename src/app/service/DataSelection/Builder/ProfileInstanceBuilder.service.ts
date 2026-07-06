@@ -26,11 +26,11 @@ export class ProfileInstanceBuilderService {
     markAsReference: boolean
   ): DataSelectionProfile[] {
     return item.map((profile: DataSelectionProfileData) =>
-      this.builProfileInstance(profile, markAsReference)
+      this.buildProfileInstance(profile, markAsReference)
     )
   }
 
-  private builProfileInstance(
+  private buildProfileInstance(
     item: DataSelectionProfileData,
     markAsReference: boolean
   ): DataSelectionProfile {

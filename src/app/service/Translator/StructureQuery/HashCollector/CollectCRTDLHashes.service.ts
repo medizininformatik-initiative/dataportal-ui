@@ -29,13 +29,14 @@ export class CollectCRTDLHashesService {
   constructor() {}
 
   public collectCriterionData(inexclusion: StructuredQueryCriterionData[][]): HashCollection {
+    this.hashes = { conceptHashes: [], criteriaHashes: [] }
     inexclusion.forEach((criterionArray: StructuredQueryCriterionData[]) => {
       this.innerCriterion(criterionArray)
     })
     return this.hashes
   }
 
-  public innerCriterion(innerArray: StructuredQueryCriterionData[]): void {
+  private innerCriterion(innerArray: StructuredQueryCriterionData[]): void {
     innerArray.forEach((criterion: StructuredQueryCriterionData) => {
       if (!this.isConsent(criterion)) {
         this.processStructuredQueryCriterion(criterion)

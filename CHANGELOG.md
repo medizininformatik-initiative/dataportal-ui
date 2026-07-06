@@ -1,5 +1,20 @@
 # Changelog
 
+## v7.1.0 (2026-07-06)
+### Features
+* Introduced a reusable shortcut component for navigating to and editing missing mandatory filters and fields in features and criteria. [#588](https://github.com/medizininformatik-initiative/feasibility-gui/issues/588)
+* Added the shortcut component to required and recommended reference fields that are not yet linked. [#551](https://github.com/medizininformatik-initiative/feasibility-gui/issues/551)
+* Added the shortcut component to profiles without any selected fields to simplify completing the data selection. [#549](https://github.com/medizininformatik-initiative/feasibility-gui/issues/549)
+
+### Fixed
+* Fixed an issue where empty queries were not properly cleared before uploading a new query. [#528](https://github.com/medizininformatik-initiative/feasibility-gui/issues/528)
+* Added missing translations for availability indicators in the Criteria Search results table. [#584](https://github.com/medizininformatik-initiative/feasibility-gui/issues/584)
+
+### Changed
+* Improved the usability and clarity of the filter dropdowns on the Criteria Search page. [#575](https://github.com/medizininformatik-initiative/feasibility-gui/issues/575)
+* Redesigned the profile reference tiles and improved the presentation of unlinked reference warnings. [#550](https://github.com/medizininformatik-initiative/feasibility-gui/issues/550)
+
+
 ## v7.0.0 (2026-06-02)
 
 ### Features

@@ -47,7 +47,7 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   tree: TreeNode[] = []
   deepCopyFieldsSubscription: Subscription
   private localFieldTree: BasicField[] = []
-  private localSelectedBasicFields: SelectedBasicField[] = []
+  public localSelectedBasicFields: SelectedBasicField[] = []
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

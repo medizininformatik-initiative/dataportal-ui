@@ -1,18 +1,4 @@
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter'
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  computed,
-  effect,
-  inject,
-  input,
-  OnDestroy,
-  OnInit,
-  TemplateRef,
-  viewChild,
-} from '@angular/core'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType'
 import { EditFieldsComponent } from '../../../../shared-filter/components/edit-fields/edit-fields.component'
@@ -30,6 +16,21 @@ import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile
 import { Subscription } from 'rxjs'
 import { TokenFilterComponent } from './profile-filter/token-filter/token-filter.component'
 import { TranslateModule } from '@ngx-translate/core'
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  signal,
+  TemplateRef,
+  viewChild,
+} from '@angular/core'
 @Component({
   selector: 'num-profile',
   templateUrl: './profile.component.html',
@@ -58,6 +59,8 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   private stagedProfileService = inject(StagedProfileService)
   private possibleReferencesService = inject(PossibleReferencesService)
 
+  readonly activeFieldTabId = signal<string | null>(null)
+
   readonly profile = input.required<DataSelectionProfile>()
 
   readonly tokenFilter = computed(() => {
@@ -76,11 +79,16 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     effect(() => {
       this.stagedProfileService.initialize(this.profile())
     })
+
+    const { activeTab, ...rest } = history.state
+    this.activeFieldTabId.set(activeTab ?? null)
+
+    history.replaceState(rest, '')
   }
 
   possibleReferencesServiceSubscription: Subscription
 
-  templates: { template: TemplateRef<any>; name: string }[] = []
+  templates: { template: TemplateRef<any>; name: string; active?: boolean }[] = []
 
   readonly fieldsTemplate = viewChild('fields', { read: TemplateRef })
   readonly timeRestrictionTemplate = viewChild('timeRestriction', { read: TemplateRef })
@@ -142,7 +150,12 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     const referenceFields = this.profile().getProfileFields().getReferenceFields()
     if (referenceFields && referenceFields.length > 0) {
       this.possibleReferencesServiceSubscription?.unsubscribe()
-      this.templates.push({ template: this.referenceTemplate(), name: 'REFERENCE' })
+      const activeTab = this.activeFieldTabId() ? true : false //referenceFields[0].getElementId()
+      this.templates.push({
+        template: this.referenceTemplate(),
+        name: 'REFERENCE',
+        active: activeTab,
+      })
     }
   }
 

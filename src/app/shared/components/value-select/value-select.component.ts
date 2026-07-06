@@ -27,6 +27,6 @@ export class ValueSelectComponent {
     const v = this.value()
     setTimeout(() => {
       this.selectedValue.emit(v)
-    }, 1000)
+    }, 300)
   }
 }
