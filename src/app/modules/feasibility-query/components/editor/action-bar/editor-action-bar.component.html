@@ -11,7 +11,7 @@
   <num-button
     type="green"
     (click)="doSendRequest()"
-    [isDisabled]="!isFeasibilityQueryValid()"
+    [isDisabled]="!isFeasibilityQueryValid"
     matTooltip="{{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate }}"
   >
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY' | translate }}

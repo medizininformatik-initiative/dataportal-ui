@@ -9,7 +9,7 @@ import { CriterionProviderService } from 'src/app/service/Provider/CriterionProv
 import { EditAttributeFilterService } from './EditAttributeFilter.service'
 import { EditReferenceFilterService } from './EditReferenceFilter.service'
 import { EditValueFilterService } from './EditValueFilter.service'
-import { FeasibilityQueryValidationService } from '../Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from '../../Validation/FeasibilityQueryValidationService.service'
 import { inject, Injectable } from '@angular/core'
 import { Observable, tap } from 'rxjs'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'

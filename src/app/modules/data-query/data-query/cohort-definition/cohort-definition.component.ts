@@ -10,7 +10,7 @@ import { PlaceholderBoxComponent } from '../../../../shared/components/placehold
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-cohort-definition',
@@ -34,7 +34,7 @@ export class CohortDefinitionComponent {
   private readonly feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
   private readonly resultProviderService = inject(ResultProviderService)
 
-  readonly isFeasibilityExistent = this.feasibilityQueryValidation.isFeasibilityQueryValid
+  readonly isFeasibilityExistent = this.feasibilityQueryValidation.validationState().isValid
 
   readonly totalNumberOfPatients = toSignal(
     this.resultProviderService

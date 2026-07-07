@@ -5,7 +5,7 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { Injectable, inject } from '@angular/core'
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
-import { FeasibilityQueryValidationService } from '../Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from '../../Validation/FeasibilityQueryValidationService.service'
 
 @Injectable({
   providedIn: 'root',
@@ -104,7 +104,7 @@ export class EditAttributeFilterService {
   }
 
   public isFilterRequired(criterion: Criterion): boolean {
-    return this.feasibilityQueryValidationService.isFilterRequired(criterion)
+    return this.feasibilityQueryValidationService.isRequiredFilterSet(criterion)
   }
 
   private buildAttributeFilter(

@@ -11,7 +11,7 @@ import { ButtonComponent } from '../../../../../../shared/components/button/butt
 import { MatTooltip } from '@angular/material/tooltip'
 import { AsyncPipe } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-bulk-search-action-bar',

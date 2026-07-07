@@ -5,7 +5,7 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { DropGroupDirective } from '../../../../../shared/directives/drop-group/drop-group.directive'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
 import { map, Observable, of, Subscription } from 'rxjs'
 import { StageProviderService } from '../../../../../service/Provider/StageProvider.service'
 import { TranslateModule } from '@ngx-translate/core'
@@ -47,7 +47,7 @@ export class CriteriaStageComponent implements AfterViewInit, OnDestroy {
   constructor(...args: unknown[])
 
   constructor() {
-    console.log(this.test.isFeasibilityQueryValid())
+    console.log(this.test.validationState().isValid)
   }
 
   ngAfterViewInit() {

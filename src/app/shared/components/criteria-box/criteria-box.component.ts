@@ -23,7 +23,7 @@ import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/Ref
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { TranslateModule } from '@ngx-translate/core'
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
 @Component({
   selector: 'num-criteria-box',
   templateUrl: './criteria-box.component.html',
@@ -71,7 +71,7 @@ export class CriteriaBoxComponent implements OnInit {
    * A filter is considered required if the criterion does not have a required filter set. This is determined by the getIsRequiredFilterSet method of the Criterion class. If this method returns false, it means that there are required filters that have not been set, and thus the criterion is considered to be in a state where required filters are missing.
    */
   readonly isFilterRequired = computed(() =>
-    this.feasibilityQueryValidationService.isFilterRequired(this.criterion())
+    this.feasibilityQueryValidationService.isRequiredFilterSet(this.criterion())
   )
 
   readonly warningSignUrl = 'assets/img/alert-blue-white.png'

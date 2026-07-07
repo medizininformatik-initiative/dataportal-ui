@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, input } from '@angular/core'
 import { DataDefinitionValidationService } from 'src/app/service/Validation/DataDefinitionValidation.service'
 import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component'
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -30,7 +30,7 @@ export class ActionBarComponent {
   readonly showSave = input(true)
 
   readonly downloadAllowed = computed(() => {
-    return this.feasibilityQueryValidationService.isFeasibilityQueryValid() && this.showDownload()
+    return this.feasibilityQueryValidationService.validationState().isValid && this.showDownload()
   })
 
   readonly isDataDefinitionValid = computed(() =>

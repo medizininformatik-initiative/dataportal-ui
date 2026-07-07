@@ -11,7 +11,7 @@ import { NavigationHelperService } from 'src/app/service/NavigationHelper.servic
 import { PlaceholderBoxComponent } from '../../../../shared/components/placeholder-box/placeholder-box.component'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
-import { FeasibilityQueryValidationService } from 'src/app/service/Criterion/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-data-selection',
@@ -43,7 +43,7 @@ export class DataSelectionComponent {
     { initialValue: false }
   )
 
-  readonly isCohortExistent = this.feasibilityQueryValidationService.isFeasibilityQueryValid
+  readonly isCohortExistent = this.feasibilityQueryValidationService.validationState().isValid
 
   readonly emailLink = this.appSettingsProviderService.getEmail()
 

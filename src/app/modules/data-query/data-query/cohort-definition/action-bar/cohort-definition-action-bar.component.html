@@ -8,7 +8,7 @@
   </num-button>
   <num-button
     type="green"
-    [isDisabled]="!isFeasibilityQueryValid()"
+    [isDisabled]="!isFeasibilityQueryValid"
     (click)="sendQuery()"
     tooltip="{{ 'DATAQUERY.COHORT.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate }}"
   >
