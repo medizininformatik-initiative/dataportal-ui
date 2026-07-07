@@ -567,16 +567,20 @@
         "VERY_LOW": "Sehr niedrig"
       },
       "CONTEXT": "Kontext",
+      "CRITERION": "Kriterium",
       "DISPLAY": "Anzeige",
       "EMPTY": "",
       "ICON": "Verwandte Kriterien anzeigen",
       "NAME": "Name",
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
       "PATIENT_COUNT": "Anzahl der Patienten",
+      "PROFILE": "Merkmal",
       "SELECT_CHECKBOX": "Kriterium auswählen",
       "SITE": "Standort",
+      "STATUS": "Status",
       "TERMCODE": "Termcode",
-      "TERMINOLOGY_CODE": "Terminologie"
+      "TERMINOLOGY_CODE": "Terminologie",
+      "WHAT_IS_MISSING": "Was fehlt?"
     }
   },
   "SHARED_FILTER": {

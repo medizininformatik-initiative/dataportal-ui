@@ -1,79 +1,75 @@
-.validation-status {
+.modal-container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  width: 100%;
+  height: 100%;
 }
 
-.status-row {
+.modal-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+/* === Tab headers with embedded status === */
+.tab-header {
+  display: flex;
+  flex-direction: row;
   align-items: center;
+  gap: 8px;
+  padding: 2px 4px;
 }
 
-.status-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.status-section h4 {
-  margin: 0;
-  font-size: 1rem;
+.tab-title {
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
   font-weight: 600;
+  color: var(--color-text-primary);
 }
 
-.status-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  padding: 1rem;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 0.75rem;
-
-  background: #fff;
+.tab-container {
+  flex: 1;
 }
 
-.status {
+.summary-status {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  line-height: var(--line-height-sm);
 
-  min-width: 5rem;
+  &.status-valid {
+    color: #2e7d32;
+  }
 
-  padding: 0.25rem 0.75rem;
-
-  border-radius: 999px;
-
-  font-size: 0.875rem;
-  font-weight: 600;
+  &.status-invalid {
+    color: #b71c1c;
+  }
 }
 
-.status.success {
-  background: #dcfce7;
-  color: #166534;
+.summary-count {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--color-text-secondary);
 }
 
-.status.error {
-  background: #fee2e2;
-  color: #991b1b;
+/* === Table === */
+.table-container {
+  width: 100%;
+  overflow-y: auto;
+  padding-top: 8px;
 }
 
-.label {
-  font-weight: 600;
-}
-
-ul {
-  margin: 0.25rem 0 0;
-  padding-left: 1.25rem;
-}
-
-li {
-  margin: 0.25rem 0;
-}
-
-.empty-state {
-  color: #6b7280;
-  font-style: italic;
+/* === Footer === */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+  margin-top: 8px;
+  border-top: 1px solid var(--border-color);
 }
