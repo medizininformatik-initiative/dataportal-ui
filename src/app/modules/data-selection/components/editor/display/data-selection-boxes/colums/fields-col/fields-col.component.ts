@@ -1,16 +1,16 @@
 import { Component, computed, effect, inject, input, output } from '@angular/core'
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import {
-  DataSelectionValidationService,
-  ValidationStateType,
-} from 'src/app/service/Validation/DataSelectionValidation.service'
 import { DisplayTranslationPipe } from 'src/app/shared/pipes/DisplayTranslationPipe'
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
 import { FilterChipsComponent } from 'src/app/shared/components/filter-chips/filter-chips.component'
 import { InfoTooltipDirective } from 'src/app/shared/directives/info-tooltip.directive'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MissingFilterComponent } from 'src/app/shared/components/missing-filter/missing-filter.component'
+import {
+  ProfileStateType,
+  ProfileValidationService,
+} from 'src/app/service/Validation/Internal/ProfileValidationService.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -32,7 +32,7 @@ export type FieldsMessageType = 'chips' | 'red' | 'grey'
 })
 export class FieldsColComponent {
   private readonly fieldsFilterChipsService = inject(DataSelectionFieldsChipsService)
-  private readonly validationService = inject(DataSelectionValidationService)
+  private readonly profileValidationService = inject(ProfileValidationService)
 
   readonly profile = input<DataSelectionProfile>()
   readonly navigate = output<void>()
@@ -46,11 +46,11 @@ export class FieldsColComponent {
     if (!profile) {
       return 'chips'
     }
-    const { state } = this.validationService.validateProfile(profile)
-    if (state === ValidationStateType.NoBasicFieldsSetAndNoReferencesSet) {
+    const { state } = this.profileValidationService.validate(profile)
+    if (state === ProfileStateType.NoBasicFieldsSetAndNoReferencesSet) {
       return 'red'
     }
-    if (state === ValidationStateType.NoBasicFieldsSetButReferencesSet) {
+    if (state === ProfileStateType.NoBasicFieldsSetButReferencesSet) {
       return 'grey'
     }
 

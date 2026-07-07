@@ -5,12 +5,12 @@ import {
 } from './DataSelectionValidation.service'
 import {
   FeasibilityQueryValidationService,
-  FeasibilityValidationState,
+  FeasibilityQueryValidationState,
 } from './FeasibilityQueryValidationService.service'
 
 export interface DataDefinitionValidationState {
   dataSelectionValidationState: DataSelectionValidationState
-  feasibilityQueryValidationState: FeasibilityValidationState
+  feasibilityQueryValidationState: FeasibilityQueryValidationState
   isDataDefinitionValid: boolean
 }
 @Injectable({

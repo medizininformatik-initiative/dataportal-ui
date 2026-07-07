@@ -2,7 +2,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop'
 import { Directive, HostListener, inject, input, OnInit } from '@angular/core'
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { StageProviderService } from '../../../service/Provider/StageProvider.service'
 
 @Directive({

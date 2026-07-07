@@ -4,26 +4,26 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { CriterionValidationEntry } from './table/CriterionValidationEntry'
 import { CriterionValidationTableAdapter } from './table/CriterionValidationTableAdapter'
-import { DataDefinitionValidationService } from 'src/app/service/Validation/DataDefinitionValidation.service'
-import { ProfileValidationState } from 'src/app/service/Validation/DataSelectionValidation.service'
+import { DataDefinitionValidationService } from 'src/app/service/Validation/Internal/DataDefinitionValidation.service'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import {
-  HeaderComponent,
-  HeaderDescriptionComponent,
-  ModalWindowComponent,
-  SectionNameComponent,
-} from '../shared-components.module'
+import { InformationSectionComponent } from '../information-section/information-section.component'
 import { MatDialogRef } from '@angular/material/dialog'
-import { MatTabsModule } from '@angular/material/tabs'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { ProfileValidationEntry } from './table/ProfileValidationContextEntry'
+import { ProfileValidationService } from 'src/app/service/Validation/Internal/ProfileValidationService.service'
+import { ProfileValidationState } from 'src/app/service/Validation/Internal/DataSelectionValidation.service'
 import { ProfileValidationTableAdapter } from './table/ProfileValidationTableAdapter'
 import { TableComponent } from '../table/table.component'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 import { v4 as uuidv4 } from 'uuid'
+import {
+  HeaderComponent,
+  HeaderDescriptionComponent,
+  ModalWindowComponent,
+} from '../shared-components.module'
 @Component({
   selector: 'num-validation-modal',
   templateUrl: './validation-modal.component.html',
@@ -35,10 +35,9 @@ import { v4 as uuidv4 } from 'uuid'
     TableComponent,
     FontAwesomeModule,
     ButtonComponent,
+    InformationSectionComponent,
     TranslateModule,
-    MatTabsModule,
     HeaderDescriptionComponent,
-    SectionNameComponent,
   ],
 })
 export class ValidationModalComponent {
@@ -67,26 +66,37 @@ export class ValidationModalComponent {
   readonly dsIsValid = computed(
     () => this.dataDefinitionValidationStatus().dataSelectionValidationState.isValid
   )
+  readonly fqHasInclusionCriteria = computed(
+    () => this.dataDefinitionValidationStatus().feasibilityQueryValidationState.hasInclusionCriteria
+  )
 
-  readonly fqValidCount = computed(() => {
-    return this.dataDefinitionValidationStatus().feasibilityQueryValidationState.count
-  })
+  readonly fqValidCount = computed(
+    () =>
+      this.dataDefinitionValidationStatus().feasibilityQueryValidationState.criterionValidationStates.filter(
+        (s) => s.isValid
+      ).length
+  )
+  readonly fqTotalCount = computed(
+    () => this.dataDefinitionValidationStatus().feasibilityQueryValidationState.criterionCount
+  )
 
   readonly dsValidCount = computed(
     () =>
-      this.dataDefinitionValidationStatus().dataSelectionValidationState.validatedProfiles.filter(
+      this.dataDefinitionValidationStatus().dataSelectionValidationState.profileValidationStates.filter(
         (validatedProfile) => validatedProfile.isValid
       ).length
   )
   readonly dsTotalCount = computed(
-    () => this.dataDefinitionValidationStatus().dataSelectionValidationState.count
+    () => this.dataDefinitionValidationStatus().dataSelectionValidationState.profileCount
   )
 
   // ─── Table data ───────────────────────────────────────────────────────────────
 
   readonly fqTableData = computed<TableData>(() => {
     const invalidIds = this.dataDefinitionValidationStatus()
-      .feasibilityQueryValidationState.validatedCriterions.filter((context) => !context.isValid)
+      .feasibilityQueryValidationState.criterionValidationStates.filter(
+        (context) => !context.isValid
+      )
       .map((context) => context.criterionId)
     const entries = invalidIds.map((criterionId: string) => {
       const criterion = this.criterionProvider.getOne(criterionId)
@@ -101,24 +111,23 @@ export class ValidationModalComponent {
   })
 
   readonly dsTableData = computed<TableData>(() => {
-    const entries: ProfileValidationEntry[] = []
-
-    for (const profile of this.dataDefinitionValidationStatus().dataSelectionValidationState
-      .validatedProfiles) {
-      entries.push(this.createEntry(profile))
-    }
-
+    const validatedProfiles =
+      this.dataDefinitionValidationStatus().dataSelectionValidationState.profileValidationStates
+    const entries = validatedProfiles.map((profileState) =>
+      this.buildProfileValidationEntry(profileState)
+    )
     return this.profileValidationTableAdapter.adapt(entries)
   })
 
-  private createEntry(validation: ProfileValidationState): ProfileValidationEntry {
-    const profile = this.profileProvider.getOne(validation.profileId)
-
+  private buildProfileValidationEntry(
+    profileState: ProfileValidationState
+  ): ProfileValidationEntry {
+    const profile = this.profileProvider.getOne(profileState.profileId)
     return new ProfileValidationEntry(
       uuidv4(),
       profile.getDisplay(),
-      validation.state,
-      validation.isValid,
+      profileState.state,
+      profileState.isValid,
       profile.getId()
     )
   }

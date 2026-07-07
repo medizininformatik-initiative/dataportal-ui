@@ -2,7 +2,7 @@ import { ActionBarComponent } from '../../../../../shared/components/action-bar/
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
 import { Component, inject } from '@angular/core'
 import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { TranslateModule } from '@ngx-translate/core'
 

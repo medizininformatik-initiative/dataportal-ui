@@ -14,7 +14,7 @@ import { StageProviderService } from 'src/app/service/Provider/StageProvider.ser
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
 import { tap } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-search-action-bar',

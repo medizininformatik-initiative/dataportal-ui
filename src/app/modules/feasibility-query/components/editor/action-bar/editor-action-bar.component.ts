@@ -1,7 +1,7 @@
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
 import { Component, effect, inject, OnInit } from '@angular/core'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { MatTooltip } from '@angular/material/tooltip'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { Observable, of } from 'rxjs'

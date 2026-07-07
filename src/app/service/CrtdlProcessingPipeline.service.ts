@@ -1,7 +1,7 @@
 import { concatMap, filter, map, Observable, of, switchMap, take, tap } from 'rxjs'
 import { CRTDL2UIModelService } from './Translator/CRTDL/CRTDL2UIModel.service'
 import { CRTDLData } from '../model/Interface/CRTDLData'
-import { CRTDLValidationService } from './Validation/CRTDLValidation.service'
+import { CRTDLValidationService } from './Validation/External/CRTDLValidation.service'
 import { ErrorLogModalComponent } from '../layout/components/error-log/error-log-modal.component'
 import { Injectable, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'

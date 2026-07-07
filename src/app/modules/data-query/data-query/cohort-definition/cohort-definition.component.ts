@@ -10,7 +10,7 @@ import { PlaceholderBoxComponent } from '../../../../shared/components/placehold
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/FeasibilityQueryValidationService.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-cohort-definition',

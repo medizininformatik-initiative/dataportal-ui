@@ -1,6 +1,6 @@
 import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { ValidationStateType } from 'src/app/service/Validation/DataSelectionValidation.service'
+import { ProfileStateType } from 'src/app/service/Validation/Internal/DataSelectionValidation.service'
 
 /**
  * List entry wrapping a ValidationContext from DataDefinitionValidationService.
@@ -9,14 +9,14 @@ import { ValidationStateType } from 'src/app/service/Validation/DataSelectionVal
 export class ProfileValidationEntry extends AbstractListEntry {
   protected id: string
   private readonly display: Display
-  private readonly state: ValidationStateType
+  private readonly state: ProfileStateType
   private readonly valid: boolean
   private readonly profileId: string
 
   constructor(
     id: string,
     display: Display,
-    state: ValidationStateType,
+    state: ProfileStateType,
     valid: boolean,
     profileId: string
   ) {
@@ -28,22 +28,41 @@ export class ProfileValidationEntry extends AbstractListEntry {
     this.profileId = profileId
   }
 
+  /**
+   * Returns the display object of the profile.
+   * @returns {Display}
+   */
   public getDisplay(): Display {
     return this.display
   }
 
+  /**
+   * Returns whether the profile is valid or not.
+   * @returns {boolean}
+   */
   public getValid(): boolean {
     return this.valid
   }
-
-  public getState(): ValidationStateType {
+  /**
+   * Returns the validation state of the profile.
+   * @returns {ProfileStateType}
+   */
+  public getState(): ProfileStateType {
     return this.state
   }
 
+  /**
+   * Returns the ID of the profile.
+   * @returns {string}
+   */
   public getProfileId(): string {
     return this.profileId
   }
 
+  /**
+   * Returns the ID of the entry.
+   * @returns {string}
+   */
   public getId(): string {
     return this.id
   }

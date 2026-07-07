@@ -3,7 +3,10 @@ import { ProfileValidationEntry } from './ProfileValidationContextEntry'
 import { TableCellBuilder } from 'src/app/shared/models/TableData/cells/TableCellBuilder'
 import { TableHeaderData } from 'src/app/shared/models/TableData/TableHeaderData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
-import { ValidationStateType } from 'src/app/service/Validation/DataSelectionValidation.service'
+import {
+  ProfileStateType,
+  ProfileValidationState,
+} from 'src/app/service/Validation/Internal/ProfileValidationService.service'
 
 export class ProfileValidationTableAdapter extends AbstractTableAdapter<ProfileValidationEntry> {
   protected buildHeaders(): TableHeaderData {
@@ -23,15 +26,15 @@ export class ProfileValidationTableAdapter extends AbstractTableAdapter<ProfileV
     }))
   }
 
-  private whatsMissing(state: ValidationStateType): string {
+  private whatsMissing(state: ProfileStateType): string {
     switch (state) {
-      case ValidationStateType.BasicFieldsSetButReferenceNotSet:
+      case ProfileStateType.BasicFieldsSetButReferenceNotSet:
         return 'Missing references'
-      case ValidationStateType.BasicFieldsSetAndReferenceSet:
+      case ProfileStateType.BasicFieldsSetAndReferenceSet:
         return '–'
-      case ValidationStateType.NoBasicFieldsSetButReferencesSet:
+      case ProfileStateType.NoBasicFieldsSetButReferencesSet:
         return 'Missing fields · Missing references'
-      case ValidationStateType.NoBasicFieldsSetAndNoReferencesSet:
+      case ProfileStateType.NoBasicFieldsSetAndNoReferencesSet:
         return 'Missing fields'
     }
   }

@@ -1,7 +1,7 @@
 import { CheckAndUpgradeCCDLService } from '../../Upgrade/CheckAndUpgradeCCDL.service'
 import { concatMap, map, Observable, switchMap } from 'rxjs'
 import { CrtdlProcessingPipelineService } from '../../CrtdlProcessingPipeline.service'
-import { CRTDLValidationService } from '../../Validation/CRTDLValidation.service'
+import { CRTDLValidationService } from '../../Validation/External/CRTDLValidation.service'
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
 import { inject, Injectable } from '@angular/core'
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile'
