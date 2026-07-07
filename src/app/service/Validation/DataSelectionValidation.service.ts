@@ -10,13 +10,17 @@ export enum ValidationStateType {
   NoBasicFieldsSetButReferencesSet,
   NoBasicFieldsSetAndNoReferencesSet,
 }
-export interface ValidationContext extends ValidationState {
-  profileId: string
-}
-export interface ValidationState {
+
+export interface ProfileValidationState {
   isValid: boolean
   state: ValidationStateType
   referenceFieldIds?: string[]
+  profileId: string
+}
+export interface DataSelectionValidationState {
+  count: number
+  isValid: boolean
+  validatedProfiles: ProfileValidationState[]
 }
 @Injectable({
   providedIn: 'root',
@@ -36,35 +40,26 @@ export class DataSelectionValidationService {
   })
 
   /**
-   * @returns {ValidationContext[]} An array of validation contexts for each profile in the active data selection.
-   */
-  readonly validationContexts: Signal<ValidationContext[]> = computed(() => {
-    const dataSelection = this.activeDataSelection()
-
-    if (!dataSelection) {
-      return []
-    }
-    return this.validateProfiles(dataSelection.getProfiles())
-  })
-
-  /**
    * @returns {boolean} true if the active data selection is valid, false otherwise.
    */
-  readonly isDataSelectionValid: Signal<boolean> = computed(() => {
+  readonly validationState: Signal<DataSelectionValidationState> = computed(() => {
     const dataSelection = this.activeDataSelection()
     const containsMainProfile = dataSelection
       ?.getProfiles()
       .findIndex((profile) => profile.getId() === this.patientProfile()?.getId())
 
     if (containsMainProfile === -1 || !dataSelection) {
-      return false
+      return { isValid: false, count: 0, validatedProfiles: [] }
     }
-    return this.validateProfiles(dataSelection.getProfiles()).every((context) => context.isValid)
+    const validateProfiles = this.validateProfiles(dataSelection.getProfiles())
+    const isValid = validateProfiles.every((context) => context.isValid)
+    const count = validateProfiles.length
+    return { isValid, count, validatedProfiles: validateProfiles }
   })
 
   constructor() {}
 
-  private validateProfiles(profiles: DataSelectionProfile[]): ValidationContext[] {
+  private validateProfiles(profiles: DataSelectionProfile[]): ProfileValidationState[] {
     return profiles.map((profile: DataSelectionProfile) => {
       const validationState = this.validateProfile(profile)
       return {
@@ -83,7 +78,7 @@ export class DataSelectionValidationService {
    *	3: `false` if basic fields are selected, but there are unlinked required or recommended reference fields.
    *	4: `false` if neither basic fields but there are unlinked required or recommended reference fields.
    */
-  public validateProfile(profile: DataSelectionProfile): ValidationState {
+  public validateProfile(profile: DataSelectionProfile): ProfileValidationState {
     const hasUnlinkedReferences =
       profile.getProfileFields().getUnlinkedRequiredOrRecommendedReferences().length > 0
 
@@ -99,6 +94,7 @@ export class DataSelectionValidationService {
           .getProfileFields()
           .getUnlinkedRequiredOrRecommendedReferences()
           .map((field) => field.getElementId()),
+        profileId: profile.getId(),
       }
     }
 
@@ -106,6 +102,7 @@ export class DataSelectionValidationService {
       return {
         isValid: true,
         state: ValidationStateType.BasicFieldsSetAndReferenceSet,
+        profileId: profile.getId(),
       }
     }
 
@@ -113,6 +110,7 @@ export class DataSelectionValidationService {
       return {
         isValid: true,
         state: ValidationStateType.NoBasicFieldsSetButReferencesSet,
+        profileId: profile.getId(),
       }
     }
 
@@ -123,6 +121,7 @@ export class DataSelectionValidationService {
         .getProfileFields()
         .getUnlinkedRequiredOrRecommendedReferences()
         .map((field) => field.getElementId()),
+      profileId: profile.getId(),
     }
   }
 }

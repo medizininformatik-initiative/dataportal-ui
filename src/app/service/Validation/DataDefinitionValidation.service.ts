@@ -1,16 +1,16 @@
 import { inject, Injectable } from '@angular/core'
 import {
   DataSelectionValidationService,
-  ValidationContext,
+  DataSelectionValidationState,
 } from './DataSelectionValidation.service'
 import {
   FeasibilityQueryValidationService,
-  ValidationState,
-} from '../Criterion/Validation/FeasibilityQueryValidationService.service'
+  FeasibilityValidationState,
+} from './FeasibilityQueryValidationService.service'
 
-export interface DataDefinitionValidationStatus {
-  dataSelectionValidationState: ValidationContext[]
-  feasibilityQueryValidationState: ValidationState
+export interface DataDefinitionValidationState {
+  dataSelectionValidationState: DataSelectionValidationState
+  feasibilityQueryValidationState: FeasibilityValidationState
   isDataDefinitionValid: boolean
 }
 @Injectable({
@@ -26,8 +26,8 @@ export class DataDefinitionValidationService {
    *
    * @returns {}
    */
-  public getDataDefinitionValidationStatus(): DataDefinitionValidationStatus {
-    const dataSelectionValidationState = this.dataSelectionValidationService.validationContexts()
+  public getDataDefinitionValidationStatus(): DataDefinitionValidationState {
+    const dataSelectionValidationState = this.dataSelectionValidationService.validationState()
     const feasibilityQueryValidationState = this.feasibilityQueryValidationService.validationState()
     return {
       dataSelectionValidationState,
@@ -49,7 +49,7 @@ export class DataDefinitionValidationService {
    * @returns {boolean}
    */
   private isFeasibilityQueryValid(): boolean {
-    return this.feasibilityQueryValidationService.isFeasibilityQueryValid()
+    return this.feasibilityQueryValidationService.validationState().isValid
   }
 
   /**
@@ -57,6 +57,6 @@ export class DataDefinitionValidationService {
    * @returns {boolean}
    */
   private isDataSelectionValid(): boolean {
-    return this.dataSelectionValidationService.isDataSelectionValid()
+    return this.dataSelectionValidationService.validationState().isValid
   }
 }
