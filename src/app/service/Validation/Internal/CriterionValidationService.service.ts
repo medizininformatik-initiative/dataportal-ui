@@ -3,6 +3,7 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { FilterTypesService } from 'src/app/service/FilterTypes.service'
 import { inject, Injectable } from '@angular/core'
+import { toSignal } from '@angular/core/rxjs-interop'
 
 export interface CriterionValidationState {
   criterionId: string
@@ -15,12 +16,16 @@ export class CriterionValidationService {
   private readonly filterTypeService = inject(FilterTypesService)
   private readonly criterionProvider = inject(CriterionProviderService)
 
+  private readonly criteria = toSignal(this.criterionProvider.getAll(), {
+    initialValue: [],
+  })
   /**
    * Validates multiple criteria by their IDs.
    * @param criterionIds - An array of criterion IDs to validate.
    * @returns An array of CriterionValidationState objects representing the validation results.
    */
   public validateMany(criterionIds: string[]): CriterionValidationState[] {
+    this.criteria() // Ensure criteria are loaded
     return criterionIds.map((id) => {
       const criterion = this.criterionProvider.getOne(id)
       return criterion
