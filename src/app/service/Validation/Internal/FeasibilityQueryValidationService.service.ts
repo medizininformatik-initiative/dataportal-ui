@@ -1,12 +1,12 @@
 import { computed, inject, Injectable } from '@angular/core'
-import {
-  CriterionValidationService,
-  CriterionValidationState,
-} from './CriterionValidationService.service'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { map } from 'rxjs'
 import { toSignal } from '@angular/core/rxjs-interop'
+import {
+  CriterionValidationService,
+  CriterionValidationState,
+} from './CriterionValidationService.service'
 
 export interface FeasibilityQueryValidationState {
   criterionCount: number
@@ -64,7 +64,9 @@ export class FeasibilityQueryValidationService {
       hasInclusionCriteria: inclusionCriteriaCount > 0,
       criterionCount: allCriterionIds.length,
       criterionValidationStates,
-      isValid: criterionValidationStates.every((c) => c.isValid) && inclusionCriteriaCount > 0,
+      isValid:
+        criterionValidationStates.every((state: CriterionValidationState) => state.isValid) &&
+        inclusionCriteriaCount > 0,
     }
   }
 
