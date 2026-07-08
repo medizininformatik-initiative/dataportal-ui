@@ -76,7 +76,7 @@
       } @else {
       <num-table [tableData]="fqTableData()"></num-table>
       } } @else {
-      <num-table [tableData]="dsTableData()"></num-table>
+      <num-table [tableData]="dsTableData()" (iconClicked)="onIconClicked($event)"></num-table>
       }
     </div>
 
