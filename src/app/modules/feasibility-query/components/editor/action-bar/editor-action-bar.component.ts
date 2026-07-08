@@ -1,12 +1,10 @@
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
-import { Component, effect, inject, OnInit } from '@angular/core'
 import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { MatTooltip } from '@angular/material/tooltip'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { Observable, of } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
-
+import { Component, computed, inject, OnInit } from '@angular/core'
 @Component({
   selector: 'num-editor-action-bar',
   templateUrl: './editor-action-bar.component.html',
@@ -15,30 +13,25 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, MatTooltip, TranslateModule],
 })
 export class EditorActionBarComponent implements OnInit {
-  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
-  private navigationHelperService = inject(NavigationHelperService)
+  private readonly validationService = inject(FeasibilityQueryValidationService)
+  private readonly navigation = inject(NavigationHelperService)
 
-  stageArray$: Observable<Array<string>> = of([])
-  isFeasibilityQueryValid = this.feasibilityQueryValidation.validationState().isValid
+  readonly isFeasibilityQueryValid = computed(
+    () => this.validationService.validationState().isValid
+  )
+  constructor() {}
 
-  constructor() {
-    effect(() => {
-      this.feasibilityQueryValidation.validationState()
-      this.isFeasibilityQueryValid = this.feasibilityQueryValidation.validationState().isValid
-    })
+  ngOnInit(): void {}
+
+  navigateToSearch(): void {
+    this.navigation.navigateToFeasibilityQuerySearch()
   }
 
-  ngOnInit() {}
-
-  public navigateToSearch() {
-    this.navigationHelperService.navigateToFeasibilityQuerySearch()
+  navigateToBulkCriteriaSearch(): void {
+    this.navigation.navigateToFeasibilityQueryBulkSearch()
   }
 
-  public doSendRequest(): void {
-    this.navigationHelperService.navigateToFeasibilityQueryResult()
-  }
-
-  public navigateToBulkCriteriaSearch(): void {
-    this.navigationHelperService.navigateToFeasibilityQueryBulkSearch()
+  sendRequest(): void {
+    this.navigation.navigateToFeasibilityQueryResult()
   }
 }
