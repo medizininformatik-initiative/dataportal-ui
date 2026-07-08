@@ -39,11 +39,15 @@ export class DataSelectionValidationService {
 
   readonly validationState: Signal<DataSelectionValidationState> = computed(() => {
     const dataSelection = this.activeDataSelection()
-    if (!dataSelection) return INITIAL_STATE
+    if (!dataSelection) {
+      return INITIAL_STATE
+    }
 
     const profiles = dataSelection.getProfiles()
     const containsMainProfile = profiles.some((p) => p.getId() === this.patientProfile()?.getId())
-    if (!containsMainProfile) return INITIAL_STATE
+    if (!containsMainProfile) {
+      return INITIAL_STATE
+    }
 
     const profileValidationStates = this.profileValidationService.validateMany(profiles)
     return {

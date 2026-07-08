@@ -3,7 +3,7 @@ import { CriterionValidationEntry } from './CriterionValidationEntry'
 import { TableCellBuilder } from 'src/app/shared/models/TableData/cells/TableCellBuilder'
 import { TableHeaderData } from 'src/app/shared/models/TableData/TableHeaderData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
-
+import { v4 as uuidv4 } from 'uuid'
 export class CriterionValidationTableAdapter extends AbstractTableAdapter<CriterionValidationEntry> {
   protected buildHeaders(): TableHeaderData {
     return { headers: ['CRITERION', 'STATUS', 'WHAT_IS_MISSING'] }
@@ -11,7 +11,7 @@ export class CriterionValidationTableAdapter extends AbstractTableAdapter<Criter
 
   protected buildRows(entries: CriterionValidationEntry[]): TableRowData[] {
     return entries.map((entry) => ({
-      id: entry.getId(),
+      id: uuidv4(),
       isClickable: false,
       originalEntry: entry,
       cells: [
