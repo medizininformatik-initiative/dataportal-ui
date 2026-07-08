@@ -24,6 +24,7 @@ import {
   HeaderDescriptionComponent,
   ModalWindowComponent,
 } from '../shared-components.module'
+import { TableRowData } from '../../models/TableData/TableRowData'
 @Component({
   selector: 'num-validation-modal',
   templateUrl: './validation-modal.component.html',
@@ -123,12 +124,14 @@ export class ValidationModalComponent {
     profileState: ProfileValidationState
   ): ProfileValidationEntry {
     const profile = this.profileProvider.getOne(profileState.profileId)
+    const referenceFieldIds = profileState.referenceFieldId
     return new ProfileValidationEntry(
       uuidv4(),
       profile.getDisplay(),
       profileState.state,
       profileState.isValid,
-      profile.getId()
+      profile.getId(),
+      referenceFieldIds
     )
   }
   // ─── Actions ──────────────────────────────────────────────────────────────────
@@ -137,12 +140,19 @@ export class ValidationModalComponent {
     this.dialogRef.close()
   }
 
-  goToIssues(): void {
-    if (this.activeTab() === 'feasibility') {
-      this.navigationHelper.navigateToFeasibilityQueryEditor()
-    } else {
-      this.navigationHelper.navigateToDataQueryDataSelection()
+  public onIconClicked(entry: TableRowData): void {
+    const originalEntry = entry.originalEntry
+    if (originalEntry instanceof ProfileValidationEntry) {
+      console.log('Navigating to edit profile with ID:', originalEntry)
+      const referenceFieldId = originalEntry.getReferenceFieldId()
+      if (referenceFieldId) {
+        this.navigationHelper.navigateToEditProfile(originalEntry.getProfileId(), {
+          activeTab: referenceFieldId,
+        })
+      } else {
+        this.navigationHelper.navigateToEditProfile(originalEntry.getProfileId())
+      }
+      this.dialogRef.close()
     }
-    this.dialogRef.close()
   }
 }

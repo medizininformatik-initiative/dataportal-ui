@@ -12,13 +12,15 @@ export class ProfileValidationEntry extends AbstractListEntry {
   private readonly state: ProfileStateType
   private readonly valid: boolean
   private readonly profileId: string
+  private readonly referenceFieldId?: string
 
   constructor(
     id: string,
     display: Display,
     state: ProfileStateType,
     valid: boolean,
-    profileId: string
+    profileId: string,
+    referenceFieldId?: string
   ) {
     super(id)
     this.id = id
@@ -26,6 +28,7 @@ export class ProfileValidationEntry extends AbstractListEntry {
     this.state = state
     this.valid = valid
     this.profileId = profileId
+    this.referenceFieldId = referenceFieldId
   }
 
   /**
@@ -65,5 +68,13 @@ export class ProfileValidationEntry extends AbstractListEntry {
    */
   public getId(): string {
     return this.id
+  }
+
+  /**
+   * Returns the ID of the reference field that is missing for the profile.
+   * @returns {string | undefined}
+   */
+  public getReferenceFieldId(): string | undefined {
+    return this.referenceFieldId
   }
 }

@@ -12,7 +12,7 @@ export interface ProfileValidationState {
   profileId: string
   isValid: boolean
   state: ProfileStateType
-  referenceFieldIds?: string[]
+  referenceFieldId?: string
 }
 
 @Injectable({
@@ -40,13 +40,13 @@ export class ProfileValidationService {
       profile.getProfileFields().getUnlinkedRequiredOrRecommendedReferences().length > 0
     const basicFieldsSet = profile.getProfileFields().getSelectedBasicFields().length > 0
     const referenceFieldsSet = profile.getProfileFields().getSelectedReferenceFields().length > 0
-    const referenceFieldIds = this.getUnlinkedReferenceFieldIds(profile)
+    const referenceFieldId = this.getUnlinkedReferenceFieldId(profile)
     if (basicFieldsSet && hasUnlinkedReferences) {
       return {
         profileId: profile.getId(),
         isValid: false,
         state: ProfileStateType.BasicFieldsSetButReferenceNotSet,
-        referenceFieldIds: referenceFieldIds,
+        referenceFieldId: referenceFieldId,
       }
     }
 
@@ -70,19 +70,19 @@ export class ProfileValidationService {
       profileId: profile.getId(),
       isValid: false,
       state: ProfileStateType.NoBasicFieldsSetAndNoReferencesSet,
-      referenceFieldIds: referenceFieldIds,
+      referenceFieldId: referenceFieldId,
     }
   }
 
   /**
    * Returns the IDs of unlinked reference fields for a given profile.
    * @param {DataSelectionProfile} profile
-   * @returns {string[]}
+   * @returns {string}
    */
-  private getUnlinkedReferenceFieldIds(profile: DataSelectionProfile): string[] {
+  private getUnlinkedReferenceFieldId(profile: DataSelectionProfile): string {
     return profile
       .getProfileFields()
       .getUnlinkedRequiredOrRecommendedReferences()
-      .map((field) => field.getElementId())
+      .map((field) => field.getElementId())[0]
   }
 }
