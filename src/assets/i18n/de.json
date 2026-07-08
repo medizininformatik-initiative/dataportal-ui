@@ -556,6 +556,7 @@
       "MIN_LENGTH": "Bitte mindestens drei Buchstaben eingeben"
     },
     "TABLE": {
+      "ACTIONS": "Aktionen",
       "ADD": "Hinzufügen",
       "AVAILABILITY": "Verfügbarkeit",
       "AVAILABILITY_STATUS": {

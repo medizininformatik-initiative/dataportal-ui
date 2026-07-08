@@ -567,6 +567,7 @@
       "MIN_LENGTH": "Required length of 3 letters"
     },
     "TABLE": {
+      "ACTIONS": "Actions",
       "ADD": "Add",
       "AVAILABILITY": "Availability",
       "AVAILABILITY_STATUS": {
