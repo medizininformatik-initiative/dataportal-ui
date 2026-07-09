@@ -5,8 +5,9 @@ import { TableHeaderData } from 'src/app/shared/models/TableData/TableHeaderData
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { v4 as uuidv4 } from 'uuid'
 export class CriterionValidationTableAdapter extends AbstractTableAdapter<CriterionValidationEntry> {
+  private readonly ICON_NAME: string = 'pencil-alt'
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['CRITERION', 'STATUS', 'WHAT_IS_MISSING'] }
+    return { headers: ['CRITERION', 'STATUS', 'WHAT_IS_MISSING', 'ACTIONS'] }
   }
 
   protected buildRows(entries: CriterionValidationEntry[]): TableRowData[] {
@@ -16,8 +17,15 @@ export class CriterionValidationTableAdapter extends AbstractTableAdapter<Criter
       originalEntry: entry,
       cells: [
         TableCellBuilder.withDisplay(entry.getDisplay()),
-        TableCellBuilder.withText(entry.isValid() ? 'Valid' : 'Invalid'),
-        TableCellBuilder.withText(entry.isValid() ? '–' : 'Missing filters'),
+        TableCellBuilder.withText(
+          entry.isValid()
+            ? 'SHARED_COMPONENTS.TABLE.CRITERION_VALIDATION.VALID'
+            : 'SHARED_COMPONENTS.TABLE.CRITERION_VALIDATION.INVALID'
+        ),
+        TableCellBuilder.withText(
+          entry.isValid() ? '–' : 'SHARED_COMPONENTS.TABLE.CRITERION_VALIDATION.MISSING_FILTER'
+        ),
+        TableCellBuilder.withIcon(this.ICON_NAME),
       ],
     }))
   }

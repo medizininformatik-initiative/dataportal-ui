@@ -28,7 +28,11 @@ export class ProfileValidationTableAdapter extends AbstractTableAdapter<ProfileV
       originalEntry: entry,
       cells: [
         TableCellBuilder.withDisplay(entry.getDisplay()),
-        TableCellBuilder.withText(entry.getValid() ? 'Valid' : 'Invalid'),
+        TableCellBuilder.withText(
+          entry.getValid()
+            ? 'SHARED_COMPONENTS.TABLE.PROFILE_VALIDATION.VALID'
+            : 'SHARED_COMPONENTS.TABLE.PROFILE_VALIDATION.INVALID'
+        ),
         TableCellBuilder.withText(this.whatsMissing(entry.getState())),
         TableCellBuilder.withIcon(this.ICON_NAME),
       ],
@@ -38,13 +42,13 @@ export class ProfileValidationTableAdapter extends AbstractTableAdapter<ProfileV
   private whatsMissing(state: ProfileStateType): string {
     switch (state) {
       case ProfileStateType.BasicFieldsSetButReferenceNotSet:
-        return 'Missing references'
+        return 'SHARED_COMPONENTS.TABLE.PROFILE_VALIDATION.MISSING_REFERENCE'
       case ProfileStateType.BasicFieldsSetAndReferenceSet:
         return '–'
       case ProfileStateType.NoBasicFieldsSetButReferencesSet:
-        return 'Missing fields · Missing references'
+        return 'SHARED_COMPONENTS.TABLE.PROFILE_VALIDATION.MISSING_FIELDS_MISSING_REFERENCES'
       case ProfileStateType.NoBasicFieldsSetAndNoReferencesSet:
-        return 'Missing fields'
+        return 'SHARED_COMPONENTS.TABLE.PROFILE_VALIDATION.MISSING_FIELDS'
     }
   }
 }

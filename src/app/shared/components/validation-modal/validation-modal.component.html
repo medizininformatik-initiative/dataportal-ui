@@ -74,9 +74,15 @@
         </ol>
       </num-information-section>
       } @else {
-      <num-table [tableData]="fqTableData()"></num-table>
+      <num-table
+        [tableData]="fqTableData()"
+        (iconClicked)="onCriterionIconClicked($event)"
+      ></num-table>
       } } @else {
-      <num-table [tableData]="dsTableData()" (iconClicked)="onIconClicked($event)"></num-table>
+      <num-table
+        [tableData]="dsTableData()"
+        (iconClicked)="onProfileIconClicked($event)"
+      ></num-table>
       }
     </div>
 

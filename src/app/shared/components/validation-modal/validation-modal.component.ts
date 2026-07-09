@@ -140,10 +140,9 @@ export class ValidationModalComponent {
     this.dialogRef.close()
   }
 
-  public onIconClicked(entry: TableRowData): void {
+  public onProfileIconClicked(entry: TableRowData): void {
     const originalEntry = entry.originalEntry
     if (originalEntry instanceof ProfileValidationEntry) {
-      console.log('Navigating to edit profile with ID:', originalEntry)
       const referenceFieldId = originalEntry.getReferenceFieldId()
       if (referenceFieldId) {
         this.navigationHelper.navigateToEditProfile(originalEntry.getProfileId(), {
@@ -152,6 +151,14 @@ export class ValidationModalComponent {
       } else {
         this.navigationHelper.navigateToEditProfile(originalEntry.getProfileId())
       }
+      this.dialogRef.close()
+    }
+  }
+
+  public onCriterionIconClicked(entry: TableRowData): void {
+    const originalEntry = entry.originalEntry
+    if (originalEntry instanceof CriterionValidationEntry) {
+      this.navigationHelper.navigateToEditCriterion(originalEntry.getCriterionId())
       this.dialogRef.close()
     }
   }

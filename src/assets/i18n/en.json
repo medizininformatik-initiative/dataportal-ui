@@ -580,6 +580,11 @@
       },
       "CONTEXT": "Context",
       "CRITERION": "Criterion",
+      "CRITERION_VALIDATION": {
+        "INVALID": "Invalid",
+        "MISSING_FILTER": "Missing filter",
+        "VALID": "Valid"
+      },
       "DISPLAY": "Display",
       "EMPTY": "",
       "ICON": "Show related criteria",
@@ -587,6 +592,13 @@
       "NOT_SELECTABLE": "Criterion cannot be selected",
       "PATIENT_COUNT": "Number of patients",
       "PROFILE": "Profile",
+      "PROFILE_VALIDATION": {
+        "INVALID": "Invalid",
+        "MISSING_FIELDS": "Missing fields",
+        "MISSING_FIELDS_MISSING_REFERENCES": "Missing fields · Missing references",
+        "MISSING_REFERENCE": "Missing reference",
+        "VALID": "Valid"
+      },
       "SELECT_CHECKBOX": "Select Criteria",
       "SITE": "Location",
       "STATUS": "Status",

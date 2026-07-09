@@ -569,6 +569,11 @@
       },
       "CONTEXT": "Kontext",
       "CRITERION": "Kriterium",
+      "CRITERION_VALIDATION": {
+        "INVALID": "Ungültig",
+        "MISSING_FILTER": "Filter fehlt",
+        "VALID": "Gültig"
+      },
       "DISPLAY": "Anzeige",
       "EMPTY": "",
       "ICON": "Verwandte Kriterien anzeigen",
@@ -576,6 +581,13 @@
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
       "PATIENT_COUNT": "Anzahl der Patienten",
       "PROFILE": "Merkmal",
+      "PROFILE_VALIDATION": {
+        "INVALID": "Ungültig",
+        "MISSING_FIELDS": "Fehlende Felder",
+        "MISSING_FIELDS_MISSING_REFERENCES": "Fehlende Felder · Fehlende Referenzen",
+        "MISSING_REFERENCE": "Fehlende Referenz",
+        "VALID": "Gültig"
+      },
       "SELECT_CHECKBOX": "Kriterium auswählen",
       "SITE": "Standort",
       "STATUS": "Status",
