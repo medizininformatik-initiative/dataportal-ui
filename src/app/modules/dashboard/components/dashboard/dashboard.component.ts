@@ -2,13 +2,12 @@ import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsPr
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
 import { Component, inject, OnInit } from '@angular/core'
 import { DashboardFaqComponent } from '../dashboard-faq/dashboard-faq.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { HeaderComponent } from 'src/app/shared/components/header/header.component'
 import { HeaderDescriptionComponent } from 'src/app/shared/components/header-description/header-description.component'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { UploadService } from '../../../../service/Upload/Upload.service'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: 'num-dashboard',
@@ -22,7 +21,6 @@ import { MatTooltip } from '@angular/material/tooltip'
     ButtonComponent,
     DashboardFaqComponent,
     FontAwesomeModule,
-    MatTooltip,
   ],
 })
 export class DashboardComponent implements OnInit {

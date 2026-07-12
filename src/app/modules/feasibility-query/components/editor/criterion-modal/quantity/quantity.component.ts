@@ -1,5 +1,15 @@
 import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
 import { AllowedUnitsComponent } from './allowed-units/allowed-units.component'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { QuantityComparatorComponent } from './quantity-comparator/quantity-comparator.component'
+import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
+import { QuantityComparisionSelectComponent } from './quantity-comparision-select/quantity-comparision-select.component'
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
+import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service'
+import { QuantityRangeComponent } from './quantity-range/quantity-range.component'
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,18 +20,6 @@ import {
   model,
   signal,
 } from '@angular/core'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { QuantityComparatorComponent } from './quantity-comparator/quantity-comparator.component'
-import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
-import { QuantityComparisionSelectComponent } from './quantity-comparision-select/quantity-comparision-select.component'
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
-import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service'
-import { QuantityRangeComponent } from './quantity-range/quantity-range.component'
-import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
-import { SectionNameComponent } from '../../../../../../shared/components/section-name/section-name.component'
 
 @Component({
   selector: 'num-quantity',
@@ -30,12 +28,10 @@ import { SectionNameComponent } from '../../../../../../shared/components/sectio
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    SectionNameComponent,
     QuantityComparisionSelectComponent,
     QuantityRangeComponent,
     QuantityComparatorComponent,
     AllowedUnitsComponent,
-    DisplayTranslationPipe,
   ],
 })
 export class QuantityComponent {
