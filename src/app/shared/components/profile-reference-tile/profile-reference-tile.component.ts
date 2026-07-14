@@ -1,5 +1,15 @@
 import { CheckboxComponent } from '../checkbox/checkbox.component'
-import { Component, computed, inject, input, OnInit, output, Signal } from '@angular/core'
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  output,
+  Signal,
+} from '@angular/core'
+import { Subscription } from 'rxjs'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
@@ -38,7 +48,7 @@ import { MatTooltip } from '@angular/material/tooltip'
     MatTooltip,
   ],
 })
-export class ProfileReferenceTileComponent implements OnInit {
+export class ProfileReferenceTileComponent implements OnInit, OnDestroy {
   private dataSelectionProviderService = inject(DataSelectionProviderService)
   private profileProviderService = inject(ProfileProviderService)
   private profileReferenceChipsService = inject(ProfileReferenceChipsService)
@@ -52,6 +62,7 @@ export class ProfileReferenceTileComponent implements OnInit {
   readonly isEditable = input<boolean>(true)
 
   filterChips: ProfileReferenceChipData[] = []
+  private profileProviderSub: Subscription
   type: Signal<string> = computed(() => this.field()?.getType() ?? '')
 
   field: Signal<ReferenceField | SelectedReferenceField> = computed(
@@ -69,7 +80,14 @@ export class ProfileReferenceTileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileReferenceMenuService.getMenuItems(this.parentId(), { elementId: this.elementId() })
-    this.initiliazeDisplayDataFiletrChips()
+    this.profileProviderSub = this.profileProviderService.getAll().subscribe(() => {
+      this.filterChips = []
+      this.initiliazeDisplayDataFiletrChips()
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.profileProviderSub?.unsubscribe()
   }
 
   private initiliazeDisplayDataFiletrChips() {

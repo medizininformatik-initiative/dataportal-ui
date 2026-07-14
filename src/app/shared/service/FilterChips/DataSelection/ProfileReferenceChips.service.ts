@@ -40,8 +40,13 @@ export class ProfileReferenceChipsService {
   private getLinkedProfileDisplays(selectedReferenceField: SelectedReferenceField): Display[] {
     return selectedReferenceField
       .getLinkedProfileIds()
-      .map((id) => this.profileProviderService.getOne(id).getLabel())
-
+      .map((id) => {
+        try {
+          return this.profileProviderService.getOne(id).getLabel()
+        } catch {
+          return undefined
+        }
+      })
       .filter((profileDisplay): profileDisplay is Display => !!profileDisplay)
   }
 
