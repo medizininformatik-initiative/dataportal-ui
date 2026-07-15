@@ -12,15 +12,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [CheckboxComponent, MatTooltip, TranslateModule],
 })
 export class CheckboxCellComponent {
-  readonly cell = input<CheckboxCellData>()
+  readonly cell = input.required<CheckboxCellData>()
 
   readonly checkboxChange = output<void>()
 
-  onCheckboxClick(event: MouseEvent): void {
-    event.stopPropagation()
-  }
-
-  onCheckboxChange(): void {
+  public onCheckboxChange(): void {
     this.checkboxChange.emit()
   }
 }
