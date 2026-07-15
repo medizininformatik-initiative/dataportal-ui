@@ -643,6 +643,7 @@
       "DISPLAY": "Display",
       "EMPTY": "",
       "ICON": "Show related criteria",
+      "MODULE": "Modul",
       "NAME": "Name",
       "NOT_SELECTABLE": "Criterion cannot be selected",
       "PATIENT_COUNT": "Number of patients",
