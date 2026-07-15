@@ -7,6 +7,7 @@ import { IconCellComponent } from '../cells/icon-cell/icon-cell.component'
 import { NgClass } from '@angular/common'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TextCellComponent } from '../cells/text-cell/text-cell.component'
+import { CheckboxCellComponent } from '../../shared-components.module'
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
@@ -21,6 +22,7 @@ import { TextCellComponent } from '../cells/text-cell/text-cell.component'
     DisplayCellComponent,
     IconCellComponent,
     TextCellComponent,
+    CheckboxCellComponent,
   ],
 })
 export class TableBodyComponent {
@@ -41,7 +43,9 @@ export class TableBodyComponent {
   }
 
   public onCheckboxSelect(row: TableRowData): void {
-    const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === 'checkboxText')
+    const checkboxCell = row.cells.find(
+      (c): c is CheckboxTextCellData => c.type === 'checkboxText' || c.type === 'checkbox'
+    )
     if (checkboxCell) {
       checkboxCell.isSelected = !checkboxCell.isSelected
     }
