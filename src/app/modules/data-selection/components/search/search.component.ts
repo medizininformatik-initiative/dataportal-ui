@@ -1,27 +1,45 @@
+import { ActionBarComponent } from '../../../../shared/components/action-bar/action-bar.component'
 import { ActivatedRoute } from '@angular/router'
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service'
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
+import { AsyncPipe } from '@angular/common'
+import { ButtonComponent } from '../../../../shared/components/button/button.component'
+import { Component, inject, OnDestroy, OnInit, output, signal } from '@angular/core'
+import { createTestProfileEntries } from './TestProfileEntries'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileTreeNode } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTreeNode'
 import { DataSelectionProviderService } from '../../services/DataSelectionProvider.service'
 import { DataSelectionTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/DataSelectionProfileTreeAdapter'
-import { LoadDataSelectionProfilesService } from 'src/app/service/DataSelection/LoadDataSelectionProfiles.service'
-import { map, Observable, Subscription } from 'rxjs'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelection/Selection/SelectedDataSelectionProfile.service'
-import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
-import { TreeComponent } from 'src/app/shared/components/tree/tree.component'
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface'
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
-import { TreeComponent as TreeComponent_1 } from '../../../../shared/components/tree/tree.component'
-import { ActionBarComponent } from '../../../../shared/components/action-bar/action-bar.component'
-import { ButtonComponent } from '../../../../shared/components/button/button.component'
+import { LoadDataSelectionProfilesService } from 'src/app/service/DataSelection/LoadDataSelectionProfiles.service'
+import { map, Observable, Subscription } from 'rxjs'
 import { MatBadge } from '@angular/material/badge'
 import { MatTooltip } from '@angular/material/tooltip'
-import { AsyncPipe } from '@angular/common'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { ProfileEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ProfileEntryAdapter'
+import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
+import { SelectedDataSelectionProfileService } from 'src/app/service/DataSelection/Selection/SelectedDataSelectionProfile.service'
+import { SelectedProfileService } from 'src/app/service/DataSelection/Selection/SelectedProfileEntry.service'
+import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
+import {
+  DisplayTranslationPipe,
+  TableComponent,
+} from 'src/app/shared/components/shared-components.module'
+import { TableData } from 'src/app/shared/models/TableData/TableData'
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TranslateModule } from '@ngx-translate/core'
+import { TreeComponent } from '../../../../shared/components/tree/tree.component'
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface'
+import { createTestProfileEntryDetails } from 'src/app/shared/components/list-item-details-generic/createTestProfileEntryDetails'
+import { ListItemDetailsGenericComponent } from 'src/app/shared/components/list-item-details-generic/list-item-details-generic.component'
+import {
+  ListItemDetailsData,
+  ListItemDetailsRelative,
+  ProfileListItemDetailsAdapter,
+} from 'src/app/shared/components/list-item-details/ListItemDetailsData'
+import { MatTab, MatTabGroup } from '@angular/material/tabs'
+import { ListItemDetailsGenericSectionsComponent } from 'src/app/shared/components/list-item-details-generic/list-item-details-generic-sections/list-item-details-generic-sections.component'
 
 @Component({
   selector: 'num-search-data-selection',
@@ -31,13 +49,15 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [
     HeaderComponent,
     HeaderDescriptionComponent,
-    TreeComponent_1,
+    TreeComponent,
     ActionBarComponent,
     ButtonComponent,
     MatBadge,
     MatTooltip,
     AsyncPipe,
     TranslateModule,
+    TableComponent,
+    ListItemDetailsGenericComponent,
   ],
 })
 export class SearchDataSelectionComponent implements OnInit, OnDestroy {
@@ -49,6 +69,7 @@ export class SearchDataSelectionComponent implements OnInit, OnDestroy {
   private activeRoute = inject(ActivatedRoute)
   private appSettingsProviderService = inject(AppSettingsProviderService)
   private snackbarMessageService = inject(SnackbarMessageService)
+  private selectedProfileService = inject(SelectedProfileService)
 
   trees: TreeNode[]
 
@@ -60,10 +81,15 @@ export class SearchDataSelectionComponent implements OnInit, OnDestroy {
 
   $dataSelectionProfileTreeNodeArray: Observable<DataSelectionProfileTreeNode[]>
 
+  $dataSelectionProfileEntryArray: Observable<string[]>
+
   emailLink: string
 
-  constructor() {}
+  tableData: TableData
 
+  adaptedDetailsData = signal<ListItemDetailsData | undefined>(undefined)
+
+  constructor() {}
   ngOnInit(): void {
     this.$dataSelectionProfileArray = this.dataSelectionProviderService
       .getActiveDataSelection()
@@ -71,11 +97,17 @@ export class SearchDataSelectionComponent implements OnInit, OnDestroy {
     this.$dataSelectionProfileTreeNodeArray =
       this.selectedDataSelectionProfileService.getSelectedProfiles()
 
+    this.$dataSelectionProfileEntryArray = this.selectedProfileService
+      .getSelectedProfiles()
+      .pipe(map((profiles) => profiles.map((profile) => profile.getId())))
+
     this.handleSelectedItemsSubscription()
     const tree = this.activeRoute.snapshot.data.preLoadDataSelectionData
     const rootNode = DataSelectionTreeAdapter.fromTree(tree.getTreeNode())
     this.trees = rootNode
     this.emailLink = this.appSettingsProviderService.getEmail()
+    const testProfiles = createTestProfileEntries()
+    this.tableData = new ProfileEntryAdapter().adapt(testProfiles)
   }
 
   /**
@@ -164,7 +196,27 @@ export class SearchDataSelectionComponent implements OnInit, OnDestroy {
     }
   }
 
+  public onRowSelected(row: TableRowData): void {
+    console.log('Row selected:', row)
+    const originalEntry = row.originalEntry as ProfileListEntry
+    this.selectedDataSelectionProfileUrls.add(originalEntry.getId())
+    this.selectedProfileService.addToSelection(row.originalEntry as ProfileListEntry)
+  }
+
   public navigateToDataSelectionEditor() {
     this.navigationHelperService.navigateToDataSelectionEditor()
+  }
+
+  getRelatives(row: TableRowData): void {
+    const test = createTestProfileEntryDetails()
+    row.originalEntry.getId()
+    console.log('Row clicked:', row.originalEntry.getId())
+    const foundElement = test.find((entry) => entry.getId() === row.originalEntry.getId())
+    if (foundElement) {
+      const adaptedData = ProfileListItemDetailsAdapter.adapt(foundElement)
+      this.adaptedDetailsData.set(adaptedData)
+      console.log('Row clicked:', test)
+      console.log('Adapted data:', adaptedData)
+    }
   }
 }
