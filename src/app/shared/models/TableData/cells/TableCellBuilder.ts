@@ -1,13 +1,13 @@
-import { AvailabilityCellData } from './AvailabilityCellData';
-import { AvailabilityStatusType } from 'src/app/model/Availability/AvailabilityStatusType';
-import { CheckboxTextCellData } from './CheckboxTextCellData';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { DisplayCellData } from './DisplayCellData';
-import { TableCellType } from './TableCellType';
-import { TextCellData } from './TextCellData';
-import { IconCellData } from './IconCellData';
-import { CheckboxCellOptionsData } from './CheckboxCellOptionData';
-import { CheckboxCellData } from './CheckboxCellData';
+import { AvailabilityCellData } from './AvailabilityCellData'
+import { AvailabilityStatusType } from 'src/app/model/Availability/AvailabilityStatusType'
+import { CheckboxTextCellData } from './CheckboxTextCellData'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { DisplayCellData } from './DisplayCellData'
+import { TableCellType } from './TableCellType'
+import { TextCellData } from './TextCellData'
+import { IconCellData } from './IconCellData'
+import { CheckboxCellOptionsData } from './CheckboxCellOptionData'
+import { CheckboxCellData } from './CheckboxCellData'
 
 /**
  * Factory class for constructing typed table cells.
@@ -20,7 +20,7 @@ import { CheckboxCellData } from './CheckboxCellData';
  */
 export class TableCellBuilder {
   public static withIcon(icon: string): IconCellData {
-    return { type: 'icon', icon };
+    return { type: 'icon', icon }
   }
   /**
    * Text cell builder
@@ -28,7 +28,7 @@ export class TableCellBuilder {
    * @returns
    */
   public static withText(value: string | Display): TextCellData {
-    return { type: 'text', value };
+    return { type: 'text', value }
   }
 
   /** Availability status bar cell
@@ -37,7 +37,7 @@ export class TableCellBuilder {
    *
    */
   public static withAvailability(value: AvailabilityStatusType): AvailabilityCellData {
-    return { type: 'availability', value };
+    return { type: 'availability', value }
   }
 
   /** Checkbox cell with optional icon
@@ -54,18 +54,14 @@ export class TableCellBuilder {
       value,
       isSelected: options.isSelected ?? false,
       isDisabled: options.isDisabled ?? false,
-    };
+    }
   }
-  public static withCheckbox(
-    value: string | Display,
-    options: CheckboxCellOptionsData = {}
-  ): CheckboxCellData {
+  public static withCheckbox(options: CheckboxCellOptionsData = {}): CheckboxCellData {
     return {
       type: 'checkbox',
-      value,
       isSelected: options.isSelected ?? false,
       isDisabled: options.isDisabled ?? false,
-    };
+    }
   }
   /**
    * Display-object cell with optional icon
@@ -74,7 +70,7 @@ export class TableCellBuilder {
    * @returns
    */
   public static withDisplay(value: Display, options: { icon?: string } = {}): DisplayCellData {
-    return { type: 'display', value, icon: options.icon };
+    return { type: 'display', value, icon: options.icon }
   }
 
   /**
@@ -83,6 +79,6 @@ export class TableCellBuilder {
    * @returns
    */
   public static row(...cells: Array<TableCellType>): Array<TableCellType> {
-    return cells;
+    return cells
   }
 }
