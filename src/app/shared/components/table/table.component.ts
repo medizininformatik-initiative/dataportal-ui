@@ -13,7 +13,7 @@ import { TableHeaderComponent } from './table-header/table-header.component'
   imports: [TableHeaderComponent, TableBodyComponent],
 })
 export class TableComponent {
-  readonly tableData = input<TableData>()
+  readonly tableData = input.required<TableData>()
 
   readonly selectedRow = output<TableRowData>()
   readonly rowClicked = output<TableRowData>()
