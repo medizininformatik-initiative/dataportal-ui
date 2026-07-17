@@ -1,16 +1,17 @@
-import { AbstractKeyedSearchEngineService } from '../../../Abstract/Engine/AbstractKeyedSearchEngine.service'
+import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service'
 import { inject, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 import { ProfileResultList } from 'src/app/model/Search/ResultList/ProfileResultList'
-import { SearchEngine } from '../../../SearchEngine'
 import { ProfileResultMapperStrategy } from '../Mapper/ProfileResultMapperStrategy.service'
 import { ProfileSearchUrlStrategy } from '../Url/ProfileSearchUrlStrategy'
+import { SearchEngine } from '../../../SearchEngine'
+import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder'
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileSearchEngineService extends AbstractKeyedSearchEngineService<
+export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<
   ProfileListEntry,
   ProfileResultList
 > {
@@ -25,14 +26,22 @@ export class ProfileSearchEngineService extends AbstractKeyedSearchEngineService
     this.searchEngine = searchEngine
   }
 
-  public search(searchText: string, page: number = 0): Observable<ProfileResultList> {
+  public search(
+    searchText: string,
+    page: number = 0,
+    pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
+  ): Observable<ProfileResultList> {
     const resultMapper = this.getMapping()
-    const url = this.createUrl(searchText, page)
+    const url = this.createUrl(searchText, page, pageSize)
     return this.searchResultProcessorService.fetchAndMapSearchResults(url, resultMapper)
   }
 
-  protected createUrl(searchText: string, page: number = 0): string {
-    return new ProfileSearchUrlStrategy(searchText).getSearchUrl(page)
+  protected createUrl(
+    searchText: string,
+    page: number = 0,
+    pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
+  ): string {
+    return new ProfileSearchUrlStrategy(searchText).getSearchUrl(page, pageSize)
   }
 
   protected getMapping(): ProfileResultMapperStrategy {
