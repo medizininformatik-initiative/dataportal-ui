@@ -1,24 +1,21 @@
-import { DataSelectionProfileTree } from 'src/app/model/DataSelection/ProfileTree/DataSelectionProfileTree'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { LoadDataSelectionProfileTreeService } from '../DataSelection/LoadDataSelectionProfileTree.service'
+import { ProfileResultList } from 'src/app/model/Search/ResultList/ProfileResultList'
+import { ProfileSearchService } from '../Search/SearchTypes/Profile/ProfileSearch.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelectionProfileResolverService {
-  private loadDataSelectionProfileTreeService = inject(LoadDataSelectionProfileTreeService)
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
+  private profileSearchService = inject(ProfileSearchService)
 
   constructor() {}
 
   /**
-   * Resolves the data selection profile tree by fetching it from the backend.
-   * @returns An observable containing the data selection profile tree.
+   * Resolves the data selection profiles by fetching it from the backend.
+   * @returns An observable containing the data selection profile results.
    */
-  public resolve(): Observable<DataSelectionProfileTree> {
-    return this.loadDataSelectionProfileTreeService.loadProfileTree()
+  public resolve(): Observable<ProfileResultList> {
+    return this.profileSearchService.search('')
   }
 }
