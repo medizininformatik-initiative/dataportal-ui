@@ -9,19 +9,22 @@ export class ProfileListEntry extends AbstractListEntry {
   private readonly availability: number
   private readonly module: Display
   private readonly selectable: boolean
+  private readonly url: string
 
   constructor(
     id: string,
     display: Display,
     availability: number,
     module: Display,
-    selectable: boolean
+    selectable: boolean,
+    url: string
   ) {
     super(id)
     this.display = display
     this.availability = availability
     this.module = module
     this.selectable = selectable
+    this.url = url
   }
 
   public getDisplay(): Display {
@@ -44,13 +47,18 @@ export class ProfileListEntry extends AbstractListEntry {
     return new Availability(this.availability).getStatus()
   }
 
+  public getUrl(): string {
+    return this.url
+  }
+
   public static fromJson(json: ProfileListEntryData): ProfileListEntry {
     return new ProfileListEntry(
       json.id,
       Display.fromJson(json.display),
       json.availability,
       Display.fromJson(json.module),
-      json.selectable
+      json.selectable,
+      json.url
     )
   }
 }
