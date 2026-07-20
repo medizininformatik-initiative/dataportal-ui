@@ -52,7 +52,7 @@ export class TerminologyApiService {
    * @param id
    * @returns
    */
-  public getSearchTermEntryRelations(id: string): Observable<any> {
+  public getCriteriaEntryRelations(id: string): Observable<any> {
     return this.http.get<any>(
       this.backendService.createUrl(
         TerminologyPaths.ENTRY_ENDPOINT + '/' + id + TerminologyPaths.RELATIONS_ENDPOINT
