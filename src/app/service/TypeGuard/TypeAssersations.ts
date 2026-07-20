@@ -1,40 +1,40 @@
-import { AnnotatedCRTDLData } from '../../model/Interface/AnnotatedCRTDLData';
-import { AttributeCode } from '../../model/Interface/AttributeCode';
-import { AttributeDefinitionData } from '../../model/Interface/AttributeDefinitionData';
-import { AttributeFilterBaseData } from '../../model/Interface/AttributeFilterBaseData';
-import { AttributeFilterData } from '../../model/Interface/AttributeFilterData';
-import { AttributeGroupsData } from '../../model/Interface/AttributeGroupsData';
-import { AttributesData } from '../../model/Interface/AttributesData';
-import { CodeableConceptResultListData } from 'src/app/model/Interface/Search/CodeableConceptResultList';
-import { ComparatorTypeData } from '../../model/Interface/ComparatorTypeData';
-import { ContextData } from '../../model/Interface/ContextData';
-import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
-import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData';
-import { CriteriaRelationsData } from 'src/app/model/Interface/CriteriaRelationsData';
-import { CriteriaRelativeData } from 'src/app/model/Interface/CriteriaRelativesData';
-import { CRTDLData } from '../../model/Interface/CRTDLData';
-import { DataExtractionData } from '../../model/Interface/DataExtractionData';
-import { DisplayData } from '../../model/Interface/DisplayData';
-import { FilterData } from '../../model/Interface/FilterData';
-import { IssueData } from '../../core/model/Feasibility/IssueData';
-import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
-import { QuantityUnitData } from '../../model/Interface/Unit';
-import { QueryResultData } from '../../model/Interface/QueryResultData';
-import { QueryResultLineData } from '../../model/Interface/QueryResultLineData';
-import { ReferenceCriteriaListEntryData } from 'src/app/model/Interface/Search/ReferenceCriteriaListEntryData';
-import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
-import { SavedDataQueryData } from '../../model/Interface/SavedDataQueryData';
-import { SavedDataQueryListItemData } from '../../model/Interface/SavedDataQueryListItemData';
-import { StructuredQueryCriterionData } from '../../model/Interface/StructuredQueryCriterionData';
-import { StructuredQueryData } from '../../model/Interface/StructuredQueryData';
-import { TerminologyCodeBaseData } from '../../model/Interface/TerminologyBaseData';
-import { TerminologyCodeData } from '../../model/Interface/TerminologyCodeData';
-import { TimeRestrictionData } from '../../model/Interface/TimeRestrictionData';
-import { TranslationData } from '../../model/Interface/TranslationData';
-import { TypeGuard } from './TypeGuard';
-import { UiProfileData } from '../../model/Interface/UiProfileData';
-import { ValueDefinitionData } from '../../model/Interface/ValueDefinition';
-import { ValueFilterData } from '../../model/Interface/ValueFilterData';
+import { AnnotatedCRTDLData } from '../../model/Interface/AnnotatedCRTDLData'
+import { AttributeCode } from '../../model/Interface/AttributeCode'
+import { AttributeDefinitionData } from '../../model/Interface/AttributeDefinitionData'
+import { AttributeFilterBaseData } from '../../model/Interface/AttributeFilterBaseData'
+import { AttributeFilterData } from '../../model/Interface/AttributeFilterData'
+import { AttributeGroupsData } from '../../model/Interface/AttributeGroupsData'
+import { AttributesData } from '../../model/Interface/AttributesData'
+import { CodeableConceptResultListData } from 'src/app/model/Interface/Search/CodeableConceptResultList'
+import { ComparatorTypeData } from '../../model/Interface/ComparatorTypeData'
+import { ContextData } from '../../model/Interface/ContextData'
+import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData'
+import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData'
+import { CriteriaEntryDetailsData } from 'src/app/model/Interface/ListEntryDetailsData/CriteriaEntryDetailsData'
+import { CriteriaRelativeData } from 'src/app/model/Interface/ListEntryDetailsData/CriteriaRelativeData'
+import { CRTDLData } from '../../model/Interface/CRTDLData'
+import { DataExtractionData } from '../../model/Interface/DataExtractionData'
+import { DisplayData } from '../../model/Interface/DisplayData'
+import { FilterData } from '../../model/Interface/FilterData'
+import { IssueData } from '../../core/model/Feasibility/IssueData'
+import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData'
+import { QuantityUnitData } from '../../model/Interface/Unit'
+import { QueryResultData } from '../../model/Interface/QueryResultData'
+import { QueryResultLineData } from '../../model/Interface/QueryResultLineData'
+import { ReferenceCriteriaListEntryData } from 'src/app/model/Interface/Search/ReferenceCriteriaListEntryData'
+import { ResultListData } from 'src/app/model/Interface/Search/ResultListData'
+import { SavedDataQueryData } from '../../model/Interface/SavedDataQueryData'
+import { SavedDataQueryListItemData } from '../../model/Interface/SavedDataQueryListItemData'
+import { StructuredQueryCriterionData } from '../../model/Interface/StructuredQueryCriterionData'
+import { StructuredQueryData } from '../../model/Interface/StructuredQueryData'
+import { TerminologyCodeBaseData } from '../../model/Interface/TerminologyBaseData'
+import { TerminologyCodeData } from '../../model/Interface/TerminologyCodeData'
+import { TimeRestrictionData } from '../../model/Interface/TimeRestrictionData'
+import { TranslationData } from '../../model/Interface/TranslationData'
+import { TypeGuard } from './TypeGuard'
+import { UiProfileData } from '../../model/Interface/UiProfileData'
+import { ValueDefinitionData } from '../../model/Interface/ValueDefinition'
+import { ValueFilterData } from '../../model/Interface/ValueFilterData'
 
 /**
  * Class containing methods for type assertions.
@@ -47,7 +47,7 @@ export class TypeAssertion {
    */
   public static assertAttributeFilterData(obj: unknown): asserts obj is AttributeFilterData {
     if (!TypeGuard.isAttributeFilterData(obj)) {
-      throw new Error(`Invalid AttributeFilterData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid AttributeFilterData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -60,7 +60,7 @@ export class TypeAssertion {
     obj: unknown
   ): asserts obj is AttributeFilterBaseData {
     if (!TypeGuard.isAttributeFilterBaseData(obj)) {
-      throw new Error(`Invalid AttributeFilterBaseData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid AttributeFilterBaseData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -71,7 +71,7 @@ export class TypeAssertion {
    */
   public static assertComparatorTypeData(obj: unknown): asserts obj is ComparatorTypeData {
     if (!TypeGuard.isComparatorTypeData(obj)) {
-      throw new Error(`Invalid ComparatorTypeData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid ComparatorTypeData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -82,7 +82,7 @@ export class TypeAssertion {
    */
   public static assertContextData(obj: unknown): asserts obj is ContextData {
     if (!TypeGuard.isContextData(obj)) {
-      throw new Error(`Invalid ContextData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid ContextData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -93,7 +93,7 @@ export class TypeAssertion {
    */
   public static assertCriteriaProfileData(obj: unknown): asserts obj is CriteriaProfileData {
     if (!TypeGuard.isCriteriaProfileData(obj)) {
-      throw new Error(`Invalid CriteriaProfileData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid CriteriaProfileData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -104,7 +104,7 @@ export class TypeAssertion {
    */
   public static assertCRTDLData(obj: unknown): asserts obj is CRTDLData {
     if (!TypeGuard.isCRTDLData(obj)) {
-      throw new Error(`Invalid CRTDLData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid CRTDLData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -115,7 +115,7 @@ export class TypeAssertion {
    */
   public static assertDataExtractionData(obj: unknown): asserts obj is DataExtractionData {
     if (!TypeGuard.isDataExtractionData(obj)) {
-      throw new Error(`Invalid DataExtractionData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid DataExtractionData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -126,7 +126,7 @@ export class TypeAssertion {
    */
   public static assertDisplayData(obj: unknown): asserts obj is DisplayData {
     if (!TypeGuard.isDisplayData(obj)) {
-      throw new Error(`Invalid DisplayData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid DisplayData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -137,7 +137,7 @@ export class TypeAssertion {
    */
   public static assertFilterData(obj: unknown): asserts obj is FilterData {
     if (!TypeGuard.isFilterData(obj)) {
-      throw new Error(`Invalid FilterData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid FilterData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -148,7 +148,7 @@ export class TypeAssertion {
    */
   public static assertIssueData(obj: unknown): asserts obj is IssueData {
     if (!TypeGuard.isIssueData(obj)) {
-      throw new Error(`Invalid IssueData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid IssueData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -159,7 +159,7 @@ export class TypeAssertion {
    */
   public static assertQueryResultData(obj: unknown): asserts obj is QueryResultData {
     if (!TypeGuard.isQueryResultData(obj)) {
-      throw new Error(`Invalid QueryResultData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid QueryResultData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -170,7 +170,7 @@ export class TypeAssertion {
    */
   public static assertQueryResultLineData(obj: unknown): asserts obj is QueryResultLineData {
     if (!TypeGuard.isQueryResultLineData(obj)) {
-      throw new Error(`Invalid QueryResultLineData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid QueryResultLineData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -179,9 +179,11 @@ export class TypeAssertion {
    * @param obj - The object to check.
    * @throws Will throw an error if the object is not of type Relations.
    */
-  public static assertCriteriaRelationsData(obj: unknown): asserts obj is CriteriaRelationsData {
+  public static assertCriteriaEntryDetailsData(
+    obj: unknown
+  ): asserts obj is CriteriaEntryDetailsData {
     if (!TypeGuard.isCriteriaRelations(obj)) {
-      throw new Error(`Invalid Relations: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid Relations: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -192,7 +194,7 @@ export class TypeAssertion {
    */
   public static assertRelatives(obj: unknown): asserts obj is CriteriaRelativeData {
     if (!TypeGuard.isCriteriaRelative(obj)) {
-      throw new Error(`Invalid Relatives: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid Relatives: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -203,7 +205,7 @@ export class TypeAssertion {
    */
   public static assertSavedDataQueryData(obj: unknown): asserts obj is SavedDataQueryData {
     if (!TypeGuard.isSavedDataQueryData(obj)) {
-      throw new Error(`Invalid SavedDataQueryData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid SavedDataQueryData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -216,7 +218,7 @@ export class TypeAssertion {
     obj: unknown
   ): asserts obj is SavedDataQueryListItemData {
     if (!TypeGuard.isSavedDataQueryListItemData(obj)) {
-      throw new Error(`Invalid SavedDataQueryListItemData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid SavedDataQueryListItemData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -227,7 +229,7 @@ export class TypeAssertion {
    */
   public static assertListEntryData(obj: unknown): asserts obj is ListEntryData {
     if (!TypeGuard.isListEntryData(obj)) {
-      throw new Error(`Invalid ListEntryData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid ListEntryData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -240,7 +242,7 @@ export class TypeAssertion {
     obj: unknown
   ): asserts obj is ResultListData<C> {
     if (!TypeGuard.isListEntryData(obj)) {
-      throw new Error(`Invalid ResultListData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid ResultListData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -253,7 +255,7 @@ export class TypeAssertion {
     obj: unknown
   ): asserts obj is StructuredQueryCriterionData {
     if (!TypeGuard.isStructuredQueryCriterionData(obj)) {
-      throw new Error(`Invalid StructuredQueryCriterionData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid StructuredQueryCriterionData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -264,7 +266,7 @@ export class TypeAssertion {
    */
   public static assertStructuredQueryData(obj: unknown): asserts obj is StructuredQueryData {
     if (!TypeGuard.isStructuredQueryData(obj)) {
-      throw new Error(`Invalid StructuredQueryData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid StructuredQueryData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -277,7 +279,7 @@ export class TypeAssertion {
     obj: unknown
   ): asserts obj is TerminologyCodeBaseData {
     if (!TypeGuard.isTerminologyCodeBaseData(obj)) {
-      throw new Error(`Invalid TerminologyCodeBaseData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid TerminologyCodeBaseData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -288,7 +290,7 @@ export class TypeAssertion {
    */
   public static assertTerminologyCodeData(obj: unknown): asserts obj is TerminologyCodeData {
     if (!TypeGuard.isTerminologyCodeData(obj)) {
-      throw new Error(`Invalid TerminologyCodeData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid TerminologyCodeData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -299,7 +301,7 @@ export class TypeAssertion {
    */
   public static assertTimeRestrictionData(obj: unknown): asserts obj is TimeRestrictionData {
     if (!TypeGuard.isTimeRestrictionData(obj)) {
-      throw new Error(`Invalid TimeRestrictionData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid TimeRestrictionData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -310,7 +312,7 @@ export class TypeAssertion {
    */
   public static assertTranslationData(obj: unknown): asserts obj is TranslationData {
     if (!TypeGuard.isTranslationData(obj)) {
-      throw new Error(`Invalid TranslationData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid TranslationData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -321,7 +323,7 @@ export class TypeAssertion {
    */
   public static assertUiProfileData(obj: unknown): asserts obj is UiProfileData {
     if (!TypeGuard.isUiProfileData(obj)) {
-      throw new Error(`Invalid UiProfileData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid UiProfileData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -332,7 +334,7 @@ export class TypeAssertion {
    */
   public static assertValueDefinitionData(obj: unknown): asserts obj is ValueDefinitionData {
     if (!TypeGuard.isValueDefinitionData(obj)) {
-      throw new Error(`Invalid ValueDefinitionData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid ValueDefinitionData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -343,7 +345,7 @@ export class TypeAssertion {
    */
   public static assertValueFilterData(obj: unknown): asserts obj is ValueFilterData {
     if (!TypeGuard.isValueFilterData(obj)) {
-      throw new Error(`Invalid ValueFilterData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid ValueFilterData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -354,7 +356,7 @@ export class TypeAssertion {
    */
   public static assertQuantityUnitData(obj: unknown): asserts obj is QuantityUnitData {
     if (!TypeGuard.isQuantityUnitData(obj)) {
-      throw new Error(`Invalid QuantityUnitData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid QuantityUnitData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -367,7 +369,7 @@ export class TypeAssertion {
     obj: unknown
   ): asserts obj is AttributeDefinitionData {
     if (!TypeGuard.isAttributeDefinitionData(obj)) {
-      throw new Error(`Invalid AttributeDefinitionData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid AttributeDefinitionData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -378,7 +380,7 @@ export class TypeAssertion {
    */
   public static assertAttributeCode(obj: unknown): asserts obj is AttributeCode {
     if (!TypeGuard.isAttributeCode(obj)) {
-      throw new Error(`Invalid AttributeCode: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid AttributeCode: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -389,7 +391,7 @@ export class TypeAssertion {
    */
   public static assertAnnotatedCRTDLData(obj: unknown): asserts obj is AnnotatedCRTDLData {
     if (!TypeGuard.isAnnotatedCRTDLData(obj)) {
-      throw new Error(`Invalid AnnotatedCRTDLData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid AnnotatedCRTDLData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -400,7 +402,7 @@ export class TypeAssertion {
    */
   public static assertAttributesData(obj: unknown): asserts obj is AttributesData {
     if (!TypeGuard.isAttributesData(obj)) {
-      throw new Error(`Invalid AttributesData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid AttributesData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -411,7 +413,7 @@ export class TypeAssertion {
    */
   public static assertAttributeGroupsData(obj: unknown): asserts obj is AttributeGroupsData {
     if (!TypeGuard.isAttributeGroupsData(obj)) {
-      throw new Error(`Invalid AttributeGroupsData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid AttributeGroupsData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -424,7 +426,7 @@ export class TypeAssertion {
     obj: unknown
   ): asserts obj is CodeableConceptResultListData {
     if (!TypeGuard.isCodeableConceptResult(obj)) {
-      throw new Error(`Invalid CodeableConceptResult: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid CodeableConceptResult: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -432,7 +434,7 @@ export class TypeAssertion {
     obj: unknown
   ): asserts obj is ReferenceCriteriaListEntryData {
     if (!TypeGuard.isReferenceCriteriaListEntryData(obj)) {
-      throw new Error(`Invalid ReferenceCriteriaListEntryData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid ReferenceCriteriaListEntryData: ${JSON.stringify(obj)}`)
     }
   }
 
@@ -440,13 +442,13 @@ export class TypeAssertion {
     obj: unknown
   ): asserts obj is CriteriaListEntryData {
     if (!TypeGuard.isCriteriaListListEntryData(obj)) {
-      throw new Error(`Invalid CriteriaListListEntryData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid CriteriaListListEntryData: ${JSON.stringify(obj)}`)
     }
   }
 
   public static assertCriteriaRelativeData(obj: unknown): asserts obj is CriteriaRelativeData {
     if (!TypeGuard.isCriteriaRelative(obj)) {
-      throw new Error(`Invalid CriteriaRelativeData: ${JSON.stringify(obj)}`);
+      throw new Error(`Invalid CriteriaRelativeData: ${JSON.stringify(obj)}`)
     }
   }
 }
