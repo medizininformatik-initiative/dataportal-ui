@@ -1,59 +1,59 @@
-import { AnnotatedCRTDLData } from '../../model/Interface/AnnotatedCRTDLData';
-import { AttributeCode } from '../../model/Interface/AttributeCode';
-import { AttributeDefinitionData } from '../../model/Interface/AttributeDefinitionData';
-import { AttributeFilterBaseData } from '../../model/Interface/AttributeFilterBaseData';
-import { AttributeFilterData } from '../../model/Interface/AttributeFilterData';
-import { AttributeGroupsData } from '../../model/Interface/AttributeGroupsData';
-import { AttributesData } from '../../model/Interface/AttributesData';
-import { CodeableConceptResultListData } from 'src/app/model/Interface/Search/CodeableConceptResultList';
-import { CodeableConceptResultListEntryData } from 'src/app/model/Interface/Search/CodeableConceptResultListEntryData';
-import { ComparatorTypeData } from '../../model/Interface/ComparatorTypeData';
-import { ContextData } from '../../model/Interface/ContextData';
-import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData';
-import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData';
-import { CriteriaRelationsData } from 'src/app/model/Interface/CriteriaRelationsData';
-import { CriteriaRelativeData } from '../../model/Interface/CriteriaRelativesData';
-import { CriteriaSetValidationIssueData } from 'src/app/core/model/Validation/CriteriaSetValidationIssueData';
-import { CRTDLData } from '../../model/Interface/CRTDLData';
-import { DataExtractionData } from '../../model/Interface/DataExtractionData';
-import { DataExtractionValidationIssueData } from 'src/app/core/model/Validation/DataExtractionValidationIssueData';
-import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData';
-import { DateFilterUpgrade } from '../../core/model/Upgrade/Filter/DateFilterUpgradeData';
-import { DisplayData } from '../../model/Interface/DisplayData';
-import { FieldUpgradeData } from '../../core/model/Upgrade/Field/FieldUpgradeData';
-import { FilterData } from '../../model/Interface/FilterData';
-import { IssueData } from '../../core/model/Feasibility/IssueData';
-import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData';
-import { ProfileFieldUpgradeData } from '../../core/model/Upgrade/Field/ProfileFieldUpgradeData';
-import { ProfileFilterUpgradeData } from 'src/app/core/model/Upgrade/Filter/ProfileFilterUpgradeData';
-import { ProfileRemovedData } from '../../core/model/Upgrade/Profile/ProfileRemovedData';
-import { ProfileUpgradeData } from '../../core/model/Upgrade/Profile/ProfileUpgradeData';
-import { QuantityRangeValidationIssueData } from 'src/app/core/model/Validation/QuantityRangeValidationIssueData';
-import { QuantityUnitData } from '../../model/Interface/Unit';
-import { QuantityUnitValidationIssueData } from 'src/app/core/model/Validation/QuantityUnitValidationIssueData';
-import { QueryResultData } from '../../model/Interface/QueryResultData';
-import { QueryResultLineData } from '../../model/Interface/QueryResultLineData';
-import { ReferenceCriteriaListEntryData } from 'src/app/model/Interface/Search/ReferenceCriteriaListEntryData';
-import { ReferenceCriteriaResultListData } from 'src/app/model/Interface/Search/RefrenceCriteriaResultListData';
-import { ResultListData } from 'src/app/model/Interface/Search/ResultListData';
-import { SavedDataQueryData } from '../../model/Interface/SavedDataQueryData';
-import { SavedDataQueryListItemData } from '../../model/Interface/SavedDataQueryListItemData';
-import { StructuredQueryCriterionData } from '../../model/Interface/StructuredQueryCriterionData';
-import { StructuredQueryData } from '../../model/Interface/StructuredQueryData';
-import { TerminologyCodeBaseData } from '../../model/Interface/TerminologyBaseData';
-import { TerminologyCodeData } from '../../model/Interface/TerminologyCodeData';
-import { TimeRestrictionData } from '../../model/Interface/TimeRestrictionData';
-import { TimeRestrictionValidationIssueData } from 'src/app/core/model/Validation/TimeRestrictionValidationIssueData';
-import { TranslationData } from '../../model/Interface/TranslationData';
-import { Type } from '@angular/core';
-import { UiProfileData } from '../../model/Interface/UiProfileData';
-import { UpgradeData } from '../../core/model/Upgrade/UpgradeData';
-import { ValidationErrorData } from 'src/app/core/model/Validation/ValidationErrorData';
-import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
-import { ValidationIssueType } from 'src/app/core/model/Validation/ValidationIssueType';
-import { ValueDefinitionData } from '../../model/Interface/ValueDefinition';
-import { ValueFilterData } from '../../model/Interface/ValueFilterData';
-import { ValueSetValidationIssueData } from 'src/app/core/model/Validation/ValueSetValidationIssueData';
+import { AnnotatedCRTDLData } from '../../model/Interface/AnnotatedCRTDLData'
+import { AttributeCode } from '../../model/Interface/AttributeCode'
+import { AttributeDefinitionData } from '../../model/Interface/AttributeDefinitionData'
+import { AttributeFilterBaseData } from '../../model/Interface/AttributeFilterBaseData'
+import { AttributeFilterData } from '../../model/Interface/AttributeFilterData'
+import { AttributeGroupsData } from '../../model/Interface/AttributeGroupsData'
+import { AttributesData } from '../../model/Interface/AttributesData'
+import { CodeableConceptResultListData } from 'src/app/model/Interface/Search/CodeableConceptResultList'
+import { CodeableConceptResultListEntryData } from 'src/app/model/Interface/Search/CodeableConceptResultListEntryData'
+import { ComparatorTypeData } from '../../model/Interface/ComparatorTypeData'
+import { ContextData } from '../../model/Interface/ContextData'
+import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData'
+import { CriteriaProfileData } from '../../model/Interface/CriteriaProfileData'
+import { CriteriaEntryDetailsData } from 'src/app/model/Interface/ListEntryDetailsData/CriteriaEntryDetailsData'
+import { CriteriaRelativeData } from '../../model/Interface/ListEntryDetailsData/CriteriaRelativeData'
+import { CriteriaSetValidationIssueData } from 'src/app/core/model/Validation/CriteriaSetValidationIssueData'
+import { CRTDLData } from '../../model/Interface/CRTDLData'
+import { DataExtractionData } from '../../model/Interface/DataExtractionData'
+import { DataExtractionValidationIssueData } from 'src/app/core/model/Validation/DataExtractionValidationIssueData'
+import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData'
+import { DateFilterUpgrade } from '../../core/model/Upgrade/Filter/DateFilterUpgradeData'
+import { DisplayData } from '../../model/Interface/DisplayData'
+import { FieldUpgradeData } from '../../core/model/Upgrade/Field/FieldUpgradeData'
+import { FilterData } from '../../model/Interface/FilterData'
+import { IssueData } from '../../core/model/Feasibility/IssueData'
+import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData'
+import { ProfileFieldUpgradeData } from '../../core/model/Upgrade/Field/ProfileFieldUpgradeData'
+import { ProfileFilterUpgradeData } from 'src/app/core/model/Upgrade/Filter/ProfileFilterUpgradeData'
+import { ProfileRemovedData } from '../../core/model/Upgrade/Profile/ProfileRemovedData'
+import { ProfileUpgradeData } from '../../core/model/Upgrade/Profile/ProfileUpgradeData'
+import { QuantityRangeValidationIssueData } from 'src/app/core/model/Validation/QuantityRangeValidationIssueData'
+import { QuantityUnitData } from '../../model/Interface/Unit'
+import { QuantityUnitValidationIssueData } from 'src/app/core/model/Validation/QuantityUnitValidationIssueData'
+import { QueryResultData } from '../../model/Interface/QueryResultData'
+import { QueryResultLineData } from '../../model/Interface/QueryResultLineData'
+import { ReferenceCriteriaListEntryData } from 'src/app/model/Interface/Search/ReferenceCriteriaListEntryData'
+import { ReferenceCriteriaResultListData } from 'src/app/model/Interface/Search/RefrenceCriteriaResultListData'
+import { ResultListData } from 'src/app/model/Interface/Search/ResultListData'
+import { SavedDataQueryData } from '../../model/Interface/SavedDataQueryData'
+import { SavedDataQueryListItemData } from '../../model/Interface/SavedDataQueryListItemData'
+import { StructuredQueryCriterionData } from '../../model/Interface/StructuredQueryCriterionData'
+import { StructuredQueryData } from '../../model/Interface/StructuredQueryData'
+import { TerminologyCodeBaseData } from '../../model/Interface/TerminologyBaseData'
+import { TerminologyCodeData } from '../../model/Interface/TerminologyCodeData'
+import { TimeRestrictionData } from '../../model/Interface/TimeRestrictionData'
+import { TimeRestrictionValidationIssueData } from 'src/app/core/model/Validation/TimeRestrictionValidationIssueData'
+import { TranslationData } from '../../model/Interface/TranslationData'
+import { Type } from '@angular/core'
+import { UiProfileData } from '../../model/Interface/UiProfileData'
+import { UpgradeData } from '../../core/model/Upgrade/UpgradeData'
+import { ValidationErrorData } from 'src/app/core/model/Validation/ValidationErrorData'
+import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData'
+import { ValidationIssueType } from 'src/app/core/model/Validation/ValidationIssueType'
+import { ValueDefinitionData } from '../../model/Interface/ValueDefinition'
+import { ValueFilterData } from '../../model/Interface/ValueFilterData'
+import { ValueSetValidationIssueData } from 'src/app/core/model/Validation/ValueSetValidationIssueData'
 
 /**
  * Utility class for type guards to ensure objects conform to their respective interfaces.
@@ -65,7 +65,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isString(obj: unknown): obj is string {
-    return typeof obj === 'string';
+    return typeof obj === 'string'
   }
 
   /**
@@ -74,7 +74,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isNumber(obj: unknown): obj is number {
-    return typeof obj === 'number';
+    return typeof obj === 'number'
   }
 
   /**
@@ -83,7 +83,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isBoolean(obj: unknown): obj is boolean {
-    return typeof obj === 'boolean';
+    return typeof obj === 'boolean'
   }
 
   /**
@@ -92,23 +92,23 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isObject(obj: unknown): obj is object {
-    return typeof obj === 'object' && obj !== null && obj !== undefined;
+    return typeof obj === 'object' && obj !== null && obj !== undefined
   }
 
   public static isOptionalString(val: unknown): boolean {
-    return TypeGuard.isString(val) || val === undefined;
+    return TypeGuard.isString(val) || val === undefined
   }
 
   public static isOptionalNumber(val: unknown): boolean {
-    return TypeGuard.isNumber(val) || val === undefined;
+    return TypeGuard.isNumber(val) || val === undefined
   }
 
   public static isOptionalBoolean(val: unknown): boolean {
-    return TypeGuard.isBoolean(val) || val === undefined;
+    return TypeGuard.isBoolean(val) || val === undefined
   }
 
   public static isOptionalObject(val: unknown): boolean {
-    return TypeGuard.isObject(val) || val === undefined;
+    return TypeGuard.isObject(val) || val === undefined
   }
 
   /**
@@ -121,9 +121,9 @@ export class TypeGuard {
    */
   public static isArray<T>(val: unknown, checkFn?: (item: unknown) => boolean): val is T[] {
     if (!Array.isArray(val)) {
-      return false;
+      return false
     }
-    return checkFn ? val.every(checkFn) : true;
+    return checkFn ? val.every(checkFn) : true
   }
 
   /**
@@ -135,13 +135,13 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isOptionalArray<T>(val: unknown, checkFn?: (item: unknown) => boolean): boolean {
-    return val === undefined || this.isArray<T>(val, checkFn);
+    return val === undefined || this.isArray<T>(val, checkFn)
   }
 
   private static isOptionalAttributeFilterData(
     obj: unknown
   ): obj is AttributeFilterData | undefined {
-    return obj === undefined || TypeGuard.isArray(obj, TypeGuard.isAttributeFilterData);
+    return obj === undefined || TypeGuard.isArray(obj, TypeGuard.isAttributeFilterData)
   }
 
   /**
@@ -150,7 +150,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isAttributeFilterData(obj: unknown): obj is AttributeFilterData {
-    const attributeFilterData = obj as AttributeFilterData;
+    const attributeFilterData = obj as AttributeFilterData
     return (
       TypeGuard.isObject(obj) &&
       TypeGuard.isOptionalArray(
@@ -161,17 +161,17 @@ export class TypeGuard {
       TypeGuard.isAttributeCode(attributeFilterData.attributeCode) &&
       TypeGuard.isString(attributeFilterData.type) &&
       TypeGuard.isAttributeFilterBaseData(obj)
-    );
+    )
   }
 
   private static isSelectedConcepts(obj: unknown): obj is TerminologyCodeData[] {
-    return TypeGuard.isArray<TerminologyCodeData>(obj, TypeGuard.isTerminologyCodeData);
+    return TypeGuard.isArray<TerminologyCodeData>(obj, TypeGuard.isTerminologyCodeData)
   }
 
   private static isOptionalSelectedConcepts(
     obj: unknown
   ): obj is TerminologyCodeData[] | undefined {
-    return obj === undefined || TypeGuard.isArray(obj, TypeGuard.isTerminologyCodeBaseData);
+    return obj === undefined || TypeGuard.isArray(obj, TypeGuard.isTerminologyCodeBaseData)
   }
 
   /**
@@ -180,7 +180,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isAttributeFilterBaseData(obj: unknown): obj is AttributeFilterBaseData {
-    const attributeFilterBaseData = obj as AttributeFilterBaseData;
+    const attributeFilterBaseData = obj as AttributeFilterBaseData
     return (
       TypeGuard.isObject(attributeFilterBaseData) &&
       TypeGuard.isOptionalString(attributeFilterBaseData.comparator) &&
@@ -188,7 +188,7 @@ export class TypeGuard {
       TypeGuard.isOptionalNumber(attributeFilterBaseData.maxValue) &&
       TypeGuard.isOptionalObject(attributeFilterBaseData.unit) &&
       TypeGuard.isOptionalNumber(attributeFilterBaseData.value)
-    );
+    )
   }
 
   /**
@@ -197,7 +197,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isComparatorTypeData(obj: unknown): obj is ComparatorTypeData {
-    return TypeGuard.isString(obj);
+    return TypeGuard.isString(obj)
   }
 
   /**
@@ -206,14 +206,14 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isContextData(obj: unknown): obj is ContextData {
-    const contextData = obj as ContextData;
+    const contextData = obj as ContextData
     return (
       TypeGuard.isObject(contextData) &&
       TypeGuard.isString(contextData.code) &&
       TypeGuard.isString(contextData.system) &&
       TypeGuard.isString(contextData.display) &&
       TypeGuard.isString(contextData.version)
-    );
+    )
   }
 
   /**
@@ -222,7 +222,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isCriteriaProfileData(obj: unknown): obj is CriteriaProfileData {
-    const criteriaProfileData = obj as CriteriaProfileData;
+    const criteriaProfileData = obj as CriteriaProfileData
     return (
       TypeGuard.isObject(criteriaProfileData) &&
       TypeGuard.isString(criteriaProfileData.id) &&
@@ -231,7 +231,7 @@ export class TypeGuard {
       TypeGuard.isTerminologyCodeData(criteriaProfileData.context) &&
       Array.isArray(criteriaProfileData.termCodes) &&
       criteriaProfileData.termCodes.every(TypeGuard.isTerminologyCodeData)
-    );
+    )
   }
 
   /**
@@ -240,14 +240,14 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isCRTDLData(obj: unknown): obj is CRTDLData {
-    const crtdlData = obj as CRTDLData;
+    const crtdlData = obj as CRTDLData
     return (
       TypeGuard.isObject(crtdlData) &&
       TypeGuard.isOptionalCohortDefinition(crtdlData.cohortDefinition) &&
       TypeGuard.isOptionalDataExtraction(crtdlData.dataExtraction) &&
       TypeGuard.isOptionalString(crtdlData.display) &&
       TypeGuard.isOptionalString(crtdlData.version)
-    );
+    )
   }
 
   /**
@@ -256,7 +256,7 @@ export class TypeGuard {
    * @returns
    */
   private static isOptionalDataExtraction(obj: unknown): obj is DataExtractionData {
-    return obj === undefined || TypeGuard.isDataExtractionData(obj);
+    return obj === undefined || TypeGuard.isDataExtractionData(obj)
   }
 
   /**
@@ -265,14 +265,14 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isDataExtractionData(obj: unknown): obj is DataExtractionData {
-    const dataExtractionData = obj as DataExtractionData;
+    const dataExtractionData = obj as DataExtractionData
     return (
       TypeGuard.isObject(dataExtractionData) &&
       TypeGuard.isArray<AttributeGroupsData>(
         dataExtractionData.attributeGroups,
         TypeGuard.isAttributeGroupsData
       )
-    );
+    )
   }
 
   /**
@@ -281,17 +281,17 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isDisplayData(obj: unknown): obj is DisplayData {
-    const displayData = obj as DisplayData;
+    const displayData = obj as DisplayData
     return (
       TypeGuard.isObject(displayData) &&
       TypeGuard.isString(displayData.original) &&
       Array.isArray(displayData.translations) &&
       displayData.translations.every(TypeGuard.isTranslationData)
-    );
+    )
   }
 
   public static isOptionalFilterData(obj: unknown): obj is FilterData {
-    return obj !== undefined ? TypeGuard.isFilterData(obj) : undefined;
+    return obj !== undefined ? TypeGuard.isFilterData(obj) : undefined
   }
 
   /**
@@ -300,7 +300,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isFilterData(obj: unknown): obj is FilterData {
-    const filterData = obj as FilterData;
+    const filterData = obj as FilterData
     return (
       TypeGuard.isOptionalObject(filterData) &&
       TypeGuard.isString(filterData?.type) &&
@@ -308,7 +308,7 @@ export class TypeGuard {
       TypeGuard.isOptionalArray(filterData?.codes, TypeGuard.isTerminologyCodeBaseData) &&
       TypeGuard.isOptionalString(filterData?.start) &&
       TypeGuard.isOptionalString(filterData?.end)
-    );
+    )
   }
 
   /**
@@ -317,14 +317,14 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isIssueData(obj: unknown): obj is IssueData {
-    const issueData = obj as IssueData;
+    const issueData = obj as IssueData
     return (
       TypeGuard.isObject(issueData) &&
       TypeGuard.isString(issueData.message) &&
       TypeGuard.isString(issueData.type) &&
       TypeGuard.isString(issueData.code) &&
       TypeGuard.isString(issueData.severity)
-    );
+    )
   }
 
   /**
@@ -333,7 +333,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isQueryResultData(obj: unknown): obj is QueryResultData {
-    const queryResultData = obj as QueryResultData;
+    const queryResultData = obj as QueryResultData
     return (
       TypeGuard.isObject(queryResultData) &&
       TypeGuard.isBoolean(queryResultData.detailsReceived) &&
@@ -344,7 +344,7 @@ export class TypeGuard {
       Array.isArray(queryResultData.resultLines) &&
       queryResultData.resultLines.every(TypeGuard.isQueryResultLineData) &&
       TypeGuard.isNumber(queryResultData.totalNumberOfPatients)
-    );
+    )
   }
 
   /**
@@ -353,12 +353,12 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isQueryResultLineData(obj: unknown): obj is QueryResultLineData {
-    const queryResultLineData = obj as QueryResultLineData;
+    const queryResultLineData = obj as QueryResultLineData
     return (
       TypeGuard.isObject(queryResultLineData) &&
       TypeGuard.isNumber(queryResultLineData.numberOfPatients) &&
       TypeGuard.isString(queryResultLineData.siteName)
-    );
+    )
   }
 
   /**
@@ -366,8 +366,8 @@ export class TypeGuard {
    * @param obj
    * @returns boolean
    */
-  public static isCriteriaRelations(obj: unknown): obj is CriteriaRelationsData {
-    const relations = obj as CriteriaRelationsData;
+  public static isCriteriaRelations(obj: unknown): obj is CriteriaEntryDetailsData {
+    const relations = obj as CriteriaEntryDetailsData
     return (
       TypeGuard.isObject(relations) &&
       TypeGuard.isDisplayData(relations.display) &&
@@ -377,7 +377,7 @@ export class TypeGuard {
       relations.children.every(TypeGuard.isCriteriaRelative) &&
       Array.isArray(relations.relatedTerms) &&
       relations.relatedTerms.every(TypeGuard.isCriteriaRelative)
-    );
+    )
   }
 
   /**
@@ -386,13 +386,13 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isCriteriaRelative(obj: unknown): obj is CriteriaRelativeData {
-    const relatives = obj as CriteriaRelativeData;
+    const relatives = obj as CriteriaRelativeData
     return (
       TypeGuard.isObject(relatives) &&
       TypeGuard.isBoolean(relatives.selectable) &&
       TypeGuard.isDisplayData(relatives.display) &&
       TypeGuard.isString(relatives.contextualizedTermcodeHash)
-    );
+    )
   }
 
   /**
@@ -401,7 +401,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isSavedDataQueryData(obj: unknown): obj is SavedDataQueryData {
-    const savedDataQueryData = obj as SavedDataQueryData;
+    const savedDataQueryData = obj as SavedDataQueryData
     return (
       TypeGuard.isObject(savedDataQueryData) &&
       TypeGuard.isNumber(savedDataQueryData.id) &&
@@ -417,7 +417,7 @@ export class TypeGuard {
       TypeGuard.isOptionalObject(savedDataQueryData.dataExtraction) &&
       TypeGuard.isBoolean(savedDataQueryData.dataExtraction.exists) &&
       TypeGuard.isBoolean(savedDataQueryData.dataExtraction.isValid)
-    );
+    )
   }
 
   /**
@@ -426,7 +426,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isSavedDataQueryListItemData(obj: unknown): obj is SavedDataQueryListItemData {
-    const item = obj as SavedDataQueryListItemData;
+    const item = obj as SavedDataQueryListItemData
     return (
       TypeGuard.isObject(item) &&
       TypeGuard.isNumber(item.id) &&
@@ -440,7 +440,7 @@ export class TypeGuard {
       TypeGuard.isObject(item.dataExtraction) &&
       TypeGuard.isBoolean(item.dataExtraction.exists) &&
       TypeGuard.isBoolean(item.dataExtraction.isValid)
-    );
+    )
   }
 
   /**
@@ -449,8 +449,8 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isListEntryData<C extends ListEntryData>(obj: unknown): obj is ResultListData<C> {
-    const searchResult = obj as ResultListData<C>;
-    return TypeGuard.isObject(searchResult) && Array.isArray(searchResult.results);
+    const searchResult = obj as ResultListData<C>
+    return TypeGuard.isObject(searchResult) && Array.isArray(searchResult.results)
   }
 
   /**
@@ -459,14 +459,14 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isResultListEntryData(obj: unknown): obj is ListEntryData {
-    const searchResult = obj as ListEntryData;
-    return TypeGuard.isObject(searchResult) && TypeGuard.isString(searchResult.id);
+    const searchResult = obj as ListEntryData
+    return TypeGuard.isObject(searchResult) && TypeGuard.isString(searchResult.id)
   }
 
   public static isOptionalStructuredQueryCriterionData(
     obj: unknown
   ): obj is StructuredQueryCriterionData | undefined {
-    return obj === undefined || TypeGuard.isStructuredQueryCriterionData(obj);
+    return obj === undefined || TypeGuard.isStructuredQueryCriterionData(obj)
   }
 
   /**
@@ -475,7 +475,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isStructuredQueryCriterionData(obj: unknown): obj is StructuredQueryCriterionData {
-    const structuredQueryCriterionData = obj as StructuredQueryCriterionData;
+    const structuredQueryCriterionData = obj as StructuredQueryCriterionData
     return (
       TypeGuard.isObject(structuredQueryCriterionData) &&
       TypeGuard.isOptionalAttributeFilterData(structuredQueryCriterionData.attributeFilters) &&
@@ -483,11 +483,11 @@ export class TypeGuard {
       TypeGuard.isArray(structuredQueryCriterionData.termCodes, TypeGuard.isTerminologyCodeData) &&
       TypeGuard.isOptionalTimeRestrictionData(structuredQueryCriterionData.timeRestriction) &&
       TypeGuard.isOptionalValueFilterData(structuredQueryCriterionData.valueFilter)
-    );
+    )
   }
 
   public static isOptionalCohortDefinition(obj: unknown): obj is StructuredQueryData | undefined {
-    return obj === undefined || TypeGuard.isStructuredQueryData(obj);
+    return obj === undefined || TypeGuard.isStructuredQueryData(obj)
   }
   /**
    * Checks if the object is an instance of StructuredQueryData.
@@ -495,14 +495,14 @@ export class TypeGuard {
    * @returns
    */
   public static isStructuredQueryData(obj: unknown): obj is StructuredQueryData {
-    const structuredQueryData = obj as StructuredQueryData;
+    const structuredQueryData = obj as StructuredQueryData
     return (
       TypeGuard.isObject(structuredQueryData) &&
       TypeGuard.isString(structuredQueryData.version) &&
       TypeGuard.isOptionalString(structuredQueryData.display) &&
       TypeGuard.isInclusionCriteria(structuredQueryData.inclusionCriteria) &&
       TypeGuard.isExclusionCriteria(structuredQueryData.exclusionCriteria)
-    );
+    )
   }
 
   /**
@@ -518,7 +518,7 @@ export class TypeGuard {
   public static isExclusionCriteria(val: unknown): boolean {
     return TypeGuard.isOptionalArray(val, (criteria) =>
       TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData)
-    );
+    )
   }
 
   /**
@@ -534,7 +534,7 @@ export class TypeGuard {
   public static isInclusionCriteria(val: unknown): boolean {
     return TypeGuard.isArray(val, (criteria) =>
       TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData)
-    );
+    )
   }
 
   /**
@@ -543,13 +543,13 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isTerminologyCodeBaseData(obj: unknown): obj is TerminologyCodeBaseData {
-    const terminologyCodeBaseData = obj as TerminologyCodeBaseData;
+    const terminologyCodeBaseData = obj as TerminologyCodeBaseData
     return (
       TypeGuard.isObject(terminologyCodeBaseData) &&
       TypeGuard.isString(terminologyCodeBaseData.code) &&
       TypeGuard.isString(terminologyCodeBaseData.system) &&
       TypeGuard.isString(terminologyCodeBaseData.display)
-    );
+    )
   }
 
   /**
@@ -558,19 +558,19 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isTerminologyCodeData(obj: unknown): obj is TerminologyCodeData {
-    const terminologyCodeData = obj as TerminologyCodeData;
+    const terminologyCodeData = obj as TerminologyCodeData
     return (
       TypeGuard.isObject(terminologyCodeData) &&
       TypeGuard.isTerminologyCodeBaseData(terminologyCodeData) &&
       (TypeGuard.isOptionalString(terminologyCodeData.version) ||
         terminologyCodeData.version === '')
-    );
+    )
   }
 
   private static isOptionalTimeRestrictionData(
     obj: unknown
   ): obj is TimeRestrictionData | undefined {
-    return obj === undefined || TypeGuard.isTimeRestrictionData(obj);
+    return obj === undefined || TypeGuard.isTimeRestrictionData(obj)
   }
 
   /**
@@ -579,12 +579,12 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isTimeRestrictionData(obj: unknown): obj is TimeRestrictionData {
-    const timeRestrictionData = obj as TimeRestrictionData;
+    const timeRestrictionData = obj as TimeRestrictionData
     return (
       TypeGuard.isObject(timeRestrictionData) &&
       TypeGuard.isOptionalString(timeRestrictionData.afterDate) &&
       TypeGuard.isOptionalString(timeRestrictionData.beforeDate)
-    );
+    )
   }
 
   /**
@@ -593,12 +593,12 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isTranslationData(obj: unknown): obj is TranslationData {
-    const translationData = obj as TranslationData;
+    const translationData = obj as TranslationData
     return (
       TypeGuard.isObject(translationData) &&
       TypeGuard.isString(translationData.language) &&
       TypeGuard.isString(translationData.value)
-    );
+    )
   }
 
   /**
@@ -607,7 +607,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isUiProfileData(obj: unknown): obj is UiProfileData {
-    const uiProfileData = obj as UiProfileData;
+    const uiProfileData = obj as UiProfileData
     return (
       TypeGuard.isObject(uiProfileData) &&
       TypeGuard.isString(uiProfileData.name) &&
@@ -617,7 +617,7 @@ export class TypeGuard {
         TypeGuard.isAttributeDefinitionData
       ) &&
       TypeGuard.isValueDefinitionData(uiProfileData.valueDefinition)
-    );
+    )
   }
 
   /**
@@ -626,7 +626,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isValueDefinitionData(obj: unknown): obj is ValueDefinitionData {
-    const valueDefinitionData = obj as ValueDefinitionData;
+    const valueDefinitionData = obj as ValueDefinitionData
     return (
       TypeGuard.isObject(valueDefinitionData) &&
       TypeGuard.isDisplayData(valueDefinitionData.display) &&
@@ -640,11 +640,11 @@ export class TypeGuard {
       TypeGuard.isOptionalNumber(valueDefinitionData.precision) &&
       TypeGuard.isOptionalNumber(valueDefinitionData.max) &&
       TypeGuard.isOptionalNumber(valueDefinitionData.min)
-    );
+    )
   }
 
   private static isOptionalValueFilterData(obj: unknown): obj is ValueFilterData | undefined {
-    return obj === undefined || TypeGuard.isValueFilterData(obj);
+    return obj === undefined || TypeGuard.isValueFilterData(obj)
   }
 
   /**
@@ -653,12 +653,12 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isValueFilterData(obj: unknown): obj is ValueFilterData {
-    const valueFilterData = obj as ValueFilterData;
+    const valueFilterData = obj as ValueFilterData
     return (
       TypeGuard.isObject(valueFilterData) &&
       TypeGuard.isString(valueFilterData.type) &&
       TypeGuard.isAttributeFilterBaseData(valueFilterData)
-    );
+    )
   }
 
   /**
@@ -667,12 +667,12 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isQuantityUnitData(obj: unknown): obj is QuantityUnitData {
-    const quantityUnitData = obj as QuantityUnitData;
+    const quantityUnitData = obj as QuantityUnitData
     return (
       TypeGuard.isObject(quantityUnitData) &&
       TypeGuard.isString(quantityUnitData.code) &&
       TypeGuard.isString(quantityUnitData.display)
-    );
+    )
   }
 
   /**
@@ -681,7 +681,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isAttributeDefinitionData(obj: unknown): obj is AttributeDefinitionData {
-    const attributeDefinitionData = obj as AttributeDefinitionData;
+    const attributeDefinitionData = obj as AttributeDefinitionData
     return (
       TypeGuard.isObject(attributeDefinitionData) &&
       TypeGuard.isNumber(attributeDefinitionData.min) &&
@@ -695,7 +695,7 @@ export class TypeGuard {
       Array.isArray(attributeDefinitionData.selectableConcepts) &&
       attributeDefinitionData.selectableConcepts.every(TypeGuard.isString) &&
       TypeGuard.isString(attributeDefinitionData.type)
-    );
+    )
   }
 
   /**
@@ -704,13 +704,13 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isAttributeCode(obj: unknown): obj is AttributeCode {
-    const attributeCode = obj as AttributeCode;
+    const attributeCode = obj as AttributeCode
     return (
       TypeGuard.isObject(attributeCode) &&
       TypeGuard.isString(attributeCode.code) &&
       TypeGuard.isString(attributeCode.system) &&
       TypeGuard.isString(attributeCode.display)
-    );
+    )
   }
 
   /**
@@ -719,12 +719,12 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isAnnotatedCRTDLData(obj: unknown): obj is AnnotatedCRTDLData {
-    const annotatedCRTDLData = obj as AnnotatedCRTDLData;
+    const annotatedCRTDLData = obj as AnnotatedCRTDLData
     return (
       TypeGuard.isObject(annotatedCRTDLData) &&
       TypeGuard.isDataExtractionData(annotatedCRTDLData.dataExtraction) &&
       TypeGuard.isStructuredQueryData(annotatedCRTDLData.cohortDefinition)
-    );
+    )
   }
 
   /**
@@ -733,13 +733,13 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isAttributesData(obj: unknown): obj is AttributesData {
-    const attributesData = obj as AttributesData;
+    const attributesData = obj as AttributesData
     return (
       TypeGuard.isObject(attributesData) &&
       TypeGuard.isOptionalArray<string>(attributesData.linkedGroups, TypeGuard.isString) &&
       TypeGuard.isBoolean(attributesData.mustHave) &&
       TypeGuard.isString(attributesData.attributeRef)
-    );
+    )
   }
 
   /**
@@ -748,7 +748,7 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isAttributeGroupsData(obj: unknown): obj is AttributeGroupsData {
-    const attributeGroupsData = obj as AttributeGroupsData;
+    const attributeGroupsData = obj as AttributeGroupsData
     return (
       TypeGuard.isObject(attributeGroupsData) &&
       TypeGuard.isOptionalString(attributeGroupsData.id) &&
@@ -760,15 +760,15 @@ export class TypeGuard {
         TypeGuard.isAttributesData
       ) &&
       TypeGuard.isOptionalFilterDataArray(attributeGroupsData.filter)
-    );
+    )
   }
 
   public static isOptionalFilterDataArray(obj: unknown): obj is FilterData[] | undefined {
-    return obj === undefined || TypeGuard.isOptionalArray(obj, TypeGuard.isFilterData);
+    return obj === undefined || TypeGuard.isOptionalArray(obj, TypeGuard.isFilterData)
   }
 
   public static isFilterDataArray(obj: unknown): obj is FilterData[] | undefined {
-    return TypeGuard.isArray(obj, TypeGuard.isFilterData);
+    return TypeGuard.isArray(obj, TypeGuard.isFilterData)
   }
 
   /**
@@ -777,11 +777,11 @@ export class TypeGuard {
    * @returns boolean
    */
   public static isCodeableConceptResult(obj: unknown): obj is CodeableConceptResultListData {
-    const codeableConceptResult = obj as CodeableConceptResultListData;
+    const codeableConceptResult = obj as CodeableConceptResultListData
     return (
       TypeGuard.isObject(codeableConceptResult) &&
       TypeGuard.isListEntryData<CodeableConceptResultListEntryData>(codeableConceptResult)
-    );
+    )
   }
 
   /**
@@ -792,13 +792,13 @@ export class TypeGuard {
   public static isCodeableConceptResultListEntry(
     obj: unknown
   ): obj is CodeableConceptResultListEntryData {
-    const codeableConceptResultListEntry = obj as CodeableConceptResultListEntryData;
+    const codeableConceptResultListEntry = obj as CodeableConceptResultListEntryData
     return (
       TypeGuard.isObject(codeableConceptResultListEntry) &&
       TypeGuard.isResultListEntryData(codeableConceptResultListEntry) &&
       TypeGuard.isDisplayData(codeableConceptResultListEntry.display) &&
       TypeGuard.isTerminologyCodeData(codeableConceptResultListEntry.termCode)
-    );
+    )
   }
 
   /**
@@ -809,17 +809,17 @@ export class TypeGuard {
   public static isReferenceCriteriaResultList(
     obj: unknown
   ): obj is ReferenceCriteriaResultListData {
-    const referenceCriteriaResult = obj as ReferenceCriteriaResultListData;
+    const referenceCriteriaResult = obj as ReferenceCriteriaResultListData
     return (
       TypeGuard.isObject(referenceCriteriaResult) &&
       TypeGuard.isArray(referenceCriteriaResult.results, TypeGuard.isReferenceCriteriaListEntryData)
-    );
+    )
   }
 
   public static isReferenceCriteriaListEntryData(
     obj: unknown
   ): obj is ReferenceCriteriaListEntryData {
-    const referenceCriteriaListEntry = obj as ReferenceCriteriaListEntryData;
+    const referenceCriteriaListEntry = obj as ReferenceCriteriaListEntryData
     return (
       TypeGuard.isObject(referenceCriteriaListEntry) &&
       TypeGuard.isResultListEntryData(referenceCriteriaListEntry) &&
@@ -827,11 +827,11 @@ export class TypeGuard {
       TypeGuard.isDisplayData(referenceCriteriaListEntry.display) &&
       TypeGuard.isString(referenceCriteriaListEntry.terminology) &&
       TypeGuard.isString(referenceCriteriaListEntry.system)
-    );
+    )
   }
 
   public static isCriteriaListListEntryData(obj: unknown): obj is CriteriaListEntryData {
-    const criteriaListEntry = obj as CriteriaListEntryData;
+    const criteriaListEntry = obj as CriteriaListEntryData
     return (
       TypeGuard.isObject(criteriaListEntry) &&
       TypeGuard.isResultListEntryData(criteriaListEntry) &&
@@ -842,62 +842,62 @@ export class TypeGuard {
       TypeGuard.isString(criteriaListEntry.termcode) &&
       TypeGuard.isString(criteriaListEntry.kdsModule) &&
       TypeGuard.isString(criteriaListEntry.context)
-    );
+    )
   }
 
   public static isCriteriaSetValidationIssueData(
     details: ValidationIssueType
   ): details is CriteriaSetValidationIssueData {
-    return 'criteriaSets' in details && 'termCode' in details;
+    return 'criteriaSets' in details && 'termCode' in details
   }
 
   public static isQuantityUnitValidationIssueData(
     details: ValidationIssueType
   ): details is QuantityUnitValidationIssueData {
-    return 'selected' in details && 'allowed' in details;
+    return 'selected' in details && 'allowed' in details
   }
 
   public static isValueSetValidationIssueData(
     details: ValidationIssueType
   ): details is ValueSetValidationIssueData {
-    return 'valueSets' in details && 'selectedConcepts' in details;
+    return 'valueSets' in details && 'selectedConcepts' in details
   }
 
   public static isTimeRestrictionValidationIssueData(
     details: ValidationIssueType
   ): details is TimeRestrictionValidationIssueData {
-    const timeRestrictionDetails = details as TimeRestrictionValidationIssueData;
+    const timeRestrictionDetails = details as TimeRestrictionValidationIssueData
     return (
       TypeGuard.isObject(timeRestrictionDetails) &&
       TypeGuard.isObject(timeRestrictionDetails.timeRestriction) &&
       TypeGuard.isString(timeRestrictionDetails.timeRestriction.afterDate) &&
       TypeGuard.isString(timeRestrictionDetails.timeRestriction.beforeDate)
-    );
+    )
   }
 
   public static isQuantityRangeValidationIssueData(
     details: unknown
   ): details is QuantityRangeValidationIssueData {
-    const quantityRangeDetails = details as QuantityRangeValidationIssueData;
+    const quantityRangeDetails = details as QuantityRangeValidationIssueData
     return (
       TypeGuard.isObject(quantityRangeDetails) &&
       TypeGuard.isObject(quantityRangeDetails.valueFilter) &&
       TypeGuard.isOptionalNumber(quantityRangeDetails.valueFilter.minValue) &&
       TypeGuard.isOptionalNumber(quantityRangeDetails.valueFilter.maxValue)
-    );
+    )
   }
 
   public static isDataExtractionValidationIssueData(
     details: ValidationIssueType
   ): details is DataExtractionValidationIssueData {
-    const dataExtractionDetails = details as DataExtractionValidationIssueData;
+    const dataExtractionDetails = details as DataExtractionValidationIssueData
     return (
       TypeGuard.isObject(dataExtractionDetails) &&
       TypeGuard.isString(dataExtractionDetails.end) &&
       TypeGuard.isString(dataExtractionDetails.name) &&
       TypeGuard.isString(dataExtractionDetails.start) &&
       TypeGuard.isString(dataExtractionDetails.end)
-    );
+    )
   }
 
   /**
@@ -912,7 +912,7 @@ export class TypeGuard {
       TypeGuard.isValueSetValidationIssueData(obj as ValueSetValidationIssueData) ||
       TypeGuard.isTimeRestrictionValidationIssueData(obj as TimeRestrictionValidationIssueData) ||
       TypeGuard.isQuantityRangeValidationIssueData(obj as QuantityRangeValidationIssueData)
-    );
+    )
   }
 
   public static isValidationError(error: DataportalErrorData): error is ValidationErrorData {
@@ -921,91 +921,91 @@ export class TypeGuard {
       TypeGuard.isString(error.type) &&
       error.type === 'VALIDATION_ERROR' &&
       Array.isArray(error.payload)
-    );
+    )
   }
 
   public static isValidationPayload(payload: unknown): payload is ValidationIssueData[] {
-    return Array.isArray(payload) && payload.length > 0;
+    return Array.isArray(payload) && payload.length > 0
   }
 
   public static isFeasibilityPayload(payload: unknown): payload is { issues: IssueData[] } {
-    return typeof payload === 'object' && payload !== null && 'issues' in payload;
+    return typeof payload === 'object' && payload !== null && 'issues' in payload
   }
 
   /**
    * Checks if the object is an instance of DateFilterUpgrade.
    */
   public static isDateFilterUpgrade(obj: unknown): obj is DateFilterUpgrade {
-    const d = obj as DateFilterUpgrade;
+    const d = obj as DateFilterUpgrade
     return (
       TypeGuard.isObject(d) &&
       TypeGuard.isString(d.name) &&
       TypeGuard.isString(d.type) &&
       TypeGuard.isString(d.start) &&
       TypeGuard.isString(d.end)
-    );
+    )
   }
 
   /**
    * Checks if the object is an instance of FieldUpgradeData.
    */
   public static isFieldUpgradeData(obj: unknown): obj is FieldUpgradeData {
-    const f = obj as FieldUpgradeData;
+    const f = obj as FieldUpgradeData
     return (
       TypeGuard.isObject(f) && TypeGuard.isString(f.attributeRef) && TypeGuard.isBoolean(f.mustHave)
-    );
+    )
   }
 
   /**
    * Checks if the object is an instance of ProfileFieldUpgradeData.
    */
   public static isProfileFieldUpgradeData(obj: unknown): obj is ProfileFieldUpgradeData {
-    const p = obj as ProfileFieldUpgradeData;
+    const p = obj as ProfileFieldUpgradeData
     return (
       TypeGuard.isObject(p) &&
       TypeGuard.isFieldUpgradeData(p.replaced) &&
       (p.replacedWith === undefined || TypeGuard.isFieldUpgradeData(p.replacedWith))
-    );
+    )
   }
 
   /**
    * Checks if the object is an instance of ProfileFilterUpgradeData.
    */
   public static isProfileFilterUpgradeData(obj: unknown): obj is ProfileFilterUpgradeData {
-    const p = obj as ProfileFilterUpgradeData;
+    const p = obj as ProfileFilterUpgradeData
     return (
       TypeGuard.isObject(p) &&
       TypeGuard.isDateFilterUpgrade(p.replaced) &&
       (p.replacedWith === undefined || TypeGuard.isDateFilterUpgrade(p.replacedWith))
-    );
+    )
   }
 
   /**
    * Checks if the object is an instance of ProfileRemovedData.
    */
   public static isProfileRemovedData(obj: unknown): obj is ProfileRemovedData {
-    const p = obj as ProfileRemovedData;
+    const p = obj as ProfileRemovedData
     return (
       TypeGuard.isObject(p) &&
       TypeGuard.isString(p.groupReference) &&
       TypeGuard.isString(p.id) &&
       TypeGuard.isString(p.name)
-    );
+    )
   }
 
   /**
    * Checks if the object is an instance of ProfileUpgradeData.
    */
   public static isProfileUpgradeData(obj: unknown): obj is ProfileUpgradeData {
-    const p = obj as ProfileUpgradeData;
-    return TypeGuard.isObject(p) && TypeGuard.isProfileRemovedData(p.replaced);
+    const p = obj as ProfileUpgradeData
+    return TypeGuard.isObject(p) && TypeGuard.isProfileRemovedData(p.replaced)
   }
 
   /**
    * Checks if the object is an instance of UpgradeData.
    */
   public static isUpgradeData(obj: unknown): obj is UpgradeData {
-    const u = obj as UpgradeData;
+    const u = obj as UpgradeData
     return (
       TypeGuard.isObject(u) &&
       TypeGuard.isCRTDLData(u.crtdl) &&
@@ -1020,6 +1020,6 @@ export class TypeGuard {
           TypeGuard.isString(a.value.message) &&
           TypeGuard.isString(a.value.code)
       )
-    );
+    )
   }
 }
