@@ -1,0 +1,24 @@
+<num-action-bar>
+  <num-button
+    class="margin-right-2"
+    [isDisabled]="profileEntryCount() === 0"
+    type="green"
+    (click)="loadSelectedProfiles()"
+    [matBadge]="profileEntryCount()"
+    matBadgePosition="above after"
+    matTooltip="{{ 'DATASELECTION.SEARCH.ACTION_BAR.ADD_TOOLTIP' | translate }}"
+  >
+    {{ 'DATASELECTION.SEARCH.ACTION_BAR.ADD' | translate }}
+  </num-button>
+  <num-button
+    [isDisabled]="dataSelectionProfileCount() === 0"
+    [icon]="'arrow-down'"
+    (click)="navigateToDataSelection()"
+    type="green"
+    [matBadge]="dataSelectionProfileCount()"
+    matBadgePosition="above after"
+    matTooltip="{{ 'DATASELECTION.SEARCH.ACTION_BAR.JUMP_TO_DATASELECTION_TOOLTIP' | translate }}"
+  >
+    {{ 'DATASELECTION.SEARCH.ACTION_BAR.JUMP_TO_DATASELECTION' | translate }}
+  </num-button>
+</num-action-bar>

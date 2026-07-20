@@ -1,0 +1,83 @@
+import { Component, computed, inject, input, signal, viewChild } from '@angular/core'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
+import { ListItemDetailsData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsData'
+import { ListItemDetailsGenericComponent } from 'src/app/shared/components/list-item-details-generic/list-item-details-generic.component'
+import { map } from 'rxjs'
+import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav'
+import { MatTooltip } from '@angular/material/tooltip'
+import { ProfileEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ProfileEntryAdapter'
+import { ProfileEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/ProfileEntryDetails.service'
+import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
+import { ProfileListItemDetailsAdapter } from 'src/app/shared/models/ListItemDetails/Adapter/ProfileListItemDetailsAdapter'
+import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
+import { SelectedProfileService } from 'src/app/service/DataSelection/Selection/SelectedProfileEntry.service'
+import { TableComponent } from 'src/app/shared/components/table/table.component'
+import { TableData } from 'src/app/shared/models/TableData/TableData'
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { TranslateModule } from '@ngx-translate/core'
+
+@Component({
+  selector: 'num-profile-search-results',
+  templateUrl: './profile-search-results.component.html',
+  styleUrls: ['./profile-search-results.component.scss'],
+  standalone: true,
+  imports: [
+    MatDrawerContainer,
+    MatDrawer,
+    MatDrawerContent,
+    InfiniteScrollDirective,
+    TableComponent,
+    ListItemDetailsGenericComponent,
+    FontAwesomeModule,
+    MatTooltip,
+    TranslateModule,
+  ],
+})
+export class ProfileSearchResultsComponent {
+  private profileSearchService = inject(ProfileSearchService)
+  private profileEntryDetailsService = inject(ProfileEntryDetailsService)
+  private selectedProfileService = inject(SelectedProfileService)
+
+  readonly searchText = input<string>('')
+  readonly drawer = viewChild<MatDrawer>('drawer')
+
+  private readonly searchResultEntries = toSignal(
+    this.profileSearchService.getSearchResults().pipe(map((r) => r?.getResults() ?? [])),
+    { initialValue: [] as ProfileListEntry[] }
+  )
+
+  readonly adaptedData = computed<TableData>(() =>
+    new ProfileEntryAdapter().adapt(this.searchResultEntries())
+  )
+
+  readonly adaptedDetailsData = signal<ListItemDetailsData | undefined>(undefined)
+
+  public onRowSelected(row: TableRowData): void {
+    const entry = row.originalEntry as ProfileListEntry
+    if (this.isProfileSelected(entry.getUrl())) {
+      this.selectedProfileService.removeFromSelection(entry)
+    } else {
+      this.selectedProfileService.addToSelection(entry)
+    }
+  }
+
+  private isProfileSelected(entryUrl: string): boolean {
+    return this.selectedProfileService
+      .getSelectedProfiles()()
+      .some((profile) => profile.getUrl() === entryUrl)
+  }
+
+  public loadEntry(row: TableRowData): void {
+    const entry = row.originalEntry as ProfileListEntry
+    this.profileEntryDetailsService.loadDetails(entry.getId()).subscribe((details) => {
+      this.adaptedDetailsData.set(new ProfileListItemDetailsAdapter().adapt(details))
+    })
+    this.drawer()?.open()
+  }
+
+  public loadMoreSearchResults(): void {
+    this.profileSearchService.loadNextPage(this.searchText()).subscribe()
+  }
+}
