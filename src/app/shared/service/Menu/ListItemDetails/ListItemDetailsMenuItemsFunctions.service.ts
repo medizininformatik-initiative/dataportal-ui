@@ -5,8 +5,8 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
 import { Injectable, inject } from '@angular/core'
 import { map, switchMap, take } from 'rxjs'
-import { SearchTermDetailsProviderService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetailsProvider.service'
-import { SearchTermDetailsService } from 'src/app/service/Search/SearchTemDetails/SearchTermDetails.service'
+import { CriteriaEntryDetailsProviderService } from 'src/app/service/Search/ListEntryDetails/CriteriaEntryDetailsProvider.service'
+import { CriteriaEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/CriteriaEntryDetails.service'
 import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
 import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCriterionService'
 
@@ -17,9 +17,9 @@ export class ListItemDetailsMenuItemsFunctionsService {
   private searchService = inject(CriteriaByIdSearchService)
   private criteriaSearchService = inject(CriteriaSearchService)
   private criterionService = inject(BuildCriterionService)
-  private searchTermDetailsService = inject(SearchTermDetailsService)
+  private criteriaEntryDetailsService = inject(CriteriaEntryDetailsService)
   private feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
-  private searchTermDetailsProviderService = inject(SearchTermDetailsProviderService)
+  private criteriaEntryDetailsProviderService = inject(CriteriaEntryDetailsProviderService)
   private snackbarMessageService = inject(SnackbarMessageService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
@@ -29,11 +29,11 @@ export class ListItemDetailsMenuItemsFunctionsService {
 
   public showCriteriaInResultList(id: string) {
     this.searchService.search(id).pipe(take(1)).subscribe()
-    this.searchTermDetailsService
-      .getDetailsForListItem(id)
+    this.criteriaEntryDetailsService
+      .loadDetails(id)
       .pipe(take(1))
       .subscribe((test) => {
-        this.searchTermDetailsProviderService.setSearchTermDetails(test)
+        this.criteriaEntryDetailsProviderService.setCriteriaEntryDetails(test)
       })
   }
 
@@ -61,15 +61,13 @@ export class ListItemDetailsMenuItemsFunctionsService {
         ),
         switchMap((resultList: CriteriaResultList) => {
           if (resultList.getResults().length > 0) {
-            return this.searchTermDetailsService.getDetailsForListItem(
-              resultList.getResults()[0].getId()
-            )
+            return this.criteriaEntryDetailsService.loadDetails(resultList.getResults()[0].getId())
           }
           return []
         })
       )
       .subscribe((test) => {
-        this.searchTermDetailsProviderService.setSearchTermDetails(test)
+        this.criteriaEntryDetailsProviderService.setCriteriaEntryDetails(test)
       })
   }
 }
