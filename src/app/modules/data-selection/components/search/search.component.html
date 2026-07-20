@@ -7,50 +7,15 @@
       ></span>
     </num-header-description>
   </div>
-  <!--
-    <div class="tree-container margin-bottom-3">
-      @for (tree of trees; track tree) {
-        <div>
-          <num-tree (selectedCheckbox)="addItemsToStage($event)" [treeData]="tree"></num-tree>
-        </div>
-      }
-    </div>
-    -->
   <div>
-    @if (adaptedDetailsData(); as data) {
-    <num-list-item-details-generic [listItemDetails]="data"></num-list-item-details-generic>
-    }
-  </div>
-  <div>
-    <num-table
-      (rowClicked)="getRelatives($event)"
-      (selectedRow)="onRowSelected($event)"
-      [tableData]="tableData"
-    ></num-table>
+    <num-profile-search-bar (searchTextChange)="onSearchTextChange($event)" />
   </div>
 
-  <num-action-bar>
-    <num-button
-      class="margin-right-2"
-      [isDisabled]="($dataSelectionProfileEntryArray | async)?.length === 0"
-      type="green"
-      (click)="getDataSelectionProfileData()"
-      [matBadge]="($dataSelectionProfileEntryArray | async)?.length"
-      matBadgePosition="above after"
-      matTooltip="{{ 'DATASELECTION.SEARCH.ACTION_BAR.ADD_TOOLTIP' | translate }}"
-    >
-      {{ 'DATASELECTION.SEARCH.ACTION_BAR.ADD' | translate }}
-    </num-button>
-    <num-button
-      [isDisabled]="($dataSelectionProfileArray | async)?.length === 0"
-      [icon]="'arrow-down'"
-      (click)="navigateToDataSelectionEditor()"
-      type="green"
-      [matBadge]="($dataSelectionProfileArray | async)?.length"
-      matBadgePosition="above after"
-      matTooltip="{{ 'DATASELECTION.SEARCH.ACTION_BAR.JUMP_TO_DATASELECTION_TOOLTIP' | translate }}"
-    >
-      {{ 'DATASELECTION.SEARCH.ACTION_BAR.JUMP_TO_DATASELECTION' | translate }}
-    </num-button>
-  </num-action-bar>
+  <div class="result-container">
+    <num-profile-search-results [searchText]="searchText()" />
+  </div>
+
+  <div>
+    <num-profile-search-action-bar></num-profile-search-action-bar>
+  </div>
 </div>
