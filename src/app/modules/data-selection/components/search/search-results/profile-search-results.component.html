@@ -1,0 +1,37 @@
+<div class="container">
+  <mat-drawer-container class="results-container">
+    <mat-drawer #drawer position="end" mode="side" class="details-drawer">
+      @if (adaptedDetailsData(); as data) {
+      <div class="details-wrapper">
+        <div class="button-align-right">
+          <button
+            [matTooltip]="'DATASELECTION.SEARCH.CLOSE_DETAILS' | translate"
+            (click)="drawer.close()"
+            class="num-button cancel"
+          >
+            {{ 'DATASELECTION.SEARCH.CLOSE_DETAILS' | translate }}
+            <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
+          </button>
+        </div>
+        <div class="details-container">
+          <num-list-item-details-generic [listItemDetails]="data"></num-list-item-details-generic>
+        </div>
+      </div>
+      }
+    </mat-drawer>
+    <mat-drawer-content
+      class="results-container"
+      infiniteScroll
+      [infiniteScrollDistance]="0.5"
+      [infiniteScrollThrottle]="50"
+      [scrollWindow]="false"
+      (scrolled)="loadMoreSearchResults()"
+    >
+      <num-table
+        (rowClicked)="loadEntry($event)"
+        (selectedRow)="onRowSelected($event)"
+        [tableData]="adaptedData()"
+      ></num-table>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
