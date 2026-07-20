@@ -1,21 +1,21 @@
 import { AbstractDetails } from '../AbstractDetails'
-import { CriteriaEntryRelatives } from './CriteriaEntryRelatives'
-import { CriteriaRelationsData } from '../../../Interface/CriteriaRelationsData'
+import { CriteriaEntryRelative } from './CriteriaEntryRelative'
+import { CriteriaEntryDetailsData } from '../../../Interface/ListEntryDetailsData/CriteriaEntryDetailsData'
 import { Display } from '../../../DataSelection/Profile/Display'
 
-export class CriteriaEntryDetails extends AbstractDetails<CriteriaEntryRelatives> {
+export class CriteriaEntryDetails extends AbstractDetails<CriteriaEntryRelative> {
   constructor(
-    children: CriteriaEntryRelatives[] = [],
-    parents: CriteriaEntryRelatives[] = [],
+    children: CriteriaEntryRelative[] = [],
+    parents: CriteriaEntryRelative[] = [],
     display: Display
   ) {
     super(display, parents, children)
   }
 
-  public static fromJson(json: CriteriaRelationsData): CriteriaEntryDetails {
+  public static fromJson(json: CriteriaEntryDetailsData): CriteriaEntryDetails {
     const display = Display.fromJson(json.display)
-    const parents = json.parents.map(CriteriaEntryRelatives.fromJson)
-    const children = json.children.map(CriteriaEntryRelatives.fromJson)
+    const parents = json.parents.map(CriteriaEntryRelative.fromJson)
+    const children = json.children.map(CriteriaEntryRelative.fromJson)
     return new CriteriaEntryDetails(children, parents, display)
   }
 }
