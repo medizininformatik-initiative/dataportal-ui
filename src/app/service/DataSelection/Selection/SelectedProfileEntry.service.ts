@@ -1,57 +1,42 @@
-import { Injectable } from '@angular/core'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { Injectable, Signal, signal } from '@angular/core'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SelectedProfileService {
-  private readonly selectedProfiles = new BehaviorSubject<ProfileListEntry[]>([])
-
+  private readonly _selectedProfiles = signal<ProfileListEntry[]>([])
   private readonly profileIds = new Set<string>()
 
   /**
-   * Gets the selected profiles as an observable.
+   * Returns the selected profiles as a readonly signal.
    */
-  public getSelectedProfiles(): Observable<ProfileListEntry[]> {
-    return this.selectedProfiles.asObservable()
+  public getSelectedProfiles(): Signal<ProfileListEntry[]> {
+    return this._selectedProfiles.asReadonly()
   }
 
   /**
    * Sets the selected profiles and updates the internal ID set.
-   *
-   * @param profiles The profiles to be set.
    */
   public setSelectedProfiles(profiles: ProfileListEntry[]): void {
-    this.selectedProfiles.next(profiles)
-
+    this._selectedProfiles.set(profiles)
     this.profileIds.clear()
-    profiles.forEach((profile) => {
-      this.profileIds.add(profile.getId())
-    })
+    profiles.forEach((profile) => this.profileIds.add(profile.getId()))
   }
 
   /**
    * Adds a profile to the current selection if it is not already included.
-   *
-   * @param profile The profile to be added to the selection.
    */
   public addToSelection(profile: ProfileListEntry): void {
     if (this.profileIds.has(profile.getId())) {
       return
     }
-
-    const currentSelection = this.selectedProfiles.getValue()
-
-    this.selectedProfiles.next([...currentSelection, profile])
-
+    this._selectedProfiles.update((current) => [...current, profile])
     this.profileIds.add(profile.getId())
   }
 
   /**
    * Gets the IDs of all selected profiles.
-   *
-   * @returns An array of profile IDs.
    */
   public getSelectedIds(): string[] {
     return Array.from(this.profileIds)
@@ -59,15 +44,9 @@ export class SelectedProfileService {
 
   /**
    * Removes a profile from the current selection.
-   *
-   * @param profile The profile to be removed from the selection.
    */
   public removeFromSelection(profile: ProfileListEntry): void {
-    const updatedSelection = this.selectedProfiles
-      .getValue()
-      .filter((selectedProfile) => selectedProfile.getId() !== profile.getId())
-
-    this.selectedProfiles.next(updatedSelection)
+    this._selectedProfiles.update((current) => current.filter((p) => p.getId() !== profile.getId()))
     this.profileIds.delete(profile.getId())
   }
 
@@ -75,7 +54,7 @@ export class SelectedProfileService {
    * Clears the current selection of all profiles.
    */
   public clearSelection(): void {
-    this.selectedProfiles.next([])
+    this._selectedProfiles.set([])
     this.profileIds.clear()
   }
 }
