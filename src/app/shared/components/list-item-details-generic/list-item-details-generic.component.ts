@@ -1,14 +1,13 @@
-import { Component, effect, input, output } from '@angular/core'
-import {
-  ListItemDetailsData,
-  ListItemDetailsRelative,
-} from '../list-item-details/ListItemDetailsData'
+import { Component, input, output } from '@angular/core'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { ListItemDetailsData } from '../../models/ListItemDetails/ListItemDetailsData'
 import { ListItemDetailsGenericSectionsComponent } from './list-item-details-generic-sections/list-item-details-generic-sections.component'
+import { ListItemDetailsRelativeData } from '../../models/ListItemDetails/ListItemDetailsRelative'
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs'
 import { MatTooltip } from '@angular/material/tooltip'
-import { JsonPipe, NgClass } from '@angular/common'
+import { NgClass } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
-import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { MenuItemInterface } from '../../models/Menu/MenuItemInterface'
 
 @Component({
   selector: 'num-list-item-details-generic',
@@ -24,22 +23,14 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
     ListItemDetailsGenericSectionsComponent,
     TranslateModule,
     DisplayTranslationPipe,
-    JsonPipe,
   ],
 })
 export class ListItemDetailsGenericComponent {
   readonly listItemDetails = input.required<ListItemDetailsData>()
-  readonly selectedRelative = output<ListItemDetailsRelative>()
-  constructor() {
-    effect(() => {
-      const details = this.listItemDetails()
+  readonly menuItems = input<MenuItemInterface[]>([])
+  readonly selectedRelative = output<ListItemDetailsRelativeData>()
 
-      console.log('details', details)
-      console.log('parents', details?.parents[0].display)
-      console.log('parents length', details?.parents?.length)
-    })
-  }
-  getSelectedRelative(item: ListItemDetailsRelative): void {
+  public getSelectedRelative(item: ListItemDetailsRelativeData): void {
     this.selectedRelative.emit(item)
   }
 }
