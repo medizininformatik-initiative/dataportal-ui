@@ -7,7 +7,19 @@ import { Routes } from '@angular/router'
 export const routes: Routes = [
   {
     path: 'home',
-    redirectTo: BasePaths.dataQuery,
+    redirectTo: BasePaths.home,
+  },
+  {
+    path: BasePaths.home,
+    data: {
+      navId: BasePaths.home,
+      roles: ['main'],
+      breadcrumb: 'BREADCRUMB.DASHBOARD',
+      animation: 'DashboardPage',
+      title: 'TAB_TITLE.DASHBOARD',
+    },
+    loadChildren: () =>
+      import('./modules/dashboard/dashboard-routing.module').then((m) => m.DASHBOARD_ROUTES),
   },
   {
     path: BasePaths.queryEditor,
@@ -94,6 +106,6 @@ export const routes: Routes = [
       title: 'TAB_TITLE.DATA_PROTECTION',
     },
   },
-  { path: '', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
-  { path: '**', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
+  { path: '', redirectTo: BasePaths.home, pathMatch: 'full' },
+  { path: '**', redirectTo: BasePaths.home, pathMatch: 'full' },
 ]

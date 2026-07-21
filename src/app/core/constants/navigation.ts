@@ -1,7 +1,12 @@
-import { BasePaths } from 'src/app/app-paths';
-import INavItem from '../../layout/models/nav-item.interface';
+import { BasePaths } from 'src/app/app-paths'
+import INavItem from '../../layout/models/nav-item.interface'
 
 export const mainNavItems: INavItem[] = [
+  {
+    routeTo: BasePaths.home,
+    icon: 'home',
+    translationKey: 'NAVIGATION.DASHBOARD',
+  },
   {
     routeTo: BasePaths.dataQuery,
     icon: 'clipboard-list',
@@ -22,4 +27,4 @@ export const mainNavItems: INavItem[] = [
     icon: 'folder-open',
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
-];
+]

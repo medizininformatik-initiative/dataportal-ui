@@ -62,7 +62,62 @@
       "LABEL": "Toggle side navigation"
     }
   },
+  "FAQ": {
+    "TITLE": "Frequently Asked Questions",
+    "SUBTITLE": "Find answers to common questions about using the portal.",
+    "COHORT_DEFINITION": {
+      "QUESTION": "What is a Cohort Definition?",
+      "ANSWER": "A cohort definition specifies the group of patients or data objects you want to analyze. Define inclusion and exclusion criteria to precisely describe your target population. This step is required to proceed."
+    },
+    "DATA_SELECTION": {
+      "QUESTION": "What is Data Selection?",
+      "ANSWER": "The data selection defines which data fields or variables are included for the defined cohort. Select the relevant data points for your analysis. This step is required to proceed."
+    },
+    "APPLIED_FILTER": {
+      "QUESTION": "What are Applied Filters?",
+      "ANSWER": "Filters restrict the data of a profile to specific values, e.g. only diagnoses after a certain date. Optional filters are only applied if corresponding data is available."
+    },
+    "APPLIED_REFERENCES": {
+      "QUESTION": "What are Applied References?",
+      "ANSWER": "Referenced profiles are linked profiles that are automatically included when the current profile is part of the request. They cannot be deselected individually."
+    },
+    "ONLY_IF_REFERENCED": {
+      "QUESTION": "What does \"Only if referenced\" mean?",
+      "ANSWER": "When enabled, this FHIR profile is only included in the data request if it is explicitly referenced by another selected profile. This is useful for linked resources — for example, including an Observation only when it is referenced by a selected Condition — avoiding the retrieval of unrelated data."
+    },
+    "SELECTED_FIELDS": {
+      "QUESTION": "What are Selected Fields?",
+      "ANSWER": "Fields are the specific data points of a profile, e.g. diagnosis code or date. Pre-selected fields have been predefined based on typical research requirements. You can add further fields or remove ones you don't need."
+    }
+  },
+  "DASHBOARD": {
+    "HEADER": "Dashboard",
+    "INFO": {
+      "TEXT": "Welcome to the feasibility portal. Use the cards below to navigate to the different areas."
+    },
+    "NEWQUERY": {
+      "HEADER": "Submit Feasibility Query",
+      "BUTTON": "Go to Editor"
+    },
+    "PROPOSALPORTAL": {
+      "HEADER": "Submit Research Proposal",
+      "BUTTON": "Go to Form"
+    },
+    "SAVED_QUERIES": {
+      "HEADER": "My Queries",
+      "BUTTON": "Go to Overview"
+    },
+    "DATASELECTION": {
+      "HEADER": "Create Data Selection",
+      "BUTTON": "Go to Editor"
+    },
+    "UPLOAD_DATADEFINITION": {
+      "HEADER": "Upload of existing Data Definition",
+      "BUTTON": "Open File Selection"
+    }
+  },
   "BREADCRUMB": {
+    "DASHBOARD": "Dashboard",
     "DATA_PROTECTION": "Data Protection",
     "DATA_QUERY": "Data Definition",
     "DATA_QUERY_COHORT_DEFINITION": "Cohort Definition",
@@ -620,6 +675,7 @@
     }
   },
   "TAB_TITLE": {
+    "DASHBOARD": "Dashboard",
     "DATA_PROTECTION": "Data Protection",
     "DATA_QUERY": {
       "COHORT_DEFINITION": "Data Definition - Cohort Selection",
