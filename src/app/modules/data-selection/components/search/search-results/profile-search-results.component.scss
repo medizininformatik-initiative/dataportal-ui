@@ -22,7 +22,11 @@
   overflow: hidden;
   height: 100%;
 }
-
+.details-drawer.mat-drawer-opened {
+  width: 40%;
+  padding-left: 24px;
+  border-left-width: 1px !important;
+}
 .details-drawer {
   border-left: 1px solid #e0e0e0;
 }
