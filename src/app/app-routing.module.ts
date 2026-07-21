@@ -7,9 +7,9 @@ import { Routes } from '@angular/router'
 export const routes: Routes = [
   {
     path: 'home',
-    redirectTo: BasePaths.home,
+    redirectTo: BasePaths.dataQuery,
   },
-  {
+  /* {
     path: BasePaths.home,
     data: {
       navId: BasePaths.home,
@@ -20,7 +20,7 @@ export const routes: Routes = [
     },
     loadChildren: () =>
       import('./modules/dashboard/dashboard-routing.module').then((m) => m.DASHBOARD_ROUTES),
-  },
+  },*/
   {
     path: BasePaths.queryEditor,
     data: {
@@ -106,6 +106,6 @@ export const routes: Routes = [
       title: 'TAB_TITLE.DATA_PROTECTION',
     },
   },
-  { path: '', redirectTo: BasePaths.home, pathMatch: 'full' },
-  { path: '**', redirectTo: BasePaths.home, pathMatch: 'full' },
+  { path: '', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
+  { path: '**', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
 ]
