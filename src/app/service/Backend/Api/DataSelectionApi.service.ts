@@ -26,11 +26,6 @@ export class DataSelectionApiService {
     return this.chunkedRequestService.getChunkedRequest(ids, path)
   }
 
-  public getDataSelectionProfileTree() {
-    const parsedUrl = this.backendService.createUrl(DataSelectionPaths.PROFILE_TREE_ENDPOINT)
-    return this.http.get<any>(parsedUrl)
-  }
-
   /**
    * Returns an observable containing the search results for data selection profiles.
    * @returns {Observable<ResultListData<T>>}

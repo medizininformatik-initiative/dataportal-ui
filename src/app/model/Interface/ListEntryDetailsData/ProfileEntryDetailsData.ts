@@ -4,5 +4,7 @@ import { ProfileRelativeData } from './ProfileRelativeData'
 
 export interface ProfileEntryDetailsData extends ListEntryDetailsData<ProfileRelativeData> {
   id: string
-  fields: DisplayData[]
+  fields: {
+    display: DisplayData
+  }[]
 }

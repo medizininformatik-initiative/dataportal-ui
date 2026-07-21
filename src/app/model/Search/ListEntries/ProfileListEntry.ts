@@ -56,7 +56,7 @@ export class ProfileListEntry extends AbstractListEntry {
       json.id,
       Display.fromJson(json.display),
       json.availability,
-      Display.fromJson(json.module),
+      Display.fromJson(json.module.display),
       json.selectable,
       json.url
     )
