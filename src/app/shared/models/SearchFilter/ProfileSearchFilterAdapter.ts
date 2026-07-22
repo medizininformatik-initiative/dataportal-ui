@@ -19,7 +19,7 @@ export class ProfileSearchFilterAdapter {
   ): SearchFilterValueData {
     const label = filterValue.getLabel()
     const count = filterValue.getCount()
-    const display = label
+    const display = label.toUpperCase()
 
     return {
       count,

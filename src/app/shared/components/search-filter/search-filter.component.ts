@@ -8,6 +8,7 @@ import { MatSelect, MatSelectTrigger } from '@angular/material/select'
 import { MatTooltip } from '@angular/material/tooltip'
 import { SearchFilterData } from '../../models/SearchFilter/SearchFilterData'
 import { TranslateModule } from '@ngx-translate/core'
+import { UpperCasePipe } from '@angular/common'
 
 @Component({
   selector: 'num-search-filter',
@@ -25,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatOptgroup,
     TranslateModule,
     DisplayTranslationPipe,
+    UpperCasePipe,
   ],
 })
 export class SearchFilterComponent {
