@@ -4,7 +4,9 @@ import { ListEntryData } from './ListEntryData'
 export interface ProfileListEntryData extends ListEntryData {
   display: DisplayData
   availability: number
-  module: DisplayData
+  module: {
+    display: DisplayData
+  }
   url: string
   categories: any[]
   selectable: boolean
