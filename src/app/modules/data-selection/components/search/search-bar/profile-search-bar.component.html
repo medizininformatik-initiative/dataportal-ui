@@ -1,7 +1,18 @@
-<num-searchbar
-  class="searchbar"
-  icon="search"
-  [searchText]="searchText()"
-  [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
-  (searchTextChange)="onSearchTextChange($event)"
-></num-searchbar>
+<div class="search-bar-container">
+  <num-searchbar
+    class="searchbar"
+    icon="search"
+    [searchText]="searchText()"
+    [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
+    (searchTextChange)="onSearchTextChange($event)"
+  ></num-searchbar>
+  <div class="filter-container">
+    <num-search-filter
+      [filter]="searchFilter()"
+      (filterChange)="onFilterChange($event)"
+    ></num-search-filter>
+    <num-button [isDisabled]="resetFilterDisabled()" type="blue" (click)="resetFilter()">
+      {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
+    </num-button>
+  </div>
+</div>
