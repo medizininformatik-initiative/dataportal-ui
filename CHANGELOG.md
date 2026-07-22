@@ -13,6 +13,7 @@
 ### Changed
 * Improved the usability and clarity of the filter dropdowns on the Criteria Search page. [#575](https://github.com/medizininformatik-initiative/feasibility-gui/issues/575)
 * Redesigned the profile reference tiles and improved the presentation of unlinked reference warnings. [#550](https://github.com/medizininformatik-initiative/feasibility-gui/issues/550)
+* Redesign Recommended Field Linking for Features. [#588](https://github.com/medizininformatik-initiative/feasibility-gui/issues/588)
 
 
 ## v7.0.0 (2026-06-02)
