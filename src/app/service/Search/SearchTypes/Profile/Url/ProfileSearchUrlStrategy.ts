@@ -3,18 +3,18 @@ import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder'
 import { SearchUrlStrategy } from '../../../Interface/InterfaceSearchUrlStrategy'
 
 export class ProfileSearchUrlStrategy implements SearchUrlStrategy {
-  private readonly path: string = DataSelectionPaths.PROFILE_SEARCH_ENDPOINT
-  constructor(private searchText: string) {}
+  private searchText: string
+  private moduleFilter: string
 
-  /**
-   * Get the search URL for the profile search.
-   * @param {number} page
-   * @param {number} pageSize
-   * @returns {string}
-   */
+  constructor(searchText: string, moduleFilter: string = '') {
+    this.searchText = searchText
+    this.moduleFilter = moduleFilter
+  }
+
   public getSearchUrl(page: number, pageSize?: number): string {
-    return new SearchUrlBuilder(this.path)
+    return new SearchUrlBuilder(DataSelectionPaths.PROFILE_SEARCH_ENDPOINT)
       .withSearchTerm(this.searchText)
+      .withModule(this.moduleFilter)
       .withPage(page)
       .withPageSize(pageSize)
       .buildUrl()

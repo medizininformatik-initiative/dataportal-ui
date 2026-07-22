@@ -1,17 +1,27 @@
 import { AbstractArrayEntityProvider } from '../../Provider/Abstract/AbstractArrayEntityProvider'
+import { BehaviorSubject, Observable } from 'rxjs'
+import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue'
 import { Injectable } from '@angular/core'
-import { ProfileSearchFilter } from 'src/app/model/Search/Filter/ProfileSearchFilter'
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileSearchFilterProviderService extends AbstractArrayEntityProvider<ProfileSearchFilter> {
+export class ProfileSearchFilterProviderService extends AbstractArrayEntityProvider<CriteriaSearchFilterValue> {
+  private readonly selectedModulesSubject = new BehaviorSubject<string[]>([])
+
   constructor() {
     super()
   }
 
-  public selectId(entity: ProfileSearchFilter) {
-    console.log(entity)
-    return entity.getName()
+  public selectId(entity: CriteriaSearchFilterValue): string {
+    return entity.getlabel()
+  }
+
+  public setSelectedModules(modules: string[]): void {
+    this.selectedModulesSubject.next(modules)
+  }
+
+  public getSelectedModules(): Observable<string[]> {
+    return this.selectedModulesSubject.asObservable()
   }
 }

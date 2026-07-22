@@ -18,13 +18,12 @@ export class ProfileSearchFilterResolverService {
    * Resolves the criteria search filters by fetching them from the backend.
    * @returns An observable containing an array of criteria search filters.
    */
-  public resolve(): Observable<Array<ProfileSearchFilter>> {
+  public resolve(): Observable<ProfileSearchFilter> {
     return this.profileSearchFilterService.fetchFilter().pipe(
       tap((bla) => console.log(bla)),
-      map((filters: any[]) => {
+      tap((filters: ProfileSearchFilter) => {
         console.log(filters)
-        this.filterProvider.addMany(filters)
-        return filters
+        this.filterProvider.addMany(filters.getValues())
       })
     )
   }
