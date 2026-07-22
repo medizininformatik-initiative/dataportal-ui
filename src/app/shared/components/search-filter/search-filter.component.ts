@@ -6,7 +6,7 @@ import { MatFormField } from '@angular/material/form-field'
 import { MatOptgroup, MatOption } from '@angular/material/core'
 import { MatSelect, MatSelectTrigger } from '@angular/material/select'
 import { MatTooltip } from '@angular/material/tooltip'
-import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter'
+import { SearchFilterData } from '../../models/SearchFilter/SearchFilterData'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -32,7 +32,7 @@ export class SearchFilterComponent {
     isOpen: false,
     targetFilter: '',
   }
-  readonly filter = model<SearchFilter | undefined>(undefined)
+  readonly filter = model<SearchFilterData | undefined>(undefined)
 
   readonly multiSelect = input(true)
 

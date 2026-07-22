@@ -7,10 +7,10 @@ import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchF
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
 import { InfoTooltipDirective } from '../../../../../shared/directives/info-tooltip.directive'
 import { map } from 'rxjs'
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
 import { SearchFilterComponent } from '../../../../../shared/components/search-filter/search-filter.component'
+import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 import { SectionNameComponent } from 'src/app/shared/components/section-name/section-name.component'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -32,7 +32,7 @@ export class SearchFilterBarComponent {
       map((filters: CriteriaSearchFilter[]) =>
         filters.map((f) => CriteriaSearchFilterAdapter.convertToFilterValues(f))
       ),
-      map((filters: SearchFilter[]) => {
+      map((filters: SearchFilterData[]) => {
         const order: Record<string, number> = {
           [ElasticSearchFilterTypes.KDS_MODULE]: 0,
           [ElasticSearchFilterTypes.CONTEXT]: 1,
@@ -44,7 +44,7 @@ export class SearchFilterBarComponent {
         )
       })
     ),
-    { initialValue: [] as SearchFilter[] }
+    { initialValue: [] as SearchFilterData[] }
   )
 
   readonly canResetFilters = toSignal(this.filterProvider.filtersNotSet(), {
@@ -55,7 +55,7 @@ export class SearchFilterBarComponent {
     initialValue: '',
   })
 
-  public onFilterChange(newFilter: SearchFilter): void {
+  public onFilterChange(newFilter: SearchFilterData): void {
     const filterType = newFilter.filterType.toLocaleLowerCase()
     this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText(), filterType)
     this.filterProvider.updateFilterSelectedValues(
@@ -83,7 +83,7 @@ export class SearchFilterBarComponent {
     this.criteriaFilterFetchService.fetchAndUpdateFilters(this.searchText(), event.targetFilter)
   }
 
-  trackByFilterType(_index: number, filter: SearchFilter): string {
+  trackByFilterType(_index: number, filter: SearchFilterData): string {
     return filter.filterType
   }
 }

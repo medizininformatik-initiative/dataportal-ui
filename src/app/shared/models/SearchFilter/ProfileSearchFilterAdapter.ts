@@ -1,11 +1,11 @@
-import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import { SearchFilter, SearchFilterValues } from './InterfaceSearchFilter'
+import { ProfileSearchFilterValue } from 'src/app/model/Search/Filter/ProfileSearchFilterValue'
+import { SearchFilterData, SearchFilterValueData } from './SearchFilterData'
 
 export class ProfileSearchFilterAdapter {
-  public static convertToFilterValues(filter: CriteriaSearchFilterValue[]): SearchFilter {
-    const searchFilterValues: SearchFilterValues[] = filter.map(
-      (filterValue: CriteriaSearchFilterValue) => this.createSearchFilterValue(filterValue)
+  public static convertToFilterValues(filter: ProfileSearchFilterValue[]): SearchFilterData {
+    const searchFilterValues: SearchFilterValueData[] = filter.map(
+      (filterValue: ProfileSearchFilterValue) => this.createSearchFilterValue(filterValue)
     )
     return {
       filterType: ElasticSearchFilterTypes.MODULE,
@@ -15,9 +15,9 @@ export class ProfileSearchFilterAdapter {
   }
 
   private static createSearchFilterValue(
-    filterValue: CriteriaSearchFilterValue
-  ): SearchFilterValues {
-    const label = filterValue.getlabel()
+    filterValue: ProfileSearchFilterValue
+  ): SearchFilterValueData {
+    const label = filterValue.getLabel()
     const count = filterValue.getCount()
     const display = label
 

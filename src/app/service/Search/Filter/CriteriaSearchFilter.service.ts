@@ -1,12 +1,12 @@
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
-import { CriteriaSearchFilterData } from 'src/app/model/Interface/Search/CriteriaSearchFilterData'
 import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import { Injectable, inject } from '@angular/core'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
-import { SearchFilterData } from 'src/app/model/Interface/Search/SearchFilterData'
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service'
+import { SearchFilterData } from 'src/app/model/Interface/Search/Filter/SearchFilterData'
+import { SearchFilterValueData } from 'src/app/model/Interface/Search/Filter/SearchFilterValueData'
 
 @Injectable({
   providedIn: 'root',
@@ -27,10 +27,10 @@ export class CriteriaSearchFilterService {
     return this.terminologyApiService
       .getSearchFilter(url)
       .pipe(
-        map((response: CriteriaSearchFilterData[]) =>
+        map((response: SearchFilterData[]) =>
           response
-            .filter((filter: CriteriaSearchFilterData) => filter.values && filter.values.length > 0)
-            .map((filter: CriteriaSearchFilterData) => this.createSearchTermFilter(filter))
+            .filter((filter: SearchFilterData) => filter.values && filter.values.length > 0)
+            .map((filter: SearchFilterData) => this.createSearchTermFilter(filter))
         )
       )
   }
@@ -40,7 +40,7 @@ export class CriteriaSearchFilterService {
    * @param filter
    * @returns
    */
-  private createSearchTermFilter(filter: CriteriaSearchFilterData): CriteriaSearchFilter {
+  private createSearchTermFilter(filter: SearchFilterData): CriteriaSearchFilter {
     const searchTermValues = this.buildSearchTermValues(filter.values)
     const filterType = this.setFilterType(filter.name)
     return new CriteriaSearchFilter(filterType, searchTermValues)
@@ -51,9 +51,9 @@ export class CriteriaSearchFilterService {
    * @param values
    * @returns
    */
-  private buildSearchTermValues(values: SearchFilterData[]): CriteriaSearchFilterValue[] {
+  private buildSearchTermValues(values: SearchFilterValueData[]): CriteriaSearchFilterValue[] {
     return values.map(
-      (value: SearchFilterData) => new CriteriaSearchFilterValue(value.count, value.label)
+      (value: SearchFilterValueData) => new CriteriaSearchFilterValue(value.count, value.label)
     )
   }
 

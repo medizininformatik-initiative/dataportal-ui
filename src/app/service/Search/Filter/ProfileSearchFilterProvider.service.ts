@@ -14,7 +14,7 @@ export class ProfileSearchFilterProviderService extends AbstractArrayEntityProvi
   }
 
   public selectId(entity: CriteriaSearchFilterValue): string {
-    return entity.getlabel()
+    return entity.getLabel()
   }
 
   public setSelectedModules(modules: string[]): void {
