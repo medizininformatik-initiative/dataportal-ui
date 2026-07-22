@@ -14,7 +14,7 @@
       (selectionChange)="onSelectionChange($event.value)"
       (openedChange)="onOpenedChange($event)"
       panelClass="example-panel"
-      [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter()?.filterType | translate | uppercase"
+      [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter()?.filterType | uppercase | translate"
       [value]="selectedValues()"
       [multiple]="multiSelect()"
     >
