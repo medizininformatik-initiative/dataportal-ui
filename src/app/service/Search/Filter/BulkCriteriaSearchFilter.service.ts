@@ -5,7 +5,7 @@ import { FilterProvider } from './SearchFilterProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
+import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 
 /**
  * Service for managing and filtering bulk criteria search filters.
@@ -32,7 +32,7 @@ export class BulkCriteriaSearchFilterService {
    * and converts to UI-compatible format.
    * @returns Observable that emits an array of SearchFilter objects
    */
-  public getFilter(): Observable<SearchFilter[]> {
+  public getFilter(): Observable<SearchFilterData[]> {
     return this.searchFilterProvider.getCriteriaSearchFilters().pipe(
       map((filters: CriteriaSearchFilter[]) => this.keepContextAndTerminologyFilters(filters)),
       map((filters: CriteriaSearchFilter[]) => this.removePatientFromFilterValues(filters)),
@@ -62,7 +62,7 @@ export class BulkCriteriaSearchFilterService {
    */
   private removePatientFromFilterValues(filters: CriteriaSearchFilter[]): CriteriaSearchFilter[] {
     return filters.map((filter) => {
-      const updatedValues = filter.getValues().filter((value) => value.getlabel() !== 'Patient')
+      const updatedValues = filter.getValues().filter((value) => value.getLabel() !== 'Patient')
       filter.setValues(updatedValues)
       return filter
     })
@@ -73,7 +73,7 @@ export class BulkCriteriaSearchFilterService {
    * @param filters - Array of CriteriaSearchFilter objects
    * @returns Array of SearchFilter objects for UI consumption
    */
-  private convertFiltersToUiModels(filters: CriteriaSearchFilter[]): SearchFilter[] {
+  private convertFiltersToUiModels(filters: CriteriaSearchFilter[]): SearchFilterData[] {
     return filters.map((filter) => CriteriaSearchFilterAdapter.convertToFilterValues(filter))
   }
 }

@@ -6,7 +6,7 @@ import { ProfileSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/P
 import { ProfileSearchFilterProviderService } from 'src/app/service/Search/Filter/ProfileSearchFilterProvider.service'
 import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
 import { SearchbarComponent } from 'src/app/shared/components/search/searchbar.component'
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
+import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 import { SearchFilterComponent } from 'src/app/shared/components/shared-components.module'
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
@@ -23,7 +23,7 @@ export class ProfileSearchBarComponent {
   private profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
   private readonly destroyRef = inject(DestroyRef)
 
-  readonly searchFilter = signal<SearchFilter | undefined>(undefined)
+  readonly searchFilter = signal<SearchFilterData | undefined>(undefined)
   readonly searchText = signal('')
   readonly searchTextChange = output<string>()
 
@@ -47,7 +47,7 @@ export class ProfileSearchBarComponent {
       })
   }
 
-  public onFilterChange(newFilter: SearchFilter | undefined): void {
+  public onFilterChange(newFilter: SearchFilterData | undefined): void {
     if (!newFilter) return
     this.searchFilter.update((current) =>
       current ? { ...current, selectedValues: newFilter.selectedValues } : newFilter
