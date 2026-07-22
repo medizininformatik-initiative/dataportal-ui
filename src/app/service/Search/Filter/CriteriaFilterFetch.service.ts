@@ -2,7 +2,7 @@ import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearch
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import { FilterProvider } from './SearchFilterProvider.service'
 import { Injectable, inject } from '@angular/core'
-import { SearchFilterService } from './SearchFilter.service'
+import { CriteriaSearchFilterService } from './CriteriaSearchFilter.service'
 import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder'
 import { TerminologyPaths } from '../../Backend/Paths/TerminologyPaths'
 
@@ -10,7 +10,7 @@ import { TerminologyPaths } from '../../Backend/Paths/TerminologyPaths'
   providedIn: 'root',
 })
 export class CriteriaFilterFetchService {
-  private searchFilterService = inject(SearchFilterService)
+  private searchFilterService = inject(CriteriaSearchFilterService)
   private filterProvider = inject(FilterProvider)
 
   /** Inserted by Angular inject() migration for backwards compatibility */

@@ -32,7 +32,8 @@ export class TerminologyApiService {
    */
   public getSearchFilter(url: string): Observable<Array<CriteriaSearchFilterData>> {
     const parsedUrl = this.backendService.createUrl(url)
-    return this.http.get<Array<CriteriaSearchFilterData>>(this.backendService.createUrl(url))
+    console.log(parsedUrl)
+    return this.http.get<Array<CriteriaSearchFilterData>>(parsedUrl)
   }
 
   /**

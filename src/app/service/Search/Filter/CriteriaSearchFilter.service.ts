@@ -2,7 +2,6 @@ import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearch
 import { CriteriaSearchFilterData } from 'src/app/model/Interface/Search/CriteriaSearchFilterData'
 import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { Injectable, inject } from '@angular/core'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
@@ -12,8 +11,8 @@ import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service'
 @Injectable({
   providedIn: 'root',
 })
-export class SearchFilterService {
-  private backendService = inject(TerminologyApiService)
+export class CriteriaSearchFilterService {
+  private terminologyApiService = inject(TerminologyApiService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -25,7 +24,7 @@ export class SearchFilterService {
    * @returns An Observable emitting the current list of filters.
    */
   public fetchFilters(url: string): Observable<Array<CriteriaSearchFilter>> {
-    return this.backendService
+    return this.terminologyApiService
       .getSearchFilter(url)
       .pipe(
         map((response: CriteriaSearchFilterData[]) =>

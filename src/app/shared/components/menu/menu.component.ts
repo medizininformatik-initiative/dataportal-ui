@@ -22,7 +22,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class MenuComponent implements OnInit {
-  readonly id = input<string>(undefined)
+  readonly id = input<string>()
 
   readonly menuItems = input<MenuItemInterface[]>([])
 
