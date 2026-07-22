@@ -5,10 +5,10 @@ import { Component, computed, effect, inject, output, signal, untracked } from '
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
 import { FormsModule } from '@angular/forms'
 import { MatTooltip } from '@angular/material/tooltip'
-import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 import { SearchFilterComponent } from '../../../../../../shared/components/search-filter/search-filter.component'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 
 @Component({
   selector: 'num-bulk-search-input',
