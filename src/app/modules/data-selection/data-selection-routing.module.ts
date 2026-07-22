@@ -2,6 +2,7 @@ import { Routes } from '@angular/router'
 
 import { PathSegments } from 'src/app/app-paths'
 import { DataSelectionProfileResolverService } from 'src/app/service/Resolver/DataSelectionProfileResolver.servcie'
+import { ProfileSearchFilterResolverService } from 'src/app/service/Resolver/ProfileSearchFilterResolver.service'
 
 export const DATA_SELECTION_ROUTES: Routes = [
   {
@@ -16,6 +17,7 @@ export const DATA_SELECTION_ROUTES: Routes = [
       import('./components/search/search.component').then((m) => m.SearchDataSelectionComponent),
     resolve: {
       preLoadDataSelectionData: DataSelectionProfileResolverService,
+      preLoadProfileSearchFilter: ProfileSearchFilterResolverService,
     },
     data: {
       animation: 'Data_Selection_Search',
