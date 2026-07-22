@@ -6,7 +6,6 @@
 .search-bar-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
   width: 100%;
 }
 
@@ -16,6 +15,28 @@
 
 .filter-container {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 8px;
+}
+
+.filter-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  &__label {
+    font-family: var(--font-body);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  &__info {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: var(--font-size-md);
+    line-height: 1;
+  }
 }

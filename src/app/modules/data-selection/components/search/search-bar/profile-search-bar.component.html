@@ -6,6 +6,16 @@
     [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
     (searchTextChange)="onSearchTextChange($event)"
   ></num-searchbar>
+  <div class="filter-heading">
+    <num-section-name>{{ 'FEASIBILITY.SEARCH.FILTER_HEADING' | translate }}</num-section-name>
+    <span
+      class="filter-heading__info"
+      numInfoTooltip
+      [infoTooltipTitle]="'FEASIBILITY.SEARCH.TOOLTIP_TITLE' | translate"
+      [infoTooltipText]="'FEASIBILITY.SEARCH.INFO_TOOLTIP' | translate"
+      [infoTooltipPosition]="'bottom'"
+    ></span>
+  </div>
   <div class="filter-container">
     <num-search-filter
       [filter]="searchFilter()"

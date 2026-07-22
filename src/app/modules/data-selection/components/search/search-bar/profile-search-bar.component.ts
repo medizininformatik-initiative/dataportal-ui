@@ -7,7 +7,11 @@ import { ProfileSearchFilterProviderService } from 'src/app/service/Search/Filte
 import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
 import { SearchbarComponent } from 'src/app/shared/components/search/searchbar.component'
 import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
-import { SearchFilterComponent } from 'src/app/shared/components/shared-components.module'
+import {
+  InfoTooltipDirective,
+  SearchFilterComponent,
+  SectionNameComponent,
+} from 'src/app/shared/components/shared-components.module'
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -16,7 +20,14 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './profile-search-bar.component.html',
   styleUrls: ['./profile-search-bar.component.scss'],
   standalone: true,
-  imports: [SearchbarComponent, SearchFilterComponent, ButtonComponent, TranslateModule],
+  imports: [
+    SearchbarComponent,
+    SearchFilterComponent,
+    ButtonComponent,
+    TranslateModule,
+    SectionNameComponent,
+    InfoTooltipDirective,
+  ],
 })
 export class ProfileSearchBarComponent {
   private profileSearchService = inject(ProfileSearchService)
