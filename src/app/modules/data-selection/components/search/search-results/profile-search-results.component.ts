@@ -1,5 +1,6 @@
 import { Component, computed, inject, input, signal, viewChild } from '@angular/core'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
 import { ListItemDetailsData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsData'
 import { ListItemDetailsGenericComponent } from 'src/app/shared/components/list-item-details-generic/list-item-details-generic.component'
@@ -48,9 +49,23 @@ export class ProfileSearchResultsComponent {
     { initialValue: [] as ProfileListEntry[] }
   )
 
-  readonly adaptedData = computed<TableData>(() =>
-    new ProfileEntryAdapter().adapt(this.searchResultEntries())
-  )
+  private readonly selectedProfiles = this.selectedProfileService.getSelectedProfiles()
+
+  readonly adaptedData = computed<TableData>(() => {
+    const data = new ProfileEntryAdapter().adapt(this.searchResultEntries())
+    const selected = this.selectedProfiles()
+    data?.body.rows.forEach((row) => {
+      const checkboxCell = row.cells.find(
+        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+      )
+      if (checkboxCell) {
+        checkboxCell.isSelected = selected.some(
+          (p) => p.getUrl() === (row.originalEntry as ProfileListEntry).getUrl()
+        )
+      }
+    })
+    return data
+  })
 
   readonly adaptedDetailsData = signal<ListItemDetailsData | undefined>(undefined)
 

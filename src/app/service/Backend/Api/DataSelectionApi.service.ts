@@ -26,11 +26,6 @@ export class DataSelectionApiService {
     return this.chunkedRequestService.getChunkedRequest(ids, path)
   }
 
-  public getDataSelectionProfileTree() {
-    const parsedUrl = this.backendService.createUrl(DataSelectionPaths.PROFILE_TREE_ENDPOINT)
-    return this.http.get<any>(parsedUrl)
-  }
-
   /**
    * Returns an observable containing the search results for data selection profiles.
    * @returns {Observable<ResultListData<T>>}
@@ -43,9 +38,17 @@ export class DataSelectionApiService {
   }
 
   public getDataSelectionProfileEntryDetails(id: string): Observable<ProfileEntryDetailsData> {
+    console.log('bla')
+    this.getProfileSearchFilter().subscribe()
+
     const parsedUrl =
       this.backendService.createUrl(DataSelectionPaths.PROFILE_ENTRY_DETAILS_ENDPOINT) +
       `/${id}/${DataSelectionPaths.PROFILE_ENTRY_DETAILS_LIST_ENDPOINT}`
     return this.http.get<ProfileEntryDetailsData>(parsedUrl)
+  }
+
+  public getProfileSearchFilter() {
+    const url = this.backendService.createUrl(DataSelectionPaths.PROFILE_SEARCH_FILTER)
+    return this.http.get<any>(url)
   }
 }
