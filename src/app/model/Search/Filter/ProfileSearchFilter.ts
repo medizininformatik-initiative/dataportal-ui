@@ -1,27 +1,17 @@
-import { filter } from 'lodash'
-import { CriteriaSearchFilterValue } from './CriteriaSearchFilterValue'
+import { AbstractSearchFilter } from './AbstractSearchFilter'
+import { ProfileSearchFilterValue } from './ProfileSearchFilterValue'
+import { SearchFilterData } from '../../Interface/Search/Filter/SearchFilterData'
+import { SearchFilterValueData } from '../../Interface/Search/Filter/SearchFilterValueData'
 
-export class ProfileSearchFilter {
-  private readonly name: string
-  private readonly values: CriteriaSearchFilterValue[]
-
-  constructor(name: string, values: CriteriaSearchFilterValue[]) {
-    this.name = name
-    this.values = values
+export class ProfileSearchFilter extends AbstractSearchFilter<ProfileSearchFilterValue> {
+  constructor(name: string, values: Array<ProfileSearchFilterValue>) {
+    super(name, values)
   }
 
-  public getName(): string {
-    return this.name
-  }
-
-  public getValues(): CriteriaSearchFilterValue[] {
-    return this.values
-  }
-
-  public static fromJson(json: any): ProfileSearchFilter {
+  public static fromJson(json: SearchFilterData): ProfileSearchFilter {
     return new ProfileSearchFilter(
       json.name,
-      json.values.map((value) => new CriteriaSearchFilterValue(value.count, value.label))
+      json.values.map((value: SearchFilterValueData) => ProfileSearchFilterValue.fromJson(value))
     )
   }
 }

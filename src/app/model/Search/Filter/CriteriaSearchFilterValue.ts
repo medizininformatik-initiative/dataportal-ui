@@ -1,25 +1,12 @@
-export class CriteriaSearchFilterValue {
-  private count: number;
-  private label: string;
+import { AbstractSearchFilterValue } from './AbstractSearchFilterValue'
+import { SearchFilterValueData } from '../../Interface/Search/Filter/SearchFilterValueData'
 
+export class CriteriaSearchFilterValue extends AbstractSearchFilterValue {
   constructor(count: number, label: string) {
-    this.count = count;
-    this.label = label;
+    super(count, label)
   }
 
-  public getlabel(): string {
-    return this.label;
-  }
-
-  public setLabel(label: string) {
-    this.label = label;
-  }
-
-  public setCount(count: number): void {
-    this.count = count;
-  }
-
-  public getCount(): number {
-    return this.count;
+  public static fromJson(json: SearchFilterValueData): CriteriaSearchFilterValue {
+    return new CriteriaSearchFilterValue(json.count, json.label)
   }
 }
