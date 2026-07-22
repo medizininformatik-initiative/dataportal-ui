@@ -7,6 +7,8 @@ import { ProfileResultMapperStrategy } from '../Mapper/ProfileResultMapperStrate
 import { ProfileSearchUrlStrategy } from '../Url/ProfileSearchUrlStrategy'
 import { SearchEngine } from '../../../SearchEngine'
 import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder'
+import { ProfileSearchFilterProviderService } from '../../../Filter/ProfileSearchFilterProvider.service'
+import { toSignal } from '@angular/core/rxjs-interop'
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +20,11 @@ export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<
   protected searchEngine: SearchEngine<ProfileListEntry, ProfileResultList>
   private searchResultProcessorService =
     inject<SearchEngine<ProfileListEntry, ProfileResultList>>(SearchEngine)
-
+  private profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
+  private readonly selectedModules = toSignal(
+    this.profileSearchFilterProviderService.getSelectedModules(),
+    { initialValue: [] as string[] }
+  )
   constructor() {
     const searchEngine = inject<SearchEngine<ProfileListEntry, ProfileResultList>>(SearchEngine)
 
@@ -41,7 +47,8 @@ export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<
     page: number = 0,
     pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
   ): string {
-    return new ProfileSearchUrlStrategy(searchText).getSearchUrl(page, pageSize)
+    const modules = this.selectedModules().join(',')
+    return new ProfileSearchUrlStrategy(searchText, modules).getSearchUrl(page, pageSize)
   }
 
   protected getMapping(): ProfileResultMapperStrategy {

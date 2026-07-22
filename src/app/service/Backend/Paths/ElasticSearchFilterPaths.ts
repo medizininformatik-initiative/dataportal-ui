@@ -5,4 +5,5 @@ export enum ElasticSearchFilterPaths {
   KDSMODULES = 'kds-modules',
   TERMINOLOGIES = 'terminologies',
   VALUESETS = 'value-sets',
+  MODULE = 'modules',
 }

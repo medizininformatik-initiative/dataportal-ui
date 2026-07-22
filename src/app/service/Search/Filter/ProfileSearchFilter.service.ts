@@ -11,7 +11,7 @@ export class ProfileSearchFilterService {
 
   constructor() {}
 
-  public fetchFilter(): Observable<any> {
+  public fetchFilter(): Observable<ProfileSearchFilter> {
     return this.dataSelectionApiService.getProfileSearchFilter().pipe(
       //filter((searchFilter) => searchFilter.name === 'module'),
       map((filter) => this.mapFilter(filter)),
@@ -19,7 +19,7 @@ export class ProfileSearchFilterService {
     )
   }
 
-  private mapFilter(filter: any) {
+  private mapFilter(filter: any): ProfileSearchFilter {
     console.log(filter)
     return ProfileSearchFilter.fromJson(filter[0])
   }
