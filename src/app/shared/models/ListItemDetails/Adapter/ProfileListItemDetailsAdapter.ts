@@ -1,9 +1,9 @@
 import { AbstractListItemDetailsAdapter } from './AbstractListItemDetailsAdapter'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { ListItemDetailsData } from '../ListItemDetailsData'
 import { ListItemDetailsRelativeData } from '../ListItemDetailsRelative'
 import { ProfileEntryDetails } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryDetails'
 import { ProfileEntryRelative } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryRelative'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { Translation } from 'src/app/model/DataSelection/Profile/Translation'
 
 export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapter<
