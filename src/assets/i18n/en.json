@@ -558,6 +558,7 @@
       "AVAILABILITY": "Availability",
       "CONTEXT": "Context",
       "KDS_MODULE": "CDS Modules",
+      "MODULE": "Module",
       "NO_FILTER_SELECTED": "No search filter selected",
       "SEARCH": "Search...",
       "TERMINOLOGY": "Terminology"
