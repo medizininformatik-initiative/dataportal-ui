@@ -38,10 +38,6 @@ export const routes: Routes = [
   },
   {
     path: BasePaths.feasibilityQuery,
-    resolve: {
-      preLoadCriteriaData: CriteriaSearchDataResolverService,
-      preLoadCriteriaFilter: CriteriaSearchFilterResolverService,
-    },
     data: {
       navId: BasePaths.feasibilityQuery,
       roles: ['main'],
