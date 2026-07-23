@@ -223,6 +223,7 @@
         "JUMP_TO_DATASELECTION": "Selektion anzeigen",
         "JUMP_TO_DATASELECTION_TOOLTIP": "Zum Editor navigieren, um die ausgewählten Merkmale zu bearbeiten"
       },
+      "CLOSE_DETAILS": "Schließen",
       "HEADER": "Merkmalselektion",
       "HEADER_INFO1": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter ",
       "HEADER_INFO2": ". Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: ",
