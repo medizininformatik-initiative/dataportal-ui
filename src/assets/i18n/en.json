@@ -168,6 +168,7 @@
         "JUMP_TO_DATASELECTION": "Show Selection",
         "JUMP_TO_DATASELECTION_TOOLTIP": "Navigate to editor to edit selected features"
       },
+      "CLOSE_DETAILS": "Close",
       "HEADER": "Feature Selection",
       "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
       "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
