@@ -1,19 +1,18 @@
 import { Injectable, inject } from '@angular/core'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
-import { MenuServiceCriterionFunctions } from './MenuServiceCriterionFunctions'
+import { AbstractMenuItemsService } from '../AbstractMenuItems.service'
+import { CriterionMenuFunctionsService } from './CriterionMenuFunctions.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class CriterionMenuItems {
-  private menuServiceCriterionFunctions = inject(MenuServiceCriterionFunctions)
-
-  constructor() {}
+export class CriterionMenuItemsService extends AbstractMenuItemsService {
+  private menuServiceCriterionFunctions = inject(CriterionMenuFunctionsService)
 
   /**
    * @returns Array of Menu functions for a criterion box
    */
-  public getMenuItemsForCriterion(): MenuItemInterface[] {
+  public getMenuItems(): MenuItemInterface[] {
     return [
       {
         disabled: false,

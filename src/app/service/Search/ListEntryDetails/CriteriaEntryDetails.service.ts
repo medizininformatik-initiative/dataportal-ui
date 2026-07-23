@@ -35,7 +35,7 @@ export class CriteriaEntryDetailsService extends AbstractEntryDetailsService<
     const parents = this.mapRelativeData(response.parents)
     const children = this.mapRelativeData(response.children)
 
-    const details = new CriteriaEntryDetails(children, parents, translations)
+    const details = new CriteriaEntryDetails(children, parents, translations, response.selectable)
     this.criteriaEntryDetailsProviderService.setCriteriaEntryDetails(details)
 
     return details

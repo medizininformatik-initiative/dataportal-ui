@@ -10,7 +10,7 @@ import { NavigationHelperService } from '../../../../service/NavigationHelper.se
 @Injectable({
   providedIn: 'root',
 })
-export class MenuServiceCriterionFunctions {
+export class CriterionMenuFunctionsService {
   private criterionProviderService = inject(CriterionProviderService)
   private referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
   private stageProviderService = inject(StageProviderService)

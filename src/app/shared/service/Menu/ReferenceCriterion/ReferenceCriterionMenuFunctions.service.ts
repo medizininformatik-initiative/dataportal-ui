@@ -1,18 +1,15 @@
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
-import { Injectable, inject } from '@angular/core'
-import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service'
+import { inject, Injectable } from '@angular/core'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class RefrenceCriterionMenuFunctionsService {
+export class ReferenceCriterionMenuFunctionsService {
   private criterionProviderService = inject(CriterionProviderService)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
   private navigationHelperService = inject(NavigationHelperService)
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {}
 

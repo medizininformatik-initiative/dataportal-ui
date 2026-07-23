@@ -13,7 +13,7 @@ import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCrit
 @Injectable({
   providedIn: 'root',
 })
-export class ListItemDetailsMenuItemsFunctionsService {
+export class CriteriaListItemDetailsMenuItemsFunctionsService {
   private searchService = inject(CriteriaByIdSearchService)
   private criteriaSearchService = inject(CriteriaSearchService)
   private criterionService = inject(BuildCriterionService)
