@@ -73,12 +73,12 @@
           </li>
         </ol>
       </num-information-section>
-      } @else {
+      }
       <num-table
         [tableData]="fqTableData()"
         (iconClicked)="onCriterionIconClicked($event)"
       ></num-table>
-      } } @else {
+      } @else {
       <num-table
         [tableData]="dsTableData()"
         (iconClicked)="onProfileIconClicked($event)"
