@@ -4,7 +4,7 @@ import { Component, computed, effect, inject, input } from '@angular/core'
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
 import { FilterChipsComponent } from '../../../../../../shared/components/filter-chips/filter-chips.component'
@@ -13,7 +13,7 @@ import { LinkedBadgeComponent } from '../../../../../../shared/components/linked
 import { map, tap } from 'rxjs'
 import { MenuComponent } from '../../../../../../shared/components/menu/menu.component'
 import { MenuItemInterface } from '../../../../../../shared/models/Menu/MenuItemInterface'
-import { MenuServiceDataSelection } from '../../../../../../shared/service/Menu/DataSelection/MenuServiceDataSelection.service'
+import { DataSelectionMenuService } from '../../../../../../shared/service/Menu/DataSelection/DataSelectionMenu.service'
 import { MissingFilterComponent } from '../../../../../../shared/components/missing-filter/missing-filter.component'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference'
@@ -46,7 +46,7 @@ export class DataSelectionBoxesComponent {
   private fieldsFilterChipsService = inject(DataSelectionFieldsChipsService)
   private filtersFilterChipsService = inject(DataSelectionFiltersFilterChips)
   private removeReferenceService = inject(RemoveReferenceService)
-  private menuService = inject(MenuServiceDataSelection)
+  private menuService = inject(DataSelectionMenuService)
   private appSettingsProvider = inject(AppSettingsProviderService)
   private dataSelectionProviderService = inject(DataSelectionProviderService)
   private navigationHelperService = inject(NavigationHelperService)
@@ -81,7 +81,7 @@ export class DataSelectionBoxesComponent {
   readonly menuItems = computed<MenuItemInterface[]>(() => {
     const isMainProfile =
       this.appSettingsProvider.getDsePatientProfileUrl() === this.profile()?.getUrl()
-    return this.menuService.getMenuItemsForDataSelection(isMainProfile)
+    return this.menuService.getMenuItems(isMainProfile)
   })
 
   private readonly activeDataSelection$ = this.dataSelectionProviderService.getActiveDataSelection()

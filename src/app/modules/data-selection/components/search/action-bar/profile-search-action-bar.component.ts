@@ -1,7 +1,7 @@
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
 import { Component, computed, inject } from '@angular/core'
-import { DataSelectionProviderService } from '../../../services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from '../../../../../service/Provider/DataSelectionProvider.service'
 import { LoadDataSelectionProfilesService } from 'src/app/service/DataSelection/LoadDataSelectionProfiles.service'
 import { map } from 'rxjs'
 import { MatBadge } from '@angular/material/badge'

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core'
-import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
 import { ProfileProviderService } from './Provider/ProfileProvider.service'
 import { map, take } from 'rxjs'
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile'

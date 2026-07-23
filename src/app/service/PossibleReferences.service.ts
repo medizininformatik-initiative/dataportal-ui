@@ -1,6 +1,6 @@
 import { BehaviorSubject, map, Observable, take, tap } from 'rxjs'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
 import { ElementIdMapService } from './ElementIdMap.service'
 import { Injectable, inject } from '@angular/core'
 import { LoadDataSelectionProfilesService } from './DataSelection/LoadDataSelectionProfiles.service'

@@ -1,7 +1,7 @@
 import { BehaviorSubject, map, Observable, tap } from 'rxjs'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
-import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { ProfileProviderService } from './Provider/ProfileProvider.service'
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'

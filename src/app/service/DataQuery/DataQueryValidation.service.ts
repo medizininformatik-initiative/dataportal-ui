@@ -1,6 +1,6 @@
 import { combineLatest, map, Observable } from 'rxjs'
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { FeasibilityQueryValidationService } from '../FeasibilityQuery/FeasibilityQueryValidation.service'
 import { Injectable, inject } from '@angular/core'
 import { ValidDataQuery } from 'src/app/model/Types/ValidDataQuery'
