@@ -1,6 +1,6 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery';
-import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs'
+import { Injectable } from '@angular/core'
+import { v4 as uuidv4 } from 'uuid'
 
 @Injectable({
   providedIn: 'root',
@@ -8,32 +8,32 @@ import { Injectable } from '@angular/core';
 export class ActiveFeasibilityQueryService {
   /**
    * BehaviorSubject that holds the state of the active FeasibilityQuery.
-   * Initialized with `null` as the default value.
+   * Initialized with a new UUID as the default value.
    */
-  private activeFeasibilityQueryIDSubject: BehaviorSubject<string | null> = new BehaviorSubject<
-    string | null
-  >(null);
+  private activeFeasibilityQueryIDSubject: BehaviorSubject<string> = new BehaviorSubject<string>(
+    uuidv4()
+  )
 
   /**
    * Observable of the active FeasibilityQueryID.
    * Use this to subscribe and get updates when the active FeasibilityQueryID changes.
    */
-  public activeFeasibilityIDQuery$ = this.activeFeasibilityQueryIDSubject.asObservable();
-  private activeFeasibilityQueryID: string;
+  public activeFeasibilityIDQuery$ = this.activeFeasibilityQueryIDSubject.asObservable()
+  private activeFeasibilityQueryID: string = uuidv4()
 
   constructor() {}
 
   /**
    * Getter method to retrieve the current value of the active FeasibilityQueryID.
    *
-   * @returns The current active FeasibilityQueryID or null if not set.
+   * @returns The current active FeasibilityQueryID.
    */
-  public getActiveFeasibilityQueryIdObservable(): Observable<string> | null {
-    return this.activeFeasibilityQueryIDSubject.asObservable();
+  public getActiveFeasibilityQueryIdObservable(): Observable<string> {
+    return this.activeFeasibilityQueryIDSubject.asObservable()
   }
 
-  public getActiveFeasibilityQueryID(): string | null {
-    return this.activeFeasibilityQueryID;
+  public getActiveFeasibilityQueryID(): string {
+    return this.activeFeasibilityQueryID
   }
   /**
    * Setter method to update the active FeasibilityQueryID.
@@ -41,7 +41,7 @@ export class ActiveFeasibilityQueryService {
    * @param queryID - The FeasibilityQueryID instance to set as active.
    */
   public setActiveFeasibilityQueryID(queryID: string): void {
-    this.activeFeasibilityQueryID = queryID;
-    this.activeFeasibilityQueryIDSubject.next(queryID);
+    this.activeFeasibilityQueryID = queryID
+    this.activeFeasibilityQueryIDSubject.next(queryID)
   }
 }

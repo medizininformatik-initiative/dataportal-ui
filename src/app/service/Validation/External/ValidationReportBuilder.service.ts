@@ -1,4 +1,4 @@
-import { AboutInfoBuilderService } from '../AboutInfo/AboutInfoBuilder.service'
+import { AboutInfoBuilderService } from '../../AboutInfo/AboutInfoBuilder.service'
 import { ErrorLogProviderService } from './ErrorLogProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { ValidationReportData } from 'src/app/model/Interface/Validation/ValidationReportData'

@@ -2,7 +2,8 @@ import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataS
 import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs'
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { Injectable, inject } from '@angular/core'
+import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
+import { inject, Injectable } from '@angular/core'
 import { v4 as uuidv4 } from 'uuid'
 @Injectable({
   providedIn: 'root',
@@ -79,8 +80,11 @@ export class DataSelectionProviderService {
     dataSelection: DataSelection,
     setAsActive: boolean = false
   ): void {
-    this.dataSelectionUIDMap.set(id, dataSelection)
-    this.dataSelectionUIDMapSubject.next(new Map(this.dataSelectionUIDMap))
+    const updatedMap = new Map(this.dataSelectionUIDMap)
+    updatedMap.set(id, dataSelection)
+
+    this.dataSelectionUIDMap = updatedMap
+    this.dataSelectionUIDMapSubject.next(updatedMap)
     if (setAsActive) {
       this.activeDataSelection.setActiveDataSelectionID(id)
     }
@@ -106,18 +110,25 @@ export class DataSelectionProviderService {
 
   public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId)
-    if (dataSelection) {
-      const profiles = dataSelection.getProfiles()
-      const index = profiles.findIndex(
-        (existingProfile) => existingProfile.getId() === profile.getId()
-      )
-      if (index !== -1) {
-        profiles[index] = profile
-      } else {
-        profiles.push(profile)
-      }
-      this.createDataSelectionInstanceAndSetMap(profiles, dataSelectionId)
+
+    if (!dataSelection) {
+      return
     }
+
+    const clonedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
+    const profiles = DataSelectionProfileCloner.deepCopyProfiles(dataSelection.getProfiles())
+
+    const exists = profiles.some(
+      (existingProfile) => existingProfile.getId() === clonedProfile.getId()
+    )
+
+    const updatedProfiles = exists
+      ? profiles.map((existingProfile) =>
+          existingProfile.getId() === clonedProfile.getId() ? clonedProfile : existingProfile
+        )
+      : [...profiles, clonedProfile]
+
+    this.createDataSelectionInstanceAndSetMap(updatedProfiles, dataSelectionId)
   }
 
   private createDataSelectionInstanceAndSetMap(

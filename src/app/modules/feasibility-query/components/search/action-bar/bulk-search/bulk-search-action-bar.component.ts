@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, inject, input } from '@angular/core'
 import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service'
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry'
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
-import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { map, Observable, of, Subscription, take } from 'rxjs'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriteria.service'
@@ -12,6 +11,7 @@ import { ButtonComponent } from '../../../../../../shared/components/button/butt
 import { MatTooltip } from '@angular/material/tooltip'
 import { AsyncPipe } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-bulk-search-action-bar',
@@ -25,12 +25,10 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
   private stageProviderService = inject(StageProviderService)
   private navigationHelperService = inject(NavigationHelperService)
   private feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
-  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
   private createBulkCriterionService = inject(CreateBulkCriterionService)
 
   listItemArray$: Observable<CriteriaBulkEntry[]>
   stageArray$: Observable<string[]>
-  isFeasibilityExistent$: Observable<boolean>
   disabledAddToStageButton: Observable<boolean> = of(true)
   addToStageSubscription: Subscription
 
@@ -49,7 +47,6 @@ export class BulkSearchActionBarComponent implements OnInit, OnDestroy {
       .pipe(map((entries) => entries.length === 0))
     this.listItemArray$ = this.selectedBulkCriteriaService.getSelected()
     this.stageArray$ = this.stageProviderService.getAll()
-    this.isFeasibilityExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQuerySet()
   }
 
   ngOnDestroy() {

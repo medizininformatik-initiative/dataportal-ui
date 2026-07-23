@@ -1,28 +1,26 @@
-import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
-import { AttributeFilter } from './AttributeFilter/AttributeFilter';
-import { CritGroupPosition } from '../CritGroupPosition';
-import { Display } from '../../DataSelection/Profile/Display';
-import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { ValueFilter } from './AttributeFilter/ValueFilter';
-import { FilterTypes } from '../../Utilities/FilterTypes';
-import { AbstractQuantityFilter } from './AttributeFilter/Quantity/AbstractQuantityFilter';
+import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction'
+import { AttributeFilter } from './AttributeFilter/AttributeFilter'
+import { CritGroupPosition } from '../CritGroupPosition'
+import { Display } from '../../DataSelection/Profile/Display'
+import { TerminologyCode } from '../../Terminology/TerminologyCode'
+import { ValueFilter } from './AttributeFilter/ValueFilter'
+import { FilterTypes } from '../../Utilities/FilterTypes'
 
 /**
  * Abstract class representing a criterion with various filters and properties.
  */
 export abstract class AbstractCriterion {
-  private attributeFilters?: Array<AttributeFilter> = [];
-  private context?: TerminologyCode;
-  private criterionHash?: string;
-  private display: Display;
-  private isInvalid?: boolean = false;
-  private isReference = false;
-  private position?: CritGroupPosition;
-  private termCodes?: Array<TerminologyCode> = [];
-  private timeRestriction?: AbstractTimeRestriction;
-  private id: string;
-  private valueFilters?: Array<ValueFilter> = [];
-  private isRequiredFilterSet: boolean;
+  private attributeFilters?: Array<AttributeFilter> = []
+  private context?: TerminologyCode
+  private criterionHash?: string
+  private display: Display
+  private isReference = false
+  private position?: CritGroupPosition
+  private termCodes?: Array<TerminologyCode> = []
+  private timeRestriction?: AbstractTimeRestriction
+  private id: string
+  private valueFilters?: Array<ValueFilter> = []
+  private isRequiredFilterSet: boolean
 
   /**
    * Constructor for AbstractCriterion.
@@ -46,7 +44,6 @@ export abstract class AbstractCriterion {
     context?: TerminologyCode,
     criterionHash?: string,
     display?: Display,
-    isInvalid?: boolean,
     isRequiredFilterSet?: boolean,
     position?: CritGroupPosition,
     termCodes?: Array<TerminologyCode>,
@@ -54,18 +51,17 @@ export abstract class AbstractCriterion {
     id?: string,
     valueFilters?: Array<ValueFilter>
   ) {
-    this.isRequiredFilterSet = isRequiredFilterSet;
-    this.attributeFilters = attributeFilters;
-    this.context = context;
-    this.criterionHash = criterionHash;
-    this.display = display;
-    this.isInvalid = isInvalid;
-    this.isReference = isReference;
-    this.position = position;
-    this.termCodes = termCodes;
-    this.timeRestriction = timeRestriction;
-    this.id = id;
-    this.valueFilters = valueFilters;
+    this.isRequiredFilterSet = isRequiredFilterSet
+    this.attributeFilters = attributeFilters
+    this.context = context
+    this.criterionHash = criterionHash
+    this.display = display
+    this.isReference = isReference
+    this.position = position
+    this.termCodes = termCodes
+    this.timeRestriction = timeRestriction
+    this.id = id
+    this.valueFilters = valueFilters
   }
 
   /**
@@ -73,7 +69,7 @@ export abstract class AbstractCriterion {
    * @param isReference
    */
   public setisReference(isReference: boolean) {
-    this.isReference = isReference;
+    this.isReference = isReference
   }
 
   /**
@@ -81,7 +77,7 @@ export abstract class AbstractCriterion {
    * @returns
    */
   public getisReference(): boolean {
-    return this.isReference;
+    return this.isReference
   }
 
   /**
@@ -91,16 +87,16 @@ export abstract class AbstractCriterion {
    */
   public isAttributeFiltersSet(): boolean {
     if (this.attributeFilters === undefined) {
-      return false;
+      return false
     }
-    return true;
+    return true
   }
 
   public getAttributeFilters(): Array<AttributeFilter> {
     if (this.attributeFilters === undefined) {
-      return [];
+      return []
     }
-    return this.attributeFilters;
+    return this.attributeFilters
   }
 
   /**
@@ -109,7 +105,7 @@ export abstract class AbstractCriterion {
    * @param attributeFilters - Array of AttributeFilter objects.
    */
   public setAttributeFilters(attributeFilters: Array<AttributeFilter>): void {
-    this.attributeFilters = attributeFilters;
+    this.attributeFilters = attributeFilters
   }
 
   /**
@@ -118,7 +114,7 @@ export abstract class AbstractCriterion {
    * @returns TerminologyCode object representing the context.
    */
   public getContext(): TerminologyCode | undefined {
-    return this.context;
+    return this.context
   }
 
   /**
@@ -127,7 +123,7 @@ export abstract class AbstractCriterion {
    * @param context - TerminologyCode object representing the context.
    */
   public setContext(context: TerminologyCode): void {
-    this.context = context;
+    this.context = context
   }
 
   /**
@@ -136,7 +132,7 @@ export abstract class AbstractCriterion {
    * @returns Hash string for the criterion.
    */
   public getCriterionHash(): string | undefined {
-    return this.criterionHash;
+    return this.criterionHash
   }
 
   /**
@@ -145,7 +141,7 @@ export abstract class AbstractCriterion {
    * @param criterionHash - Hash string for the criterion.
    */
   public setCriterionHash(criterionHash: string): void {
-    this.criterionHash = criterionHash;
+    this.criterionHash = criterionHash
   }
 
   /**
@@ -154,7 +150,7 @@ export abstract class AbstractCriterion {
    * @returns Display string for the criterion.
    */
   public getDisplay(): Display {
-    return this.display;
+    return this.display
   }
 
   /**
@@ -163,25 +159,7 @@ export abstract class AbstractCriterion {
    * @param display - Display string for the criterion.
    */
   public setDisplay(display: Display): void {
-    this.display = display;
-  }
-
-  /**
-   * Gets the invalid flag.
-   *
-   * @returns Boolean flag indicating if the criterion is invalid.
-   */
-  public getIsInvalid(): boolean | undefined {
-    return this.isInvalid;
-  }
-
-  /**
-   * Sets the invalid flag.
-   *
-   * @param isInvalid - Boolean flag indicating if the criterion is invalid.
-   */
-  public setIsInvalid(isInvalid: boolean): void {
-    this.isInvalid = isInvalid;
+    this.display = display
   }
 
   /**
@@ -190,7 +168,7 @@ export abstract class AbstractCriterion {
    * @returns CritGroupPosition object representing the position.
    */
   public getPosition(): CritGroupPosition | undefined {
-    return this.position;
+    return this.position
   }
 
   /**
@@ -199,7 +177,7 @@ export abstract class AbstractCriterion {
    * @param position - CritGroupPosition object representing the position.
    */
   public setPosition(position: CritGroupPosition): void {
-    this.position = position;
+    this.position = position
   }
 
   /**
@@ -208,7 +186,7 @@ export abstract class AbstractCriterion {
    * @returns Array of TerminologyCode objects.
    */
   public getTermCodes(): Array<TerminologyCode> {
-    return this.termCodes;
+    return this.termCodes
   }
 
   /**
@@ -217,7 +195,7 @@ export abstract class AbstractCriterion {
    * @param termCodes - Array of TerminologyCode objects.
    */
   public setTermCodes(termCodes: Array<TerminologyCode>): void {
-    this.termCodes = termCodes;
+    this.termCodes = termCodes
   }
 
   /**
@@ -226,7 +204,7 @@ export abstract class AbstractCriterion {
    * @returns AbstractTimeRestriction object.
    */
   public getTimeRestriction(): AbstractTimeRestriction | undefined {
-    return this.timeRestriction;
+    return this.timeRestriction
   }
 
   /**
@@ -235,7 +213,7 @@ export abstract class AbstractCriterion {
    * @param timeRestriction - AbstractTimeRestriction object.
    */
   public setTimeRestriction(timeRestriction: AbstractTimeRestriction): void {
-    this.timeRestriction = timeRestriction;
+    this.timeRestriction = timeRestriction
   }
 
   /**
@@ -244,7 +222,7 @@ export abstract class AbstractCriterion {
    * @returns Unique identifier for the criterion.
    */
   public getId(): string {
-    return this.id;
+    return this.id
   }
 
   /**
@@ -253,7 +231,7 @@ export abstract class AbstractCriterion {
    * @param id - Unique identifier for the criterion.
    */
   public setId(id: string): void {
-    this.id = id;
+    this.id = id
   }
 
   /**
@@ -262,7 +240,7 @@ export abstract class AbstractCriterion {
    * @returns Array of ValueFilter objects or false if valueFilters is undefined.
    */
   public getValueFilters(): Array<ValueFilter> {
-    return this.valueFilters;
+    return this.valueFilters
   }
 
   /**
@@ -271,15 +249,15 @@ export abstract class AbstractCriterion {
    * @param valueFilters - Array of ValueFilter objects.
    */
   public setValueFilters(valueFilters: Array<ValueFilter>): void {
-    this.valueFilters = valueFilters;
+    this.valueFilters = valueFilters
   }
 
   public setIsRequiredFilterSet(isRequiredFilterSet: boolean): void {
-    this.isRequiredFilterSet = isRequiredFilterSet;
+    this.isRequiredFilterSet = isRequiredFilterSet
   }
 
   public getIsRequiredFilterSet(): boolean {
-    return this.isRequiredFilterSet;
+    return this.isRequiredFilterSet
   }
 
   /**
@@ -287,7 +265,7 @@ export abstract class AbstractCriterion {
    * @returns Array of AttributeFilter containing instances of type CONCEPT.
    */
   public getConceptAttributeFilters(): AttributeFilter[] {
-    return this.getAttributeFiltersByType(FilterTypes.CONCEPT);
+    return this.getAttributeFiltersByType(FilterTypes.CONCEPT)
   }
 
   /**
@@ -295,7 +273,7 @@ export abstract class AbstractCriterion {
    * @returns Array of AttributeFilter containing instances of type REFERENCE.
    */
   public getReferenceAttributeFilters(): AttributeFilter[] {
-    return this.getAttributeFiltersByType(FilterTypes.REFERENCE);
+    return this.getAttributeFiltersByType(FilterTypes.REFERENCE)
   }
 
   /**
@@ -303,7 +281,7 @@ export abstract class AbstractCriterion {
    * @returns Array of AttributeFilter containing instances of type QUANTITY.
    */
   public getQuantityAttributeFilters(): AttributeFilter[] {
-    return this.getAttributeFiltersByType(FilterTypes.QUANTITY);
+    return this.getAttributeFiltersByType(FilterTypes.QUANTITY)
   }
 
   /**
@@ -311,7 +289,7 @@ export abstract class AbstractCriterion {
    * @returns Array of ValueFilter containing instances of type QUANTITY.
    */
   public getQuantityValueFilters(): ValueFilter[] {
-    return this.getValueFiltersByType(FilterTypes.QUANTITY);
+    return this.getValueFiltersByType(FilterTypes.QUANTITY)
   }
 
   /**
@@ -319,7 +297,7 @@ export abstract class AbstractCriterion {
    * @returns Array of ValueFilter containing instances of type CONCEPT.
    */
   public getConceptValueFilters(): ValueFilter[] {
-    return this.getValueFiltersByType(FilterTypes.CONCEPT);
+    return this.getValueFiltersByType(FilterTypes.CONCEPT)
   }
 
   /**
@@ -328,7 +306,7 @@ export abstract class AbstractCriterion {
    * @returns Array of AttributeFilter containing instances of the specified type.
    */
   protected getAttributeFiltersByType(type: FilterTypes): AttributeFilter[] {
-    return this.getAttributeFilters().filter((f) => f.getFilterType() === type);
+    return this.getAttributeFilters().filter((f) => f.getFilterType() === type)
   }
 
   /**
@@ -337,6 +315,6 @@ export abstract class AbstractCriterion {
    * @returns Array of ValueFilter containing instances of the specified type.
    */
   protected getValueFiltersByType(type: FilterTypes): ValueFilter[] {
-    return this.getValueFilters().filter((f) => f.getFilterType() === type);
+    return this.getValueFilters().filter((f) => f.getFilterType() === type)
   }
 }

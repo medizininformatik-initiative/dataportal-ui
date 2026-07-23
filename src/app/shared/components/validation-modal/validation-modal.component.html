@@ -1,0 +1,94 @@
+<num-modal-window [displaySaveButtons]="false">
+  <div class="modal-container">
+    <!-- Header -->
+    <div class="modal-header">
+      <num-header>Validation Status</num-header>
+      <num-header-description>
+        Overview of the current data definition validation
+      </num-header-description>
+    </div>
+
+    <!-- Navigation Cards -->
+    <div class="nav-cards">
+      <button
+        class="nav-card"
+        [class.nav-card--active]="activeTab() === 'feasibility'"
+        (click)="activeTab.set('feasibility')"
+      >
+        <span class="nav-card__title">Feasibility Query</span>
+        <div
+          class="nav-card__status"
+          [class.nav-card__status--valid]="fqIsValid()"
+          [class.nav-card__status--invalid]="!fqIsValid()"
+        >
+          <fa-icon [icon]="fqIsValid() ? 'check-circle' : 'times-circle'"></fa-icon>
+          <span>{{ fqIsValid() ? 'Valid' : 'Invalid' }}</span>
+        </div>
+        <span class="nav-card__count">{{ fqValidCount() }} / {{ fqTotalCount() }} Criteria</span>
+      </button>
+
+      <button
+        class="nav-card"
+        [class.nav-card--active]="activeTab() === 'dataSelection'"
+        (click)="activeTab.set('dataSelection')"
+      >
+        <span class="nav-card__title">Data Selection</span>
+        <div
+          class="nav-card__status"
+          [class.nav-card__status--valid]="dsIsValid()"
+          [class.nav-card__status--invalid]="!dsIsValid()"
+        >
+          <fa-icon [icon]="dsIsValid() ? 'check-circle' : 'times-circle'"></fa-icon>
+          <span>{{ dsIsValid() ? 'Valid' : 'Invalid' }}</span>
+        </div>
+        <span class="nav-card__count">{{ dsValidCount() }} / {{ dsTotalCount() }} Profiles</span>
+      </button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      @if (activeTab() === 'feasibility') { @if (!fqHasInclusionCriteria()) {
+      <num-information-section>
+        <span slot="title">No inclusion criteria set</span>
+        <ol>
+          <li>
+            Go to
+            <strong>Criteria Search</strong>
+            and find the elements you need.
+          </li>
+          <li>
+            Add them to the
+            <strong>Stage</strong>
+            .
+          </li>
+          <li>
+            Open each staged criterion and
+            <strong>edit</strong>
+            its filters if required.
+          </li>
+          <li>
+            Drag and drop criteria from the Stage into the
+            <strong>Inclusion</strong>
+            group.
+          </li>
+        </ol>
+      </num-information-section>
+      }
+      <num-table
+        [tableData]="fqTableData()"
+        (iconClicked)="onCriterionIconClicked($event)"
+      ></num-table>
+      } @else {
+      <num-table
+        [tableData]="dsTableData()"
+        (iconClicked)="onProfileIconClicked($event)"
+      ></num-table>
+      }
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <num-button (click)="close()">Close</num-button>
+    </div>
+  </div>
+</num-modal-window>

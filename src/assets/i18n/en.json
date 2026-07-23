@@ -531,10 +531,12 @@
       },
       "DOWNLOAD": "Download",
       "DOWNLOAD_DISABLED": "No feasibility query was defined",
+      "INVALID_DATA_DEFINITION_TOOLTIP": "The data definition is invalid. Please click here to view the validation report for details.",
       "SAVE": "Save",
       "SAVE_DISABLED": "No data to save",
       "UPLOAD": "Upload",
-      "UPLOAD_DISABLED": "Upload not available"
+      "UPLOAD_DISABLED": "Upload not available",
+      "VALID_DATA_DEFINITION_TOOLTIP": "The data definition is valid."
     },
     "CHIPS": {
       "CONTEXT": "Context",
@@ -620,6 +622,7 @@
       "MIN_LENGTH": "Required length of 3 letters"
     },
     "TABLE": {
+      "ACTIONS": "Actions",
       "ADD": "Add",
       "AVAILABILITY": "Availability",
       "AVAILABILITY_STATUS": {
@@ -631,16 +634,32 @@
         "VERY_LOW": "Very low"
       },
       "CONTEXT": "Context",
+      "CRITERION": "Criterion",
+      "CRITERION_VALIDATION": {
+        "INVALID": "Invalid",
+        "MISSING_FILTER": "Missing filter",
+        "VALID": "Valid"
+      },
       "DISPLAY": "Display",
       "EMPTY": "",
       "ICON": "Show related criteria",
       "NAME": "Name",
       "NOT_SELECTABLE": "Criterion cannot be selected",
       "PATIENT_COUNT": "Number of patients",
+      "PROFILE": "Profile",
+      "PROFILE_VALIDATION": {
+        "INVALID": "Invalid",
+        "MISSING_FIELDS": "Missing fields",
+        "MISSING_FIELDS_MISSING_REFERENCES": "Missing fields · Missing references",
+        "MISSING_REFERENCE": "Missing reference",
+        "VALID": "Valid"
+      },
       "SELECT_CHECKBOX": "Select Criteria",
       "SITE": "Location",
+      "STATUS": "Status",
       "TERMCODE": "Term code",
-      "TERMINOLOGY_CODE": "Terminology"
+      "TERMINOLOGY_CODE": "Terminology",
+      "WHAT_IS_MISSING": "What is missing"
     }
   },
   "SHARED_FILTER": {

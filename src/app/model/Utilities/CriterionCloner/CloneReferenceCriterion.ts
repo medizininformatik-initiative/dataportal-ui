@@ -1,12 +1,12 @@
-import { AbstractCriterion } from '../../FeasibilityQuery/Criterion/AbstractCriterion';
-import { CloneAttributeFilter } from './ValueAttributeFilter/CloneAttributeFilter';
-import { CloneTerminologyCode } from './TerminologyCode/CloneTerminologyCode';
-import { CloneTimeRestriction } from './TimeRestriction/CloneTimeRestriction';
-import { CloneValueFilter } from './ValueAttributeFilter/CloneValueFilter';
-import { CriterionBuilder } from '../../FeasibilityQuery/Criterion/CriterionBuilder';
-import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { v4 as uuidv4 } from 'uuid';
-import { Display } from '../../DataSelection/Profile/Display';
+import { AbstractCriterion } from '../../FeasibilityQuery/Criterion/AbstractCriterion'
+import { CloneAttributeFilter } from './ValueAttributeFilter/CloneAttributeFilter'
+import { CloneTerminologyCode } from './TerminologyCode/CloneTerminologyCode'
+import { CloneTimeRestriction } from './TimeRestriction/CloneTimeRestriction'
+import { CloneValueFilter } from './ValueAttributeFilter/CloneValueFilter'
+import { CriterionBuilder } from '../../FeasibilityQuery/Criterion/CriterionBuilder'
+import { TerminologyCode } from '../../Terminology/TerminologyCode'
+import { v4 as uuidv4 } from 'uuid'
+import { Display } from '../../DataSelection/Profile/Display'
 
 export class CloneAbstractCriterion {
   static deepCopyAbstractCriterions(
@@ -15,40 +15,40 @@ export class CloneAbstractCriterion {
   ): AbstractCriterion[] {
     return abstractCriterions.map((abstractCriterion) =>
       this.deepCopyAbstractCriterion(abstractCriterion, preserveReferenceFilterIds)
-    );
+    )
   }
 
   static deepCopyAbstractCriterion(
     abstractCriterion: AbstractCriterion,
     preserveReferenceFilterIds = true
   ): AbstractCriterion {
-    let clonedTimeRestriction;
+    let clonedTimeRestriction
     const clonedAttributeFilters = CloneAttributeFilter.deepCopyAttributeFilters(
       abstractCriterion.getAttributeFilters(),
       preserveReferenceFilterIds
-    );
+    )
     const clonedValueFilters = CloneValueFilter.deepCopyValueFilters(
       abstractCriterion.getValueFilters()
-    );
+    )
     if (abstractCriterion.getTimeRestriction()) {
       clonedTimeRestriction = CloneTimeRestriction.deepCopyTimeRestriction(
         abstractCriterion.getTimeRestriction()
-      );
+      )
     }
 
     const mandatoryFields = this.createMandatoryFields(
       abstractCriterion,
       preserveReferenceFilterIds
-    );
-    const criterionBuilder: CriterionBuilder = new CriterionBuilder(mandatoryFields);
+    )
+    const criterionBuilder: CriterionBuilder = new CriterionBuilder(mandatoryFields)
     criterionBuilder
       .withAttributeFilters(clonedAttributeFilters)
       .withTimeRestriction(clonedTimeRestriction)
-      .withValueFilters(clonedValueFilters);
+      .withValueFilters(clonedValueFilters)
 
     return abstractCriterion.getisReference()
       ? criterionBuilder.buildReferenceCriterion()
-      : criterionBuilder.buildCriterion();
+      : criterionBuilder.buildCriterion()
   }
 
   private static createMandatoryFields(
@@ -59,27 +59,25 @@ export class CloneAbstractCriterion {
     context: TerminologyCode
     criterionHash: string
     display: Display
-    isInvalid: boolean
     isRequiredFilterSet: boolean
     id: string
     termCodes: Array<TerminologyCode>
   } {
-    const context = CloneTerminologyCode.deepCopyTerminologyCode(abstractCriterion.getContext());
+    const context = CloneTerminologyCode.deepCopyTerminologyCode(abstractCriterion.getContext())
     const termCodes = CloneTerminologyCode.deepCopyTerminologyCodes(
       abstractCriterion.getTermCodes()
-    );
-    const display = abstractCriterion.getDisplay();
-    const criterionHash = abstractCriterion.getCriterionHash();
+    )
+    const display = abstractCriterion.getDisplay()
+    const criterionHash = abstractCriterion.getCriterionHash()
 
     return {
       isReference: abstractCriterion.getisReference(),
       context,
       criterionHash,
       display,
-      isInvalid: abstractCriterion.getIsInvalid(),
       isRequiredFilterSet: abstractCriterion.getIsRequiredFilterSet(),
       id: preserveId ? abstractCriterion.getId() : uuidv4(),
       termCodes,
-    };
+    }
   }
 }

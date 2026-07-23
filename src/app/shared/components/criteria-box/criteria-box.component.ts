@@ -5,7 +5,7 @@ import { Component, computed, inject, input, OnInit } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
 import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { CriterionValidationService } from 'src/app/service/Validation/Internal/CriterionValidationService.service'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FilterChipData } from '../../models/FilterChips/FilterChipData'
 import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
@@ -46,6 +46,7 @@ export class CriteriaBoxComponent implements OnInit {
   private filterChipsService = inject(CriterionFilterChipService)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
   private readonly navigationHelperService = inject(NavigationHelperService)
+  private readonly criterionValidationService = inject(CriterionValidationService)
 
   readonly criterion = input.required<Criterion>()
   readonly isEditable = input<boolean>()
@@ -66,7 +67,9 @@ export class CriteriaBoxComponent implements OnInit {
   /**
    * A filter is considered required if the criterion does not have a required filter set. This is determined by the getIsRequiredFilterSet method of the Criterion class. If this method returns false, it means that there are required filters that have not been set, and thus the criterion is considered to be in a state where required filters are missing.
    */
-  readonly isFilterRequired = computed(() => !this.criterion().getIsRequiredFilterSet())
+  readonly isFilterRequired = computed(() =>
+    this.criterionValidationService.isRequiredFilterSet(this.criterion())
+  )
 
   readonly warningSignUrl = 'assets/img/alert-blue-white.png'
 

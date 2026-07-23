@@ -23,9 +23,9 @@
     </num-header-description>
   </div>
   <div class="feasibility-container margin-bottom-3">
-    @if (isFeasibilityExistent()) {
+    @if (isFeasibilityExistent) {
     <num-display-feasibility-query [isEditable]="false"></num-display-feasibility-query>
-    } @if (isFeasibilityExistent() === false) {
+    } @if (!isFeasibilityExistent) {
     <ng-container class="empty-cohort-box">
       <num-placeholder-box>
         {{ 'DATAQUERY.COHORT.EMPTY' | translate }}

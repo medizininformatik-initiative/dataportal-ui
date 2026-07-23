@@ -1,16 +1,16 @@
-import { CriteriaSetValidationIssue } from 'src/app/model/Validation/Issues/CriteriaSetValidationIssue';
-import { DataExtractionValidationIssue } from 'src/app/model/Validation/Issues/DataExtractionValidationIssue';
-import { Injectable } from '@angular/core';
-import { QuantityRangeValidationIssue } from 'src/app/model/Validation/Issues/QuantityRangeValidationIssue';
-import { QuantityUnitValidationIssue } from 'src/app/model/Validation/Issues/QuantityUnitValidationIssue';
-import { TimeRestrictionValidationIssue } from 'src/app/model/Validation/Issues/TimeRestrictionValidationIssue';
-import { TypeGuard } from '../TypeGuard/TypeGuard';
-import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue';
-import { ValueSetValidationIssue } from 'src/app/model/Validation/Issues/ValueSetValidationIssue';
-import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData';
+import { CriteriaSetValidationIssue } from 'src/app/model/Validation/Issues/CriteriaSetValidationIssue'
+import { DataExtractionValidationIssue } from 'src/app/model/Validation/Issues/DataExtractionValidationIssue'
+import { Injectable } from '@angular/core'
+import { QuantityRangeValidationIssue } from 'src/app/model/Validation/Issues/QuantityRangeValidationIssue'
+import { QuantityUnitValidationIssue } from 'src/app/model/Validation/Issues/QuantityUnitValidationIssue'
+import { TimeRestrictionValidationIssue } from 'src/app/model/Validation/Issues/TimeRestrictionValidationIssue'
+import { TypeGuard } from '../../TypeGuard/TypeGuard'
+import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue'
+import { ValueSetValidationIssue } from 'src/app/model/Validation/Issues/ValueSetValidationIssue'
+import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData'
 
-const PATH_PREFIX = /^content\//;
-const NUMERIC_SEGMENT = /^\d+$/;
+const PATH_PREFIX = /^content\//
+const NUMERIC_SEGMENT = /^\d+$/
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +22,9 @@ export class ValidationIssueMapperService {
    * @returns ValidationIssue instance with attached details
    */
   public mapToValidationIssue(validationData: ValidationIssueData): ValidationIssue {
-    const validationIssue = this.createValidationIssue(validationData);
-    this.attachIssueDetails(validationIssue, validationData.details);
-    return validationIssue;
+    const validationIssue = this.createValidationIssue(validationData)
+    this.attachIssueDetails(validationIssue, validationData.details)
+    return validationIssue
   }
 
   /**
@@ -34,27 +34,27 @@ export class ValidationIssueMapperService {
    */
   private attachIssueDetails(validationIssue: ValidationIssue, details: any): void {
     if (!details) {
-      return;
+      return
     }
 
     if (TypeGuard.isValueSetValidationIssueData(details)) {
-      validationIssue.setValueSetValidationIssue(ValueSetValidationIssue.fromJson(details));
+      validationIssue.setValueSetValidationIssue(ValueSetValidationIssue.fromJson(details))
     } else if (TypeGuard.isQuantityUnitValidationIssueData(details)) {
-      validationIssue.setQuantityUnitValidationIssue(QuantityUnitValidationIssue.fromJson(details));
+      validationIssue.setQuantityUnitValidationIssue(QuantityUnitValidationIssue.fromJson(details))
     } else if (TypeGuard.isCriteriaSetValidationIssueData(details)) {
-      validationIssue.setCriteriaSetValidationIssue(CriteriaSetValidationIssue.fromJson(details));
+      validationIssue.setCriteriaSetValidationIssue(CriteriaSetValidationIssue.fromJson(details))
     } else if (TypeGuard.isTimeRestrictionValidationIssueData(details)) {
       validationIssue.setTimeRestrictionValidationIssue(
         TimeRestrictionValidationIssue.fromJson(details)
-      );
+      )
     } else if (TypeGuard.isQuantityRangeValidationIssueData(details)) {
       validationIssue.setQuantityRangeValidationIssue(
         QuantityRangeValidationIssue.fromJson(details)
-      );
+      )
     } else if (TypeGuard.isDataExtractionValidationIssueData(details)) {
       validationIssue.setDataExtractionValidationIssue(
         DataExtractionValidationIssue.fromJson(details)
-      );
+      )
     }
   }
 
@@ -64,10 +64,10 @@ export class ValidationIssueMapperService {
    * @returns Base ValidationIssue with location, code, and message
    */
   private createValidationIssue(validationData: ValidationIssueData): ValidationIssue {
-    const location = this.pathToLocation(validationData.path);
-    const code = validationData.value.code;
-    const message = validationData.value.message;
-    return new ValidationIssue(location, code, message);
+    const location = this.pathToLocation(validationData.path)
+    const code = validationData.value.code
+    const message = validationData.value.message
+    return new ValidationIssue(location, code, message)
   }
 
   /**
@@ -83,6 +83,6 @@ export class ValidationIssueMapperService {
       .split('/')
       .map((segment) => (NUMERIC_SEGMENT.test(segment) ? `[${segment}]` : segment))
       .join('.')
-      .replace(/\.\[/g, '[');
+      .replace(/\.\[/g, '[')
   }
 }

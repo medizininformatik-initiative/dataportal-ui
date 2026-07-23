@@ -9,12 +9,12 @@ import { CriterionProviderService } from 'src/app/service/Provider/CriterionProv
 import { EditAttributeFilterService } from './EditAttributeFilter.service'
 import { EditReferenceFilterService } from './EditReferenceFilter.service'
 import { EditValueFilterService } from './EditValueFilter.service'
-import { Injectable, inject } from '@angular/core'
+import { FeasibilityQueryValidationService } from '../../Validation/Internal/FeasibilityQueryValidationService.service'
+import { inject, Injectable } from '@angular/core'
 import { Observable, tap } from 'rxjs'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
-import { CriterionValidationService } from '../Validation/CriterionValidation.deprecated.service'
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class EditCriterionService {
   private referenceFilterService = inject(EditReferenceFilterService)
   private valueFilterService = inject(EditValueFilterService)
   private attributeFilterService = inject(EditAttributeFilterService)
-  private criterionValidationService = inject(CriterionValidationService)
+  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
 
   private workingCriterion: Criterion
 
@@ -138,7 +138,6 @@ export class EditCriterionService {
 
   private emit(): void {
     const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(this.workingCriterion, true)
-    copy.setIsRequiredFilterSet(this.criterionValidationService.setIsFilterRequired(copy))
     copy.setId(this.workingCriterion.getId())
     this.workingCriterion = copy as Criterion
     this.criterionProvider.setOne(this.workingCriterion)

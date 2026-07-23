@@ -5,6 +5,9 @@ import { ActionBarComponent } from '../../../../../shared/components/action-bar/
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
 import { TranslateModule } from '@ngx-translate/core'
 
+/**
+ * @todo add save button for feasibility and download button. Save and download should be active once a result is available.
+ */
 @Component({
   selector: 'num-result-action-bar',
   templateUrl: './result-action-bar.component.html',

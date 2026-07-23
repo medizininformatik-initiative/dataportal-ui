@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service'
+import { ErrorLogProviderService } from 'src/app/service/Validation/External/ErrorLogProvider.service'
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { Observable, Subject, tap } from 'rxjs'
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue'

@@ -1,4 +1,4 @@
-import { faBug } from '@fortawesome/free-solid-svg-icons'
+import { faBug, faShieldAlt } from '@fortawesome/free-solid-svg-icons'
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
@@ -155,4 +155,5 @@ export const FONT_AWESOME_ICONS = [
   faUpload,
   faDownload,
   faBug,
+  faShieldAlt,
 ]

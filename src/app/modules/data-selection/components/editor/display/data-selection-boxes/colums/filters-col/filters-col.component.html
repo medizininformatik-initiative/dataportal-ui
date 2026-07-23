@@ -1,0 +1,18 @@
+<div class="label-with-info">
+  <span class="num-text-accent">
+    {{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate }}
+  </span>
+  <span
+    class="info-icon"
+    numInfoTooltip
+    [infoTooltipTitle]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TITLE' | translate"
+    [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TEXT' | translate"
+  ></span>
+</div>
+<div class="filter-chips-container">
+  @if (hasChips()) {
+  <num-filter-chips [filterChips]="filterChips()"></num-filter-chips>
+  } @else {
+  <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
+  }
+</div>

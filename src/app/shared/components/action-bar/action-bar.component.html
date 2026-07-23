@@ -25,14 +25,14 @@
   <button
     (click)="downloadCRTDL()"
     [matTooltip]="
-      (downloadAllowed$ | async)
+      downloadAllowed()
         ? ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
     "
     type="button"
     class="num-button green icon"
-    [class.disabled]="(downloadAllowed$ | async) === false"
-    [disabled]="(downloadAllowed$ | async) === false"
+    [class.disabled]="!downloadAllowed()"
+    [disabled]="!downloadAllowed()"
   >
     <fa-icon size="lg" [icon]="'download'"></fa-icon>
   </button>
@@ -40,19 +40,34 @@
   <button
     (click)="onSaveDataQuery()"
     [matTooltip]="
-      (downloadAllowed$ | async)
+      downloadAllowed()
         ? ('SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
     "
     type="button"
     class="num-button green icon"
-    [class.disabled]="(downloadAllowed$ | async) === false"
-    [disabled]="(downloadAllowed$ | async) === false"
+    [class.disabled]="!downloadAllowed()"
+    [disabled]="!downloadAllowed()"
   >
     <fa-icon size="lg" [icon]="'save'"></fa-icon>
   </button>
   }
 
+  <button
+    type="button"
+    class="num-button icon"
+    (click)="openValidationModal()"
+    [class.green]="isDataDefinitionValid()"
+    [class.red]="!isDataDefinitionValid()"
+    [matTooltip]="
+      (isDataDefinitionValid()
+        ? 'SHARED_COMPONENTS.ACTION_BAR.VALID_DATA_DEFINITION_TOOLTIP'
+        : 'SHARED_COMPONENTS.ACTION_BAR.INVALID_DATA_DEFINITION_TOOLTIP'
+      ) | translate
+    "
+  >
+    <fa-icon size="lg" [icon]="isDataDefinitionValid() ? 'check' : 'exclamation'"></fa-icon>
+  </button>
   <div class="right">
     <ng-content></ng-content>
   </div>

@@ -4,13 +4,13 @@ import { Injectable, inject } from '@angular/core'
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
 import { UpgradeApiService } from '../Backend/Api/UpgradeApi.service'
 import { ProfileUpgradeMapperService } from './ProfileUpgradeMapper.service'
-import { ErrorLogProviderService } from '../Validation/ErrorLogProvider.service'
+import { ErrorLogProviderService } from '../Validation/External/ErrorLogProvider.service'
 import { catchError, filter, map, Observable, of, tap, throwError } from 'rxjs'
 import { AnnotationsData } from 'src/app/core/model/Upgrade/AnnotationsData'
 import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade'
 import { UpgradeData } from 'src/app/core/model/Upgrade/UpgradeData'
 import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData'
-import { CRTDLValidationService } from '../Validation/CRTDLValidation.service'
+import { CRTDLValidationService } from '../Validation/External/CRTDLValidation.service'
 
 // Handles: remote upgrade call + mapping + error log
 @Injectable({ providedIn: 'root' })

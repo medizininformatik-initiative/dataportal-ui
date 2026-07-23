@@ -1,0 +1,34 @@
+<div class="label-with-info">
+  <span class="num-text-accent">
+    {{ 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate }}
+  </span>
+  <span
+    class="info-icon"
+    numInfoTooltip
+    [infoTooltipTitle]="'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TITLE' | translate"
+    [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TEXT' | translate"
+  ></span>
+</div>
+<div class="filter-chips-container">
+  @if (messageType() === 'chips') {
+  <num-filter-chips [filterChips]="filterChips()"></num-filter-chips>
+  } @else if (messageType() === 'red') {
+  <num-missing-filter>
+    <span
+      [matTooltip]="
+        'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS_TOOLTIP_TEXT'
+          | translate : { feature: profileLabel() | displayTranslation }
+      "
+      message
+      (click)="navigate.emit()"
+    >
+      {{
+        'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS'
+          | translate : { feature: profileLabel() | displayTranslation }
+      }}
+    </span>
+  </num-missing-filter>
+  } @else {
+  <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
+  }
+</div>

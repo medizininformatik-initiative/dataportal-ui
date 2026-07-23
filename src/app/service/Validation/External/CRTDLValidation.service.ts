@@ -6,13 +6,13 @@ import { ErrorLogProviderService } from './ErrorLogProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { Observable, of, throwError } from 'rxjs'
-import { ValidationApiService } from '../Backend/Api/ValidationApi.service'
+import { ValidationApiService } from '../../Backend/Api/ValidationApi.service'
 import { ValidationReport } from 'src/app/model/Validation/ValidationReport'
 import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData'
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue'
 import { ValidationIssueMapperService } from './ValidationIssueMapper.service'
-import { TypeGuard } from '../TypeGuard/TypeGuard'
-import { SnackbarMessageService } from '../SnackbarMessage.service'
+import { TypeGuard } from '../../TypeGuard/TypeGuard'
+import { SnackbarMessageService } from '../../SnackbarMessage.service'
 
 @Injectable({
   providedIn: 'root',

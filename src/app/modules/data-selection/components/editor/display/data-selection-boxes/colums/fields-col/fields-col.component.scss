@@ -1,0 +1,12 @@
+.filter-chips-container {
+  margin-top: 8px;
+}
+
+.empty-state {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}

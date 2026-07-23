@@ -1,5 +1,5 @@
 .container {
-  padding: 16px;
+  margin: 16px;
   display: flex;
   flex-direction: column;
   width: 60em;
@@ -7,13 +7,12 @@
   border-radius: var(--border-radius-card);
   overflow: auto;
   height: 90vh;
+  width: 60vw;
 }
 
 .content-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  flex: 1;
+  height: 100%;
+  width: 100%;
 }
 
 .select-button {

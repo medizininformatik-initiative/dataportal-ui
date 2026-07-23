@@ -520,10 +520,12 @@
       },
       "DOWNLOAD": "Herunterladen",
       "DOWNLOAD_DISABLED": "Keine Machbarkeitsabfrage wurde definiert",
+      "INVALID_DATA_DEFINITION_TOOLTIP": "Die Datendefinition ist ungültig. Hier klicken, um weitere Informationen zu erhalten.",
       "SAVE": "Speichern",
       "SAVE_DISABLED": "Keine Daten zum Speichern",
       "UPLOAD": "Hochladen",
-      "UPLOAD_DISABLED": "Hochladen nicht verfügbar"
+      "UPLOAD_DISABLED": "Hochladen nicht verfügbar",
+      "VALID_DATA_DEFINITION_TOOLTIP": "Die Datendefinition ist gültig"
     },
     "CHIPS": {
       "CONTEXT": "Kontext",
@@ -609,6 +611,7 @@
       "MIN_LENGTH": "Bitte mindestens drei Buchstaben eingeben"
     },
     "TABLE": {
+      "ACTIONS": "Aktionen",
       "ADD": "Hinzufügen",
       "AVAILABILITY": "Verfügbarkeit",
       "AVAILABILITY_STATUS": {
@@ -620,16 +623,32 @@
         "VERY_LOW": "Sehr niedrig"
       },
       "CONTEXT": "Kontext",
+      "CRITERION": "Kriterium",
+      "CRITERION_VALIDATION": {
+        "INVALID": "Ungültig",
+        "MISSING_FILTER": "Filter fehlt",
+        "VALID": "Gültig"
+      },
       "DISPLAY": "Anzeige",
       "EMPTY": "",
       "ICON": "Verwandte Kriterien anzeigen",
       "NAME": "Name",
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
       "PATIENT_COUNT": "Anzahl der Patienten",
+      "PROFILE": "Merkmal",
+      "PROFILE_VALIDATION": {
+        "INVALID": "Ungültig",
+        "MISSING_FIELDS": "Fehlende Felder",
+        "MISSING_FIELDS_MISSING_REFERENCES": "Fehlende Felder · Fehlende Referenzen",
+        "MISSING_REFERENCE": "Fehlende Referenz",
+        "VALID": "Gültig"
+      },
       "SELECT_CHECKBOX": "Kriterium auswählen",
       "SITE": "Standort",
+      "STATUS": "Status",
       "TERMCODE": "Termcode",
-      "TERMINOLOGY_CODE": "Terminologie"
+      "TERMINOLOGY_CODE": "Terminologie",
+      "WHAT_IS_MISSING": "Was fehlt?"
     }
   },
   "SHARED_FILTER": {
