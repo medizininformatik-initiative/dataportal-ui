@@ -1,19 +1,20 @@
 import { Injectable, inject } from '@angular/core'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
-import { MenuProfileReferenceFunctionsService } from './MenuProfileReferenceFunctions.service'
+import { AbstractMenuItemsService } from '../AbstractMenuItems.service'
+import { ProfileReferenceMenuFunctionsService } from '../ProfileReference/ProfileReferenceMenuFunctionsService.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class MenuProfileReference {
-  private menuServiceDataSelectionFunctions = inject(MenuProfileReferenceFunctionsService)
-
-  constructor() {}
+export class ProfileReferenceMenuService extends AbstractMenuItemsService<
+  [string, (Record<string, unknown> | undefined)?]
+> {
+  private menuServiceDataSelectionFunctions = inject(ProfileReferenceMenuFunctionsService)
 
   /**
    * @returns Array of Menu functions for a dataselection profile box
    */
-  public getMenuItems(id: string, args?: Record<string, unknown>): MenuItemInterface[] {
+  public override getMenuItems(id: string, args?: Record<string, unknown>): MenuItemInterface[] {
     return [
       {
         disabled: false,

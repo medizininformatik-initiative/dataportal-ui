@@ -13,6 +13,7 @@ export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapte
   public adapt(detailsData: ProfileEntryDetails): ListItemDetailsData {
     const result: ListItemDetailsData = {
       display: detailsData.getDisplay(),
+      selectable: detailsData.getSelectable(),
     }
 
     const parents = detailsData.getParents()
@@ -59,7 +60,7 @@ export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapte
   private adaptRelative(relative: ProfileEntryRelative): ListItemDetailsRelativeData {
     return {
       display: relative.getDisplay(),
-      id: relative.getId(),
+      id: relative.getHashedUrl(),
     }
   }
 }

@@ -15,6 +15,7 @@ export abstract class AbstractListItemDetailsAdapter<
   public adapt(detailsData: D): ListItemDetailsData {
     const result: ListItemDetailsData = {
       display: detailsData.getDisplay(),
+      selectable: detailsData.getSelectable(),
     }
 
     const parents = detailsData.getParents()

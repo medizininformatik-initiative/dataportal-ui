@@ -34,7 +34,14 @@ export class ProfileEntryDetailsService extends AbstractEntryDetailsService<
     const parents = this.mapRelativeData(response.parents)
     const children = this.mapRelativeData(response.children)
     const fields = response.fields.map((field) => Display.fromJson(field.display))
-    return new ProfileEntryDetails(response.id, display, fields, parents, children)
+    return new ProfileEntryDetails(
+      response.id,
+      display,
+      fields,
+      parents,
+      children,
+      response.selectable
+    )
   }
 
   protected mapRelativeData(relatives: ProfileRelativeData[]): ProfileEntryRelative[] {

@@ -1,6 +1,6 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service'
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
@@ -9,15 +9,12 @@ import { RemoveReferenceService } from '../../../../service/RemoveReference.serv
 @Injectable({
   providedIn: 'root',
 })
-export class MenuServiceDataSelectionFunctions {
+export class DataSelectionMenuFunctionsService {
   private profileProvider = inject(ProfileProviderService)
   private dataSelectionProvider = inject(DataSelectionProviderService)
   private activeDataSelectionService = inject(ActiveDataSelectionService)
   private navigationHelperService = inject(NavigationHelperService)
   private removeReferenceService = inject(RemoveReferenceService)
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {}
 

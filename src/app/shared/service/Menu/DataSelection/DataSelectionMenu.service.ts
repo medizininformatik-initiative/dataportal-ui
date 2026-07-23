@@ -1,22 +1,22 @@
-import { Injectable, inject } from '@angular/core'
+import { AbstractMenuItemsService } from '../AbstractMenuItems.service'
+import { DataSelectionMenuFunctionsService } from './DataSelectionMenuFunctions.service'
+import { inject, Injectable } from '@angular/core'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
-import { MenuServiceDataSelectionFunctions } from './MenuServiceDataSelectionFunctions'
 
 @Injectable({
   providedIn: 'root',
 })
-export class MenuServiceDataSelection {
-  private menuServiceDataSelectionFunctions = inject(MenuServiceDataSelectionFunctions)
+export class DataSelectionMenuService extends AbstractMenuItemsService<[boolean]> {
+  private menuServiceDataSelectionFunctions = inject(DataSelectionMenuFunctionsService)
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {}
+  constructor() {
+    super()
+  }
 
   /**
    * @returns Array of Menu functions for a dataselection profile box
    */
-  public getMenuItemsForDataSelection(isMainProfile: boolean): MenuItemInterface[] {
+  public getMenuItems(isMainProfile: boolean): MenuItemInterface[] {
     return [
       {
         disabled: false,

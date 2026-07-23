@@ -1,6 +1,6 @@
-import { Display } from '../../../DataSelection/Profile/Display'
 import { AbstractRelative } from '../AbstractRelative'
-import { CriteriaRelativeData } from '../../../Interface/ListEntryDetailsData/CriteriaRelativesData'
+import { CriteriaRelativeData } from 'src/app/model/Interface/ListEntryDetailsData/CriteriaRelativeData'
+import { Display } from '../../../DataSelection/Profile/Display'
 import { TerminologySystemDictionary } from '../../../Utilities/TerminologySystemDictionary'
 
 export class CriteriaEntryRelative extends AbstractRelative {

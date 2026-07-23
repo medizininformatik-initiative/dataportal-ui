@@ -1,5 +1,5 @@
-import { Display } from '../../../DataSelection/Profile/Display'
 import { AbstractDetails } from '../AbstractDetails'
+import { Display } from '../../../DataSelection/Profile/Display'
 import { ProfileEntryRelative } from './ProfileEntryRelative'
 
 export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
@@ -11,9 +11,10 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
     display: Display,
     fields: Display[],
     parents: ProfileEntryRelative[] = [],
-    children: ProfileEntryRelative[] = []
+    children: ProfileEntryRelative[] = [],
+    selectable: boolean
   ) {
-    super(display, parents, children)
+    super(display, parents, children, selectable)
     this.id = id
     this.fields = fields
   }

@@ -5,7 +5,7 @@ import { FilterChipData } from '../../models/FilterChips/FilterChipData'
 import { MenuItemInterface } from '../../models/Menu/MenuItemInterface'
 import { Observable, of } from 'rxjs'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
-import { ReferenceCriterionMenuItems } from '../../service/Menu/ReferenceCriterion/ReferenceCriterionMenuItems.service'
+import { ReferenceCriterionMenuItemsService } from '../../service/Menu/ReferenceCriterion/ReferenceCriterionMenuItems.service'
 import { TerminologySystemDictionary } from '../../../model/Utilities/TerminologySystemDictionary'
 import { CdkDrag } from '@angular/cdk/drag-drop'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -30,7 +30,7 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
   ],
 })
 export class ReferenceCriteriaBoxComponent implements OnInit {
-  private menuService = inject(ReferenceCriterionMenuItems)
+  private menuService = inject(ReferenceCriterionMenuItemsService)
   private filterChipsService = inject(CriterionFilterChipService)
 
   readonly referenceCriterion = input<ReferenceCriterion>(undefined)
@@ -57,7 +57,7 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
   }
 
   private getMenuItems() {
-    this.menuItems = this.menuService.getMenuItemsForRefrenceCriterion()
+    this.menuItems = this.menuService.getMenuItems()
   }
 
   private getFilterChips() {

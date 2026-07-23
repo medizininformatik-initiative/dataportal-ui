@@ -1,5 +1,5 @@
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { inject, Injectable } from '@angular/core'
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
@@ -8,7 +8,7 @@ import { RemoveReferenceService } from '../../../../service/RemoveReference.serv
 @Injectable({
   providedIn: 'root',
 })
-export class MenuProfileReferenceFunctionsService {
+export class ProfileReferenceMenuFunctionsService {
   private profileProviderService = inject(ProfileProviderService)
   private navigationHelperService = inject(NavigationHelperService)
   private dataSelectionProviderService = inject(DataSelectionProviderService)
