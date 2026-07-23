@@ -1,5 +1,5 @@
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
-import { Component, inject, OnInit, signal } from '@angular/core'
+import { Component, inject, OnInit } from '@angular/core'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
 import { ProfileSearchActionBarComponent } from './action-bar/profile-search-action-bar.component'
@@ -25,13 +25,8 @@ export class SearchDataSelectionComponent implements OnInit {
   private appSettingsProviderService = inject(AppSettingsProviderService)
 
   emailLink = ''
-  readonly searchText = signal('')
 
   ngOnInit(): void {
     this.emailLink = this.appSettingsProviderService.getEmail()
-  }
-
-  onSearchTextChange(text: string): void {
-    this.searchText.set(text)
   }
 }
