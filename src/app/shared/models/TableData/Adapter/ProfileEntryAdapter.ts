@@ -10,7 +10,7 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
   }
 
   protected buildHeaders(): TableHeaderData {
-    const headers = ['EMPTY', 'DISPLAY', 'AVAILABILITY', 'MODULE']
+    const headers = ['DISPLAY', 'AVAILABILITY', 'MODULE']
     return { headers }
   }
 
@@ -29,24 +29,15 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
   }
 
   private buildCells(entry: ProfileListEntry): Array<any> {
-    return [
-      this.checkBoxCell(entry),
-      this.displayCell(entry),
-      this.availabilityCell(entry),
-      this.moduleCell(entry),
-    ]
+    return [this.checkBoxTextCell(entry), this.availabilityCell(entry), this.moduleCell(entry)]
   }
 
-  private checkBoxCell(entry: ProfileListEntry): any {
+  private checkBoxTextCell(entry: ProfileListEntry): any {
     const checkboxoptions = {
       isSelected: false,
       isDisabled: entry.getSelectable(),
     }
-    return TableCellBuilder.withCheckbox(checkboxoptions)
-  }
-
-  private displayCell(entry: ProfileListEntry): any {
-    return TableCellBuilder.withDisplay(entry.getDisplay())
+    return TableCellBuilder.withCheckboxText(entry.getDisplay(), checkboxoptions)
   }
 
   private availabilityCell(entry: ProfileListEntry): any {
