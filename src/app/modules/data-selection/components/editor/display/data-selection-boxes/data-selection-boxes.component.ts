@@ -1,22 +1,27 @@
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
+import { CheckboxComponent } from '../../../../../../shared/components/checkbox/checkbox.component'
 import { Component, computed, effect, inject, input } from '@angular/core'
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
+import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
-import { DisplayTranslationPipe } from 'src/app/shared/pipes/DisplayTranslationPipe'
-import { FieldsColComponent } from './colums/fields-col/fields-col.component'
-import { FiltersColComponent } from './colums/filters-col/filters-col.component'
-import { LabelColComponent } from './colums/label-col/label-col.component'
-import { LinkedReferencesComponent } from './linked-references/linked-references.component'
-import { MenuComponent } from 'src/app/shared/components/menu/menu.component'
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
-import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
+import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
+import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
+import { FilterChipsComponent } from '../../../../../../shared/components/filter-chips/filter-chips.component'
+import { InfoTooltipDirective } from '../../../../../../shared/directives/info-tooltip.directive'
+import { LinkedBadgeComponent } from '../../../../../../shared/components/linked-badge/linked-badge.component'
+import { map, tap } from 'rxjs'
+import { MenuComponent } from '../../../../../../shared/components/menu/menu.component'
+import { MenuItemInterface } from '../../../../../../shared/models/Menu/MenuItemInterface'
+import { DataSelectionMenuService } from '../../../../../../shared/service/Menu/DataSelection/DataSelectionMenu.service'
+import { MissingFilterComponent } from '../../../../../../shared/components/missing-filter/missing-filter.component'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { ReferenceColComponent } from './colums/reference-col/reference-col.component'
+import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference'
+import { ProfileReferenceTileComponent } from '../../../../../../shared/components/profile-reference-tile/profile-reference-tile.component'
 import { RemoveReferenceService } from 'src/app/service/RemoveReference.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -25,64 +30,102 @@ import { TranslateModule } from '@ngx-translate/core'
   providers: [DataSelectionFieldsChipsService],
   standalone: true,
   imports: [
-    DisplayTranslationPipe,
-    FieldsColComponent,
-    FiltersColComponent,
-    LabelColComponent,
-    LinkedReferencesComponent,
+    InfoTooltipDirective,
+    FilterChipsComponent,
+    CheckboxComponent,
     MenuComponent,
-    ReferenceColComponent,
+    LinkedBadgeComponent,
+    ProfileReferenceTileComponent,
     TranslateModule,
+    DisplayTranslationPipe,
+    MissingFilterComponent,
+    MatTooltip,
   ],
 })
 export class DataSelectionBoxesComponent {
-  private readonly removeReferenceService = inject(RemoveReferenceService)
-  private readonly menuService = inject(MenuServiceDataSelection)
-  private readonly appSettingsProvider = inject(AppSettingsProviderService)
-  private readonly dataSelectionProvider = inject(DataSelectionProviderService)
-  private readonly navigationHelper = inject(NavigationHelperService)
+  private fieldsFilterChipsService = inject(DataSelectionFieldsChipsService)
+  private filtersFilterChipsService = inject(DataSelectionFiltersFilterChips)
+  private removeReferenceService = inject(RemoveReferenceService)
+  private menuService = inject(DataSelectionMenuService)
+  private appSettingsProvider = inject(AppSettingsProviderService)
+  private dataSelectionProviderService = inject(DataSelectionProviderService)
+  private navigationHelperService = inject(NavigationHelperService)
 
-  readonly profile = input.required<DataSelectionProfile>()
-  readonly isEditable = input<boolean>(true)
+  readonly profile = input<DataSelectionProfile>()
+  readonly isEditable = input<boolean>()
 
-  readonly isReferenced = computed(() => {
-    const dataSelection = this.activeDataSelection()
-    if (!dataSelection) {
-      return false
-    }
-    return dataSelection.getProfiles().some((profile: DataSelectionProfile) =>
-      profile
-        .getProfileFields()
-        .getSelectedReferenceFields()
-        .some((ref) => ref.getLinkedProfileIds().includes(profile.getId()))
-    )
+  displayExpanded = false
+
+  readonly display = computed(() => this.profile()?.getDisplay().getOriginal())
+  readonly label = computed(() => this.profile()?.getLabel())
+
+  readonly fieldsFilterChips = toSignal(this.fieldsFilterChipsService.filterChips$, {
+    initialValue: [] as FilterChipData[],
   })
+
+  readonly filtersFilterChips = computed<FilterChipData[]>(() => {
+    const filters = this.profile()?.getFilters() ?? []
+    return filters.length > 0
+      ? this.filtersFilterChipsService.generateFilterChipsForDataSelectionFilters(filters)
+      : []
+  })
+
+  readonly unlinkedRequiredOrRecommendedReferences = computed(
+    () => this.profile().getProfileFields().getUnlinkedRequiredOrRecommendedReferences() ?? []
+  )
+
+  readonly selectedReferenceFields = computed(
+    () => this.profile().getProfileFields().getSelectedReferenceFields() ?? []
+  )
 
   readonly menuItems = computed<MenuItemInterface[]>(() => {
     const isMainProfile =
       this.appSettingsProvider.getDsePatientProfileUrl() === this.profile()?.getUrl()
-    return this.menuService.getMenuItemsForDataSelection(isMainProfile)
+    return this.menuService.getMenuItems(isMainProfile)
   })
 
-  private readonly activeDataSelection = toSignal(
-    this.dataSelectionProvider.getActiveDataSelection(),
-    { initialValue: undefined }
-  )
+  private readonly activeDataSelection$ = this.dataSelectionProviderService.getActiveDataSelection()
+
+  readonly activeDataSelection = toSignal(this.activeDataSelection$, {
+    initialValue: undefined,
+  })
+
+  readonly isReferenced = computed(() => {
+    const dataSelection = this.activeDataSelection()
+    const profile = this.profile()
+
+    if (!dataSelection || !profile) {
+      return false
+    }
+
+    return dataSelection.getProfiles().some((selectionProfile) =>
+      selectionProfile
+        .getProfileFields()
+        .getSelectedReferenceFields()
+        .some((selectedReferenceField) => {
+          return selectedReferenceField
+            .getLinkedProfileIds()
+            .some((linkedProfileId) => profile.getId() === linkedProfileId)
+        })
+    )
+  })
+
+  constructor() {
+    effect(() => {
+      const fields = this.profile()?.getProfileFields()?.getSelectedBasicFields() ?? []
+      this.fieldsFilterChipsService.generateFilterChipsFromDataSelectionFields(fields)
+    })
+  }
+
+  public toggleIsReferenceSet(reference: ProfileReference): void {
+    reference.setIsReferenceSet(!reference.getIsReferenceSet())
+  }
 
   public deleteProfile(id: string): void {
     this.removeReferenceService.delete(id)
   }
 
   public navigate(): void {
-    const id = this.profile()?.getId()
-    if (id) {
-      this.navigationHelper.navigateToEditProfile(id)
-    }
-  }
-
-  public onReferenceSetChange(isReferenceSet: boolean): void {
-    this.profile().getReference().setIsReferenceSet(isReferenceSet)
-    const clonedProfile = DataSelectionProfileCloner.deepCopyProfile(this.profile())
-    this.dataSelectionProvider.setProfileInActiveDataSelection(clonedProfile)
+    this.navigationHelperService.navigateToEditProfile(this.profile().getId())
   }
 }
