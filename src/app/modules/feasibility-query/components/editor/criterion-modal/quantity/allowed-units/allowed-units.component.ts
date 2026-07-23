@@ -1,5 +1,5 @@
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
-import { Component, OnInit, input, model, output } from '@angular/core'
+import { Component, computed, input, model, output } from '@angular/core'
 import { CloneQuantityUnit } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Quantity/CloneQuantityUnit'
 import { MatFormField } from '@angular/material/form-field'
 import { MatSelect } from '@angular/material/select'
@@ -12,28 +12,18 @@ import { MatOption } from '@angular/material/core'
   standalone: true,
   imports: [MatFormField, MatSelect, MatOption],
 })
-export class AllowedUnitsComponent implements OnInit {
+export class AllowedUnitsComponent {
   readonly allowedUnits = input<QuantityUnit[]>([])
-
   readonly selectedUnit = model<QuantityUnit>()
-
   readonly selectionChange = output<QuantityUnit>()
 
-  selectedUnitDisplay: string
-
-  ngOnInit() {
-    this.selectedUnitDisplay = this.selectedUnit()?.getDisplay() ?? ''
-  }
+  readonly selectedUnitDisplay = computed(() => this.selectedUnit()?.getDisplay() ?? '')
 
   onSelectionChange(selectedValue: string) {
     const unit = this.allowedUnits().find((u) => u.getDisplay() === selectedValue)
     if (unit) {
       this.selectedUnit.set(unit)
-      this.emitQuantityUnitInstance()
+      this.selectionChange.emit(CloneQuantityUnit.deepCopyQuantityUnit(unit))
     }
-  }
-
-  private emitQuantityUnitInstance() {
-    this.selectionChange.emit(CloneQuantityUnit.deepCopyQuantityUnit(this.selectedUnit()))
   }
 }

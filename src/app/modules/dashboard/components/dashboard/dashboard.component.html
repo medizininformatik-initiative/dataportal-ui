@@ -1,48 +1,54 @@
 <div class="fullscreen">
-  <num-header [showToggle]="true">{{ 'DASHBOARD.HEADER' | translate }}</num-header>
-  <num-header-description>
-    {{ 'DASHBOARD.INFO.TEXT' | translate }}
-  </num-header-description>
+  <div class="cards-section">
+    <num-header [showToggle]="true">{{ 'DASHBOARD.HEADER' | translate }}</num-header>
+    <num-header-description>
+      {{ 'DASHBOARD.INFO.TEXT' | translate }}
+    </num-header-description>
 
-  <div class="link-boxes" fxLayout="row wrap" fxLayoutAlign="start">
-    <div
-      fxFlex="30"
-      fxLayout="column"
-      fxLayoutAlign="start start"
-      class="linkBox newQueryBox dotted-background"
-    >
-      <div class="queryBoxHeader content">{{ 'DASHBOARD.DATAQUERY.HEADER' | translate }}</div>
-      <num-button class="content" (click)="navigateToDataQueryEditor()" type="blue">{{
-        'DASHBOARD.DATAQUERY.BUTTON' | translate
-      }}</num-button>
-    </div>
+    <div class="link-boxes">
+      <div class="linkBox linkBox--blue">
+        <div class="queryBoxHeader">{{ 'DASHBOARD.NEWQUERY.HEADER' | translate }}</div>
+        <num-button (click)="navigateToFeasibilityEditor()" type="blue">
+          {{ 'DASHBOARD.NEWQUERY.BUTTON' | translate }}
+        </num-button>
+      </div>
 
-    <div fxFlex="30" fxLayout="column" fxLayoutAlign="start start" class="linkBox newQueryBox">
-      <div class="queryBoxHeader">{{ 'DASHBOARD.NEWQUERY.HEADER' | translate }}</div>
-      <num-button (click)="navigateToFeasibilityEditor()" type="blue">
-        {{ 'DASHBOARD.NEWQUERY.BUTTON' | translate }}
-      </num-button>
-    </div>
+      <div class="linkBox linkBox--green">
+        <div class="queryBoxHeader">{{ 'DASHBOARD.PROPOSALPORTAL.HEADER' | translate }}</div>
+        <num-button type="green" (click)="navigateToProposalPortal()">
+          {{ 'DASHBOARD.PROPOSALPORTAL.BUTTON' | translate }}
+        </num-button>
+      </div>
 
-    <div fxFlex="30" fxLayout="column" fxLayoutAlign="start start" class="linkBox myQueryBox">
-      <div class="queryBoxHeader">{{ 'DASHBOARD.DATASELECTION.HEADER' | translate }}</div>
-      <num-button (click)="navigateToDataSelectionEditor()" type="blue">
-        {{ 'DASHBOARD.DATASELECTION.ACTION_BAR' | translate }}
-      </num-button>
-    </div>
+      <div class="linkBox linkBox--grey">
+        <div class="queryBoxHeader">{{ 'DASHBOARD.SAVED_QUERIES.HEADER' | translate }}</div>
+        <num-button (click)="navigateToSavedQueries()" type="blue">
+          {{ 'DASHBOARD.SAVED_QUERIES.BUTTON' | translate }}
+        </num-button>
+      </div>
 
-    <div fxFlex="30" fxLayout="column" fxLayoutAlign="start start" class="linkBox myQueryBox">
-      <div class="queryBoxHeader">{{ 'DASHBOARD.SAVED_QUERIES.HEADER' | translate }}</div>
-      <num-button (click)="navigateToSavedQueries()" type="blue">{{
-        'DASHBOARD.SAVED_QUERIES.BUTTON' | translate
-      }}</num-button>
-    </div>
+      <div class="linkBox linkBox--blue">
+        <div class="queryBoxHeader">{{ 'DASHBOARD.DATASELECTION.HEADER' | translate }}</div>
+        <num-button (click)="navigateToDataSelectionEditor()" type="blue">
+          {{ 'DASHBOARD.DATASELECTION.BUTTON' | translate }}
+        </num-button>
+      </div>
 
-    <div fxFlex="30" fxLayout="column" fxLayoutAlign="start start" class="linkBox myQueryBox">
-      <div class="queryBoxHeader">{{ 'DASHBOARD.PREPOSALPORTAL.HEADER' | translate }}</div>
-      <num-button type="blue" (click)="openProposalPortalLink()">{{
-        'DASHBOARD.PREPOSALPORTAL.HEADER' | translate
-      }}</num-button>
+      <div class="linkBox linkBox--grey">
+        <div class="queryBoxHeader">{{ 'DASHBOARD.UPLOAD_DATADEFINITION.HEADER' | translate }}</div>
+        <input
+          [attr.data-cy]="'upload-crtdl'"
+          type="file"
+          class="file-input"
+          (change)="upload($event)"
+          #fileUpload
+        />
+        <num-button (click)="fileUpload.click()" type="blue">
+          {{ 'DASHBOARD.UPLOAD_DATADEFINITION.BUTTON' | translate }}
+        </num-button>
+      </div>
     </div>
   </div>
+
+  <num-dashboard-faq class="faq-section"></num-dashboard-faq>
 </div>

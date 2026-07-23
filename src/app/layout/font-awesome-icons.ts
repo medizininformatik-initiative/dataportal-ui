@@ -48,10 +48,10 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faUnlink } from '@fortawesome/free-solid-svg-icons'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faUsersCog } from '@fortawesome/free-solid-svg-icons'
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
-
 import { faWrench } from '@fortawesome/free-solid-svg-icons'
 import {
   faAngleDoubleRight,
@@ -144,6 +144,7 @@ export const FONT_AWESOME_ICONS = [
   faFile,
   faFileImage,
   faFolderOpen,
+  faHome,
   faExclamation,
   faExclamationTriangle,
   faInfoCircle,

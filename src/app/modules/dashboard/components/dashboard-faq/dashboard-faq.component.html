@@ -1,0 +1,16 @@
+<div class="faq-header">
+  <h2 class="faq-title">{{ 'FAQ.TITLE' | translate }}</h2>
+</div>
+
+<div class="faq-scroll">
+  <mat-accordion>
+    @for (item of faqItems; track item.questionKey) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ item.questionKey | translate }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{ item.answerKey | translate }}</p>
+    </mat-expansion-panel>
+    }
+  </mat-accordion>
+</div>
