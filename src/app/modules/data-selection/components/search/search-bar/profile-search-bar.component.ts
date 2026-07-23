@@ -35,7 +35,9 @@ export class ProfileSearchBarComponent {
   private readonly destroyRef = inject(DestroyRef)
 
   readonly searchFilter = signal<SearchFilterData | undefined>(undefined)
-  readonly searchText = signal('')
+  readonly searchText = toSignal(this.profileSearchService.getActiveSearchTerm(), {
+    initialValue: '',
+  })
   readonly searchTextChange = output<string>()
 
   private readonly selectedModules = toSignal(
@@ -74,7 +76,6 @@ export class ProfileSearchBarComponent {
   }
 
   public onSearchTextChange(text: string): void {
-    this.searchText.set(text)
     this.searchTextChange.emit(text)
     this.profileSearchService.search(text).subscribe()
   }

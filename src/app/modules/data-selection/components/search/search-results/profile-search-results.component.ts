@@ -7,9 +7,11 @@ import { ListItemDetailsGenericComponent } from 'src/app/shared/components/list-
 import { map } from 'rxjs'
 import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav'
 import { MatTooltip } from '@angular/material/tooltip'
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
 import { ProfileEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ProfileEntryAdapter'
 import { ProfileEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/ProfileEntryDetails.service'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
+import { ProfileListItemDetailsMenuService } from 'src/app/shared/service/Menu/ListItemDetails/Profile/ProfileListItemDetailsMenu.service'
 import { ProfileListItemDetailsAdapter } from 'src/app/shared/models/ListItemDetails/Adapter/ProfileListItemDetailsAdapter'
 import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
 import { SelectedProfileService } from 'src/app/service/DataSelection/Selection/SelectedProfileEntry.service'
@@ -40,9 +42,13 @@ export class ProfileSearchResultsComponent {
   private profileSearchService = inject(ProfileSearchService)
   private profileEntryDetailsService = inject(ProfileEntryDetailsService)
   private selectedProfileService = inject(SelectedProfileService)
+  private profileListItemDetailsMenuService = inject(ProfileListItemDetailsMenuService)
 
-  readonly searchText = input<string>('')
   readonly drawer = viewChild<MatDrawer>('drawer')
+
+  private readonly activeSearchTerm = toSignal(this.profileSearchService.getActiveSearchTerm(), {
+    initialValue: '',
+  })
 
   private readonly searchResultEntries = toSignal(
     this.profileSearchService.getSearchResults().pipe(map((r) => r?.getResults() ?? [])),
@@ -69,6 +75,10 @@ export class ProfileSearchResultsComponent {
 
   readonly adaptedDetailsData = signal<ListItemDetailsData | undefined>(undefined)
 
+  public getMenuItemsForListItem(data: ListItemDetailsData): MenuItemInterface[] {
+    return this.profileListItemDetailsMenuService.getMenuItems(data.selectable)
+  }
+
   public onRowSelected(row: TableRowData): void {
     const entry = row.originalEntry as ProfileListEntry
     if (this.isProfileSelected(entry.getUrl())) {
@@ -93,6 +103,6 @@ export class ProfileSearchResultsComponent {
   }
 
   public loadMoreSearchResults(): void {
-    this.profileSearchService.loadNextPage(this.searchText()).subscribe()
+    this.profileSearchService.loadNextPage(this.activeSearchTerm()).subscribe()
   }
 }

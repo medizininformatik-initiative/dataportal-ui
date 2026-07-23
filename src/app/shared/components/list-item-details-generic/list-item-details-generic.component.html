@@ -55,6 +55,7 @@
         <div class="detail-value">
           <num-list-item-details-generic-sections
             [listItemDetails]="parents"
+            [menuItems]="menuItems()"
             (selectedRelative)="getSelectedRelative($event)"
           />
         </div>
@@ -74,6 +75,7 @@
         <div class="detail-value">
           <num-list-item-details-generic-sections
             [listItemDetails]="children"
+            [menuItems]="menuItems()"
             (selectedRelative)="getSelectedRelative($event)"
           />
         </div>
@@ -97,6 +99,7 @@
     <div class="tab-content">
       <num-list-item-details-generic-sections
         [listItemDetails]="parentsTab"
+        [menuItems]="menuItems()"
         (selectedRelative)="getSelectedRelative($event)"
       />
     </div>
@@ -113,6 +116,7 @@
     <div class="tab-content">
       <num-list-item-details-generic-sections
         [listItemDetails]="childrenTab"
+        [menuItems]="menuItems()"
         (selectedRelative)="getSelectedRelative($event)"
       />
     </div>

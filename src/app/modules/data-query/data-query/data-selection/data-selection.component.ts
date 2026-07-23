@@ -1,7 +1,7 @@
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { Component, inject } from '@angular/core'
 import { DataSelectionActionBarComponent } from './action-bar/data-selection-action-bar.component'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { DisplayProfilesComponent } from '../../../data-selection/components/editor/display/display-profiles/display-profiles.component'
 import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'

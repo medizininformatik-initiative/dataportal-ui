@@ -14,7 +14,10 @@
           </button>
         </div>
         <div class="details-container">
-          <num-list-item-details-generic [listItemDetails]="data"></num-list-item-details-generic>
+          <num-list-item-details-generic
+            [listItemDetails]="data"
+            [menuItems]="getMenuItemsForListItem(data)"
+          ></num-list-item-details-generic>
         </div>
       </div>
       }
