@@ -12,11 +12,15 @@ export class ProfileSearchUrlStrategy implements SearchUrlStrategy {
   }
 
   public getSearchUrl(page: number, pageSize?: number): string {
-    return new SearchUrlBuilder(DataSelectionPaths.PROFILE_SEARCH_ENDPOINT)
+    const builder = new SearchUrlBuilder(DataSelectionPaths.PROFILE_SEARCH_ENDPOINT)
       .withSearchTerm(this.searchText)
-      .withModule(this.moduleFilter)
       .withPage(page)
       .withPageSize(pageSize)
-      .buildUrl()
+
+    if (this.moduleFilter) {
+      builder.withModule(this.moduleFilter)
+    }
+
+    return builder.buildUrl()
   }
 }

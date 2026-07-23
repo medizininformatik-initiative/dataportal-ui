@@ -1,6 +1,6 @@
 import { Component, computed, inject, input } from '@angular/core'
 import { DataSelectionBoxesComponent } from '../data-selection-boxes/data-selection-boxes.component'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 

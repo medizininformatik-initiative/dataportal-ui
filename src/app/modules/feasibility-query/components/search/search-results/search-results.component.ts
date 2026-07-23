@@ -22,6 +22,8 @@ import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { CriteriaListItemDetailsMenuService } from 'src/app/shared/service/Menu/ListItemDetails/Criteria/CriteriaListItemDetailsMenu.service'
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
 
 @Component({
   selector: 'num-criteria-search-results',
@@ -48,7 +50,7 @@ export class SearchResultsComponent implements OnDestroy {
   )
   private criteriaEntryDetailsService = inject(CriteriaEntryDetailsService)
   private snackbarService = inject(SnackbarMessageService)
-
+  private criterionListItemDetailsMenuService = inject(CriteriaListItemDetailsMenuService)
   readonly drawer = viewChild<MatDrawer>('drawer')
 
   private searchResultEntries = toSignal(
@@ -63,6 +65,8 @@ export class SearchResultsComponent implements OnDestroy {
   readonly searchText = toSignal(this.criteriaSearchService.getActiveSearchTerm(), {
     initialValue: '',
   })
+
+  menuItems = signal<MenuItemInterface[]>([])
 
   readonly adaptedData = computed<TableData>(() => {
     const data = new CriteriaListEntryAdapter().adapt(this.searchResultEntries())
@@ -91,6 +95,10 @@ export class SearchResultsComponent implements OnDestroy {
   }
 
   readonly adaptedDetailsData = signal<ListItemDetailsData | undefined>(undefined)
+
+  public getMenuItemsForListItem(listItemDetailsData: ListItemDetailsData) {
+    return this.criterionListItemDetailsMenuService.getMenuItems(listItemDetailsData.selectable)
+  }
 
   public setSelectedRowItem(item: TableRowData): void {
     const selectedIds = this.selectedTableItemsService.getIds()
