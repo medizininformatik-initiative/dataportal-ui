@@ -1,6 +1,7 @@
-import { AvailabilityStatusType } from 'src/app/model/Availability/AvailabilityStatusType';
+import { AvailabilityStatusType } from 'src/app/model/Availability/AvailabilityStatusType'
+import { TableCellDataTypes } from './TableCellType'
 
 export interface AvailabilityCellData {
-  type: 'availability'
+  type: TableCellDataTypes.AVAILABILITY
   value: AvailabilityStatusType
 }

@@ -3,6 +3,7 @@ import { AbstractTableAdapter } from './AbstractTableAdapter'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
 import { TableCellBuilder } from '../cells/TableCellBuilder'
+import { CellDataContext } from '../cells/TableCellType'
 
 export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> {
   constructor() {
@@ -10,7 +11,7 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
   }
 
   protected buildHeaders(): TableHeaderData {
-    const headers = ['DISPLAY', 'AVAILABILITY', 'MODULE']
+    const headers = ['EMPTY', 'DISPLAY', 'AVAILABILITY', 'MODULE']
     return { headers }
   }
 
@@ -29,7 +30,16 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
   }
 
   private buildCells(entry: ProfileListEntry): Array<any> {
-    return [this.checkBoxTextCell(entry), this.availabilityCell(entry), this.moduleCell(entry)]
+    return [
+      this.iconCell(),
+      this.checkBoxTextCell(entry),
+      this.availabilityCell(entry),
+      this.moduleCell(entry),
+    ]
+  }
+
+  private iconCell(): any {
+    return TableCellBuilder.withIcon('sitemap', CellDataContext.FEATURE)
   }
 
   private checkBoxTextCell(entry: ProfileListEntry): any {
@@ -37,7 +47,11 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
       isSelected: false,
       isDisabled: entry.getSelectable(),
     }
-    return TableCellBuilder.withCheckboxText(entry.getDisplay(), checkboxoptions)
+    return TableCellBuilder.withCheckboxText(
+      entry.getDisplay(),
+      checkboxoptions,
+      CellDataContext.FEATURE
+    )
   }
 
   private availabilityCell(entry: ProfileListEntry): any {

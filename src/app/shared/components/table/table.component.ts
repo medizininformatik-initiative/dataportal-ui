@@ -4,6 +4,7 @@ import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
 import { TableRowData } from '../../models/TableData/TableRowData'
 import { TableHeaderComponent } from './table-header/table-header.component'
+import { TableCellDataTypes } from '../../models/TableData/cells/TableCellType'
 
 @Component({
   selector: 'num-table',
@@ -24,7 +25,7 @@ export class TableComponent {
       const foundRow = this.tableData().body?.rows?.find((row) => row.id === id)
       if (foundRow) {
         const checkboxCell = foundRow.cells.find(
-          (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+          (c): c is CheckboxTextCellData => c.type === TableCellDataTypes.CHECKBOXTEXT
         )
         if (checkboxCell) {
           checkboxCell.isSelected = false

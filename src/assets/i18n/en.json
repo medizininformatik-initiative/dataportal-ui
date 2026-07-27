@@ -635,6 +635,10 @@
         "VERY_HIGH": "Very high",
         "VERY_LOW": "Very low"
       },
+      "CONCEPT": {
+        "NOT_SELECTABLE": "Concept cannot be selected",
+        "SELECT_CHECKBOX": "Select Concept"
+      },
       "CONTEXT": "Context",
       "CRITERION": "Criterion",
       "CRITERION_VALIDATION": {
@@ -645,9 +649,20 @@
       "DISPLAY": "Display",
       "EMPTY": "",
       "ICON": "Show related criteria",
+      "CRITERIA": {
+        "ICON": "Show related criteria",
+        "NOT_SELECTABLE": "Criterion cannot be selected",
+        "SELECT_CHECKBOX": "Select Criteria"
+      },
+      "DISPLAY": "Anzeige",
+      "EMPTY": "",
+      "FEATURE": {
+        "ICON": "Show related features",
+        "NOT_SELECTABLE": "Feature cannot be selected",
+        "SELECT_CHECKBOX": "Select Feature"
+      },
       "MODULE": "Modul",
       "NAME": "Name",
-      "NOT_SELECTABLE": "Criterion cannot be selected",
       "PATIENT_COUNT": "Number of patients",
       "PROFILE": "Profile",
       "PROFILE_VALIDATION": {

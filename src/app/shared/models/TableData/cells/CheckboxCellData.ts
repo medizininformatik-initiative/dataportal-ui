@@ -1,5 +1,8 @@
+import { CellDataContext, TableCellDataTypes } from './TableCellType'
+
 export interface CheckboxCellData {
-  type: 'checkbox'
+  type: TableCellDataTypes.CHECKBOX
   isSelected: boolean
   isDisabled: boolean
+  context: CellDataContext
 }

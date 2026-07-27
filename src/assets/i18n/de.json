@@ -624,7 +624,16 @@
         "VERY_HIGH": "Sehr hoch",
         "VERY_LOW": "Sehr niedrig"
       },
+      "CONCEPT": {
+        "NOT_SELECTABLE": "Konzept kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Konzept auswählen"
+      },
       "CONTEXT": "Kontext",
+      "CRITERIA": {
+        "ICON": "Verwandte Kriterien anzeigen",
+        "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Kriterium auswählen"
+      },
       "CRITERION": "Kriterium",
       "CRITERION_VALIDATION": {
         "INVALID": "Ungültig",
@@ -633,7 +642,11 @@
       },
       "DISPLAY": "Anzeige",
       "EMPTY": "",
-      "ICON": "Verwandte Kriterien anzeigen",
+      "FEATURE": {
+        "ICON": "Verwandte Merkmale anzeigen",
+        "NOT_SELECTABLE": "Merkmal kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Merkmal auswählen"
+      },
       "MODULE": "Modul",
       "NAME": "Name",
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",

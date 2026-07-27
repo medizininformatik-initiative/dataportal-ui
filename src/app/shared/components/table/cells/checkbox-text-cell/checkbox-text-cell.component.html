@@ -2,8 +2,8 @@
   <num-checkbox
     [matTooltip]="
       !cell().isDisabled
-        ? ('SHARED_COMPONENTS.TABLE.NOT_SELECTABLE' | translate)
-        : ('SHARED_COMPONENTS.TABLE.SELECT_CHECKBOX' | translate)
+        ? ('SHARED_COMPONENTS.TABLE.' + cell().context + '.NOT_SELECTABLE' | translate)
+        : ('SHARED_COMPONENTS.TABLE.' + cell().context + '.SELECT_CHECKBOX' | translate)
     "
     [disabled]="!cell().isDisabled"
     [checked]="cell().isSelected"

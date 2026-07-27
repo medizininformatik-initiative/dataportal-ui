@@ -15,6 +15,7 @@ import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { TableCellDataTypes } from '../../../../../shared/models/TableData/cells/TableCellType'
 
 @Component({
   selector: 'num-concept-filter-table',
@@ -78,7 +79,7 @@ export class ConceptFilterTableComponent {
       const concept = CloneConcept.deepCopyConcept(listEntry.getConcept())
       this.clearSelectedConceptArray()
       const checkboxCell = row.cells.find(
-        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+        (c): c is CheckboxTextCellData => c.type === TableCellDataTypes.CHECKBOXTEXT
       )
       if (checkboxCell) {
         checkboxCell.isSelected = !!this.selectedConceptProviderService.findConcept(concept)
