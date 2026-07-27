@@ -12,6 +12,7 @@ import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriter
 import { TableComponent } from '../../../../../../shared/components/table/table.component'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
+import { TableCellDataTypes } from '../../../../../../shared/models/TableData/cells/TableCellType'
 
 export type SelectedTab = 'FOUND' | 'NOTFOUND'
 
@@ -43,7 +44,7 @@ export class BulkSearchResultsComponent {
     const tableData = new CriteriaBulkFoundListEntryAdapter().adapt(result.getFound())
     tableData.body?.rows?.forEach((row) => {
       const checkboxCell = row.cells.find(
-        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+        (c): c is CheckboxTextCellData => c.type === TableCellDataTypes.CHECKBOXTEXT
       )
       if (checkboxCell) {
         const entryId = (row.originalEntry as CriteriaBulkEntry).getId()

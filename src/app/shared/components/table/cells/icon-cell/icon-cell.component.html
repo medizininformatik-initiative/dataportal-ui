@@ -1,6 +1,6 @@
 @if (iconData().icon) {
 <fa-icon
-  matTooltip="{{ 'SHARED_COMPONENTS.TABLE.ICON' | translate }}"
+  matTooltip="{{ 'SHARED_COMPONENTS.TABLE.' + iconData().context + '.ICON' | translate }}"
   matTooltipClass="prevent-selection"
   size="1x"
   [icon]="iconData().icon"

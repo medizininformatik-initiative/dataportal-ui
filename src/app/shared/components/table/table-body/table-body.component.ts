@@ -8,6 +8,8 @@ import { NgClass } from '@angular/common'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TextCellComponent } from '../cells/text-cell/text-cell.component'
 import { CheckboxCellComponent } from '../../shared-components.module'
+import { TableCellDataTypes } from '../../../models/TableData/cells/TableCellType'
+
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
@@ -44,11 +46,14 @@ export class TableBodyComponent {
 
   public onCheckboxSelect(row: TableRowData): void {
     const checkboxCell = row.cells.find(
-      (c): c is CheckboxTextCellData => c.type === 'checkboxText' || c.type === 'checkbox'
+      (c): c is CheckboxTextCellData =>
+        c.type === TableCellDataTypes.CHECKBOX || c.type === TableCellDataTypes.CHECKBOXTEXT
     )
     if (checkboxCell) {
       checkboxCell.isSelected = !checkboxCell.isSelected
     }
     this.selectedRow.emit(row)
   }
+
+  protected readonly TableCellDataTypes = TableCellDataTypes
 }

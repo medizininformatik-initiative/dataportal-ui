@@ -566,15 +566,26 @@
         "VERY_HIGH": "Sehr hoch",
         "VERY_LOW": "Sehr niedrig"
       },
+      "CONCEPT": {
+        "NOT_SELECTABLE": "Konzept kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Konzept auswählen"
+      },
       "CONTEXT": "Kontext",
+      "CRITERIA": {
+        "ICON": "Verwandte Kriterien anzeigen",
+        "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Kriterium auswählen"
+      },
       "DISPLAY": "Anzeige",
       "EMPTY": "",
-      "ICON": "Verwandte Kriterien anzeigen",
+      "FEATURE": {
+        "ICON": "Verwandte Merkmale anzeigen",
+        "NOT_SELECTABLE": "Merkmal kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Merkmal auswählen"
+      },
       "MODULE": "Modul",
       "NAME": "Name",
-      "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
       "PATIENT_COUNT": "Anzahl der Patienten",
-      "SELECT_CHECKBOX": "Kriterium auswählen",
       "SITE": "Standort",
       "TERMCODE": "Termcode",
       "TERMINOLOGY_CODE": "Terminologie"

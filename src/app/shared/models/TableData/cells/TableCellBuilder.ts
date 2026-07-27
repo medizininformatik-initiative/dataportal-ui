@@ -3,7 +3,7 @@ import { AvailabilityStatusType } from 'src/app/model/Availability/AvailabilityS
 import { CheckboxTextCellData } from './CheckboxTextCellData'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { DisplayCellData } from './DisplayCellData'
-import { TableCellType } from './TableCellType'
+import { CellDataContext, TableCellDataTypes, TableCellType } from './TableCellType'
 import { TextCellData } from './TextCellData'
 import { IconCellData } from './IconCellData'
 import { CheckboxCellOptionsData } from './CheckboxCellOptionData'
@@ -19,8 +19,8 @@ import { CheckboxCellData } from './CheckboxCellData'
  *   TableCellBuilder.display(entry.getDisplay(), { icon: 'sitemap' })
  */
 export class TableCellBuilder {
-  public static withIcon(icon: string): IconCellData {
-    return { type: 'icon', icon }
+  public static withIcon(icon: string, context: CellDataContext): IconCellData {
+    return { context: context, type: TableCellDataTypes.ICON, icon }
   }
   /**
    * Text cell builder
@@ -28,7 +28,7 @@ export class TableCellBuilder {
    * @returns
    */
   public static withText(value: string | Display): TextCellData {
-    return { type: 'text', value }
+    return { type: TableCellDataTypes.TEXT, value }
   }
 
   /** Availability status bar cell
@@ -37,30 +37,37 @@ export class TableCellBuilder {
    *
    */
   public static withAvailability(value: AvailabilityStatusType): AvailabilityCellData {
-    return { type: 'availability', value }
+    return { type: TableCellDataTypes.AVAILABILITY, value }
   }
 
   /** Checkbox cell with optional icon
    * @param value
    * @param options
+   * @param context
    * @returns
    */
   public static withCheckboxText(
     value: string | Display,
-    options: CheckboxCellOptionsData = {}
+    options: CheckboxCellOptionsData = {},
+    context: CellDataContext
   ): CheckboxTextCellData {
     return {
-      type: 'checkboxText',
+      type: TableCellDataTypes.CHECKBOXTEXT,
       value,
       isSelected: options.isSelected ?? false,
       isDisabled: options.isDisabled ?? false,
+      context: context,
     }
   }
-  public static withCheckbox(options: CheckboxCellOptionsData = {}): CheckboxCellData {
+  public static withCheckbox(
+    options: CheckboxCellOptionsData = {},
+    context: CellDataContext
+  ): CheckboxCellData {
     return {
-      type: 'checkbox',
+      type: TableCellDataTypes.CHECKBOX,
       isSelected: options.isSelected ?? false,
       isDisabled: options.isDisabled ?? false,
+      context: context,
     }
   }
   /**
@@ -70,7 +77,7 @@ export class TableCellBuilder {
    * @returns
    */
   public static withDisplay(value: Display, options: { icon?: string } = {}): DisplayCellData {
-    return { type: 'display', value, icon: options.icon }
+    return { type: TableCellDataTypes.DISPLAY, value, icon: options.icon }
   }
 
   /**

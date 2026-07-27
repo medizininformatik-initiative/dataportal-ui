@@ -1,7 +1,8 @@
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { TableCellDataTypes } from './TableCellType'
 
 export interface DisplayCellData {
-  type: 'display'
+  type: TableCellDataTypes.DISPLAY
   value: Display
   icon?: string
 }

@@ -1,6 +1,7 @@
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { TableCellDataTypes } from './TableCellType'
 
 export interface TextCellData {
-  type: 'text'
+  type: TableCellDataTypes.TEXT
   value: string | Display
 }
