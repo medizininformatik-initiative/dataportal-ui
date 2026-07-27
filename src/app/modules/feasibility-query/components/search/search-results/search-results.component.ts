@@ -119,7 +119,7 @@ export class SearchResultsComponent implements OnDestroy {
       .loadDetails((row.originalEntry as CriteriaListEntry).getId())
       .subscribe((details) => {
         this.adaptedDetailsData.set(new CriteriaListItemDetailsAdapter().adapt(details))
-        this.openSidenav()
+        this.drawer().toggle()
       })
   }
 

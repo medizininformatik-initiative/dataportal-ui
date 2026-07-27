@@ -100,7 +100,7 @@ export class ProfileSearchResultsComponent {
     this.profileEntryDetailsService.loadDetails(entry.getId()).subscribe((details) => {
       this.adaptedDetailsData.set(new ProfileListItemDetailsAdapter().adapt(details))
     })
-    this.drawer()?.open()
+    this.drawer().toggle()
   }
 
   public loadMoreSearchResults(): void {
