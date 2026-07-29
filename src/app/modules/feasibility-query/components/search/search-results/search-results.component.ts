@@ -90,6 +90,8 @@ export class SearchResultsComponent implements OnDestroy {
   private listItemDetailsSubscription?: Subscription
   private loadMoreSubscription?: Subscription
 
+  private selectedEntryId: string = ''
+
   ngOnDestroy() {
     this.listItemDetailsSubscription?.unsubscribe()
     this.loadMoreSubscription?.unsubscribe()
@@ -115,12 +117,14 @@ export class SearchResultsComponent implements OnDestroy {
 
   public setClickedRow(row: TableRowData): void {
     this.listItemDetailsSubscription?.unsubscribe()
+    const entry = row.originalEntry as CriteriaListEntry
     this.listItemDetailsSubscription = this.criteriaEntryDetailsService
-      .loadDetails((row.originalEntry as CriteriaListEntry).getId())
+      .loadDetails(entry.getId())
       .subscribe((details) => {
         this.adaptedDetailsData.set(new CriteriaListItemDetailsAdapter().adapt(details))
-        this.drawer().toggle()
       })
+    this.selectedEntryId === entry.getId() ? this.drawer().toggle() : this.drawer().open()
+    this.selectedEntryId = entry.getId()
   }
 
   public getSelectedRelative(item: ListItemDetailsRelativeData): void {
