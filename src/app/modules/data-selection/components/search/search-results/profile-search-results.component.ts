@@ -47,6 +47,8 @@ export class ProfileSearchResultsComponent {
 
   readonly drawer = viewChild<MatDrawer>('drawer')
 
+  private selectedEntryId: string = ''
+
   private readonly activeSearchTerm = toSignal(this.profileSearchService.getActiveSearchTerm(), {
     initialValue: '',
   })
@@ -100,7 +102,8 @@ export class ProfileSearchResultsComponent {
     this.profileEntryDetailsService.loadDetails(entry.getId()).subscribe((details) => {
       this.adaptedDetailsData.set(new ProfileListItemDetailsAdapter().adapt(details))
     })
-    this.drawer().toggle()
+    this.selectedEntryId === entry.getId() ? this.drawer().toggle() : this.drawer().open()
+    this.selectedEntryId = entry.getId()
   }
 
   public loadMoreSearchResults(): void {
