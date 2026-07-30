@@ -38,7 +38,6 @@ export class DataSelectionApiService {
   }
 
   public getDataSelectionProfileEntryDetails(id: string): Observable<ProfileEntryDetailsData> {
-    console.log('bla')
     this.getProfileSearchFilter().subscribe()
 
     const parsedUrl =
