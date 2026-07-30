@@ -4,6 +4,7 @@ import { ProfileEntryRelative } from './ProfileEntryRelative'
 
 export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
   private readonly id: string
+  private readonly url: string
   private readonly fields: Display[]
 
   constructor(
@@ -12,11 +13,13 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
     fields: Display[],
     parents: ProfileEntryRelative[] = [],
     children: ProfileEntryRelative[] = [],
-    selectable: boolean
+    selectable: boolean,
+    url: string
   ) {
     super(display, parents, children, selectable)
     this.id = id
     this.fields = fields
+    this.url = url
   }
 
   public getId(): string {
@@ -25,5 +28,9 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
 
   public getFields(): Display[] {
     return this.fields
+  }
+
+  public getUrl(): string {
+    return this.url
   }
 }
