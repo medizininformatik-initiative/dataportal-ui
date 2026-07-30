@@ -60,7 +60,7 @@ export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapte
   private adaptRelative(relative: ProfileEntryRelative): ListItemDetailsRelativeData {
     return {
       display: relative.getDisplay(),
-      id: relative.getHashedUrl(),
+      id: relative.getId(),
     }
   }
 }

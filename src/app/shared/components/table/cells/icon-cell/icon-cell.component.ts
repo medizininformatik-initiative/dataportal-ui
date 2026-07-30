@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core'
-import { IconCellData } from 'src/app/shared/models/TableData/cells/IconCellData'
+import { IconCellData } from 'src/app/shared/models/TableData/Cells/Data/IconCellData'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatTooltip } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'

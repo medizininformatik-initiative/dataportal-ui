@@ -2,8 +2,8 @@ import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEn
 import { AbstractTableAdapter } from './AbstractTableAdapter'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
-import { TableCellBuilder } from '../cells/TableCellBuilder'
-import { CellDataContext } from '../cells/TableCellType'
+import { TableCellBuilder } from '../Cells/TableCellBuilder'
+import { TableCellContext } from '../Cells/TableCellContext'
 
 export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> {
   constructor() {
@@ -39,7 +39,7 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
   }
 
   private iconCell(): any {
-    return TableCellBuilder.withIcon('sitemap', CellDataContext.FEATURE)
+    return TableCellBuilder.withIcon('sitemap', TableCellContext.FEATURE)
   }
 
   private checkBoxTextCell(entry: ProfileListEntry): any {
@@ -50,7 +50,7 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
     return TableCellBuilder.withCheckboxText(
       entry.getDisplay(),
       checkboxoptions,
-      CellDataContext.FEATURE
+      TableCellContext.FEATURE
     )
   }
 

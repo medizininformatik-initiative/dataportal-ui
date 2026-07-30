@@ -1,10 +1,10 @@
-import { Component, ViewChild, input, output } from '@angular/core'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
+import { Component, input, output } from '@angular/core'
 import { TableBodyComponent } from './table-body/table-body.component'
+import { TableCellKind } from '../../models/TableData/Cells/TableCellKind'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
-import { TableRowData } from '../../models/TableData/TableRowData'
 import { TableHeaderComponent } from './table-header/table-header.component'
-import { TableCellDataTypes } from '../../models/TableData/cells/TableCellType'
+import { TableRowData } from '../../models/TableData/TableRowData'
 
 @Component({
   selector: 'num-table',
@@ -25,7 +25,7 @@ export class TableComponent {
       const foundRow = this.tableData().body?.rows?.find((row) => row.id === id)
       if (foundRow) {
         const checkboxCell = foundRow.cells.find(
-          (c): c is CheckboxTextCellData => c.type === TableCellDataTypes.CHECKBOXTEXT
+          (c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT
         )
         if (checkboxCell) {
           checkboxCell.isSelected = false

@@ -1,5 +1,5 @@
 import { CheckboxComponent } from '../../../checkbox/checkbox.component'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
 import { Component, input, output } from '@angular/core'
 import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe'
 import { MatTooltip } from '@angular/material/tooltip'

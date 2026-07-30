@@ -1,14 +1,15 @@
 import { AbstractTableAdapter } from './AbstractTableAdapter'
-import { AvailabilityCellData } from '../cells/AvailabilityCellData'
-import { CheckboxTextCellData } from '../cells/CheckboxTextCellData'
+import { AvailabilityCellData } from '../Cells/Data/AvailabilityCellData'
+import { CheckboxTextCellData } from '../Cells/Data/CheckboxTextCellData'
 import { CriteriaListEntry } from '../../../../model/Search/ListEntries/CriteriaListListEntry'
-import { TableCellBuilder } from '../cells/TableCellBuilder'
+import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
-import { TextCellData } from '../cells/TextCellData'
-import { CellDataContext, TableCellType } from '../cells/TableCellType'
-import { IconCellData } from '../cells/IconCellData'
+import { TextCellData } from '../Cells/Data/TextCellData'
+import { TableCellContext } from '../Cells/TableCellContext'
+import { TableCellUnion } from '../Cells/TableCellUnion'
+import { IconCellData } from '../Cells/Data/IconCellData'
 
 export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListEntry> {
   constructor() {
@@ -34,7 +35,7 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
     }
   }
 
-  private buildCells(listEntry: CriteriaListEntry): TableCellType[] {
+  private buildCells(listEntry: CriteriaListEntry): TableCellUnion[] {
     return [
       this.iconCell(listEntry),
       this.displayCell(listEntry),
@@ -52,12 +53,12 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
         isSelected: false,
         isDisabled: listEntry.getSelectable(),
       },
-      CellDataContext.CRITERIA
+      TableCellContext.CRITERIA
     )
   }
 
   private iconCell(listEntry: CriteriaListEntry): IconCellData {
-    return TableCellBuilder.withIcon('sitemap', CellDataContext.CRITERIA)
+    return TableCellBuilder.withIcon('sitemap', TableCellContext.CRITERIA)
   }
 
   private terminologyCell(listEntry: CriteriaListEntry): TextCellData {

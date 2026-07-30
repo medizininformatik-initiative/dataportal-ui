@@ -1,10 +1,11 @@
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { CellDataContext, TableCellDataTypes } from './TableCellType'
+import { TableCellContext } from '../TableCellContext'
+import { TableCellKind } from '../TableCellKind'
 
 export interface CheckboxTextCellData {
-  type: TableCellDataTypes.CHECKBOXTEXT
+  type: TableCellKind.CHECKBOXTEXT
   value: string | Display
   isSelected: boolean
   isDisabled: boolean
-  context: CellDataContext
+  context: TableCellContext
 }
