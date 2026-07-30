@@ -14,13 +14,13 @@ export class ProfileListItemDetailsMenuService extends AbstractMenuItemsService<
       {
         disabled: false,
         icon: 'search',
-        label: 'SEARCH',
+        label: 'SEARCH_PROFILE',
         action: (id: string) => this.listItemDetailsFunctionService.searchProfile(id),
       },
       {
         disabled: false,
         icon: 'eye',
-        label: 'SHOW_CRITERIA',
+        label: 'SHOW_PROFILE',
         action: (id: string) => this.listItemDetailsFunctionService.showProfileInResultList(id),
       },
       {

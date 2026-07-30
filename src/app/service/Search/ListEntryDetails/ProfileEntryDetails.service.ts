@@ -40,7 +40,8 @@ export class ProfileEntryDetailsService extends AbstractEntryDetailsService<
       fields,
       parents,
       children,
-      response.selectable
+      response.selectable,
+      response.url
     )
   }
 
