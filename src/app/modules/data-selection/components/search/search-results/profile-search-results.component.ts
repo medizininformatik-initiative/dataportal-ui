@@ -1,6 +1,6 @@
 import { Component, computed, inject, input, signal, viewChild } from '@angular/core'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
 import { ListItemDetailsData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsData'
 import { ListItemDetailsGenericComponent } from 'src/app/shared/components/list-item-details-generic/list-item-details-generic.component'
@@ -20,7 +20,7 @@ import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
-import { TableCellDataTypes } from '../../../../../shared/models/TableData/cells/TableCellType'
+import { TableCellKind } from '../../../../../shared/models/TableData/Cells/TableCellKind'
 
 @Component({
   selector: 'num-profile-search-results',
@@ -63,7 +63,7 @@ export class ProfileSearchResultsComponent {
     const selected = this.selectedProfiles()
     data?.body.rows.forEach((row) => {
       const checkboxCell = row.cells.find(
-        (c): c is CheckboxTextCellData => c.type === TableCellDataTypes.CHECKBOXTEXT
+        (c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT
       )
       if (checkboxCell) {
         checkboxCell.isSelected = selected.some(
