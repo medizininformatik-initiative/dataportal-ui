@@ -7,4 +7,5 @@ export interface ProfileEntryDetailsData extends ListEntryDetailsData<ProfileRel
   fields: {
     display: DisplayData
   }[]
+  url: string
 }

@@ -1,4 +1,4 @@
-import { concatMap, map, Observable } from 'rxjs'
+import { concatMap, map, Observable, tap, throwError } from 'rxjs'
 import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileData } from 'src/app/model/Interface/DataSelectionProfileData'
@@ -29,15 +29,27 @@ export class LoadDataSelectionProfilesService {
     urls: string[],
     markAsReference: boolean = false
   ): Observable<DataSelectionProfile[]> {
-    return this.dataSelectionApiService.getDataSelectionProfileData(urls).pipe(
+    const validUrls = urls.filter(this.isValidUrl)
+
+    if (validUrls.length !== urls.length) {
+      return throwError(() => new Error('One or more URLs are invalid.'))
+    }
+
+    return this.dataSelectionApiService.getDataSelectionProfileData(validUrls).pipe(
       map((data: DataSelectionProfileData[]) =>
         this.profileInstanceBuilder.buildProfileInstances(data, markAsReference)
       ),
-      concatMap((profiles) => {
-        this.setProfilesInProvider(profiles)
-        return [profiles]
-      })
+      tap((profiles) => this.setProfilesInProvider(profiles))
     )
+  }
+
+  private isValidUrl(url: string): boolean {
+    try {
+      new URL(url)
+      return true
+    } catch {
+      return false
+    }
   }
 
   /**
