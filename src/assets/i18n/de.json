@@ -483,7 +483,6 @@
     },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",
-      "DELETE": "Löschen",
       "HEADER": "Löschung bestätigen",
       "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?"
     },
@@ -521,7 +520,9 @@
       "OPTIONS": "Optionen",
       "REFERENCE": "Kriterien verknüpfen",
       "SEARCH": "Als Suchbegriff nutzen",
-      "SHOW_CRITERIA": "Kriterium anzeigen"
+      "SEARCH_PROFILE": "Profile als Suchbegriff nutzen",
+      "SHOW_CRITERIA": "Kriterium anzeigen",
+      "SHOW_PROFILE": "Profil anzeigen"
     },
     "MODAL": {
       "BUTTON": {

@@ -523,7 +523,8 @@
       "TRANSLATIONS": "Automatic Translations"
     },
     "MENU": {
-      "ADD": "Add to cohort selection",
+      "ADD_COHORT": "Add to cohort selection",
+      "ADD_PROFILE": "Add to profile selection",
       "APPLY_FILTERS": "Apply filter",
       "DEFINE_FIELDS": "Select fields",
       "DELETE": "Delete",
@@ -532,7 +533,7 @@
       "OPTIONS": "Options",
       "REFERENCE": "Link criteria",
       "SEARCH": "Use as search term",
-      "SHOW_CRITERIA": "Show criteria"
+      "SHOW_PROFILE": "Show profile"
     },
     "MODAL": {
       "BUTTON": {
