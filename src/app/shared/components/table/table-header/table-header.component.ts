@@ -2,7 +2,7 @@
 import { Component, input } from '@angular/core'
 import { TableData } from '../../../models/TableData/TableData'
 import { TranslateModule } from '@ngx-translate/core'
-import { TableCellDataTypes } from '../../../models/TableData/cells/TableCellType'
+import { TableCellKind } from '../../../models/TableData/Cells/TableCellKind'
 
 @Component({
   selector: '[num-table-header]',
@@ -23,13 +23,13 @@ export class TableHeaderComponent {
     const iconOrCheckboxWidth = 2
 
     switch (cellType) {
-      case TableCellDataTypes.ICON:
-      case TableCellDataTypes.CHECKBOX:
+      case TableCellKind.ICON:
+      case TableCellKind.CHECKBOX:
         return iconOrCheckboxWidth
-      case TableCellDataTypes.TEXT:
-      case TableCellDataTypes.DISPLAY:
-      case TableCellDataTypes.CHECKBOXTEXT:
-      case TableCellDataTypes.AVAILABILITY:
+      case TableCellKind.TEXT:
+      case TableCellKind.DISPLAY:
+      case TableCellKind.CHECKBOXTEXT:
+      case TableCellKind.AVAILABILITY:
         return (
           (100 - iconOrCheckbox * iconOrCheckboxWidth) /
           (tableData?.body?.rows[0]?.cells?.length - iconOrCheckbox)

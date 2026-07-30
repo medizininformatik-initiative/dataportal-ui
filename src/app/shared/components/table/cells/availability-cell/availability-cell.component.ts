@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core'
-import { AvailabilityCellData } from 'src/app/shared/models/TableData/cells/AvailabilityCellData'
+import { AvailabilityCellData } from 'src/app/shared/models/TableData/Cells/Data/AvailabilityCellData'
 import { AvailabilityStatusBarComponent } from '../../../availability-status-bar/availability-status-bar.component'
 
 @Component({

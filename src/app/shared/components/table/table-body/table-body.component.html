@@ -6,18 +6,18 @@
   @for (cell of row.cells; track j; let j = $index) {
   <td (click)="onRowClick(row)" [ngClass]="{ 'table-row-text-color': j > 0 }">
     <div class="row-container">
-      @switch (cell.type) { @case (TableCellDataTypes.CHECKBOX) {
+      @switch (cell.type) { @case (TableCellKind.CHECKBOX) {
       <num-checkbox-cell [cell]="cell" (checkboxChange)="onCheckboxSelect(row)"></num-checkbox-cell>
-      } @case (TableCellDataTypes.CHECKBOXTEXT) {
+      } @case (TableCellKind.CHECKBOXTEXT) {
       <num-checkbox-text-cell
         [cell]="cell"
         (checkboxChange)="onCheckboxSelect(row)"
       ></num-checkbox-text-cell>
-      } @case (TableCellDataTypes.AVAILABILITY) {
+      } @case (TableCellKind.AVAILABILITY) {
       <num-availability-cell [cell]="cell"></num-availability-cell>
-      } @case (TableCellDataTypes.DISPLAY) {
+      } @case (TableCellKind.DISPLAY) {
       <num-display-cell [cell]="cell"></num-display-cell>
-      } @case (TableCellDataTypes.ICON) {
+      } @case (TableCellKind.ICON) {
       <num-icon-cell [iconData]="cell" (iconClicked)="onIconClick(row)"></num-icon-cell>
       } @default {
       <num-text-cell [cell]="cell"></num-text-cell>

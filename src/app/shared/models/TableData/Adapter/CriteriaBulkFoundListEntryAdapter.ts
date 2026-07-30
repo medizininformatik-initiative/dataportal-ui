@@ -1,11 +1,12 @@
 import { AbstractTableAdapter } from './AbstractTableAdapter'
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry'
-import { TableCellBuilder } from '../cells/TableCellBuilder'
+import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { v4 as uuidv4 } from 'uuid'
-import { CellDataContext, TableCellType } from '../cells/TableCellType'
+import { TableCellContext } from '../Cells/TableCellContext'
+import { TableCellUnion } from '../Cells/TableCellUnion'
 
 export class CriteriaBulkFoundListEntryAdapter extends AbstractTableAdapter<CriteriaBulkEntry> {
   protected buildHeaders(): TableHeaderData {
@@ -25,7 +26,7 @@ export class CriteriaBulkFoundListEntryAdapter extends AbstractTableAdapter<Crit
     }
   }
 
-  private buildCells(entry: CriteriaBulkEntry): TableCellType[] {
+  private buildCells(entry: CriteriaBulkEntry): TableCellUnion[] {
     return TableCellBuilder.row(
       this.displayCell(entry),
       this.terminologyCell(entry),
@@ -36,7 +37,7 @@ export class CriteriaBulkFoundListEntryAdapter extends AbstractTableAdapter<Crit
   private displayCell(entry: CriteriaBulkEntry) {
     const display = entry.getDisplay()
     const options = { isSelected: true, isDisabled: true }
-    return TableCellBuilder.withCheckboxText(display, options, CellDataContext.CRITERIA)
+    return TableCellBuilder.withCheckboxText(display, options, TableCellContext.CRITERIA)
   }
 
   private terminologyCell(entry: CriteriaBulkEntry) {

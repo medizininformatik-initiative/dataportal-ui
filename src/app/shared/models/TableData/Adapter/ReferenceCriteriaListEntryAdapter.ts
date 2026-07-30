@@ -1,12 +1,13 @@
 import { AbstractTableAdapter } from './AbstractTableAdapter'
 import { ReferenceCriteriaListEntry } from '../../../../model/Search/ListEntries/ReferenceCriteriaListEntry'
-import { TableCellBuilder } from '../cells/TableCellBuilder'
-import { CellDataContext, TableCellType } from '../cells/TableCellType'
+import { TableCellBuilder } from '../Cells/TableCellBuilder'
+import { TableCellContext } from '../Cells/TableCellContext'
+import { TableCellUnion } from '../Cells/TableCellUnion'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
-import { IconCellData } from '../cells/IconCellData'
-import { DisplayCellData } from '../cells/DisplayCellData'
+import { IconCellData } from '../Cells/Data/IconCellData'
+import { DisplayCellData } from '../Cells/Data/DisplayCellData'
 
 export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<ReferenceCriteriaListEntry> {
   protected buildHeaders(): TableHeaderData {
@@ -26,7 +27,7 @@ export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<Refe
     }
   }
 
-  private buildCells(listEntry: ReferenceCriteriaListEntry): TableCellType[] {
+  private buildCells(listEntry: ReferenceCriteriaListEntry): TableCellUnion[] {
     return TableCellBuilder.row(
       this.iconCell(),
       this.displayCell(listEntry),
@@ -35,7 +36,7 @@ export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<Refe
   }
 
   private iconCell(): IconCellData {
-    return TableCellBuilder.withIcon('plus', CellDataContext.CRITERIA)
+    return TableCellBuilder.withIcon('plus', TableCellContext.CRITERIA)
   }
 
   private displayCell(listEntry: ReferenceCriteriaListEntry): DisplayCellData {
@@ -43,7 +44,7 @@ export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<Refe
     return TableCellBuilder.withDisplay(display)
   }
 
-  private terminologyCell(listEntry: ReferenceCriteriaListEntry): TableCellType {
+  private terminologyCell(listEntry: ReferenceCriteriaListEntry): TableCellUnion {
     const terminologyName = TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology())
     return TableCellBuilder.withText(terminologyName ?? listEntry.getTerminology())
   }

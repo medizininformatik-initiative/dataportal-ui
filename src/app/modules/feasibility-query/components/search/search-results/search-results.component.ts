@@ -1,4 +1,4 @@
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
 import { Component, computed, inject, OnDestroy, signal, viewChild } from '@angular/core'
 import { CriteriaEntryDetails } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryDetails'
 import { CriteriaEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/CriteriaEntryDetails.service'
@@ -22,7 +22,7 @@ import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
-import { TableCellDataTypes } from '../../../../../shared/models/TableData/cells/TableCellType'
+import { TableCellKind } from '../../../../../shared/models/TableData/Cells/TableCellKind'
 import { CriteriaListItemDetailsMenuService } from 'src/app/shared/service/Menu/ListItemDetails/Criteria/CriteriaListItemDetailsMenu.service'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
 
@@ -74,7 +74,7 @@ export class SearchResultsComponent implements OnDestroy {
     const selected = this.selectedItems()
     data?.body.rows.forEach((row) => {
       const checkboxCell = row.cells.find(
-        (c): c is CheckboxTextCellData => c.type === TableCellDataTypes.CHECKBOXTEXT
+        (c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT
       )
       if (checkboxCell) {
         checkboxCell.isSelected = selected.some((item) => item.getId() === row.id)

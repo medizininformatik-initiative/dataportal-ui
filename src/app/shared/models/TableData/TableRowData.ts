@@ -1,9 +1,9 @@
-import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
-import { TableCellType } from './cells/TableCellType';
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
+import { TableCellUnion } from './Cells/TableCellUnion'
 
 export interface TableRowData {
   id: string
-  cells: Array<TableCellType>
+  cells: Array<TableCellUnion>
   isClickable?: boolean
   originalEntry: AbstractListEntry
 }

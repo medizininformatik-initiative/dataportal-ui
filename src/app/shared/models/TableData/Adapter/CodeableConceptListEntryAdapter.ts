@@ -1,12 +1,13 @@
 import { AbstractTableAdapter } from './AbstractTableAdapter'
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
-import { TableCellBuilder } from '../cells/TableCellBuilder'
+import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { v4 as uuidv4 } from 'uuid'
-import { TextCellData } from '../cells/TextCellData'
-import { CellDataContext, TableCellType } from '../cells/TableCellType'
+import { TextCellData } from '../Cells/Data/TextCellData'
+import { TableCellContext } from '../Cells/TableCellContext'
+import { TableCellUnion } from '../Cells/TableCellUnion'
 
 export class CodeableConceptListEntryAdapter extends AbstractTableAdapter<CodeableConceptResultListEntry> {
   protected buildHeaders(): TableHeaderData {
@@ -26,7 +27,7 @@ export class CodeableConceptListEntryAdapter extends AbstractTableAdapter<Codeab
     }
   }
 
-  private buildCells(entry: CodeableConceptResultListEntry): TableCellType[] {
+  private buildCells(entry: CodeableConceptResultListEntry): TableCellUnion[] {
     return TableCellBuilder.row(
       this.checkboxTextCell(entry),
       this.terminologyCell(entry),
@@ -37,7 +38,7 @@ export class CodeableConceptListEntryAdapter extends AbstractTableAdapter<Codeab
   private checkboxTextCell(entry: CodeableConceptResultListEntry) {
     const display = entry.getConcept().getDisplay()
     const options = { isSelected: entry.getIsSelected(), isDisabled: true }
-    return TableCellBuilder.withCheckboxText(display, options, CellDataContext.CONCEPT)
+    return TableCellBuilder.withCheckboxText(display, options, TableCellContext.CONCEPT)
   }
 
   private terminologyCell(entry: CodeableConceptResultListEntry): TextCellData {

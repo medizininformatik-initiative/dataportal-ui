@@ -1,5 +1,5 @@
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
 import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept'
 import { CodeableConceptListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptListEntryAdapter'
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
@@ -15,7 +15,7 @@ import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
-import { TableCellDataTypes } from '../../../../../shared/models/TableData/cells/TableCellType'
+import { TableCellKind } from '../../../../../shared/models/TableData/Cells/TableCellKind'
 
 @Component({
   selector: 'num-concept-filter-table',
@@ -79,7 +79,7 @@ export class ConceptFilterTableComponent {
       const concept = CloneConcept.deepCopyConcept(listEntry.getConcept())
       this.clearSelectedConceptArray()
       const checkboxCell = row.cells.find(
-        (c): c is CheckboxTextCellData => c.type === TableCellDataTypes.CHECKBOXTEXT
+        (c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT
       )
       if (checkboxCell) {
         checkboxCell.isSelected = !!this.selectedConceptProviderService.findConcept(concept)
