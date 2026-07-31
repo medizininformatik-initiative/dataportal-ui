@@ -488,10 +488,12 @@
     },
     "FILTER": {
       "AVAILABILITY": "Verfügbarkeit",
+      "CATEGORY": "Kategorie",
       "CONTEXT": "Kontext",
       "KDS_MODULE": "KDS-Modul",
       "MODULE": "Modul",
       "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
+      "RESOURCETYPE": "Ressourcentyp",
       "SEARCH": "Suchen...",
       "TERMINOLOGY": "Terminologie"
     },
@@ -504,6 +506,7 @@
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Kindelement",
       "DETAILS": "Details",
+      "FIELDS": "Felder",
       "NO_CHILDREN": "Keine Kindelemente",
       "NO_PARENTS": "Keine Elternelemente",
       "NO_TRANSLATIONS": "Keine automatischen Übersetzungen",
@@ -587,6 +590,7 @@
       "MODULE": "Modul",
       "NAME": "Name",
       "PATIENT_COUNT": "Anzahl der Patienten",
+      "RESSOURCE_TYPE": "Ressourcen Type",
       "SITE": "Standort",
       "TERMCODE": "Termcode",
       "TERMINOLOGY_CODE": "Terminologie"
