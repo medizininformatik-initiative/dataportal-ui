@@ -1,6 +1,6 @@
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
 import { inject, Injectable } from '@angular/core'
-import { map, Observable, tap } from 'rxjs'
+import { Observable, tap } from 'rxjs'
 import { ProfileSearchFilterProviderService } from '../Search/Filter/ProfileSearchFilterProvider.service'
 import { ProfileSearchFilterService } from '../Search/Filter/ProfileSearchFilter.service'
 import { ProfileSearchFilter } from 'src/app/model/Search/Filter/ProfileSearchFilter'
@@ -18,12 +18,10 @@ export class ProfileSearchFilterResolverService {
    * Resolves the criteria search filters by fetching them from the backend.
    * @returns An observable containing an array of criteria search filters.
    */
-  public resolve(): Observable<ProfileSearchFilter> {
+  public resolve(): Observable<ProfileSearchFilter[]> {
     return this.profileSearchFilterService.fetchFilter().pipe(
-      tap((bla) => console.log(bla)),
-      tap((filters: ProfileSearchFilter) => {
-        console.log(filters)
-        this.filterProvider.addMany(filters.getValues())
+      tap((filters: ProfileSearchFilter[]) => {
+        this.filterProvider.setProfileSearchFilters(filters)
       })
     )
   }
