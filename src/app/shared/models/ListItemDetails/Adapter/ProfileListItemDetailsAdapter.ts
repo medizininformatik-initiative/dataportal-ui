@@ -4,8 +4,7 @@ import { ListItemDetailsData } from '../ListItemDetailsData'
 import { ListItemDetailsRelativeData } from '../ListItemDetailsRelative'
 import { ProfileEntryDetails } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryDetails'
 import { ProfileEntryRelative } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryRelative'
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation'
-
+import { v4 as uuidv4 } from 'uuid'
 export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapter<
   ProfileEntryDetails,
   ProfileEntryRelative
@@ -31,17 +30,21 @@ export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapte
       result.fields = this.adaptFields(fields)
     }
 
+    const description = detailsData.getDescription()
+    if (description) {
+      result.description = description
+    }
+
     return result
   }
 
-  private adaptFields(fields: Display[]): Display {
-    const original = fields.map((field) => field.getOriginal()).join(', ')
-
-    const de = fields.map((field) => field.translate('de')).join(', ')
-
-    const en = fields.map((field) => field.translate('en')).join(', ')
-
-    return new Display([new Translation('de-DE', de), new Translation('en-US', en)], original)
+  private adaptFields(fields: Display[]): ListItemDetailsRelativeData[] {
+    return fields.map((field) => {
+      return {
+        display: field,
+        id: uuidv4(),
+      }
+    })
   }
 
   /**
