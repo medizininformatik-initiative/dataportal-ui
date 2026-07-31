@@ -9,6 +9,8 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { SearchFilterData } from '../../models/SearchFilter/SearchFilterData'
 import { TranslateModule } from '@ngx-translate/core'
 import { UpperCasePipe } from '@angular/common'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { SearchFilterValueData } from '../../models/SearchFilter/SearchFilterData'
 
 @Component({
   selector: 'num-search-filter',
@@ -64,7 +66,7 @@ export class SearchFilterComponent {
       return filter.data
     }
     const query = this.searchText.toLowerCase()
-    return filter.data.filter((item) => item.label.toLowerCase().includes(query))
+    return filter.data.filter((item) => this.getSearchSource(item).toLowerCase().includes(query))
   }
 
   translatedLabel: { translatedSystem: string; count: number; url: string }[] = []
@@ -98,6 +100,31 @@ export class SearchFilterComponent {
       return 'SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED'
     }
     return this.getCleanValue(selectedValues)
+  }
+
+  public getOptionValue(item: SearchFilterValueData): string {
+    const label = item.label?.trim()
+    if (label) {
+      return label
+    }
+
+    if (typeof item.display === 'string') {
+      return item.display
+    }
+
+    if (item.display instanceof Display) {
+      return item.display.getOriginal() ?? ''
+    }
+
+    return ''
+  }
+
+  public getTrackByValue(item: SearchFilterValueData): string {
+    return this.getOptionValue(item)
+  }
+
+  private getSearchSource(item: SearchFilterValueData): string {
+    return this.getOptionValue(item)
   }
 
   public onOpenedChange(isOpen: boolean): void {

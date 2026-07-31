@@ -1,9 +1,10 @@
-import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 import { AbstractTableAdapter } from './AbstractTableAdapter'
-import { TableHeaderData } from '../TableHeaderData'
-import { TableRowData } from '../TableRowData'
+import { DisplayCellData } from '../Cells/Data/DisplayCellData'
+import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellContext } from '../Cells/TableCellContext'
+import { TableHeaderData } from '../TableHeaderData'
+import { TableRowData } from '../TableRowData'
 
 export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> {
   constructor() {
@@ -11,7 +12,7 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
   }
 
   protected buildHeaders(): TableHeaderData {
-    const headers = ['EMPTY', 'DISPLAY', 'AVAILABILITY', 'MODULE']
+    const headers = ['EMPTY', 'DISPLAY', 'AVAILABILITY', 'MODULE', 'RESSOURCE_TYPE']
     return { headers }
   }
 
@@ -35,6 +36,7 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
       this.checkBoxTextCell(entry),
       this.availabilityCell(entry),
       this.moduleCell(entry),
+      this.ressourceTypeCell(entry),
     ]
   }
 
@@ -60,5 +62,9 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
 
   private moduleCell(entry: ProfileListEntry): any {
     return TableCellBuilder.withDisplay(entry.getModule())
+  }
+
+  private ressourceTypeCell(entry: ProfileListEntry): DisplayCellData {
+    return TableCellBuilder.withDisplay(entry.getRessourceType())
   }
 }

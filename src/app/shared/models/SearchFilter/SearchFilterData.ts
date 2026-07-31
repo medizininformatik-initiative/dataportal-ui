@@ -9,6 +9,6 @@ export interface SearchFilterData {
 
 export interface SearchFilterValueData {
   count: number
-  label: string
+  label?: string
   display: Display | string
 }
