@@ -34,9 +34,13 @@
         </div>
       </mat-option>
       <mat-optgroup class="scrollable-options-group">
-        @for (value of filteredData; track value.label) {
-        <mat-option [value]="value.label">
-          {{ value.display | displayTranslation }} ({{ value.count }})
+        @for (value of filteredData; track getTrackByValue(value)) {
+        <mat-option [value]="getOptionValue(value)">
+          @if (value.display) {
+          {{ value.display | displayTranslation }}
+          } @else {
+          {{ value.label }}
+          } ({{ value.count }})
         </mat-option>
         }
       </mat-optgroup>
