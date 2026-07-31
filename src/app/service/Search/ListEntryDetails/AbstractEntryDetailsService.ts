@@ -1,8 +1,6 @@
-import { Observable } from 'rxjs'
-import { ListEntryDetailsData } from 'src/app/model/Interface/ListEntryDetailsData/ListEntryDetailsData'
-import { ListEntryDetailsRelativeData } from 'src/app/model/Interface/ListEntryDetailsData/ListEntryDetailsRelativeData'
 import { AbstractDetails } from 'src/app/model/Search/EntryDetails/AbstractDetails'
 import { AbstractRelative } from 'src/app/model/Search/EntryDetails/AbstractRelative'
+import { Observable } from 'rxjs'
 
 /**
  * Abstract base for entry-details services.
@@ -27,10 +25,4 @@ export abstract class AbstractEntryDetailsService<
    * @returns An Observable emitting fully populated entry details.
    */
   public abstract loadDetails(id: string): Observable<D>
-
-  /**
-   * Mapping for a list of
-   * @param {string} id
-   */
-  protected abstract mapRelativeData(relatives: ListEntryDetailsRelativeData[]): T[]
 }
