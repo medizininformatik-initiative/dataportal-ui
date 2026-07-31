@@ -4,9 +4,11 @@ import { computed } from '@angular/core'
 import { map } from 'rxjs'
 import { ProfileSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/ProfileSearchFilterAdapter'
 import { ProfileSearchFilterProviderService } from 'src/app/service/Search/Filter/ProfileSearchFilterProvider.service'
+import { ProfileFilterFetchService } from 'src/app/service/Search/Filter/ProfileFilterFetch.service'
 import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
 import { SearchbarComponent } from 'src/app/shared/components/search/searchbar.component'
 import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import {
   InfoTooltipDirective,
   SearchFilterComponent,
@@ -32,9 +34,10 @@ import { TranslateModule } from '@ngx-translate/core'
 export class ProfileSearchBarComponent {
   private profileSearchService = inject(ProfileSearchService)
   private profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
+  private profileFilterFetchService = inject(ProfileFilterFetchService)
   private readonly destroyRef = inject(DestroyRef)
 
-  readonly searchFilter = signal<SearchFilterData | undefined>(undefined)
+  readonly searchFilters = signal<SearchFilterData[]>([])
   readonly searchText = toSignal(this.profileSearchService.getActiveSearchTerm(), {
     initialValue: '',
   })
@@ -44,35 +47,71 @@ export class ProfileSearchBarComponent {
     this.profileSearchFilterProviderService.getSelectedModules(),
     { initialValue: [] as string[] }
   )
-  readonly resetFilterDisabled = computed(() => this.selectedModules().length === 0)
+  private readonly selectedCategories = toSignal(
+    this.profileSearchFilterProviderService.getSelectedCategories(),
+    { initialValue: [] as string[] }
+  )
+  private readonly selectedResourceTypes = toSignal(
+    this.profileSearchFilterProviderService.getSelectedResourceTypes(),
+    { initialValue: [] as string[] }
+  )
+  readonly resetFilterDisabled = computed(
+    () =>
+      this.selectedModules().length === 0 &&
+      this.selectedCategories().length === 0 &&
+      this.selectedResourceTypes().length === 0
+  )
 
   constructor() {
     this.profileSearchFilterProviderService
-      .getAll()
+      .getProfileSearchFilters()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        map((values) => ProfileSearchFilterAdapter.convertToFilterValues(values))
+        map((filters) => ProfileSearchFilterAdapter.convertToFilterValues(filters)),
+        map((filters: SearchFilterData[]) => {
+          const order: Record<string, number> = {
+            [ElasticSearchFilterTypes.MODULE.toLowerCase()]: 0,
+            [ElasticSearchFilterTypes.CATEGORY.toLowerCase()]: 1,
+            [ElasticSearchFilterTypes.RESOURCE_TYPE.toLowerCase()]: 2,
+          }
+
+          return [...filters].sort(
+            (a, b) =>
+              (order[a.filterType.toLowerCase()] ?? 99) - (order[b.filterType.toLowerCase()] ?? 99)
+          )
+        })
       )
-      .subscribe((filter) => {
-        this.searchFilter.update((current) =>
-          current ? { ...filter, selectedValues: current.selectedValues } : filter
-        )
+      .subscribe((filters) => {
+        this.searchFilters.set(filters)
       })
   }
 
   public onFilterChange(newFilter: SearchFilterData | undefined): void {
     if (!newFilter) return
-    this.searchFilter.update((current) =>
-      current ? { ...current, selectedValues: newFilter.selectedValues } : newFilter
+
+    this.profileFilterFetchService.fetchAndUpdateFilters(this.searchText(), newFilter.filterType)
+    this.profileSearchFilterProviderService.updateFilterSelectedValues(
+      newFilter.filterType,
+      newFilter.selectedValues
     )
-    this.profileSearchFilterProviderService.setSelectedModules(newFilter.selectedValues)
     this.profileSearchService.search(this.searchText()).subscribe()
   }
 
+  public onFilterOpen(event: { isOpen: boolean; targetFilter: string }): void {
+    if (!event.isOpen) {
+      return
+    }
+
+    this.profileFilterFetchService.fetchAndUpdateFilters(this.searchText(), event.targetFilter)
+  }
+
   public resetFilter(): void {
-    this.profileSearchFilterProviderService.setSelectedModules([])
-    this.searchFilter.update((current) => (current ? { ...current, selectedValues: [] } : current))
+    this.profileSearchFilterProviderService.resetSelectedValues()
     this.profileSearchService.search(this.searchText()).subscribe()
+  }
+
+  public trackByFilterType(_index: number, filter: SearchFilterData): string {
+    return filter.filterType
   }
 
   public onSearchTextChange(text: string): void {

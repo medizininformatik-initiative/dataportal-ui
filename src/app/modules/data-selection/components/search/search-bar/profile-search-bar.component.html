@@ -17,10 +17,13 @@
     ></span>
   </div>
   <div class="filter-container">
+    @for (searchFilter of searchFilters(); track trackByFilterType($index, searchFilter)) {
     <num-search-filter
-      [filter]="searchFilter()"
+      [filter]="searchFilter"
       (filterChange)="onFilterChange($event)"
+      (isOpen)="onFilterOpen($event)"
     ></num-search-filter>
+    }
     <num-button [isDisabled]="resetFilterDisabled()" type="blue" (click)="resetFilter()">
       {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
     </num-button>

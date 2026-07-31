@@ -21,6 +21,7 @@ import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 import { TableCellKind } from '../../../../../shared/models/TableData/Cells/TableCellKind'
+import { ListItemDetailsRelativeData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsRelative'
 
 @Component({
   selector: 'num-profile-search-results',
@@ -44,7 +45,6 @@ export class ProfileSearchResultsComponent {
   private profileEntryDetailsService = inject(ProfileEntryDetailsService)
   private selectedProfileService = inject(SelectedProfileService)
   private profileListItemDetailsMenuService = inject(ProfileListItemDetailsMenuService)
-
   readonly drawer = viewChild<MatDrawer>('drawer')
 
   private selectedEntryId: string = ''
@@ -108,5 +108,11 @@ export class ProfileSearchResultsComponent {
 
   public loadMoreSearchResults(): void {
     this.profileSearchService.loadNextPage(this.activeSearchTerm()).subscribe()
+  }
+
+  public onSelectedRelative(item: ListItemDetailsRelativeData) {
+    console.log(item)
+    const originalDisplay = item.display.getOriginal()
+    this.profileSearchService.search(originalDisplay).subscribe()
   }
 }

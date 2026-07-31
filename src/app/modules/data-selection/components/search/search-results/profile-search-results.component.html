@@ -17,6 +17,7 @@
           <num-list-item-details-generic
             [listItemDetails]="data"
             [menuItems]="getMenuItemsForListItem(data)"
+            (selectedRelative)="onSelectedRelative($event)"
           ></num-list-item-details-generic>
         </div>
       </div>
