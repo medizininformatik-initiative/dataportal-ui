@@ -58,6 +58,16 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
     return this
   }
 
+  public withCategory(category: string): this {
+    this.queryParams.set(ElasticSearchFilterPaths.CATEGORY, category)
+    return this
+  }
+
+  public withResourceType(resourceType: string): this {
+    this.queryParams.set(ElasticSearchFilterPaths.RESOURCE_TYPE, resourceType)
+    return this
+  }
+
   public withFiltertUrl(path: string, criteriaSetUrl: string): this {
     this.queryParams.set(path, encodeURI(criteriaSetUrl))
     return this

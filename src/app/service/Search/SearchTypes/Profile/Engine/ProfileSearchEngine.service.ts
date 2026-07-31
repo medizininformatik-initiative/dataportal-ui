@@ -25,6 +25,14 @@ export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<
     this.profileSearchFilterProviderService.getSelectedModules(),
     { initialValue: [] as string[] }
   )
+  private readonly selectedCategories = toSignal(
+    this.profileSearchFilterProviderService.getSelectedCategories(),
+    { initialValue: [] as string[] }
+  )
+  private readonly selectedResourceTypes = toSignal(
+    this.profileSearchFilterProviderService.getSelectedResourceTypes(),
+    { initialValue: [] as string[] }
+  )
   constructor() {
     const searchEngine = inject<SearchEngine<ProfileListEntry, ProfileResultList>>(SearchEngine)
 
@@ -48,7 +56,15 @@ export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<
     pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
   ): string {
     const modules = this.selectedModules().join(',')
-    return new ProfileSearchUrlStrategy(searchText, modules).getSearchUrl(page, pageSize)
+    const categories = this.selectedCategories().join(',')
+    const resourceTypes = this.selectedResourceTypes().join(',')
+
+    return new ProfileSearchUrlStrategy(
+      searchText,
+      modules,
+      categories,
+      resourceTypes
+    ).getSearchUrl(page, pageSize)
   }
 
   protected getMapping(): ProfileResultMapperStrategy {
