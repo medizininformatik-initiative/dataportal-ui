@@ -8,10 +8,16 @@ export class ProfileSearchFilter extends AbstractSearchFilter<ProfileSearchFilte
     super(name, values)
   }
 
+  public setValues(values: ProfileSearchFilterValue[]): void {
+    this.values = values
+  }
+
   public static fromJson(json: SearchFilterData): ProfileSearchFilter {
+    const values = json?.values ?? []
+
     return new ProfileSearchFilter(
       json.name,
-      json.values.map((value: SearchFilterValueData) => ProfileSearchFilterValue.fromJson(value))
+      values.map((value: SearchFilterValueData) => ProfileSearchFilterValue.fromJson(value))
     )
   }
 }
