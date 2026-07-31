@@ -37,7 +37,6 @@ export class ProfileListItemDetailsMenuItemsFunctionsService {
       .loadDetails(id)
       .pipe(
         take(1),
-        tap((bla) => console.log(bla)),
         switchMap((details) =>
           this.loadDataSelectionProfilesService.loadProfiles([
             'https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/dauer-extrakorporaler-gasaustausch',

@@ -5,6 +5,7 @@ export interface ListItemDetailsData {
   parents?: ListItemDetailsRelativeData[]
   children?: ListItemDetailsRelativeData[]
   display: Display
-  fields?: Display
+  description?: Display
+  fields?: ListItemDetailsRelativeData[]
   selectable: boolean
 }

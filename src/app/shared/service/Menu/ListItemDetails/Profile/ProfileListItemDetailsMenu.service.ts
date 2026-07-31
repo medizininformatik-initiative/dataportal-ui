@@ -18,12 +18,6 @@ export class ProfileListItemDetailsMenuService extends AbstractMenuItemsService<
         action: (id: string) => this.listItemDetailsFunctionService.searchProfile(id),
       },
       {
-        disabled: false,
-        icon: 'eye',
-        label: 'SHOW_PROFILE',
-        action: (id: string) => this.listItemDetailsFunctionService.showProfileInResultList(id),
-      },
-      {
         disabled: !selectable,
         icon: 'plus',
         label: 'ADD',
