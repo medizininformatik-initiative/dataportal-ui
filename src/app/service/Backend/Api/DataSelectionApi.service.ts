@@ -38,16 +38,14 @@ export class DataSelectionApiService {
   }
 
   public getDataSelectionProfileEntryDetails(id: string): Observable<ProfileEntryDetailsData> {
-    this.getProfileSearchFilter().subscribe()
-
     const parsedUrl =
       this.backendService.createUrl(DataSelectionPaths.PROFILE_ENTRY_DETAILS_ENDPOINT) +
       `/${id}/${DataSelectionPaths.PROFILE_ENTRY_DETAILS_LIST_ENDPOINT}`
     return this.http.get<ProfileEntryDetailsData>(parsedUrl)
   }
 
-  public getProfileSearchFilter() {
-    const url = this.backendService.createUrl(DataSelectionPaths.PROFILE_SEARCH_FILTER)
-    return this.http.get<any>(url)
+  public getProfileSearchFilter(url?: string) {
+    const parsedUrl = this.backendService.createUrl(url ?? DataSelectionPaths.PROFILE_SEARCH_FILTER)
+    return this.http.get<any>(parsedUrl)
   }
 }
