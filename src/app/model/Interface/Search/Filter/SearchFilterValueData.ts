@@ -1,4 +1,7 @@
+import { DisplayData } from '../../DisplayData'
+
 export interface SearchFilterValueData {
-  label: string
+  label?: string | undefined
   count: number
+  display?: DisplayData | undefined
 }

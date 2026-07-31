@@ -4,4 +4,6 @@ export enum ElasticSearchFilterTypes {
   KDS_MODULE = 'kds_module',
   AVAILABILITY = 'availability',
   MODULE = 'module',
+  CATEGORY = 'category',
+  RESOURCE_TYPE = 'resourceType',
 }

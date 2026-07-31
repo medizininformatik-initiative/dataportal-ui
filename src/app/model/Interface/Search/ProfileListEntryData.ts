@@ -11,4 +11,7 @@ export interface ProfileListEntryData extends ListEntryData {
   categories: any[]
   selectable: boolean
   name: string
+  resourceType: {
+    display: DisplayData
+  }
 }

@@ -1,3 +1,4 @@
+import { ProfileRelativeData } from 'src/app/model/Interface/ListEntryDetailsData/ProfileRelativeData'
 import { Display } from '../../../DataSelection/Profile/Display'
 import { AbstractRelative } from '../AbstractRelative'
 
@@ -17,5 +18,9 @@ export class ProfileEntryRelative extends AbstractRelative {
 
   public getHashedUrl(): string {
     return this.hashedUrl
+  }
+
+  public static fromJson(json: ProfileRelativeData): ProfileEntryRelative {
+    return new ProfileEntryRelative(json.id, Display.fromJson(json.display), json.url)
   }
 }

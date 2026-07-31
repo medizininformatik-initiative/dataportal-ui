@@ -1,15 +1,20 @@
 import { AbstractDetails } from '../AbstractDetails'
 import { Display } from '../../../DataSelection/Profile/Display'
 import { ProfileEntryRelative } from './ProfileEntryRelative'
+import { ProfileEntryDetailsData } from 'src/app/model/Interface/ListEntryDetailsData/ProfileEntryDetailsData'
+import { TranslationData } from 'src/app/model/Interface/TranslationData'
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation'
 
 export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
   private readonly id: string
+  private readonly description: Display
   private readonly url: string
   private readonly fields: Display[]
 
   constructor(
     id: string,
     display: Display,
+    description: Display,
     fields: Display[],
     parents: ProfileEntryRelative[] = [],
     children: ProfileEntryRelative[] = [],
@@ -18,6 +23,7 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
   ) {
     super(display, parents, children, selectable)
     this.id = id
+    this.description = description
     this.fields = fields
     this.url = url
   }
@@ -32,5 +38,41 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
 
   public getUrl(): string {
     return this.url
+  }
+
+  public getDescription(): Display {
+    return this.description
+  }
+
+  /**
+   * @todo replace test description
+   * @param {ProfileEntryDetailsData} json
+   * @returns {ProfileEntryDetails}
+   */
+  public static fromJson(json: ProfileEntryDetailsData): ProfileEntryDetails {
+    const bla = {
+      original: 'Labor',
+      translations: [
+        {
+          language: 'de-DE',
+          value: 'Bal bla ',
+        },
+        {
+          language: 'en-US',
+          value: 'Bla bla bla',
+        },
+      ],
+    }
+
+    return new ProfileEntryDetails(
+      json.id,
+      Display.fromJson(json.display),
+      Display.fromJson(bla), //Display.fromJson(json.description),
+      json.fields.map((field) => Display.fromJson(field.display)),
+      json.parents.map((parent) => ProfileEntryRelative.fromJson(parent)),
+      json.children.map((child) => ProfileEntryRelative.fromJson(child)),
+      json.selectable,
+      json.url
+    )
   }
 }
