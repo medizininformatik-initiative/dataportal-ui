@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core'
+import { Component, input, OnInit, output } from '@angular/core'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { ListItemDetailsData } from '../../models/ListItemDetails/ListItemDetailsData'
 import { ListItemDetailsGenericSectionsComponent } from './list-item-details-generic-sections/list-item-details-generic-sections.component'
@@ -25,10 +25,17 @@ import { MenuItemInterface } from '../../models/Menu/MenuItemInterface'
     DisplayTranslationPipe,
   ],
 })
-export class ListItemDetailsGenericComponent {
+export class ListItemDetailsGenericComponent implements OnInit {
   readonly listItemDetails = input.required<ListItemDetailsData>()
   readonly menuItems = input<MenuItemInterface[]>([])
   readonly selectedRelative = output<ListItemDetailsRelativeData>()
+
+  displayFields = []
+  ngOnInit() {
+    this.displayFields = this.listItemDetails().fields.map(
+      (item) => ' ' + item.display.getOriginal()
+    )
+  }
 
   public getSelectedRelative(item: ListItemDetailsRelativeData): void {
     this.selectedRelative.emit(item)
