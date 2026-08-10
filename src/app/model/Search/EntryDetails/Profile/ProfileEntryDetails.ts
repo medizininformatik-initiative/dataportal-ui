@@ -45,29 +45,14 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
   }
 
   /**
-   * @todo replace test description
    * @param {ProfileEntryDetailsData} json
    * @returns {ProfileEntryDetails}
    */
   public static fromJson(json: ProfileEntryDetailsData): ProfileEntryDetails {
-    const bla = {
-      original: 'Labor',
-      translations: [
-        {
-          language: 'de-DE',
-          value: 'Bal bla ',
-        },
-        {
-          language: 'en-US',
-          value: 'Bla bla bla',
-        },
-      ],
-    }
-
     return new ProfileEntryDetails(
       json.id,
       Display.fromJson(json.display),
-      Display.fromJson(bla), //Display.fromJson(json.description),
+      Display.fromJson(json.description),
       json.fields.map((field) => Display.fromJson(field.display)),
       json.parents.map((parent) => ProfileEntryRelative.fromJson(parent)),
       json.children.map((child) => ProfileEntryRelative.fromJson(child)),
