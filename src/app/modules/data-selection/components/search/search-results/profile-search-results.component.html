@@ -35,6 +35,8 @@
         (rowClicked)="loadEntry($event)"
         (selectedRow)="onRowSelected($event)"
         [tableData]="adaptedData()"
+        [triggerSelectAll]="triggerSelectAll"
+        (selectAll)="selectAll($event)"
       ></num-table>
     </mat-drawer-content>
   </mat-drawer-container>

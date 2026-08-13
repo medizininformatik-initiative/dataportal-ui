@@ -10,7 +10,13 @@ import { TableCellUnion } from '../Cells/TableCellUnion'
 
 export class CriteriaBulkFoundListEntryAdapter extends AbstractTableAdapter<CriteriaBulkEntry> {
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['DISPLAY', 'TERMINOLOGY_CODE', 'TERMCODE'] }
+    return {
+      headers: [
+        { label: 'DISPLAY', addAllCheckbox: false },
+        { label: 'TERMINOLOGY_CODE', addAllCheckbox: false },
+        { label: 'TERMCODE', addAllCheckbox: false },
+      ],
+    }
   }
 
   protected buildRows(listEntries: CriteriaBulkEntry[]): TableRowData[] {

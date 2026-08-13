@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 export class CodeableConceptBulkNotFoundEntryAdapter extends AbstractTableAdapter<CriteriaBulkEntryNotFound> {
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['TERMCODE'] }
+    return { headers: [{ label: 'TERMCODE', addAllCheckbox: false }] }
   }
 
   protected buildRows(listEntries: CriteriaBulkEntryNotFound[]): TableRowData[] {

@@ -19,6 +19,8 @@ export class TableComponent {
   readonly selectedRow = output<TableRowData>()
   readonly rowClicked = output<TableRowData>()
   readonly iconClicked = output<TableRowData>()
+  readonly selectAll = output<boolean>()
+  readonly triggerSelectAll = input<{ id: number; value: boolean }>()
 
   public unselectCheckbox(ids: string[]): void {
     ids.forEach((id) => {

@@ -17,8 +17,16 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
   }
 
   protected buildHeaders(): TableHeaderData {
-    const headers = ['EMPTY', 'NAME', 'AVAILABILITY', 'TERMINOLOGY_CODE', 'TERMCODE', 'CONTEXT']
-    return { headers }
+    return {
+      headers: [
+        { label: 'EMPTY', addAllCheckbox: false },
+        { label: 'NAME', addAllCheckbox: false },
+        { label: 'AVAILABILITY', addAllCheckbox: false },
+        { label: 'TERMINOLOGY_CODE', addAllCheckbox: false },
+        { label: 'TERMCODE', addAllCheckbox: false },
+        { label: 'CONTEXT', addAllCheckbox: false },
+      ],
+    }
   }
 
   protected buildRows(listEntries: CriteriaListEntry[]): TableRowData[] {

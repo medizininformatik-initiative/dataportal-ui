@@ -11,7 +11,13 @@ import { DisplayCellData } from '../Cells/Data/DisplayCellData'
 
 export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<ReferenceCriteriaListEntry> {
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['EMPTY', 'NAME', 'TERMINOLOGY_CODE'] }
+    return {
+      headers: [
+        { label: 'EMPTY', addAllCheckbox: false },
+        { label: 'NAME', addAllCheckbox: false },
+        { label: 'TERMINOLOGY_CODE', addAllCheckbox: false },
+      ],
+    }
   }
 
   protected buildRows(listEntries: ReferenceCriteriaListEntry[]): TableRowData[] {
