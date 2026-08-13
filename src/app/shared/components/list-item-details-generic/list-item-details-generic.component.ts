@@ -32,7 +32,7 @@ export class ListItemDetailsGenericComponent implements OnInit {
 
   displayFields = []
   ngOnInit() {
-    this.displayFields = this.listItemDetails().fields.map(
+    this.displayFields = this.listItemDetails()?.fields?.map(
       (item) => ' ' + item.display.getOriginal()
     )
   }
