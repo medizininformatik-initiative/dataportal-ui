@@ -101,7 +101,14 @@ export class DataExtraction2UiDataSelectionService {
    * @param externProfile
    */
   private applyLabel(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
-    profile.setLabel(externProfile.name ?? profile.getLabel().getOriginal())
+    if (externProfile.name) {
+      const newLabel = this.parseTrailingNumber(externProfile.name)
+      profile.setLabel(newLabel.text)
+      profile.setLabelNumber(newLabel.number)
+    } else {
+      profile.setLabel(profile.getLabel().getOriginal())
+      profile.setLabelNumber(0)
+    }
   }
 
   /**
@@ -211,5 +218,21 @@ export class DataExtraction2UiDataSelectionService {
         this.idMap.push({ oldId: matchedExtern.id, newId: profile.getId() })
       }
     })
+  }
+
+  parseTrailingNumber(text) {
+    const match = text.match(/^(.*) \((\d+)\)$/)
+
+    if (!match) {
+      return {
+        text: text,
+        number: null,
+      }
+    }
+
+    return {
+      text: match[1],
+      number: Number(match[2]),
+    }
   }
 }

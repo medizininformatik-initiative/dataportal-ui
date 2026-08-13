@@ -1,8 +1,8 @@
-import { BehaviorSubject, map, Observable, tap } from 'rxjs'
+import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
-import { Injectable, inject } from '@angular/core'
+import { Injectable, OnDestroy, inject } from '@angular/core'
 import { ProfileProviderService } from './Provider/ProfileProvider.service'
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
@@ -17,15 +17,20 @@ import { initial } from 'lodash'
 @Injectable({
   providedIn: 'root',
 })
-export class StagedProfileService {
+export class StagedProfileService implements OnDestroy {
   private dataSelectionProviderService = inject(DataSelectionProviderService)
   private profileProviderService = inject(ProfileProviderService)
 
   private stagedProfile: DataSelectionProfile
+  private subscription: Subscription
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
   constructor() {}
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe()
+  }
 
   public initialize(profile: DataSelectionProfile): void {
     this.stagedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
@@ -71,10 +76,69 @@ export class StagedProfileService {
    * @returns
    */
   public updateLabel(label: string): void {
+    this.subscription?.unsubscribe()
     const profile = this.stagedProfile
+
     if (profile) {
-      profile.setLabel(label)
+      let profiles: DataSelectionProfile[] = []
+      this.profileProviderService
+        .getAll()
+        .subscribe((profiles_) => {
+          profiles = profiles_
+        })
+        .unsubscribe()
+
+      const newLabel = this.parseTrailingNumber(label)
+
+      const sameProfiles = profiles.filter(
+        (existingProfile) =>
+          existingProfile.getLabel().getOriginal() === newLabel.text ||
+          existingProfile.getLabel().getTranslations()[0].getValue() === newLabel.text ||
+          existingProfile.getLabel().getTranslations()[1].getValue() === newLabel.text
+      )
+
+      if (sameProfiles.length === 0) {
+        if (newLabel.number !== null) {
+          profile.setLabelNumber(newLabel.number)
+        } else {
+          profile.setLabelNumber(0)
+        }
+      } else {
+        if (newLabel.number !== null) {
+          const foundProfile = sameProfiles.find(
+            (existingProfile) => existingProfile.getLabelNumber() === newLabel.number
+          )
+          if (foundProfile) {
+            if (foundProfile.getId() !== profile.getId()) {
+              sameProfiles.sort(function (a, b) {
+                return b.getLabelNumber() - a.getLabelNumber()
+              })
+              const newLabelNumber = sameProfiles[0].getLabelNumber() + 1
+              profile.setLabelNumber(newLabelNumber)
+            }
+          } else {
+            profile.setLabelNumber(newLabel.number)
+          }
+        }
+      }
+      profile.setLabel(newLabel.text)
       this.buildProfile()
+    }
+  }
+
+  parseTrailingNumber(text) {
+    const match = text.match(/^(.*) \((\d+)\)$/)
+
+    if (!match) {
+      return {
+        text: text,
+        number: null,
+      }
+    }
+
+    return {
+      text: match[1],
+      number: Number(match[2]),
     }
   }
   /**
@@ -132,7 +196,6 @@ export class StagedProfileService {
   public buildProfile(): Observable<void[]> {
     const profile = this.stagedProfile
     this.stagedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
-    this.profileProviderService.setOne(profile)
     this.setProfileInDataSelectionProvider(profile)
     return this.setLinkedProfillesInDataSelectionProvdier()
   }
@@ -144,6 +207,6 @@ export class StagedProfileService {
    * @private
    */
   private setProfileInDataSelectionProvider(profile: DataSelectionProfile): void {
-    this.dataSelectionProviderService.setProfileInActiveDataSelection(profile)
+    this.dataSelectionProviderService.setProfileInActiveDataSelection(profile, 'SET')
   }
 }

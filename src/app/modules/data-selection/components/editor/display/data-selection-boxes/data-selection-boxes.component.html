@@ -1,6 +1,6 @@
 <div class="num-card selection-box" [attr.data-cy]="label() | displayTranslation">
   <div class="card-col">
-    <div class="num-text-body">{{ label() | displayTranslation }}</div>
+    <div class="num-text-body">{{ label() | displayTranslation }} {{ labelNumber() }}</div>
     <div
       class="num-pill"
       [class.expanded]="displayExpanded"

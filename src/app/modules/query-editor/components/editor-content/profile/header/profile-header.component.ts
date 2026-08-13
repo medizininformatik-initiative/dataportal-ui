@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common'
-import { Component, computed, inject, input, output } from '@angular/core'
+import { Component, computed, inject, input, OnInit, output } from '@angular/core'
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
@@ -30,7 +30,7 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
   ],
 })
-export class ProfileHeaderComponent {
+export class ProfileHeaderComponent implements OnInit {
   private profileProviderService = inject(ProfileProviderService)
   private fieldsFilterChipsService = inject(DataSelectionFieldsChipsService)
   private filtersFilterChipsService = inject(DataSelectionFiltersFilterChips)
@@ -42,9 +42,9 @@ export class ProfileHeaderComponent {
 
   filterChipsSelected = false
   displayExpanded = false
-
-  readonly label = computed(() => this.translation.transform(this.profile()?.getLabel()))
-  readonly placeholder = computed(() => this.translation.transform(this.profile()?.getDisplay()))
+  labelNumber: string = ''
+  label: string = ''
+  placeholder: string = ''
 
   readonly $fieldsFilterChips = computed<Observable<FilterChipData[]>>(() => {
     const fields = this.profile()?.getProfileFields()?.getSelectedBasicFields() ?? []
@@ -64,6 +64,13 @@ export class ProfileHeaderComponent {
       this.profile()?.getProfileFields()?.getSelectedReferenceFields() ?? []
     return this.getProfileReferenceChips(selectedReferenceFields)
   })
+
+  ngOnInit(): void {
+    this.labelNumber =
+      this.profile()?.getLabelNumber() > 0 ? ' (' + this.profile()?.getLabelNumber() + ')' : ''
+    this.label = this.translation.transform(this.profile()?.getLabel()) + this.labelNumber
+    this.placeholder = this.translation.transform(this.profile()?.getDisplay()) + this.labelNumber
+  }
 
   public setLabel(label: string) {
     this.updatedLabel.emit(label)

@@ -5,6 +5,7 @@ import { Injectable, inject } from '@angular/core'
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { RemoveReferenceService } from '../../../../service/RemoveReference.service'
+import { v4 as uuidv4 } from 'uuid'
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +27,9 @@ export class DataSelectionMenuFunctionsService {
    */
   public cloneDataSelectionObject(id: string) {
     const profile = this.profileProvider.getOne(id)
-    const copiedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
-    this.profileProvider.addOne(copiedProfile)
+    const copiedProfile = DataSelectionProfileCloner.deepCopyProfile(profile, uuidv4())
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId()
-    this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile)
+    this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile, 'ADD')
   }
 
   public deleteDataSelectionObject(id: string) {
