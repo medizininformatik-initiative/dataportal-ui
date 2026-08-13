@@ -12,8 +12,15 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
   }
 
   protected buildHeaders(): TableHeaderData {
-    const headers = ['EMPTY', 'DISPLAY', 'AVAILABILITY', 'MODULE', 'RESSOURCE_TYPE']
-    return { headers }
+    return {
+      headers: [
+        { label: 'EMPTY', addAllCheckbox: false },
+        { label: 'DISPLAY', addAllCheckbox: true },
+        { label: 'AVAILABILITY', addAllCheckbox: false },
+        { label: 'MODULE', addAllCheckbox: false },
+        { label: 'RESSOURCE_TYPE', addAllCheckbox: false },
+      ],
+    }
   }
 
   protected buildRows(data: ProfileListEntry[]): TableRowData[] {

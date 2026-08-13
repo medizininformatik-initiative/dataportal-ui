@@ -9,7 +9,7 @@ import { TableCellUnion } from '../Cells/TableCellUnion'
 
 export class CriteriaBulkNotFoundListEntryAdapter extends AbstractTableAdapter<CriteriaBulkEntryNotFound> {
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['TERMCODE'] }
+    return { headers: [{ label: 'TERMCODE', addAllCheckbox: false }] }
   }
 
   protected buildRows(listEntries: CriteriaBulkEntryNotFound[]): TableRowData[] {

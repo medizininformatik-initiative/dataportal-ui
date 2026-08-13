@@ -1,3 +1,6 @@
 export interface TableHeaderData {
-  headers: string[]
+  headers: {
+    label: string
+    addAllCheckbox: boolean
+  }[]
 }

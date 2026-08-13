@@ -4,7 +4,7 @@ import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
 import { ListItemDetailsData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsData'
 import { ListItemDetailsGenericComponent } from 'src/app/shared/components/list-item-details-generic/list-item-details-generic.component'
-import { map } from 'rxjs'
+import { map, tap } from 'rxjs'
 import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
@@ -54,7 +54,12 @@ export class ProfileSearchResultsComponent {
   })
 
   private readonly searchResultEntries = toSignal(
-    this.profileSearchService.getSearchResults().pipe(map((r) => r?.getResults() ?? [])),
+    this.profileSearchService.getSearchResults().pipe(
+      map((r) => r?.getResults() ?? []),
+      tap(() => {
+        this.triggerSelectAll = { id: Date.now(), value: false }
+      })
+    ),
     { initialValue: [] as ProfileListEntry[] }
   )
 
@@ -78,6 +83,8 @@ export class ProfileSearchResultsComponent {
 
   readonly adaptedDetailsData = signal<ListItemDetailsData | undefined>(undefined)
 
+  triggerSelectAll = { id: Date.now(), value: false }
+
   public getMenuItemsForListItem(data: ListItemDetailsData): MenuItemInterface[] {
     return this.profileListItemDetailsMenuService.getMenuItems(data.selectable)
   }
@@ -86,8 +93,12 @@ export class ProfileSearchResultsComponent {
     const entry = row.originalEntry as ProfileListEntry
     if (this.isProfileSelected(entry.getUrl())) {
       this.selectedProfileService.removeFromSelection(entry)
+      this.triggerSelectAll = { id: Date.now(), value: false }
     } else {
       this.selectedProfileService.addToSelection(entry)
+      if (this.selectedProfiles().length === this.searchResultEntries().length) {
+        this.triggerSelectAll = { id: Date.now(), value: true }
+      }
     }
   }
 
@@ -114,5 +125,20 @@ export class ProfileSearchResultsComponent {
     console.log(item)
     const originalDisplay = item.display.getOriginal()
     this.profileSearchService.search(originalDisplay).subscribe()
+  }
+  public selectAll(areAllSelected: boolean): void {
+    if (areAllSelected) {
+      this.searchResultEntries().forEach((entry) => {
+        if (!this.isProfileSelected(entry.getUrl())) {
+          this.selectedProfileService.addToSelection(entry)
+        }
+      })
+    } else {
+      this.searchResultEntries().forEach((entry) => {
+        if (this.isProfileSelected(entry.getUrl())) {
+          this.selectedProfileService.removeFromSelection(entry)
+        }
+      })
+    }
   }
 }

@@ -12,7 +12,13 @@ import { v4 as uuidv4 } from 'uuid'
 
 export class CodeableConceptBulkFoundEntryAdapter extends AbstractTableAdapter<CodeableConceptBulkEntry> {
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['DISPLAY', 'TERMINOLOGY_CODE', 'TERMCODE'] }
+    return {
+      headers: [
+        { label: 'DISPLAY', addAllCheckbox: false },
+        { label: 'TERMINOLOGY_CODE', addAllCheckbox: false },
+        { label: 'TERMCODE', addAllCheckbox: false },
+      ],
+    }
   }
 
   protected buildRows(listEntries: CodeableConceptBulkEntry[]): TableRowData[] {

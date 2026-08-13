@@ -9,7 +9,12 @@ import { v4 as uuidv4 } from 'uuid'
 
 export class FeasibilityQueryResultDetailsListAdapter extends AbstractTableAdapter<FeasibilityQueryResultDetailstListEntry> {
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['SITE', 'PATIENT_COUNT'] }
+    return {
+      headers: [
+        { label: 'SITE', addAllCheckbox: false },
+        { label: 'PATIENT_COUNT', addAllCheckbox: false },
+      ],
+    }
   }
 
   protected buildRows(listEntries: FeasibilityQueryResultDetailstListEntry[]): TableRowData[] {
