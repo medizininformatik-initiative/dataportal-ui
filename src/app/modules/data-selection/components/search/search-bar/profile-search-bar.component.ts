@@ -68,6 +68,12 @@ export class ProfileSearchBarComponent {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         map((filters) => ProfileSearchFilterAdapter.convertToFilterValues(filters)),
+        // TODO: temp exclusion of category filter to be included once categories filled in ontology
+        map((filters: SearchFilterData[]) =>
+          filters.filter(
+            (f) => f.filterType.toLowerCase() !== ElasticSearchFilterTypes.CATEGORY.toLowerCase()
+          )
+        ),
         map((filters: SearchFilterData[]) => {
           const order: Record<string, number> = {
             [ElasticSearchFilterTypes.MODULE.toLowerCase()]: 0,
