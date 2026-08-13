@@ -82,7 +82,7 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
   }
 
   public withTargetFilter(targetFilter: string): this {
-    this.queryParams.set('targetFilter', targetFilter)
+    this.queryParams.set('target-filter', targetFilter)
     return this
   }
 

@@ -25,8 +25,7 @@ export class RemoveReferenceService {
         map((dataSelection) => {
           dataSelection.getProfiles().map((profile) => {
             const updatedProfile = this.removeReferenceFromProfile(profile, profileIdToBeDeleted)
-            this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile)
-            this.profileProviderService.setOne(updatedProfile)
+            this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile, 'SET')
           })
           //this.profileProviderService.removeProfileById(profileIdToBeDeleted);
           return dataSelection

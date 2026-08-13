@@ -4,11 +4,13 @@ import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { Injectable, inject } from '@angular/core'
 import { v4 as uuidv4 } from 'uuid'
+import { ProfileProviderService } from './ProfileProvider.service'
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelectionProviderService {
   private activeDataSelection = inject(ActiveDataSelectionService)
+  private profileProviderService = inject(ProfileProviderService)
 
   private dataSelectionUIDMap: Map<string, DataSelection> = new Map()
   private dataSelectionUIDMapSubject: BehaviorSubject<Map<string, DataSelection>> =
@@ -67,11 +69,15 @@ export class DataSelectionProviderService {
 
   /**
    * Method to set multiple profiles in the active data selection.
-   * @param profiles
+   * @param profile
+   * @param profileProvider
    */
-  public setProfileInActiveDataSelection(profile: DataSelectionProfile): void {
+  public setProfileInActiveDataSelection(
+    profile: DataSelectionProfile,
+    profileProvider?: 'ADD' | 'SET'
+  ): void {
     const id: string = this.activeDataSelection.getActiveDataSelectionId()
-    this.setProfileInDataSelection(id, profile)
+    this.setProfileInDataSelection(id, profile, profileProvider)
   }
 
   public setDataSelectionByUID(
@@ -104,7 +110,11 @@ export class DataSelectionProviderService {
     }
   }
 
-  public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
+  public setProfileInDataSelection(
+    dataSelectionId: string,
+    profile: DataSelectionProfile,
+    profileProvider?: 'ADD' | 'SET'
+  ): void {
     const dataSelection = this.dataSelectionUIDMap.get(dataSelectionId)
     if (dataSelection) {
       const profiles = dataSelection.getProfiles()
@@ -114,9 +124,17 @@ export class DataSelectionProviderService {
       if (index !== -1) {
         profiles[index] = profile
       } else {
-        profiles.push(profile)
+        console.log('profile: ', JSON.parse(JSON.stringify(profile)))
+        profiles.push(this.testForSameLabel(profiles, profile))
       }
       this.createDataSelectionInstanceAndSetMap(profiles, dataSelectionId)
+
+      if (profileProvider === 'ADD') {
+        this.profileProviderService.addOne(profile)
+      }
+      if (profileProvider === 'SET') {
+        this.profileProviderService.setOne(profile)
+      }
     }
   }
 
@@ -136,5 +154,28 @@ export class DataSelectionProviderService {
     const dataSelection: DataSelection = new DataSelection([], uuidv4())
     this.setDataSelectionByUID(dataSelection.getId(), dataSelection, true)
     this.activeDataSelection.setActiveDataSelectionID(dataSelection.getId())
+  }
+
+  private testForSameLabel(
+    profiles: DataSelectionProfile[],
+    profile: DataSelectionProfile
+  ): DataSelectionProfile {
+    const sameProfiles = profiles.filter(
+      (existingProfile) =>
+        existingProfile.getLabel().getOriginal() === profile.getLabel().getOriginal() ||
+        existingProfile.getLabel().getTranslations()[0].getValue() ===
+          profile.getLabel().getTranslations()[0].getValue() ||
+        existingProfile.getLabel().getTranslations()[1].getValue() ===
+          profile.getLabel().getTranslations()[1].getValue()
+    )
+
+    if (sameProfiles.length > 0) {
+      sameProfiles.sort(function (a, b) {
+        return b.getLabelNumber() - a.getLabelNumber()
+      })
+      const newLabelNumber = sameProfiles[0].getLabelNumber() + 1
+      profile.setLabelNumber(newLabelNumber)
+    }
+    return profile
   }
 }

@@ -58,7 +58,8 @@ export class ProfileInstanceBuilderService {
       fields,
       filters,
       new ProfileReference(markAsReference, markAsReference),
-      displayInstance
+      displayInstance,
+      0
     )
   }
 }

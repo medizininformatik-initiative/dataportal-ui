@@ -58,6 +58,9 @@ export class DataSelectionBoxesComponent {
 
   readonly display = computed(() => this.profile()?.getDisplay().getOriginal())
   readonly label = computed(() => this.profile()?.getLabel())
+  readonly labelNumber = computed(() =>
+    this.profile()?.getLabelNumber() > 0 ? '(' + this.profile()?.getLabelNumber() + ')' : ''
+  )
 
   readonly fieldsFilterChips = toSignal(this.fieldsFilterChipsService.filterChips$, {
     initialValue: [] as FilterChipData[],

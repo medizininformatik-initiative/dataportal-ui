@@ -58,8 +58,7 @@ export class LoadDataSelectionProfilesService {
    */
   private setProfilesInProvider(profiles: DataSelectionProfile[]): void {
     profiles.forEach((profile) => {
-      this.dataSelectionProvider.setProfileInActiveDataSelection(profile)
-      this.profileProvider.setOne(profile)
+      this.dataSelectionProvider.setProfileInActiveDataSelection(profile, 'SET')
     })
   }
 }

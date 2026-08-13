@@ -103,8 +103,7 @@ export class ProfileReferenceTileComponent implements OnInit {
 
   private updateProfile(profile: DataSelectionProfile): void {
     const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
-    this.profileProviderService.setOne(updatedProfile)
-    this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile)
+    this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile, 'SET')
   }
 
   private getIndexOfSelectedReferenceField(selectedReferences: SelectedReferenceField[]): number {
