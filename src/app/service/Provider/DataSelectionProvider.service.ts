@@ -26,6 +26,7 @@ export class DataSelectionProviderService {
     this.setDataSelectionByUID(dataSelection.getId(), dataSelection)
     this.activeDataSelection.setActiveDataSelectionID(dataSelection.getId())
     dataSelection.setProfiles([mainProfile])
+    this.profileProviderService.setOne(mainProfile)
     return of(true)
   }
 
