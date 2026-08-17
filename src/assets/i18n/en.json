@@ -658,7 +658,7 @@
         "NOT_SELECTABLE": "Criterion cannot be selected",
         "SELECT_CHECKBOX": "Select Criteria"
       },
-      "DISPLAY": "Anzeige",
+      "DISPLAY": "Feature",
       "EMPTY": "",
       "FEATURE": {
         "ICON": "Show related features",
