@@ -17,5 +17,8 @@
       (isOpen)="onFilterOpen($event)"
     ></num-search-filter>
     }
+    <num-button [isDisabled]="resetFilterEnabled()" type="blue" (click)="resetFilter()">
+      {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
+    </num-button>
   </div>
 </div>
