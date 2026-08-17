@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core'
+import { Component, DestroyRef, inject, signal } from '@angular/core'
 import { CriteriaFilterFetchService } from 'src/app/service/Search/Filter/CriteriaFilterFetch.service'
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
 import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
@@ -13,13 +13,20 @@ import { SectionNameComponent } from 'src/app/shared/components/section-name/sec
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '../../../../../shared/components/button/button.component'
 
 @Component({
   selector: 'num-criteria-search-filter-bar',
   templateUrl: './search-filter-bar.component.html',
   styleUrls: ['./search-filter-bar.component.scss'],
   standalone: true,
-  imports: [SearchFilterComponent, InfoTooltipDirective, TranslateModule, SectionNameComponent],
+  imports: [
+    SearchFilterComponent,
+    InfoTooltipDirective,
+    TranslateModule,
+    SectionNameComponent,
+    ButtonComponent,
+  ],
 })
 export class SearchFilterBarComponent {
   private filterProvider = inject(FilterProvider)
@@ -54,6 +61,10 @@ export class SearchFilterBarComponent {
   private readonly searchText = toSignal(this.criteriaSearchService.getActiveSearchTerm(), {
     initialValue: '',
   })
+  readonly resetFilterEnabled = toSignal(this.filterProvider.filtersNotSet(), {
+    initialValue: true,
+  })
+  readonly localSearchText = signal('')
 
   public onFilterChange(newFilter: SearchFilterData): void {
     const filterType = newFilter.filterType.toLocaleLowerCase()
@@ -85,5 +96,10 @@ export class SearchFilterBarComponent {
 
   trackByFilterType(_index: number, filter: SearchFilterData): string {
     return filter.filterType
+  }
+
+  public resetFilter(): void {
+    this.filterProvider.resetSelectedValues()
+    this.criteriaSearchService.search(this.localSearchText()).subscribe()
   }
 }
