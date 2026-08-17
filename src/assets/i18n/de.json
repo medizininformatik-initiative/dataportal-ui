@@ -580,7 +580,7 @@
         "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
         "SELECT_CHECKBOX": "Kriterium auswählen"
       },
-      "DISPLAY": "Anzeige",
+      "DISPLAY": "Merkmal",
       "EMPTY": "",
       "FEATURE": {
         "ICON": "Verwandte Merkmale anzeigen",
