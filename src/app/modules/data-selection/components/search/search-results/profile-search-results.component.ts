@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal, viewChild } from '@angular/core'
+import { Component, computed, inject, input, output, signal, viewChild } from '@angular/core'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll'
@@ -22,6 +22,7 @@ import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 import { TableCellKind } from '../../../../../shared/models/TableData/Cells/TableCellKind'
 import { ListItemDetailsRelativeData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsRelative'
+import { ProfileSearchEngineService } from '../../../../../service/Search/SearchTypes/Profile/Engine/ProfileSearchEngine.service'
 
 @Component({
   selector: 'num-profile-search-results',
@@ -41,6 +42,7 @@ import { ListItemDetailsRelativeData } from 'src/app/shared/models/ListItemDetai
   ],
 })
 export class ProfileSearchResultsComponent {
+  private profileSearchEngineService = inject(ProfileSearchEngineService)
   private profileSearchService = inject(ProfileSearchService)
   private profileEntryDetailsService = inject(ProfileEntryDetailsService)
   private selectedProfileService = inject(SelectedProfileService)
@@ -54,12 +56,7 @@ export class ProfileSearchResultsComponent {
   })
 
   private readonly searchResultEntries = toSignal(
-    this.profileSearchService.getSearchResults().pipe(
-      map((r) => r?.getResults() ?? []),
-      tap(() => {
-        this.triggerSelectAll = { id: Date.now(), value: false }
-      })
-    ),
+    this.profileSearchService.getSearchResults().pipe(map((r) => r?.getResults() ?? [])),
     { initialValue: [] as ProfileListEntry[] }
   )
 
@@ -122,23 +119,30 @@ export class ProfileSearchResultsComponent {
   }
 
   public onSelectedRelative(item: ListItemDetailsRelativeData) {
-    console.log(item)
     const originalDisplay = item.display.getOriginal()
     this.profileSearchService.search(originalDisplay).subscribe()
   }
   public selectAll(areAllSelected: boolean): void {
     if (areAllSelected) {
-      this.searchResultEntries().forEach((entry) => {
-        if (!this.isProfileSelected(entry.getUrl())) {
-          this.selectedProfileService.addToSelection(entry)
-        }
-      })
+      this.profileSearchEngineService
+        .search(this.activeSearchTerm(), 0, 10000)
+        .subscribe((result) => {
+          result.getResults().forEach((entry) => {
+            if (!this.isProfileSelected(entry.getUrl())) {
+              this.selectedProfileService.addToSelection(entry)
+            }
+          })
+        })
     } else {
-      this.searchResultEntries().forEach((entry) => {
-        if (this.isProfileSelected(entry.getUrl())) {
-          this.selectedProfileService.removeFromSelection(entry)
-        }
-      })
+      this.profileSearchEngineService
+        .search(this.activeSearchTerm(), 0, 10000)
+        .subscribe((result) => {
+          result.getResults().forEach((entry) => {
+            if (this.isProfileSelected(entry.getUrl())) {
+              this.selectedProfileService.removeFromSelection(entry)
+            }
+          })
+        })
     }
   }
 }
