@@ -74,9 +74,9 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
   }
 
   public withPageSize(limit: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE): this {
-    if (limit > SearchUrlBuilder.MAX_ENTRIES_PER_PAGE) {
-      limit = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
-    }
+    //if (limit > SearchUrlBuilder.MAX_ENTRIES_PER_PAGE) {
+    //  limit = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
+    //}
     this.queryParams.set('page-size', limit.toString())
     return this
   }
