@@ -531,7 +531,7 @@
         "SINGULAR": "You have added {{amount}} criterion to the cohort selection"
       },
       "DOWNLOAD": "Download",
-      "DOWNLOAD_DISABLED": "No feasibility query was defined",
+      "DOWNLOAD_DISABLED": "The data definition is invalid.",
       "INVALID_DATA_DEFINITION_TOOLTIP": "The data definition is invalid. Please click here to view the validation report for details.",
       "SAVE": "Save",
       "SAVE_DISABLED": "No data to save",

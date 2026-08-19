@@ -25,14 +25,14 @@
   <button
     (click)="downloadCRTDL()"
     [matTooltip]="
-      downloadAllowed()
+      isDataDefinitionValid()
         ? ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
     "
     type="button"
     class="num-button green icon"
-    [class.disabled]="!downloadAllowed()"
-    [disabled]="!downloadAllowed()"
+    [class.disabled]="!isDataDefinitionValid()"
+    [disabled]="!isDataDefinitionValid()"
   >
     <fa-icon size="lg" [icon]="'download'"></fa-icon>
   </button>
@@ -40,14 +40,14 @@
   <button
     (click)="onSaveDataQuery()"
     [matTooltip]="
-      downloadAllowed()
+      isDataDefinitionValid()
         ? ('SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
     "
     type="button"
     class="num-button green icon"
-    [class.disabled]="!downloadAllowed()"
-    [disabled]="!downloadAllowed()"
+    [class.disabled]="!isDataDefinitionValid()"
+    [disabled]="!isDataDefinitionValid()"
   >
     <fa-icon size="lg" [icon]="'save'"></fa-icon>
   </button>

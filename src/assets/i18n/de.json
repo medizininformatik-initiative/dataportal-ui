@@ -520,7 +520,7 @@
         "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohortenselektion hinzugefügt"
       },
       "DOWNLOAD": "Herunterladen",
-      "DOWNLOAD_DISABLED": "Keine Machbarkeitsabfrage wurde definiert",
+      "DOWNLOAD_DISABLED": "Die Datendefinition ist ungültig.",
       "INVALID_DATA_DEFINITION_TOOLTIP": "Die Datendefinition ist ungültig. Hier klicken, um weitere Informationen zu erhalten.",
       "SAVE": "Speichern",
       "SAVE_DISABLED": "Keine Daten zum Speichern",

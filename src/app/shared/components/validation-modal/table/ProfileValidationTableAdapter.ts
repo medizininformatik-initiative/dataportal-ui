@@ -1,10 +1,11 @@
 import { AbstractTableAdapter } from 'src/app/shared/models/TableData/Adapter/AbstractTableAdapter'
 import { ProfileValidationEntry } from './ProfileValidationContextEntry'
-import { TableCellBuilder } from 'src/app/shared/models/TableData/cells/TableCellBuilder'
 import { TableHeaderData } from 'src/app/shared/models/TableData/TableHeaderData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { ProfileStateType } from 'src/app/service/Validation/Internal/ProfileValidationService.service'
 import { v4 as uuidv4 } from 'uuid'
+import { TableCellContext } from '../../../models/TableData/Cells/TableCellContext'
+import { TableCellBuilder } from '../../../models/TableData/Cells/TableCellBuilder'
 export class ProfileValidationTableAdapter extends AbstractTableAdapter<ProfileValidationEntry> {
   private readonly ICON_NAME: string = 'pencil-alt'
 
@@ -13,7 +14,14 @@ export class ProfileValidationTableAdapter extends AbstractTableAdapter<ProfileV
    * @returns {TableHeaderData}
    */
   protected buildHeaders(): TableHeaderData {
-    return { headers: ['PROFILE', 'STATUS', 'WHAT_IS_MISSING', 'ACTIONS'] }
+    return {
+      headers: [
+        { label: 'PROFILE', addAllCheckbox: false },
+        { label: 'STATUS', addAllCheckbox: false },
+        { label: 'WHAT_IS_MISSING', addAllCheckbox: false },
+        { label: 'ACTIONS', addAllCheckbox: false },
+      ],
+    }
   }
 
   /**
@@ -34,7 +42,7 @@ export class ProfileValidationTableAdapter extends AbstractTableAdapter<ProfileV
             : 'SHARED_COMPONENTS.TABLE.PROFILE_VALIDATION.INVALID'
         ),
         TableCellBuilder.withText(this.whatsMissing(entry.getState())),
-        TableCellBuilder.withIcon(this.ICON_NAME),
+        TableCellBuilder.withIcon(this.ICON_NAME, TableCellContext.FEATURE),
       ],
     }))
   }

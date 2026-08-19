@@ -13,6 +13,8 @@ export class LabelColComponent {
 
   readonly label = computed(() => this.profile()?.getLabel())
   readonly display = computed(() => this.profile()?.getDisplay().getOriginal())
-
+  readonly labelNumber = computed(() =>
+    this.profile()?.getLabelNumber() > 0 ? '(' + this.profile()?.getLabelNumber() + ')' : ''
+  )
   displayExpanded = false
 }
