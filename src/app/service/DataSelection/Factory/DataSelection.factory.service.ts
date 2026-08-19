@@ -1,7 +1,7 @@
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
 import { DataSelectionMainProfileInitializerService } from '../../DataSelectionMainProfileInitializerService'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { map, Observable, take } from 'rxjs'
 import { v4 as uuidv4 } from 'uuid'

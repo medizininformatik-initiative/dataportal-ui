@@ -1,19 +1,20 @@
-:host {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
 .container {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 .background-color-button {
   color: white;
   background-color: #5a79af;
   margin-right: 10px;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  overflow: hidden;
+  height: 100%;
 }
 
 .tree-container {
@@ -38,4 +39,11 @@
   width: 26px !important;
   height: 26px !important;
   border-radius: 25%;
+}
+
+.result-container {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }

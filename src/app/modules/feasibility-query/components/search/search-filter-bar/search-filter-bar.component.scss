@@ -33,3 +33,9 @@
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+.filter-container > num-button {
+  margin-top: 2px;
+}
+::ng-deep .filter-container .num-button {
+  height: 38px;
+}

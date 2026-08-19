@@ -1,7 +1,7 @@
 @if (searchResultsFound()) {
 <mat-drawer-container class="results-container">
   <mat-drawer #drawer position="end" mode="side" class="details-drawer">
-    @if (listItems()) {
+    @if (adaptedDetailsData(); as data) {
     <div class="details-wrapper">
       <div class="button-align-right">
         <button
@@ -14,11 +14,12 @@
         </button>
       </div>
       <div class="details-container">
-        <num-list-item-details
+        <num-list-item-details-generic
           class="details-panel"
-          [listItemDetails$]="selectedDetails$"
+          [listItemDetails]="data"
+          [menuItems]="getMenuItemsForListItem(data)"
           (selectedRelative)="getSelectedRelative($event)"
-        ></num-list-item-details>
+        ></num-list-item-details-generic>
       </div>
     </div>
     }

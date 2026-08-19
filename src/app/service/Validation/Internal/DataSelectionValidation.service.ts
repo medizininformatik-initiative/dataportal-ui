@@ -1,11 +1,11 @@
 import { computed, inject, Injectable, Signal } from '@angular/core'
 import { DataSelectionMainProfileProviderService } from '../../DataSelectionMainProfileProvider.service'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
 import {
   ProfileValidationService,
   ProfileValidationState,
 } from './ProfileValidationService.service'
 import { toSignal } from '@angular/core/rxjs-interop'
+import { DataSelectionProviderService } from '../../Provider/DataSelectionProvider.service'
 
 export { ProfileStateType, ProfileValidationState } from './ProfileValidationService.service'
 

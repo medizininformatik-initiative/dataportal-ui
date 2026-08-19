@@ -9,9 +9,6 @@ import { Observable } from 'rxjs'
 export class CriteriaSearchDataResolverService {
   private searchService = inject(CriteriaSearchService)
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
   constructor() {}
 
   public resolve(): Observable<CriteriaResultList> {

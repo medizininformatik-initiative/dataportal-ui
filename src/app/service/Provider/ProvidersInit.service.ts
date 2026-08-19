@@ -1,6 +1,6 @@
 import { DataSelectionMainProfileProviderService } from '../DataSelectionMainProfileProvider.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { map } from 'rxjs/operators'

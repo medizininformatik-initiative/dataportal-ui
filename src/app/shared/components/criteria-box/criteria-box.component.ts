@@ -4,8 +4,9 @@ import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop'
 import { Component, computed, inject, input, OnInit } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
-import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service'
 import { CriterionValidationService } from 'src/app/service/Validation/Internal/CriterionValidationService.service'
+import { CriterionMenuItemsService } from '../../service/Menu/Criterion/CriterionMenuItems.service'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FilterChipData } from '../../models/FilterChips/FilterChipData'
 import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
@@ -42,7 +43,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class CriteriaBoxComponent implements OnInit {
-  private menuService = inject(CriterionMenuItems)
+  private menuService = inject(CriterionMenuItemsService)
   private filterChipsService = inject(CriterionFilterChipService)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
   private readonly navigationHelperService = inject(NavigationHelperService)
@@ -51,7 +52,7 @@ export class CriteriaBoxComponent implements OnInit {
   readonly criterion = input.required<Criterion>()
   readonly isEditable = input<boolean>()
 
-  readonly menuItems = this.menuService.getMenuItemsForCriterion()
+  readonly menuItems = this.menuService.getMenuItems()
 
   referenceCriterion: ReferenceCriterion[] = []
 

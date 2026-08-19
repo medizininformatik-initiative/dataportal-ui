@@ -2,7 +2,14 @@
   @for (headerItem of tableData()?.header?.headers; track headerItem; let i = $index) {
   <th [style.width.%]="getWidth(i)">
     <div class="header-cell">
-      {{ 'SHARED_COMPONENTS.TABLE.' + headerItem | translate }}
+      @if (headerItem.addAllCheckbox) {
+      <num-checkbox
+        [matTooltip]="'SHARED_COMPONENTS.TABLE.SELECT_CHECKBOX_ALL' | translate"
+        [checked]="checkBoxAll"
+        (checkedChange)="onCheckboxAllChange()"
+      ></num-checkbox>
+      }
+      {{ 'SHARED_COMPONENTS.TABLE.' + headerItem.label | translate }}
     </div>
   </th>
   }

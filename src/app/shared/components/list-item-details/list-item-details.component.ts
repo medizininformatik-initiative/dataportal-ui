@@ -1,7 +1,7 @@
 import { Component, OnInit, input, output } from '@angular/core'
 import { CriteriaListEntry } from '../../../model/Search/ListEntries/CriteriaListListEntry'
 import { Observable } from 'rxjs'
-import { SearchTermDetails } from 'src/app/model/Search/SearchDetails/SearchTermDetails'
+import { CriteriaEntryDetails } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryDetails'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { NgClass, AsyncPipe } from '@angular/common'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -36,7 +36,7 @@ export class ListItemDetailsComponent implements OnInit {
 
   readonly selectedTableItemId = input<string>(undefined)
 
-  readonly listItemDetails$ = input<Observable<SearchTermDetails>>(undefined)
+  readonly listItemDetails$ = input<Observable<CriteriaEntryDetails>>(undefined)
 
   readonly selectedRelative = output<CriteriaListEntry>()
 

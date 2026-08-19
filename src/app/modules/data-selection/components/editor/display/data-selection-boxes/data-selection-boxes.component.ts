@@ -3,7 +3,6 @@ import { Component, computed, effect, inject, input } from '@angular/core'
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
 import { DisplayTranslationPipe } from 'src/app/shared/pipes/DisplayTranslationPipe'
 import { FieldsColComponent } from './colums/fields-col/fields-col.component'
 import { FiltersColComponent } from './colums/filters-col/filters-col.component'
@@ -11,12 +10,13 @@ import { LabelColComponent } from './colums/label-col/label-col.component'
 import { LinkedReferencesComponent } from './linked-references/linked-references.component'
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
-import { MenuServiceDataSelection } from 'src/app/shared/service/Menu/DataSelection/MenuServiceDataSelection.service'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { ReferenceColComponent } from './colums/reference-col/reference-col.component'
 import { RemoveReferenceService } from 'src/app/service/RemoveReference.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { DataSelectionProviderService } from '../../../../../../service/Provider/DataSelectionProvider.service'
+import { DataSelectionMenuService } from '../../../../../../shared/service/Menu/DataSelection/DataSelectionMenu.service'
 
 @Component({
   selector: 'num-data-selection-boxes',
@@ -37,7 +37,7 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class DataSelectionBoxesComponent {
   private readonly removeReferenceService = inject(RemoveReferenceService)
-  private readonly menuService = inject(MenuServiceDataSelection)
+  private readonly menuService = inject(DataSelectionMenuService)
   private readonly appSettingsProvider = inject(AppSettingsProviderService)
   private readonly dataSelectionProvider = inject(DataSelectionProviderService)
   private readonly navigationHelper = inject(NavigationHelperService)
@@ -61,7 +61,7 @@ export class DataSelectionBoxesComponent {
   readonly menuItems = computed<MenuItemInterface[]>(() => {
     const isMainProfile =
       this.appSettingsProvider.getDsePatientProfileUrl() === this.profile()?.getUrl()
-    return this.menuService.getMenuItemsForDataSelection(isMainProfile)
+    return this.menuService.getMenuItems(isMainProfile)
   })
 
   private readonly activeDataSelection = toSignal(

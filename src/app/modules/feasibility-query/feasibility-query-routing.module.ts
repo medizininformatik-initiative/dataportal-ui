@@ -1,12 +1,13 @@
 import { PathSegments } from 'src/app/app-paths'
 import { Routes } from '@angular/router'
+import { CriteriaSearchDataResolverService } from 'src/app/service/Resolver/CriteriaSearchDataResolver.service'
+import { CriteriaSearchFilterResolverService } from 'src/app/service/Resolver/CriteriaSearchFilterResolver.service'
 
 export const FEASIBILITY_QUERY_ROUTES: Routes = [
   {
     path: '',
     redirectTo: PathSegments.search,
     pathMatch: 'full',
-
     data: {
       animation: 'Feasibility_Search',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
@@ -36,6 +37,10 @@ export const FEASIBILITY_QUERY_ROUTES: Routes = [
     path: PathSegments.search,
     loadComponent: () =>
       import('./components/search/search.component').then((m) => m.FeasibilityQuerySearchComponent),
+    resolve: {
+      preLoadCriteriaData: CriteriaSearchDataResolverService,
+      preLoadCriteriaFilter: CriteriaSearchFilterResolverService,
+    },
     data: {
       animation: 'Feasibility_Search',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',

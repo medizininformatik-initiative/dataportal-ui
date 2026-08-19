@@ -1,0 +1,20 @@
+@let items = listItemDetails(); @let menu = menuItems(); @if (items.length) { @for (item of items;
+track item.id) {
+<div (click)="getSelectedRelative(item)" class="mat-divider entry-layout">
+  <div class="text-overflow display-name" [matTooltip]="item.display | displayTranslation">
+    {{ item.display | displayTranslation }}
+
+    @if (item.metadata?.length) {
+    <div class="num-info-item">
+      {{ item.metadata[0] }}
+      @if (item.metadata[1]) { , {{ item.metadata[1] }}
+      }
+    </div>
+    }
+  </div>
+
+  @if (menu.length) {
+  <num-menu [menuItems]="menu" [id]="item.id" (click)="$event.stopPropagation()" />
+  }
+</div>
+} }

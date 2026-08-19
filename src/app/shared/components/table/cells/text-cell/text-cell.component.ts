@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core'
-import { TextCellData } from 'src/app/shared/models/TableData/cells/TextCellData'
+import { TextCellData } from 'src/app/shared/models/TableData/Cells/Data/TextCellData'
 import { MatTooltip } from '@angular/material/tooltip'
 import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe'
 

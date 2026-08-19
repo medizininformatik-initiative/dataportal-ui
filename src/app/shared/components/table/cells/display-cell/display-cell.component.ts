@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core'
-import { DisplayCellData } from 'src/app/shared/models/TableData/cells/DisplayCellData'
+import { DisplayCellData } from 'src/app/shared/models/TableData/Cells/Data/DisplayCellData'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatTooltip } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'

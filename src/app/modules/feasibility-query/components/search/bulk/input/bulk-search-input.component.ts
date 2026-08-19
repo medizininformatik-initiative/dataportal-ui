@@ -4,10 +4,10 @@ import { Component, computed, effect, inject, output, signal, untracked } from '
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
 import { FormsModule } from '@angular/forms'
 import { MatTooltip } from '@angular/material/tooltip'
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
 import { SearchFilterComponent } from '../../../../../../shared/components/search-filter/search-filter.component'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 
 @Component({
   selector: 'num-bulk-search-input',
@@ -24,7 +24,7 @@ export class BulkSearchInputComponent {
   readonly searchText = signal(this.bulkCriteriaSearchProvider.getSearchText() ?? '')
 
   readonly searchFilters = toSignal(this.bulkCriteriaSearchFilterService.getFilter(), {
-    initialValue: [] as SearchFilter[],
+    initialValue: [] as SearchFilterData[],
   })
 
   readonly filterMap = signal<Map<string, string[]>>(new Map())
@@ -60,7 +60,7 @@ export class BulkSearchInputComponent {
     )
   }
 
-  setElasticSearchFilter(newFilter: SearchFilter): void {
+  setElasticSearchFilter(newFilter: SearchFilterData): void {
     const selectedValues = Array.isArray(newFilter.selectedValues)
       ? (newFilter.selectedValues as string[])
       : [newFilter.selectedValues as string]

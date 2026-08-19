@@ -223,6 +223,7 @@
         "JUMP_TO_DATASELECTION": "Selektion anzeigen",
         "JUMP_TO_DATASELECTION_TOOLTIP": "Zum Editor navigieren, um die ausgewählten Merkmale zu bearbeiten"
       },
+      "CLOSE_DETAILS": "Schließen",
       "HEADER": "Merkmalselektion",
       "HEADER_INFO1": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter ",
       "HEADER_INFO2": ". Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: ",
@@ -519,7 +520,7 @@
         "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohortenselektion hinzugefügt"
       },
       "DOWNLOAD": "Herunterladen",
-      "DOWNLOAD_DISABLED": "Keine Machbarkeitsabfrage wurde definiert",
+      "DOWNLOAD_DISABLED": "Die Datendefinition ist ungültig.",
       "INVALID_DATA_DEFINITION_TOOLTIP": "Die Datendefinition ist ungültig. Hier klicken, um weitere Informationen zu erhalten.",
       "SAVE": "Speichern",
       "SAVE_DISABLED": "Keine Daten zum Speichern",
@@ -539,15 +540,17 @@
     },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",
-      "DELETE": "Löschen",
       "HEADER": "Löschung bestätigen",
       "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?"
     },
     "FILTER": {
       "AVAILABILITY": "Verfügbarkeit",
+      "CATEGORY": "Kategorie",
       "CONTEXT": "Kontext",
       "KDS_MODULE": "KDS-Modul",
+      "MODULE": "Modul",
       "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
+      "RESOURCETYPE": "Ressourcentyp",
       "SEARCH": "Suchen...",
       "TERMINOLOGY": "Terminologie"
     },
@@ -560,6 +563,7 @@
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Kindelement",
       "DETAILS": "Details",
+      "FIELDS": "Felder",
       "NO_CHILDREN": "Keine Kindelemente",
       "NO_PARENTS": "Keine Elternelemente",
       "NO_TRANSLATIONS": "Keine automatischen Übersetzungen",
@@ -576,7 +580,9 @@
       "OPTIONS": "Optionen",
       "REFERENCE": "Kriterien verknüpfen",
       "SEARCH": "Als Suchbegriff nutzen",
-      "SHOW_CRITERIA": "Kriterium anzeigen"
+      "SEARCH_PROFILE": "Profile als Suchbegriff nutzen",
+      "SHOW_CRITERIA": "Kriterium anzeigen",
+      "SHOW_PROFILE": "Profil anzeigen"
     },
     "MODAL": {
       "BUTTON": {
@@ -622,19 +628,34 @@
         "VERY_HIGH": "Sehr hoch",
         "VERY_LOW": "Sehr niedrig"
       },
+      "CONCEPT": {
+        "NOT_SELECTABLE": "Konzept kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Konzept auswählen"
+      },
       "CONTEXT": "Kontext",
+      "CRITERIA": {
+        "ICON": "Verwandte Kriterien anzeigen",
+        "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Kriterium auswählen"
+      },
       "CRITERION": "Kriterium",
       "CRITERION_VALIDATION": {
         "INVALID": "Ungültig",
         "MISSING_FILTER": "Filter fehlt",
         "VALID": "Gültig"
       },
-      "DISPLAY": "Anzeige",
+      "DISPLAY": "Merkmal",
       "EMPTY": "",
-      "ICON": "Verwandte Kriterien anzeigen",
+      "FEATURE": {
+        "ICON": "Verwandte Merkmale anzeigen",
+        "NOT_SELECTABLE": "Merkmal kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Merkmal auswählen"
+      },
+      "MODULE": "Modul",
       "NAME": "Name",
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
       "PATIENT_COUNT": "Anzahl der Patienten",
+      "RESSOURCE_TYPE": "Ressourcen Type",
       "PROFILE": "Merkmal",
       "PROFILE_VALIDATION": {
         "INVALID": "Ungültig",

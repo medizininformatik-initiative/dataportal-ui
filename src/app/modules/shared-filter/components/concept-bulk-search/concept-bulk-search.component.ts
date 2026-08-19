@@ -3,6 +3,20 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { CodeableConceptBulkEntry } from '../../../../model/Search/ListEntries/CodeableConceptBulkEntry'
 import { CodeableConceptBulkFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkFoundEntryAdapter'
 import { CodeableConceptBulkNotFoundEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CodeableConceptBulkNotFoundEntryAdapter'
+import { CodeableConceptBulkResultList } from 'src/app/model/Search/ResultList/CodeableConceptBulkResultList'
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
+import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
+import { FormsModule } from '@angular/forms'
+import { MatInput } from '@angular/material/input'
+import { MatTab, MatTabGroup } from '@angular/material/tabs'
+import { SearchFilterComponent } from '../../../../shared/components/search-filter/search-filter.component'
+import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
+import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service'
+import { Subscription } from 'rxjs'
+import { TableComponent } from '../../../../shared/components/table/table.component'
+import { TableData } from 'src/app/shared/models/TableData/TableData'
+import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   Component,
   computed,
@@ -13,20 +27,6 @@ import {
   output,
   signal,
 } from '@angular/core'
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
-import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
-import { FormsModule } from '@angular/forms'
-import { MatInput } from '@angular/material/input'
-import { MatTab, MatTabGroup } from '@angular/material/tabs'
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
-import { SearchFilterComponent } from '../../../../shared/components/search-filter/search-filter.component'
-import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service'
-import { Subscription } from 'rxjs'
-import { TableComponent } from '../../../../shared/components/table/table.component'
-import { TableData } from 'src/app/shared/models/TableData/TableData'
-import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
-import { TranslateModule } from '@ngx-translate/core'
-import { CodeableConceptBulkResultList } from 'src/app/model/Search/ResultList/CodeableConceptBulkResultList'
 
 @Component({
   selector: 'num-concept-bulk-search',
@@ -55,7 +55,7 @@ export class ConceptBulkSearchComponent {
   readonly tabChanged = input(false)
   readonly changedSelectedConcepts = output<Concept[]>()
 
-  readonly searchFilter = computed<SearchFilter | undefined>(() => {
+  readonly searchFilter = computed<SearchFilterData | undefined>(() => {
     const urls = this.valueSetUrl()
     if (!urls?.length) {
       return undefined
@@ -97,7 +97,7 @@ export class ConceptBulkSearchComponent {
     })
   }
 
-  public setValueSet(filter: SearchFilter): void {
+  public setValueSet(filter: SearchFilterData): void {
     this.selectedValueSet.set(filter.selectedValues[0])
   }
 
