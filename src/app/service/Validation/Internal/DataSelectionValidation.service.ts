@@ -6,6 +6,7 @@ import {
 } from './ProfileValidationService.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { DataSelectionProviderService } from '../../Provider/DataSelectionProvider.service'
+import { map } from 'rxjs'
 
 export { ProfileStateType, ProfileValidationState } from './ProfileValidationService.service'
 
@@ -28,7 +29,7 @@ export class DataSelectionValidationService {
   private readonly profileValidationService = inject(ProfileValidationService)
 
   private readonly activeDataSelection = toSignal(
-    this.dataSelectionProviderService.getActiveDataSelection(),
+    this.dataSelectionProviderService.getActiveDataSelection().pipe(map((data) => data ?? null)),
     { initialValue: null, equal: () => false }
   )
 
@@ -44,7 +45,7 @@ export class DataSelectionValidationService {
     }
 
     const profiles = dataSelection.getProfiles()
-    const containsMainProfile = profiles.some((p) => p.getId() === this.patientProfile()?.getId())
+    const containsMainProfile = profiles.some((p) => p.getUrl() === this.patientProfile()?.getUrl())
     if (!containsMainProfile) {
       return INITIAL_STATE
     }

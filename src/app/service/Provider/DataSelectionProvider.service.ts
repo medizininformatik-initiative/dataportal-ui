@@ -125,7 +125,6 @@ export class DataSelectionProviderService {
       if (index !== -1) {
         profiles[index] = profile
       } else {
-        console.log('profile: ', JSON.parse(JSON.stringify(profile)))
         profiles.push(this.testForSameLabel(profiles, profile))
       }
       this.createDataSelectionInstanceAndSetMap(profiles, dataSelectionId)
