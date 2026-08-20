@@ -562,7 +562,7 @@
       "KDS_MODULE": "CDS Modules",
       "MODULE": "Module",
       "NO_FILTER_SELECTED": "No search filter selected",
-      "RESOURCETYPE": "Resource Type",
+      "RESOURCETYPE": "FHIR Data Type",
       "SEARCH": "Search...",
       "TERMINOLOGY": "Terminology"
     },
@@ -665,10 +665,10 @@
         "NOT_SELECTABLE": "Feature cannot be selected",
         "SELECT_CHECKBOX": "Select Feature"
       },
-      "MODULE": "Modul",
+      "MODULE": "Module",
       "NAME": "Name",
       "PATIENT_COUNT": "Number of patients",
-      "RESSOURCE_TYPE": "Ressourcen Type",
+      "RESSOURCE_TYPE": "FHIR Data Type",
       "PROFILE": "Profile",
       "PROFILE_VALIDATION": {
         "INVALID": "Invalid",

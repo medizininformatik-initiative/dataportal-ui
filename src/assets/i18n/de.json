@@ -550,7 +550,7 @@
       "KDS_MODULE": "KDS-Modul",
       "MODULE": "Modul",
       "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
-      "RESOURCETYPE": "Ressourcentyp",
+      "RESOURCETYPE": "FHIR Datentyp",
       "SEARCH": "Suchen...",
       "TERMINOLOGY": "Terminologie"
     },
@@ -655,7 +655,7 @@
       "NAME": "Name",
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
       "PATIENT_COUNT": "Anzahl der Patienten",
-      "RESSOURCE_TYPE": "Ressourcen Type",
+      "RESSOURCE_TYPE": "FHIR Datentyp",
       "PROFILE": "Merkmal",
       "PROFILE_VALIDATION": {
         "INVALID": "Ungültig",
