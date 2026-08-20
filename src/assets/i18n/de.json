@@ -665,6 +665,7 @@
         "VALID": "Gültig"
       },
       "SELECT_CHECKBOX": "Kriterium auswählen",
+      "SELECT_CHECKBOX_ALL": "Alles auswählen",
       "SITE": "Standort",
       "STATUS": "Status",
       "TERMCODE": "Termcode",

@@ -4,13 +4,14 @@ import { TableData } from '../../../models/TableData/TableData'
 import { TranslateModule } from '@ngx-translate/core'
 import { TableCellKind } from '../../../models/TableData/Cells/TableCellKind'
 import { CheckboxComponent } from '../../checkbox/checkbox.component'
+import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: '[num-table-header]',
   templateUrl: './table-header.component.html',
   styleUrls: ['./table-header.component.scss'],
   standalone: true,
-  imports: [TranslateModule, CheckboxComponent],
+  imports: [TranslateModule, CheckboxComponent, MatTooltip],
 })
 export class TableHeaderComponent {
   readonly tableData = input<TableData>(undefined)

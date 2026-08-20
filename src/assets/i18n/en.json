@@ -678,6 +678,7 @@
         "VALID": "Valid"
       },
       "SELECT_CHECKBOX": "Select Criteria",
+      "SELECT_CHECKBOX_ALL": "Select All",
       "SITE": "Location",
       "STATUS": "Status",
       "TERMCODE": "Term code",
