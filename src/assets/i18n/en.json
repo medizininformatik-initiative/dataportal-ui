@@ -228,7 +228,9 @@
       "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
       "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
       "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
-      "INFOTEXT": "Select criteria to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
+      "INFOTEXT": "Select criteria to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal.",
+      "INFO_TOOLTIP": "<b>CDS Modules:</b> Thematic data categories in the MII Core Data Set (e.g., Diagnosis, Medication, Laboratory).<br><br><b>FHIR Data Type:</b> A broad technical grouping by FHIR representation (resource type - e.g. Observation, Condition).",
+      "SEARCHBAR": "Search for term or fields"
     },
     "SNACKBAR": {
       "ADDED": "Successfully added to data selection"
@@ -451,7 +453,7 @@
       "FILTER_HEADING": "Refine Your Search:",
       "HEADER": "Criteria search",
       "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD-10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide. If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU” or other criteria from the “EINWILLIGUNG” module.",
-      "INFO_TOOLTIP": "<b>CDS Modules:</b> Refers to the section of the MII core dataset where the data is structured, e.g. diagnosis, medication, or laboratory data.<br><br><b>Context:</b> Describes the medical context of a search term, e.g. diagnosis, procedure, or laboratory value.<br><br><b>Terminology:</b> Indicates which medical classification system a term comes from, e.g. ICD-10, OPS, or LOINC.",
+      "INFO_TOOLTIP": "<b>CDS Modules:</b> Thematic data categories in the MII Core Data Set (e.g., Diagnosis, Medication, Laboratory).<br><br><b>Context:</b> Describes a specific clinical area or use case of a criterion (it is more specific than modules).<br><br><b>Terminology:</b> Identifies the standardized vocabulary or coding system used to define the criterion.",
       "LABEL": "Enter code or search term",
       "SEARCHBAR": "Search for term or terminology code",
       "SEARCH_BUTTON": "Search",
