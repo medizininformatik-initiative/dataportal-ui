@@ -1,9 +1,9 @@
 import { Component, OnInit, inject, input, output } from '@angular/core'
 import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
-import { ListItemDetailService } from 'src/app/shared/service/Menu/ListItemDetails/ListItemDetails.service'
+import { CriteriaListItemDetailsMenuService } from 'src/app/shared/service/Menu/ListItemDetails/Criteria/CriteriaListItemDetailsMenu.service'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
-import { SearchTermRelatives } from 'src/app/model/Search/SearchDetails/SearchTermRelatives'
+import { CriteriaEntryRelative } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryRelative'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MenuComponent } from '../../menu/menu.component'
 import { DisplayTranslationPipe } from '../../../pipes/DisplayTranslationPipe'
@@ -16,10 +16,10 @@ import { DisplayTranslationPipe } from '../../../pipes/DisplayTranslationPipe'
   imports: [MatTooltip, MenuComponent, DisplayTranslationPipe],
 })
 export class ListItemDetailsSectionsComponent implements OnInit {
-  private menuService = inject(ListItemDetailService)
+  private menuService = inject(CriteriaListItemDetailsMenuService)
   private criteriaByIdSearchService = inject(CriteriaByIdSearchService)
 
-  readonly listItemDetails = input<SearchTermRelatives[]>()
+  readonly listItemDetails = input<CriteriaEntryRelative[]>()
 
   menuItemsTrue: MenuItemInterface[] = []
   menuItemsFalse: MenuItemInterface[] = []
@@ -37,7 +37,7 @@ export class ListItemDetailsSectionsComponent implements OnInit {
     this.getMenuItems()
   }
 
-  public getSelectedRelative(item: SearchTermRelatives) {
+  public getSelectedRelative(item: CriteriaEntryRelative) {
     this.criteriaByIdSearchService
       .search(item.getContextualizedTermcodeHash())
       .subscribe((resultList) => {
@@ -46,7 +46,7 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   }
 
   private getMenuItems() {
-    this.menuItemsTrue = this.menuService.getMenuItemsListItemDetails(true)
-    this.menuItemsFalse = this.menuService.getMenuItemsListItemDetails(false)
+    this.menuItemsTrue = this.menuService.getMenuItems(true)
+    this.menuItemsFalse = this.menuService.getMenuItems(false)
   }
 }

@@ -9,6 +9,18 @@ export const routes: Routes = [
     path: 'home',
     redirectTo: BasePaths.dataQuery,
   },
+  /* {
+    path: BasePaths.home,
+    data: {
+      navId: BasePaths.home,
+      roles: ['main'],
+      breadcrumb: 'BREADCRUMB.DASHBOARD',
+      animation: 'DashboardPage',
+      title: 'TAB_TITLE.DASHBOARD',
+    },
+    loadChildren: () =>
+      import('./modules/dashboard/dashboard-routing.module').then((m) => m.DASHBOARD_ROUTES),
+  },*/
   {
     path: BasePaths.queryEditor,
     data: {
@@ -38,10 +50,6 @@ export const routes: Routes = [
   },
   {
     path: BasePaths.feasibilityQuery,
-    resolve: {
-      preLoadCriteriaData: CriteriaSearchDataResolverService,
-      preLoadCriteriaFilter: CriteriaSearchFilterResolverService,
-    },
     data: {
       navId: BasePaths.feasibilityQuery,
       roles: ['main'],

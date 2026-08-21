@@ -1,13 +1,13 @@
 import { Component, ElementRef, OnDestroy, OnInit, inject } from '@angular/core'
 import { DataSelectionFactoryService } from 'src/app/service/DataSelection/Factory/DataSelection.factory.service'
-import { DataSelectionProviderService } from 'src/app/modules/data-selection/services/DataSelectionProvider.service'
-import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { map } from 'rxjs/operators'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { Observable, Subscription } from 'rxjs'
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { FeasibilityQueryValidationService } from '../../../../../service/Validation/Internal/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-data-selection-action-bar',
@@ -42,7 +42,7 @@ export class DataSelectionActionBarComponent implements OnDestroy, OnInit {
       .getActiveDataSelection()
       .pipe(map((dataSelection) => dataSelection.getProfiles().length > 0))
 
-    this.isCohortExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid()
+    //this.isCohortExistent$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid()
   }
 
   ngOnDestroy(): void {

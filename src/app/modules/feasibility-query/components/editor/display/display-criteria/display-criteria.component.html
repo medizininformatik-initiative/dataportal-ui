@@ -2,31 +2,33 @@
   @if (!isEditable()) {
   <div class="lock-div"></div>
   }
-  <ng-container #outlet [ngTemplateOutlet]="content"> </ng-container>
+  <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
   <ng-template #content>
     @for ( criterionInnerArray of criteriaArray$ | async; track criterionInnerArray; let lastOuter =
     $last; let i = $index) {
     <div>
       @for (criterion of criterionInnerArray; track criterion; let lastInner = $last; let j =
       $index) {
-      <div style="display: flex; flex-direction: column; align-items: center">
+      <div style="display: flex; flex-direction: column">
         <num-criteria-box
           [criterion]="criterionProvider.getOne(criterion)"
           [isEditable]="isEditable()"
         ></num-criteria-box>
         <ng-container>
           @if (!lastInner) {
-          <num-bool-logic-switch
-            style="display: block; height: 0px"
-            [position]="'inner'"
-            [label]="getInnerLabelKey()"
-            (switched)="splitInnerArray(i, j)"
-          ></num-bool-logic-switch>
+          <div style="display: flex; justify-content: center; width: 448px">
+            <num-bool-logic-switch
+              style="display: block; height: 0; align-self: center"
+              [position]="'inner'"
+              [label]="getInnerLabelKey()"
+              (switched)="splitInnerArray(i, j)"
+            ></num-bool-logic-switch>
+          </div>
           }
         </ng-container>
       </div>
       }
-      <div style="display: flex; justify-content: center">
+      <div style="display: flex; justify-content: center; width: 448px">
         @if (!lastOuter) {
         <num-bool-logic-switch
           style="display: block; height: 0px; margin-bottom: 27px"

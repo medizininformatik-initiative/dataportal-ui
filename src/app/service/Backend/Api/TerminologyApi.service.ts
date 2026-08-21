@@ -4,12 +4,12 @@ import { BulkSearchResponseData } from 'src/app/model/Interface/BulkSearchRespon
 import { ChunkedRequestService } from './ChunkedRequest.service'
 import { CriteriaListEntryData } from 'src/app/model/Interface/Search/CriteriaListListEntryData'
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
-import { CriteriaSearchFilterData } from 'src/app/model/Interface/Search/CriteriaSearchFilterData'
 import { HttpClient } from '@angular/common/http'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData'
 import { Observable } from 'rxjs'
 import { ResultListData } from 'src/app/model/Interface/Search/ResultListData'
+import { SearchFilterData } from 'src/app/model/Interface/Search/Filter/SearchFilterData'
 import { TerminologyPaths } from '../Paths/TerminologyPaths'
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData'
 
@@ -30,9 +30,9 @@ export class TerminologyApiService {
    * Retrieves the search filter options.
    * @returns - An observable containing the search filter options.
    */
-  public getSearchFilter(url: string): Observable<Array<CriteriaSearchFilterData>> {
+  public getSearchFilter(url: string): Observable<Array<SearchFilterData>> {
     const parsedUrl = this.backendService.createUrl(url)
-    return this.http.get<Array<CriteriaSearchFilterData>>(this.backendService.createUrl(url))
+    return this.http.get<Array<SearchFilterData>>(parsedUrl)
   }
 
   /**
@@ -52,7 +52,7 @@ export class TerminologyApiService {
    * @param id
    * @returns
    */
-  public getSearchTermEntryRelations(id: string): Observable<any> {
+  public getCriteriaEntryRelations(id: string): Observable<any> {
     return this.http.get<any>(
       this.backendService.createUrl(
         TerminologyPaths.ENTRY_ENDPOINT + '/' + id + TerminologyPaths.RELATIONS_ENDPOINT

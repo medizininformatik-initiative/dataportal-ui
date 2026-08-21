@@ -5,7 +5,7 @@ import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilte
 import { ConceptFilterTableComponent } from './concept-filter-table/concept-filter-table.component'
 import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
 import { SearchbarComponent } from '../../../../shared/components/search/searchbar.component'
-import { SearchFilter } from 'src/app/shared/models/SearchFilter/InterfaceSearchFilter'
+import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 import { SearchFilterComponent } from '../../../../shared/components/search-filter/search-filter.component'
 import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service'
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop'
@@ -45,7 +45,7 @@ export class ConceptFilterComponent {
   private readonly overrideUrls = signal<string[] | undefined>(undefined)
   readonly activeUrls = computed(() => this.overrideUrls() ?? this.valueSetUrl())
 
-  readonly searchFilter = computed<SearchFilter | undefined>(() => {
+  readonly searchFilter = computed<SearchFilterData | undefined>(() => {
     const urls = this.valueSetUrl()
     return urls?.length > 1 ? this.conceptSelectionService.createTerminologyFilter(urls) : undefined
   })
@@ -72,7 +72,7 @@ export class ConceptFilterComponent {
     this.currentSearchTerm.set(searchTerm)
   }
 
-  public setValueSet(searchFilter: SearchFilter): void {
+  public setValueSet(searchFilter: SearchFilterData): void {
     const urls = searchFilter.selectedValues.length > 0 ? searchFilter.selectedValues : undefined
     this.overrideUrls.set(urls)
   }

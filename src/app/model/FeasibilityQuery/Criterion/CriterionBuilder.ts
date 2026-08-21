@@ -1,30 +1,30 @@
-import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction';
-import { AttributeFilter } from './AttributeFilter/AttributeFilter';
-import { Criterion } from './Criterion';
-import { CritGroupPosition } from '../CritGroupPosition';
-import { ReferenceCriterion } from './ReferenceCriterion';
-import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { TimeRestrictionNotSet } from './TimeRestriction/TimeRestrictionNotSet';
-import { ValueFilter } from './AttributeFilter/ValueFilter';
-import { Display } from '../../DataSelection/Profile/Display';
+import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction'
+import { AttributeFilter } from './AttributeFilter/AttributeFilter'
+import { Criterion } from './Criterion'
+import { CritGroupPosition } from '../CritGroupPosition'
+import { ReferenceCriterion } from './ReferenceCriterion'
+import { TerminologyCode } from '../../Terminology/TerminologyCode'
+import { TimeRestrictionNotSet } from './TimeRestriction/TimeRestrictionNotSet'
+import { ValueFilter } from './AttributeFilter/ValueFilter'
+import { Display } from '../../DataSelection/Profile/Display'
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
  */
 export class CriterionBuilder {
-  private hasReference = false;
-  private attributeFilters?: Array<AttributeFilter> = [];
-  private context?: TerminologyCode;
-  private criterionHash?: string;
-  private display?: Display;
-  private isInvalid?: boolean;
-  private isRequiredFilterSet: boolean;
-  private parentId: string;
-  private position?: CritGroupPosition;
-  private termCodes?: Array<TerminologyCode>;
-  private timeRestriction?: AbstractTimeRestriction;
-  private id?: string;
-  private valueFilters?: Array<ValueFilter> = [];
+  private hasReference = false
+  private attributeFilters?: Array<AttributeFilter> = []
+  private context?: TerminologyCode
+  private criterionHash?: string
+  private display?: Display
+  private isInvalid?: boolean
+  private isRequiredFilterSet: boolean
+  private parentId: string
+  private position?: CritGroupPosition
+  private termCodes?: Array<TerminologyCode>
+  private timeRestriction?: AbstractTimeRestriction
+  private id?: string
+  private valueFilters?: Array<ValueFilter> = []
 
   constructor(
     private readonly mandatoryFields: {
@@ -32,24 +32,22 @@ export class CriterionBuilder {
       context: TerminologyCode
       criterionHash: string
       display: Display
-      isInvalid: boolean
       isRequiredFilterSet: boolean
       id: string
       termCodes: Array<TerminologyCode>
     }
   ) {
-    this.context = mandatoryFields.context;
-    this.criterionHash = mandatoryFields.criterionHash;
-    this.display = mandatoryFields.display;
-    this.isInvalid = mandatoryFields.isInvalid;
-    this.isRequiredFilterSet = mandatoryFields.isRequiredFilterSet;
-    this.id = mandatoryFields.id;
-    this.termCodes = mandatoryFields.termCodes;
+    this.context = mandatoryFields.context
+    this.criterionHash = mandatoryFields.criterionHash
+    this.display = mandatoryFields.display
+    this.isRequiredFilterSet = mandatoryFields.isRequiredFilterSet
+    this.id = mandatoryFields.id
+    this.termCodes = mandatoryFields.termCodes
   }
 
   withAttributeFilters(attributeFilters: Array<AttributeFilter>): CriterionBuilder {
-    this.attributeFilters = attributeFilters;
-    return this;
+    this.attributeFilters = attributeFilters
+    return this
   }
 
   withAttributeFilter(attributeFilter: AttributeFilter): CriterionBuilder {
@@ -58,81 +56,81 @@ export class CriterionBuilder {
         (existingAttributeFilter) =>
           attributeFilter.getAttributeCode()?.getCode() ===
           existingAttributeFilter.getAttributeCode()?.getCode()
-      );
+      )
       if (index !== -1) {
-        this.attributeFilters[index] = attributeFilter;
+        this.attributeFilters[index] = attributeFilter
       } else {
-        this.attributeFilters.push(attributeFilter);
+        this.attributeFilters.push(attributeFilter)
       }
     } else {
-      this.attributeFilters.push(attributeFilter);
+      this.attributeFilters.push(attributeFilter)
     }
-    return this;
+    return this
   }
 
   withContext(context: TerminologyCode): CriterionBuilder {
-    this.context = context;
-    return this;
+    this.context = context
+    return this
   }
 
   withCriterionHash(criterionHash: string): CriterionBuilder {
-    this.criterionHash = criterionHash;
-    return this;
+    this.criterionHash = criterionHash
+    return this
   }
 
   withDisplay(display: Display): CriterionBuilder {
-    this.display = display;
-    return this;
+    this.display = display
+    return this
   }
 
   withIsInvalid(isInvalid: boolean): CriterionBuilder {
-    this.isInvalid = isInvalid;
-    return this;
+    this.isInvalid = isInvalid
+    return this
   }
 
   withPosition(position: CritGroupPosition): CriterionBuilder {
-    this.position = position;
-    return this;
+    this.position = position
+    return this
   }
 
   withTermCodes(termCodes: Array<TerminologyCode>): CriterionBuilder {
-    this.termCodes = termCodes;
-    return this;
+    this.termCodes = termCodes
+    return this
   }
 
   withTimeRestriction(timeRestriction: AbstractTimeRestriction): CriterionBuilder {
-    this.timeRestriction = timeRestriction;
-    return this;
+    this.timeRestriction = timeRestriction
+    return this
   }
 
   withId(id: string): CriterionBuilder {
-    this.id = id;
-    return this;
+    this.id = id
+    return this
   }
 
   withValueFilters(valueFilters: ValueFilter[]): CriterionBuilder {
     if (this.valueFilters.length === 0) {
-      this.valueFilters.push(...valueFilters);
+      this.valueFilters.push(...valueFilters)
     } else {
-      this.valueFilters = valueFilters;
+      this.valueFilters = valueFilters
     }
 
-    return this;
+    return this
   }
 
   withRequiredFilter(withFilter: boolean): CriterionBuilder {
-    this.isRequiredFilterSet = withFilter;
-    return this;
+    this.isRequiredFilterSet = withFilter
+    return this
   }
 
   withHasReference(hasReference: boolean): CriterionBuilder {
-    this.hasReference = hasReference;
-    return this;
+    this.hasReference = hasReference
+    return this
   }
 
   withParentId(id: string): CriterionBuilder {
-    this.parentId = id;
-    return this;
+    this.parentId = id
+    return this
   }
 
   /**
@@ -147,14 +145,13 @@ export class CriterionBuilder {
       this.context,
       this.criterionHash,
       this.display,
-      this.isInvalid,
       this.isRequiredFilterSet,
       this.position,
       this.termCodes,
       this.timeRestriction,
       this.id,
       this.valueFilters
-    );
+    )
   }
 
   /**
@@ -170,17 +167,16 @@ export class CriterionBuilder {
       this.context,
       this.criterionHash,
       this.display,
-      this.isInvalid,
       this.isRequiredFilterSet,
       this.position,
       this.termCodes,
       this.timeRestriction,
       this.id,
       this.valueFilters
-    );
+    )
   }
 
   buildEmptyTimeRestriction() {
-    return new TimeRestrictionNotSet();
+    return new TimeRestrictionNotSet()
   }
 }

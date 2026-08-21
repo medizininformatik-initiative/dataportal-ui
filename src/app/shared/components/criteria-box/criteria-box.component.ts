@@ -4,7 +4,8 @@ import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop'
 import { Component, computed, inject, input, OnInit } from '@angular/core'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
-import { CriterionMenuItems } from '../../service/Menu/Criterion/CriterionMenuItems.service'
+import { CriterionValidationService } from 'src/app/service/Validation/Internal/CriterionValidationService.service'
+import { CriterionMenuItemsService } from '../../service/Menu/Criterion/CriterionMenuItems.service'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FilterChipData } from '../../models/FilterChips/FilterChipData'
@@ -42,15 +43,16 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class CriteriaBoxComponent implements OnInit {
-  private menuService = inject(CriterionMenuItems)
+  private menuService = inject(CriterionMenuItemsService)
   private filterChipsService = inject(CriterionFilterChipService)
   private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
   private readonly navigationHelperService = inject(NavigationHelperService)
+  private readonly criterionValidationService = inject(CriterionValidationService)
 
   readonly criterion = input.required<Criterion>()
   readonly isEditable = input<boolean>()
 
-  readonly menuItems = this.menuService.getMenuItemsForCriterion()
+  readonly menuItems = this.menuService.getMenuItems()
 
   referenceCriterion: ReferenceCriterion[] = []
 
@@ -66,7 +68,9 @@ export class CriteriaBoxComponent implements OnInit {
   /**
    * A filter is considered required if the criterion does not have a required filter set. This is determined by the getIsRequiredFilterSet method of the Criterion class. If this method returns false, it means that there are required filters that have not been set, and thus the criterion is considered to be in a state where required filters are missing.
    */
-  readonly isFilterRequired = computed(() => !this.criterion().getIsRequiredFilterSet())
+  readonly isFilterRequired = computed(() =>
+    this.criterionValidationService.isRequiredFilterSet(this.criterion())
+  )
 
   readonly warningSignUrl = 'assets/img/alert-blue-white.png'
 

@@ -1,9 +1,9 @@
-import { Component, input, output } from '@angular/core'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
 import { CheckboxComponent } from '../../../checkbox/checkbox.component'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
+import { Component, input, output } from '@angular/core'
+import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe'
 import { MatTooltip } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'
-import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe'
 
 @Component({
   selector: 'num-checkbox-text-cell',
@@ -17,12 +17,7 @@ export class CheckboxTextCellComponent {
 
   readonly checkboxChange = output<void>()
 
-  onCheckboxClick(event: MouseEvent): void {
-    event.stopPropagation()
-  }
-
-  onCheckboxChange(): void {
-    // TODO: The 'emit' function requires a mandatory void argument
+  public onCheckboxChange(): void {
     this.checkboxChange.emit()
   }
 }

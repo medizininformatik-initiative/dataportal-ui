@@ -1,0 +1,19 @@
+@if (showBadge()) {
+<num-linked-badge></num-linked-badge>
+} @if (unlinked().length > 0 && isEditable()) { @for (reference of unlinked(); track reference) {
+<div class="reference-tile">
+  <num-profile-reference-tile
+    [unlinkedRequiredOrRecommendedReferences]="reference"
+    [parentId]="profileId()"
+  ></num-profile-reference-tile>
+</div>
+} } @if (selectedReferences().length > 0) { @for (selectedReference of selectedReferences(); track
+selectedReference) {
+<div class="reference-tile">
+  <num-profile-reference-tile
+    [referenceField]="selectedReference"
+    [parentId]="profileId()"
+    [isEditable]="isEditable()"
+  ></num-profile-reference-tile>
+</div>
+} }

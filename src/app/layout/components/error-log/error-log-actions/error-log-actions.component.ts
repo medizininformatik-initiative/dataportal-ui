@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core'
 import { DownloadErrorLogService } from 'src/app/service/Download/DownloadErrroLog.service'
 import { ErrorLogModalComponent } from '../error-log-modal.component'
-import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service'
+import { ErrorLogProviderService } from 'src/app/service/Validation/External/ErrorLogProvider.service'
 import { MatDialogRef } from '@angular/material/dialog'
 import { ButtonComponent } from '../../../../shared/components/button/button.component'
 import { MatTooltip } from '@angular/material/tooltip'

@@ -1,7 +1,7 @@
 import { AboutModalComponent } from '../../about-modal/about-modal.component'
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { ErrorLogModalComponent } from '../../error-log/error-log-modal.component'
-import { ErrorLogProviderService } from 'src/app/service/Validation/ErrorLogProvider.service'
+import { ErrorLogProviderService } from 'src/app/service/Validation/External/ErrorLogProvider.service'
 import { IUserProfile } from '../../../../shared/models/user/user-profile.interface'
 import { MatDialog } from '@angular/material/dialog'
 import { OAuthService } from 'angular-oauth2-oidc'

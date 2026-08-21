@@ -2,7 +2,7 @@ import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filte
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileData } from 'src/app/model/Interface/DataSelectionProfileData'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { ProfileFieldBuilderService } from './ProfileFieldBuilder.service'
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields'
 import { ProfileFilterBuilderService } from './ProfileFilterBuilder.service'
@@ -15,9 +15,6 @@ import { v4 as uuidv4 } from 'uuid'
 export class ProfileInstanceBuilderService {
   private profileFilterBuilder = inject(ProfileFilterBuilderService)
   private profileFieldBuilder = inject(ProfileFieldBuilderService)
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
 
   constructor() {}
 
@@ -61,7 +58,8 @@ export class ProfileInstanceBuilderService {
       fields,
       filters,
       new ProfileReference(markAsReference, markAsReference),
-      displayInstance
+      displayInstance,
+      0
     )
   }
 }

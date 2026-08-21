@@ -1,6 +1,6 @@
 import { AbstractDownloadService } from './AbstractDownload.service'
 import { Injectable, inject } from '@angular/core'
-import { ValidationReportBuilderService } from '../Validation/ValidationReportBuilder.service'
+import { ValidationReportBuilderService } from '../Validation/External/ValidationReportBuilder.service'
 
 @Injectable({
   providedIn: 'root',

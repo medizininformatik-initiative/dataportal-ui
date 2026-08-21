@@ -1,0 +1,148 @@
+<mat-tab-group class="details-tab-group" animationDuration="0ms">
+  <!-- Details tab -->
+  <mat-tab>
+    <ng-template mat-tab-label>
+      {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.DETAILS' | translate }}
+    </ng-template>
+
+    @let data = listItemDetails(); @if (data) { @let parents = data.parents ?? []; @let children =
+    data.children ?? [];
+
+    <div class="tab-content">
+      <div class="original-item">
+        {{ data.display | displayTranslation }}
+      </div>
+
+      <!-- Translations -->
+      @if (data.display?.getTranslations()?.length) {
+      <div class="detail-row divider">
+        <div class="detail-label">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.TRANSLATIONS' | translate }}
+        </div>
+        <div class="detail-value">
+          @for (t of data.display.getTranslations(); track t.getLanguage()) {
+          <div class="translation-entry">
+            <span
+              class="fi"
+              style="font-size: 14px"
+              [ngClass]="'fi-' + (t.getLanguage() === 'en-US' ? 'gb' : 'de')"
+            ></span>
+            <span [matTooltip]="t.getValue() | displayTranslation" class="num-text-accent">
+              {{ t.getValue() }}
+            </span>
+          </div>
+          }
+        </div>
+      </div>
+      } @if(data.description) {
+      <div class="detail-row divider">
+        <div class="detail-label">
+          {{ 'Description' | translate }}
+        </div>
+        {{ data.description | displayTranslation }}
+      </div>
+
+      }
+      <!-- Fields -->
+      @if (data.fields) {
+      <div class="detail-row divider">
+        <div class="detail-label">Felder</div>
+        <div class="detail-value">
+          {{ displayFields }}
+        </div>
+      </div>
+      }
+      <!-- Parents -->
+      <div class="detail-row divider">
+        <div class="detail-label">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
+        </div>
+        @if (parents.length) {
+        <div class="detail-value">
+          <num-list-item-details-generic-sections
+            [listItemDetails]="parents"
+            [menuItems]="menuItems()"
+            (selectedRelative)="getSelectedRelative($event)"
+          />
+        </div>
+        } @else {
+        <div class="num-text-accent">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_PARENTS' | translate }}
+        </div>
+        }
+      </div>
+
+      <!-- Children -->
+      <div class="detail-row">
+        <div class="detail-label">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
+        </div>
+        @if (children.length) {
+        <div class="detail-value">
+          <num-list-item-details-generic-sections
+            [listItemDetails]="children"
+            [menuItems]="menuItems()"
+            (selectedRelative)="getSelectedRelative($event)"
+          />
+        </div>
+        } @else {
+        <div class="num-text-accent">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_CHILDREN' | translate }}
+        </div>
+        }
+      </div>
+    </div>
+    }
+  </mat-tab>
+
+  <!-- Parents tab -->
+  <mat-tab [disabled]="listItemDetails().parents?.length <= 0">
+    <ng-template mat-tab-label>
+      {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
+      ({{ listItemDetails().parents?.length || 0 }})
+    </ng-template>
+    @let parentsTab = listItemDetails()?.parents ?? []; @if (parentsTab.length) {
+    <div class="tab-content">
+      <num-list-item-details-generic-sections
+        [listItemDetails]="parentsTab"
+        [menuItems]="menuItems()"
+        (selectedRelative)="getSelectedRelative($event)"
+      />
+    </div>
+    }
+  </mat-tab>
+
+  <!-- Children tab -->
+  <mat-tab [disabled]="listItemDetails().children?.length <= 0">
+    <ng-template mat-tab-label>
+      {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
+      ({{ listItemDetails().children?.length || 0 }})
+    </ng-template>
+    @let childrenTab = listItemDetails()?.children ?? []; @if (childrenTab.length) {
+    <div class="tab-content">
+      <num-list-item-details-generic-sections
+        [listItemDetails]="childrenTab"
+        [menuItems]="menuItems()"
+        (selectedRelative)="getSelectedRelative($event)"
+      />
+    </div>
+    }
+  </mat-tab>
+
+  @if(listItemDetails().fields) {
+  <mat-tab>
+    <ng-template mat-tab-label>
+      {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.FIELDS' | translate }}
+      ({{ listItemDetails().fields?.length }})
+    </ng-template>
+    @let fielTab = listItemDetails().fields; @if (fielTab?.length) {
+    <div class="tab-content">
+      <num-list-item-details-generic-sections
+        [listItemDetails]="fielTab"
+        (selectedRelative)="getSelectedRelative($event)"
+      />
+    </div>
+    }
+  </mat-tab>
+  }
+</mat-tab-group>

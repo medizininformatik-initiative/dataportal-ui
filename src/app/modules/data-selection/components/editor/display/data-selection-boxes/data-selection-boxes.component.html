@@ -1,126 +1,29 @@
-<div class="num-card selection-box" [attr.data-cy]="label() | displayTranslation">
+<div class="num-card selection-box" [attr.data-cy]="profile()?.getLabel() | displayTranslation">
   <div class="card-col">
-    <div class="num-text-body">{{ label() | displayTranslation }}</div>
-    <div
-      class="num-pill"
-      [class.expanded]="displayExpanded"
-      (click)="displayExpanded = !displayExpanded"
-    >
-      {{ display() }}
-    </div>
+    <num-label-col [profile]="profile()"></num-label-col>
   </div>
   <div class="card-col">
-    <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate
-      }}</span>
-      <span
-        class="info-icon"
-        numInfoTooltip
-        [infoTooltipTitle]="
-          'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TITLE' | translate
-        "
-        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS_TOOLTIP_TEXT' | translate"
-      ></span>
-    </div>
-    <div class="filter-chips-container">
-      @if (fieldsFilterChips().length > 0) {
-      <num-filter-chips [filterChips]="fieldsFilterChips()"></num-filter-chips>
-      } @if (!fieldsFilterChips().length) {
-      <num-missing-filter>
-        <span
-          [matTooltip]="
-            'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS_TOOLTIP_TEXT'
-              | translate : { feature: label() | displayTranslation }
-          "
-          message
-          (click)="navigate()"
-        >
-          {{
-            'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS'
-              | translate : { feature: label() | displayTranslation }
-          }}
-        </span>
-      </num-missing-filter>
-      }
-    </div>
+    <num-fields-col [profile]="profile()" (navigate)="navigate()"></num-fields-col>
   </div>
   <div class="card-col">
-    <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate
-      }}</span>
-      <span
-        class="info-icon"
-        numInfoTooltip
-        [infoTooltipTitle]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TITLE' | translate"
-        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER_TOOLTIP_TEXT' | translate"
-      ></span>
-    </div>
-    <div class="filter-chips-container">
-      @if (filtersFilterChips().length > 0) {
-      <num-filter-chips [filterChips]="filtersFilterChips()"></num-filter-chips>
-      } @if (!filtersFilterChips().length) {
-      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
-      }
-    </div>
+    <num-filters-col [profile]="profile()"></num-filters-col>
   </div>
   @if (isReferenced()) {
   <div class="card-col">
-    <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
-      }}</span>
-      <span
-        class="info-icon"
-        numInfoTooltip
-        [infoTooltipTitle]="'DATASELECTION.EDITOR.DISPLAY.REFERENCE_TOOLTIP_TITLE' | translate"
-        [infoTooltipText]="'DATASELECTION.EDITOR.DISPLAY.REFERENCE_TOOLTIP_TEXT' | translate"
-      ></span>
-    </div>
-    <div class="reference-toggle-row">
-      <ng-container>
-        <div
-          class="reference-toggle"
-          [class.reference-toggle--active]="profile().getReference().getIsReferenceSet()"
-        >
-          <num-checkbox
-            [disabled]="!isEditable()"
-            [checked]="profile().getReference().getIsReferenceSet()"
-            (checkedChange)="toggleIsReferenceSet(profile().getReference())"
-          ></num-checkbox>
-          <span class="reference-toggle-text">{{
-            'DATASELECTION.EDITOR.DISPLAY.REFERENCE' | translate
-          }}</span>
-        </div>
-      </ng-container>
-    </div>
+    <num-reference-col
+      [reference]="profile()!.getReference()"
+      [isEditable]="isEditable() ?? false"
+      (isReferenceSetChange)="onReferenceSetChange($event)"
+    ></num-reference-col>
   </div>
   } @if (isEditable()) {
   <div class="menu-box">
-    <num-menu [menuItems]="menuItems()" [id]="profile().getId()"></num-menu>
+    <num-menu [menuItems]="menuItems()" [id]="profile()!.getId()"></num-menu>
   </div>
   }
 </div>
-@if ((unlinkedRequiredOrRecommendedReferences().length > 0 && isEditable()) ||
-selectedReferenceFields().length > 0) {
-<num-linked-badge></num-linked-badge>
-} @if (unlinkedRequiredOrRecommendedReferences().length > 0 && isEditable()) { @for (reference of
-unlinkedRequiredOrRecommendedReferences(); track reference) {
-<div class="selection-box-container">
-  <num-profile-reference-tile
-    [unlinkedRequiredOrRecommendedReferences]="reference"
-    [parentId]="profile().getId()"
-  >
-  </num-profile-reference-tile>
-</div>
-} } @if (selectedReferenceFields().length > 0) { @for (selectedReference of
-selectedReferenceFields(); track selectedReference) {
-<div class="selection-box-container">
-  <num-profile-reference-tile
-    [referenceField]="selectedReference"
-    [parentId]="profile().getId()"
-    [isEditable]="isEditable()"
-  ></num-profile-reference-tile>
-</div>
-} }
+<num-linked-references
+  [fields]="profile().getProfileFields()"
+  [isEditable]="isEditable()"
+  [profileId]="profile().getId()"
+></num-linked-references>

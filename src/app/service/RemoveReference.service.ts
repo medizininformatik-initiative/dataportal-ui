@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core'
-import { DataSelectionProviderService } from '../modules/data-selection/services/DataSelectionProvider.service'
+import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
 import { ProfileProviderService } from './Provider/ProfileProvider.service'
 import { map, take } from 'rxjs'
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile'
@@ -25,8 +25,7 @@ export class RemoveReferenceService {
         map((dataSelection) => {
           dataSelection.getProfiles().map((profile) => {
             const updatedProfile = this.removeReferenceFromProfile(profile, profileIdToBeDeleted)
-            this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile)
-            this.profileProviderService.setOne(updatedProfile)
+            this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile, 'SET')
           })
           //this.profileProviderService.removeProfileById(profileIdToBeDeleted);
           return dataSelection

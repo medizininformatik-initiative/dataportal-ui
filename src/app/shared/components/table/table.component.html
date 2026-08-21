@@ -1,6 +1,12 @@
 @if (tableData()) {
 <table>
-  <thead num-table-header class="table-header sticky-header" [tableData]="tableData()"></thead>
+  <thead
+    num-table-header
+    class="table-header sticky-header"
+    [tableData]="tableData()"
+    [triggerSelectAll]="triggerSelectAll()"
+    (selectAll)="selectAll.emit($event)"
+  ></thead>
   <tbody
     num-table-body
     [rows]="tableData().body.rows"

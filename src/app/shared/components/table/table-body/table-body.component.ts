@@ -1,12 +1,15 @@
 import { AvailabilityCellComponent } from '../cells/availability-cell/availability-cell.component'
 import { CheckboxTextCellComponent } from '../cells/checkbox-text-cell/checkbox-text-cell.component'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
 import { Component, input, output } from '@angular/core'
 import { DisplayCellComponent } from '../cells/display-cell/display-cell.component'
 import { IconCellComponent } from '../cells/icon-cell/icon-cell.component'
 import { NgClass } from '@angular/common'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TextCellComponent } from '../cells/text-cell/text-cell.component'
+import { CheckboxCellComponent } from '../../shared-components.module'
+import { TableCellKind } from '../../../models/TableData/Cells/TableCellKind'
+
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
@@ -21,6 +24,7 @@ import { TextCellComponent } from '../cells/text-cell/text-cell.component'
     DisplayCellComponent,
     IconCellComponent,
     TextCellComponent,
+    CheckboxCellComponent,
   ],
 })
 export class TableBodyComponent {
@@ -41,10 +45,15 @@ export class TableBodyComponent {
   }
 
   public onCheckboxSelect(row: TableRowData): void {
-    const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === 'checkboxText')
+    const checkboxCell = row.cells.find(
+      (c): c is CheckboxTextCellData =>
+        c.type === TableCellKind.CHECKBOX || c.type === TableCellKind.CHECKBOXTEXT
+    )
     if (checkboxCell) {
       checkboxCell.isSelected = !checkboxCell.isSelected
     }
     this.selectedRow.emit(row)
   }
+
+  protected readonly TableCellKind = TableCellKind
 }

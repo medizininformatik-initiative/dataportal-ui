@@ -7,6 +7,7 @@
   display: flex;
   justify-content: start;
   width: 100%;
+  flex-direction: column;
 }
 
 .searchbar {
@@ -17,4 +18,5 @@
   display: flex;
   gap: 8px;
   padding-left: 16px;
+  padding-top: 1px;
 }

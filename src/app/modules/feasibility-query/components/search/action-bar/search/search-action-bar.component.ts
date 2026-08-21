@@ -5,7 +5,6 @@ import { Component, computed, DestroyRef, inject } from '@angular/core'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
-import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { MatBadge } from '@angular/material/badge'
 import { MatTooltip } from '@angular/material/tooltip'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
@@ -15,6 +14,7 @@ import { StageProviderService } from 'src/app/service/Provider/StageProvider.ser
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
 import { tap } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-search-action-bar',
@@ -31,7 +31,7 @@ export class SearchActionBarComponent {
   private readonly stageProviderService = inject(StageProviderService)
   private readonly navigationHelperService = inject(NavigationHelperService)
   private readonly feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
-  private readonly feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
+  private readonly feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
   private readonly snackbarService = inject(SnackbarService)
   private readonly destroyRef = inject(DestroyRef)
 
@@ -43,14 +43,9 @@ export class SearchActionBarComponent {
     initialValue: [] as string[],
   })
 
-  readonly isFeasibilityExistent = toSignal(
-    this.feasibilityQueryValidation.getIsFeasibilityQuerySet(),
-    { initialValue: false }
-  )
+  readonly isFeasibilityExistent = this.feasibilityQueryValidationService.validationState().isValid
 
-  readonly canViewStage = computed(
-    () => this.stageItems().length > 0 || this.isFeasibilityExistent()
-  )
+  readonly canViewStage = computed(() => this.stageItems().length > 0 || this.isFeasibilityExistent)
 
   public addItemsToStage(): void {
     const ids = this.listItemService.getIds()

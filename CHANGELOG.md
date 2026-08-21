@@ -1,5 +1,20 @@
 # Changelog
 
+## v7.1.0 (2026-08-21)
+### Features
+* Introduced Elasticsearch-based search and filtering as a replacement for tree-based feature selection, matching the cohort selection workflow. [#596](https://github.com/medizininformatik-initiative/feasibility-gui/issues/596), [#603](https://github.com/medizininformatik-initiative/feasibility-gui/issues/603)
+* Added consecutive numbers to feature names if names are identical [#606](https://github.com/medizininformatik-initiative/feasibility-gui/issues/606)
+* Added option to add all found profiles to data selection at once [#607](https://github.com/medizininformatik-initiative/feasibility-gui/issues/607)
+
+### Changed
+* Improved Filter menu description [#583](https://github.com/medizininformatik-initiative/feasibility-gui/issues/583)
+
+### Fixed
+* Prevent export of CRTDL with unconfigured feature [#609](https://github.com/medizininformatik-initiative/feasibility-gui/issues/609)
+* Fix depiction of cohort criteria boxes when connected by OR [#611](https://github.com/medizininformatik-initiative/feasibility-gui/issues/611)
+
+
+
 ## v7.1.0 (2026-07-06)
 ### Features
 * Introduced a reusable shortcut component for navigating to and editing missing mandatory filters and fields in features and criteria. [#588](https://github.com/medizininformatik-initiative/feasibility-gui/issues/588)
@@ -13,6 +28,7 @@
 ### Changed
 * Improved the usability and clarity of the filter dropdowns on the Criteria Search page. [#575](https://github.com/medizininformatik-initiative/feasibility-gui/issues/575)
 * Redesigned the profile reference tiles and improved the presentation of unlinked reference warnings. [#550](https://github.com/medizininformatik-initiative/feasibility-gui/issues/550)
+* Redesign Recommended Field Linking for Features. [#588](https://github.com/medizininformatik-initiative/feasibility-gui/issues/588)
 
 
 ## v7.0.0 (2026-06-02)

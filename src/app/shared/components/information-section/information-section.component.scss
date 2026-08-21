@@ -1,21 +1,17 @@
 .information-section {
   background-color: var(--color-accent-bg);
-  border-left: 3px solid var(--color-accent);
+  border-left: 4px solid var(--color-accent);
   border-radius: var(--border-radius-card);
   padding: 16px 20px;
-  margin: 8px 0;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   overflow: auto;
-  height: 100%;
 }
 
 .information-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
 }
 
 .information-icon {

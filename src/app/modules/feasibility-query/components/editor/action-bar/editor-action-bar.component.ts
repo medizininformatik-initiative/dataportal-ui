@@ -1,59 +1,37 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { DataQueryValidationService } from 'src/app/service/DataQuery/DataQueryValidation.service'
-import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { Observable, of, Subscription } from 'rxjs'
-import { StageProviderService } from '../../../../../service/Provider/StageProvider.service'
-import { ValidDataQuery } from 'src/app/model/Types/ValidDataQuery'
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { MatTooltip } from '@angular/material/tooltip'
-import { AsyncPipe } from '@angular/common'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { TranslateModule } from '@ngx-translate/core'
-
+import { Component, computed, inject, OnInit } from '@angular/core'
 @Component({
   selector: 'num-editor-action-bar',
   templateUrl: './editor-action-bar.component.html',
   styleUrls: ['./editor-action-bar.component.scss'],
   standalone: true,
-  imports: [ActionBarComponent, ButtonComponent, MatTooltip, AsyncPipe, TranslateModule],
+  imports: [ActionBarComponent, ButtonComponent, MatTooltip, TranslateModule],
 })
-export class EditorActionBarComponent implements OnInit, OnDestroy {
-  private dataQueryValidation = inject(DataQueryValidationService)
-  private feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
-  private stageProviderService = inject(StageProviderService)
-  private navigationHelperService = inject(NavigationHelperService)
+export class EditorActionBarComponent implements OnInit {
+  private readonly validationService = inject(FeasibilityQueryValidationService)
+  private readonly navigation = inject(NavigationHelperService)
 
-  stageArray$: Observable<Array<string>> = of([])
-  isFeasibilityQueryValid$: Observable<boolean>
-
-  validDataQuery$: Observable<ValidDataQuery>
-
-  saveDataQueryModalSubscription: Subscription
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
+  readonly isFeasibilityQueryValid = computed(
+    () => this.validationService.validationState().isValid
+  )
   constructor() {}
 
-  ngOnInit() {
-    this.isFeasibilityQueryValid$ = this.feasibilityQueryValidation.getIsFeasibilityQueryValid()
-    this.validDataQuery$ = this.dataQueryValidation.validateDataQuery()
+  ngOnInit(): void {}
+
+  navigateToSearch(): void {
+    this.navigation.navigateToFeasibilityQuerySearch()
   }
 
-  ngOnDestroy() {
-    this.saveDataQueryModalSubscription?.unsubscribe()
+  navigateToBulkCriteriaSearch(): void {
+    this.navigation.navigateToFeasibilityQueryBulkSearch()
   }
 
-  public navigateToSearch() {
-    this.navigationHelperService.navigateToFeasibilityQuerySearch()
-  }
-
-  public doSendRequest(): void {
-    this.navigationHelperService.navigateToFeasibilityQueryResult()
-  }
-
-  public navigateToBulkCriteriaSearch(): void {
-    this.navigationHelperService.navigateToFeasibilityQueryBulkSearch()
+  sendRequest(): void {
+    this.navigation.navigateToFeasibilityQueryResult()
   }
 }

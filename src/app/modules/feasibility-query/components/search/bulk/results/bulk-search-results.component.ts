@@ -2,7 +2,7 @@ import { Component, computed, inject, input, output } from '@angular/core'
 import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs'
 import { TranslateModule } from '@ngx-translate/core'
 import { toSignal } from '@angular/core/rxjs-interop'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry'
 import { CriteriaBulkFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkFoundListEntryAdapter'
 import { CriteriaBulkNotFoundListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/CriteriaBulkNotFoundListEntryAdapter'
@@ -12,6 +12,7 @@ import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriter
 import { TableComponent } from '../../../../../../shared/components/table/table.component'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
+import { TableCellKind } from '../../../../../../shared/models/TableData/Cells/TableCellKind'
 
 export type SelectedTab = 'FOUND' | 'NOTFOUND'
 
@@ -43,7 +44,7 @@ export class BulkSearchResultsComponent {
     const tableData = new CriteriaBulkFoundListEntryAdapter().adapt(result.getFound())
     tableData.body?.rows?.forEach((row) => {
       const checkboxCell = row.cells.find(
-        (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+        (c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT
       )
       if (checkboxCell) {
         const entryId = (row.originalEntry as CriteriaBulkEntry).getId()

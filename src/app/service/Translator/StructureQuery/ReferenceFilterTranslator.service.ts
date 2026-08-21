@@ -134,7 +134,6 @@ export class ReferenceFilterTranslatorService {
       hash,
       Display.fromJson(uiProfile.display),
       false,
-      false,
       new CritGroupPosition(),
       [termCode],
       timeRestriction,

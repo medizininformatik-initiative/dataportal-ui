@@ -6,8 +6,11 @@ import { MatFormField } from '@angular/material/form-field'
 import { MatOptgroup, MatOption } from '@angular/material/core'
 import { MatSelect, MatSelectTrigger } from '@angular/material/select'
 import { MatTooltip } from '@angular/material/tooltip'
-import { SearchFilter } from '../../models/SearchFilter/InterfaceSearchFilter'
+import { SearchFilterData } from '../../models/SearchFilter/SearchFilterData'
 import { TranslateModule } from '@ngx-translate/core'
+import { UpperCasePipe } from '@angular/common'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { SearchFilterValueData } from '../../models/SearchFilter/SearchFilterData'
 
 @Component({
   selector: 'num-search-filter',
@@ -25,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatOptgroup,
     TranslateModule,
     DisplayTranslationPipe,
+    UpperCasePipe,
   ],
 })
 export class SearchFilterComponent {
@@ -32,7 +36,7 @@ export class SearchFilterComponent {
     isOpen: false,
     targetFilter: '',
   }
-  readonly filter = model<SearchFilter | undefined>(undefined)
+  readonly filter = model<SearchFilterData | undefined>(undefined)
 
   readonly multiSelect = input(true)
 
@@ -62,7 +66,7 @@ export class SearchFilterComponent {
       return filter.data
     }
     const query = this.searchText.toLowerCase()
-    return filter.data.filter((item) => item.label.toLowerCase().includes(query))
+    return filter.data.filter((item) => this.getSearchSource(item).toLowerCase().includes(query))
   }
 
   translatedLabel: { translatedSystem: string; count: number; url: string }[] = []
@@ -96,6 +100,31 @@ export class SearchFilterComponent {
       return 'SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED'
     }
     return this.getCleanValue(selectedValues)
+  }
+
+  public getOptionValue(item: SearchFilterValueData): string {
+    const label = item.label?.trim()
+    if (label) {
+      return label
+    }
+
+    if (typeof item.display === 'string') {
+      return item.display
+    }
+
+    if (item.display instanceof Display) {
+      return item.display.getOriginal() ?? ''
+    }
+
+    return ''
+  }
+
+  public getTrackByValue(item: SearchFilterValueData): string {
+    return this.getOptionValue(item)
+  }
+
+  private getSearchSource(item: SearchFilterValueData): string {
+    return this.getOptionValue(item)
   }
 
   public onOpenedChange(isOpen: boolean): void {

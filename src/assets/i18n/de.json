@@ -62,7 +62,62 @@
       "LABEL": "Seitennavigation umschalten"
     }
   },
+  "FAQ": {
+    "TITLE": "Häufig gestellte Fragen",
+    "SUBTITLE": "Finden Sie Antworten auf häufige Fragen zur Nutzung des Portals.",
+    "COHORT_DEFINITION": {
+      "QUESTION": "Was ist eine Kohortendefinition?",
+      "ANSWER": "Eine Kohortendefinition legt die Gruppe von Patienten oder Datenobjekten fest, die Sie analysieren möchten. Definieren Sie Ein- und Ausschlusskriterien, um Ihre Zielpopulation präzise zu beschreiben. Dieser Schritt ist erforderlich, um fortzufahren."
+    },
+    "DATA_SELECTION": {
+      "QUESTION": "Was ist Datenselektion?",
+      "ANSWER": "Die Datenselektion legt fest, welche Datenfelder oder Variablen für die definierte Kohorte einbezogen werden. Wählen Sie die relevanten Datenpunkte für Ihre Analyse aus. Dieser Schritt ist erforderlich, um fortzufahren."
+    },
+    "APPLIED_FILTER": {
+      "QUESTION": "Was sind angewandte Filter?",
+      "ANSWER": "Filter schränken die Daten eines Merkmals auf bestimmte Werte ein, z. B. nur Diagnosen ab einem bestimmten Datum. Optionale Filter werden nur dann angewendet, wenn entsprechende Daten vorhanden sind."
+    },
+    "APPLIED_REFERENCES": {
+      "QUESTION": "Was sind referenzierte Merkmale?",
+      "ANSWER": "Referenzierte Merkmale sind verknüpfte Profile, die automatisch mitgeliefert werden, wenn das aktuelle Merkmal in der Anfrage enthalten ist. Sie können nicht einzeln abgewählt werden."
+    },
+    "ONLY_IF_REFERENCED": {
+      "QUESTION": "Was bedeutet \"Nur wenn referenziert\"?",
+      "ANSWER": "Wenn aktiviert, wird dieses FHIR-Profil nur dann in die Datenanfrage einbezogen, wenn es explizit von einem anderen ausgewählten Profil referenziert wird. Dies ist nützlich für verknüpfte Ressourcen – zum Beispiel, um eine Observation nur dann einzuschließen, wenn sie von einer ausgewählten Condition referenziert wird."
+    },
+    "SELECTED_FIELDS": {
+      "QUESTION": "Was sind selektierte Felder?",
+      "ANSWER": "Felder sind die konkreten Datenpunkte eines Merkmals, z. B. Diagnose-Code oder Datum. Die vorausgewählten Felder wurden anhand typischer Forschungsanforderungen vordefiniert. Sie können weitere Felder hinzufügen oder nicht benötigte entfernen."
+    }
+  },
+  "DASHBOARD": {
+    "HEADER": "Dashboard",
+    "INFO": {
+      "TEXT": "Willkommen im Machbarkeitsportal. Nutzen Sie die Kacheln unten, um zu den verschiedenen Bereichen zu navigieren."
+    },
+    "NEWQUERY": {
+      "HEADER": "Machbarkeitsabfrage stellen",
+      "BUTTON": "zum Editor"
+    },
+    "PROPOSALPORTAL": {
+      "HEADER": "Forschungsantrag stellen",
+      "BUTTON": "zum Formular"
+    },
+    "SAVED_QUERIES": {
+      "HEADER": "Meine Abfragen",
+      "BUTTON": "zur Übersicht"
+    },
+    "DATASELECTION": {
+      "HEADER": "Datenselektion erstellen",
+      "BUTTON": "zum Editor"
+    },
+    "UPLOAD_DATADEFINITION": {
+      "HEADER": "Upload existierender Datendefinitionen",
+      "BUTTON": "Dateiauswahl öffnen"
+    }
+  },
   "BREADCRUMB": {
+    "DASHBOARD": "Dashboard",
     "DATA_PROTECTION": "Datenschutz",
     "DATA_QUERY": "Datendefinition",
     "DATA_QUERY_COHORT_DEFINITION": "Kohortenselektion",
@@ -168,11 +223,14 @@
         "JUMP_TO_DATASELECTION": "Selektion anzeigen",
         "JUMP_TO_DATASELECTION_TOOLTIP": "Zum Editor navigieren, um die ausgewählten Merkmale zu bearbeiten"
       },
+      "CLOSE_DETAILS": "Schließen",
       "HEADER": "Merkmalselektion",
       "HEADER_INFO1": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter ",
       "HEADER_INFO2": ". Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: ",
       "HEADER_INFO3": "Achten Sie bei der Bearbeitung darauf, dass alle Zwischenergebnisse durch Klick auf \"Speichern\" in der Bearbeitungsansicht der Module zwischengespeichert werden müssen.",
-      "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie erforschen möchten, und laden Sie die Datendefinition herunter. Sie können die Datei dann als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen. Diese Datei ist maschinenlesbar und darf nicht verändert werden."
+      "INFOTEXT": "Bitte wählen Sie unten die Kriterien aus, die Sie erforschen möchten, und laden Sie die Datendefinition herunter. Sie können die Datei dann als Teil Ihres Forschungsantrags im Forschungsantragsportal des FDPG hochladen. Diese Datei ist maschinenlesbar und darf nicht verändert werden.",
+      "INFO_TOOLTIP": "<b>KDS-Module:</b> Thematische Datenkategorien im MII-Kerndatensatz (z. B. Diagnose, Medikation, Laborbefunde).<br><br><b>FHIR Datentyp:</b> Eine grobe technische Gruppierung nach FHIR-Darstellung (Resource Type – z. B. Observation, Condition).",
+      "SEARCHBAR": "Suchen nach Begriff oder Feldern"
     },
     "SNACKBAR": {
       "ADDED": "Erfolgreich zur Datenselektion hinzugefügt"
@@ -384,7 +442,7 @@
       "FILTER_HEADING": "Suche verfeinern:",
       "HEADER": "Kriteriensuche",
       "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen. Wenn Sie die Rohdaten, pseudonymisiert, lokal analysieren möchten, fügen Sie das Kriterium \"MDAT wissenschaftlich nutzen EU DSGVO NIVEAU\" oder weitere Kriterien aus dem Modul \"EINWILLIGUNG\" hinzu.",
-      "INFO_TOOLTIP": "<b>KDS-Module:</b> Bezeichnet den Bereich des MII-Kerndatensatzes, in dem die Daten strukturiert gespeichert sind.<br><br><b>Kontext:</b> Beschreibt den medizinischen Zusammenhang eines Suchbegriffs, z. B. Diagnose, Prozedur oder Laborwert.<br><br><b>Terminologie:</b> Gibt an, aus welchem medizinischen Klassifikationssystem ein Begriff stammt, z. B. ICD-10, OPS oder LOINC.",
+      "INFO_TOOLTIP": "<b>KDS-Module:</b> Thematische Datenkategorien im MII-Kerndatensatz (z. B. Diagnose, Medikation, Laborbefunde).<br><br><b>Kontext:</b> Beschreibt einen spezifischen klinischen Bereich oder Anwendungsfall eines Kriteriums (es ist spezifischer als Module).<br><br><b>Terminologie:</b> Die Terminologie bezeichnet das standardisierte Vokabular oder Kodierungssystem, das zur Definition des Kriteriums verwendet wird.",
       "LABEL": "Code oder Suchbegriff eingeben",
       "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
       "SEARCH_BUTTON": "Suchen",
@@ -464,11 +522,13 @@
         "SINGULAR": "Sie haben {{amount}} Kriterium zur Kohortenselektion hinzugefügt"
       },
       "DOWNLOAD": "Herunterladen",
-      "DOWNLOAD_DISABLED": "Keine Machbarkeitsabfrage wurde definiert",
+      "DOWNLOAD_DISABLED": "Die Datendefinition ist ungültig.",
+      "INVALID_DATA_DEFINITION_TOOLTIP": "Die Datendefinition ist ungültig. Hier klicken, um weitere Informationen zu erhalten.",
       "SAVE": "Speichern",
       "SAVE_DISABLED": "Keine Daten zum Speichern",
       "UPLOAD": "Hochladen",
-      "UPLOAD_DISABLED": "Hochladen nicht verfügbar"
+      "UPLOAD_DISABLED": "Hochladen nicht verfügbar",
+      "VALID_DATA_DEFINITION_TOOLTIP": "Die Datendefinition ist gültig"
     },
     "CHIPS": {
       "CONTEXT": "Kontext",
@@ -482,15 +542,17 @@
     },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",
-      "DELETE": "Löschen",
       "HEADER": "Löschung bestätigen",
       "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?"
     },
     "FILTER": {
       "AVAILABILITY": "Verfügbarkeit",
+      "CATEGORY": "Kategorie",
       "CONTEXT": "Kontext",
       "KDS_MODULE": "KDS-Modul",
+      "MODULE": "Modul",
       "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
+      "RESOURCETYPE": "FHIR Datentyp",
       "SEARCH": "Suchen...",
       "TERMINOLOGY": "Terminologie"
     },
@@ -503,6 +565,7 @@
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Kindelement",
       "DETAILS": "Details",
+      "FIELDS": "Felder",
       "NO_CHILDREN": "Keine Kindelemente",
       "NO_PARENTS": "Keine Elternelemente",
       "NO_TRANSLATIONS": "Keine automatischen Übersetzungen",
@@ -515,11 +578,13 @@
       "DEFINE_FIELDS": "Felder selektieren",
       "DELETE": "Löschen",
       "DUPLICATE": "Duplizieren",
-      "EDIT": "Bearbeiten",
+      "EDIT": "Filter setzen",
       "OPTIONS": "Optionen",
       "REFERENCE": "Kriterien verknüpfen",
       "SEARCH": "Als Suchbegriff nutzen",
-      "SHOW_CRITERIA": "Kriterium anzeigen"
+      "SEARCH_PROFILE": "Profile als Suchbegriff nutzen",
+      "SHOW_CRITERIA": "Kriterium anzeigen",
+      "SHOW_PROFILE": "Profil anzeigen"
     },
     "MODAL": {
       "BUTTON": {
@@ -554,6 +619,7 @@
       "MIN_LENGTH": "Bitte mindestens drei Buchstaben eingeben"
     },
     "TABLE": {
+      "ACTIONS": "Aktionen",
       "ADD": "Hinzufügen",
       "AVAILABILITY": "Verfügbarkeit",
       "AVAILABILITY_STATUS": {
@@ -564,17 +630,49 @@
         "VERY_HIGH": "Sehr hoch",
         "VERY_LOW": "Sehr niedrig"
       },
+      "CONCEPT": {
+        "NOT_SELECTABLE": "Konzept kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Konzept auswählen"
+      },
       "CONTEXT": "Kontext",
-      "DISPLAY": "Anzeige",
+      "CRITERIA": {
+        "ICON": "Verwandte Kriterien anzeigen",
+        "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Kriterium auswählen"
+      },
+      "CRITERION": "Kriterium",
+      "CRITERION_VALIDATION": {
+        "INVALID": "Ungültig",
+        "MISSING_FILTER": "Filter fehlt",
+        "VALID": "Gültig"
+      },
+      "DISPLAY": "Merkmal",
       "EMPTY": "",
-      "ICON": "Verwandte Kriterien anzeigen",
+      "FEATURE": {
+        "ICON": "Verwandte Merkmale anzeigen",
+        "NOT_SELECTABLE": "Merkmal kann nicht ausgewählt werden",
+        "SELECT_CHECKBOX": "Merkmal auswählen"
+      },
+      "MODULE": "Modul",
       "NAME": "Name",
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
       "PATIENT_COUNT": "Anzahl der Patienten",
+      "RESSOURCE_TYPE": "FHIR Datentyp",
+      "PROFILE": "Merkmal",
+      "PROFILE_VALIDATION": {
+        "INVALID": "Ungültig",
+        "MISSING_FIELDS": "Fehlende Felder",
+        "MISSING_FIELDS_MISSING_REFERENCES": "Fehlende Felder · Fehlende Referenzen",
+        "MISSING_REFERENCE": "Fehlende Referenz",
+        "VALID": "Gültig"
+      },
       "SELECT_CHECKBOX": "Kriterium auswählen",
+      "SELECT_CHECKBOX_ALL": "Alles auswählen",
       "SITE": "Standort",
+      "STATUS": "Status",
       "TERMCODE": "Termcode",
-      "TERMINOLOGY_CODE": "Terminologie"
+      "TERMINOLOGY_CODE": "Terminologie",
+      "WHAT_IS_MISSING": "Was fehlt?"
     }
   },
   "SHARED_FILTER": {
@@ -609,6 +707,7 @@
     }
   },
   "TAB_TITLE": {
+    "DASHBOARD": "Dashboard",
     "DATA_PROTECTION": "Datenschutz",
     "DATA_QUERY": {
       "COHORT_DEFINITION": "Datendefinition - Kohortenselektion",

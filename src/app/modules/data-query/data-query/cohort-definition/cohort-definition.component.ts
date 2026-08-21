@@ -1,7 +1,6 @@
 import { CohortDefinitionActionBarComponent } from './action-bar/cohort-definition-action-bar.component'
 import { Component, inject } from '@angular/core'
 import { DisplayFeasibilityQueryComponent } from '../../../feasibility-query/components/editor/display/display.component'
-import { FeasibilityQueryValidationService } from 'src/app/service/FeasibilityQuery/FeasibilityQueryValidation.service'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
 import { map } from 'rxjs'
@@ -11,6 +10,7 @@ import { PlaceholderBoxComponent } from '../../../../shared/components/placehold
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-cohort-definition',
@@ -34,10 +34,7 @@ export class CohortDefinitionComponent {
   private readonly feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
   private readonly resultProviderService = inject(ResultProviderService)
 
-  readonly isFeasibilityExistent = toSignal(
-    this.feasibilityQueryValidation.getIsFeasibilityQuerySet(),
-    { initialValue: false }
-  )
+  readonly isFeasibilityExistent = this.feasibilityQueryValidation.validationState().isValid
 
   readonly totalNumberOfPatients = toSignal(
     this.resultProviderService

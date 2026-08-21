@@ -62,7 +62,62 @@
       "LABEL": "Toggle side navigation"
     }
   },
+  "FAQ": {
+    "TITLE": "Frequently Asked Questions",
+    "SUBTITLE": "Find answers to common questions about using the portal.",
+    "COHORT_DEFINITION": {
+      "QUESTION": "What is a Cohort Definition?",
+      "ANSWER": "A cohort definition specifies the group of patients or data objects you want to analyze. Define inclusion and exclusion criteria to precisely describe your target population. This step is required to proceed."
+    },
+    "DATA_SELECTION": {
+      "QUESTION": "What is Data Selection?",
+      "ANSWER": "The data selection defines which data fields or variables are included for the defined cohort. Select the relevant data points for your analysis. This step is required to proceed."
+    },
+    "APPLIED_FILTER": {
+      "QUESTION": "What are Applied Filters?",
+      "ANSWER": "Filters restrict the data of a profile to specific values, e.g. only diagnoses after a certain date. Optional filters are only applied if corresponding data is available."
+    },
+    "APPLIED_REFERENCES": {
+      "QUESTION": "What are Applied References?",
+      "ANSWER": "Referenced profiles are linked profiles that are automatically included when the current profile is part of the request. They cannot be deselected individually."
+    },
+    "ONLY_IF_REFERENCED": {
+      "QUESTION": "What does \"Only if referenced\" mean?",
+      "ANSWER": "When enabled, this FHIR profile is only included in the data request if it is explicitly referenced by another selected profile. This is useful for linked resources — for example, including an Observation only when it is referenced by a selected Condition — avoiding the retrieval of unrelated data."
+    },
+    "SELECTED_FIELDS": {
+      "QUESTION": "What are Selected Fields?",
+      "ANSWER": "Fields are the specific data points of a profile, e.g. diagnosis code or date. Pre-selected fields have been predefined based on typical research requirements. You can add further fields or remove ones you don't need."
+    }
+  },
+  "DASHBOARD": {
+    "HEADER": "Dashboard",
+    "INFO": {
+      "TEXT": "Welcome to the feasibility portal. Use the cards below to navigate to the different areas."
+    },
+    "NEWQUERY": {
+      "HEADER": "Submit Feasibility Query",
+      "BUTTON": "Go to Editor"
+    },
+    "PROPOSALPORTAL": {
+      "HEADER": "Submit Research Proposal",
+      "BUTTON": "Go to Form"
+    },
+    "SAVED_QUERIES": {
+      "HEADER": "My Queries",
+      "BUTTON": "Go to Overview"
+    },
+    "DATASELECTION": {
+      "HEADER": "Create Data Selection",
+      "BUTTON": "Go to Editor"
+    },
+    "UPLOAD_DATADEFINITION": {
+      "HEADER": "Upload of existing Data Definition",
+      "BUTTON": "Open File Selection"
+    }
+  },
   "BREADCRUMB": {
+    "DASHBOARD": "Dashboard",
     "DATA_PROTECTION": "Data Protection",
     "DATA_QUERY": "Data Definition",
     "DATA_QUERY_COHORT_DEFINITION": "Cohort Definition",
@@ -168,11 +223,14 @@
         "JUMP_TO_DATASELECTION": "Show Selection",
         "JUMP_TO_DATASELECTION_TOOLTIP": "Navigate to editor to edit selected features"
       },
+      "CLOSE_DETAILS": "Close",
       "HEADER": "Feature Selection",
       "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
       "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
       "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
-      "INFOTEXT": "Select criteria to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal."
+      "INFOTEXT": "Select criteria to study and download your data definition. You can upload the data selection file as an attachment to your research proposal in the proposal portal.",
+      "INFO_TOOLTIP": "<b>CDS Modules:</b> Thematic data categories in the MII Core Data Set (e.g., Diagnosis, Medication, Laboratory).<br><br><b>FHIR Data Type:</b> A broad technical grouping by FHIR representation (resource type - e.g. Observation, Condition).",
+      "SEARCHBAR": "Search for term or fields"
     },
     "SNACKBAR": {
       "ADDED": "Successfully added to data selection"
@@ -395,7 +453,7 @@
       "FILTER_HEADING": "Refine Your Search:",
       "HEADER": "Criteria search",
       "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD-10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide. If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU” or other criteria from the “EINWILLIGUNG” module.",
-      "INFO_TOOLTIP": "<b>CDS Modules:</b> Refers to the section of the MII core dataset where the data is structured, e.g. diagnosis, medication, or laboratory data.<br><br><b>Context:</b> Describes the medical context of a search term, e.g. diagnosis, procedure, or laboratory value.<br><br><b>Terminology:</b> Indicates which medical classification system a term comes from, e.g. ICD-10, OPS, or LOINC.",
+      "INFO_TOOLTIP": "<b>CDS Modules:</b> Thematic data categories in the MII Core Data Set (e.g., Diagnosis, Medication, Laboratory).<br><br><b>Context:</b> Describes a specific clinical area or use case of a criterion (it is more specific than modules).<br><br><b>Terminology:</b> Identifies the standardized vocabulary or coding system used to define the criterion.",
       "LABEL": "Enter code or search term",
       "SEARCHBAR": "Search for term or terminology code",
       "SEARCH_BUTTON": "Search",
@@ -475,11 +533,13 @@
         "SINGULAR": "You have added {{amount}} criterion to the cohort selection"
       },
       "DOWNLOAD": "Download",
-      "DOWNLOAD_DISABLED": "No feasibility query was defined",
+      "DOWNLOAD_DISABLED": "The data definition is invalid.",
+      "INVALID_DATA_DEFINITION_TOOLTIP": "The data definition is invalid. Please click here to view the validation report for details.",
       "SAVE": "Save",
       "SAVE_DISABLED": "No data to save",
       "UPLOAD": "Upload",
-      "UPLOAD_DISABLED": "Upload not available"
+      "UPLOAD_DISABLED": "Upload not available",
+      "VALID_DATA_DEFINITION_TOOLTIP": "The data definition is valid."
     },
     "CHIPS": {
       "CONTEXT": "Context",
@@ -499,9 +559,12 @@
     },
     "FILTER": {
       "AVAILABILITY": "Availability",
+      "CATEGORY": "Category",
       "CONTEXT": "Context",
       "KDS_MODULE": "CDS Modules",
+      "MODULE": "Module",
       "NO_FILTER_SELECTED": "No search filter selected",
+      "RESOURCETYPE": "FHIR Data Type",
       "SEARCH": "Search...",
       "TERMINOLOGY": "Terminology"
     },
@@ -514,6 +577,7 @@
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Child element",
       "DETAILS": "Details",
+      "FIELDS": "Fields",
       "NO_CHILDREN": "No child elements",
       "NO_PARENTS": "No parent elements",
       "NO_TRANSLATIONS": "No automatic translations",
@@ -521,16 +585,17 @@
       "TRANSLATIONS": "Automatic Translations"
     },
     "MENU": {
-      "ADD": "Add to cohort selection",
+      "ADD_COHORT": "Add to cohort selection",
+      "ADD_PROFILE": "Add to profile selection",
       "APPLY_FILTERS": "Apply filter",
       "DEFINE_FIELDS": "Select fields",
       "DELETE": "Delete",
       "DUPLICATE": "Duplicate",
-      "EDIT": "Edit",
+      "EDIT": "Set Filter",
       "OPTIONS": "Options",
       "REFERENCE": "Link criteria",
       "SEARCH": "Use as search term",
-      "SHOW_CRITERIA": "Show criteria"
+      "SHOW_PROFILE": "Show profile"
     },
     "MODAL": {
       "BUTTON": {
@@ -565,6 +630,7 @@
       "MIN_LENGTH": "Required length of 3 letters"
     },
     "TABLE": {
+      "ACTIONS": "Actions",
       "ADD": "Add",
       "AVAILABILITY": "Availability",
       "AVAILABILITY_STATUS": {
@@ -575,17 +641,51 @@
         "VERY_HIGH": "Very high",
         "VERY_LOW": "Very low"
       },
+      "CONCEPT": {
+        "NOT_SELECTABLE": "Concept cannot be selected",
+        "SELECT_CHECKBOX": "Select Concept"
+      },
       "CONTEXT": "Context",
+      "CRITERION": "Criterion",
+      "CRITERION_VALIDATION": {
+        "INVALID": "Invalid",
+        "MISSING_FILTER": "Missing filter",
+        "VALID": "Valid"
+      },
       "DISPLAY": "Display",
       "EMPTY": "",
       "ICON": "Show related criteria",
+      "CRITERIA": {
+        "ICON": "Show related criteria",
+        "NOT_SELECTABLE": "Criterion cannot be selected",
+        "SELECT_CHECKBOX": "Select Criteria"
+      },
+      "DISPLAY": "Feature",
+      "EMPTY": "",
+      "FEATURE": {
+        "ICON": "Show related features",
+        "NOT_SELECTABLE": "Feature cannot be selected",
+        "SELECT_CHECKBOX": "Select Feature"
+      },
+      "MODULE": "Module",
       "NAME": "Name",
-      "NOT_SELECTABLE": "Criterion cannot be selected",
       "PATIENT_COUNT": "Number of patients",
+      "RESSOURCE_TYPE": "FHIR Data Type",
+      "PROFILE": "Profile",
+      "PROFILE_VALIDATION": {
+        "INVALID": "Invalid",
+        "MISSING_FIELDS": "Missing fields",
+        "MISSING_FIELDS_MISSING_REFERENCES": "Missing fields · Missing references",
+        "MISSING_REFERENCE": "Missing reference",
+        "VALID": "Valid"
+      },
       "SELECT_CHECKBOX": "Select Criteria",
+      "SELECT_CHECKBOX_ALL": "Select All",
       "SITE": "Location",
+      "STATUS": "Status",
       "TERMCODE": "Term code",
-      "TERMINOLOGY_CODE": "Terminology"
+      "TERMINOLOGY_CODE": "Terminology",
+      "WHAT_IS_MISSING": "What is missing"
     }
   },
   "SHARED_FILTER": {
@@ -620,6 +720,7 @@
     }
   },
   "TAB_TITLE": {
+    "DASHBOARD": "Dashboard",
     "DATA_PROTECTION": "Data Protection",
     "DATA_QUERY": {
       "COHORT_DEFINITION": "Data Definition - Cohort Selection",

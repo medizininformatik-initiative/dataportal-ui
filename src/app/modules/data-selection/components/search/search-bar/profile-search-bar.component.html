@@ -1,0 +1,31 @@
+<div class="search-bar-container">
+  <num-searchbar
+    class="searchbar"
+    icon="search"
+    [searchText]="searchText()"
+    [label]="'DATASELECTION.SEARCH.SEARCHBAR'"
+    (searchTextChange)="onSearchTextChange($event)"
+  ></num-searchbar>
+  <div class="filter-heading">
+    <num-section-name>{{ 'FEASIBILITY.SEARCH.FILTER_HEADING' | translate }}</num-section-name>
+    <span
+      class="filter-heading__info"
+      numInfoTooltip
+      [infoTooltipTitle]="'FEASIBILITY.SEARCH.TOOLTIP_TITLE' | translate"
+      [infoTooltipText]="'DATASELECTION.SEARCH.INFO_TOOLTIP' | translate"
+      [infoTooltipPosition]="'bottom'"
+    ></span>
+  </div>
+  <div class="filter-container">
+    @for (searchFilter of searchFilters(); track trackByFilterType($index, searchFilter)) {
+    <num-search-filter
+      [filter]="searchFilter"
+      (filterChange)="onFilterChange($event)"
+      (isOpen)="onFilterOpen($event)"
+    ></num-search-filter>
+    }
+    <num-button [isDisabled]="resetFilterDisabled()" type="blue" (click)="resetFilter()">
+      {{ 'FEASIBILITY.SEARCH.BUTTON.RESET' | translate }}
+    </num-button>
+  </div>
+</div>

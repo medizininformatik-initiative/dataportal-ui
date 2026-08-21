@@ -1,9 +1,10 @@
-import { Component, ViewChild, input, output } from '@angular/core'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
+import { Component, input, output } from '@angular/core'
 import { TableBodyComponent } from './table-body/table-body.component'
+import { TableCellKind } from '../../models/TableData/Cells/TableCellKind'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/cells/CheckboxTextCellData'
-import { TableRowData } from '../../models/TableData/TableRowData'
 import { TableHeaderComponent } from './table-header/table-header.component'
+import { TableRowData } from '../../models/TableData/TableRowData'
 
 @Component({
   selector: 'num-table',
@@ -13,18 +14,20 @@ import { TableHeaderComponent } from './table-header/table-header.component'
   imports: [TableHeaderComponent, TableBodyComponent],
 })
 export class TableComponent {
-  readonly tableData = input<TableData>()
+  readonly tableData = input.required<TableData>()
 
   readonly selectedRow = output<TableRowData>()
   readonly rowClicked = output<TableRowData>()
   readonly iconClicked = output<TableRowData>()
+  readonly selectAll = output<boolean>()
+  readonly triggerSelectAll = input<{ id: number; value: boolean }>()
 
   public unselectCheckbox(ids: string[]): void {
     ids.forEach((id) => {
       const foundRow = this.tableData().body?.rows?.find((row) => row.id === id)
       if (foundRow) {
         const checkboxCell = foundRow.cells.find(
-          (c): c is CheckboxTextCellData => c.type === 'checkboxText'
+          (c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT
         )
         if (checkboxCell) {
           checkboxCell.isSelected = false
