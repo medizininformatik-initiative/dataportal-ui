@@ -60,12 +60,21 @@ export class DataSelectionProviderService {
       )
   }
 
-  /**
-   * Convenence method to set multiple profiles in the active data selection.
-   * @param profiles
-   */
   public setProfilesInActiveDataSelection(profiles: DataSelectionProfile[]): void {
-    profiles.map((profile: DataSelectionProfile) => this.setProfileInActiveDataSelection(profile))
+    const id: string = this.activeDataSelection.getActiveDataSelectionId()
+    const dataSelection = this.dataSelectionUIDMap.get(id)
+    if (dataSelection) {
+      const currentProfiles = dataSelection.getProfiles()
+      for (const profile of profiles) {
+        const index = currentProfiles.findIndex((existing) => existing.getId() === profile.getId())
+        if (index !== -1) {
+          currentProfiles[index] = profile
+        } else {
+          currentProfiles.push(this.testForSameLabel(currentProfiles, profile))
+        }
+      }
+      this.createDataSelectionInstanceAndSetMap(currentProfiles, id)
+    }
   }
 
   /**
@@ -162,11 +171,7 @@ export class DataSelectionProviderService {
   ): DataSelectionProfile {
     const sameProfiles = profiles.filter(
       (existingProfile) =>
-        existingProfile.getLabel().getOriginal() === profile.getLabel().getOriginal() ||
-        existingProfile.getLabel().getTranslations()[0].getValue() ===
-          profile.getLabel().getTranslations()[0].getValue() ||
-        existingProfile.getLabel().getTranslations()[1].getValue() ===
-          profile.getLabel().getTranslations()[1].getValue()
+        existingProfile.getLabel().getOriginal() === profile.getLabel().getOriginal()
     )
 
     if (sameProfiles.length > 0) {
