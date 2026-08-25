@@ -564,6 +564,7 @@
     "KONTEXT": "Kontext / KDS-Profil",
     "LIST_ITEM_DETAILS": {
       "CHILDREN": "Kindelement",
+      "DESCRIPTION": "Beschreibung",
       "DETAILS": "Details",
       "FIELDS": "Felder",
       "NO_CHILDREN": "Keine Kindelemente",
