@@ -31,7 +31,7 @@
 
 /* ── Design tokens ─────────────────────────────────────────────
    Typography
-   --font-body           : body / UI text font stack (Open Sans)
+   --font-body           : body / UI text font stack (Titillium Web)
    --font-size-md        : standard body text size
    --font-size-sm        : secondary / label text size
    --line-height-md      : line-height for font-size-md
@@ -63,7 +63,7 @@
 ──────────────────────────────────────────────────────────────── */
 :root {
   /* Typography */
-  --font-body: 'Open Sans', sans-serif;
+  --font-body: 'Titillium Web', sans-serif;
   --font-size-md: 14px;
   --font-size-sm: 12px;
   --line-height-md: 19px;

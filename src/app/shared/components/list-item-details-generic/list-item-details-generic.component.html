@@ -46,7 +46,9 @@
       <!-- Fields -->
       @if (data.fields) {
       <div class="detail-row divider">
-        <div class="detail-label">Felder</div>
+        <div class="detail-label">
+          {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.FIELDS' | translate }}
+        </div>
         <div class="detail-value">
           {{ displayFields }}
         </div>

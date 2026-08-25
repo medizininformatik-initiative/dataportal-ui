@@ -2,20 +2,19 @@ import { AbstractDetails } from '../AbstractDetails'
 import { Display } from '../../../DataSelection/Profile/Display'
 import { ProfileEntryRelative } from './ProfileEntryRelative'
 import { ProfileEntryDetailsData } from 'src/app/model/Interface/ListEntryDetailsData/ProfileEntryDetailsData'
-import { TranslationData } from 'src/app/model/Interface/TranslationData'
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation'
+import { ProfileEntryDetailsField } from './ProfileEntryDetailsField'
 
 export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
   private readonly id: string
   private readonly description: Display
   private readonly url: string
-  private readonly fields: Display[]
+  private readonly fields: ProfileEntryDetailsField[]
 
   constructor(
     id: string,
     display: Display,
     description: Display,
-    fields: Display[],
+    fields: ProfileEntryDetailsField[],
     parents: ProfileEntryRelative[] = [],
     children: ProfileEntryRelative[] = [],
     selectable: boolean,
@@ -32,7 +31,7 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
     return this.id
   }
 
-  public getFields(): Display[] {
+  public getFields(): ProfileEntryDetailsField[] {
     return this.fields
   }
 
@@ -53,7 +52,7 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
       json.id,
       Display.fromJson(json.display),
       Display.fromJson(json.description),
-      json.fields.map((field) => Display.fromJson(field.display)),
+      json.fields.map((field) => ProfileEntryDetailsField.fromJson(field)),
       json.parents.map((parent) => ProfileEntryRelative.fromJson(parent)),
       json.children.map((child) => ProfileEntryRelative.fromJson(child)),
       json.selectable,

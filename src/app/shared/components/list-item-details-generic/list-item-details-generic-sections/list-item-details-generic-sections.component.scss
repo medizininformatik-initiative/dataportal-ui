@@ -18,10 +18,9 @@
 .entry-layout {
   border-radius: var(--border-radius-card);
   padding: 4px 12px;
-  height: 48px;
+  min-height: 48px;
+  height: auto;
   margin-bottom: 8px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   background-color: var(--color-accent-bg);
   border: 1px solid var(--color-accent-border);
   box-shadow: var(--shadow-card);
@@ -29,7 +28,7 @@
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 
   &:hover {
@@ -40,8 +39,22 @@
 
 .display-name {
   cursor: pointer;
-  width: max-content;
   max-width: 80%;
+}
+
+.entry-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  padding: 4px 0;
+}
+
+// wrapping overrides — typography comes from num-text-meta
+.field-description {
+  white-space: normal;
+  word-break: break-word;
+  margin-top: 2px;
 }
 
 .text-overflow {

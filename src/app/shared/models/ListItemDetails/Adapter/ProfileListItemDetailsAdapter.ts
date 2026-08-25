@@ -1,8 +1,8 @@
 import { AbstractListItemDetailsAdapter } from './AbstractListItemDetailsAdapter'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { ListItemDetailsData } from '../ListItemDetailsData'
 import { ListItemDetailsRelativeData } from '../ListItemDetailsRelative'
 import { ProfileEntryDetails } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryDetails'
+import { ProfileEntryDetailsField } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryDetailsField'
 import { ProfileEntryRelative } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryRelative'
 import { v4 as uuidv4 } from 'uuid'
 export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapter<
@@ -38,11 +38,12 @@ export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapte
     return result
   }
 
-  private adaptFields(fields: Display[]): ListItemDetailsRelativeData[] {
+  private adaptFields(fields: ProfileEntryDetailsField[]): ListItemDetailsRelativeData[] {
     return fields.map((field) => {
       return {
-        display: field,
+        display: field.getDisplay(),
         id: uuidv4(),
+        description: field.getDescription(),
       }
     })
   }
