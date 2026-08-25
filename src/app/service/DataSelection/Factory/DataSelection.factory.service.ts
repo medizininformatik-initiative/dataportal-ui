@@ -35,11 +35,7 @@ export class DataSelectionFactoryService {
   }
 
   private setDataSelectionProvider(dataSelection: DataSelection): void {
-    this.dataSelectionProviderService.setDataSelectionByUID(
-      dataSelection.getId(),
-      dataSelection,
-      true
-    )
+    this.dataSelectionProviderService.setDataSelection(dataSelection.getId(), dataSelection, true)
   }
 
   private loadMainProfile() {

@@ -60,7 +60,7 @@ export class CreateCRTDLService {
   private getDataExtraction(): Observable<DataExtraction> {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId()
     return this.dataSelectionProvider
-      .getDataSelectionByUID(dataSelectionId)
+      .getDataSelection(dataSelectionId)
       .pipe(
         map((dataSelection) =>
           this.dataExtractionTranslator.translateToDataExtraction(dataSelection)

@@ -48,7 +48,7 @@ export class PossibleReferencesService {
   }
 
   public rebuildPossibleReferences(parentProfile: DataSelectionProfile): Observable<void> {
-    return this.dataSelectionProviderService.getProfilesFromActiveDataSelection().pipe(
+    return this.dataSelectionProviderService.getActiveProfiles().pipe(
       take(1),
       map((dataSelectionProfiles) => {
         const baseMap = new Map<string, Map<string, PossibleProfileReferenceData[]>>(
@@ -166,7 +166,7 @@ export class PossibleReferencesService {
   ): Observable<PossibleProfileReferenceData[]> {
     return this.loadDataSelectionProfilesService.loadProfiles(urls, true).pipe(
       map((profiles: DataSelectionProfile[]) => {
-        this.dataSelectionProviderService.setProfilesInActiveDataSelection(profiles)
+        this.dataSelectionProviderService.setActiveProfiles(profiles)
         const possibleReferences = this.mapProfilesToReferences(profiles)
         const currentMap = this.possibleReferencesMapSubject.getValue()
         const existingReferences = currentMap.get(parentProfileId)?.get(elementId) ?? []

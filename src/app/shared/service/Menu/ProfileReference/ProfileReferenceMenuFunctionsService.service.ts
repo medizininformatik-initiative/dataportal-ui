@@ -40,6 +40,6 @@ export class ProfileReferenceMenuFunctionsService {
       selectedReferences.splice(index, 1)
     }
     const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
-    this.dataSelectionProviderService.setProfileInActiveDataSelection(updatedProfile, 'ADD')
+    this.dataSelectionProviderService.setActiveProfile(updatedProfile, 'ADD')
   }
 }

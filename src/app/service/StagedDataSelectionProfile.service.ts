@@ -207,6 +207,6 @@ export class StagedProfileService implements OnDestroy {
    * @private
    */
   private setProfileInDataSelectionProvider(profile: DataSelectionProfile): void {
-    this.dataSelectionProviderService.setProfileInActiveDataSelection(profile, 'SET')
+    this.dataSelectionProviderService.setActiveProfile(profile, 'SET')
   }
 }

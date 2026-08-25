@@ -27,7 +27,7 @@ export class ProvidersInitService {
   public initializeProviders(patientProfileResult: DataSelectionProfile): Observable<boolean> {
     this.dataSelectionMainProfileProviderService.setPatientProfile(patientProfileResult)
     return this.dataSelectionProvider
-      .initializeDataSelectionInstance(patientProfileResult)
+      .initDataSelection(patientProfileResult)
       .pipe(
         switchMap((dsResult) =>
           this.feasibilityQueryProvider

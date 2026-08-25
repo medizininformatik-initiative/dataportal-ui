@@ -43,9 +43,7 @@ export class ProfileListItemDetailsMenuItemsFunctionsService {
           ])
         ),
         filter((profiles) => profiles.length > 0),
-        tap((profiles) =>
-          this.dataSelectionProvider.setProfileInActiveDataSelection(profiles[0], 'ADD')
-        ),
+        tap((profiles) => this.dataSelectionProvider.setActiveProfile(profiles[0], 'ADD')),
         take(1)
       )
       .subscribe(() => this.snackbarMessageService.displayAddedToDataSelection())

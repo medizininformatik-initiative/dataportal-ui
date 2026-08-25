@@ -112,7 +112,7 @@ export class CRTDL2UIModelService {
   }
 
   private setDataSelectionProvider(dataSelection: DataSelection): void {
-    this.dataSelectionProvider.setDataSelectionByUID(dataSelection.getId(), dataSelection, true)
+    this.dataSelectionProvider.setDataSelection(dataSelection.getId(), dataSelection, true)
   }
 
   private resetDataSelection(): void {
