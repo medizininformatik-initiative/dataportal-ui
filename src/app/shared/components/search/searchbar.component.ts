@@ -55,7 +55,7 @@ export class SearchbarComponent {
   readonly minLength = input<number>(3)
   readonly searchText = input<string>('')
   readonly searchTextChange = output<string>()
-  readonly icon = input<string | undefined>(undefined)
+  readonly icon = input<string>('search')
 
   readonly inputValue = signal(this.searchText() || '')
   readonly currentText = signal('')

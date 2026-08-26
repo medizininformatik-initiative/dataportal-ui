@@ -1,30 +1,36 @@
-@let items = listItemDetails(); @let menu = menuItems(); @if (items.length) { @for (item of items;
-track item.id) {
-<div (click)="getSelectedRelative(item)" class="mat-divider entry-layout">
-  <div class="entry-content">
-    <div
-      class="text-overflow display-name num-text-label"
-      [matTooltip]="item.display | displayTranslation"
-    >
-      {{ item.display | displayTranslation }}
+<num-searchbar
+  [label]="'SHARED_COMPONENTS.LIST_ITEM_DETAILS.SEARCH_FIELDS' | translate"
+  (searchTextChange)="searchText.set($event)"
+/>
+<div class="scroll-container">
+  @let items = filteredItems(); @let menu = menuItems(); @if (items.length) { @for (item of items;
+  track item.id) {
+  <div (click)="getSelectedRelative(item)" class="mat-divider entry-layout">
+    <div class="entry-content">
+      <div
+        class="text-overflow display-name num-text-label"
+        [matTooltip]="item.display | displayTranslation"
+      >
+        {{ item.display | displayTranslation }}
 
-      @if (item.metadata?.length) {
-      <div class="num-info-item">
-        {{ item.metadata[0] }}
-        @if (item.metadata[1]) { , {{ item.metadata[1] }}
+        @if (item.metadata?.length) {
+        <div class="num-info-item">
+          {{ item.metadata[0] }}
+          @if (item.metadata[1]) { , {{ item.metadata[1] }}
+          }
+        </div>
         }
+      </div>
+      @if (item.description) {
+      <div class="field-description num-text-meta">
+        {{ item.description | displayTranslation }}
       </div>
       }
     </div>
-    @if (item.description) {
-    <div class="field-description num-text-meta">
-      {{ item.description | displayTranslation }}
-    </div>
+
+    @if (menu.length) {
+    <num-menu [menuItems]="menu" [id]="item.id" (click)="$event.stopPropagation()" />
     }
   </div>
-
-  @if (menu.length) {
-  <num-menu [menuItems]="menu" [id]="item.id" (click)="$event.stopPropagation()" />
-  }
+  } }
 </div>
-} }

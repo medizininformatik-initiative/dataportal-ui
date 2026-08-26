@@ -2,19 +2,22 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  min-height: 300px;
-}
-.details-tab-group {
-  width: 100%;
-  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
-.tab-content {
-  padding: 16px 0;
+.details-tab-group {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  flex: 1 1 auto;
+}
+
+::ng-deep .mat-mdc-tab-body-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .tab-content {
@@ -24,7 +27,7 @@
   height: 100%;
   width: 100%;
   min-height: 0;
-  flex: 1 1 auto;
+  overflow-y: auto;
 }
 
 .original-item {
