@@ -3,48 +3,48 @@
 services:
   dataportal-backend:
     container_name: dataportal-backend
-    image:  ghcr.io/medizininformatik-initiative/dataportal-backend:latest
+    image: ghcr.io/medizininformatik-initiative/dataportal-backend:latest
     ports:
-      - "8090:8090"
+      - '8090:8090'
     depends_on:
       dataportal-postgres:
         condition: service_started
       elastic-search-init:
         condition: service_completed_successfully
     environment:
-      JAVA_OPTS: ""
-      QUERYRESULT_PUBLIC_KEY: "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA1lWOfXzE/mUEPitNLxsDMtjERJGVhS8gP1WmuHPvjPxUOQyod4EbJcbJlkBqLqpaIs8Buy3gcbJvIPERdG1N1BSZ8NOKOtRubioKf30JwnLdZAae3vJAzRC3h42OPM3fohZCXMxbrju+KM0ZUIrLEXKEDMHQWfevCQCxeixvXVYpfXlkJIBGaWz4cDgEOiiwhU87AMzGZwjAIHvr4oTF/uHg6+C3Mdx0m8WLtygTiEixJegMb/txR+4gNVYrzpm5BwDUU7Qxy3nTUDYZLlTGeP9MBFWW+W87IHzgP+OFr3ZKMEkAPU0R1lqXFZCYcgZHGA5He2W701isnqkKIQT8ePOH43ZOXo3S34Pqw5oQ4Q2kPubp1wgZWw0VtEiZDtlwqUJ+r3CigU7NAFM5JnC/skiIBKetbWoNm1JPEfGOTrgjHD2uo82jSO8tV45LNH1EaR2+5UWSFZyDvTayLZsxsVlRFXJKgQJDI344R6lhGbLXbhqCuPzeQaHr1XGCKAtdAgMBAAE="
+      JAVA_OPTS: ''
+      QUERYRESULT_PUBLIC_KEY: 'MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA1lWOfXzE/mUEPitNLxsDMtjERJGVhS8gP1WmuHPvjPxUOQyod4EbJcbJlkBqLqpaIs8Buy3gcbJvIPERdG1N1BSZ8NOKOtRubioKf30JwnLdZAae3vJAzRC3h42OPM3fohZCXMxbrju+KM0ZUIrLEXKEDMHQWfevCQCxeixvXVYpfXlkJIBGaWz4cDgEOiiwhU87AMzGZwjAIHvr4oTF/uHg6+C3Mdx0m8WLtygTiEixJegMb/txR+4gNVYrzpm5BwDUU7Qxy3nTUDYZLlTGeP9MBFWW+W87IHzgP+OFr3ZKMEkAPU0R1lqXFZCYcgZHGA5He2W701isnqkKIQT8ePOH43ZOXo3S34Pqw5oQ4Q2kPubp1wgZWw0VtEiZDtlwqUJ+r3CigU7NAFM5JnC/skiIBKetbWoNm1JPEfGOTrgjHD2uo82jSO8tV45LNH1EaR2+5UWSFZyDvTayLZsxsVlRFXJKgQJDI344R6lhGbLXbhqCuPzeQaHr1XGCKAtdAgMBAAE='
       # ----- app
-      QUERY_VALIDATION_ENABLED: "true"
-      CQL_TRANSLATE_ENABLED: "false"
-      FHIR_TRANSLATE_ENABLED: "false"
-      API_BASE_URL: "http://localhost:8090/api/"
-      ALLOWED_ORIGINS: "http://localhost:4200"
+      QUERY_VALIDATION_ENABLED: 'true'
+      CQL_TRANSLATE_ENABLED: 'false'
+      FHIR_TRANSLATE_ENABLED: 'false'
+      API_BASE_URL: 'http://localhost:8090/api/'
+      ALLOWED_ORIGINS: 'http://localhost:4200'
       QUERYRESULT_EXPIRY_MINUTES: 5
       # ---- db config
-      DATABASE_HOST: "dataportal-postgres"
+      DATABASE_HOST: 'dataportal-postgres'
       DATABASE_PORT: 5432
-      DATABASE_USER: "dataportaluser"
-      DATABASE_PASSWORD: "dataportalpw"
-      DATABASE_DBNAME: "dataportal"
-      ONTOLOGY_DB_MIGRATION_FOLDER: "/opt/dataportal-backend/ontology/migration"
-      DSE_PROFILE_TREE_FILE: "/opt/dataportal-backend/ontology/dse/profile_tree.json"
-      TERMINOLOGY_SYSTEMS_FILE: "/opt/dataportal-backend/ontology/terminology_systems.json"
+      DATABASE_USER: 'dataportaluser'
+      DATABASE_PASSWORD: 'dataportalpw'
+      DATABASE_DBNAME: 'dataportal'
+      ONTOLOGY_DB_MIGRATION_FOLDER: '/opt/dataportal-backend/ontology/migration'
+      DSE_PROFILE_TREE_FILE: '/opt/dataportal-backend/ontology/dse/profile_tree.json'
+      TERMINOLOGY_SYSTEMS_FILE: '/opt/dataportal-backend/ontology/terminology_systems.json'
       # ---- auth
-      KEYCLOAK_ENABLED: "true"
-      KEYCLOAK_ALLOWED_ROLE: "DataportalUser"
-      KEYCLOAK_POWER_ROLE: "DataportalPowerUser"
-      KEYCLOAK_ADMIN_ROLE: "DataportalAdmin"
-      KEYCLOAK_BASE_URL_ISSUER: "http://localhost:8080"
-      KEYCLOAK_BASE_URL_JWK: "http://auth:8080"
-      KEYCLOAK_REALM: "dataportal"
+      KEYCLOAK_ENABLED: 'true'
+      KEYCLOAK_ALLOWED_ROLE: 'DataportalUser'
+      KEYCLOAK_POWER_ROLE: 'DataportalPowerUser'
+      KEYCLOAK_ADMIN_ROLE: 'DataportalAdmin'
+      KEYCLOAK_BASE_URL_ISSUER: 'http://localhost:8080'
+      KEYCLOAK_BASE_URL_JWK: 'http://auth:8080'
+      KEYCLOAK_REALM: 'dataportal'
       #---- Direct broker
-      BROKER_CLIENT_MOCK_ENABLED: "true"
-      BROKER_CLIENT_DIRECT_ENABLED: "false"
-      BROKER_CLIENT_DIRECT_USE_CQL: "false"
-      BROKER_CLIENT_OBFUSCATE_RESULT_COUNT: "false"
-      FLARE_WEBSERVICE_BASE_URL: "http://flare:8080"
-      CQL_SERVER_BASE_URL: "http://blaze:8080/fhir"
+      BROKER_CLIENT_MOCK_ENABLED: 'true'
+      BROKER_CLIENT_DIRECT_ENABLED: 'false'
+      BROKER_CLIENT_DIRECT_USE_CQL: 'false'
+      BROKER_CLIENT_OBFUSCATE_RESULT_COUNT: 'false'
+      FLARE_WEBSERVICE_BASE_URL: 'http://flare:8080'
+      CQL_SERVER_BASE_URL: 'http://blaze:8080/fhir'
       # ---- privacy
       PRIVACY_QUOTA_SOFT_CREATE_AMOUNT: 3
       PRIVACY_QUOTA_SOFT_CREATE_INTERVAL: PT1M
@@ -57,12 +57,12 @@ services:
       PRIVACY_THRESHOLD_RESULTS: 0
       PRIVACY_THRESHOLD_SITES: 0
       # ---- Elastic Search
-      ELASTIC_SEARCH_ENABLED: "true"
+      ELASTIC_SEARCH_ENABLED: 'true'
       ELASTIC_SEARCH_HOST: dataportal-elastic:9200
       ELASTIC_SEARCH_FILTER: context,terminology,kds_module
       # ---- logging
-      LOG_LEVEL_SQL: "warn"
-      LOG_LEVEL: "warn"
+      LOG_LEVEL_SQL: 'debug'
+      LOG_LEVEL: 'debug'
     restart: unless-stopped
     volumes:
       - ./secrets:/opt/dataportal-security
@@ -72,20 +72,20 @@ services:
     image: 'postgres:16-alpine'
     container_name: dataportal-postgres
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
-      POSTGRES_USER: "dataportaluser"
-      POSTGRES_PASSWORD: "dataportalpw"
-      POSTGRES_DB: "dataportal"
+      POSTGRES_USER: 'dataportaluser'
+      POSTGRES_PASSWORD: 'dataportalpw'
+      POSTGRES_DB: 'dataportal'
 
   dataportal-elastic:
-    image: docker.elastic.co/elasticsearch/elasticsearch:9.1.3
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.5.1
     container_name: dataportal-elastic
     ports:
       - '9200:9200'
       - '9300:9300'
     healthcheck:
-      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1" ]
+      test: ['CMD-SHELL', 'curl --silent --fail localhost:9200/_cluster/health || exit 1']
       interval: 30s
       timeout: 30s
       retries: 3
@@ -94,7 +94,7 @@ services:
       ES_JAVA_OPTS: -Xmx512m -Xms512m
       node.name: es01
       cluster.name: elasticsearch
-      xpack.security.enabled: "false"
+      xpack.security.enabled: 'false'
 
   elastic-search-init:
     depends_on:
@@ -103,45 +103,40 @@ services:
     container_name: elastic-search-init
     environment:
       ES_HOST: dataportal-elastic
-      ONTO_GIT_TAG: v4.0.0
+      ONTO_GIT_TAG: v5.0.0
       ONTO_REPO: https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download
       DOWNLOAD_FILENAME: elastic.zip
-      EXIT_ON_EXISTING_INDICES: false
-    volumes:
-      - type: bind
-        source: "./ontology/elastic.zip"
-        target: "/tmp/mounted_onto.zip"
-        read_only: true
+      FORCE_REINSTALL: true
 
   auth-db:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_DB: "keycloakdb"
-      POSTGRES_USER: "keycloakdbuser"
-      POSTGRES_PASSWORD: "keycloakdbpw"
+      POSTGRES_DB: 'keycloakdb'
+      POSTGRES_USER: 'keycloakdbuser'
+      POSTGRES_PASSWORD: 'keycloakdbpw'
     volumes:
       - dataportal-auth-db:/var/lib/postgresql/data
 
   auth:
     image: keycloak/keycloak:26.2
     container_name: keycloak-auth
-    command: ["start", "--import-realm"]
+    command: ['start', '--import-realm']
     restart: unless-stopped
     environment:
-      KC_DB: "postgres"
-      KC_DB_URL: "jdbc:postgresql://auth-db:5432/keycloakdb"
-      KC_DB_USERNAME: "keycloakdbuser"
-      KC_DB_PASSWORD: "keycloakdbpw"
-      KEYCLOAK_ADMIN: "keycloakadmin"
-      KEYCLOAK_ADMIN_PASSWORD: "keycloak"
-      KC_HOSTNAME: "http://localhost:8080"
-      KC_LOG_LEVEL: "info"
-      KC_HTTP_ENABLED: "true"
-      KC_HEALTH_ENABLED: "true"
+      KC_DB: 'postgres'
+      KC_DB_URL: 'jdbc:postgresql://auth-db:5432/keycloakdb'
+      KC_DB_USERNAME: 'keycloakdbuser'
+      KC_DB_PASSWORD: 'keycloakdbpw'
+      KEYCLOAK_ADMIN: 'keycloakadmin'
+      KEYCLOAK_ADMIN_PASSWORD: 'keycloak'
+      KC_HOSTNAME: 'http://localhost:8080'
+      KC_LOG_LEVEL: 'info'
+      KC_HTTP_ENABLED: 'true'
+      KC_HEALTH_ENABLED: 'true'
     ports:
-      - "8080:8080"
-      - "9003:9000"
+      - '8080:8080'
+      - '9003:9000'
     volumes:
       - ./keycloak-init/dataportal-realm.json:/opt/keycloak/data/import/realm.json:ro
     depends_on:
