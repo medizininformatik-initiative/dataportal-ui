@@ -122,6 +122,14 @@ textarea {
 *:after {
   box-sizing: inherit;
 }
+
+mark {
+  background-color: var(--color-accent-bg);
+  color: var(--color-text-primary);
+  border-radius: 2px;
+  padding: 0 1px;
+  font-weight: 600;
+}
 /*TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
 .mat-chip-ripple {
   display: none;

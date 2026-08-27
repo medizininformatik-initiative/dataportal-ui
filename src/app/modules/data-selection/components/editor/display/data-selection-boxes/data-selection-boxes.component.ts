@@ -44,6 +44,7 @@ export class DataSelectionBoxesComponent {
 
   readonly profile = input.required<DataSelectionProfile>()
   readonly isEditable = input<boolean>(true)
+  readonly searchTerm = input<string | undefined>(undefined)
 
   readonly isReferenced = computed(() => {
     const dataSelection = this.activeDataSelection()

@@ -11,7 +11,7 @@
 </div>
 <div class="filter-chips-container">
   @if (messageType() === 'chips') {
-  <num-filter-chips [filterChips]="filterChips()"></num-filter-chips>
+  <num-filter-chips [filterChips]="filterChips()" [searchTerm]="searchTerm()"></num-filter-chips>
   } @else if (messageType() === 'red') {
   <num-missing-filter>
     <span

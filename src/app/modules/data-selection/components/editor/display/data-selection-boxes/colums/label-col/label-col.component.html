@@ -1,8 +1,10 @@
-<div class="num-text-body">{{ label() | displayTranslation }} {{ labelNumber() }}</div>
+<div class="num-text-body">
+  <span [innerHTML]="label() | displayTranslation | highlight : searchTerm()"></span>
+  {{ labelNumber() }}
+</div>
 <div
   class="num-pill"
   [class.expanded]="displayExpanded"
   (click)="displayExpanded = !displayExpanded"
->
-  {{ display() }}
-</div>
+  [innerHTML]="display() | highlight : searchTerm()"
+></div>

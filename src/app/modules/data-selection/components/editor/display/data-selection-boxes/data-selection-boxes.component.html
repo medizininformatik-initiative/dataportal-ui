@@ -1,9 +1,13 @@
 <div class="num-card selection-box" [attr.data-cy]="profile()?.getLabel() | displayTranslation">
   <div class="card-col">
-    <num-label-col [profile]="profile()"></num-label-col>
+    <num-label-col [profile]="profile()" [searchTerm]="searchTerm()"></num-label-col>
   </div>
   <div class="card-col">
-    <num-fields-col [profile]="profile()" (navigate)="navigate()"></num-fields-col>
+    <num-fields-col
+      [profile]="profile()"
+      [searchTerm]="searchTerm()"
+      (navigate)="navigate()"
+    ></num-fields-col>
   </div>
   <div class="card-col">
     <num-filters-col [profile]="profile()"></num-filters-col>
