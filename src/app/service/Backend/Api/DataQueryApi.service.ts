@@ -3,7 +3,7 @@ import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
 import { DataqueryPaths } from '../Paths/DataqueryPaths'
 import { DataQuerySlots } from 'src/app/model/SavedDataQuery/DataQuerySlots'
 import { HttpClient, HttpResponse } from '@angular/common/http'
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery'
 import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData'
@@ -16,9 +16,6 @@ export class DataQueryApiService {
   private http = inject(HttpClient)
   private backendService = inject(BackendService)
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
   constructor() {}
 
   public postDataQuery(dataQuery: SavedDataQueryData): Observable<HttpResponse<any>> {
@@ -26,6 +23,15 @@ export class DataQueryApiService {
     return this.http.post<any>(url, dataQuery, {
       headers: this.backendService.getHeaders(),
       observe: 'response',
+    })
+  }
+
+  public postConvertCrtdltToCsv(crtdlData: any): Observable<Blob> {
+    const url = this.backendService.createUrl(DataqueryPaths.CONVERT_CRTDL)
+    return this.http.post(url, crtdlData, {
+      headers: this.backendService.getHeaders(),
+      observe: 'body',
+      responseType: 'blob',
     })
   }
 
