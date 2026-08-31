@@ -6,13 +6,15 @@ import { SaveDataModal } from 'src/app/shared/models/SaveDataModal/SaveDataModal
 import { SaveFeasibilityQueryModalService } from 'src/app/service/SaveFeasibilityQueryModal.service'
 import { Subscription } from 'rxjs'
 import { SaveFileModalComponent } from '../../../../../shared/components/save-file-modal/save-file-modal.component'
+import { ButtonComponent } from '../../../../../shared/components/button/button.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-save-dialog',
   templateUrl: './save-dialog.component.html',
   styleUrls: ['./save-dialog.component.scss'],
   standalone: true,
-  imports: [SaveFileModalComponent],
+  imports: [SaveFileModalComponent, ButtonComponent, TranslateModule],
 })
 export class SaveQueryModalComponent implements OnInit, OnDestroy {
   feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)

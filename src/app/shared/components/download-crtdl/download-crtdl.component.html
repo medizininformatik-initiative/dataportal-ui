@@ -1,5 +1,23 @@
-<num-save-file-modal (save)="downloadCRTDL($event)" (cancelled)="doDiscard()">
+<num-save-file-modal #modal (cancelled)="doDiscard()">
   <num-header>
     {{ 'DATAQUERY.DATASELECTION.SAVE.HEADER' | translate }}
   </num-header>
+  <div role="buttons">
+    <num-button
+      type="green"
+      [attr.data-cy]="'save-file-button'"
+      [isDisabled]="modal.title.length === 0"
+      (click)="downloadCRTDL(modal.title)"
+    >
+      {{ 'SHARED_COMPONENTS.SAVE_MODAL.DOWNLOAD' | translate }}
+    </num-button>
+    <num-button
+      type="green"
+      [attr.data-cy]="'save-file-csv-button'"
+      [isDisabled]="modal.title.length === 0"
+      (click)="downloadCRTDLZip(modal.title)"
+    >
+      {{ 'SHARED_COMPONENTS.SAVE_MODAL.DOWNLOAD_CSV' | translate }}
+    </num-button>
+  </div>
 </num-save-file-modal>

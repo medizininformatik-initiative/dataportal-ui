@@ -1,33 +1,25 @@
-<div class="modal-content">
-  <button class="close-btn" (click)="doDiscard()" aria-label="Close">
+<div class="save-modal">
+  <button class="save-modal__close" (click)="doDiscard()" aria-label="Close">
     <fa-icon icon="times"></fa-icon>
   </button>
   <ng-content></ng-content>
-  <div class="save-query-box">
+  <div class="save-modal__fields">
     <input
-      class="field-input"
+      class="save-modal__input"
       type="text"
       [(ngModel)]="title"
       placeholder="{{ 'SHARED_COMPONENTS.SAVE_MODAL.LABEL' | translate }}"
     />
     @if (isCommentRequired()) {
     <textarea
-      class="field-input field-textarea"
+      class="save-modal__input save-modal__input--textarea"
       [(ngModel)]="comment"
       placeholder="{{ 'SAVED_QUERIES.COMMENT' | translate }}"
     ></textarea>
     }
   </div>
 
-  <div class="save-dialog-footer">
-    <num-button
-      type="green"
-      [attr.data-cy]="'save-file-button'"
-      [isDisabled]="title.length === 0"
-      (click)="doSave()"
-      class="button-save"
-    >
-      {{ 'SHARED_COMPONENTS.SAVE_MODAL.SAVE' | translate }}
-    </num-button>
+  <div class="save-modal__footer">
+    <ng-content select="[role=buttons]"></ng-content>
   </div>
 </div>

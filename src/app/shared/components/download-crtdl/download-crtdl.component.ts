@@ -1,11 +1,10 @@
-import { AnnotatedStructuredQuery } from 'src/app/model/AnnotatedStructuredQuery/AnnotatedStructuredQuery'
+import { ButtonComponent } from '../shared-components.module'
 import { Component, inject } from '@angular/core'
 import { DownloadCRTDLService } from 'src/app/service/Download/DownloadCRTDL.service'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { SaveFileDataModal } from '../../models/SaveDataModal/SaveFileDataModal'
-import { SaveQueryModalComponent } from 'src/app/modules/feasibility-query/components/result/save-dialog/save-dialog.component'
-import { SaveFileModalComponent } from '../save-file-modal/save-file-modal.component'
+import { DownloadCRTDLZipService } from 'src/app/service/Download/DownloadCRTDLZip.service'
 import { HeaderComponent } from '../header/header.component'
+import { MatDialogRef } from '@angular/material/dialog'
+import { SaveFileModalComponent } from '../save-file-modal/save-file-modal.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -13,20 +12,22 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './download-crtdl.component.html',
   styleUrls: ['./download-crtdl.component.scss'],
   standalone: true,
-  imports: [SaveFileModalComponent, HeaderComponent, TranslateModule],
+  imports: [SaveFileModalComponent, HeaderComponent, TranslateModule, ButtonComponent],
 })
 export class DownloadCRTDLComponent {
-  private dialogRef = inject<MatDialogRef<SaveQueryModalComponent, void>>(MatDialogRef)
-  annotatedStructuredQuery = inject<AnnotatedStructuredQuery>(MAT_DIALOG_DATA)
+  private dialogRef = inject(MatDialogRef)
   private downloadCRTDLService = inject(DownloadCRTDLService)
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
+  private downloadCRTDLZipService = inject(DownloadCRTDLZipService)
 
   constructor() {}
 
-  public downloadCRTDL(data: SaveFileDataModal) {
-    this.downloadCRTDLService.download(data.title)
+  public downloadCRTDL(title: string): void {
+    this.downloadCRTDLService.download(title)
+    this.doDiscard()
+  }
+
+  public downloadCRTDLZip(title: string): void {
+    this.downloadCRTDLZipService.download(title)
     this.doDiscard()
   }
 
