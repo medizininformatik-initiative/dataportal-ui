@@ -1,0 +1,42 @@
+<div class="apply-time-restriction">
+  <button
+    class="apply-time-restriction__toggle"
+    [class.apply-time-restriction__toggle--active]="isExpanded()"
+    (click)="toggle()"
+  >
+    <fa-icon icon="calendar-alt"></fa-icon>
+    {{ 'FEASIBILITY.EDITOR.CRITERIA_STAGE.APPLY_TIME_RESTRICTION' | translate }}
+  </button>
+
+  @if (isExpanded()) {
+  <div class="apply-time-restriction__controls">
+    <num-timerestriction-type-selector
+      [type]="selectedType()"
+      (timeRestrictionTypeChanged)="onTypeChange($event)"
+    />
+
+    @if (selectedType() === TimeRestrictionType.BETWEEN) {
+    <num-between-filter
+      [betweenFilter]="betweenFilter()"
+      (betweenFilterChanged)="onBetweenFilterChanged($event)"
+    />
+    } @if (selectedType() !== TimeRestrictionType.BETWEEN && selectedType() !==
+    TimeRestrictionType.NONE) {
+    <num-before-filter
+      [timeRestrictionType]="selectedType()"
+      (timeRestrictionInstanceChanged)="onSingleDateRestrictionChanged($event)"
+    />
+    }
+
+    <num-button type="blue" [isDisabled]="!isApplyEnabled()" (click)="apply()">
+      {{
+        'FEASIBILITY.EDITOR.CRITERIA_STAGE.APPLY_BUTTON' | translate : { count: criteriaCount() }
+      }}
+    </num-button>
+
+    <button class="apply-time-restriction__cancel" (click)="cancel()">
+      {{ 'FEASIBILITY.EDITOR.CRITERIA_STAGE.CANCEL' | translate }}
+    </button>
+  </div>
+  }
+</div>

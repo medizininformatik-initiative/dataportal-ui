@@ -365,6 +365,11 @@
         "yes-yes-yes-no": "Distributed, EU GDPR compliant analysis, with health insurance data, and without recontacting",
         "yes-yes-yes-yes": "Distributed, EU GDPR compliant analysis, with health insurance data, and with recontacting"
       },
+      "CRITERIA_STAGE": {
+        "APPLY_TIME_RESTRICTION": "Apply time period to all criteria",
+        "APPLY_BUTTON": "Apply ({{count}})",
+        "CANCEL": "Cancel"
+      },
       "DRAG_AND_DROP": "Use drag & drop to sort",
       "EDIT_SUCCESS": "Criterion edited successfully",
       "EMPTY": "Sorry, we could not find any results for ",
@@ -398,6 +403,9 @@
         "SELECTION": "Selected references"
       },
       "REQUIRED_FILTER": "Please set a filter",
+      "SUCCESS": {
+        "TIME_RESTRICTION_APPLIED": "Time restriction applied to all criteria"
+      },
       "SWITCH": {
         "LABEL_AND": "AND",
         "LABEL_OR": "OR"

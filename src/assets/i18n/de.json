@@ -387,6 +387,9 @@
         "SELECTION": "Ausgewählte Referenzen"
       },
       "REQUIRED_FILTER": "Bitte einen Filter setzen",
+      "SUCCESS": {
+        "TIME_RESTRICTION_APPLIED": "Zeiteinschränkung wurde auf alle Kriterien angewendet"
+      },
       "SWITCH": {
         "LABEL_AND": "UND",
         "LABEL_OR": "ODER"
