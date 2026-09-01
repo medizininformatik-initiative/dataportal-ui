@@ -55,9 +55,6 @@ export class DisplayCriteriaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.criteriaSubscription = this.criterionProvider.getAll().subscribe(() => {
       this.initialize()
-      setTimeout(() => {
-        this.rerender()
-      }, 50)
     })
   }
 

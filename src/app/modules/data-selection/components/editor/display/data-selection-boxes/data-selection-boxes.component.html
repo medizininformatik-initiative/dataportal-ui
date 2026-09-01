@@ -24,6 +24,24 @@
   <div class="menu-box">
     <num-menu [menuItems]="menuItems()" [id]="profile()!.getId()"></num-menu>
   </div>
+  <div class="arrow-container">
+    <button
+      class="arrow-btn"
+      [disabled]="!canMoveUp()"
+      [matTooltip]="'DATASELECTION.EDITOR.DISPLAY.MOVE_UP' | translate"
+      (click)="moveProfileUp()"
+    >
+      <fa-icon size="lg" icon="arrow-up"></fa-icon>
+    </button>
+    <button
+      class="arrow-btn"
+      [disabled]="!canMoveDown()"
+      [matTooltip]="'DATASELECTION.EDITOR.DISPLAY.MOVE_DOWN' | translate"
+      (click)="moveProfileDown()"
+    >
+      <fa-icon size="lg" icon="arrow-down"></fa-icon>
+    </button>
+  </div>
   }
 </div>
 <num-linked-references

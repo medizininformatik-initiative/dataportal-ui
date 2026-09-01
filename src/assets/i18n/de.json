@@ -176,6 +176,8 @@
         "REFERENCE": "Nur wenn referenziert",
         "REFERENCE_TOOLTIP_TEXT": "Wenn aktiviert, wird dieses FHIR-Profil nur dann in die Datenanfrage einbezogen, wenn es explizit von einem anderen ausgewählten Profil referenziert wird. Dies ist nützlich für verknüpfte Ressourcen – zum Beispiel, um eine Observation nur dann einzuschließen, wenn sie von einer ausgewählten Condition referenziert wird – und verhindert so das Abrufen nicht relevanter Daten.",
         "REFERENCE_TOOLTIP_TITLE": "Nur wenn referenziert",
+        "MOVE_DOWN": "Nach unten verschieben",
+        "MOVE_UP": "Nach oben verschieben",
         "RENAME_FEATURE": "Merkmal umbenennen",
         "REQUIRED": "Erforderlich",
         "SELECTED_FIELDS": "Selektierte Felder",

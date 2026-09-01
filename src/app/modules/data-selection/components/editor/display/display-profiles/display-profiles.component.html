@@ -9,12 +9,14 @@
 }
 <div class="container">
   @for (profile of filteredProfiles(); track profile.getId()) {
-  <div class="selection-box-container">
+  <div #profileBox class="selection-box-container">
     <num-data-selection-boxes
       [profile]="profile"
-      [isEditable]="isEditable()"
+      [isEditable]="isEditable() ?? false"
       [searchTerm]="searchText()"
       class="box-container"
+      (profileMoveUp)="handleMoveUp(profile.getId())"
+      (profileMoveDown)="handleMoveDown(profile.getId())"
     ></num-data-selection-boxes>
     @let matched = matchedFields().get(profile.getId()); @if (matched?.length) {
     <div class="match-hint">
