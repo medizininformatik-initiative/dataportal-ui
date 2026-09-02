@@ -5,6 +5,7 @@ import { HeaderComponent } from '../../../../../shared/components/header/header.
 import { HeaderDescriptionComponent } from '../../../../../shared/components/header-description/header-description.component'
 import { SectionNameComponent } from '../../../../../shared/components/section-name/section-name.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { ApplyTimeRestrictionComponent } from './apply-time-restriction/apply-time-restriction.component'
 
 @Component({
   selector: 'num-display-data-selection',
@@ -18,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core'
     DisplayProfilesComponent,
     DisplayActionBarComponent,
     TranslateModule,
+    ApplyTimeRestrictionComponent,
   ],
 })
 export class DisplayDataSelectionComponent implements OnInit {

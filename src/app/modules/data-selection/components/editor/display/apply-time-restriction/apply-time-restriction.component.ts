@@ -1,17 +1,21 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
-import { BeforeFilterComponent } from '../../criterion-modal/time-restriction/before-filter/before-filter.component'
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
-import { BetweenFilterComponent } from '../../criterion-modal/time-restriction/between-filter/between-filter.component'
 import { ButtonComponent } from 'src/app/shared/components/shared-components.module'
 import { Component, computed, inject, signal } from '@angular/core'
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
 import { TimeRestrictionNotSet } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
-import { TimerestrictionTypeSelectorComponent } from '../../criterion-modal/time-restriction/timerestriction-type-selector/timerestriction-type-selector.component'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { ProfileProviderService } from '../../../../../../service/Provider/ProfileProvider.service'
+import { DataSelectionUIType } from '../../../../../../model/Utilities/DataSelectionUIType'
+import { ProfileTimeRestrictionFilter } from '../../../../../../model/DataSelection/Profile/Filter/ProfileDateFilter'
+import { BetweenFilterComponent } from '../../../../../feasibility-query/components/editor/criterion-modal/time-restriction/between-filter/between-filter.component'
+import { TimerestrictionTypeSelectorComponent } from '../../../../../feasibility-query/components/editor/criterion-modal/time-restriction/timerestriction-type-selector/timerestriction-type-selector.component'
+import { BeforeFilterComponent } from '../../../../../feasibility-query/components/editor/criterion-modal/time-restriction/before-filter/before-filter.component'
+import { DataSelectionProviderService } from '../../../../../../service/Provider/DataSelectionProvider.service'
+import { DataSelectionProfileCloner } from '../../../../../../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 
 @Component({
   selector: 'num-apply-time-restriction',
@@ -25,29 +29,37 @@ import { TranslateModule } from '@ngx-translate/core'
     FontAwesomeModule,
     TimerestrictionTypeSelectorComponent,
     TranslateModule,
+    BetweenFilterComponent,
+    TimerestrictionTypeSelectorComponent,
+    BeforeFilterComponent,
   ],
 })
 export class ApplyTimeRestrictionComponent {
-  private readonly criterionProviderService = inject(CriterionProviderService)
+  private readonly profileProviderService = inject(ProfileProviderService)
+  private readonly dataSelectionProvider = inject(DataSelectionProviderService)
   private readonly snackbarMessageService = inject(SnackbarMessageService)
 
   protected readonly TimeRestrictionType = TimeRestrictionType
 
-  private readonly allCriteria = toSignal(this.criterionProviderService.getAll(), {
+  private readonly allProfile = toSignal(this.profileProviderService.getAll(), {
     initialValue: [],
   })
 
-  readonly allCriteriaFiltered = computed(() =>
-    this.allCriteria().filter((criterion) => criterion.getTimeRestriction() !== undefined)
+  readonly allProfileFiltered = computed(() =>
+    this.allProfile().filter((profile) =>
+      profile
+        .getFilters()
+        .some((filter) => filter.getUiType() === DataSelectionUIType.TIMERESTRICTION)
+    )
   )
-  readonly criteriaCount = computed(() => this.allCriteriaFiltered().length)
+  readonly profileCount = computed(() => this.allProfileFiltered().length)
   readonly isExpanded = signal(false)
   readonly selectedType = signal<TimeRestrictionType>(TimeRestrictionType.BETWEEN)
   readonly betweenFilter = signal<BetweenFilter>(new BetweenFilter('', ''))
   readonly singleDateRestriction = signal<AbstractTimeRestriction | null>(null)
 
   readonly isApplyEnabled = computed(() => {
-    if (this.criteriaCount() === 0) return false
+    if (this.profileCount() === 0) return false
     const type = this.selectedType()
     if (type === TimeRestrictionType.NONE) return true
     if (type === TimeRestrictionType.BETWEEN) {
@@ -81,9 +93,20 @@ export class ApplyTimeRestrictionComponent {
   public apply(): void {
     const restriction = this.buildRestriction()
     if (!restriction) return
-    this.allCriteriaFiltered().forEach((criterion) => {
-      criterion.setTimeRestriction(restriction)
-      this.criterionProviderService.setOne(criterion)
+    this.allProfileFiltered().forEach((profile) => {
+      const timeRestrictionFilter = profile
+        .getFilters()
+        .filter((filter) => filter.getUiType() === DataSelectionUIType.TIMERESTRICTION)
+      if (timeRestrictionFilter.length > 0) {
+        const profileDateFilter = new ProfileTimeRestrictionFilter(
+          timeRestrictionFilter[0].getName(),
+          timeRestrictionFilter[0].getType(),
+          restriction
+        )
+        profile.setFilter(profileDateFilter)
+        const clonedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
+        this.dataSelectionProvider.setActiveProfile(clonedProfile, 'SET')
+      }
     })
     this.snackbarMessageService.displayTimeRestrictionAppliedToAll()
     this.isExpanded.set(false)
