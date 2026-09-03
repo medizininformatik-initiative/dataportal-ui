@@ -612,6 +612,8 @@
       "CANCEL": "Abbrechen",
       "COHORT_WARNING": "Kohortenselektion ist erforderlich",
       "COMMENT": "Kommentar",
+      "DOWNLOAD": "als JSON-Datei",
+      "DOWNLOAD_CSV": "als CSV (zip)",
       "HEADER": "Abfrage speichern",
       "LABEL": "Titel",
       "SAVE": "Speichern",
