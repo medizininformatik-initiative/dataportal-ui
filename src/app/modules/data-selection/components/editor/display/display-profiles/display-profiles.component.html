@@ -1,8 +1,30 @@
+<num-searchbar [minLength]="1" (searchTextChange)="searchText.set($event)" />
+@if (searchText()) {
+<div class="search-summary">
+  {{ filteredProfiles().length }} / {{ profiles().length }}
+  <span class="search-summary-detail">
+    ({{ matchSummary().byName }} by name, {{ matchSummary().byField }} by field)
+  </span>
+</div>
+}
 <div class="container">
-  @for (profile of profiles(); track profile.getId()) {
-  <div class="selection-box-container">
-    <num-data-selection-boxes [profile]="profile" [isEditable]="isEditable()" class="box-container">
-    </num-data-selection-boxes>
+  @for (profile of filteredProfiles(); track profile.getId()) {
+  <div #profileBox class="selection-box-container">
+    <num-data-selection-boxes
+      [profile]="profile"
+      [isEditable]="isEditable() ?? false"
+      [searchTerm]="searchText()"
+      class="box-container"
+      (profileMoveUp)="handleMoveUp(profile.getId())"
+      (profileMoveDown)="handleMoveDown(profile.getId())"
+    ></num-data-selection-boxes>
+    @let matched = matchedFields().get(profile.getId()); @if (matched?.length) {
+    <div class="match-hint">
+      @for (field of matched; track field) {
+      <span class="match-chip">{{ field }}</span>
+      }
+    </div>
+    }
   </div>
   }
 </div>

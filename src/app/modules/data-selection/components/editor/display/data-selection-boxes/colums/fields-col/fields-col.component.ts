@@ -36,6 +36,7 @@ export class FieldsColComponent {
 
   readonly profile = input<DataSelectionProfile>()
   readonly navigate = output<void>()
+  readonly searchTerm = input<string | undefined>(undefined)
 
   readonly filterChips = toSignal(this.fieldsFilterChipsService.filterChips$, {
     initialValue: [] as FilterChipData[],

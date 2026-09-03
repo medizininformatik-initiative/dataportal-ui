@@ -128,6 +128,12 @@ export class DataSelectionProviderService {
     this.setDataSelection(updatedDataSelection.getId(), updatedDataSelection, true)
   }
 
+  public reorderProfiles(profiles: DataSelectionProfile[]): void {
+    const id = this.activeDataSelection.getActiveDataSelectionId()
+    const updatedDataSelection = new DataSelection(profiles, id)
+    this.setDataSelection(updatedDataSelection.getId(), updatedDataSelection, true)
+  }
+
   public resetSelectionMap(): void {
     this.selectionMapSubject.next(new Map())
   }

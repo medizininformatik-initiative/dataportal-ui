@@ -17,9 +17,8 @@
     class="chip-container margin-left-1"
     [ngClass]="{ expanded: chip.expanded }"
     (click)="toggleExpanded(chip)"
-  >
-    {{ chip.text | displayTranslation }}
-  </div>
+    [innerHTML]="chip.text | displayTranslation | highlight : searchTerm()"
+  ></div>
   } } @if (!showAll() && filterChip.data.length > maxVisible()) {
   <div
     class="chip-container margin-left-1 count-badge"

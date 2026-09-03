@@ -1,6 +1,6 @@
 .selection-box {
   display: grid;
-  grid-template-columns: repeat(4, 1fr) auto;
+  grid-template-columns: repeat(5, 1fr) auto;
   align-items: stretch;
   min-height: 104px;
   margin-bottom: 16px;
@@ -21,6 +21,37 @@
   grid-column: 5;
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: flex-end;
   padding: 0.75em;
+}
+
+.arrow-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px;
+}
+
+.arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--border-radius-card);
+  cursor: pointer;
+  color: var(--color-accent);
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--color-accent-bg);
+  }
+
+  &:disabled {
+    color: var(--border-color);
+    cursor: not-allowed;
+  }
 }

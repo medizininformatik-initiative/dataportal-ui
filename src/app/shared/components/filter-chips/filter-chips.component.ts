@@ -2,6 +2,7 @@ import { Component, computed, effect, inject, input } from '@angular/core'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FilterChipData } from '../../models/FilterChips/FilterChipData'
 import { FilterChipPropertyData } from '../../models/FilterChips/FilterChipPropertyData'
+import { HighlightPipe } from '../../pipes/HighlightPipe'
 import { NgClass } from '@angular/common'
 import { MatTooltip } from '@angular/material/tooltip'
 
@@ -10,7 +11,7 @@ import { MatTooltip } from '@angular/material/tooltip'
   templateUrl: './filter-chips.component.html',
   styleUrls: ['./filter-chips.component.scss'],
   standalone: true,
-  imports: [NgClass, DisplayTranslationPipe, MatTooltip],
+  imports: [NgClass, DisplayTranslationPipe, HighlightPipe, MatTooltip],
 })
 export class FilterChipsComponent {
   private translation = inject(DisplayTranslationPipe)
@@ -19,6 +20,7 @@ export class FilterChipsComponent {
   readonly displayBlockTriangle = input(true)
   readonly showAll = input(false)
   readonly maxVisible = input(3)
+  readonly searchTerm = input<string | undefined>(undefined)
   readonly hasFilterChips = computed(() => this.filterChips().length > 0)
 
   private readonly twoLineCharLimit = 22

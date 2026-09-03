@@ -176,6 +176,8 @@
         "REFERENCE": "Only if referenced",
         "REFERENCE_TOOLTIP_TEXT": "When enabled, this FHIR profile is only included in the data request if it is explicitly referenced by another selected profile. This is useful for linked resources — for example, including an Observation only when it is referenced by a selected Condition — avoiding the retrieval of unrelated data.",
         "REFERENCE_TOOLTIP_TITLE": "Only if referenced",
+        "MOVE_DOWN": "Move down",
+        "MOVE_UP": "Move up",
         "RENAME_FEATURE": "Rename Feature",
         "REQUIRED": "Required",
         "SELECTED_FIELDS": "Selected fields",
