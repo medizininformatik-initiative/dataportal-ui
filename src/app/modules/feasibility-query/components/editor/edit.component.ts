@@ -1,3 +1,4 @@
+import { ApplyTimeRestrictionComponent } from './stage/apply-time-restriction/apply-time-restriction.component'
 import { CdkDropListGroup } from '@angular/cdk/drag-drop'
 import { Component, OnInit } from '@angular/core'
 import { CriteriaStageComponent } from './stage/criteria-stage.component'
@@ -14,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./edit.component.scss'],
   standalone: true,
   imports: [
+    ApplyTimeRestrictionComponent,
     CdkDropListGroup,
     HeaderComponent,
     HeaderDescriptionComponent,

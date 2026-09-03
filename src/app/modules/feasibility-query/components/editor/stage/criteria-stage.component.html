@@ -1,11 +1,11 @@
 <div id="Stage" cdkDropList numAppDropGroup class="container">
-  @for (criterion of $criteriaArray | async; track criterion) {
+  @for (criterion of criteriaArray(); track criterion) {
   <num-criteria-box
     class="flex-grow"
     [criterion]="criterion"
     [isEditable]="isEditable()"
   ></num-criteria-box>
-  } @if (($criteriaArray | async).length === 0) {
+  } @if (criteriaArray().length === 0) {
   <div class="no-selected-criteria">
     {{ 'FEASIBILITY.EDITOR.NO_SELECTED_CRITERIA' | translate }}
   </div>

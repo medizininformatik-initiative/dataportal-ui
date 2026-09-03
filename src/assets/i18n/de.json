@@ -356,6 +356,11 @@
         "yes-yes-yes-no": "Verteilte, EU-DSGVO-konforme Analyse, mit Krankenkassendaten und ohne Rekontaktierung",
         "yes-yes-yes-yes": "Verteilte, EU-DSGVO-konforme Analyse, mit Krankenkassendaten und mit Rekontaktierung"
       },
+      "CRITERIA_STAGE": {
+        "APPLY_TIME_RESTRICTION": "Zeiteinschränkung für alle Kriterien hinzufügen",
+        "APPLY_BUTTON": "Hinzufügen ({{count}})",
+        "CANCEL": "Abbrechen"
+      },
       "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
       "EDIT_SUCCESS": "Kriterium erfolgreich bearbeitet",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse zu ",
@@ -389,6 +394,9 @@
         "SELECTION": "Ausgewählte Referenzen"
       },
       "REQUIRED_FILTER": "Bitte einen Filter setzen",
+      "SUCCESS": {
+        "TIME_RESTRICTION_APPLIED": "Zeiteinschränkung wurde auf alle Kriterien angewendet"
+      },
       "SWITCH": {
         "LABEL_AND": "UND",
         "LABEL_OR": "ODER"

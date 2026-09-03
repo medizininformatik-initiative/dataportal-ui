@@ -101,4 +101,8 @@ export class SnackbarMessageService {
   public displayCriterionEditSuccess(): void {
     this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.EDIT_SUCCESS')
   }
+
+  public displayTimeRestrictionAppliedToAll(): void {
+    this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.SUCCESS.TIME_RESTRICTION_APPLIED')
+  }
 }
