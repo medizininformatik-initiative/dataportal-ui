@@ -623,6 +623,8 @@
       "CANCEL": "Cancel",
       "COHORT_WARNING": "Cohort selection is required",
       "COMMENT": "Comment",
+      "DOWNLOAD": "as JSON-File",
+      "DOWNLOAD_CSV": "as CSV (zip)",
       "HEADER": "Save query",
       "LABEL": "Title",
       "SAVE": "Save",

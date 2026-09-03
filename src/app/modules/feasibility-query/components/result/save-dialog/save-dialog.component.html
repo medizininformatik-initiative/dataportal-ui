@@ -1,5 +1,18 @@
 <num-save-file-modal
+  #modal
   (cancelled)="doDiscard()"
   (save)="doSaveFeasibilityQuery($event)"
   [isCommentRequired]="true"
-></num-save-file-modal>
+>
+  <div role="buttons">
+    <num-button
+      type="green"
+      [attr.data-cy]="'save-file-button'"
+      [isDisabled]="modal.title.length === 0"
+      (click)="modal.doSave()"
+      class="button-save"
+    >
+      {{ 'SHARED_COMPONENTS.SAVE_MODAL.SAVE' | translate }}
+    </num-button>
+  </div>
+</num-save-file-modal>
