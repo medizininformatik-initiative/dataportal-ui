@@ -18,13 +18,6 @@
       (profileMoveUp)="handleMoveUp(profile.getId())"
       (profileMoveDown)="handleMoveDown(profile.getId())"
     ></num-data-selection-boxes>
-    @let matched = matchedFields().get(profile.getId()); @if (matched?.length) {
-    <div class="match-hint">
-      @for (field of matched; track field) {
-      <span class="match-chip">{{ field }}</span>
-      }
-    </div>
-    }
   </div>
   }
 </div>
