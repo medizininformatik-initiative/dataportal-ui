@@ -12,6 +12,7 @@ import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestrict
 import { TimerestrictionTypeSelectorComponent } from '../../criterion-modal/time-restriction/timerestriction-type-selector/timerestriction-type-selector.component'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
 
 @Component({
   selector: 'num-apply-time-restriction',
@@ -83,7 +84,8 @@ export class ApplyTimeRestrictionComponent {
     if (!restriction) return
     this.allCriteriaFiltered().forEach((criterion) => {
       criterion.setTimeRestriction(restriction)
-      this.criterionProviderService.setOne(criterion)
+      const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(criterion)
+      this.criterionProviderService.setOne(clonedCriterion)
     })
     this.snackbarMessageService.displayTimeRestrictionAppliedToAll()
     this.isExpanded.set(false)
