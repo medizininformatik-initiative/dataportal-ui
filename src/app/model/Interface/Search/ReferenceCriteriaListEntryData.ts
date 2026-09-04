@@ -1,5 +1,5 @@
-import { DisplayData } from '../DisplayData';
-import { ListEntryData } from './ListEntryData';
+import { DisplayData } from '../DisplayData'
+import { ListEntryData } from './ListEntryData'
 
 /**
  * Interface representing reference criteria entry data from backend search API responses.
@@ -22,4 +22,9 @@ export interface ReferenceCriteriaListEntryData extends ListEntryData {
    * Terminology system name or identifier associated with this reference criteria
    */
   terminology: string
+
+  /**
+   * The terminology code
+   */
+  termcode: string
 }

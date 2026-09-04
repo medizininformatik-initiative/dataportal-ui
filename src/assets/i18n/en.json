@@ -169,6 +169,8 @@
         "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenced profiles are linked profiles that are automatically included when the current profile is part of the request. They cannot be deselected individually.",
         "APPLIED_REFERENCES_TOOLTIP_TITLE": "Applied References",
         "LINKED": "Reference field",
+        "MOVE_DOWN": "Move down",
+        "MOVE_UP": "Move up",
         "NO_FIELDS": "No fields have been selected for the feature {{ feature }}. Please select at least one field for each feature",
         "NO_FIELDS_TOOLTIP_TEXT": "Click here to select fields for feature {{ feature }}.",
         "NO_FILTERS": "None applied",
@@ -176,8 +178,6 @@
         "REFERENCE": "Only if referenced",
         "REFERENCE_TOOLTIP_TEXT": "When enabled, this FHIR profile is only included in the data request if it is explicitly referenced by another selected profile. This is useful for linked resources — for example, including an Observation only when it is referenced by a selected Condition — avoiding the retrieval of unrelated data.",
         "REFERENCE_TOOLTIP_TITLE": "Only if referenced",
-        "MOVE_DOWN": "Move down",
-        "MOVE_UP": "Move up",
         "RENAME_FEATURE": "Rename Feature",
         "REQUIRED": "Required",
         "SELECTED_FIELDS": "Selected fields",
@@ -368,8 +368,8 @@
         "yes-yes-yes-yes": "Distributed, EU GDPR compliant analysis, with health insurance data, and with recontacting"
       },
       "CRITERIA_STAGE": {
-        "APPLY_TIME_RESTRICTION": "Apply time period to all criteria",
         "APPLY_BUTTON": "Apply ({{count}})",
+        "APPLY_TIME_RESTRICTION": "Apply time period to all criteria",
         "CANCEL": "Cancel"
       },
       "DRAG_AND_DROP": "Use drag & drop to sort",
@@ -695,7 +695,7 @@
       "SELECT_CHECKBOX_ALL": "Select All",
       "SITE": "Location",
       "STATUS": "Status",
-      "TERMCODE": "Term code",
+      "TERMCODE": "Terminology code",
       "TERMINOLOGY_CODE": "Terminology",
       "WHAT_IS_MISSING": "What is missing"
     }

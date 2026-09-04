@@ -169,6 +169,8 @@
         "APPLIED_REFERENCES_TOOLTIP_TEXT": "Referenzierte Merkmale sind verknüpfte Profile, die automatisch mitgeliefert werden, wenn das aktuelle Merkmal in der Anfrage enthalten ist. Sie können nicht einzeln abgewählt werden.",
         "APPLIED_REFERENCES_TOOLTIP_TITLE": "Referenzierte Merkmale",
         "LINKED": "Referenzfeld",
+        "MOVE_DOWN": "Nach unten verschieben",
+        "MOVE_UP": "Nach oben verschieben",
         "NO_FIELDS": "Es wurden keine Felder für das Merkmal {{ feature }} ausgewählt.",
         "NO_FIELDS_TOOLTIP_TEXT": "Hier klicken und Felder für das Merkmal {{ feature }} auswählen",
         "NO_FILTERS": "Keine angewendet",
@@ -176,8 +178,6 @@
         "REFERENCE": "Nur wenn referenziert",
         "REFERENCE_TOOLTIP_TEXT": "Wenn aktiviert, wird dieses FHIR-Profil nur dann in die Datenanfrage einbezogen, wenn es explizit von einem anderen ausgewählten Profil referenziert wird. Dies ist nützlich für verknüpfte Ressourcen – zum Beispiel, um eine Observation nur dann einzuschließen, wenn sie von einer ausgewählten Condition referenziert wird – und verhindert so das Abrufen nicht relevanter Daten.",
         "REFERENCE_TOOLTIP_TITLE": "Nur wenn referenziert",
-        "MOVE_DOWN": "Nach unten verschieben",
-        "MOVE_UP": "Nach oben verschieben",
         "RENAME_FEATURE": "Merkmal umbenennen",
         "REQUIRED": "Erforderlich",
         "SELECTED_FIELDS": "Selektierte Felder",
@@ -357,8 +357,8 @@
         "yes-yes-yes-yes": "Verteilte, EU-DSGVO-konforme Analyse, mit Krankenkassendaten und mit Rekontaktierung"
       },
       "CRITERIA_STAGE": {
-        "APPLY_TIME_RESTRICTION": "Zeiteinschränkung für alle Kriterien hinzufügen",
         "APPLY_BUTTON": "Hinzufügen ({{count}})",
+        "APPLY_TIME_RESTRICTION": "Zeiteinschränkung für alle Kriterien hinzufügen",
         "CANCEL": "Abbrechen"
       },
       "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
@@ -684,7 +684,7 @@
       "SELECT_CHECKBOX_ALL": "Alles auswählen",
       "SITE": "Standort",
       "STATUS": "Status",
-      "TERMCODE": "Termcode",
+      "TERMCODE": "Terminology Code",
       "TERMINOLOGY_CODE": "Terminologie",
       "WHAT_IS_MISSING": "Was fehlt?"
     }

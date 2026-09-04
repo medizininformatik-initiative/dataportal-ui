@@ -8,6 +8,7 @@ import { TableRowData } from '../TableRowData'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { IconCellData } from '../Cells/Data/IconCellData'
 import { DisplayCellData } from '../Cells/Data/DisplayCellData'
+import { TextCellData } from '../Cells/Data/TextCellData'
 
 export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<ReferenceCriteriaListEntry> {
   protected buildHeaders(): TableHeaderData {
@@ -16,6 +17,7 @@ export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<Refe
         { label: 'EMPTY', addAllCheckbox: false },
         { label: 'NAME', addAllCheckbox: false },
         { label: 'TERMINOLOGY_CODE', addAllCheckbox: false },
+        { label: 'TERMCODE', addAllCheckbox: false },
       ],
     }
   }
@@ -37,7 +39,8 @@ export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<Refe
     return TableCellBuilder.row(
       this.iconCell(),
       this.displayCell(listEntry),
-      this.terminologyCell(listEntry)
+      this.terminologyCell(listEntry),
+      this.terminologyCodeCell(listEntry)
     )
   }
 
@@ -50,8 +53,13 @@ export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<Refe
     return TableCellBuilder.withDisplay(display)
   }
 
-  private terminologyCell(listEntry: ReferenceCriteriaListEntry): TableCellUnion {
+  private terminologyCell(listEntry: ReferenceCriteriaListEntry): TextCellData {
     const terminologyName = TerminologySystemDictionary.getNameByUrl(listEntry.getTerminology())
     return TableCellBuilder.withText(terminologyName ?? listEntry.getTerminology())
+  }
+
+  private terminologyCodeCell(listEntry: ReferenceCriteriaListEntry): TextCellData {
+    const terminologyCode = listEntry.getTermcode()
+    return TableCellBuilder.withText(terminologyCode)
   }
 }
