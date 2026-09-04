@@ -1,52 +1,31 @@
 <div class="criteria-container">
   @if (!isEditable()) {
   <div class="lock-div"></div>
-  }
-  <ng-container #outlet [ngTemplateOutlet]="content"></ng-container>
-  <ng-template #content>
-    @for ( criterionInnerArray of criteriaArray$ | async; track criterionInnerArray; let lastOuter =
-    $last; let i = $index) {
-    <div>
-      @for (criterion of criterionInnerArray; track criterion; let lastInner = $last; let j =
-      $index) {
-      <div style="display: flex; flex-direction: column">
-        <num-criteria-box
-          [criterion]="criterionProvider.getOne(criterion)"
-          [isEditable]="isEditable()"
-        ></num-criteria-box>
-        <ng-container>
-          @if (!lastInner) {
-          <div style="display: flex; justify-content: center; width: 448px">
-            <num-bool-logic-switch
-              style="display: block; height: 0; align-self: center"
-              [position]="'inner'"
-              [label]="getInnerLabelKey()"
-              (switched)="splitInnerArray(i, j)"
-            ></num-bool-logic-switch>
-          </div>
-          }
-        </ng-container>
-      </div>
-      }
-      <div style="display: flex; justify-content: center; width: 448px">
-        @if (!lastOuter) {
-        <num-bool-logic-switch
-          style="display: block; height: 0px; margin-bottom: 27px"
-          [position]="'outer'"
-          [label]="getOuterLabelKey()"
-          (switched)="joinInnerArrays(i)"
-        ></num-bool-logic-switch>
-        }
-      </div>
+  } @for (group of criteriaGroups(); track group; let last = $last; let i = $index) {
+  <div>
+    <num-criteria-group
+      [criterionIds]="group"
+      [isEditable]="isEditable()"
+      [innerLabel]="innerLabel()"
+      (splitAt)="splitGroup(i, $event)"
+    ></num-criteria-group>
+    @if (!last) {
+    <div class="outer-switch-row">
+      <num-bool-logic-switch
+        class="outer-switch"
+        [position]="'outer'"
+        [label]="outerLabel()"
+        (switched)="mergeGroups(i)"
+      ></num-bool-logic-switch>
     </div>
     }
-  </ng-template>
-  @if ((criteriaArray$ | async).length === 0 && isEditable()) {
+  </div>
+  } @if (criteriaGroups().length === 0 && isEditable()) {
   <div class="no-selected-criteria">
     <div class="wrapper">
       <div class="wrapper-solid-dashed-box">
         <div class="solid-box">
-          <fa-icon class="icon drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
+          <fa-icon class="drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
         </div>
         <div class="dashed-box"></div>
       </div>

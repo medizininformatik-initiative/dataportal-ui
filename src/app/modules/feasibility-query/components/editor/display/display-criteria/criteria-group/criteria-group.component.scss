@@ -1,0 +1,16 @@
+.group-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.inner-switch-row {
+  display: flex;
+  justify-content: center;
+  width: 448px;
+}
+
+.inner-switch {
+  display: block;
+  height: 0;
+  align-self: center;
+}

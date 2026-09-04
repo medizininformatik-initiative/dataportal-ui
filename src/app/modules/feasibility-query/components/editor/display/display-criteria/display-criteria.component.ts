@@ -1,19 +1,7 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewContainerRef,
-  TemplateRef,
-  inject,
-  input,
-  viewChild,
-} from '@angular/core'
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
+import { Component, computed, inject, input } from '@angular/core'
+import { toSignal } from '@angular/core/rxjs-interop'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
-import { map, Observable, Subscription } from 'rxjs'
-import { NgTemplateOutlet, AsyncPipe, NgClass } from '@angular/common'
-import { CriteriaBoxComponent } from '../../../../../../shared/components/criteria-box/criteria-box.component'
+import { CriteriaGroupComponent } from './criteria-group/criteria-group.component'
 import { BoolLogicSwitchComponent } from '../bool-logic-switch/bool-logic-switch.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
@@ -23,154 +11,58 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './display-criteria.component.html',
   styleUrls: ['./display-criteria.component.scss'],
   standalone: true,
-  imports: [
-    NgTemplateOutlet,
-    CriteriaBoxComponent,
-    BoolLogicSwitchComponent,
-    FontAwesomeModule,
-    AsyncPipe,
-    TranslateModule,
-  ],
+  imports: [CriteriaGroupComponent, BoolLogicSwitchComponent, FontAwesomeModule, TranslateModule],
 })
-export class DisplayCriteriaComponent implements OnInit, OnDestroy {
-  private queryService = inject(FeasibilityQueryProviderService)
-  criterionProvider = inject(CriterionProviderService)
+export class DisplayCriteriaComponent {
+  private readonly queryService = inject(FeasibilityQueryProviderService)
 
-  readonly outletRef = viewChild('outlet', { read: ViewContainerRef })
-  readonly contentRef = viewChild('content', { read: TemplateRef })
+  readonly groupType = input<'Inclusion' | 'Exclusion'>()
+  readonly isEditable = input<boolean>()
 
-  readonly groupType = input<string>(undefined)
+  private readonly activeQuery = toSignal(this.queryService.getActiveFeasibilityQuery())
 
-  readonly isEditable = input<boolean>(undefined)
+  readonly criteriaGroups = computed<string[][]>(() => {
+    const query = this.activeQuery()
+    if (!query) return []
+    return this.groupType() === 'Inclusion'
+      ? query.getInclusionCriteria()
+      : query.getExclusionCriteria()
+  })
 
-  criteriaArray$: Observable<string[][]>
-  private querySubscription: Subscription
-  private criteriaSubscription: Subscription
+  readonly innerLabel = computed<'AND' | 'OR'>(() =>
+    this.groupType() === 'Inclusion' ? 'OR' : 'AND'
+  )
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
+  readonly outerLabel = computed<'AND' | 'OR'>(() =>
+    this.groupType() === 'Exclusion' ? 'OR' : 'AND'
+  )
 
-  constructor() {}
-
-  ngOnInit() {
-    this.criteriaSubscription = this.criterionProvider.getAll().subscribe(() => {
-      this.initialize()
-    })
+  splitGroup(groupIndex: number, splitIndex: number): void {
+    const groups = this.criteriaGroups()
+    const updated = [
+      ...groups.slice(0, groupIndex),
+      groups[groupIndex].slice(0, splitIndex + 1),
+      groups[groupIndex].slice(splitIndex + 1),
+      ...groups.slice(groupIndex + 1),
+    ]
+    this.updateCriteria(updated)
   }
 
-  ngOnDestroy() {
-    this.querySubscription?.unsubscribe()
-    this.criteriaSubscription?.unsubscribe()
+  mergeGroups(groupIndex: number): void {
+    const groups = this.criteriaGroups()
+    const updated = [
+      ...groups.slice(0, groupIndex),
+      [...groups[groupIndex], ...groups[groupIndex + 1]],
+      ...groups.slice(groupIndex + 2),
+    ]
+    this.updateCriteria(updated)
   }
 
-  public rerender() {
-    this.outletRef().clear()
-    this.outletRef().createEmbeddedView(this.contentRef())
-  }
-
-  initialize(): void {
-    const groupType = this.groupType()
-    if (groupType === 'Inclusion') {
-      this.criteriaArray$ = this.queryService
-        .getActiveFeasibilityQuery()
-        .pipe(map((feasibilityQuery) => feasibilityQuery.getInclusionCriteria()))
+  private updateCriteria(groups: string[][]): void {
+    if (this.groupType() === 'Inclusion') {
+      this.queryService.setInclusionCriteria(groups)
+    } else {
+      this.queryService.setExclusionCriteria(groups)
     }
-    if (groupType === 'Exclusion') {
-      this.criteriaArray$ = this.queryService
-        .getActiveFeasibilityQuery()
-        .pipe(map((feasibilityQuery) => feasibilityQuery.getExclusionCriteria()))
-    }
-  }
-
-  getInnerLabelKey(): 'AND' | 'OR' {
-    return this.groupType() === 'Inclusion' ? 'OR' : 'AND'
-  }
-
-  getOuterLabelKey(): 'AND' | 'OR' {
-    return this.groupType() === 'Exclusion' ? 'OR' : 'AND'
-  }
-
-  splitInnerArray(i: number, j: number): void {
-    let tempcrit: string[][] = []
-
-    this.queryService
-      .getActiveFeasibilityQuery()
-      .subscribe((query: FeasibilityQuery) => {
-        const groupType = this.groupType()
-        if (groupType === 'Inclusion') {
-          tempcrit = this.splitInnerArray2(query.getInclusionCriteria(), i, j)
-        }
-        if (groupType === 'Exclusion') {
-          tempcrit = this.splitInnerArray2(query.getExclusionCriteria(), i, j)
-        }
-      })
-      .unsubscribe()
-    const groupType = this.groupType()
-    if (groupType === 'Inclusion') {
-      this.queryService.setInclusionCriteria(tempcrit)
-    }
-    if (groupType === 'Exclusion') {
-      this.queryService.setExclusionCriteria(tempcrit)
-    }
-  }
-
-  joinInnerArrays(i: number): void {
-    let tempcrit: string[][] = []
-
-    this.queryService
-      .getActiveFeasibilityQuery()
-      .subscribe((query: FeasibilityQuery) => {
-        const groupType = this.groupType()
-        if (groupType === 'Inclusion') {
-          tempcrit = this.joinInnerArrays2(query.getInclusionCriteria(), i)
-        }
-        if (groupType === 'Exclusion') {
-          tempcrit = this.joinInnerArrays2(query.getExclusionCriteria(), i)
-        }
-      })
-      .unsubscribe()
-    const groupType = this.groupType()
-    if (groupType === 'Inclusion') {
-      this.queryService.setInclusionCriteria(tempcrit)
-    }
-    if (groupType === 'Exclusion') {
-      this.queryService.setExclusionCriteria(tempcrit)
-    }
-  }
-
-  public splitInnerArray2(critGroup: string[][], i: number, j: number): string[][] {
-    const critGroupTemp: string[][] = []
-
-    let index = 0
-    critGroup.forEach((subarray) => {
-      if (index === i) {
-        critGroupTemp.push(subarray.slice(0, j + 1))
-        critGroupTemp.push(subarray.slice(j + 1))
-      } else {
-        critGroupTemp.push(subarray)
-      }
-      index++
-    })
-
-    return critGroupTemp
-  }
-
-  public joinInnerArrays2(critGroup: string[][], i: number): string[][] {
-    const critGroupTemp: string[][] = []
-
-    let index = 0
-    let subarrayTemp
-    critGroup.forEach((subarray) => {
-      if (index === i) {
-        subarrayTemp = subarray
-      } else if (index === i + 1) {
-        critGroupTemp.push(subarrayTemp.concat(subarray))
-      } else {
-        critGroupTemp.push(subarray)
-      }
-      index++
-    })
-
-    return critGroupTemp
   }
 }

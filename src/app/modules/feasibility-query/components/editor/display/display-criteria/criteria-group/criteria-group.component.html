@@ -1,0 +1,15 @@
+@for (criterion of criteria(); track criterion; let last = $last; let j = $index) {
+<div class="group-item">
+  <num-criteria-box [criterion]="criterion" [isEditable]="isEditable()"></num-criteria-box>
+  @if (!last) {
+  <div class="inner-switch-row">
+    <num-bool-logic-switch
+      class="inner-switch"
+      [position]="'inner'"
+      [label]="innerLabel()"
+      (switched)="splitAt.emit(j)"
+    ></num-bool-logic-switch>
+  </div>
+  }
+</div>
+}
