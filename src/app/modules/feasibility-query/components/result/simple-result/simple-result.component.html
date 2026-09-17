@@ -16,7 +16,15 @@
       {{ 'FEASIBILITY.RESULT.DETAILS_BUTTON' | translate }}
       ({{ (queryResultRateLimit$ | async)?.getRemainingCalls() }}/{{
         (queryResultRateLimit$ | async)?.getLimit()
-      }})
+      }}) @if (showExpSpinner) {
+      <mat-progress-spinner
+        class="example-margin"
+        [diameter]="18"
+        [strokeWidth]="1"
+        [mode]="mode()"
+        [value]="value()"
+      ></mat-progress-spinner>
+      }
     </num-button>
     @if (showSpinner) {
     <num-spinner [countdown]="pollingTime"></num-spinner>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject, output } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, output, signal } from '@angular/core'
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
@@ -19,6 +19,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { SpinnerComponent } from '../../../../../shared/components/spinner/spinner.component'
 import { AsyncPipe } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { ProgressSpinnerMode, MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 type QueryResponseType = QueryResult | ErrorQueryResult | null
 
@@ -34,6 +35,7 @@ type QueryResponseType = QueryResult | ErrorQueryResult | null
     SpinnerComponent,
     AsyncPipe,
     TranslateModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class SimpleResultComponent implements OnInit, OnDestroy {
@@ -43,13 +45,18 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private appSettingsProviderService = inject(AppSettingsProviderService)
   private snackbarService = inject(SnackbarService)
 
+  mode = signal<ProgressSpinnerMode>('determinate')
+  value = signal(0)
+
   showSpinner = false
+  showExpSpinner = false
 
   pollingTime: number
   patientCountArray: string[] = []
 
   public isQueryExpired = false
   private timeoutId: ReturnType<typeof setTimeout> | null = null
+  private spinnerTimer: ReturnType<typeof setTimeout> | null = null
   private expTime: number
 
   queryResultRateLimit$: Observable<QueryResultRateLimit>
@@ -70,6 +77,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   constructor() {
     this.queryResultRateLimit$ = this.feasibilityQueryResultService.getDetailedResultRateLimit()
     this.pollingTime = this.appSettingsProviderService.getPollingTimeUi()
+    this.expTime = this.appSettingsProviderService.getQueryResultExpiry()
   }
 
   private destroy$ = new Subject<void>()
@@ -97,8 +105,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.initializeState()
     this.doSendSusbscription?.unsubscribe()
 
-    const expirationTime = this.appSettingsProviderService.getQueryResultExpiry()
-    this.startExpirationTimer(expirationTime * 1000)
+    this.startExpirationTimer(this.expTime * 1000)
     const obs = this.feasibilityQueryResultService.doSendQueryRequest()
 
     this.doSendSusbscription = this.createDoSendSubscription(obs)
@@ -205,11 +212,27 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private finalize(): void {
     this.loadedResult = true
     this.showSpinner = false
+    this.startExpirationSpinner()
   }
 
   private startExpirationTimer(durationMs: number) {
     this.timeoutId = setTimeout(() => {
       this.isQueryExpired = true
     }, durationMs)
+  }
+  private startExpirationSpinner() {
+    clearInterval(this.spinnerTimer)
+    let timer = 100
+    this.showExpSpinner = true
+    this.spinnerTimer = setInterval(() => {
+      if (timer > 0) {
+        timer = timer - 100 / (this.expTime - this.pollingTime)
+        this.value.set(timer)
+      } else {
+        clearInterval(this.spinnerTimer)
+        this.value.set(0)
+        this.showExpSpinner = false
+      }
+    }, 1000)
   }
 }
