@@ -18,6 +18,7 @@ export class ListItemDetailsGenericSectionsComponent {
 
   readonly listItemDetails = input.required<ListItemDetailsRelativeData[]>()
   readonly menuItems = input<MenuItemInterface[]>([])
+  readonly showSearch = input(false)
   readonly selectedRelative = output<ListItemDetailsRelativeData>()
 
   readonly searchText = signal('')

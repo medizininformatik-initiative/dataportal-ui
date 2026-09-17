@@ -1,7 +1,9 @@
+@if (showSearch()) {
 <num-searchbar
   [label]="'SHARED_COMPONENTS.LIST_ITEM_DETAILS.SEARCH_FIELDS' | translate"
   (searchTextChange)="searchText.set($event)"
 />
+}
 <div class="scroll-container">
   @let items = filteredItems(); @let menu = menuItems(); @if (items.length) { @for (item of items;
   track item.id) {
