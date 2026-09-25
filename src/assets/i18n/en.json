@@ -148,6 +148,10 @@
       },
       "HEADER": "Feature Selection",
       "SAVE": {
+        "CRTDL_DESCRIPTION": "Machine-readable query definition (JSON)",
+        "CRTDL_TITLE": "As CRTDL",
+        "CSV_DESCRIPTION": "Cohort and data selection as CSV files in a ZIP file",
+        "CSV_TITLE": "As project summary",
         "HEADER": "Download current data definition"
       },
       "SUCCESS": {
@@ -640,8 +644,7 @@
       "CANCEL": "Cancel",
       "COHORT_WARNING": "Cohort selection is required",
       "COMMENT": "Comment",
-      "DOWNLOAD": "as JSON-File",
-      "DOWNLOAD_CSV": "as CSV (zip)",
+      "DOWNLOAD": "Download",
       "HEADER": "Save query",
       "LABEL": "Title",
       "SAVE": "Save",

@@ -1,6 +1,24 @@
 # Changelog
 
+## v7.3.1 (2026-09-18)
+
+### Fixed
+* Fixed an issue where reordering feature selections triggered an unintended CSV download by properly closing the open subscription after the download [#627](https://github.com/medizininformatik-initiative/dataportal-ui/issues/627)
+* Removed debug text [#628](https://github.com/medizininformatik-initiative/dataportal-ui/issues/628)
+* Fixed the Feature Search detail layout by adjusting the affected CSS styles [#630](https://github.com/medizininformatik-initiative/dataportal-ui/issues/630)
+* Fixed an issue preventing detailed results from opening by adjusting the timeout handling [#632](https://github.com/medizininformatik-initiative/dataportal-ui/issues/632)
+* Fixed an error message in the results that appeared when insufficient patients were found. [#631](https://github.com/medizininformatik-initiative/dataportal-ui/issues/631)
+
+### Changed
+* Change "set filter" for cohort criteria and features to "configure" [#636](https://github.com/medizininformatik-initiative/dataportal-ui/issues/636)
+* Refined the CRTDL CSV download UI, including its design and layout, to match the intended interface [#598](https://github.com/medizininformatik-initiative/dataportal-ui/issues/598)
+* Show patient result display from beginning [#633](https://github.com/medizininformatik-initiative/dataportal-ui/issues/633)
+* Hide page header description on start
+
+
+
 ## v7.3.0 (2026-09-07)
+
 * Added CSV download as ZIP to the download modal [#598](https://github.com/medizininformatik-initiative/dataportal-ui/issues/598)
 * Added option to apply the same date filter to all criteria and features in the editor [#370](https://github.com/medizininformatik-initiative/dataportal-ui/issues/370)
 * Show code in value set selection for reference criteria [#612](https://github.com/medizininformatik-initiative/dataportal-ui/issues/612)
@@ -11,6 +29,7 @@
 
 
 ## v7.2.0 (2026-08-21)
+
 ### Features
 * Introduced Elasticsearch-based search and filtering as a replacement for tree-based feature selection, matching the cohort selection workflow. [#596](https://github.com/medizininformatik-initiative/feasibility-gui/issues/596), [#603](https://github.com/medizininformatik-initiative/feasibility-gui/issues/603)
 * Added consecutive numbers to feature names if names are identical [#606](https://github.com/medizininformatik-initiative/feasibility-gui/issues/606)
@@ -26,6 +45,7 @@
 
 
 ## v7.1.0 (2026-07-06)
+
 ### Features
 * Introduced a reusable shortcut component for navigating to and editing missing mandatory filters and fields in features and criteria. [#588](https://github.com/medizininformatik-initiative/feasibility-gui/issues/588)
 * Added the shortcut component to required and recommended reference fields that are not yet linked. [#551](https://github.com/medizininformatik-initiative/feasibility-gui/issues/551)

@@ -1,4 +1,61 @@
-.button-container {
+.download-actions {
   display: flex;
-  gap: 16px;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 100%;
+}
+
+.download-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.download-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-card);
+  cursor: pointer;
+  transition: var(--transition-shadow), border-color 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    border-color: var(--color-accent);
+  }
+
+  &--selected {
+    border-color: var(--color-accent);
+    background: var(--color-accent-bg);
+  }
+
+  input[type='radio'] {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin: 2px 0 0;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--color-text-primary);
+  }
+
+  &__description {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+    color: var(--color-text-secondary);
+  }
 }

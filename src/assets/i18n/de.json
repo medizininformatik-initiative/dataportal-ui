@@ -148,6 +148,10 @@
       },
       "HEADER": "Merkmalselektion",
       "SAVE": {
+        "CRTDL_DESCRIPTION": "Maschinenlesbare Abfragedefinition (JSON)",
+        "CRTDL_TITLE": "Als CRTDL",
+        "CSV_DESCRIPTION": "Kohorten- und Merkmalselektion als CSV-Dateien in einer ZIP Datei",
+        "CSV_TITLE": "Als Projektzusammenfassung",
         "HEADER": "Aktuelle Datendefinition herunterladen"
       },
       "SUCCESS": {
@@ -630,8 +634,7 @@
       "CANCEL": "Abbrechen",
       "COHORT_WARNING": "Kohortenselektion ist erforderlich",
       "COMMENT": "Kommentar",
-      "DOWNLOAD": "als JSON-Datei",
-      "DOWNLOAD_CSV": "als CSV (zip)",
+      "DOWNLOAD": "Herunterladen",
       "HEADER": "Abfrage speichern",
       "LABEL": "Titel",
       "SAVE": "Speichern",

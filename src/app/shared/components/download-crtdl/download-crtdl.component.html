@@ -2,22 +2,56 @@
   <num-header>
     {{ 'DATAQUERY.DATASELECTION.SAVE.HEADER' | translate }}
   </num-header>
-  <div role="buttons" class="button-container">
+
+  <div role="options" class="download-options">
+    <label class="download-option" [class.download-option--selected]="selectedFormat === 'crtdl'">
+      <input
+        type="radio"
+        name="download-format"
+        [attr.data-cy]="'download-format-crtdl'"
+        [checked]="selectedFormat === 'crtdl'"
+        (change)="selectedFormat = 'crtdl'"
+      />
+      <span class="download-option__text">
+        <span class="download-option__title">
+          {{ 'DATAQUERY.DATASELECTION.SAVE.CRTDL_TITLE' | translate }}
+        </span>
+        <span class="download-option__description">
+          {{ 'DATAQUERY.DATASELECTION.SAVE.CRTDL_DESCRIPTION' | translate }}
+        </span>
+      </span>
+    </label>
+
+    <label class="download-option" [class.download-option--selected]="selectedFormat === 'csv'">
+      <input
+        type="radio"
+        name="download-format"
+        [attr.data-cy]="'download-format-csv'"
+        [checked]="selectedFormat === 'csv'"
+        (change)="selectedFormat = 'csv'"
+      />
+      <span class="download-option__text">
+        <span class="download-option__title">
+          {{ 'DATAQUERY.DATASELECTION.SAVE.CSV_TITLE' | translate }}
+        </span>
+        <span class="download-option__description">
+          {{ 'DATAQUERY.DATASELECTION.SAVE.CSV_DESCRIPTION' | translate }}
+        </span>
+      </span>
+    </label>
+  </div>
+
+  <div role="buttons" class="download-actions">
+    <num-button type="cancel" [attr.data-cy]="'cancel-download-button'" (click)="doDiscard()">
+      {{ 'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate }}
+    </num-button>
     <num-button
       type="green"
       [attr.data-cy]="'save-file-button'"
       [isDisabled]="modal.title.length === 0"
-      (click)="downloadCRTDL(modal.title)"
+      (click)="download(modal.title)"
     >
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.DOWNLOAD' | translate }}
-    </num-button>
-    <num-button
-      type="green"
-      [attr.data-cy]="'save-file-csv-button'"
-      [isDisabled]="modal.title.length === 0"
-      (click)="downloadCRTDLZip(modal.title)"
-    >
-      {{ 'SHARED_COMPONENTS.SAVE_MODAL.DOWNLOAD_CSV' | translate }}
     </num-button>
   </div>
 </num-save-file-modal>

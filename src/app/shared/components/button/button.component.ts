@@ -13,7 +13,7 @@ export class ButtonComponent {
   constructor() {}
 
   readonly icon = input<string>()
-  readonly type = input<'blue' | 'green' | 'red'>('blue')
+  readonly type = input<'blue' | 'green' | 'red' | 'cancel'>('blue')
   readonly isDisabled = input<boolean>(false)
   readonly tooltip = input<string>(undefined)
 }

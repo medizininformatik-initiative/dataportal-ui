@@ -7,6 +7,8 @@ import { MatDialogRef } from '@angular/material/dialog'
 import { SaveFileModalComponent } from '../save-file-modal/save-file-modal.component'
 import { TranslateModule } from '@ngx-translate/core'
 
+export type DownloadCRTDLFormat = 'crtdl' | 'csv'
+
 @Component({
   selector: 'num-download-crtdl',
   templateUrl: './download-crtdl.component.html',
@@ -19,15 +21,16 @@ export class DownloadCRTDLComponent {
   private downloadCRTDLService = inject(DownloadCRTDLService)
   private downloadCRTDLZipService = inject(DownloadCRTDLZipService)
 
+  public selectedFormat: DownloadCRTDLFormat = 'crtdl'
+
   constructor() {}
 
-  public downloadCRTDL(title: string): void {
-    this.downloadCRTDLService.download(title)
-    this.doDiscard()
-  }
-
-  public downloadCRTDLZip(title: string): void {
-    this.downloadCRTDLZipService.download(title)
+  public download(title: string): void {
+    if (this.selectedFormat === 'crtdl') {
+      this.downloadCRTDLService.download(title)
+    } else {
+      this.downloadCRTDLZipService.download(title)
+    }
     this.doDiscard()
   }
 

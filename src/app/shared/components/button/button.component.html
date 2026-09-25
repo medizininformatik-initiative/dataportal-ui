@@ -43,6 +43,20 @@
   }
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </button>
+} @if (type() === 'cancel') {
+<button
+  class="num-button cancel"
+  [ngClass]="isDisabled() ? 'disabled' : ''"
+  [disabled]="isDisabled()"
+  [matTooltip]="tooltip()"
+  [matTooltipPosition]="'above'"
+  [matTooltipShowDelay]="300"
+>
+  @if (icon()) {
+  <fa-icon [icon]="icon()" size="lg" [fixedWidth]="true"></fa-icon>
+  }
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</button>
 }
 
 <ng-template #content><ng-content></ng-content></ng-template>
