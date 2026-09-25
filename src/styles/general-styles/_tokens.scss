@@ -9,6 +9,7 @@
    Text colours
    --color-text-primary  : main body text
    --color-text-secondary: muted / meta text
+   --color-text-title    : card titles — softer than pure black, accent-tinted slate
 
    Brand accent
    --color-accent        : primary blue
@@ -47,6 +48,7 @@
   --color-text-primary: #000000;
   --color-text-secondary: #6a7483;
   --color-text-section: #5f6266;
+  --color-text-title: #2b3a55; /* ~9.5:1 on the raised card tint */
 
   /* Type weights (fix previously-dead var() fallbacks — see spacing note below) */
   --font-weight-normal: 400;

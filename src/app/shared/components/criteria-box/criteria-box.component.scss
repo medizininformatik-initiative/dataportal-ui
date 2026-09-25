@@ -7,17 +7,13 @@
   grid-template-areas:
     'content actions'
     'filters filters';
+  /* Surface, edge shadow and hover come from the global .num-card
+     .num-card--raised (_ui-classes.scss) — no box-shadow here, or the
+     global :hover would be outranked. */
   width: 448px;
   max-width: 100%;
-  background-color: var(--color-accent-bg);
-  border-radius: var(--border-radius-card);
   padding: var(--spacing-16);
-  transition: var(--transition-shadow);
-
-  &:hover {
-    box-shadow: var(--shadow-card-hover);
-    cursor: grab;
-  }
+  cursor: grab;
 }
 
 .content {
@@ -36,7 +32,7 @@
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
-  color: var(--color-text-primary);
+  color: var(--color-text-title);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -45,7 +41,9 @@
   overflow-wrap: anywhere;
 }
 
+/* --color-text-section instead of --color-text-secondary: 5.5:1 on the tint (AA) */
 .info-section {
+  color: var(--color-text-section);
   overflow-wrap: anywhere;
 }
 
@@ -54,25 +52,32 @@
   opacity: 0.6;
 }
 
-/* Drag handle + options menu as a compact icon toolbar (32px targets),
-   matching num-menu's appearance="icon" trigger. */
+/* Drag handle + options menu as a compact icon toolbar (24px targets),
+   matching num-menu's appearance="icon" trigger. The row is exactly one
+   title line high, so the icons are centred on the title's first line. */
 .handle-icons {
   grid-area: actions;
+  align-self: start;
   display: flex;
   align-items: center;
-  gap: var(--spacing-2);
-  margin: calc(-1 * var(--spacing-4)) calc(-1 * var(--spacing-4)) 0 var(--spacing-12);
+  gap: var(--spacing-4);
+  height: var(--line-height-md);
+  margin-left: var(--spacing-12);
+
+  num-menu {
+    display: flex;
+  }
 }
 
 .drag-handle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: var(--border-radius-sm);
-  color: var(--color-accent);
-  font-size: 16px;
+  color: var(--color-accent-strong);
+  font-size: 14px;
   cursor: grab;
   transition: background-color 0.15s ease, color 0.15s ease;
 

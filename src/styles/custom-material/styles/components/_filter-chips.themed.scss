@@ -34,7 +34,7 @@
       padding: 4px 16px 4px 8px;
       border-radius: 4px 0 0 4px;
       clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
-      background: $accent-500;
+      background: var(--color-accent-strong); // white text 5:1 (AA)
       font-family: var(--font-body);
       font-style: normal;
       font-weight: 700;
@@ -73,7 +73,7 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 22px;
-      color: $accent-500;
+      color: var(--color-accent-strong); // 5:1 on white (AA)
       background: #ffffff;
       border: 1px solid rgba($accent-500, 0.2);
       border-radius: 4px;

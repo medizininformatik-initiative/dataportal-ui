@@ -167,7 +167,7 @@
     position: absolute;
     inset: 0;
     background: var(--color-accent);
-    opacity: 0.1;
+    opacity: var(--num-card-tint, 0.1);
     border-radius: var(--border-radius-card);
     pointer-events: none;
     z-index: 0;
@@ -178,7 +178,22 @@
     z-index: 1;
   }
 
+  // Declared before --raised so the raised hover below can extend it.
+  // Don't set box-shadow on a .num-card in component styles: the emulated
+  // attribute selector would outrank these rules and disable the hover.
   &:hover {
     box-shadow: var(--shadow-card-hover);
+  }
+
+  // Raised variant: a slightly darker tint (15%), a 1px accent ring as the
+  // card edge and resting elevation, so the card separates clearly from a
+  // white page. Opt-in, so existing flat .num-card users are unchanged.
+  &--raised {
+    --num-card-tint: 0.15;
+    box-shadow: 0 0 0 1px var(--color-accent-border), var(--shadow-card);
+
+    &:hover {
+      box-shadow: 0 0 0 1px var(--color-accent-border), var(--shadow-card-hover);
+    }
   }
 }
