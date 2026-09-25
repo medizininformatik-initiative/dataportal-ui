@@ -1,0 +1,38 @@
+// ──────────────────────────────────────────────────────────────
+// Base element styles
+//
+// Document-level defaults for html/body and bare HTML elements.
+// ──────────────────────────────────────────────────────────────
+
+html,
+body {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+mark {
+  background-color: var(--color-accent-bg);
+  color: var(--color-text-primary);
+  border-radius: 2px;
+  padding: 0 1px;
+  font-weight: 600;
+}

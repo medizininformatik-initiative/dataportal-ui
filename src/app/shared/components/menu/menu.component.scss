@@ -1,3 +1,31 @@
+/* ── Compact trigger (appearance="icon") ───────────── */
+.menu-trigger-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius-sm);
+  background: transparent;
+  color: var(--color-accent);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover,
+  &[aria-expanded='true'] {
+    background: var(--color-accent-border);
+    color: var(--num-color--accent-400, #345396);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+}
+
 /* ── Panel ─────────────────────────────────────────── */
 ::ng-deep .mat-mdc-menu-panel {
   min-width: 214px !important;

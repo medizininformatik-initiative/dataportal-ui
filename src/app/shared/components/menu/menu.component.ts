@@ -28,6 +28,9 @@ export class MenuComponent implements OnInit {
 
   readonly args = input<Record<string, unknown>>({})
 
+  /** 'button' = filled blue num-button (default), 'icon' = compact ghost icon button for dense cards */
+  readonly appearance = input<'button' | 'icon'>('button')
+
   constructor() {}
 
   ngOnInit() {}

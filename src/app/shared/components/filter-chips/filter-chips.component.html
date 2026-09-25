@@ -4,28 +4,29 @@
   <div
     data-cy="{{ filterChip.type | displayTranslation }}"
     class="block"
+    [matTooltip]="filterChip.type | displayTranslation"
+    [matTooltipDisabled]="filterChip.typeExpanded"
     (click)="toggleTypeExpanded(filterChip)"
-    [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
+    [ngClass]="{ expanded: filterChip.typeExpanded }"
   >
     {{ filterChip.type | displayTranslation }}
   </div>
-  <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
-  } @for (chip of filterChip.data; track chip; let i = $index) { @if (showAll() || i < maxVisible())
-  {
-  <div
-    [attr.data-cy]="chip.text | displayTranslation"
-    class="chip-container margin-left-1"
-    [ngClass]="{ expanded: chip.expanded }"
-    (click)="toggleExpanded(chip)"
-    [innerHTML]="chip.text | displayTranslation | highlight : searchTerm()"
-  ></div>
-  } } @if (!showAll() && filterChip.data.length > maxVisible()) {
-  <div
-    class="chip-container margin-left-1 count-badge"
-    [matTooltip]="getOverflowTooltip(filterChip.data)"
-  >
-    +{{ filterChip.data.length - maxVisible() }}
-  </div>
   }
+  <div class="chip-list">
+    @for (chip of filterChip.data; track chip; let i = $index) { @if (showAll() || i < maxVisible())
+    {
+    <div
+      [attr.data-cy]="chip.text | displayTranslation"
+      class="chip-container"
+      [ngClass]="{ expanded: chip.expanded }"
+      (click)="toggleExpanded(chip)"
+      [innerHTML]="chip.text | displayTranslation | highlight : searchTerm()"
+    ></div>
+    } } @if (!showAll() && filterChip.data.length > maxVisible()) {
+    <div class="chip-container count-badge" [matTooltip]="getOverflowTooltip(filterChip.data)">
+      +{{ filterChip.data.length - maxVisible() }}
+    </div>
+    }
+  </div>
 </div>
 } }

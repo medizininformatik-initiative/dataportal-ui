@@ -1,13 +1,17 @@
+/* Card grid: title block and actions share the header row; filters span the
+   full width below. Nothing is absolutely positioned, so long titles and many
+   filter rows can never overlap the icons. */
 .container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'content actions'
+    'filters filters';
   width: 448px;
-  min-height: 136px;
+  max-width: 100%;
   background-color: var(--color-accent-bg);
   border-radius: var(--border-radius-card);
-  position: relative;
-  padding: var(--spacing-24);
+  padding: var(--spacing-16);
   transition: var(--transition-shadow);
 
   &:hover {
@@ -16,46 +20,71 @@
   }
 }
 
+.content {
+  grid-area: content;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  cursor: grab;
+}
+
+/* Long names are capped at 3 lines; the full name is in the tooltip. */
 .title-section {
   font-family: var(--font-body);
   font-style: normal;
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-bold);
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
   color: var(--color-text-primary);
-  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   overflow: hidden;
-  margin-bottom: var(--spacing-8);
+  overflow-wrap: anywhere;
 }
 
 .info-section {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  margin-bottom: var(--spacing-8);
+  overflow-wrap: anywhere;
 }
 
+.info-section .separator {
+  margin-inline: var(--spacing-4);
+  opacity: 0.6;
+}
+
+/* Drag handle + options menu as a compact icon toolbar (32px targets),
+   matching num-menu's appearance="icon" trigger. */
 .handle-icons {
+  grid-area: actions;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin: calc(-1 * var(--spacing-4)) calc(-1 * var(--spacing-4)) 0 var(--spacing-12);
 }
 
-.menu-icon {
-  align-self: flex-end;
+.drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--border-radius-sm);
   color: var(--color-accent);
-  margin-left: var(--spacing-8);
-  margin-right: var(--spacing-8);
-  font-size: var(--font-size-lg);
-}
-
-.menu-icon:hover {
+  font-size: 16px;
   cursor: grab;
-  opacity: 0.8; /* small visual feedback */
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  fa-icon {
+    display: flex;
+    transform: rotateZ(45deg);
+  }
+
+  &:hover {
+    background: var(--color-accent-border);
+    color: var(--num-color--accent-400, #345396);
+  }
 }
 
 ::ng-deep .mat-mdc-menu-panel {
@@ -66,19 +95,16 @@
   box-shadow: var(--shadow-menu);
 }
 
-.drag-handle {
-  position: absolute;
-  display: block;
-  transform: rotateZ(45deg);
-  bottom: 16px; /* aligned to 8px step */
-  right: 24px;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px; /* 4 system detail */
-}
-
-.content {
-  width: 100%;
+/* Full-width filter section; num-filter-chips aligns one row per filter type. */
+.filter-chips-container {
+  grid-area: filters;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  margin-top: var(--spacing-12);
+  padding-top: var(--spacing-12);
+  border-top: 1px solid var(--color-accent-border);
   cursor: grab;
 }
 

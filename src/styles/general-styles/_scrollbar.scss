@@ -1,0 +1,28 @@
+// ──────────────────────────────────────────────────────────────
+// Global scrollbar
+//
+// WebKit/Blink use the ::-webkit-scrollbar rules; Firefox uses the
+// standard scrollbar-width / scrollbar-color properties.
+// ──────────────────────────────────────────────────────────────
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f2f3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5cacf;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8aeb5;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c5cacf #f1f2f3;
+}

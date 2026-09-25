@@ -1,0 +1,33 @@
+// ──────────────────────────────────────────────────────────────
+// Angular Material overrides
+//
+// Global tweaks to Material component defaults that cannot be
+// expressed through the theme.
+// ──────────────────────────────────────────────────────────────
+
+// Green-outlined circular badge content, overriding Material's default badge theme.
+// Angular Material injects its own component styles into the DOM at runtime (after
+// our compiled stylesheet), so !important is required here regardless of import order.
+.mat-badge-content {
+  border: 1px solid var(--num-color--primary-green) !important;
+  color: var(--num-color--primary-green) !important;
+  background-color: white !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 25% !important;
+}
+
+/* Override Material's Roboto default with our global font */
+.mat-typography,
+.mat-typography p,
+.mat-typography input,
+.mat-typography button,
+.mat-typography select,
+.mat-typography textarea {
+  font-family: 'Titillium Web', sans-serif;
+}
+
+/*TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
+.mat-chip-ripple {
+  display: none;
+}

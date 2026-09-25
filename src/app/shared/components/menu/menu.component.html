@@ -1,12 +1,13 @@
 <button
   [matTooltip]="'SHARED_COMPONENTS.MENU.OPTIONS' | translate"
-  class="num-button blue icon"
+  [attr.aria-label]="'SHARED_COMPONENTS.MENU.OPTIONS' | translate"
+  [ngClass]="appearance() === 'icon' ? 'menu-trigger-icon' : 'num-button blue icon'"
   data-cy="openMenu"
   type="button"
   #menuTrigger="matMenuTrigger"
   [matMenuTriggerFor]="menu"
 >
-  <fa-icon size="lg" [icon]="'cog'"></fa-icon>
+  <fa-icon [size]="appearance() === 'icon' ? undefined : 'lg'" [icon]="'cog'"></fa-icon>
 </button>
 
 <mat-menu #menu="matMenu" yPosition="below" xPosition="before">

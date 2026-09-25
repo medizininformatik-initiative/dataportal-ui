@@ -2,7 +2,7 @@
   text-align: left;
   padding: var(--spacing-8);
   // Extra right padding reserves the same width as tbody's scrollbar
-  // (styles.scss forces a 20px webkit scrollbar), keeping columns aligned.
+  // (_scrollbar.scss forces a 20px webkit scrollbar), keeping columns aligned.
   padding-right: var(--spacing-20);
   border-bottom: 1px solid #f1f2f3;
   font-family: 'Open Sans', sans-serif;
