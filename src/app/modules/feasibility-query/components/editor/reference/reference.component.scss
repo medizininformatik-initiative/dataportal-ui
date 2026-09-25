@@ -10,11 +10,11 @@
 }
 
 .add-button {
-  margin-top: 10px;
+  margin-top: var(--spacing-10);
   background-color: var(--color-accent);
   color: white;
   width: fit-content;
-  padding: 10px 18px;
+  padding: var(--spacing-10) 18px;
   flex-shrink: 0;
 }
 
@@ -29,11 +29,11 @@
   height: 40px;
   background-color: white;
   border-radius: var(--border-radius-card);
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-10);
 }
 
 .display-part {
-  padding-left: 10px;
+  padding-left: var(--spacing-10);
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -47,12 +47,12 @@
   background-color: white;
   border: 0;
   text-decoration: underline var(--color-accent);
-  padding-bottom: 10px;
+  padding-bottom: var(--spacing-10);
 }
 
 .filter-title {
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: var(--spacing-10);
+  margin-top: var(--spacing-10);
   color: var(--color-text-secondary);
   font-size: var(--font-size-md);
   font-weight: 500;
@@ -61,7 +61,7 @@
 
 .attribute-code-display {
   color: var(--color-text-secondary);
-  padding-bottom: 5px;
+  padding-bottom: var(--spacing-5);
   flex-shrink: 0;
 }
 

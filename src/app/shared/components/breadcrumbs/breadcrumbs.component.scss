@@ -8,7 +8,7 @@
 .breadcrumb-item {
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: var(--font-size-md);
 }
 
 .breadcrumb-item a {
@@ -35,8 +35,8 @@
   align-self: stretch;
   font-size: 24px;
   color: var(--color-text-secondary);
-  margin-bottom: 4px;
-  padding: 0 8px;
+  margin-bottom: var(--spacing-4);
+  padding: 0 var(--spacing-8);
 }
 
 .last-breadcrumb {

@@ -10,7 +10,7 @@
 }
 
 .tab-content {
-  padding: 16px 0;
+  padding: var(--spacing-16) 0;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -22,12 +22,12 @@
 .original-item {
   font-size: 16px;
   font-weight: 500;
-  padding-bottom: 12px;
+  padding-bottom: var(--spacing-12);
 }
 
 .detail-row {
   width: 100%;
-  padding: 8px 0;
+  padding: var(--spacing-8) 0;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -42,13 +42,13 @@
   font-family: var(--font-body);
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
   color: var(--color-text-primary);
   min-width: 190px;
   max-width: 190px;
-  padding-right: 16px;
-  padding-top: 2px;
+  padding-right: var(--spacing-16);
+  padding-top: var(--spacing-2);
 }
 
 .detail-value {
@@ -63,8 +63,8 @@
 }
 
 .translation-entry {
-  margin-bottom: 6px;
-  font-size: 14px;
+  margin-bottom: var(--spacing-6);
+  font-size: var(--font-size-md);
   gap: 8px;
   display: flex;
   flex-direction: row;
@@ -73,7 +73,7 @@
 
 /* Fix flag icon size in translation row */
 .translation-entry .fi {
-  font-size: 20px !important;
+  font-size: var(--font-size-lg) !important;
   line-height: 1;
   vertical-align: middle;
 }

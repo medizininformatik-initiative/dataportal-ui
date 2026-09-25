@@ -24,7 +24,7 @@
 }
 .details-drawer.mat-drawer-opened {
   width: 40%;
-  padding-left: 24px;
+  padding-left: var(--spacing-24);
   border-left-width: 1px !important;
 }
 .details-drawer {
@@ -42,13 +42,13 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin: 8px 0;
+  margin: var(--spacing-8) 0;
 }
 
 .close-icon {
   font-size: medium;
-  color: #5170a8;
-  padding-left: 10px;
+  color: var(--color-accent-strong);
+  padding-left: var(--spacing-10);
 }
 
 .details-container {

@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px 24px;
+  padding: var(--spacing-12) var(--spacing-24);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(10px);
@@ -98,7 +98,7 @@
     right: 10px;
     width: auto;
     transform: none;
-    padding: 16px 20px;
+    padding: 16px var(--spacing-20);
     border-radius: 16px;
 
     // Mobile-specific animations
@@ -112,7 +112,7 @@
   }
 
   .message-display {
-    font-size: 14px;
+    font-size: var(--font-size-md);
   }
 }
 
@@ -196,7 +196,7 @@
     content: '';
     width: 16px;
     height: 16px;
-    margin-left: 12px;
+    margin-left: var(--spacing-12);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-top: 2px solid white;
     border-radius: 50%;

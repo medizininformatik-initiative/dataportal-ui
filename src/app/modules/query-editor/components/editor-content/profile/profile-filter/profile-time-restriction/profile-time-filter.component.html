@@ -4,7 +4,7 @@
   mat-stretch-tabs="false"
   [selectedIndex]="1"
 >
-  <mat-tab style="height: 100%">
+  <mat-tab class="height-100">
     <ng-template mat-tab-label>
       <fa-icon icon="info" class="information-icon"></fa-icon>
       {{ 'INFORMATION.TAB_LABEL' | translate }}
@@ -19,7 +19,6 @@
     <num-edit-time-restriction
       [timeRestriction]="profileTimeRestrictionFilter().getTimeRestriction()"
       (timeRestrictionChange)="emitProfileTimeRestriction($event)"
-    >
-    </num-edit-time-restriction>
+    ></num-edit-time-restriction>
   </mat-tab>
 </mat-tab-group>

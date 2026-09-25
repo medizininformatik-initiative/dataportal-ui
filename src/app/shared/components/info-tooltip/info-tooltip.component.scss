@@ -7,7 +7,7 @@
   box-sizing: border-box;
   width: 294px;
   min-height: 109px;
-  padding: 14px 20px;
+  padding: 14px var(--spacing-20);
 
   background: #ffffff;
   border: 1px solid #c3c7cd;
@@ -21,18 +21,18 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-10);
 }
 
 .card-title {
   font-family: 'Titillium Web', sans-serif;
   font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-md);
   line-height: 21px;
   color: #000000;
   flex: 1;
-  padding-right: 8px;
+  padding-right: var(--spacing-8);
 }
 
 .info-badge {
@@ -40,15 +40,15 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: #5f6266;
-  border: 1px solid #5f6266;
+  background: var(--color-text-section);
+  border: 1px solid var(--color-text-section);
   display: flex;
   align-items: center;
   justify-content: center;
 
   font-family: 'Open Sans', sans-serif;
-  font-weight: 600;
-  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
   line-height: 12px;
   color: #ffffff;
 }
@@ -58,8 +58,8 @@
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-sm);
   line-height: 17px;
-  color: #5f6266;
+  color: var(--color-text-section);
 }

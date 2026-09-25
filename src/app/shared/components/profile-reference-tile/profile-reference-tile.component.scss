@@ -4,7 +4,7 @@
   align-items: flex-start;
 
   .label {
-    margin: 0 0 var(--spacing-xs, 4px) 4px;
+    margin: 0 0 var(--spacing-xs) 4px;
     padding: 0;
     border-radius: 0;
     background: none;
@@ -12,7 +12,7 @@
 
     color: var(--color-accent);
     font-size: var(--font-size-md);
-    font-weight: var(--font-weight-bold, 400);
+    font-weight: var(--font-weight-bold);
   }
 
   .value {
@@ -33,7 +33,7 @@
   width: 80%;
   min-height: 67px;
   margin-top: -11px;
-  padding: 10px 16px;
+  padding: var(--spacing-10) 16px;
 
   background: rgb(157 161 166 / 10%);
   border-radius: var(--border-radius-card);
@@ -68,7 +68,7 @@
   transform: translateY(-1px);
 
   color: var(--color-accent);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 300;
 }
 

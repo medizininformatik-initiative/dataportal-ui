@@ -7,10 +7,10 @@
 }
 
 .background {
-  background-color: rgba(90, 121, 175, 0.1);
+  background-color: var(--color-accent-bg);
   padding: 1%;
   overflow: auto;
   flex: 1;
   box-shadow: var(--shadow-card);
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
 }

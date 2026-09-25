@@ -17,7 +17,7 @@
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-card);
   box-shadow: var(--shadow-card);
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-16);
   font-family: var(--font-body);
   font-size: var(--font-size-md);
   font-weight: 500;
@@ -58,27 +58,27 @@
   background: var(--color-accent);
   font-size: 16px;
   line-height: 24px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  box-shadow: var(--shadow-card);
   color: white;
   font-family: inherit;
   font-size: 16px;
   cursor: pointer;
   white-space: nowrap;
   opacity: 1;
-  font-weight: 600;
-  border-radius: 5px;
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-card);
   border: none;
 
   &:hover:not(:disabled) {
     color: white !important;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    box-shadow: var(--shadow-card);
     background: #678fd2;
   }
 
   &:disabled {
     background-color: #f9f9f9;
-    color: #5a79af;
-    box-shadow: 0px 0px 1px 1px #5a79af;
+    color: var(--color-accent);
+    box-shadow: 0px 0px 1px 1px var(--color-accent);
     cursor: unset;
   }
 }

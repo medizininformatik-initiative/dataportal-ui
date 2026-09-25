@@ -6,7 +6,7 @@
   .mat-mdc-text-field-wrapper {
     background: transparent !important;
     box-shadow: none !important;
-    padding: 0 8px;
+    padding: 0 var(--spacing-8);
   }
 
   .mat-mdc-form-field-flex {
@@ -27,7 +27,7 @@
 
 .circle {
   color: var(--num-color--primary-blue);
-  margin-right: 16px;
+  margin-right: var(--spacing-16);
 }
 
 ::ng-deep .mdc-list-item__primary-text {

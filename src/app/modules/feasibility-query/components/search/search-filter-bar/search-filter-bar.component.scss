@@ -12,7 +12,7 @@
   &__label {
     font-family: var(--font-body);
     font-size: var(--font-size-md);
-    font-weight: 600;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-primary);
   }
 
@@ -34,7 +34,7 @@
   gap: 0.5rem;
 }
 .filter-container > num-button {
-  margin-top: 2px;
+  margin-top: var(--spacing-2);
 }
 ::ng-deep .filter-container .num-button {
   height: 38px;

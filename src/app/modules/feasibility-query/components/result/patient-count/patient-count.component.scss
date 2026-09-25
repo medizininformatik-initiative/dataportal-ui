@@ -2,9 +2,10 @@
   width: 40px;
   height: 40px;
   font-size: 24px;
-  margin: 0 8px;
+  margin: 0 var(--spacing-8);
   background-color: rgba(241, 242, 243, 0.5);
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
+  text-align: center;
 }
 
 .digit {
@@ -16,15 +17,11 @@
   align-content: center;
 }
 
-.number-of-patients {
-  text-align: center;
-}
-
 .container {
   display: flex;
   flex-direction: row;
   height: 100%;
   width: 100%;
   overflow: auto;
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-24);
 }

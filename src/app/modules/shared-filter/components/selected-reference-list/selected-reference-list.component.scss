@@ -5,13 +5,13 @@
   width: 100%;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: 16px;
+  margin-top: var(--spacing-16);
 }
 .reference-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-8);
 }
 .delete-button {
   background: none;

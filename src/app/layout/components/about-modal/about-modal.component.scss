@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem 1.5rem;
+  padding: var(--spacing-16) var(--spacing-24);
   background: linear-gradient(135deg, var(--color-accent) 0%, var(--num-color--primary-green) 100%);
   color: white;
   font-size: 1.25rem;
@@ -16,12 +16,12 @@
 
 .about-modal-content {
   background: white;
-  padding: 1.5rem;
+  padding: var(--spacing-24);
   flex: 1;
 }
 
 .info-section {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-24);
 
   &:last-child {
     margin-bottom: 0;
@@ -30,10 +30,10 @@
 
 .section-header {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   color: var(--color-accent);
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: var(--spacing-16);
+  padding-bottom: var(--spacing-8);
   border-bottom: 2px solid var(--num-color--primary-green);
   margin-left: -1rem;
 }
@@ -42,7 +42,7 @@
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
-  padding: 1rem 1.5rem;
+  padding: var(--spacing-16) var(--spacing-24);
   background: white;
   border-top: 1px solid #e9ecef;
 }

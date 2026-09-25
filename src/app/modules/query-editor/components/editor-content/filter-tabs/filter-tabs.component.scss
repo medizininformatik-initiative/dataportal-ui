@@ -7,22 +7,22 @@
 
 .tabs-container {
   display: flex;
-  border-radius: 5px 5px 0 0;
+  border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
   width: 100%;
-  margin-bottom: 2px;
+  margin-bottom: var(--spacing-2);
 }
 
 .tab {
-  padding: 8px 24px;
+  padding: var(--spacing-8) var(--spacing-24);
   height: 41px;
-  border-radius: 5px 5px 0 0;
+  border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
   text-transform: uppercase;
   text-align: center;
-  color: #5a79af;
+  color: var(--color-accent);
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
@@ -42,8 +42,8 @@
   height: 41px;
   opacity: 1;
   background: #ffffff;
-  color: #5a79af;
-  border-radius: 5px 5px 0 0;
+  color: var(--color-accent);
+  border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
   box-shadow: var(--shadow-card-active);
 }
 
@@ -51,7 +51,7 @@
   height: 100%;
   overflow: auto;
   background: white;
-  padding: 0px 8px;
-  border-radius: 0 5px 5px 5px;
+  padding: 0px var(--spacing-8);
+  border-radius: 0 var(--border-radius-card) var(--border-radius-card) var(--border-radius-card);
   box-shadow: var(--shadow-card);
 }

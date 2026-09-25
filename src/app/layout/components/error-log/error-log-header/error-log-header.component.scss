@@ -1,6 +1,6 @@
 .error-log-header {
   display: flex;
-  padding: 1rem 1.5rem;
+  padding: var(--spacing-16) var(--spacing-24);
   background: linear-gradient(135deg, #5a79af 0%, #9bb823 100%);
   color: white;
   font-size: 1.25rem;

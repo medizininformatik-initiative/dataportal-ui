@@ -16,18 +16,21 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 1.5rem;
-  margin-top: 1rem;
+  margin-top: var(--spacing-16);
   width: 100%;
 }
 
 .bulk-search-container {
   display: flex;
   flex-direction: column;
+  align-items: start;
   gap: 0.5rem;
 }
 
 .inner-tab-group {
-  margin-top: 1.5rem;
+  margin-top: var(--spacing-24);
+  height: 100%;
+  overflow: auto;
 }
 
 .result-list-container {
@@ -66,6 +69,12 @@
   gap: 3rem;
 }
 
+.header-container {
+  margin-bottom: var(--spacing-16);
+  display: flex;
+  align-items: start;
+}
+
 .input-field-area {
   font-size: 1rem;
   font-weight: 500;
@@ -90,29 +99,10 @@
 
 .input-field-area:focus {
   outline: none;
-  border-color: #5a79af;
+  border-color: var(--color-accent);
   box-shadow: 0 0 0 4px rgba(90, 121, 175, 0.25);
 }
 
-.header-container {
-  margin-bottom: 16px;
-  display: flex;
-  align-items: start;
-}
-
-.bulk-search-container {
-  display: flex;
-  align-items: start;
-  gap: 8px;
-}
-
-.inner-tab-group {
-  height: 100%;
-  overflow: auto;
-}
-.table-container {
-  overflow-y: auto;
-}
 ::ng-deep .mat-mdc-tab-body-wrapper {
   height: 100%;
 }

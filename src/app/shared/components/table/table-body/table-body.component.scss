@@ -15,13 +15,13 @@ tr {
 }
 
 td {
-  padding: 0 0.5rem;
+  padding: 0 var(--spacing-8);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  line-height: 19px;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
   color: #000000;
 }
 

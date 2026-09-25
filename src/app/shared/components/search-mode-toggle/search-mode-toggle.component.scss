@@ -24,14 +24,14 @@
   justify-content: center;
   gap: 6px;
   min-height: 30px;
-  padding: 0 12px;
+  padding: 0 var(--spacing-12);
   border: 0;
   background: transparent;
   color: var(--color-text-secondary);
   cursor: pointer;
   font-family: var(--font-body);
   font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   line-height: 1;
   transition: color 0.2s ease, background-color 0.2s ease, var(--transition-shadow);
 
@@ -66,6 +66,6 @@
   }
 
   .mode-toggle__option {
-    padding: 0 10px;
+    padding: 0 var(--spacing-10);
   }
 }

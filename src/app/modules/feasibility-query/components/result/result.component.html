@@ -1,23 +1,23 @@
 <div class="container">
   <div>
     @if (!resultLoaded) {
-    <num-header [showToggle]="true">{{
-      'FEASIBILITY.RESULT.HEADER.RESULT_NOT_LOADED' | translate
-    }}</num-header>
+    <num-header [showToggle]="true">
+      {{ 'FEASIBILITY.RESULT.HEADER.RESULT_NOT_LOADED' | translate }}
+    </num-header>
     } @if (resultLoaded) {
-    <num-header [showToggle]="true">{{
-      'FEASIBILITY.RESULT.HEADER.RESULT_LOADED' | translate
-    }}</num-header>
+    <num-header [showToggle]="true">
+      {{ 'FEASIBILITY.RESULT.HEADER.RESULT_LOADED' | translate }}
+    </num-header>
     }
     <num-header-description>
       {{ 'FEASIBILITY.RESULT.HEADER_DESCRIPTION' | translate }}
     </num-header-description>
   </div>
-  <div style="height: 24%">
+  <div class="simple-result-container">
     <num-simple-result (resultLoaded)="setResultLoaded($event)"></num-simple-result>
   </div>
   <div class="feasibility-container">
-    <num-display-feasibility-query [isEditable]="false"> </num-display-feasibility-query>
+    <num-display-feasibility-query [isEditable]="false"></num-display-feasibility-query>
   </div>
-  <num-result-action-bar [hasQueryResult]="!resultLoaded" class="bottom"> </num-result-action-bar>
+  <num-result-action-bar [hasQueryResult]="!resultLoaded" class="bottom"></num-result-action-bar>
 </div>

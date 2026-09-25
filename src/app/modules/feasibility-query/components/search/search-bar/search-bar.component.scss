@@ -17,6 +17,6 @@
 .search-button-wrapper {
   display: flex;
   gap: 8px;
-  padding-left: 16px;
+  padding-left: var(--spacing-16);
   padding-top: 1px;
 }

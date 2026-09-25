@@ -17,7 +17,7 @@
 }
 
 .box-container {
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-10);
 }
 .profiles-box {
   overflow: auto;
@@ -32,6 +32,6 @@
 .profiles-container {
   height: 100%;
   overflow: auto;
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-16);
   gap: 1.5rem;
 }

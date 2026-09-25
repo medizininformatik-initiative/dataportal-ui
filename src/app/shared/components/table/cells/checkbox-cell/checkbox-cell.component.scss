@@ -1,8 +1,8 @@
 .name-column {
-  padding-left: 8px;
+  padding-left: var(--spacing-8);
   font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  line-height: 19px;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
   color: #000000;
 }
 
@@ -14,7 +14,7 @@
 
 .cursor-click {
   cursor: pointer;
-  padding-left: 8px;
+  padding-left: var(--spacing-8);
 }
 
 .row-container {

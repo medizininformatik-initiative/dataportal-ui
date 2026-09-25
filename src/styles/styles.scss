@@ -57,10 +57,12 @@
    --color-accent        : primary blue
    --color-accent-bg     : tinted card background (10% opacity)
    --color-accent-border : pill / light border (20% opacity)
+   --color-accent-strong : darker accent for hover/interactive text (links, underlines)
 
    Borders & Radius
    --border-color        : default rule / divider colour
    --border-radius-card  : standard card corner radius
+   --border-radius-sm    : compact corner radius (inputs, chips, small controls)
 
    Transitions
    --transition-shadow   : hover shadow transition shorthand
@@ -84,15 +86,50 @@
   /* Text colours */
   --color-text-primary: #000000;
   --color-text-secondary: #6a7483;
+  --color-text-section: #5f6266;
+
+  /* Type weights (fix previously-dead var() fallbacks — see spacing note above) */
+  --font-weight-normal: 400;
+  --font-weight-bold: 600;
+  --font-size-lg: 20px;
 
   /* Brand accent */
   --color-accent: #5a79af;
   --color-accent-bg: rgba(90, 121, 175, 0.1);
   --color-accent-border: rgba(90, 121, 175, 0.2);
+  --color-accent-strong: #5170a8;
 
   /* Borders & radius */
   --border-color: #c5cacf;
   --border-radius-card: 5px;
+  --border-radius-sm: 4px;
+
+  /* Spacing (8px grid, 4px sub-grid for fine adjustments — standard 8pt
+     grid system). Named by pixel value for direct use in component
+     `padding`/`margin` declarations. --spacing-xs/-sm are legacy aliases:
+     they fix previously-dead var() fallbacks that referenced these names
+     without ever defining them — kept equal to their old fallback values
+     so nothing visually shifts.
+
+     --spacing-2/5/6/10/30 are tracked exceptions, not on the 4px grid —
+     kept only because each was already in repeated use. Prefer a grid
+     value in new code. */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px; /* on the 4px sub-grid, not the primary 8px grid */
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-2: 2px; /* exception */
+  --spacing-5: 5px; /* exception */
+  --spacing-6: 6px; /* exception */
+  --spacing-10: 10px; /* exception */
+  --spacing-30: 30px; /* exception */
+  --spacing-xs: var(--spacing-4);
+  --spacing-sm: var(--spacing-12);
 
   /* Transitions */
   --transition-shadow: box-shadow 0.2s ease;
@@ -167,16 +204,19 @@ mark {
   pointer-events: none;
 }
 
-// Spacing scale (8pt system)
+// Utility-class spacing scale. Keys are ordinal steps, NOT pixel values
+// (.padding-left-4 = 24px, while --spacing-4 = 4px). Steps 0-7 are used in
+// templates and must never be renumbered. For off-scale values (10, 12, 20px)
+// use var(--spacing-*) directly in component SCSS instead of adding keys here.
 $spacing-scale: (
-  0: 0px,
-  1: 4px,
-  2: 8px,
-  3: 16px,
-  4: 24px,
-  5: 32px,
-  6: 40px,
-  7: 48px,
+  0: 0,
+  1: var(--spacing-4),
+  2: var(--spacing-8),
+  3: var(--spacing-16),
+  4: var(--spacing-24),
+  5: var(--spacing-32),
+  6: var(--spacing-40),
+  7: var(--spacing-48),
   auto: auto,
 );
 
@@ -213,7 +253,9 @@ $spacing-scale: (
   }
 }
 
-// Generate percentage classes
+// Generate spacing utility classes (.padding-N, .padding-top-N, .margin-x-N, …)
+@include generate-spacing(padding);
+@include generate-spacing(margin);
 @include generate-directional-spacing(padding);
 @include generate-directional-spacing(margin);
 

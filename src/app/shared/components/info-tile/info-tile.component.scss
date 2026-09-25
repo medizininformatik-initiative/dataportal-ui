@@ -1,8 +1,8 @@
 .info-item {
   display: flex;
   gap: 12px;
-  padding: 10px 14px;
-  margin-bottom: 6px;
+  padding: var(--spacing-10) 14px;
+  margin-bottom: var(--spacing-6);
   background-color: var(--color-accent-bg);
   border-left: 3px solid var(--color-accent);
   border-radius: var(--border-radius-card);
@@ -17,7 +17,7 @@
 .info-label {
   flex-shrink: 0;
   min-width: 100px;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
@@ -29,7 +29,7 @@
 
   code {
     background: rgba(0, 0, 0, 0.04);
-    padding: 1px 6px;
+    padding: 1px var(--spacing-6);
     border-radius: 3px;
     font-size: var(--font-size-sm);
     color: var(--color-text-primary);

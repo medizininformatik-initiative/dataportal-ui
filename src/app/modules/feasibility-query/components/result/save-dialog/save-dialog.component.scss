@@ -13,7 +13,7 @@ textarea {
   margin: 0.5em 0;
 }
 h2 {
-  padding: 5px !important;
+  padding: var(--spacing-5) !important;
 }
 .padding-2em {
   padding: 2em;

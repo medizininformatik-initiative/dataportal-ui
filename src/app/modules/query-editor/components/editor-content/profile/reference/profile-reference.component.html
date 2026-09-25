@@ -1,9 +1,5 @@
 <div class="full">
-  <mat-tab-group
-    style="background-color: white"
-    [selectedIndex]="selectedIndex()"
-    animationDuration="0ms"
-  >
+  <mat-tab-group [selectedIndex]="selectedIndex()" animationDuration="0ms">
     <mat-tab>
       <ng-template mat-tab-label>
         <fa-icon icon="info" class="information-icon"></fa-icon>
@@ -20,8 +16,7 @@
         [referenceField]="reference"
         [profileId]="profileId()"
         (selectedProfileAsReference)="setSelectedReference($event, reference)"
-      >
-      </num-reference-field-tab>
+      ></num-reference-field-tab>
     </mat-tab>
     }
   </mat-tab-group>

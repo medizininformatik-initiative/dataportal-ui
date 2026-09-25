@@ -19,15 +19,15 @@
     border-radius: 10px;
     flex-shrink: 0;
     color: var(--color-accent);
-    font-size: 12px;
+    font-size: var(--font-size-sm);
     transform: rotateZ(45deg);
   }
 
   .icon-area {
     background: var(--color-accent-border);
     border-radius: 10px;
-    margin-right: 8px;
-    margin-left: 8px;
+    margin-right: var(--spacing-8);
+    margin-left: var(--spacing-8);
   }
 
   .text {

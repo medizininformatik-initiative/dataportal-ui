@@ -3,36 +3,36 @@
   flex-direction: column;
   flex: 1 1 0;
   min-height: 0;
-  margin-top: 24px;
+  margin-top: var(--spacing-24);
 }
 
 .faq-header {
   flex-shrink: 0;
-  padding-bottom: 4px;
+  padding-bottom: var(--spacing-4);
 }
 
 .faq-scroll {
   flex: 1 1 0;
   min-height: 0;
   overflow-y: auto;
-  padding-right: 4px;
+  padding-right: var(--spacing-4);
 }
 
 .faq-title {
   font-size: 1.25rem;
   font-weight: bold;
   color: rgb(27, 27, 27);
-  margin-bottom: 4px;
+  margin-bottom: var(--spacing-4);
 }
 
 mat-expansion-panel {
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-8);
   border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 4px !important;
+  border-radius: var(--border-radius-sm) !important;
   box-shadow: none !important;
 }
 
 mat-panel-title {
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   color: rgb(27, 27, 27);
 }

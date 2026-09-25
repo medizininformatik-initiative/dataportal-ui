@@ -30,7 +30,7 @@
 
   &:focus-within {
     outline: none !important;
-    font-weight: 600;
+    font-weight: var(--font-weight-bold);
     border-width: 2px;
     border-color: var(--color-accent);
     background-color: var(--color-accent-bg);
