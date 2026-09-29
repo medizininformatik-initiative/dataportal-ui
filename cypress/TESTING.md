@@ -64,6 +64,14 @@ npx cypress open
 npx cypress run
 ```
 
+## Test Criteria
+
+Which exact criterium names the feature files search for, which ontology context
+each comes from, and how to re-verify or replace one when the ontology version
+changes: see [`TEST_DATA.md`](./TEST_DATA.md). For the mechanisms behind those
+gotchas (translation fallback, step-file loading rules, ontology-reload
+instability, the Component Object library), see [`CLAUDE.md`](./CLAUDE.md).
+
 ## Important Notes
 
 All step strings (e.g., button names or labels) are case-sensitive and must match exactly.  

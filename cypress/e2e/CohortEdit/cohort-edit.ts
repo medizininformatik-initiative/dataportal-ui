@@ -1,48 +1,20 @@
-import { UrlPaths } from '../../support/e2e'
 import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
-import { FilterChips } from '../../support/step_definitions/filter-chips.cy'
-import { CriterionSearch } from '../CohortSearch/cohort-search'
-import { selectCriterion } from '../test'
+import { materialSelect } from '../../support/component-objects/MaterialSelect'
+import { numFilterChips } from '../../support/component-objects/NumFilterChips'
 
 export class CohortEdit {
-  public goToCohortEditPage() {
-    cy.visit(UrlPaths.feasibilityQuery.search)
-  }
-
-  public addCriteriumToCohort(criterium: string) {
-    const criterionSearch = new CriterionSearch()
-    criterionSearch.searchInput(criterium)
-    selectCriterion([0])
-    cy.get('num-search-action-bar button').eq(0).click()
-    cy.get('num-search-action-bar button').eq(1).click()
-  }
-
-  public shouldSeeModalOpening(modalTitle: string) {
-    cy.get('mat-dialog-container').should('be.visible')
-  }
-
   public shouldSeePanelWithName(panelName: string) {
     cy.get(`[data-cy="${panelName}"]`).should('be.visible')
   }
+
   public shouldSeeSelectedInPanel(selected: string, panelName: string) {
-    cy.get('num-edit-criterion-modal').within(() => {
-          cy.get(`[data-cy="${panelName}"]`).within(() => {
-            cy.get('num-quantity-comparision-select').contains(selected).should('be.visible')
-          })
+    cy.get(`[data-cy="${panelName}"]`).within(() => {
+      cy.get('num-quantity-comparision-select').contains(selected).should('be.visible')
     })
   }
-  public selectFromPanelByName(option: string, panelName: string) {
-    cy.get('num-quantity-comparision-select')
-      .click()
-      .then(() => {
-        cy.get('.mat-mdc-option').contains(option).click()
-      })
-  }
-  public clickAuswaehlenButton() {
-    cy.contains('button', 'Select').click()
-  }
-  public shouldSeeModalClosing(modalTitle: string) {
-    cy.get('.mat-dialog-title').should('not.exist')
+
+  public selectFromPanelByName(option: string) {
+    materialSelect.selectOptionByText('num-quantity-comparision-select', option)
   }
 
   public shouldSeeCriteriumInListWithSelected(
@@ -50,89 +22,63 @@ export class CohortEdit {
     panelName: string,
     chipValue: string
   ) {
-    const filterChip = new FilterChips()
-    filterChip.getFilterChipBlock(criterium, panelName)
-     cy.get(`[data-cy="${criterium}"]`).within(() => {
-      cy.get('.content').should('contain', criterium).should('contain', chipValue)
+    numFilterChips.getFilterChipBlock(criterium, panelName)
+    // Scoped by .container (the actual data-cy host — see NumFilterChips),
+    // not just the data-cy value — a value filter's chip block can share
+    // its criterion's exact data-cy value, which makes an unscoped
+    // `[data-cy="..."]` ambiguous here too.
+    cy.get(`.container[data-cy="${criterium}"]`).within(() => {
+      cy.get('[data-cy="criterion-content"]').should('contain', criterium).should('contain', chipValue)
     })
-    filterChip.getFilterChipByName(criterium, chipValue, panelName)
+    numFilterChips.getFilterChipByName(criterium, chipValue, panelName)
   }
 
   public selectValue(value: string) {
-    cy.get('num-value-select').click().type(value)
+    // num-value-select wraps a plain matInput — target it directly rather
+    // than the host tag (host has no styling/dimensions of its own, and
+    // .type() needs the actual focusable element).
+    cy.get('num-value-select input').clear().type(value)
   }
 
   public selectUnit(unit: string) {
-    cy.get('num-allowed-units')
-      .click()
-      .then(() => {
-        cy.get('.mat-mdc-option').contains(unit).click()
-      })
+    materialSelect.selectOptionByText('num-allowed-units', unit)
   }
 
-  public dragCriteriumRightBy200px(type = 'Inclusion') {
-    const draggableSelector = '.cdk-drag'
-    cy.wait(1000) // ensure UI is ready
-    cy.get(draggableSelector).trigger('mousedown', {
-      button: 0,
-      timeout: 10000,
-    })
-    cy.get(`#${type}`)
-      .trigger('mousemove', {
-        timeout: 10000,
-        waitForAnimations: true,
-      })
-      .click()
-    cy.wait(1000) // wait for the drag to complete
-  }
-
-  public selectFilter(filterIndex: number, optionIndex: number) {
-    cy.get('body').as('root')
-
-    cy.get('num-search-filter').eq(filterIndex).click()
-    cy.get('num-search-filter mat-select')
-      .eq(filterIndex)
-      .invoke('attr', 'id')
-      .then((id) => {
-        cy.get('@root')
-          .find('#' + id + '-panel')
-          .find('.mat-mdc-option')
-          .eq(optionIndex)
-          .click()
-        cy.get('.cdk-overlay-backdrop').click({ force: true })
-      })
+  /**
+   * Asserts the criterion page's own "Selected Filters" summary
+   * (criterion-header.component.html's `.header-col-chips`) reflects the
+   * value just entered, before navigating away with "Close". The summary is
+   * driven by the same `criterion()` input → EditCriterionService round trip
+   * as the Feasibility Editor's own criteria-box list, so waiting for it
+   * here (Cypress's normal retry, not a fixed wait) rules out a race where
+   * "Close" navigates before that round trip has propagated — confirmed
+   * necessary: without this, the value filter intermittently didn't survive
+   * the trip back to the Feasibility Editor page.
+   */
+  public shouldSeeChipValueInFilterSummary(chipValue: string) {
+    cy.get('.header-col-chips').contains(chipValue).should('be.visible')
   }
 }
 
-const cohortEdit = new CohortEdit()
+export const cohortEdit = new CohortEdit()
 
-defineStep('I should see {string} modal opening', (modalTitle: string) =>
-  cohortEdit.shouldSeeModalOpening(modalTitle)
-)
 defineStep('I see the panel with the name {string}', (panelName: string) =>
   cohortEdit.shouldSeePanelWithName(panelName)
 )
-defineStep('I should see {string} selected in the panel {string}', (selected: string, panelName: string) =>
-  cohortEdit.shouldSeeSelectedInPanel(selected, panelName)
-)
 defineStep(
-  'I select {string} from the panel with the name {string}',
-  (option: string, panelName: string) => cohortEdit.selectFromPanelByName(option, panelName)
+  'I should see {string} selected in the panel {string}',
+  (selected: string, panelName: string) => cohortEdit.shouldSeeSelectedInPanel(selected, panelName)
 )
-defineStep('I click on Auswählen button', () => cohortEdit.clickAuswaehlenButton())
-defineStep('I should see {string} modal closing', (modalTitle: string) =>
-  cohortEdit.shouldSeeModalClosing(modalTitle)
+defineStep('I select {string} from the panel with the name {string}', (option: string) =>
+  cohortEdit.selectFromPanelByName(option)
 )
 defineStep('I select a value of {int}', (value: number) => cohortEdit.selectValue(value.toString()))
 defineStep('I select the unit {string}', (unit: string) => cohortEdit.selectUnit(unit))
+defineStep('I should see {string} applied in the filter summary', (chipValue: string) =>
+  cohortEdit.shouldSeeChipValueInFilterSummary(chipValue)
+)
 defineStep(
   'I should see {string} in the cohort criteria list with {string} and {string} selected',
   (criterium: string, panelName: string, chipValue: string) =>
     cohortEdit.shouldSeeCriteriumInListWithSelected(criterium, panelName, chipValue)
-)
-defineStep(
-  'I select the filter {int} and option {int}',
-  (filterIndex: number, optionsIndex: number) => {
-    cohortEdit.selectFilter(filterIndex, optionsIndex)
-  }
 )

@@ -8,7 +8,7 @@
       <input
         type="radio"
         name="download-format"
-        [attr.data-cy]="'download-format-crtdl'"
+        numDataCy="download-format-crtdl"
         [checked]="selectedFormat === 'crtdl'"
         (change)="selectedFormat = 'crtdl'"
       />
@@ -26,7 +26,7 @@
       <input
         type="radio"
         name="download-format"
-        [attr.data-cy]="'download-format-csv'"
+        numDataCy="download-format-csv"
         [checked]="selectedFormat === 'csv'"
         (change)="selectedFormat = 'csv'"
       />
@@ -42,12 +42,12 @@
   </div>
 
   <div role="buttons" class="download-actions">
-    <num-button type="cancel" [attr.data-cy]="'cancel-download-button'" (click)="doDiscard()">
+    <num-button type="cancel" numDataCy="cancel-download-button" (click)="doDiscard()">
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate }}
     </num-button>
     <num-button
       type="green"
-      [attr.data-cy]="'save-file-button'"
+      numDataCy="save-file-button"
       [isDisabled]="modal.title.length === 0"
       (click)="download(modal.title)"
     >

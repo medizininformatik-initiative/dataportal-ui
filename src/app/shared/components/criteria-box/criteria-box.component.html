@@ -1,10 +1,10 @@
 <div
   cdkDrag
   [cdkDragData]="criterion().getId()"
-  [attr.data-cy]="criterion().getDisplay() | displayTranslation"
+  [numDataCy]="criterion().getDisplay() | displayTranslation"
   class="container margin-bottom-2 margin-right-2"
 >
-  <div class="content" cdkDragHandle>
+  <div class="content" numDataCy="criterion-content" cdkDragHandle>
     <div
       matTooltipPosition="below"
       [matTooltip]="criterion().getDisplay() | displayTranslation"

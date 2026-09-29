@@ -2,6 +2,7 @@
   @for (navItem of mainNavItems; track navItem) {
   <a
     class="num-mat-list-item"
+    [numDataCy]="'nav-' + navItem.routeTo"
     [routerLinkActive]="'num-mat-list-item--active'"
     mat-list-item
     [disableRipple]="true"
