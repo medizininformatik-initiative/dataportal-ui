@@ -2,6 +2,7 @@ import { Component, OnInit, inject, input, output } from '@angular/core'
 import { ConfirmDeleteService } from '../../service/SavedQueryTile/ConfirmDelete.service'
 import { InterfaceSavedQueryTile } from '../../models/SavedQueryTile/InterfaceSavedQueryTile'
 import { MatTooltip } from '@angular/material/tooltip'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
 import { ButtonComponent } from '../button/button.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { DatePipe } from '@angular/common'
@@ -12,7 +13,14 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './saved-query-tile.component.html',
   styleUrls: ['./saved-query-tile.component.scss'],
   standalone: true,
-  imports: [MatTooltip, ButtonComponent, FontAwesomeModule, DatePipe, TranslateModule],
+  imports: [
+    MatTooltip,
+    ButtonComponent,
+    FontAwesomeModule,
+    DatePipe,
+    TranslateModule,
+    NumDataCyDirective,
+  ],
 })
 export class SavedQueryTileComponent implements OnInit {
   private confirmDeleteService = inject(ConfirmDeleteService)

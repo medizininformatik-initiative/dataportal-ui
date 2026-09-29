@@ -7,8 +7,13 @@ import path from "path";
 
 export default defineConfig({
   env: {
+    // Sensitive - read via cy.env() only, never exposed to the browser context.
     username: 'testuser',
     password: 'testpassword',
+  },
+  expose: {
+    // Non-sensitive - safe for synchronous Cypress.expose() access, including
+    // as cy.origin()'s plain string URL argument.
     homeUrl: 'http://localhost:4200/data-query/cohort-definition',
     redirectUrl: 'http://localhost:8080',
   },

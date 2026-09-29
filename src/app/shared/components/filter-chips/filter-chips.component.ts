@@ -5,13 +5,14 @@ import { FilterChipPropertyData } from '../../models/FilterChips/FilterChipPrope
 import { HighlightPipe } from '../../pipes/HighlightPipe'
 import { NgClass } from '@angular/common'
 import { MatTooltip } from '@angular/material/tooltip'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
 
 @Component({
   selector: 'num-filter-chips',
   templateUrl: './filter-chips.component.html',
   styleUrls: ['./filter-chips.component.scss'],
   standalone: true,
-  imports: [NgClass, DisplayTranslationPipe, HighlightPipe, MatTooltip],
+  imports: [NgClass, DisplayTranslationPipe, HighlightPipe, MatTooltip, NumDataCyDirective],
 })
 export class FilterChipsComponent {
   private translation = inject(DisplayTranslationPipe)

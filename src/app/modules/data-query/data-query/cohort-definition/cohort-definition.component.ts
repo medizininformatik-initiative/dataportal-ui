@@ -1,5 +1,5 @@
 import { CohortDefinitionActionBarComponent } from './action-bar/cohort-definition-action-bar.component'
-import { Component, inject } from '@angular/core'
+import { Component, computed, inject } from '@angular/core'
 import { DisplayFeasibilityQueryComponent } from '../../../feasibility-query/components/editor/display/display.component'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
@@ -34,7 +34,9 @@ export class CohortDefinitionComponent {
   private readonly feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
   private readonly resultProviderService = inject(ResultProviderService)
 
-  readonly isFeasibilityExistent = this.feasibilityQueryValidation.validationState().isValid
+  readonly isFeasibilityExistent = computed(
+    () => this.feasibilityQueryValidation.validationState().isValid
+  )
 
   readonly totalNumberOfPatients = toSignal(
     this.resultProviderService

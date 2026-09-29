@@ -1,5 +1,5 @@
 import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
-import { MenuTests } from '../../support/step_definitions/menu.cy'
+import { numMenu } from '../../support/component-objects/NumMenu'
 import { Search } from '../../support/step_definitions/search.cy'
 
 export class DataSelectionSearch {
@@ -17,9 +17,8 @@ export class DataSelectionSearch {
   }
 
   public openMenuOnDataSelectionBox(name: string) {
-    const menuInstance = new MenuTests()
     cy.get(`[data-cy="${name}"]`).within(() => {
-      menuInstance.openMenu()
+      numMenu.open()
     })
   }
 
@@ -27,20 +26,10 @@ export class DataSelectionSearch {
     cy.get(`[data-cy="${label}"]`).contains(label).should('be.visible').click()
   }
 
-  public getFilterChip(chipName: string) {
-    cy.get('.filter-container').within(() => {
-      cy.get(`[data-cy="${chipName}"]`).contains(chipName).should('be.visible')
-    })
-  }
-
-  public getFieldChip(chipName: string) {
-    cy.get('.selected-fields-container').within(() => {
-      cy.get(`[data-cy="${chipName}"]`).contains(chipName).should('be.visible')
-    })
-  }
-
-    public getReferenceChip(chipName: string) {
-    cy.get('.reference-container').within(() => {
+  // Was 3 near-identical methods (getFilterChip/getFieldChip/getReferenceChip)
+  // differing only by container class — one parametrized method instead.
+  public getChip(containerClass: string, chipName: string) {
+    cy.get(containerClass).within(() => {
       cy.get(`[data-cy="${chipName}"]`).contains(chipName).should('be.visible')
     })
   }
@@ -104,7 +93,7 @@ defineStep('I select the checkbox labeled {string}', (label: string) => {
 });
 
 defineStep('a chip labeled {string} should appear in the "Selected Fields" section', (chipName: string) => {
-  dataSelectionSearch.getFieldChip(chipName);
+  dataSelectionSearch.getChip('.selected-fields-container', chipName);
 });
 
 defineStep('I click the {string} tab', (tabName: string) => {
@@ -116,7 +105,7 @@ defineStep('I enter {string} into the filter search field', (conceptName: string
 });
 
 defineStep('a chip labeled {string} should appear in the "Selected Filters" section', (chipName: string) => {
-  dataSelectionSearch.getFilterChip(chipName);
+  dataSelectionSearch.getChip('.filter-container', chipName);
 });
 
 defineStep('I should see the placeholder', () => {
@@ -138,5 +127,5 @@ defineStep('I add the reference', () => {
   dataSelectionSearch.saveReference();
 })
 defineStep('a chip labeled {string} should appear in the "Selected Reference" section', (chipName: string) => {
-  dataSelectionSearch.getReferenceChip(chipName);
+  dataSelectionSearch.getChip('.reference-container', chipName);
 });

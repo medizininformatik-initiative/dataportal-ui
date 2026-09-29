@@ -21,7 +21,12 @@ export function getUrlPathByPage(page: Page): string {
     case Page.QueryEditorCriteria:
       return UrlPaths.queryEditor.criteria;
     case Page.QueryEditorProfile:
-      return UrlPaths.queryEditor.profile;
+      // .profile doesn't exist on UrlPaths.queryEditor (criteria/feature/
+      // reference only) — Page.QueryEditorProfile is query-editor/feature
+      // (editing a data-selection profile's filters), confirmed against
+      // query-editor.routing.module.ts's actual routes. Pre-existing bug,
+      // unrelated to this pass — found via `tsc --noEmit`, fixed in passing.
+      return UrlPaths.queryEditor.feature;
     case Page.SavedQueries:
       return BasePaths.savedQueries
     default:
