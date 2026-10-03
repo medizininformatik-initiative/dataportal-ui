@@ -1,20 +1,17 @@
 import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service'
-import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
-import { combineLatest, filter, map, switchMap } from 'rxjs'
+import { combineLatest, filter, switchMap } from 'rxjs'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptFilterTableComponent } from './concept-filter-table/concept-filter-table.component'
 import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
 import { SearchbarComponent } from '../../../../shared/components/search/searchbar.component'
 import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 import { SearchFilterComponent } from '../../../../shared/components/search-filter/search-filter.component'
-import { SelectedConceptFilterProviderService } from '../../service/ConceptFilter/SelectedConceptFilterProvider.service'
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop'
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
 import {
   Component,
   DestroyRef,
   computed,
-  effect,
   inject,
   input,
   model,
@@ -26,13 +23,12 @@ import {
   selector: 'num-concept-filter',
   templateUrl: './concept-filter.component.html',
   styleUrls: ['./concept-filter.component.scss'],
-  providers: [ConceptSelectionHelperService, SelectedConceptFilterProviderService],
+  providers: [ConceptSelectionHelperService],
   standalone: true,
   imports: [SearchbarComponent, SearchFilterComponent, ConceptFilterTableComponent],
 })
 export class ConceptFilterComponent {
   private readonly destroyRef = inject(DestroyRef)
-  private readonly selectedConceptFilterService = inject(SelectedConceptFilterProviderService)
   private readonly conceptSearchService = inject(CodeableConceptSearchService)
   private readonly conceptSelectionService = inject(ConceptSelectionHelperService)
 
@@ -53,19 +49,14 @@ export class ConceptFilterComponent {
   readonly searchResults = toSignal<CodeableConceptResultList | null>(
     toObservable(this.activeUrls).pipe(
       switchMap((urls) =>
-        this.conceptSearchService.getSearchResults(urls).pipe(
-          filter((results) => results != null),
-          map((results) => this.applySelectionState(results))
-        )
+        this.conceptSearchService.getSearchResults(urls).pipe(filter((results) => results != null))
       )
     ),
     { initialValue: null }
   )
 
   constructor() {
-    effect(() => this.syncPreSelectedConcepts())
     this.setupSearchTrigger()
-    this.destroyRef.onDestroy(() => this.selectedConceptFilterService.clearSelectedConceptFilter())
   }
 
   public searchConcepts(searchTerm: string): void {
@@ -82,31 +73,6 @@ export class ConceptFilterComponent {
       this.conceptSelectionService.toggleConceptSelection(concept, prev)
     )
     this.changedSelectedConcepts.emit(this.cloneCurrentConcepts())
-  }
-
-  private syncPreSelectedConcepts(): void {
-    const concepts = this.preSelectedConcepts()
-    this.selectedConceptFilterService.initializeSelectedConcepts(concepts)
-    this.applySelectionStateToCurrentResults()
-  }
-
-  private applySelectionStateToCurrentResults(): void {
-    this.searchResults()
-      ?.getResults()
-      .forEach((entry) => this.updateEntrySelection(entry))
-  }
-
-  private applySelectionState(results: CodeableConceptResultList): CodeableConceptResultList {
-    results
-      .getResults()
-      .forEach((entry: CodeableConceptResultListEntry) => this.updateEntrySelection(entry))
-    return results
-  }
-
-  private updateEntrySelection(entry: CodeableConceptResultListEntry): void {
-    const terminologyCode = entry.getConcept().getTerminologyCode()
-    const isSelected = this.selectedConceptFilterService.isConceptSelected(terminologyCode)
-    entry.setIsSelected(isSelected)
   }
 
   private setupSearchTrigger(): void {

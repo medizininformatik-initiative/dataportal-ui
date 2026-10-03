@@ -24,7 +24,10 @@ export class ConceptSelectionHelperService {
   }
 
   isSameConcept(concept1: Concept, concept2: Concept): boolean {
-    return concept1.getTerminologyCode().getCode() === concept2.getTerminologyCode().getCode()
+    return (
+      concept1.getTerminologyCode().getCode() === concept2.getTerminologyCode().getCode() &&
+      concept1.getTerminologyCode().getSystem() === concept2.getTerminologyCode().getSystem()
+    )
   }
 
   cloneConcepts(concepts: Concept[]): Concept[] {
