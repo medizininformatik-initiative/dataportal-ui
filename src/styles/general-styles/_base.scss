@@ -1,0 +1,98 @@
+// ──────────────────────────────────────────────────────────────
+// Base element styles
+//
+// Document-level defaults for html/body and bare HTML elements.
+// ──────────────────────────────────────────────────────────────
+
+html,
+body {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+mark {
+  background-color: var(--color-accent-bg);
+  color: var(--color-text-primary);
+  border-radius: 2px;
+  padding: 0 1px;
+  font-weight: 600;
+}
+
+// Interaction polish. :where() keeps specificity at zero so Material's own
+// component styles (focus indicators, ripple, transitions) still win where defined.
+:where(a, button, [role='button'], [tabindex]):focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+:where(button, a, .mat-mdc-button-base) {
+  transition: var(--transition-interactive);
+}
+
+:where(button, .mat-mdc-button-base):not(:disabled):active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(button, a, .mat-mdc-button-base) {
+    transition: none;
+  }
+
+  :where(button, .mat-mdc-button-base):not(:disabled):active {
+    transform: none;
+  }
+}
+
+// Skip link: hidden until focused by keyboard
+.skip-link {
+  position: fixed;
+  top: var(--spacing-8);
+  left: var(--spacing-8);
+  z-index: var(--z-skip-link);
+  padding: var(--spacing-8) var(--spacing-16);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-text-primary);
+  color: #ffffff;
+  transform: translateY(-200%);
+
+  &:focus {
+    transform: translateY(0);
+  }
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+// Aligned digits in data-heavy UI (tables, paginator, badges).
+table,
+.mat-mdc-table,
+.mat-mdc-paginator,
+.mat-badge-content {
+  font-variant-numeric: tabular-nums;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}

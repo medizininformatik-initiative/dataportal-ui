@@ -1,0 +1,54 @@
+// Utility-class spacing scale. Keys are ordinal steps, NOT pixel values
+// (.padding-left-4 = 24px, while --spacing-4 = 4px). Steps 0-7 are used in
+// templates and must never be renumbered. For off-scale values (10, 12, 20px)
+// use var(--spacing-*) directly in component SCSS instead of adding keys here.
+$spacing-scale: (
+  0: 0,
+  1: var(--spacing-4),
+  2: var(--spacing-8),
+  3: var(--spacing-16),
+  4: var(--spacing-24),
+  5: var(--spacing-32),
+  6: var(--spacing-40),
+  7: var(--spacing-48),
+  auto: auto,
+);
+
+@mixin generate-spacing($property) {
+  @each $key, $value in $spacing-scale {
+    .#{$property}-#{$key} {
+      #{$property}: #{$value};
+    }
+  }
+}
+
+@mixin generate-directional-spacing($property) {
+  @each $key, $value in $spacing-scale {
+    .#{$property}-top-#{$key} {
+      #{$property}-top: $value;
+    }
+    .#{$property}-right-#{$key} {
+      #{$property}-right: $value;
+    }
+    .#{$property}-bottom-#{$key} {
+      #{$property}-bottom: $value;
+    }
+    .#{$property}-left-#{$key} {
+      #{$property}-left: $value;
+    }
+    .#{$property}-x-#{$key} {
+      #{$property}-left: $value;
+      #{$property}-right: $value;
+    }
+    .#{$property}-y-#{$key} {
+      #{$property}-top: $value;
+      #{$property}-bottom: $value;
+    }
+  }
+}
+
+// Generate spacing utility classes (.padding-N, .padding-top-N, .margin-x-N, …)
+@include generate-spacing(padding);
+@include generate-spacing(margin);
+@include generate-directional-spacing(padding);
+@include generate-directional-spacing(margin);
