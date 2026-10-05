@@ -1,8 +1,8 @@
 import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
-import { numCheckbox } from '../../support/component-objects/NumCheckbox'
-import { numMenu } from '../../support/component-objects/NumMenu'
-import { Search } from '../../support/step_definitions/search.cy'
-import { t } from '../../support/i18n'
+import { numCheckbox } from '../component-objects/NumCheckbox'
+import { numMenu } from '../component-objects/NumMenu'
+import { Search } from './search.cy'
+import { t } from '../i18n'
 
 export class DataSelectionSearch {
   public getTreeNodeByName(name: string, root: string) {
