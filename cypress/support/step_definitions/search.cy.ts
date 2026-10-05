@@ -21,3 +21,6 @@ defineStep('I type {string} in the search input field', (text: string) => {
 defineStep('I clear the search input field', () => {
   searchInstance.clearInputField()
 })
+defineStep('the search input should keep the text {string}', (text: string) => {
+  cy.get('num-searchbar input').should('have.value', text)
+})
