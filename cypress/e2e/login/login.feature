@@ -1,3 +1,4 @@
+@cross-cutting
 Feature: Login
 Scenario: I Login Successfully
     When I go to the login page

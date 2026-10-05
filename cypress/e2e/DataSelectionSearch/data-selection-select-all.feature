@@ -1,5 +1,6 @@
 # The "select all" checkbox in the table header ticks every loaded row. Rows
 # update a moment after the header checkbox, so the row assertions retry.
+@area:data-selection
 Feature: Data Selection Search - select all
 
   Background:

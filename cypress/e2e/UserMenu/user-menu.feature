@@ -1,6 +1,7 @@
 # The header user menu is a mat-select, not the shared num-menu. The "Log" entry
 # (error log) is disabled while there are no errors to show. Entry names are
 # Examples data.
+@cross-cutting
 Feature: User menu
 
   Background:

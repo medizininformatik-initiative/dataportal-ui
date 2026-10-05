@@ -2,6 +2,7 @@
 # Its options menu offers exactly configure, duplicate and delete - there is no
 # move entry, so moving into Inclusion / Exclusion is drag and drop only.
 # The criterium and the menu entries are Examples data, so either can be swapped.
+@area:feasibility-query
 Feature: Criterium actions
 
   Background:

@@ -3,6 +3,7 @@
 # line breaks. All data lives in the Examples tables, so a code, terminology or context
 # can be swapped without touching a step. The defaults are ICD-10-GM category codes
 # in the context Diagnose.
+@area:feasibility-query
 Feature: Bulk search
 
   Background:

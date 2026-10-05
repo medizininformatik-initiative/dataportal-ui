@@ -1,3 +1,4 @@
+@area:feasibility-query
 Feature: Cohort editing
   Background:
     Given I am logged in as a user

@@ -6,6 +6,7 @@
 # (icd-10-gm only), hence the add-by-code step.
 # All data (criterium, code, tab, search term, concepts, system) is in the Examples
 # tables, so another criterium or concept can be tried without touching a step.
+@area:shared-filter
 Feature: Attribute filter (concept) - selecting concepts
 
   Background:

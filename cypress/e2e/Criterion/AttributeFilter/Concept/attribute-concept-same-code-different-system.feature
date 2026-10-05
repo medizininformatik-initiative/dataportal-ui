@@ -11,6 +11,7 @@
 # The search table shows the system as its display name in its own cell, so a row is picked by
 # code AND that name. The selected-concepts list shows only display and code, never the system,
 # so it is asserted by entry count.
+@area:shared-filter
 Feature: Concept filter - same code in different code systems
 
   Background:

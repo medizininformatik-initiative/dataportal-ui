@@ -2,6 +2,7 @@
 # ("Cannot set onlyIfReferenced", fix: commit 2edcb284 on develop). `isReferenced` of
 # `data-selection-boxes` compared against a shadowed variable, so no box ever offered the
 # "Only if referenced" option. The issue explicitly asks for a UI test that the option is there.
+@area:data-selection
 Feature: Data Selection - Only if referenced
 
   Background: I am logged in and have a data selection with a profile that references another

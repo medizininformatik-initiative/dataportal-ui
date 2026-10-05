@@ -13,6 +13,7 @@
 # department key, Level of encounter, Type of encounter - plus Time restriction.
 # The criteria, the filter names and the concept codes are Examples data, so another
 # profile with several concept filters can be tried by changing the tables only.
+@area:shared-filter
 Feature: Attribute filter (concept) - criterium with several concept filters
 
   Background:

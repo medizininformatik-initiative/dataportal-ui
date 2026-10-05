@@ -3,6 +3,7 @@
 # timeRestrictionAllowed=false, no valueDefinition, no attributeDefinitions).
 # The English UI shows the German original name (en translation is empty).
 # The criterium, the list and the menu entry are Examples data.
+@area:query-editor
 Feature: Criterion without any filter
 
   Background:

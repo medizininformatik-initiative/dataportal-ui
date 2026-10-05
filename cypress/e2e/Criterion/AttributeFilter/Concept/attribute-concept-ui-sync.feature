@@ -2,6 +2,7 @@
 # tabs and empty state, and that the tabs stay in sync with each other.
 # Selection/removal logic itself is in the sibling -select / -remove files.
 # All data (criterium, code, tab, search terms, concepts, count) is in Examples cells.
+@area:shared-filter
 Feature: Attribute filter (concept) - UI state
 
   Background:
