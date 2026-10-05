@@ -12,6 +12,9 @@ export default defineConfig({
     password: 'testpassword',
   },
   expose: {
+    // UI language the suite runs in: 'en' (default) or 'de'. Override per run with
+    // `npx cypress run --expose language=de`. See cypress/support/i18n.ts.
+    language: 'en',
     // Non-sensitive - safe for synchronous Cypress.expose() access, including
     // as cy.origin()'s plain string URL argument.
     homeUrl: 'http://localhost:4200/data-query/cohort-definition',

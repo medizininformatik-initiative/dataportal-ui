@@ -1,4 +1,5 @@
 import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { currentLanguage } from '../i18n'
 
 export class Language {
   public setLanguage(language: 'en' | 'de' = 'en') {
@@ -19,4 +20,8 @@ defineStep('I set the language to English', () => {
 })
 defineStep('I set the language to German', () => {
   languageInstance.setLanguage('de')
+})
+// Uses the language configured for the run (`--expose language=de`, default 'en').
+defineStep('I set the language to the configured language', () => {
+  languageInstance.setLanguage(currentLanguage())
 })
