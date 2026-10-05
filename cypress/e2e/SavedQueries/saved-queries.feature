@@ -1,3 +1,4 @@
+@area:saved-queries
 Feature: Saved Queries
 
   Background:

@@ -1,6 +1,7 @@
 # Logging in lands on the cohort definition page. Without a cohort it shows the
 # empty message, and running a feasibility query or saving is not possible yet.
 # Button names and the target page are Examples data.
+@area:data-query
 Feature: Cohort definition - empty state
 
   Background:

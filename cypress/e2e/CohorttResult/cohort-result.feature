@@ -1,3 +1,4 @@
+@area:feasibility-query
 Feature: Cohort Result
 
   Background:

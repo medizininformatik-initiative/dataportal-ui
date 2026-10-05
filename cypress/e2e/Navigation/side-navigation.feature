@@ -1,6 +1,7 @@
 # The side navigation shows four areas and can be collapsed to icons only. In the
 # collapsed state the labels are gone (they move into tooltips). The labels and the
 # number of areas are Examples data.
+@cross-cutting
 Feature: Side navigation
 
   Background:

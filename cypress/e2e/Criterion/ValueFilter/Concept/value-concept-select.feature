@@ -3,6 +3,7 @@
 # valueDefinition.type=concept), value set http://hl7.org/fhir/ValueSet/administrative-gender:
 # female, male, other, unknown (system http://hl7.org/fhir/administrative-gender).
 # The criterium, its code, the tab, the concepts and the system are Examples data.
+@area:shared-filter
 Feature: Value filter (concept) - selecting and removing concepts
 
   Background:

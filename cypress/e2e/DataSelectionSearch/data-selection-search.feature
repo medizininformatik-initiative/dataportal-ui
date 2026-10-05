@@ -1,3 +1,4 @@
+@area:data-selection
 Feature: Data Selection Search
 
   Background: I am logged in and on the Data Selection Search page

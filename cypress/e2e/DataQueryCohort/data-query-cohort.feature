@@ -1,3 +1,4 @@
+@area:data-query
 Feature: Data Query Cohort
     Background: I am logged in and on the Data Query Cohort page
         Given I am logged in as a user

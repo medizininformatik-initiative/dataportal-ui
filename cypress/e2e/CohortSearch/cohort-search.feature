@@ -1,3 +1,4 @@
+@area:feasibility-query
 Feature: Cohort Search
 
   Background: I am logged in and on the Cohort Search page

@@ -1,6 +1,7 @@
 # The language dropdown offers German and English. The side navigation labels are
 # used as the visible check because they come straight from the translation files.
 # Languages, labels and the page to navigate to are Examples data.
+@cross-cutting
 Feature: Language switch
 
   Background:

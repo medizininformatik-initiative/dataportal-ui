@@ -4,6 +4,7 @@
 # Regression for bug-reports/selected-concept-list-remove-wipes-selection.md
 # Data: see attribute-concept-select.feature. Every value is an Examples cell; a cell may
 # be a literal or a {{placeholder}} from support/test-data/concepts.json.
+@area:shared-filter
 Feature: Attribute filter (concept) - removing concepts
 
   Background:
