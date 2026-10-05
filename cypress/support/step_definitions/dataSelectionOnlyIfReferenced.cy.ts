@@ -23,7 +23,7 @@ defineStep('the data selection box {string} does not offer the "Only if referenc
   box(name).find('num-reference-col').should('not.exist')
 })
 
-defineStep('I enable the "Only if referenced" option of the data selection box {string}', (name: string) => {
+defineStep('I toggle the "Only if referenced" option of the data selection box {string}', (name: string) => {
   box(name)
     .find('num-reference-col')
     .within(() => numCheckbox.toggle())
