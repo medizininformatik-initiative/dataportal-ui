@@ -19,8 +19,10 @@ Feature: Cohort Search
       | Age       | Add to cohort selection  | Show cohort selection  |
       | Diabetes  | Add to cohort selection  | Show cohort selection  |
 
+  # Searched by termcode: a name search for "Age" is outranked by unrelated "...age..."
+  # matches, so the exact row is not on the first page (see cypress/CLAUDE.md).
   Scenario Outline: Select Cohort elements
-    When I type "<criterium>" in the search input field
+    When I type "<code>" in the search input field
     When I select the checkbox in the row containing "<criterium>"
     And I click on the button "<button1>"
     Then the button "<button2>" should be enabled
@@ -29,5 +31,5 @@ Feature: Cohort Search
     Then I am on the "Feasibility Editor" page
 
     Examples: Selection Criteria
-      | criterium | button1                  | button2                |
-      | Age       | Add to cohort selection  | Show cohort selection  |
+      | criterium | code    | button1                  | button2                |
+      | Age       | 30525-0 | Add to cohort selection  | Show cohort selection  |
