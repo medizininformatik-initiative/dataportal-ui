@@ -15,7 +15,10 @@ function escapeRegex(text: string): string {
 
 export class NumTable {
   public getRowByText(text: string) {
-    return cy.get('num-table tbody > tr').contains('td', new RegExp(escapeRegex(text), 'i')).closest('tr')
+    return cy
+      .get('num-table tbody > tr')
+      .contains('td', new RegExp(escapeRegex(text), 'i'))
+      .closest('tr')
   }
 
   /**
@@ -36,11 +39,42 @@ export class NumTable {
   }
 
   public shouldNotContainRow(text: string) {
-    cy.get('num-table tbody > tr').contains('td', new RegExp(escapeRegex(text), 'i')).should('not.exist')
+    cy.get('num-table tbody > tr')
+      .contains('td', new RegExp(escapeRegex(text), 'i'))
+      .should('not.exist')
   }
 
   public selectCheckboxInRow(text: string) {
     this.getRowByExactText(text).within(() => numCheckbox.toggle())
+  }
+
+  /** Toggles the "select all" checkbox in the table header. */
+  public toggleSelectAll() {
+    cy.get('num-table thead').within(() => numCheckbox.toggle())
+  }
+
+  /**
+   * Asserts on the rows currently rendered (the table is infinite-scrolled, so
+   * "all" means every loaded row). Uses a retrying `.should(callback)` on
+   * `aria-checked` because the row checkboxes update a moment after the header
+   * one — asserting right after the click sees the header ticked and the rows
+   * still unticked.
+   */
+  public shouldHaveAllRowsChecked() {
+    this.shouldHaveRowsCheckedState('true')
+  }
+
+  public shouldHaveNoRowChecked() {
+    this.shouldHaveRowsCheckedState('false')
+  }
+
+  private shouldHaveRowsCheckedState(expected: 'true' | 'false') {
+    cy.get('num-table tbody > tr [data-cy="checkbox"]').should(($boxes) => {
+      expect($boxes.length, 'number of row checkboxes').to.be.greaterThan(0)
+      $boxes.each((_, box) => {
+        expect(box.getAttribute('aria-checked'), 'aria-checked').to.eq(expected)
+      })
+    })
   }
 }
 
