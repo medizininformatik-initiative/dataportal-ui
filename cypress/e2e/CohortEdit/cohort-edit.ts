@@ -27,9 +27,9 @@ export class CohortEdit {
     // not just the data-cy value — a value filter's chip block can share
     // its criterion's exact data-cy value, which makes an unscoped
     // `[data-cy="..."]` ambiguous here too.
-    cy.get(`.container[data-cy="${criterium}"]`).within(() => {
-      cy.get('[data-cy="criterion-content"]').should('contain', criterium).should('contain', chipValue)
-    })
+    // The box itself, not `criterion-content`: the chips render in the box's own
+    // filter section, a sibling of the content block, not inside it.
+    cy.get(`.container[data-cy="${criterium}"]`).should('contain', criterium).and('contain', chipValue)
     numFilterChips.getFilterChipByName(criterium, chipValue, panelName)
   }
 

@@ -9,7 +9,8 @@ export class CriterionToEditor {
     criterionSearchInstance.selectCriterion(criterium)
     criterionSearchInstance.selectActioBarButton('Add')
     criterionSearchInstance.selectActioBarButton('Show')
-    cy.wait(1000) // wait for the editor to load
+    // The criteria-box rendering is the editor's own "loaded" signal
+    cy.get(`.container[data-cy="${criterium}"]`).should('be.visible')
   }
 
   /**
@@ -28,7 +29,7 @@ export class CriterionToEditor {
     criterionSearchInstance.selectCriterion(expectedDisplayText)
     criterionSearchInstance.selectActioBarButton('Add')
     criterionSearchInstance.selectActioBarButton('Show')
-    cy.wait(1000) // wait for the editor to load
+    cy.get(`.container[data-cy="${expectedDisplayText}"]`).should('be.visible')
   }
 
   public shouldSeeCriteriumInEditor(criterium: string) {
@@ -38,9 +39,10 @@ export class CriterionToEditor {
   }
 
   public dragCriteriumRightBy200px(type = "Inclusion") {
-    const draggableSelector = '.cdk-drag'
-    cy.wait(1000) // ensure UI is ready
-    cy.get(draggableSelector).trigger('mousedown', {
+    // A synthetic mousedown only starts a CDK drag when its target is inside a
+    // cdkDragHandle, and the criteria-box root is not one — use its content block.
+    const draggableSelector = '[data-cy="criterion-content"]'
+    cy.get(draggableSelector).should('be.visible').trigger('mousedown', {
       button: 0,
       timeout: 10000,
     })
@@ -50,7 +52,7 @@ export class CriterionToEditor {
         waitForAnimations: true,
       })
       .click()
-      cy.wait(1000)
+    // No fixed wait: the scenario's next step asserts the resulting UI state, and Cypress retries it
   }
 }
 

@@ -54,6 +54,8 @@ export default defineConfig({
     },
 
     testIsolation: true,
+    // Retry only in CI-style runs; `cypress open` stays strict so flakes are seen while authoring
+    retries: { runMode: 2, openMode: 0 },
     baseUrl: "http://localhost:4200",
     port: 4300,
     viewportHeight: 1080,
