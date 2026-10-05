@@ -19,11 +19,9 @@ import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 import { v4 as uuidv4 } from 'uuid'
-import {
-  HeaderComponent,
-  HeaderDescriptionComponent,
-  ModalWindowComponent,
-} from '../shared-components.module'
+import { HeaderComponent } from '../header/header.component'
+import { HeaderDescriptionComponent } from '../header-description/header-description.component'
+import { ModalWindowComponent } from '../modal-window/modal-window.component'
 import { TableRowData } from '../../models/TableData/TableRowData'
 @Component({
   selector: 'num-validation-modal',
