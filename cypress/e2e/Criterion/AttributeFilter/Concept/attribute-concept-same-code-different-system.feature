@@ -1,50 +1,56 @@
 # Regression for https://github.com/medizininformatik-initiative/dataportal-ui/issues/626
 # (fix: commit 88b62fa9 on develop - concept identity = code AND system).
 #
-# BLOCKED: needs a criterium whose concept filter offers the SAME code in two
-# systems. J13 etc. exist in both http://hl7.org/fhir/sid/icd-10 and
-# http://fhir.de/CodeSystem/bfarm/icd-10-gm, but they never meet in one table.
-# Re-checked against GET terminology/ui-profile (all profiles): NO concept filter
-# (attribute or value) has more than one value set, and the two ICD value sets sit in
-# different profiles:
-#   http://hl7.org/fhir/sid/icd-10/vs       -> MII_PR_Person_Todesursache(1)  (attr "ICD-10-WHO")
-#   http://fhir.de/ValueSet/bfarm/icd-10-gm -> MII_PR_Onko_Tod                (attr "Actual result")
-# So no single concept editor can show both. Open options: a profile with a combined
-# value set, or reproducing it at the unit level. Until then replace the TBD cells in
-# Examples and drop @pending.
-# All data is in the Examples tables, so only those need to change once a criterium exists.
-@pending
-Feature: Attribute filter (concept) - same code in different code systems
+# The feasibility criteria's concept filters each offer ONE value set, so one code can never
+# appear in two systems there. The data-selection editor can: the profile "Diagnosis"
+# (MII PR Diagnose Condition) has a Code Filter whose value sets include ICD-10-GM and
+# Alpha-ID, and `I26` exists in both (ICD-10-GM: Lungenembolie, Alpha-ID: Traumatische
+# Amputation im Schultergelenk). Verified against GET dse/profile-data and the
+# codeable_concept index (see TEST_DATA.md).
+#
+# The search table shows the system as its display name in its own cell, so a row is picked by
+# code AND that name. The selected-concepts list shows only display and code, never the system,
+# so it is asserted by entry count.
+Feature: Concept filter - same code in different code systems
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
-    And I set the language to the configured language
+    And I am on the "Data Selection Search" page
+    And I set the language to English
 
   Scenario Outline: Selecting a code does not select the same code from another system
-    Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
-    And I open the editor of the added criterium
-    And I open the editor tab "<tab>"
-    When I search for the concept "<code>"
+    Given I type "<profile>" in the search input field
+    And I select the checkbox in the row containing "<profile>"
+    When I click on the button "Add to Selection"
+    And I click on the button "Show Selection"
+    And I click the edit button on the data selection box "<profile>"
+    And I click on the menu item "Configure"
+    And I click the "<tab>" tab
+    And I search for the concept "<code>"
     And I select the concept "<code>" with system "<firstSystem>"
-    Then the selected concepts list has 1 entry
+    Then the concept filter tab "Selected Concepts" shows the count 1
+    And the concept "<code>" with system "<firstSystem>" is checked in the search results
     And the concept "<code>" with system "<secondSystem>" is not checked in the search results
 
     Examples:
-      | criterium | criteriumCode | tab | code | firstSystem                    | secondSystem                                 |
-      | TBD       | TBD           | TBD | J13  | http://hl7.org/fhir/sid/icd-10 | http://fhir.de/CodeSystem/bfarm/icd-10-gm    |
+      | profile   | tab         | code | firstSystem | secondSystem |
+      | Diagnosis | Code Filter | I26  | ICD-10-GM   | Alpha-ID     |
 
   Scenario Outline: The same code in two systems keeps both entries until each is removed
-    Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
-    And I open the editor of the added criterium
-    And I open the editor tab "<tab>"
+    Given I type "<profile>" in the search input field
+    And I select the checkbox in the row containing "<profile>"
+    When I click on the button "Add to Selection"
+    And I click on the button "Show Selection"
+    And I click the edit button on the data selection box "<profile>"
+    And I click on the menu item "Configure"
+    And I click the "<tab>" tab
     And I have selected the concept "<code>" with system "<firstSystem>"
     And I have selected the concept "<code>" with system "<secondSystem>"
     When I open the concept filter tab "Selected Concepts"
     Then the selected concepts list has 2 entries
-    When I remove the concept "<code>" with system "<firstSystem>" from the selected concepts list
+    When I remove the concept "<code>" from the selected concepts list
     Then the selected concepts list has 1 entry
 
     Examples:
-      | criterium | criteriumCode | tab | code | firstSystem                    | secondSystem                                 |
-      | TBD       | TBD           | TBD | J13  | http://hl7.org/fhir/sid/icd-10 | http://fhir.de/CodeSystem/bfarm/icd-10-gm    |
+      | profile   | tab         | code | firstSystem | secondSystem |
+      | Diagnosis | Code Filter | I26  | ICD-10-GM   | Alpha-ID     |

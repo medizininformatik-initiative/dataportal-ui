@@ -85,6 +85,31 @@ export class NumConceptFilter {
     this.resultRow(code, filterName).within(() => numCheckbox.toggle())
   }
 
+  /**
+   * The same code can exist in several code systems (e.g. `I26` in ICD-10-GM and Alpha-ID),
+   * so a row is identified by code AND the system's display name, which the table shows in
+   * its own cell. Asserting exactly one match also guards against an ambiguous lookup.
+   */
+  private resultRowInSystem(code: string, system: string, filterName?: string) {
+    return this.scope(filterName)
+      .find('num-concept-filter-table tbody > tr')
+      .filter((_, row) => {
+        const cells = Array.from(row.querySelectorAll('td')).map((td) => (td.textContent ?? '').trim())
+        return cells.includes(code) && cells.includes(system)
+      })
+      .should('have.length', 1)
+  }
+
+  public toggleResultInSystem(code: string, system: string, filterName?: string) {
+    this.resultRowInSystem(code, system, filterName).within(() => numCheckbox.toggle())
+  }
+
+  public resultInSystemShouldBeChecked(code: string, system: string, checked: boolean) {
+    this.resultRowInSystem(code, system)
+      .find('[data-cy="checkbox"]')
+      .should('have.attr', 'aria-checked', String(checked))
+  }
+
   public resultShouldBeChecked(code: string, checked: boolean) {
     this.resultRow(code)
       .find('[data-cy="checkbox"]')
