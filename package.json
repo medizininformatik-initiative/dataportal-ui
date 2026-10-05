@@ -11,7 +11,8 @@
     "lint:fix": "ng lint --fix",
     "pretty-quick": "pretty-quick --pattern \"src/**/*.{scss,html}\"",
     "e2e": "ng e2e",
-    "cypress": "npx cypress open"
+    "cypress": "npx cypress open",
+    "coverage:features": "node cypress/scripts/feature-coverage.mjs"
   },
   "private": true,
   "dependencies": {
