@@ -13,6 +13,14 @@ export class NumMenu {
     cy.get('[data-cy="openMenu"]').click()
   }
 
+  public shouldOfferItem(menuItemLabel: MenuItemValue) {
+    cy.get('.mat-mdc-menu-content:visible')
+      .should('exist')
+      .within(() => {
+        cy.get('.mat-mdc-menu-item').contains(menuItemLabel).should('be.visible')
+      })
+  }
+
   public clickItem(menuItemLabel: MenuItemValue) {
     cy.get('.mat-mdc-menu-content:visible')
       .should('exist')
