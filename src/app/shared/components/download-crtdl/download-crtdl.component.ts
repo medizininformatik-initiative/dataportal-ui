@@ -1,4 +1,4 @@
-import { ButtonComponent } from '../shared-components.module'
+import { ButtonComponent } from '../button/button.component'
 import { Component, inject } from '@angular/core'
 import { DownloadCRTDLService } from 'src/app/service/Download/DownloadCRTDL.service'
 import { DownloadCRTDLZipService } from 'src/app/service/Download/DownloadCRTDLZip.service'
