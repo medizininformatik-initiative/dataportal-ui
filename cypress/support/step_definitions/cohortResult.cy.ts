@@ -40,7 +40,13 @@ export class CohortResult {
   }
 
   public addTitle(title: string) {
-    cy.get('[data-cy="dialog-title-input"]').type(title)
+    // Typing while the dialog is still opening loses the text (the input is
+    // re-initialised as the open animation ends, leaving it empty and "Save"
+    // disabled). Wait for Material's opening state to end, then assert the value.
+    cy.get('.mat-mdc-dialog-container')
+      .should('have.class', 'mdc-dialog--open')
+      .and('not.have.class', 'mdc-dialog--opening')
+    cy.get('[data-cy="dialog-title-input"]').type(title).should('have.value', title)
   }
 
   public addComment(comment: string) {
