@@ -33,6 +33,22 @@ defineStep('the concept filter tab {string} shows the count {int}', (tab: string
 )
 
 defineStep('I search for the concept {string}', (term: string) => numConceptFilter.search(term))
+defineStep('I select the concept {string} with system {string}', (code: string, system: string) =>
+  numConceptFilter.toggleResultInSystem(resolve(code), system)
+)
+defineStep('I have selected the concept {string} with system {string}', (code: string, system: string) => {
+  numConceptFilter.openTab('Single Search')
+  numConceptFilter.search(resolve(code))
+  numConceptFilter.toggleResultInSystem(resolve(code), system)
+})
+defineStep(
+  'the concept {string} with system {string} is checked in the search results',
+  (code: string, system: string) => numConceptFilter.resultInSystemShouldBeChecked(resolve(code), system, true)
+)
+defineStep(
+  'the concept {string} with system {string} is not checked in the search results',
+  (code: string, system: string) => numConceptFilter.resultInSystemShouldBeChecked(resolve(code), system, false)
+)
 defineStep('I clear the concept search', () => numConceptFilter.clearSearch())
 defineStep('I select the concept {string}', (code: string) =>
   numConceptFilter.toggleResult(resolve(code))
