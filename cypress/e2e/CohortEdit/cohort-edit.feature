@@ -5,7 +5,7 @@ Feature: Cohort editing
     And I set the language to English
 
   Scenario Outline: Applying a time-restriction filter to a criterium
-    Given I add the criterium "<criterium>" to the editor
+    Given I add the criterium "<criterium>" via code "<code>" to the editor
     When I open the menu
     When I click on the menu item "Configure"
     Then I am on the "Query Editor - Criteria" page
@@ -20,11 +20,11 @@ Feature: Cohort editing
     When I click on the button "Edit cohort selection"
     Then I am on the "Feasibility Editor" page
     Examples:
-      | criterium    | filterType | date       | block  |
-      | Pneumonia    | before     | 04.04.2045 | before |
-      | Appendectomy | before     | 04.04.2045 | before |
-      | Pneumonia    | on         | 04.04.2045 | at     |
-      | Appendectomy | after      | 04.04.2045 | after  |
+      | criterium    | code                      | filterType | date       | block  |
+      | Pneumonia    | {{pneumonia.code}}        | before     | 04.04.2045 | before |
+      | Appendectomy | {{appendectomy.code}}     | before     | 04.04.2045 | before |
+      | Pneumonia    | {{pneumonia.code}}        | on         | 04.04.2045 | at     |
+      | Appendectomy | {{appendectomy.code}}     | after      | 04.04.2045 | after  |
 
 
   Scenario Outline: Changing a criterium's filter comparison updates its chip
@@ -47,12 +47,12 @@ Feature: Cohort editing
 
 
   Scenario Outline: Adding a criterium to the Inclusion list enables running Feasibility
-    Given I add the criterium "<criterium>" to the editor
+    Given I add the criterium "<criterium>" via code "<code>" to the editor
     Then I should see the criterium "<criterium>" in the editor
     When I drag "<criterium>" criterium to the "Inclusion" list
     Then the button "Feasibility" should be enabled
     When I click on the button "Feasibility"
     Then I am on the "Feasibility Result" page
     Examples:
-      | criterium |
-      | Pneumonia |
+      | criterium | code               |
+      | Pneumonia | {{pneumonia.code}} |
