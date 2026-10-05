@@ -13,6 +13,18 @@ export class Table {
   public assertTableRowCount(rowCount: number): void {
     cy.get('num-table tbody > tr').should('have.length', rowCount)
   }
+
+  public toggleSelectAll(): void {
+    numTable.toggleSelectAll()
+  }
+
+  public assertAllRowsSelected(): void {
+    numTable.shouldHaveAllRowsChecked()
+  }
+
+  public assertNoRowSelected(): void {
+    numTable.shouldHaveNoRowChecked()
+  }
 }
 
 export const tableInstance = new Table()
@@ -25,4 +37,13 @@ defineStep('I select the checkbox in the row containing {string}', (text: string
 })
 defineStep('the table should have {int} rows', (rowCount: number) => {
   tableInstance.assertTableRowCount(rowCount)
+})
+defineStep('I toggle the select all checkbox of the table', () => {
+  tableInstance.toggleSelectAll()
+})
+defineStep('all rows in the table should be selected', () => {
+  tableInstance.assertAllRowsSelected()
+})
+defineStep('no row in the table should be selected', () => {
+  tableInstance.assertNoRowSelected()
 })
