@@ -1,6 +1,8 @@
 import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { numCheckbox } from '../../support/component-objects/NumCheckbox'
 import { numMenu } from '../../support/component-objects/NumMenu'
 import { Search } from '../../support/step_definitions/search.cy'
+import { t } from '../../support/i18n'
 
 export class DataSelectionSearch {
   public getTreeNodeByName(name: string, root: string) {
@@ -26,16 +28,23 @@ export class DataSelectionSearch {
     cy.get(`[data-cy="${label}"]`).contains(label).should('be.visible').click()
   }
 
-  // Was 3 near-identical methods (getFilterChip/getFieldChip/getReferenceChip)
-  // differing only by container class — one parametrized method instead.
-  public getChip(containerClass: string, chipName: string) {
-    cy.get(containerClass).within(() => {
-      cy.get(`[data-cy="${chipName}"]`).contains(chipName).should('be.visible')
-    })
+  // The profile header renders fields, filters and references as three `.header-col`
+  // blocks, each a translated label above a `.header-col-chips` block. The section is
+  // found by that label (from the app's own translation file), not by a CSS class.
+  public getChip(sectionLabelKey: string, chipName: string) {
+    cy.contains('.header-col', t(sectionLabelKey))
+      .find('.header-col-chips')
+      .within(() => {
+        cy.get(`[data-cy="${chipName}"]`).contains(chipName).should('be.visible')
+      })
   }
 
   public selecteTabByName(tabName: string) {
-    cy.get('.mdc-tab__text-label').contains(tabName).should('be.visible').click()
+    // The editor's main tabs are `div.tab` in `.tabs-container` (num-filter-tabs); nested
+    // tab groups, such as the references' "Part of", are Material tabs.
+    cy.contains('.tabs-container .tab, .mdc-tab__text-label', tabName, { matchCase: false })
+      .should('be.visible')
+      .click()
   }
 
   public searchForConcept(conceptName: string) {
@@ -62,7 +71,7 @@ export class DataSelectionSearch {
       cy.get(`[data-cy="${name}"]`)
         .should('be.visible')
         .within(() => {
-            cy.get('.mat-mdc-checkbox-touch-target').click({ force: true })
+            numCheckbox.toggle()
         })
     })
   }
@@ -93,8 +102,15 @@ defineStep('I select the checkbox labeled {string}', (label: string) => {
 });
 
 defineStep('a chip labeled {string} should appear in the "Selected Fields" section', (chipName: string) => {
-  dataSelectionSearch.getChip('.selected-fields-container', chipName);
+  dataSelectionSearch.getChip('DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS', chipName);
 });
+
+// The header chips cap at 3 visible per group (`maxVisible` in num-filter-chips) and put
+// the rest in a "+N" tooltip, so a freshly selected field may have no chip of its own.
+// The editor's own selected-fields list always shows every selected field.
+defineStep('the field {string} should be in the selected fields list', (field: string) => {
+  cy.get('.selected-fields-box .field-name').should('contain', field)
+})
 
 defineStep('I click the {string} tab', (tabName: string) => {
   dataSelectionSearch.selecteTabByName(tabName);
@@ -105,7 +121,7 @@ defineStep('I enter {string} into the filter search field', (conceptName: string
 });
 
 defineStep('a chip labeled {string} should appear in the "Selected Filters" section', (chipName: string) => {
-  dataSelectionSearch.getChip('.filter-container', chipName);
+  dataSelectionSearch.getChip('DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER', chipName);
 });
 
 defineStep('I should see the placeholder', () => {
@@ -127,5 +143,5 @@ defineStep('I add the reference', () => {
   dataSelectionSearch.saveReference();
 })
 defineStep('a chip labeled {string} should appear in the "Selected Reference" section', (chipName: string) => {
-  dataSelectionSearch.getChip('.reference-container', chipName);
+  dataSelectionSearch.getChip('DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES', chipName);
 });
