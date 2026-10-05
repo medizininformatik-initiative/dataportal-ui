@@ -1,4 +1,5 @@
 import { defineStep } from "@badeball/cypress-cucumber-preprocessor"
+import { resolve } from "../testData"
 import { CriterionSearch } from "../../e2e/CohortSearch/cohort-search"
 
 export class CriterionToEditor {
@@ -55,7 +56,7 @@ export class CriterionToEditor {
 
 export const criterionToEditor = new CriterionToEditor()
 defineStep('I add the criterium {string} to the editor', (criterium: string) => {criterionToEditor.addCriteriumToEditor(criterium)})
-defineStep('I add the criterium {string} via code {string} to the editor', (criterium: string, code: string) => {criterionToEditor.addCriteriumToEditorByCode(code, criterium)})
+defineStep('I add the criterium {string} via code {string} to the editor', (criterium: string, code: string) => {criterionToEditor.addCriteriumToEditorByCode(resolve(code), resolve(criterium))})
 defineStep('I should see the criterium {string} in the editor', (criterium: string) => {criterionToEditor.shouldSeeCriteriumInEditor(criterium)})
 defineStep('I drag {string} criterium to the {string} list', (criterium: string, type: string) =>
   criterionToEditor.dragCriteriumRightBy200px(type)

@@ -1,0 +1,20 @@
+{
+  "causeOfDeath": {
+    "criterium": "Cause of death",
+    "code": "79378-6",
+    "tab": "ICD-10-WHO"
+  },
+  "concepts": {
+    "first": "J13",
+    "second": "J15.0",
+    "third": "J15.7"
+  },
+  "pneumonia": {
+    "criterium": "Pneumonia",
+    "code": "233604007"
+  },
+  "appendectomy": {
+    "criterium": "Appendectomy",
+    "code": "80146002"
+  }
+}
