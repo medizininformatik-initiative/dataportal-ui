@@ -40,10 +40,10 @@ Cypress component-object (see below) that reads it:
 | `saved-query-tile` | `"saved-query-delete-icon"` | `savedQueries.cy.ts` |
 | `menu` | `"openMenu"`; `item.label \| translate` (dynamic, per menu item) | `NumMenu` |
 | `filter-chips` | `filterChip.type \| displayTranslation` (dynamic); `chip.text \| displayTranslation` (dynamic) | `NumFilterChips` |
-| `download-crtdl` | `"download-format-crtdl"`, `"download-format-csv"`, `"cancel-download-button"`, `"save-file-button"` | `downloadFile.cy.ts` |
+| `download-crtdl` | `"download-modal"` (the `num-save-file-modal` host), `"download-format-crtdl"`, `"download-format-csv"`, `"cancel-download-button"`, `"save-file-button"` | `downloadFile.cy.ts` |
 | `language` | `"language-select"`, `"language-option-de"`, `"language-option-en"` | `language.cy.ts` |
 | `tree` | `node.data.display \| displayTranslation` (dynamic, per tree node) | `data-selection-search.ts` |
-| `action-bar` | `"upload-crtdl"` (the file `<input>`); `"save-cohort-button"` | `uploadFile.cy.ts`; `action-bar.cy.ts` (icon-only buttons — see its `ICON_ONLY_BUTTONS` lookup, since the other action-bar buttons are text-matched, this one has no visible text) |
+| `action-bar` | `"upload-crtdl"` (the file `<input>`); `"download-crtdl-button"` (opens the download modal); `"save-cohort-button"` | `uploadFile.cy.ts`; `action-bar.cy.ts` (icon-only buttons — see its `ICON_ONLY_BUTTONS` lookup, since the other action-bar buttons are text-matched, this one has no visible text) |
 
 Deliberately **not** migrated: `dashboard`, `data-selection-boxes`,
 `query-editor/criterion`, `reference-edit`, `save-dialog` (feasibility-query
@@ -282,3 +282,22 @@ which doesn't override it, is `true`). "Save cohort" only exists on the
 Feasibility **Editor** page — a scenario that runs Feasibility first and then
 tries to save afterward is clicking a button that isn't rendered. Save before
 running Feasibility, not after.
+
+## A concept filter chip shows the concept's display text, not its code
+
+On the criterium box, a selected concept renders as a `.chip-container` with the concept's
+**display** text (for `Cause of death` -> `J13`: `Pneumonie durch Streptococcus pneumoniae`)
+under a block carrying the filter's name (`ICD-10-WHO`). The text is the ontology's original, so
+it is German in the English UI when no English translation exists. A scenario asserting a chip
+therefore needs the display text in its `Examples` (`firstChip` / `secondChip`), kept in step
+with the code column. See `attribute-concept-select.feature` and the step
+`the criterium {string} shows a filter chip for {string}` in `criterionEditor.cy.ts`.
+
+## No concept filter has more than one value set
+
+Checked against `GET terminology/ui-profile` (all profiles): every concept filter (attribute or
+value) references exactly one value set. The two ICD value sets sit in different profiles
+(`http://hl7.org/fhir/sid/icd-10/vs` in `MII_PR_Person_Todesursache(1)`,
+`http://fhir.de/ValueSet/bfarm/icd-10-gm` in `MII_PR_Onko_Tod`), so one code can never appear in
+two systems in the same table. That is why `attribute-concept-same-code-different-system.feature`
+is `@pending`.

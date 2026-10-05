@@ -107,6 +107,30 @@ To ensure a clean test environment, the following folders are automatically clea
 
 This behavior is implemented in the [Cypress configuration](../cypress.config.ts) using the `before:run` hook. It guarantees that test artifacts from previous runs don’t interfere with current results.
 
+### Skipping `@pending` scenarios
+
+Scenarios and features tagged `@pending` are blocked on missing data or a product decision
+(for example `attribute-concept-same-code-different-system.feature`). A plain `npx cypress run`
+**still runs them, and they fail**. Exclude them with:
+
+```console
+npx cypress run --expose tags='not @pending'
+```
+
+Use `--expose`, not `--env`: this project is on Cypress 16, where the preprocessor reads the
+`tags` option from the exposed config values. `--env tags=...` and `--env TAGS=...` are silently
+ignored. A skipped scenario shows up as 0 passing in a few milliseconds instead of failing.
+
+### Data lives in `Examples`
+
+Criteria, codes, concepts, tab names, labels and dates belong in an `Examples` table, never in a
+step, so a value can be swapped without touching a step definition. A `Background` cannot use
+`<placeholders>`, so a scenario that needs data adds its criterium inside the scenario
+(`Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor`). A cell may
+be a literal or a `{{placeholder}}` from `support/test-data/concepts.json`. Step definitions must
+not hard-code a filter name or code; take them from the scenario's data table instead (see
+`I have selected one concept in each of these concept filters:`).
+
 ## Implemented Step Definitions
 
 These step definitions cover common user actions and assertions implemented in the Cypress step definition files. You can use them directly in the `.feature` files without needing to write additional code for these actions. This documentation will be updated as new steps are implemented.
