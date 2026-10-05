@@ -9,7 +9,7 @@ Feature: Data Selection - Only if referenced
     And I am on the "Data Selection Search" page
     And I set the language to English
 
-  Scenario Outline: A referenced profile offers the "Only if referenced" option and it can be set
+  Scenario Outline: A referenced profile offers the "Only if referenced" option and it can be switched off and on
     Given I type "<feature>" in the search input field
     And I select the checkbox in the row containing "<feature>"
     When I click on the button "Add to Selection"
@@ -21,11 +21,14 @@ Feature: Data Selection - Only if referenced
     And I click to add a new reference
     And I add a reference named "<reference>"
     And I add the reference
-    And I click on the button "Close"
+    Then a chip labeled "<reference>" should appear in the "Selected Reference" section
+    When I click on the button "Close"
     Then the data selection box "<reference>" offers the "Only if referenced" option
     And the data selection box "<feature>" does not offer the "Only if referenced" option
-    And the "Only if referenced" option of the data selection box "<reference>" is disabled
-    When I enable the "Only if referenced" option of the data selection box "<reference>"
+    And the "Only if referenced" option of the data selection box "<reference>" is enabled
+    When I toggle the "Only if referenced" option of the data selection box "<reference>"
+    Then the "Only if referenced" option of the data selection box "<reference>" is disabled
+    When I toggle the "Only if referenced" option of the data selection box "<reference>"
     Then the "Only if referenced" option of the data selection box "<reference>" is enabled
 
     Examples:
