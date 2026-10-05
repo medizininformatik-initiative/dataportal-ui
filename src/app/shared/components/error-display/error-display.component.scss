@@ -8,7 +8,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
-  z-index: 9999;
+  z-index: var(--z-toast);
   padding: var(--spacing-20);
   box-sizing: border-box;
 }
@@ -128,12 +128,12 @@
 
 .error-display-body::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.03);
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
 }
 
 .error-display-body::-webkit-scrollbar-thumb {
   background: var(--border-color);
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
 
   &:hover {
     background: var(--color-text-secondary);

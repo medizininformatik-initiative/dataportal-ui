@@ -19,7 +19,7 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
   color: #000000;

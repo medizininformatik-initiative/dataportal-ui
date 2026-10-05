@@ -1,5 +1,5 @@
 @mixin button-base($theme) {
-  $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  $raised-shadow: rgba(20, 32, 56, 0.1) 0px 4px 6px -1px, rgba(20, 32, 56, 0.06) 0px 2px 4px -1px;
 
   .mat-mdc-button-base {
     text-transform: none !important;
@@ -21,7 +21,7 @@
     box-shadow: $raised-shadow;
     height: 40px;
     padding: 9px 18px;
-    border-radius: 5px;
+    border-radius: var(--border-radius-card);
     letter-spacing: inherit;
     cursor: pointer;
     white-space: nowrap;

@@ -12,13 +12,15 @@ import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery'
 import { v4 as uuidv4 } from 'uuid'
 import { SavedQueryTileComponent } from '../../../../shared/components/saved-query-tile/saved-query-tile.component'
 import { AsyncPipe } from '@angular/common'
+import { PlaceholderBoxComponent } from 'src/app/shared/components/placeholder-box/placeholder-box.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-feasibility',
   templateUrl: './feasibility.component.html',
   styleUrls: ['./feasibility.component.scss'],
   standalone: true,
-  imports: [SavedQueryTileComponent, AsyncPipe],
+  imports: [SavedQueryTileComponent, AsyncPipe, PlaceholderBoxComponent, TranslateModule],
 })
 export class FeasibilityComponent implements OnInit, OnDestroy {
   private dataQueryStorageService = inject(DataQueryStorageService)

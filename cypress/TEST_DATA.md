@@ -149,10 +149,13 @@ Profiles with concept filters (from `GET terminology/ui-profile`): `MII_PR_Perso
 profiles. Profiles with **no** filters: `MII_PR_Consent_Einwilligung`,
 `MII_PR_Onko_Nebenwirkung_Adverse_Event`.
 
-**Same code, different system** (needed for issue #626): e.g. `J13` exists in both
-`http://hl7.org/fhir/sid/icd-10` and `http://fhir.de/CodeSystem/bfarm/icd-10-gm`, but no concept
-filter found so far offers both systems at once — `attribute-concept-same-code-different-system.feature`
-stays `@pending` until one is found.
+**Same code, different system** (issue #626): the feasibility criteria's concept filters each offer a
+single value set, so it can't be tested there. The data-selection editor can: the profile
+`Diagnosis` (`MII PR Diagnose Condition`) has a Code Filter whose value sets include ICD-10-GM and
+Alpha-ID, and `I26` exists in both (ICD-10-GM `Lungenembolie`, Alpha-ID `Traumatische Amputation im
+Schultergelenk`). Verify with `GET dse/profile-data?ids=<profile url>` (filters with several
+`valueSetUrls`) and a `match_phrase` on `termcode.code` in the `codeable_concept` index.
+`attribute-concept-same-code-different-system.feature` uses it.
 
 **Editor tab names (verified in the running UI):** each filter is its own tab named after the filter's
 English display, rendered upper-case by CSS — there is no generic "Attribute Filter"/"Value Filter" tab.

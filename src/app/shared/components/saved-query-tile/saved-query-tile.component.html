@@ -21,18 +21,21 @@
     {{ 'SAVED_QUERIES.PATIENTS' | translate }} {{ savedQuery().totalNumberOfPatients }}
   </div>
   <div class="tile-col tile-action">
-    <num-button type="blue" (click)="onNavigate(savedQuery()?.id)">
+    <num-button type="green" (click)="onNavigate(savedQuery()?.id)">
       {{ 'SAVED_QUERIES.LOAD' | translate }}
     </num-button>
   </div>
   <div class="tile-col tile-close">
-    <fa-icon
-      class="pointer close-icon"
+    <button
+      type="button"
+      class="delete-button"
       numDataCy="saved-query-delete-icon"
-      icon="times"
+      [attr.aria-label]="'SAVED_QUERIES.DELETE' | translate"
+      [matTooltip]="'SAVED_QUERIES.DELETE' | translate"
       (click)="onDelete(savedQuery().id)"
-      [fixedWidth]="true"
-    ></fa-icon>
+    >
+      <fa-icon icon="times" [fixedWidth]="true"></fa-icon>
+    </button>
   </div>
 </div>
 }

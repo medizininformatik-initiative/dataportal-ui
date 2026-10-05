@@ -6,7 +6,7 @@
   background: linear-gradient(135deg, var(--color-accent) 0%, var(--num-color--primary-green) 100%);
   color: white;
   font-size: 1.25rem;
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
 
   .icon {
     font-size: 1.5rem;

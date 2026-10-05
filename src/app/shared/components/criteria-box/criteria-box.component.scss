@@ -62,7 +62,7 @@
   background-color: #fff;
   width: 100%; /* responsive instead of fixed */
   max-width: 960px; /* multiple of 8 */
-  border-radius: 4px; /* matches container */
+  border-radius: var(--border-radius-sm); /* matches container */
   box-shadow: var(--shadow-menu);
 }
 
@@ -74,7 +74,7 @@
   right: 24px;
   width: 16px;
   height: 16px;
-  border-radius: 4px; /* 4 system detail */
+  border-radius: var(--border-radius-sm); /* 4 system detail */
 }
 
 .content {

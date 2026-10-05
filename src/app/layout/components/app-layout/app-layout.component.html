@@ -1,3 +1,6 @@
+<a class="skip-link" href="#main-content" (click)="focusMain($event)">
+  {{ 'APPLAYOUT.SKIP_TO_CONTENT' | translate }}
+</a>
 <num-dataportal-header role="banner"></num-dataportal-header>
 <mat-sidenav-container autosize fullscreen class="sidenav-container fix-overlay">
   @if (showSideNav) {
@@ -20,7 +23,7 @@
 
   <mat-sidenav-content class="padding-left-4">
     <div role="presentation" class="content-row">
-      <main class="main-content">
+      <main id="main-content" tabindex="-1" class="main-content">
         <div [@routeAnimations]="prepareRoute(outlet)" class="fullscreen">
           <router-outlet #outlet="outlet"></router-outlet>
         </div>

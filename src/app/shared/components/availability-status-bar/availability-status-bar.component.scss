@@ -21,12 +21,12 @@
 .avail-track {
   height: 4px;
   background: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
+  border-radius: var(--border-radius-sm);
   overflow: hidden;
 }
 
 .avail-fill {
   height: 100%;
-  border-radius: 3px;
+  border-radius: var(--border-radius-sm);
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }

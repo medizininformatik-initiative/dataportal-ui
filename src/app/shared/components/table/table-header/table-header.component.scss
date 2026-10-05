@@ -5,7 +5,7 @@
   // (styles.scss forces a 20px webkit scrollbar), keeping columns aligned.
   padding-right: var(--spacing-20);
   border-bottom: 1px solid #f1f2f3;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
 }
 
 .header-cell {
@@ -26,7 +26,7 @@ tr {
 
 th {
   padding: var(--spacing-16) var(--spacing-8);
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: var(--font-size-sm);
   line-height: 14px;

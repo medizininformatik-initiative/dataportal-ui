@@ -1,4 +1,4 @@
-@for (query of savedQueries$ | async; track query) {
+@if (savedQueries$ | async; as queries) { @for (query of queries; track query) {
 <div class="width-100">
   <num-saved-query-tile
     class="width-100"
@@ -7,5 +7,20 @@
     (loadValidationReport)="loadValidationReport($event)"
     (deleteQuery)="deleteSavedFeasibility($event)"
   ></num-saved-query-tile>
+</div>
+} @empty {
+<num-placeholder-box data-cy="saved-queries-empty">
+  {{ 'SAVED_QUERIES.EMPTY' | translate }}
+</num-placeholder-box>
+} } @else {
+<div
+  class="skeleton-list"
+  role="status"
+  aria-busy="true"
+  aria-label="{{ 'SAVED_QUERIES.LOADING' | translate }}"
+>
+  @for (i of [1, 2, 3]; track i) {
+  <div class="skeleton-tile"></div>
+  }
 </div>
 }

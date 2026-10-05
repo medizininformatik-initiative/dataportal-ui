@@ -293,11 +293,54 @@ therefore needs the display text in its `Examples` (`firstChip` / `secondChip`),
 with the code column. See `attribute-concept-select.feature` and the step
 `the criterium {string} shows a filter chip for {string}` in `criterionEditor.cy.ts`.
 
-## No concept filter has more than one value set
+## Feasibility concept filters have one value set; data-selection code filters can have several
 
-Checked against `GET terminology/ui-profile` (all profiles): every concept filter (attribute or
-value) references exactly one value set. The two ICD value sets sit in different profiles
-(`http://hl7.org/fhir/sid/icd-10/vs` in `MII_PR_Person_Todesursache(1)`,
-`http://fhir.de/ValueSet/bfarm/icd-10-gm` in `MII_PR_Onko_Tod`), so one code can never appear in
-two systems in the same table. That is why `attribute-concept-same-code-different-system.feature`
-is `@pending`.
+Checked against `GET terminology/ui-profile`: every feasibility concept filter (attribute or value)
+references exactly one value set, so one code can never appear in two systems in the same table
+there. The data-selection `Diagnosis` profile's Code Filter offers ICD-10-GM, Alpha-ID, SNOMED and
+Orphanet together (`GET dse/profile-data`, keyed by the profile **url**, not the Elasticsearch `_id`),
+so `I26` shows up twice. That is what `attribute-concept-same-code-different-system.feature` tests.
+The search table shows a row's system as its display name (`ICD-10-GM`, `Alpha-ID`) in its own cell;
+the selected-concepts list shows only display and code.
+
+## A reference is saved asynchronously — wait for its chip before closing the editor
+
+Choosing a profile in the add-reference modal only returns URLs; `ReferenceFieldTabComponent` then
+loads the profiles from the backend before the reference exists. Clicking "Close" straight after
+"Select" silently drops it. Assert the "Selected Reference" chip first (see
+`data-selection-only-if-referenced.feature`, issue #641).
+
+## Negative paths: break the backend with `cy.intercept`, assert on the error dialog
+
+`cypress/e2e/NegativePaths/` covers what happens when things go wrong. The steps in
+`support/step_definitions/backendFailures.cy.ts` register an intercept (status code, unreachable,
+slow answer, 401) and must run after the page has loaded and before the action that fires the
+request. Two overlays report errors and are not interchangeable: `num-error-display` (any non-
+validation HTTP error and uncaught errors; hard-coded English, title is the raw error type) and
+`num-error-log-modal` (the backend's validation problems for a rejected upload). Their steps are in
+`errorDialog.cy.ts`. Scenarios tagged `@pending` describe behaviour the app does not have yet
+(raw `GENERIC_ERROR` title, `[object Object]` for network errors, 401 not sending the user to
+sign in, no empty-result message on the data selection search); they fail on purpose.
+
+## CRTDL roundtrip matrix: generate cases, don't hand-write fixtures
+
+`DataQueryCohort/crtdl-roundtrip.feature` uploads a generated CRTDL, downloads it again and checks
+everything sent came back. `support/crtdl/` has one file per concern, so each changes alone:
+`ontology.ts` (facts about the test ontology - the only file to re-verify after an upgrade),
+`types.ts`, `filters.ts` (filter shapes, no ontology), `criteria.ts` (`criterion(name, ...modifiers)`),
+`groups.ts` (`attributeGroup(profile, ...)`), `crtdl.ts`, `cases.ts` (composition only) and
+`roundtrip.ts` (what "the same" means, as explicit rules). A value used twice gets a name once in
+`cases.ts`; do not inline a date, a limit or a repeated criterion.
+
+After touching any of them run `npm run crtdl:validate`: it asks the backend whether it accepts
+every case, so a failing roundtrip means the UI lost data, not that the input was invalid.
+`docs/crtdl-roundtrip-cases.md` is the readable list of the cases (a plain sentence each, written by
+`describe.ts`); `npm run crtdl:doc` regenerates it and `npm run crtdl:doc:check` fails when it is
+stale. Group order comes from the feature's Examples tables; `@doc-collapse` folds a generated table.
+
+Facts learned the hard way: a quantity `unit` is `{code, display}` with no `system`; the app omits
+`includeReferenceOnly: false` on export, so only a true value is sent; group ids are regenerated on
+upload, so `roundtrip.ts` ignores `id` and compares `linkedGroups` by length only; the comparator
+`ne` makes `validation/crtdl` answer 500 (a backend bug), so it is not in the matrix.
+Not covered yet: criteria that reference criteria, consent criteria, unknown fields (#515) and the
+old CCDL auto-upgrade (#464, #545).

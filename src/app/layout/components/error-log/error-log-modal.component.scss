@@ -11,7 +11,7 @@
   padding: var(--spacing-16);
   background: #fff3cd;
   border-left: 4px solid #ffc107;
-  border-radius: 5px;
+  border-radius: var(--border-radius-card);
 }
 
 .error-list {

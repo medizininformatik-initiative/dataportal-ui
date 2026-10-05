@@ -43,7 +43,7 @@ li {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   font-style: normal;
   font-weight: 500;
   font-size: var(--font-size-sm);
@@ -52,7 +52,7 @@ li {
 }
 
 .node-sub-label {
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   font-style: normal;
   font-weight: 500;
   font-size: 10px;

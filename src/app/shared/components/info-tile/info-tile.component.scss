@@ -30,7 +30,7 @@
   code {
     background: rgba(0, 0, 0, 0.04);
     padding: 1px var(--spacing-6);
-    border-radius: 3px;
+    border-radius: var(--border-radius-sm);
     font-size: var(--font-size-sm);
     color: var(--color-text-primary);
     border: 1px solid var(--border-color);

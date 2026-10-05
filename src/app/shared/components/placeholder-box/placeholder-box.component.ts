@@ -1,5 +1,6 @@
-import { Component } from '@angular/core'
+import { Component, input } from '@angular/core'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 @Component({
   selector: 'num-placeholder-box',
@@ -8,4 +9,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
   standalone: true,
   imports: [FontAwesomeModule],
 })
-export class PlaceholderBoxComponent {}
+export class PlaceholderBoxComponent {
+  icon = input<IconProp>('folder-open')
+}

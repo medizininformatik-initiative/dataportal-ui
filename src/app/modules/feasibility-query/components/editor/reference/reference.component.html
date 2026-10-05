@@ -32,7 +32,7 @@
         }
       </div>
       @if ((tableData$ | async) === null) {
-      <num-placeholder-box class="no-results-text">
+      <num-placeholder-box icon="search" class="no-results-text">
         >{{ 'FEASIBILITY.SEARCH.EMPTY' | translate }} "
         <strong>{{ searchText$ | async }}</strong>
         "

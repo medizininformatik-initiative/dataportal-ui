@@ -110,7 +110,7 @@ This behavior is implemented in the [Cypress configuration](../cypress.config.ts
 ### Skipping `@pending` scenarios
 
 Scenarios and features tagged `@pending` are blocked on missing data or a product decision
-(for example `attribute-concept-same-code-different-system.feature`). A plain `npx cypress run`
+(`NegativePaths/` holds scenarios for known defects; see `cypress/CLAUDE.md`). A plain `npx cypress run`
 **still runs them, and they fail**. Exclude them with:
 
 ```console

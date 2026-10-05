@@ -11,10 +11,10 @@ table {
   height: 100%;
   min-height: 0;
   width: 100%;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   color: #000000;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: var(--border-radius-card);
   border-collapse: collapse;
 }
 

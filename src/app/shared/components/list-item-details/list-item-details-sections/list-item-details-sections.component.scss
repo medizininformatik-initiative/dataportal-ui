@@ -12,7 +12,7 @@
   overflow-x: hidden;
   background: var(--color-accent-bg, #f1f2f3);
   border-radius: var(--border-radius-card);
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
 }
 
 .entry-layout {

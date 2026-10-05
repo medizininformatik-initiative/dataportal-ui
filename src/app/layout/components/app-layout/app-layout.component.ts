@@ -48,6 +48,12 @@ export class AppLayoutComponent implements OnInit {
       })
   }
 
+  // <base href="/"> makes a plain #anchor navigate away, so focus the target manually
+  focusMain(event: Event): void {
+    event.preventDefault()
+    document.getElementById('main-content')?.focus()
+  }
+
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
   }

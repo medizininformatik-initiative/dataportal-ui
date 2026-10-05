@@ -17,14 +17,10 @@
         <div class="detail-value">
           @for (t of listItemDetails.getDisplay().getTranslations(); track t.getLanguage()) {
           <div class="translation-entry">
-            <span
-              class="fi"
-              style="font-size: 14px"
-              [ngClass]="'fi-' + (t.getLanguage() === 'en-US' ? 'gb' : 'de')"
-            ></span>
-            <span [matTooltip]="t.getValue() | displayTranslation" class="num-text-accent">{{
-              t.getValue()
-            }}</span>
+            <span class="fi" [ngClass]="'fi-' + (t.getLanguage() === 'en-US' ? 'gb' : 'de')"></span>
+            <span [matTooltip]="t.getValue() | displayTranslation" class="num-text-accent">
+              {{ t.getValue() }}
+            </span>
           </div>
           }
         </div>
@@ -40,8 +36,7 @@
           <num-list-item-details-sections
             [listItemDetails]="listItemDetails.getParents()"
             (selectedRelative)="getSelectedRelative($event)"
-          >
-          </num-list-item-details-sections>
+          ></num-list-item-details-sections>
         </div>
         } @if (listItemDetails.getParents().length === 0) {
         <div class="num-text-accent">
@@ -59,8 +54,7 @@
           <num-list-item-details-sections
             [listItemDetails]="listItemDetails.getChildren()"
             (selectedRelative)="getSelectedRelative($event)"
-          >
-          </num-list-item-details-sections>
+          ></num-list-item-details-sections>
         </div>
         } @if (listItemDetails.getChildren().length === 0) {
         <div class="num-text-accent">
@@ -81,8 +75,7 @@
       <num-list-item-details-sections
         [listItemDetails]="listItemDetails.getParents()"
         (selectedRelative)="getSelectedRelative($event)"
-      >
-      </num-list-item-details-sections>
+      ></num-list-item-details-sections>
     </div>
   </mat-tab>
   <!-- ── CHILDREN tab ────────────────────────────────────────── -->
@@ -98,8 +91,7 @@
       <num-list-item-details-sections
         [listItemDetails]="listItemDetails.getChildren()"
         (selectedRelative)="getSelectedRelative($event)"
-      >
-      </num-list-item-details-sections>
+      ></num-list-item-details-sections>
     </div>
   </mat-tab>
 </mat-tab-group>

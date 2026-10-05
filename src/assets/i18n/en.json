@@ -1,5 +1,6 @@
 {
   "APPLAYOUT": {
+    "SKIP_TO_CONTENT": "Skip to main content",
     "HEADER": {
       "ABOUT": "About the Portal",
       "ABOUT_MODAL": {
@@ -383,7 +384,7 @@
         "APPLY_TIME_RESTRICTION": "Apply time period to all criteria",
         "CANCEL": "Cancel"
       },
-      "DRAG_AND_DROP": "Use drag & drop to sort",
+      "DRAG_AND_DROP": "Use drag & drop to sort",
       "EDIT_SUCCESS": "Criterion edited successfully",
       "EMPTY": "Sorry, we could not find any results for ",
       "EXCLUSION": "Exclusion criteria",
@@ -540,7 +541,10 @@
   "SAVED_QUERIES": {
     "COMMENT": "Comment",
     "CREATED_AT": "Created at",
+    "DELETE": "Delete data definition",
+    "EMPTY": "No saved data definitions yet. Save one from the editor and it will appear here.",
     "HEADER": "Saved Data Definitions",
+    "LOADING": "Loading saved data definitions",
     "LOAD": "Load Data Definition",
     "PATIENTS": "Number of patients:",
     "SAVED_FEASIBILITY": "Saved Feasibility Queries",

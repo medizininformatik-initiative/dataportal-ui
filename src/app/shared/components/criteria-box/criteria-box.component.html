@@ -24,7 +24,7 @@
         <span message (click)="navigateToEditPage()">
           {{ 'FEASIBILITY.EDITOR.REQUIRED_FILTER' | translate }}
         </span>
-        <img icon [src]="warningSignUrl" class="img-layout" />
+        <img icon [src]="warningSignUrl" alt="" aria-hidden="true" class="img-layout" />
       </num-missing-filter>
       }
       <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>

@@ -86,6 +86,11 @@
 }
 
 .translation-entry {
+  .fi {
+    font-size: var(--font-size-md);
+    line-height: 1;
+  }
+
   display: flex;
   align-items: center;
   gap: 8px;

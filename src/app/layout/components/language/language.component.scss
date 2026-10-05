@@ -7,7 +7,7 @@
 
     .mat-mdc-form-field-flex {
       padding: 0px var(--spacing-6);
-      border-radius: 5px;
+      border-radius: var(--border-radius-card);
       border-color: white;
       height: 42px;
       align-items: center;

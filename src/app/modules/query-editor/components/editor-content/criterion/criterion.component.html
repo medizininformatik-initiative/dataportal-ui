@@ -1,5 +1,5 @@
 <div class="container">
-  <num-criterion-header [criterion]="criterion()" class="header-container"> </num-criterion-header>
+  <num-criterion-header [criterion]="criterion()" class="header-container"></num-criterion-header>
   @if (templates.length > 0) {
   <num-filter-tabs class="filter-tabs-container" [content]="templates"></num-filter-tabs>
   }
@@ -12,14 +12,13 @@
   </ng-template>
 
   <ng-template #conceptAttributeFilterTemplate let-index>
-    <div class="width-100">
+    <div class="concept-container">
       <num-concept
         [conceptFilter]="conceptAttributeFilter()[index].getConcept()"
         (changedConceptFilter)="
           updateConceptAttributeFilter($event, conceptAttributeFilter()[index])
         "
-      >
-      </num-concept>
+      ></num-concept>
     </div>
   </ng-template>
 
@@ -28,8 +27,7 @@
       <num-concept
         [conceptFilter]="conceptValueFilter()[0].getConcept()"
         (changedConceptFilter)="updateConceptValueFilter($event, conceptValueFilter()[0])"
-      >
-      </num-concept>
+      ></num-concept>
     </div>
   </ng-template>
 
@@ -39,8 +37,7 @@
       [termCodes]="criterion().getTermCodes()"
       [context]="criterion().getContext()"
       (changedTermCodes)="updateTermCodes($event)"
-    >
-    </num-edit-termcode>
+    ></num-edit-termcode>
   </ng-template>
 
   <ng-template #reference>
@@ -54,8 +51,7 @@
         [referenceFilterUri]="attributeFilter.getReference().getAllowedReferenceUri()"
         (selectedReferenceIds)="updateReferenceFilter($event, attributeFilter)"
         (changedSelectedReferences)="updateSelectedReferences(attributeFilter, $event)"
-      >
-      </num-reference>
+      ></num-reference>
       }
     </div>
     }

@@ -1,5 +1,5 @@
-<div class="placeholder-box">
-  <fa-icon icon="exclamation" size="3x" class="placeholder-icon"></fa-icon>
+<div class="placeholder-box" role="status">
+  <fa-icon [icon]="icon()" size="3x" class="placeholder-icon" aria-hidden="true"></fa-icon>
   <div class="placeholder-content">
     <ng-content></ng-content>
   </div>

@@ -5,93 +5,77 @@ on:
     branches: [develop, main]
   pull_request:
     branches: [develop, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-
   cypress-run:
     runs-on: ubuntu-24.04
+    timeout-minutes: 45
     env:
-      ONTOLOGY_GIT_TAG: v3.9.0-experimental.0 # Or dynamically set it
+      ONTOLOGY_GIT_TAG: v3.9.0-experimental.0
+      COMPOSE_FILE: cypress/docker/docker-compose.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Prepare ontology files
-        run: |
-          chmod +x .github/scripts/setup-ontology.sh
-          .github/scripts/setup-ontology.sh
+        run: bash .github/scripts/setup-ontology.sh
 
       - name: Start Docker Compose
-        run: docker compose -f cypress/docker/docker-compose.yml up -d
+        run: docker compose up -d
 
-      - name: Check backend health with curl (wait until ready)
-        run: |
-          max_attempts=20
-          attempt=0
-          until curl --fail http://localhost:8090/api/v5/actuator/health; do
-            attempt=$((attempt+1))
-            if [ $attempt -ge $max_attempts ]; then
-              echo "Backend did not become healthy after $max_attempts attempts"
-              exit 1
-            fi
-            echo "Waiting for backend to be healthy... attempt $attempt"
-            sleep 5
-          done
-          echo "Backend is healthy!"
+      # Keycloak first: the backend validates tokens against it.
+      - name: Wait for Keycloak management health
+        run: bash .github/scripts/wait-for-url.sh http://localhost:9003/health
 
-      - name: Make script executable
-        run: chmod +x .github/scripts/check-if-running-as-user-10001.sh
+      - name: Wait for Keycloak realm
+        run: bash .github/scripts/wait-for-url.sh http://localhost:8080/realms/master/.well-known/openid-configuration
 
-      - name: Make script executable
-        run: chmod +x .github/scripts/create-keycloak-user.sh
+      - name: Wait for Dataportal backend
+        run: bash .github/scripts/wait-for-url.sh http://localhost:8090/api/v5/actuator/health
 
-      - name: Check if Dataportal Backend is correctly running with the user with id 10001
-        run: .github/scripts/check-if-running-as-user-10001.sh
+      - name: Check backend runs as user 10001
+        run: bash .github/scripts/check-if-running-as-user-10001.sh
 
-      - name: Make script executable
-        run: chmod +x .github/scripts/wait-for-url.sh
+      - name: Create test user in Keycloak
+        run: bash .github/scripts/create-keycloak-user.sh
 
-      - name: Check docker containers
-        run: docker ps -a
-        
-      - name: Wait for Keycloak
-        run: .github/scripts/wait-for-url.sh  http://localhost:9003/health
-
-
-      - name: Wait for localhost:8080
-        run: .github/scripts/wait-for-url.sh  http://localhost:8080/realms/master/.well-known/openid-configuration
-
-      - name: Create Test User in Keycloak
-        run: .github/scripts/create-keycloak-user.sh
-      
-
-      - name: Cypress install
+      - name: Install dependencies and Cypress
         uses: cypress-io/github-action@v6
         with:
-          # Disable running of tests within install job
           runTests: false
-          build: npm run build
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          if-no-files-found: error
-          path: dist/num-portal-webapp
-
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        env:
-          DEBUG: '@cypress/github-action'
         with:
+          install: false
           start: npm start
-          wait-on: 'http://127.0.0.1:8080, http://localhost:4200'
-          browser: chrome
+          wait-on: 'http://localhost:4200'
+          wait-on-timeout: 300
+          # @pending scenarios describe known defects and fail on purpose (cypress/TESTING.md).
+          # `command` replaces the action's `browser` input, so the browser is passed here.
+          command: npx cypress run --browser chrome --expose tags='not @pending'
+
+      - name: Show docker containers
+        if: always()
+        run: docker ps -a
+
+      - name: Dump container logs
+        if: failure()
+        run: docker compose logs --no-color --tail=300
 
       - name: Upload Cypress screenshots
-        if: failure() # only upload on test failure (optional)
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 7

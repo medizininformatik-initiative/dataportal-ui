@@ -43,8 +43,27 @@
   flex: 0 0 auto;
 }
 .tile-close {
-  flex: 0 0 32px;
+  flex: 0 0 40px;
   justify-content: flex-end;
+}
+
+.delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(192, 57, 43, 0.1);
+    color: #c0392b;
+  }
 }
 
 .label {

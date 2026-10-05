@@ -16,8 +16,8 @@
   border: 1px solid #c3c7cd !important;
   box-shadow: var(--shadow-menu) !important;
 
-  /* Typography — Open Sans body style */
-  font-family: 'Open Sans', sans-serif !important;
+  /* Typography — body font style */
+  font-family: var(--font-body) !important;
   font-style: normal !important;
   font-weight: 400 !important;
   font-size: 12px !important;

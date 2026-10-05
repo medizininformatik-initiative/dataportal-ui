@@ -11,7 +11,7 @@
 
   background: #ffffff;
   border: 1px solid #c3c7cd;
-  border-radius: 5px;
+  border-radius: var(--border-radius-card);
   box-shadow: var(--shadow-menu);
 }
 
@@ -46,7 +46,7 @@
   align-items: center;
   justify-content: center;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-sm);
   line-height: 12px;
@@ -56,7 +56,7 @@
 /* ── Card body text ─────────────────────────────────────────── */
 .card-body {
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   font-style: normal;
   font-weight: var(--font-weight-normal);
   font-size: var(--font-size-sm);

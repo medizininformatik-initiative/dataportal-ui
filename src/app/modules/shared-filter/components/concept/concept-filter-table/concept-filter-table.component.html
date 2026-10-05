@@ -8,7 +8,7 @@
       (loadMore)="loadMoreSearchResults()"
     ></num-table>
     } @if (adaptedData()?.body.rows.length <= 0) {
-    <num-placeholder-box class="no-results-text">
+    <num-placeholder-box icon="search" class="no-results-text">
       {{ 'FEASIBILITY.EDITOR.EMPTY' | translate }} "
       <strong>{{ searchText() }}</strong>
     </num-placeholder-box>

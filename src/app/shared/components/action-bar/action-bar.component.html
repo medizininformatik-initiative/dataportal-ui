@@ -14,6 +14,7 @@
         ? ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD_DISABLED' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate)
     "
+    [attr.aria-label]="'SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate"
     type="button"
     class="num-button green icon"
     [class.disabled]="uploadDisabled"
@@ -30,6 +31,7 @@
         ? ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
     "
+    [attr.aria-label]="'SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate"
     type="button"
     class="num-button green icon"
     [class.disabled]="!isDataDefinitionValid()"
@@ -46,6 +48,7 @@
         ? ('SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
     "
+    [attr.aria-label]="'SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate"
     type="button"
     class="num-button green icon"
     [class.disabled]="!isDataDefinitionValid()"

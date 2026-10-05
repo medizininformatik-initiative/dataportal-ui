@@ -2,7 +2,9 @@
 
 ONTOLOGY_GIT_TAG=${ONTOLOGY_GIT_TAG:-v4.2.2}
 
-BASE_DIR="../../cypress/docker/ontology"
+# Resolve relative to the script, not the caller's cwd (CI runs it from the repo root)
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+BASE_DIR="$REPO_ROOT/cypress/docker/ontology"
 DSE_DIR="$BASE_DIR/dse"
 MIGRATION_DIR="$BASE_DIR/migration"
 

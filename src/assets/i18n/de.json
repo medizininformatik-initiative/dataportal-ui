@@ -1,5 +1,6 @@
 {
   "APPLAYOUT": {
+    "SKIP_TO_CONTENT": "Zum Hauptinhalt springen",
     "HEADER": {
       "ABOUT": "Über das Portal",
       "ABOUT_MODAL": {
@@ -372,7 +373,7 @@
         "APPLY_TIME_RESTRICTION": "Zeiteinschränkung für alle Kriterien hinzufügen",
         "CANCEL": "Abbrechen"
       },
-      "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
+      "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
       "EDIT_SUCCESS": "Kriterium erfolgreich bearbeitet",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse zu ",
       "EXCLUSION": "Ausschlusskriterien",
@@ -529,7 +530,10 @@
   "SAVED_QUERIES": {
     "COMMENT": "Kommentar",
     "CREATED_AT": "Erstellt am",
+    "DELETE": "Datendefinition löschen",
+    "EMPTY": "Noch keine gespeicherten Datendefinitionen. Speichern Sie eine im Editor, dann erscheint sie hier.",
     "HEADER": "Gespeicherte Datendefinitionen",
+    "LOADING": "Gespeicherte Datendefinitionen werden geladen",
     "LOAD": "Datendefinition laden",
     "PATIENTS": "Anzahl der Patienten:",
     "SAVED_FEASIBILITY": "Gespeicherte Machbarkeitsabfragen",

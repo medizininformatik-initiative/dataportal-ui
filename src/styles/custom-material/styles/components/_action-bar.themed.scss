@@ -12,12 +12,12 @@
       gap: 8px;
       padding: 0 16px;
       height: 80px;
-      border-radius: 5px;
+      border-radius: var(--border-radius-card);
       background-color: mat.m2-get-color-from-palette($primary, 'white');
       box-sizing: border-box;
       overflow-x: auto;
       overflow-y: hidden;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+      box-shadow: rgba(20, 32, 56, 0.1) 0px 4px 6px -1px, rgba(20, 32, 56, 0.06) 0px 2px 4px -1px;
       position: relative;
 
       &::before {
@@ -26,7 +26,7 @@
         inset: 0;
         background: mat.m2-get-color-from-palette($primary, 'green');
         opacity: 0.1;
-        border-radius: 5px;
+        border-radius: var(--border-radius-card);
         pointer-events: none;
       }
 
@@ -36,7 +36,7 @@
     }
 
     .selection-text {
-      font-family: 'Open Sans', sans-serif;
+      font-family: var(--font-body);
       font-weight: 600;
       font-size: 12px;
       line-height: 16px;
@@ -52,8 +52,8 @@
       padding: 0 4px;
       background: mat.m2-get-color-from-palette($primary, 'white');
       border: 2px solid mat.m2-get-color-from-palette($primary, 'green');
-      border-radius: 5px;
-      font-family: 'Open Sans', sans-serif;
+      border-radius: var(--border-radius-card);
+      font-family: var(--font-body);
       font-weight: 700;
       font-size: 12px;
       line-height: 12px;

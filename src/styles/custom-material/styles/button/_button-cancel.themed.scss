@@ -3,7 +3,7 @@
 @mixin button-cancel($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
-  $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  $raised-shadow: rgba(20, 32, 56, 0.1) 0px 4px 6px -1px, rgba(20, 32, 56, 0.06) 0px 2px 4px -1px;
 
   .num-button.cancel {
     font-family: inherit;
@@ -11,7 +11,7 @@
     font-weight: 500;
     height: 42px;
     padding: 9px 18px;
-    border-radius: 5px;
+    border-radius: var(--border-radius-card);
     letter-spacing: inherit;
     cursor: pointer;
     white-space: nowrap;

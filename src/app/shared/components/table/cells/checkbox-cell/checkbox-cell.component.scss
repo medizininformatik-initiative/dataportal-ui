@@ -1,6 +1,6 @@
 .name-column {
   padding-left: var(--spacing-8);
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-body);
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
   color: #000000;
@@ -33,7 +33,7 @@ input[type='checkbox'] {
   height: 15px;
   background: #ffffff;
   border: 1px solid #c3c7cd;
-  border-radius: 3px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;

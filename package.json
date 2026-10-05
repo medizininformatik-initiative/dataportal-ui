@@ -12,6 +12,9 @@
     "pretty-quick": "pretty-quick --pattern \"src/**/*.{scss,html}\"",
     "e2e": "ng e2e",
     "cypress": "npx cypress open",
+    "crtdl:validate": "tsx cypress/support/crtdl/validate.ts",
+    "crtdl:doc": "tsx cypress/support/crtdl/doc.ts",
+    "crtdl:doc:check": "tsx cypress/support/crtdl/doc.ts --check",
     "coverage:features": "node cypress/scripts/feature-coverage.mjs"
   },
   "private": true,

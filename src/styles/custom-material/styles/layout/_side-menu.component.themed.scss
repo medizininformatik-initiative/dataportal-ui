@@ -53,7 +53,7 @@
       min-height: 40px;
       height: auto;
       background: #ffffff;
-      border-radius: 5px;
+      border-radius: var(--border-radius-card);
       margin-bottom: 8px;
       text-decoration: none;
       white-space: nowrap;
