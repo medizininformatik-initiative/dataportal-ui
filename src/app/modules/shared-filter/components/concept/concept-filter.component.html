@@ -3,8 +3,7 @@
     [icon]="'search'"
     (searchTextChange)="searchConcepts($event)"
     [label]="'SHARED_FILTER.CONCEPT_FILTER.SEARCH_PLACEHOLDER'"
-  >
-  </num-searchbar>
+  ></num-searchbar>
 
   @if (valueSetUrl()?.length > 1) {
   <num-search-filter
@@ -16,6 +15,7 @@
     class="overflow"
     [valueSetUrl]="activeUrls()"
     [conceptFilterId]="conceptFilterId()"
+    [preSelectedConcepts]="preSelectedConcepts()"
     (selectedConcept)="toggleConceptSelection($event)"
   ></num-concept-filter-table>
   }
