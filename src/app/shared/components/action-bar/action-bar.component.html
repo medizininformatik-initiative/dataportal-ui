@@ -24,6 +24,7 @@
   } @if (showDownload()) {
   <button
     (click)="downloadCRTDL()"
+    numDataCy="download-crtdl-button"
     [matTooltip]="
       isDataDefinitionValid()
         ? ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate)
