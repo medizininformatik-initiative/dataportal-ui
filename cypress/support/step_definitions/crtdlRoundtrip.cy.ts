@@ -1,6 +1,6 @@
 import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
-import { caseNamed } from '../crtdl/cases'
-import { differences } from '../crtdl/roundtrip'
+import { caseNamed } from '../../../test-support/crtdl/cases'
+import { differences } from '../../../test-support/crtdl/roundtrip'
 
 /** Upload -> download roundtrip steps. What counts as "the same" is `crtdl/roundtrip.ts`. */
 defineStep('I upload the generated data definition {string}', (name: string) => {

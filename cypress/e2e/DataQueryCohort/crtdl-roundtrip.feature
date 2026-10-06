@@ -1,5 +1,5 @@
 # Uploading a data definition and downloading it again must not lose or change anything.
-# The CRTDLs are generated (cypress/support/crtdl/cases.ts) from seeds checked against the
+# The CRTDLs are generated (test-support/crtdl/cases.ts) from seeds checked against the
 # ontology, so a filter combination is one row below.
 @area:data-query
 Feature: CRTDL upload and download roundtrip

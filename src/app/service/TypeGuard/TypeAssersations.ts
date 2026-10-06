@@ -1,4 +1,3 @@
-import { AnnotatedCRTDLData } from '../../model/Interface/AnnotatedCRTDLData'
 import { AttributeCode } from '../../model/Interface/AttributeCode'
 import { AttributeDefinitionData } from '../../model/Interface/AttributeDefinitionData'
 import { AttributeFilterBaseData } from '../../model/Interface/AttributeFilterBaseData'
@@ -381,17 +380,6 @@ export class TypeAssertion {
   public static assertAttributeCode(obj: unknown): asserts obj is AttributeCode {
     if (!TypeGuard.isAttributeCode(obj)) {
       throw new Error(`Invalid AttributeCode: ${JSON.stringify(obj)}`)
-    }
-  }
-
-  /**
-   * Asserts that the object is of type AnnotatedCRTDLData.
-   * @param obj - The object to check.
-   * @throws Will throw an error if the object is not of type AnnotatedCRTDLData.
-   */
-  public static assertAnnotatedCRTDLData(obj: unknown): asserts obj is AnnotatedCRTDLData {
-    if (!TypeGuard.isAnnotatedCRTDLData(obj)) {
-      throw new Error(`Invalid AnnotatedCRTDLData: ${JSON.stringify(obj)}`)
     }
   }
 
