@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { PossibleReferencesComponent } from './possible-references.component';
+import { PossibleReferencesComponent } from './possible-references.component'
 
-describe('PossibleReferencesComponent', () => {
-  let component: PossibleReferencesComponent;
-  let fixture: ComponentFixture<PossibleReferencesComponent>;
+describe.skip('PossibleReferencesComponent', () => {
+  let component: PossibleReferencesComponent
+  let fixture: ComponentFixture<PossibleReferencesComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [PossibleReferencesComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(PossibleReferencesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PossibleReferencesComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

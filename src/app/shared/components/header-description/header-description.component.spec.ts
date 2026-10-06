@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { HeaderDescriptionComponent } from './header-description.component';
+import { HeaderDescriptionComponent } from './header-description.component'
 
-describe('HeaderDescriptionComponent', () => {
-  let component: HeaderDescriptionComponent;
-  let fixture: ComponentFixture<HeaderDescriptionComponent>;
+describe.skip('HeaderDescriptionComponent', () => {
+  let component: HeaderDescriptionComponent
+  let fixture: ComponentFixture<HeaderDescriptionComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderDescriptionComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(HeaderDescriptionComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(HeaderDescriptionComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

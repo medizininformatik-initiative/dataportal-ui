@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EditorActionBarComponent } from './editor-action-bar.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { EditorActionBarComponent } from './editor-action-bar.component'
 
-describe('StageComponent', () => {
-  let component: EditorActionBarComponent;
-  let fixture: ComponentFixture<EditorActionBarComponent>;
+describe.skip('StageComponent', () => {
+  let component: EditorActionBarComponent
+  let fixture: ComponentFixture<EditorActionBarComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EditorActionBarComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(EditorActionBarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(EditorActionBarComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

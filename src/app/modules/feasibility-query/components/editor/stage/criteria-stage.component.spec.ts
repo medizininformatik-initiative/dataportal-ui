@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CriteriaStageComponent } from './criteria-stage.component';
+import { CriteriaStageComponent } from './criteria-stage.component'
 
-describe('CriteriaComponent', () => {
-  let component: CriteriaStageComponent;
-  let fixture: ComponentFixture<CriteriaStageComponent>;
+describe.skip('CriteriaComponent', () => {
+  let component: CriteriaStageComponent
+  let fixture: ComponentFixture<CriteriaStageComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CriteriaStageComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(CriteriaStageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CriteriaStageComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

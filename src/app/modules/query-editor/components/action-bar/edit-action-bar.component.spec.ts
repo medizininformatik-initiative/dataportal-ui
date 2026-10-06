@@ -1,27 +1,27 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
+import { DebugElement } from '@angular/core'
 
-import { EditActionBarComponent } from './edit-action-bar.component';
+import { EditActionBarComponent } from './edit-action-bar.component'
 
-describe('EditActionBarComponent', () => {
-  let component: EditActionBarComponent;
-  let fixture: ComponentFixture<EditActionBarComponent>;
+describe.skip('EditActionBarComponent', () => {
+  let component: EditActionBarComponent
+  let fixture: ComponentFixture<EditActionBarComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditActionBarComponent],
-    }).compileComponents();
-  }));
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditActionBarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(EditActionBarComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

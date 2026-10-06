@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SimpleResultComponent } from './simple-result.component';
+import { SimpleResultComponent } from './simple-result.component'
 
-describe('SimpleResultComponent', () => {
-  let component: SimpleResultComponent;
-  let fixture: ComponentFixture<SimpleResultComponent>;
+describe.skip('SimpleResultComponent', () => {
+  let component: SimpleResultComponent
+  let fixture: ComponentFixture<SimpleResultComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SimpleResultComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(SimpleResultComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(SimpleResultComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

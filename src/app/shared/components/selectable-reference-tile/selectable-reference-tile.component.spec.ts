@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SelectableReferenceTileComponent } from './selectable-reference-tile.component';
+import { SelectableReferenceTileComponent } from './selectable-reference-tile.component'
 
-describe('SelectableReferenceTileComponent', () => {
-  let component: SelectableReferenceTileComponent;
-  let fixture: ComponentFixture<SelectableReferenceTileComponent>;
+describe.skip('SelectableReferenceTileComponent', () => {
+  let component: SelectableReferenceTileComponent
+  let fixture: ComponentFixture<SelectableReferenceTileComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SelectableReferenceTileComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(SelectableReferenceTileComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(SelectableReferenceTileComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

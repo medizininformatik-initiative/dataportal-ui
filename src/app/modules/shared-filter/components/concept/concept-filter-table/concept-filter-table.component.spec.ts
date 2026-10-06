@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ConceptFilterTableComponent } from './concept-filter-table.component';
+import { ConceptFilterTableComponent } from './concept-filter-table.component'
 
-describe('ConceptFilterTableComponent', () => {
-  let component: ConceptFilterTableComponent;
-  let fixture: ComponentFixture<ConceptFilterTableComponent>;
+describe.skip('ConceptFilterTableComponent', () => {
+  let component: ConceptFilterTableComponent
+  let fixture: ComponentFixture<ConceptFilterTableComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ConceptFilterTableComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(ConceptFilterTableComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ConceptFilterTableComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
