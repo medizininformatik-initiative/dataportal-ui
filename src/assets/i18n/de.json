@@ -282,6 +282,8 @@
     "FEAS-10004": "Patientenanzahl zu niedrig für detaillierte Ergebnisse.",
     "FEAS-10005": "Die Anzahl der antwortenden Standorte ist zu klein. Das Detailergebnis wird nicht angezeigt.",
     "FEAS-10006": "Sie haben zu viele Kohorten gespeichert, bitte löschen Sie Kohortenselektionen, bevor Sie weitere speichern.",
+    "INVALID_CRITERIA": "Pflichtfilter nicht gesetzt oder unbekanntes Merkmal: {{ids}}",
+    "NO_INCLUSION_CRITERIA": "Die Anfrage enthält keine Einschlusskriterien.",
     "VAL-20001": "Die Kombination aus Kontext und Termcode(s) wurde nicht gefunden."
   },
   "FAQ": {

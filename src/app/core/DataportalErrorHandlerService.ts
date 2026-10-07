@@ -1,14 +1,17 @@
+import { CohortTranslationError } from './model/CohortTranslationError'
 import { DataportalErrorPayloadType } from './model/DataportalErrorPayloadType'
 import { DataportalErrorType } from './model/DataportalErrorTypes'
 import { ErrorDisplayService } from '../shared/service/ErrorDisplay/error-display.service'
 import { ErrorHandler, Injectable, NgZone, inject } from '@angular/core'
 import { IssueData } from './model/Feasibility/IssueData'
 import { Observable, throwError } from 'rxjs'
+import { TranslateService } from '@ngx-translate/core'
 import { ValidationIssueData } from './model/Validation/ValidationIssueData'
 @Injectable({ providedIn: 'root' })
 export class DataportalErrorHandlerService implements ErrorHandler {
   private zone = inject(NgZone)
   private errorDisplayService = inject(ErrorDisplayService)
+  private translate = inject(TranslateService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -27,6 +30,15 @@ export class DataportalErrorHandlerService implements ErrorHandler {
           dataportalError.payload,
           dataportalError.type as any,
           dataportalError.url
+        )
+      } else if (error instanceof CohortTranslationError) {
+        const message = this.translate.instant(`ERROR.${error.code}`, {
+          ids: error.criterionIds.join(', '),
+        })
+        this.errorDisplayService.showError(
+          [{ message, type: 'Error', code: error.code, severity: 'ERROR' }],
+          'GENERIC_ERROR',
+          ''
         )
       } else {
         const errorMessage = error instanceof Error ? error.message : String(error)
