@@ -108,7 +108,7 @@ export class FeasibilityQuery {
    * @param inclusionCriteria - The new inclusion criteria of the query.
    */
   setInclusionCriteria(inclusionCriteria: string[][]): void {
-    this.inclusionCriteria = inclusionCriteria
+    this.inclusionCriteria = inclusionCriteria.filter((group) => group.length > 0)
   }
 
   /**
@@ -126,7 +126,7 @@ export class FeasibilityQuery {
    * @param exclusionCriteria - The new exclusion criteria of the query.
    */
   setExclusionCriteria(exclusionCriteria: string[][]): void {
-    this.exclusionCriteria = exclusionCriteria
+    this.exclusionCriteria = exclusionCriteria.filter((group) => group.length > 0)
   }
 
   public getResultIds(): string[] {
