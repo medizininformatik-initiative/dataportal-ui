@@ -214,7 +214,7 @@ Only schema v1 is supported. Read from `medizininformatik-initiative` on GitHub:
 | Types | Hand-written `*Data` types as discriminated unions; the Ajv test guards drift |
 | Validation | Tests only; Ajv is a devDependency; nothing new at runtime |
 | Scope | The cohortDefinition (about 25 classes). `CRTDL`, `DataExtraction` and the data-selection side keep their classes |
-| Seam | One translator module per direction. `UIQuery2StructuredQuery.service.ts` is the live UI-to-data path (used by `Polling.service.ts`, `CreateCRTDL.service.ts`) |
+| Seam | One translator module per direction. `UIQuery2CohortDefinition.service.ts` is the live UI-to-data path (used by `Polling.service.ts`, `CreateCRTDL.service.ts`) |
 | Test input | Round trip from the `cases.ts` catalogue, moved to a folder shared by Cypress and Jest |
 | Dead code | Deleted first, in its own commit: the annotated cluster, the `Translator/StructureQuery/Builder/` cluster, and the other unreferenced declarations (each re-checked) |
 | `ge`/`le` | A separate change after the refactor |
@@ -226,7 +226,7 @@ Only schema v1 is supported. Read from `medizininformatik-initiative` on GitHub:
 
 1. **Compile time:** the translator returns the typed data, built from object literals (no `as` casts).
 2. **Jest:** feed the catalogue cases through `StructuredQuery2FeasibilityQuery` and back through
-   `UIQuery2StructuredQuery`, validate each result with Ajv 2020 against the vendored CCDL v1.0.0
+   `UIQuery2CohortDefinition`, validate each result with Ajv 2020 against the vendored CCDL v1.0.0
    schema (formats enabled; in draft 2020-12 `format` is annotation-only by default), and compare
    with the input.
 3. **Cypress:** the existing `crtdl-roundtrip` suite stays as the end-to-end check.
@@ -274,7 +274,7 @@ Done on branch `refactoring-structured-query` (not committed):
 - `cohort-definition.schema.spec.ts` (33 tests): every case of the catalogue is valid CCDL v1, and
   the schema rejects an unknown property and an empty time restriction.
 - `ui-to-cohort-definition.spec.ts` (4 tests): criteria built with the real model classes go through
-  `UIQuery2StructuredQueryService` and the serialized output is valid CCDL v1 (no filters; quantity
+  `UIQuery2CohortDefinitionService` and the serialized output is valid CCDL v1 (no filters; quantity
   comparator `eq`, `lt`, `gt`, with the exact output shape asserted).
 
 **Changed finding: the full round trip is not feasible in Jest.** `StructuredQuery2UIQueryTranslator`
@@ -329,7 +329,7 @@ the new guards will be stricter than today's lenient ones.
 
 ## 10. Step 4 plan: output side only
 
-Goal: `UIQuery2StructuredQueryService` returns `CCDLCohortDefinition` (plain data) instead of the
+Goal: `UIQuery2CohortDefinitionService` returns `CCDLCohortDefinition` (plain data) instead of the
 `StructuredQuery` class. The input side (guards, `StructuredQuery2*`) is untouched until step 8.
 
 1. **Characterization test first.** **Done, not committed** (`ui-to-cohort-definition.spec.ts`, 18 cases, see F9 below). Build a set of UI queries (extend `ui-to-cohort-definition.spec.ts`:

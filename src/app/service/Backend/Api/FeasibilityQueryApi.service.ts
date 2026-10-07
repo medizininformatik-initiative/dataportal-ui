@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
 import { SavedFeasibilityQueryResults } from 'src/app/model/Result/SavedFeasibilityQueryResults'
-import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery'
+import { CCDLCohortDefinition } from 'src/app/model/CohortDefinition/CCDLCohortDefinition'
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +20,13 @@ export class FeasibilityQueryApiService {
 
   /**
    *
-   * @param structuredQuery
+   * @param cohortDefinition
    * @returns A string contained in the header response which is the location of the query result
    */
-  public postStructuredQuery(structuredQuery: StructuredQuery): Observable<any> {
+  public postStructuredQuery(cohortDefinition: CCDLCohortDefinition): Observable<any> {
     return this.http.post<any>(
       this.backendService.createUrl(FeasibilityQueryPaths.EXECUTE_QUERY),
-      structuredQuery,
+      cohortDefinition,
       {
         observe: 'response',
       }

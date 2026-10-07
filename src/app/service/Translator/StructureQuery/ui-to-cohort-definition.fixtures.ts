@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing'
+import { firstValueFrom } from 'rxjs'
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
@@ -7,6 +8,7 @@ import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder'
 import { CriterionProviderService } from '../../Provider/CriterionProvider.service'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
@@ -16,7 +18,7 @@ import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
 import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service'
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
-import { UIQuery2StructuredQueryService } from './UIQuery2StructuredQuery.service'
+import { UIQuery2CohortDefinitionService } from './UIQuery2CohortDefinition.service'
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 
 /**
@@ -59,13 +61,6 @@ export const CONTEXT_WIRE: Json = {
   system: 'fdpg.mii.cds',
   version: '1.0.0',
 }
-/** The context the app itself puts on the consent criterion (`ContextTermCode`). */
-export const CONSENT_CONTEXT_WIRE: Json = {
-  code: 'Einwilligung',
-  display: 'Einwilligung',
-  system: 'fdpg.mii.cds',
-  version: '1.0.0',
-}
 
 export const PNEUMONIA = new TerminologyCode('233604007', 'Pneumonia', SNOMED)
 export const YEARS = new QuantityUnit('a', 'years')
@@ -83,7 +78,6 @@ export interface UiQuery {
   exclusion?: Criterion[][]
   /** Omitted: empty. `null`: leave the default of a new query. */
   display?: string | null
-  consent?: boolean
 }
 
 /** The simplest queries: one group of alternatives, or several groups. */
@@ -110,9 +104,15 @@ export function criterion(
     id,
     termCodes: options.termCodes ?? [PNEUMONIA],
   })
-  if (options.timeRestriction) builder.withTimeRestriction(options.timeRestriction)
-  if (options.valueFilters) builder.withValueFilters(options.valueFilters)
-  if (options.attributeFilters) builder.withAttributeFilters(options.attributeFilters)
+  if (options.timeRestriction) {
+    builder.withTimeRestriction(options.timeRestriction)
+  }
+  if (options.valueFilters) {
+    builder.withValueFilters(options.valueFilters)
+  }
+  if (options.attributeFilters) {
+    builder.withAttributeFilters(options.attributeFilters)
+  }
   const built = builder.buildCriterion()
   TestBed.inject(CriterionProviderService).setOne(built)
   return built
@@ -130,7 +130,9 @@ export function referenceCriterion(timeRestriction?: AbstractTimeRestriction) {
     id,
     termCodes: [code('referenced')],
   })
-  if (timeRestriction) builder.withTimeRestriction(timeRestriction)
+  if (timeRestriction) {
+    builder.withTimeRestriction(timeRestriction)
+  }
   const built = builder.buildReferenceCriterion()
   TestBed.inject(ReferenceCriterionProviderService).setOne(built)
   return built
@@ -193,20 +195,25 @@ export const cohort = (inclusionCriteria: Json[][], rest: Json = {}): Json => ({
 
 // --- Running the translator -----------------------------------------------------------------
 
-/** The wire JSON the app would send: the translator output, serialized as on save and download. */
-export function translate({
-  inclusion,
-  exclusion = [],
-  display = '',
-  consent = false,
-}: UiQuery): Json {
+/** The query as the user holds it: built from `uiQuery` and set active in the provider. */
+export function buildQuery({ inclusion, exclusion = [], display = '' }: UiQuery): FeasibilityQuery {
   const query =
     display === null ? new FeasibilityQuery('query-1') : new FeasibilityQuery('query-1', display)
   query.setInclusionCriteria(inclusion.map((group) => group.map((c) => c.getId())))
   query.setExclusionCriteria(exclusion.map((group) => group.map((c) => c.getId())))
-  query.setConsent(consent)
-  const structuredQuery = TestBed.inject(UIQuery2StructuredQueryService).translateToStructuredQuery(
-    query
+  TestBed.inject(FeasibilityQueryProviderService).setFeasibilityQueryById(
+    query,
+    query.getId(),
+    true
   )
-  return JSON.parse(JSON.stringify(structuredQuery))
+  return query
+}
+
+/** The wire JSON the app would send: the translator output, serialized as on save and download. */
+export async function translate(uiQuery: UiQuery): Promise<Json> {
+  buildQuery(uiQuery)
+  const cohortDefinition = await firstValueFrom(
+    TestBed.inject(UIQuery2CohortDefinitionService).translateActiveQueryToCohortDefinition()
+  )
+  return JSON.parse(JSON.stringify(cohortDefinition))
 }

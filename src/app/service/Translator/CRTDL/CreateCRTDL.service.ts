@@ -6,8 +6,8 @@ import { DataSelection2DataExtraction } from './DataSelection2DataExtraction.ser
 import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { Injectable, inject } from '@angular/core'
-import { StructuredQuery } from 'src/app/model/StructuredQuery/StructuredQuery'
-import { UIQuery2StructuredQueryService } from '../StructureQuery/UIQuery2StructuredQuery.service'
+import { CCDLCohortDefinition } from 'src/app/model/CohortDefinition/CCDLCohortDefinition'
+import { UIQuery2CohortDefinitionService } from '../StructureQuery/UIQuery2CohortDefinition.service'
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ import { UIQuery2StructuredQueryService } from '../StructureQuery/UIQuery2Struct
 export class CreateCRTDLService {
   private dataExtractionTranslator = inject(DataSelection2DataExtraction)
   private feasibilityQueryProvider = inject(FeasibilityQueryProviderService)
-  private uiQueryTranslator = inject(UIQuery2StructuredQueryService)
+  private uiQueryTranslator = inject(UIQuery2CohortDefinitionService)
   private dataSelectionProvider = inject(DataSelectionProviderService)
   private activeDataSelectionService = inject(ActiveDataSelectionService)
 
@@ -25,36 +25,20 @@ export class CreateCRTDLService {
   constructor() {}
 
   public createCRTDLForSave(): Observable<CRTDL> {
-    const structuredQuery$ = this.getStructuredQuery()
-    const dataExtraction$ = this.getDataExtraction()
-
-    return combineLatest([structuredQuery$, dataExtraction$]).pipe(
-      map(([structuredQuery, dataExtraction]) => this.buildCRTDL(structuredQuery, dataExtraction))
+    return combineLatest([
+      this.uiQueryTranslator.translateActiveQueryToCohortDefinition(),
+      this.getDataExtraction(),
+    ]).pipe(
+      map(([cohortDefinition, dataExtraction]) => this.buildCRTDL(cohortDefinition, dataExtraction))
     )
   }
 
   public createCRTDL(): Observable<CRTDL> {
-    return combineLatest([this.getStructuredQuery(), this.getDataExtraction()]).pipe(
-      map(([structuredQuery, dataExtraction]) => {
-        if (structuredQuery.getInclusionCriteria()?.length > 0) {
-          return this.buildCRTDL(structuredQuery, dataExtraction)
-        }
-      })
-    )
+    return this.createCRTDLForSave()
   }
 
-  public buildCRTDL(structuredQuery: StructuredQuery, dataExtraction: DataExtraction): CRTDL {
-    return new CRTDL(structuredQuery, dataExtraction)
-  }
-
-  private getStructuredQuery(): Observable<StructuredQuery> {
-    return this.feasibilityQueryProvider
-      .getActiveFeasibilityQuery()
-      .pipe(
-        map((feasibilityQuery) =>
-          this.uiQueryTranslator.translateToStructuredQuery(feasibilityQuery)
-        )
-      )
+  public buildCRTDL(cohortDefinition: CCDLCohortDefinition, dataExtraction: DataExtraction): CRTDL {
+    return new CRTDL(cohortDefinition, dataExtraction)
   }
 
   private getDataExtraction(): Observable<DataExtraction> {

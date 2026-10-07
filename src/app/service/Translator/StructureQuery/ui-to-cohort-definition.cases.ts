@@ -1,10 +1,8 @@
-import { TestBed } from '@angular/core/testing'
 import { AfterFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AfterFilter'
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { AtFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AtFilter'
 import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter'
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
-import { ConsentService } from '../../Consent/Consent.service'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
@@ -15,7 +13,6 @@ import {
   cohort,
   comparator,
   concept,
-  CONSENT_CONTEXT_WIRE,
   CONTEXT_WIRE,
   criterion,
   DEFAULT_DISPLAY,
@@ -28,7 +25,6 @@ import {
   UiQuery,
   valueFilter,
   wire,
-  wireOf,
   MONTHS,
   MONTHS_WIRE,
   YEARS,
@@ -36,7 +32,7 @@ import {
 } from './ui-to-cohort-definition.fixtures'
 
 /**
- * Every accepted UI query of `UIQuery2StructuredQueryService`, with the exact JSON it must produce.
+ * Every accepted UI query of `UIQuery2CohortDefinitionService`, with the exact JSON it must produce.
  * Read top to bottom: one entry is one case, grouped by what it exercises.
  *
  * Characterization: the expectations were derived from the serialized keys of the current classes
@@ -49,7 +45,7 @@ export interface Case {
   name: string
   /** The UI query. A function, because building it registers criteria in the test's providers. */
   query: () => UiQuery
-  /** The exact wire JSON. A function when it has to read from the providers (consent). */
+  /** The exact wire JSON. */
   expected: Json | (() => Json)
 }
 
@@ -443,25 +439,6 @@ export const GROUPS: CaseGroup[] = [
             }),
           ],
         ]),
-      },
-    ],
-  },
-  {
-    title: 'consent',
-    cases: [
-      {
-        name: 'is added as an inclusion group of its own',
-        query: () => ({ ...included(criterion()), consent: true }),
-        expected: () =>
-          cohort([
-            [pneumonia()],
-            [
-              {
-                termCodes: [wireOf(TestBed.inject(ConsentService).getConsentTermCode())],
-                context: CONSENT_CONTEXT_WIRE,
-              },
-            ],
-          ]),
       },
     ],
   },

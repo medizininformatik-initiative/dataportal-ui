@@ -37,7 +37,7 @@ export class PollingManagerService {
     feasibilityQuery: FeasibilityQuery
   ): Observable<QueryResult | ErrorQueryResult> {
     return this.pollingService
-      .getFeasibilityIdFromPollingUrl(feasibilityQuery)
+      .getFeasibilityIdFromPollingUrl()
       .pipe(switchMap((resultId) => this.startPolling(feasibilityQuery, resultId)))
   }
 

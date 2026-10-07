@@ -47,3 +47,5 @@ export interface CCDLTermCode {
    */
   version?: string
 }
+
+export const isNonEmpty = <T>(items: T[]): items is NonEmptyArray<T> => items.length > 0

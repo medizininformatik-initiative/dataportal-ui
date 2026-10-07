@@ -1,10 +1,9 @@
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryApiService } from '../../../Backend/Api/FeasibilityQueryApi.service'
 import { FeasibilityQueryResultApiService } from '../../../Backend/Api/FeasibilityQueryResultApi.service'
 import { Injectable, inject } from '@angular/core'
-import { map, Observable } from 'rxjs'
-import { UIQuery2StructuredQueryService } from '../../../Translator/StructureQuery/UIQuery2StructuredQuery.service'
+import { map, Observable, switchMap } from 'rxjs'
+import { UIQuery2CohortDefinitionService } from '../../../Translator/StructureQuery/UIQuery2CohortDefinition.service'
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +12,7 @@ export class PollingService {
   private feasibilityQueryResultApiService = inject(FeasibilityQueryResultApiService)
   private appSettingsProviderService = inject(AppSettingsProviderService)
   private feasibilityQueryApiService = inject(FeasibilityQueryApiService)
-  private translator = inject(UIQuery2StructuredQueryService)
+  private translator = inject(UIQuery2CohortDefinitionService)
 
   private readonly POLLING_INTERVALL_MILLISECONDS =
     this.appSettingsProviderService.getResultSummaryPollingInterval()
@@ -33,15 +32,16 @@ export class PollingService {
     return this.feasibilityQueryResultApiService.getSummaryResult(resultId)
   }
 
-  public getFeasibilityIdFromPollingUrl(query: FeasibilityQuery): Observable<string> {
-    return this.feasibilityQueryApiService
-      .postStructuredQuery(this.translator.translateToStructuredQuery(query))
-      .pipe(
-        map((result) => {
-          const pollingUrl = result.headers.get('location')
-          return pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1)
-        })
-      )
+  public getFeasibilityIdFromPollingUrl(): Observable<string> {
+    return this.translator.translateActiveQueryToCohortDefinition().pipe(
+      switchMap((cohortDefinition) =>
+        this.feasibilityQueryApiService.postStructuredQuery(cohortDefinition)
+      ),
+      map((result) => {
+        const pollingUrl = result.headers.get('location')
+        return pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1)
+      })
+    )
   }
 
   /**
