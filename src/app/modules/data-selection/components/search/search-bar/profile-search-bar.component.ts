@@ -93,7 +93,9 @@ export class ProfileSearchBarComponent {
   }
 
   public onFilterChange(newFilter: SearchFilterData | undefined): void {
-    if (!newFilter) return
+    if (!newFilter) {
+      return
+    }
 
     this.profileFilterFetchService.fetchAndUpdateFilters(this.searchText(), newFilter.filterType)
     this.profileSearchFilterProviderService.updateFilterSelectedValues(

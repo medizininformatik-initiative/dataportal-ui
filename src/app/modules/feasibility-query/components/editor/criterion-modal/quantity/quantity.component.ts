@@ -73,7 +73,9 @@ export class QuantityComponent {
   constructor() {
     effect(() => {
       const filter = this.quantityFilter()
-      if (!filter) return
+      if (!filter) {
+        return
+      }
       this.quantityFilterFactoryService.setAllowedUnits(filter.getAllowedUnits())
       this.quantityFilterFactoryService.setPrecision(filter.getPrecision())
       this.selectedQuantityFilterComparator.set(filter.getComparator())

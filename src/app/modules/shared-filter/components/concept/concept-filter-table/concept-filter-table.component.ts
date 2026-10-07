@@ -93,7 +93,9 @@ export class ConceptFilterTableComponent {
 
   public loadMoreSearchResults(): void {
     const urls = this.valueSetUrl()
-    if (!urls) return
+    if (!urls) {
+      return
+    }
     this.conceptSearchService
       .loadNextPage(' ', urls)
       .pipe(takeUntilDestroyed(this.destroyRef))

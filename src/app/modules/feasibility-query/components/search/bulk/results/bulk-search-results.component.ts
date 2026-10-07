@@ -38,7 +38,9 @@ export class BulkSearchResultsComponent {
 
   readonly foundCriteriaTableData = computed<TableData | null>(() => {
     const result = this.result()
-    if (!result) return null
+    if (!result) {
+      return null
+    }
     const selected = this.selectedEntries()
     const selectedIds = new Set(selected.map((item) => item.getId()))
     const tableData = new CriteriaBulkFoundListEntryAdapter().adapt(result.getFound())
@@ -56,7 +58,9 @@ export class BulkSearchResultsComponent {
 
   readonly notFoundCriteriaTableData = computed<TableData | null>(() => {
     const result = this.result()
-    if (!result) return null
+    if (!result) {
+      return null
+    }
     return new CriteriaBulkNotFoundListEntryAdapter().adapt(result.getNotFound())
   })
 

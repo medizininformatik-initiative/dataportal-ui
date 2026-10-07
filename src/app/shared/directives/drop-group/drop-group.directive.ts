@@ -183,7 +183,9 @@ export class DropGroupDirective implements OnInit {
     let count = 0
     criteria.forEach((outer, outerIndex) => {
       outer.forEach((_, innerIndex) => {
-        if (count === currentIndex) position = [outerIndex, innerIndex]
+        if (count === currentIndex) {
+          position = [outerIndex, innerIndex]
+        }
         count++
       })
     })

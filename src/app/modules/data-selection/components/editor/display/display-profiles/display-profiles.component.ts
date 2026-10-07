@@ -43,7 +43,9 @@ export class DisplayProfilesComponent {
 
   readonly profiles = computed(() => {
     const dataSelection = this.activeDataSelection()
-    if (!dataSelection?.getProfiles()) return []
+    if (!dataSelection?.getProfiles()) {
+      return []
+    }
     return dataSelection.getProfiles()
   })
 
@@ -52,10 +54,14 @@ export class DisplayProfilesComponent {
   readonly filteredProfiles = computed(() => {
     const term = this.searchText().toLowerCase()
     const lang = this.translateService.currentLang
-    if (!term) return this.profiles()
+    if (!term) {
+      return this.profiles()
+    }
     return this.profiles().filter((profile) => {
       const nameMatch = profile.getDisplay().translate(lang).toLowerCase().includes(term)
-      if (nameMatch) return true
+      if (nameMatch) {
+        return true
+      }
       return profile
         .getProfileFields()
         .getSelectedBasicFields()
@@ -67,14 +73,18 @@ export class DisplayProfilesComponent {
     const term = this.searchText().toLowerCase()
     const lang = this.translateService.currentLang
     const map = new Map<string, string[]>()
-    if (!term) return map
+    if (!term) {
+      return map
+    }
     for (const profile of this.profiles()) {
       const fields = profile
         .getProfileFields()
         .getSelectedBasicFields()
         .filter((f) => f.getDisplay().translate(lang).toLowerCase().includes(term))
         .map((f) => f.getDisplay().translate(lang))
-      if (fields.length) map.set(profile.getId(), fields)
+      if (fields.length) {
+        map.set(profile.getId(), fields)
+      }
     }
     return map
   })
@@ -90,8 +100,11 @@ export class DisplayProfilesComponent {
         .getProfileFields()
         .getSelectedBasicFields()
         .some((f) => f.getDisplay().translate(lang).toLowerCase().includes(term))
-      if (nameMatch) byName++
-      else if (fieldMatch) byField++
+      if (nameMatch) {
+        byName++
+      } else if (fieldMatch) {
+        byField++
+      }
     }
     return { byName, byField }
   })
@@ -107,7 +120,9 @@ export class DisplayProfilesComponent {
     const profiles = this.profiles()
     const visibleProfiles = this.filteredProfiles()
     const idx = profiles.findIndex((p) => p.getId() === profileId)
-    if (direction === 'up' ? idx <= 1 : idx < 0 || idx >= profiles.length - 1) return
+    if (direction === 'up' ? idx <= 1 : idx < 0 || idx >= profiles.length - 1) {
+      return
+    }
 
     // Capture old top positions using visible (filtered) profiles since boxRefs reflects them
     const oldTops = new Map<string, number>()
@@ -131,12 +146,18 @@ export class DisplayProfilesComponent {
       () => {
         const newVisibleProfiles = this.filteredProfiles()
         this.boxRefs.forEach((ref, i) => {
-          if (i >= newVisibleProfiles.length) return
+          if (i >= newVisibleProfiles.length) {
+            return
+          }
           const el = ref.nativeElement
           const oldTop = oldTops.get(newVisibleProfiles[i].getId())
-          if (oldTop === undefined) return
+          if (oldTop === undefined) {
+            return
+          }
           const delta = oldTop - el.getBoundingClientRect().top
-          if (delta === 0) return
+          if (delta === 0) {
+            return
+          }
           el.style.transition = 'none'
           el.style.transform = `translateY(${delta}px)`
           void el.offsetHeight // force reflow so transform is applied instantly

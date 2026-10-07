@@ -28,6 +28,7 @@
 
         "max-len": "off",
         "semi": 0,
+        "curly": ["error", "all"],
         "@typescript-eslint/member-delimiter-style": ["error", {
           "multiline": {
             "delimiter": "none",    // 'none' or 'semi' or 'comma'
