@@ -1,18 +1,12 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
+      "plugins": ["import"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
-        ],
+        "project": ["tsconfig.json", "e2e/tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -23,22 +17,33 @@
       "rules": {
         "jsdoc/newline-after-description": "off",
         "@typescript-eslint/no-explicit-any": "off",
-"@typescript-eslint/no-unused-vars": "warn",
-"@angular-eslint/no-empty-lifecycle-method": "off",
-
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@angular-eslint/no-empty-lifecycle-method": "off",
         "max-len": "off",
         "semi": 0,
+        "import/order": ["error", { "alphabetize": { "order": "asc", "caseInsensitive": true } }],
         "curly": ["error", "all"],
-        "@typescript-eslint/member-delimiter-style": ["error", {
-          "multiline": {
-            "delimiter": "none",    // 'none' or 'semi' or 'comma'
-            "requireLast": true
-          },
-          "singleline": {
-            "delimiter": "semi",    // 'semi' or 'comma'
-            "requireLast": false
+        "brace-style": ["error", "1tbs", { "allowSingleLine": false }],
+        "@typescript-eslint/member-delimiter-style": [
+          "error",
+          {
+            "multiline": {
+              "delimiter": "none",
+              "requireLast": false
+            },
+            "singleline": {
+              "delimiter": "comma",
+              "requireLast": true
+            }
           }
-        }],
+        ],
+        "@typescript-eslint/prefer-function-type": "error",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "explicit"
+          }
+        ],
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -75,19 +80,16 @@
           }
         ],
         "@typescript-eslint/member-ordering": [
-          "off", {
-            "default": [ "constructor",  "public-decorated-field"]
+          "off",
+          {
+            "default": ["constructor", "public-decorated-field"]
           }
         ]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     }
   ]
