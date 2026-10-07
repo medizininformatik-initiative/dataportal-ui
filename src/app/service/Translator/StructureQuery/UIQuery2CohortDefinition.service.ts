@@ -1,4 +1,8 @@
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
+import { Injectable, inject } from '@angular/core'
+import { map, Observable, take } from 'rxjs'
+import { CohortTranslationError } from 'src/app/core/model/CohortTranslationError'
+import { CCDLCohortDefinition } from 'src/app/model/CohortDefinition/CCDLCohortDefinition'
+import { CCDLCriterion } from 'src/app/model/CohortDefinition/CCDLCriterion'
 import {
   CCDLAttributeFilter,
   CCDLConceptFilter,
@@ -9,33 +13,29 @@ import {
   CCDLUnit,
   CCDLValueFilter,
 } from 'src/app/model/CohortDefinition/CCDLFilters'
-import { CCDLCohortDefinition } from 'src/app/model/CohortDefinition/CCDLCohortDefinition'
-import { CCDLCriterion } from 'src/app/model/CohortDefinition/CCDLCriterion'
-import { CohortTranslationError } from 'src/app/core/model/CohortTranslationError'
 import { CCDLReferencedCriterion } from 'src/app/model/CohortDefinition/CCDLFilters'
 import {
   CCDLTermCode,
   isNonEmpty,
   NonEmptyArray,
 } from 'src/app/model/CohortDefinition/CCDLTermCode'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
+import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
 import { ConceptFilter } from '../../../model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
 import { Criterion } from '../../../model/FeasibilityQuery/Criterion/Criterion'
-import { CriterionProviderService } from '../../Provider/CriterionProvider.service'
 import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery'
+import { TerminologyCode } from '../../../model/Terminology/TerminologyCode'
+import { CriterionProviderService } from '../../Provider/CriterionProvider.service'
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
+import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service'
 import {
   FeasibilityQueryValidationService,
   FeasibilityQueryValidationState,
 } from '../../Validation/Internal/FeasibilityQueryValidationService.service'
-import { Injectable, inject } from '@angular/core'
-import { map, Observable, take } from 'rxjs'
-import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
-import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
-import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service'
-import { TerminologyCode } from '../../../model/Terminology/TerminologyCode'
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service'
 
 const VERSION = 'http://to_be_decided.com/draft-1/schema#'
@@ -136,7 +136,7 @@ export class UIQuery2CohortDefinitionService {
   ): NonEmptyArray<NonEmptyArray<CCDLCriterion>> | undefined {
     const translated = groups
       .map((ids) => ids.map((id) => this.criterion(this.criterionProvider.getOne(id))))
-      .filter((group): group is NonEmptyArray<CCDLCriterion> => isNonEmpty(group))
+      .filter(isNonEmpty)
     return isNonEmpty(translated) ? translated : undefined
   }
 
@@ -152,7 +152,7 @@ export class UIQuery2CohortDefinitionService {
   private criterionOf<F extends CCDLAttributeFilter>(
     criterion: Criterion,
     attributeFilters: F[]
-  ): StrictOmit<CCDLCriterion, 'attributeFilters'> & { attributeFilters?: F[] } {
+  ): StrictOmit<CCDLCriterion, 'attributeFilters'> & { attributeFilters?: F[], } {
     const timeRestriction = this.timeRestrictionTranslation.translateTimeRestriction(
       criterion.getTimeRestriction()
     )
