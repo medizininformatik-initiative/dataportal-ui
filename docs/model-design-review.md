@@ -28,12 +28,12 @@ and neither of those is called outside `service/TypeGuard`.
 
 So this whole cluster is dead (introduced in commit `41eb6936`, never wired in):
 
-| Module | Used by |
-|---|---|
-| `AnnotatedCRTDL` | nobody |
-| `AnnotatedCRTDLData` (interface) | only its own type guard and assertion |
+| Module                                                                                           | Used by                                                    |
+| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `AnnotatedCRTDL`                                                                                 | nobody                                                     |
+| `AnnotatedCRTDLData` (interface)                                                                 | only its own type guard and assertion                      |
 | `AnnotatedStructuredQuery`, `AnnotatedStructuredQueryCriterion`, `AnnotatedStructuredQueryIssue` | only `AnnotatedCRTDL` and `SavedAnnotatedFeasibilityQuery` |
-| `SavedAnnotatedFeasibilityQuery` | nobody |
+| `SavedAnnotatedFeasibilityQuery`                                                                 | nobody                                                     |
 
 **Deletion test:** deleting the cluster makes no complexity reappear anywhere. Candidate for deletion,
 together with `isAnnotatedCRTDLData` and `assertAnnotatedCRTDLData`.
@@ -43,17 +43,17 @@ together with `isAnnotatedCRTDLData` and `assertAnnotatedCRTDLData`.
 Each of these is mentioned in no other file of `src/` (checked with a word-match grep over all of `src/`;
 the Cypress suite was not searched):
 
-| Declaration | File | Note |
-|---|---|---|
-| `TemplateContext`, `TabItem`, `CriterionTabData` | `model/TabComponentData.ts` | whole file unused |
-| `AbstractValidationIssueInfo` | `Validation/ValidationIssueInfo.ts` | |
-| `BuildInformation` (top-level) | `Actuator/Information/BuildInformation.ts` | its children `GitInformation`, `BuildDetails`, `TerminologyInformation` and the three Git classes are then only reachable through it |
-| `SavedFeasibilityQueryListItem`, `StructuredQueryTemplate` | `SavedFeasibilityQuery/` | |
-| `DataSelectionProfileBuilder` | `DataSelection/Profile/` | |
-| `DataSelectionFieldsType` | `Utilities/` | enum |
-| `QuantityComparatorFilterData` | `Interface/Quantity/` | |
-| `QueryResponse` | `Result/` | |
-| `TimeRestriction` class | `FeasibilityQuery/TimeRestriction.ts` | no `new`, no type usage; only the `TimeRestrictionType` enum in the same file is used (by ~10 files). The class also has a field named `tvpe` (typo) |
+| Declaration                                                | File                                       | Note                                                                                                                                                 |
+| ---------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TemplateContext`, `TabItem`, `CriterionTabData`           | `model/TabComponentData.ts`                | whole file unused                                                                                                                                    |
+| `AbstractValidationIssueInfo`                              | `Validation/ValidationIssueInfo.ts`        |                                                                                                                                                      |
+| `BuildInformation` (top-level)                             | `Actuator/Information/BuildInformation.ts` | its children `GitInformation`, `BuildDetails`, `TerminologyInformation` and the three Git classes are then only reachable through it                 |
+| `SavedFeasibilityQueryListItem`, `StructuredQueryTemplate` | `SavedFeasibilityQuery/`                   |                                                                                                                                                      |
+| `DataSelectionProfileBuilder`                              | `DataSelection/Profile/`                   |                                                                                                                                                      |
+| `DataSelectionFieldsType`                                  | `Utilities/`                               | enum                                                                                                                                                 |
+| `QuantityComparatorFilterData`                             | `Interface/Quantity/`                      |                                                                                                                                                      |
+| `QueryResponse`                                            | `Result/`                                  |                                                                                                                                                      |
+| `TimeRestriction` class                                    | `FeasibilityQuery/TimeRestriction.ts`      | no `new`, no type usage; only the `TimeRestrictionType` enum in the same file is used (by ~10 files). The class also has a field named `tvpe` (typo) |
 
 Treat these as candidates and confirm each (templates, Cypress, dynamic lookups) before deleting.
 
@@ -208,25 +208,25 @@ Only schema v1 is supported. Read from `medizininformatik-initiative` on GitHub:
 
 ## 5. Decisions: cohortDefinition classes to types
 
-| Topic | Decision |
-|---|---|
-| Schema target | CCDL v1.0.0 plus the CRTDL v0.1.x wrapper |
-| Types | Hand-written `*Data` types as discriminated unions; the Ajv test guards drift |
-| Validation | Tests only; Ajv is a devDependency; nothing new at runtime |
-| Scope | The cohortDefinition (about 25 classes). `CRTDL`, `DataExtraction` and the data-selection side keep their classes |
-| Seam | One translator module per direction. `UIQuery2CohortDefinition.service.ts` is the live UI-to-data path (used by `Polling.service.ts`, `CreateCRTDL.service.ts`) |
-| Test input | Round trip from the `cases.ts` catalogue, moved to a folder shared by Cypress and Jest |
-| Dead code | Deleted first, in its own commit: the annotated cluster, the `Translator/StructureQuery/Builder/` cluster, and the other unreferenced declarations (each re-checked) |
-| `ge`/`le` | A separate change after the refactor |
-| Version | Emit the real CCDL v1 schema URI for the cohortDefinition. Input accepts any URI; the frontend never reads `version` (guards only check it is a string) |
-| `CheckAndUpgradeCCDL` | Stays. It migrates old CCDL-only files by wrapping them in a CRTDL with the main profile |
-| Input guards | Mirror the schema exactly, applied after the upgrade wrap; enabled last |
+| Topic                 | Decision                                                                                                                                                             |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Schema target         | CCDL v1.0.0 plus the CRTDL v0.1.x wrapper                                                                                                                            |
+| Types                 | Hand-written `*Data` types as discriminated unions; the Ajv test guards drift                                                                                        |
+| Validation            | Tests only; Ajv is a devDependency; nothing new at runtime                                                                                                           |
+| Scope                 | The cohortDefinition (about 25 classes). `CRTDL`, `DataExtraction` and the data-selection side keep their classes                                                    |
+| Seam                  | One translator module per direction. `ToCohortDefinition.service.ts` is the live UI-to-data path (used by `Polling.service.ts`, `CreateCRTDL.service.ts`)            |
+| Test input            | Round trip from the `cases.ts` catalogue, moved to a folder shared by Cypress and Jest                                                                               |
+| Dead code             | Deleted first, in its own commit: the annotated cluster, the `Translator/StructureQuery/Builder/` cluster, and the other unreferenced declarations (each re-checked) |
+| `ge`/`le`             | A separate change after the refactor                                                                                                                                 |
+| Version               | Emit the real CCDL v1 schema URI for the cohortDefinition. Input accepts any URI; the frontend never reads `version` (guards only check it is a string)              |
+| `CheckAndUpgradeCCDL` | Stays. It migrates old CCDL-only files by wrapping them in a CRTDL with the main profile                                                                             |
+| Input guards          | Mirror the schema exactly, applied after the upgrade wrap; enabled last                                                                                              |
 
 ### How the translator output is asserted
 
 1. **Compile time:** the translator returns the typed data, built from object literals (no `as` casts).
 2. **Jest:** feed the catalogue cases through `StructuredQuery2FeasibilityQuery` and back through
-   `UIQuery2CohortDefinition`, validate each result with Ajv 2020 against the vendored CCDL v1.0.0
+   `ToCohortDefinition`, validate each result with Ajv 2020 against the vendored CCDL v1.0.0
    schema (formats enabled; in draft 2020-12 `format` is annotation-only by default), and compare
    with the input.
 3. **Cypress:** the existing `crtdl-roundtrip` suite stays as the end-to-end check.
@@ -274,7 +274,7 @@ Done on branch `refactoring-structured-query` (not committed):
 - `cohort-definition.schema.spec.ts` (33 tests): every case of the catalogue is valid CCDL v1, and
   the schema rejects an unknown property and an empty time restriction.
 - `ui-to-cohort-definition.spec.ts` (4 tests): criteria built with the real model classes go through
-  `UIQuery2CohortDefinitionService` and the serialized output is valid CCDL v1 (no filters; quantity
+  `ToCohortDefinitionService` and the serialized output is valid CCDL v1 (no filters; quantity
   comparator `eq`, `lt`, `gt`, with the exact output shape asserted).
 
 **Changed finding: the full round trip is not feasible in Jest.** `StructuredQuery2UIQueryTranslator`
@@ -329,7 +329,7 @@ the new guards will be stricter than today's lenient ones.
 
 ## 10. Step 4 plan: output side only
 
-Goal: `UIQuery2CohortDefinitionService` returns `CCDLCohortDefinition` (plain data) instead of the
+Goal: `ToCohortDefinitionService` returns `CCDLCohortDefinition` (plain data) instead of the
 `StructuredQuery` class. The input side (guards, `StructuredQuery2*`) is untouched until step 8.
 
 1. **Characterization test first.** **Done, not committed** (`ui-to-cohort-definition.spec.ts`, 18 cases, see F9 below). Build a set of UI queries (extend `ui-to-cohort-definition.spec.ts`:
@@ -361,11 +361,11 @@ attribute filter classes.
 local timezone offset (`getTimezoneOffset()`, `setHours(...)`) and then reads them back with
 `toISOString()` (UTC). Running the same 18 cases under different `TZ` values:
 
-| `TZ` | Result |
-|---|---|
-| `Europe/Berlin`, `UTC`, `Pacific/Auckland` | all 18 pass |
-| `America/Los_Angeles` | 5 fail: every date comes out one day early (after, before, at, between, and the reference case) |
-| `Asia/Kolkata` (UTC+5:30) | 1 fails: the `between` end date is one day early |
+| `TZ`                                       | Result                                                                                          |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| `Europe/Berlin`, `UTC`, `Pacific/Auckland` | all 18 pass                                                                                     |
+| `America/Los_Angeles`                      | 5 fail: every date comes out one day early (after, before, at, between, and the reference case) |
+| `Asia/Kolkata` (UTC+5:30)                  | 1 fails: the `between` end date is one day early                                                |
 
 So users west of UTC would save a different date than they picked, and half-hour offsets are also affected.
 The behaviour is not changed in step 4. `jest.global-setup.js` pins the test run to `Europe/Berlin` (the
