@@ -27,6 +27,26 @@ npm run e2e              # headless e2e (ng e2e)
 - Dev server proxies `/api` → `http://localhost:8090` and `/aqleditor` → `http://localhost:8091`
   (see `proxy.conf.json`); a local backend is expected to be running for the app to fully init.
 
+## Definition of done (mandatory, every change)
+
+The coding rules below (doc comments, calls end in a const, typed arrow parameters, accessibility
+modifiers, naming, service method vs module function, `shared/types/`) are **requirements, not
+suggestions**. Writing code that breaks them is a defect, even when it compiles. A task is not done
+until all of these hold for **every file you created or changed**:
+
+1. Re-read your own diff against those rules before you run any tool. Typical misses: a call inside
+   an object literal, a method without `public`/`private`, an arrow parameter without a type, a doc
+   block without `{Type}` on `@param`/`@returns`.
+2. `npx eslint <the files>`: **0 errors and 0 warnings on code you wrote.** Read the full output.
+   "0 errors" alone is not enough: the rules above report as warnings. Warnings that already existed
+   in untouched old code stay, but never report "clean" while your own lines still warn.
+3. `npx prettier --check <the files>` and `npx tsc --noEmit -p tsconfig.app.json` print nothing.
+4. The Jest specs next to the code you changed pass. Add a spec for new logic.
+5. In the final message, say which of these you ran and what they showed. Don't claim a check you
+   did not run.
+
+If a rule and a request conflict, follow the request and say which rule you broke and why.
+
 ## Architecture
 
 **Bootstrap & startup sequence.** The app is bootstrapped via `bootstrapApplication` in
@@ -81,6 +101,56 @@ prefix (e.g. `num-root`), attribute directives are camelCase with the `num` pref
 **Style.** Prettier is configured with `semi: false` and single quotes; newer files omit
 semicolons, but some older files still have them — follow the prettier config, not surrounding
 file style, when it conflicts.
+
+**Doc comments.** Every function and method gets a JSDoc block: one sentence, then one typed
+`@param {Type} name` per parameter (no description) and one `@returns {Type}`. Omit `@returns` for
+`void`. Example:
+
+```ts
+/**
+ * Translates the criterion ids of each group and drops empty groups.
+ * @param {string[][]} groups
+ * @returns {NonEmptyArray<NonEmptyArray<CCDLCriterion>> | undefined}
+ */
+```
+
+**Calls end in a const.** Don't call functions inside object or array literals. Assign the result to
+a named `const` first, then put the const in (shorthand `{ unit }`). A call needed by two objects is
+made once, above both:
+
+```ts
+const unit = mapUnit(quantity.getSelectedUnit())
+return { unit, comparator, value }
+```
+
+Enforced as a warning by `no-restricted-syntax` (`Property > CallExpression`,
+`ArrayExpression > CallExpression`) in `.eslintrc.json`. ESLint has no rule for the same call
+appearing twice (DRY), so that part stays a review item.
+
+**Typed arrow parameters.** Always annotate arrow-function parameters, also in callbacks:
+`ids.map((id: string) => …)`, not `ids.map((id) => …)`. The return type stays inferred. Enforced by
+`@typescript-eslint/typedef` (`arrowParameter`) in `.eslintrc.json` as a warning, since older code
+still has ~600 violations.
+
+**Accessibility modifiers.** Every class member needs `public`/`private`/`protected`
+(`explicit-member-accessibility`), except constructors: write `constructor(…)`, never
+`public constructor(…)`.
+
+**Service method or module function.** Needs a dependency, or must be replaceable (mocked through
+providers): service method. Pure, no dependencies, used in more than one place: exported module
+function in its own file (e.g. `service/Translator/Shared/CohortDefinitionMapper.ts`), not an
+injectable class and not `static` methods. A pure helper used by one service only may stay in that
+service's file until a second user appears or the file grows. A private method that never uses
+`this` is a sign it should be a module function.
+
+**Generic types and helpers.** Domain-neutral types and their type guards (e.g. `NonEmptyArray<T>` +
+`isNonEmpty`) live in `src/app/shared/types/`, one PascalCase file per concept
+(`NonEmptyArray.ts`). Don't park them in a domain file such as `CCDLTermCode.ts`.
+
+**Naming.** Service = noun for its responsibility; file `X.service.ts` holds class `XService`.
+Method names start with a verb and don't repeat the service noun: `get…` reads (Observable in RxJS
+code), `translate…`/`to…`/`build…` converts, `validate…` checks, `is…`/`has…`/`can…` returns a
+boolean. Split pure `(input) => output` logic from reactive wiring.
 
 **i18n.** Uses `@ngx-translate/core` with German (`de`) as the default language;
 `DisplayTranslationPipe` (`src/app/shared/pipes/`) is the app-wide translation pipe. Route data
