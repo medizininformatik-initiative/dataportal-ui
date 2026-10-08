@@ -1,22 +1,20 @@
-import { catchError, tap } from 'rxjs/operators'
-import { Injectable, inject } from '@angular/core'
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
+import { Injectable, Injector, inject } from '@angular/core'
 import { Observable } from 'rxjs'
-import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-} from '@angular/common/http'
+import { catchError } from 'rxjs/operators'
 import { HttpErrorHandlerService } from './HttpErrorHandler.service'
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  private errorHandler = inject(HttpErrorHandlerService)
+  // lazy: handler -> TranslateService -> HttpClient -> HTTP_INTERCEPTORS (NG0200)
+  private injector = inject(Injector)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
+  /**
+   *
+   */
   constructor() {}
 
   /**
@@ -28,6 +26,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next
       .handle(req)
-      .pipe(catchError((error: HttpErrorResponse) => this.errorHandler.handleError(error, req)))
+      .pipe(catchError((error: HttpErrorResponse) => this.injector.get(HttpErrorHandlerService).handleError(error, req)))
   }
 }

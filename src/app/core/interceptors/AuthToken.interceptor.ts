@@ -1,13 +1,7 @@
-import { Injectable, inject } from '@angular/core'
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http'
+import { Injectable, Injector, inject } from '@angular/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { Observable } from 'rxjs'
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpContext,
-} from '@angular/common/http'
 
 /**
  * HTTP interceptor that automatically adds OAuth bearer tokens to outgoing requests.
@@ -16,7 +10,8 @@ import {
  */
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
-  private oauthService = inject(OAuthService)
+  // lazy: OAuthService injects HttpClient, which injects HTTP_INTERCEPTORS (NG0200)
+  private injector = inject(Injector)
 
   /**
    * List of URL patterns that should be excluded from token injection.
@@ -31,6 +26,9 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
+  /**
+   *
+   */
   constructor() {}
 
   /**
@@ -70,10 +68,15 @@ export class AuthTokenInterceptor implements HttpInterceptor {
    * Retrieves a valid, non-empty access token from the OAuth service.
    * @returns Access token string if valid, otherwise null
    */
-  private getValidToken(): string | null {
-    const token = this.oauthService.getAccessToken()
+  private oauthService = (): OAuthService => this.injector.get(OAuthService)
 
-    if (token && typeof token === 'string' && this.oauthService.hasValidAccessToken()) {
+  /**
+   *
+   */
+  private getValidToken(): string | null {
+    const token = this.oauthService().getAccessToken()
+
+    if (token && typeof token === 'string' && this.oauthService().hasValidAccessToken()) {
       return token
     }
     return null
