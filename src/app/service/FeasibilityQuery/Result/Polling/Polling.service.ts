@@ -3,7 +3,7 @@ import { FeasibilityQueryApiService } from '../../../Backend/Api/FeasibilityQuer
 import { FeasibilityQueryResultApiService } from '../../../Backend/Api/FeasibilityQueryResultApi.service'
 import { Injectable, inject } from '@angular/core'
 import { map, Observable, switchMap } from 'rxjs'
-import { UIQuery2CohortDefinitionService } from '../../../Translator/StructureQuery/UIQuery2CohortDefinition.service'
+import { ToCohortDefinitionService } from '../../../Translator/StructureQuery/ToCohortDefinition.service'
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +12,9 @@ export class PollingService {
   private feasibilityQueryResultApiService = inject(FeasibilityQueryResultApiService)
   private appSettingsProviderService = inject(AppSettingsProviderService)
   private feasibilityQueryApiService = inject(FeasibilityQueryApiService)
-  private translator = inject(UIQuery2CohortDefinitionService)
+  private translator = inject(ToCohortDefinitionService)
 
-  private readonly POLLING_INTERVALL_MILLISECONDS =
-    this.appSettingsProviderService.getResultSummaryPollingInterval()
+  private readonly POLLING_INTERVALL_MILLISECONDS = this.appSettingsProviderService.getResultSummaryPollingInterval()
   private readonly POLLING_MAXL_MILLISECONDS = this.appSettingsProviderService.getPollingTimeUi()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
@@ -33,10 +32,8 @@ export class PollingService {
   }
 
   public getFeasibilityIdFromPollingUrl(): Observable<string> {
-    return this.translator.translateActiveQueryToCohortDefinition().pipe(
-      switchMap((cohortDefinition) =>
-        this.feasibilityQueryApiService.postStructuredQuery(cohortDefinition)
-      ),
+    return this.translator.getActive().pipe(
+      switchMap((cohortDefinition) => this.feasibilityQueryApiService.postStructuredQuery(cohortDefinition)),
       map((result) => {
         const pollingUrl = result.headers.get('location')
         return pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1)

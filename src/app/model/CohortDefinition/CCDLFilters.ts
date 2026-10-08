@@ -1,5 +1,6 @@
-import { CCDLTermCode, NonEmptyArray } from './CCDLTermCode'
-import type { CCDLCriterion } from './CCDLCriterion'
+import { NonEmptyArray } from 'src/app/shared/types/NonEmptyArray'
+import { CCDLCriterion } from './CCDLCriterion'
+import { CCDLTermCode } from './CCDLTermCode'
 
 /**
  * A UCUM unit of a quantity filter.
@@ -110,10 +111,7 @@ export interface CCDLQuantityRangeFilter {
  *
  * @see `$defs/valueFilter` in the CCDL v1 schema.
  */
-export type CCDLValueFilter =
-  | CCDLConceptFilter
-  | CCDLQuantityComparatorFilter
-  | CCDLQuantityRangeFilter
+export type CCDLValueFilter = CCDLConceptFilter | CCDLQuantityComparatorFilter | CCDLQuantityRangeFilter
 
 /**
  * Turns the shared filter shape into an attribute filter by adding the attribute it applies to. In the

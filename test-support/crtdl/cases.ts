@@ -35,7 +35,13 @@ const WORKING_AGE_RANGE = quantityRange(WORKING_AGE.from, WORKING_AGE.to, UNITS.
 /** The Cause of death criterion with ICD-10-WHO concepts selected, plus any other modifier. */
 const icdConcepts =
   (...codes: Array<keyof typeof ICD_CONCEPTS>): CriterionModifier =>
-  (c) => withAttribute(conceptAttribute(ICD_ATTRIBUTE_CODE, codes.map((code) => ICD_CONCEPTS[code])))(c)
+  (c) =>
+    withAttribute(
+      conceptAttribute(
+        ICD_ATTRIBUTE_CODE,
+        codes.map((code) => ICD_CONCEPTS[code])
+      )
+    )(c)
 const deathBy = (codes: Array<keyof typeof ICD_CONCEPTS>, ...modifiers: CriterionModifier[]) =>
   criterion('causeOfDeath', icdConcepts(...codes), ...modifiers)
 
@@ -45,19 +51,22 @@ const DEATH_BY_J13 = deathBy(['J13'])
 const OLDER_THAN_FIVE_CRITERION = criterion('age', withValue(OLDER_THAN_FIVE))
 const WORKING_AGE_CRITERION = criterion('age', withValue(WORKING_AGE_RANGE))
 
-const conditionFeature = (options: GroupOptions = {}) =>
-  attributeGroup('condition', { fields: ['conditionCode'], ...options })
+const conditionFeature = (options: GroupOptions = {}) => attributeGroup('condition', { fields: ['conditionCode'], ...options })
 
 const CONDITION_FILTERS = {
   recordedBetween: dateFilter(EXTRACTION_FILTERS.conditionDate.name, DATE.early, DATE.late),
   recordedSince: dateFilter(EXTRACTION_FILTERS.conditionDate.name, DATE.early),
-  code: tokenFilter(EXTRACTION_FILTERS.conditionCode.name, EXTRACTION_FILTERS.conditionCode.system, [{ code: 'J13', display: 'Pneumonie' }]),
+  code: tokenFilter(EXTRACTION_FILTERS.conditionCode.name, EXTRACTION_FILTERS.conditionCode.system, [
+    { code: 'J13', display: 'Pneumonie' },
+  ]),
 }
 
 /** Patient + MedicationAdministration whose `medication[x]` links to the Medication feature. */
 const linkedFeatures = (options: { mustHave: boolean; referenceOnly: boolean }) => [
   patient(),
-  attributeGroup('medicationAdministration', { fields: [{ field: 'administrationMedication', mustHave: options.mustHave, linksTo: 'medication' }] }),
+  attributeGroup('medicationAdministration', {
+    fields: [{ field: 'administrationMedication', mustHave: options.mustHave, linksTo: 'medication' }],
+  }),
   attributeGroup('medication', { fields: ['medicationCode'], referenceOnly: options.referenceOnly }),
 ]
 
@@ -75,7 +84,9 @@ const comparatorCases = (): Cases =>
   COMPARATORS.reduce<Cases>(
     (cases, comparator) => ({
       ...cases,
-      ...perVariant(`age ${comparator}`, UNITS, (unit) => included(criterion('age', withValue(quantityComparator(comparator, AGE_LIMIT, unit))))),
+      ...perVariant(`age ${comparator}`, UNITS, (unit) =>
+        included(criterion('age', withValue(quantityComparator(comparator, AGE_LIMIT, unit))))
+      ),
     }),
     {}
   )
@@ -107,7 +118,10 @@ export const CASES: Cases = {
   'everything at once': crtdl({
     inclusion: [[DEATH_BY_J13], [WORKING_AGE_CRITERION]],
     exclusion: [[pneumoniaAt(TIMES.after)]],
-    groups: [patient(), conditionFeature({ fields: [{ field: 'conditionCode', mustHave: true }], filters: [CONDITION_FILTERS.recordedSince] })],
+    groups: [
+      patient(),
+      conditionFeature({ fields: [{ field: 'conditionCode', mustHave: true }], filters: [CONDITION_FILTERS.recordedSince] }),
+    ],
   }),
 }
 

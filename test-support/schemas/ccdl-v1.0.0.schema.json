@@ -19,11 +19,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "code",
-        "system",
-        "display"
-      ],
+      "required": ["code", "system", "display"],
       "additionalProperties": false
     },
     "criterion": {
@@ -49,10 +45,7 @@
           "$ref": "#/$defs/timeRestriction"
         }
       },
-      "required": [
-        "termCodes",
-        "context"
-      ],
+      "required": ["termCodes", "context"],
       "additionalProperties": false
     },
     "timeRestriction": {
@@ -72,14 +65,10 @@
       },
       "anyOf": [
         {
-          "required": [
-            "afterDate"
-          ]
+          "required": ["afterDate"]
         },
         {
-          "required": [
-            "beforeDate"
-          ]
+          "required": ["beforeDate"]
         }
       ],
       "additionalProperties": false
@@ -96,10 +85,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "code",
-        "display"
-      ],
+      "required": ["code", "display"],
       "additionalProperties": false
     },
     "attributeFilters": {
@@ -112,16 +98,10 @@
       "type": "object",
       "properties": {
         "type": {
-          "enum": [
-            "concept",
-            "quantity-comparator",
-            "quantity-range"
-          ]
+          "enum": ["concept", "quantity-comparator", "quantity-range"]
         }
       },
-      "required": [
-        "type"
-      ],
+      "required": ["type"],
       "allOf": [
         {
           "if": {
@@ -144,10 +124,7 @@
                 }
               }
             },
-            "required": [
-              "type",
-              "selectedConcepts"
-            ],
+            "required": ["type", "selectedConcepts"],
             "additionalProperties": false
           }
         },
@@ -165,14 +142,7 @@
                 "const": "quantity-comparator"
               },
               "comparator": {
-                "enum": [
-                  "gt",
-                  "ge",
-                  "lt",
-                  "le",
-                  "eq",
-                  "ne"
-                ]
+                "enum": ["gt", "ge", "lt", "le", "eq", "ne"]
               },
               "value": {
                 "type": "number"
@@ -181,11 +151,7 @@
                 "$ref": "#/$defs/unit"
               }
             },
-            "required": [
-              "type",
-              "comparator",
-              "value"
-            ],
+            "required": ["type", "comparator", "value"],
             "additionalProperties": false
           }
         },
@@ -212,11 +178,7 @@
                 "$ref": "#/$defs/unit"
               }
             },
-            "required": [
-              "type",
-              "minValue",
-              "maxValue"
-            ],
+            "required": ["type", "minValue", "maxValue"],
             "additionalProperties": false
           }
         }
@@ -226,17 +188,10 @@
       "type": "object",
       "properties": {
         "type": {
-          "enum": [
-            "concept",
-            "quantity-comparator",
-            "quantity-range",
-            "reference"
-          ]
+          "enum": ["concept", "quantity-comparator", "quantity-range", "reference"]
         }
       },
-      "required": [
-        "type"
-      ],
+      "required": ["type"],
       "allOf": [
         {
           "if": {
@@ -262,11 +217,7 @@
                 }
               }
             },
-            "required": [
-              "type",
-              "selectedConcepts",
-              "attributeCode"
-            ],
+            "required": ["type", "selectedConcepts", "attributeCode"],
             "additionalProperties": false
           }
         },
@@ -287,14 +238,7 @@
                 "const": "quantity-comparator"
               },
               "comparator": {
-                "enum": [
-                  "gt",
-                  "ge",
-                  "lt",
-                  "le",
-                  "eq",
-                  "ne"
-                ]
+                "enum": ["gt", "ge", "lt", "le", "eq", "ne"]
               },
               "value": {
                 "type": "number"
@@ -303,12 +247,7 @@
                 "$ref": "#/$defs/unit"
               }
             },
-            "required": [
-              "type",
-              "comparator",
-              "value",
-              "attributeCode"
-            ],
+            "required": ["type", "comparator", "value", "attributeCode"],
             "additionalProperties": false
           }
         },
@@ -338,12 +277,7 @@
                 "$ref": "#/$defs/unit"
               }
             },
-            "required": [
-              "type",
-              "minValue",
-              "maxValue",
-              "attributeCode"
-            ],
+            "required": ["type", "minValue", "maxValue", "attributeCode"],
             "additionalProperties": false
           }
         },
@@ -392,11 +326,7 @@
                 }
               }
             },
-            "required": [
-              "type",
-              "criteria",
-              "attributeCode"
-            ],
+            "required": ["type", "criteria", "attributeCode"],
             "additionalProperties": false
           }
         }
@@ -441,9 +371,6 @@
       "type": "string"
     }
   },
-  "required": [
-    "version",
-    "inclusionCriteria"
-  ],
+  "required": ["version", "inclusionCriteria"],
   "additionalProperties": false
 }

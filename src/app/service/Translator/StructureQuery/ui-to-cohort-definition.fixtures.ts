@@ -18,7 +18,7 @@ import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
 import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service'
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
-import { UIQuery2CohortDefinitionService } from './UIQuery2CohortDefinition.service'
+import { ToCohortDefinitionService } from './ToCohortDefinition.service'
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 
 /**
@@ -35,19 +35,35 @@ export const VERSION = 'http://to_be_decided.com/draft-1/schema#'
 export const DEFAULT_DISPLAY = 'Ausgewählte Merkmale'
 
 /**
- * `display` differs from `code` everywhere, so a translator that swaps or reuses one for the other is
- * caught.
+ * `display` differs from `code` everywhere, so a translator that swaps or reuses one for the other is caught.
+ * @param {string} value
+ * @returns {string}
  */
 const displayOf = (value: string) => `${value} (display)`
 
-/** A term code as the UI holds it, and as it looks on the wire. */
-export const code = (value: string, system = SNOMED) =>
-  new TerminologyCode(value, displayOf(value), system)
+/**
+ * Builds the term code as the UI holds it.
+ * @param {string} value
+ * @param {string} system
+ * @returns {TerminologyCode}
+ */
+export const code = (value: string, system = SNOMED) => new TerminologyCode(value, displayOf(value), system)
+/**
+ * Builds the same term code as it looks on the wire.
+ * @param {string} value
+ * @param {string} system
+ * @returns {Json}
+ */
 export const wire = (value: string, system = SNOMED): Json => ({
   code: value,
   display: displayOf(value),
   system,
 })
+/**
+ * Converts a UI term code to its wire form.
+ * @param {TerminologyCode} termCode
+ * @returns {Json}
+ */
 export const wireOf = (termCode: TerminologyCode): Json => ({
   code: termCode.getCode(),
   display: termCode.getDisplay(),
@@ -80,12 +96,20 @@ export interface UiQuery {
   display?: string | null
 }
 
-/** The simplest queries: one group of alternatives, or several groups. */
+/**
+ * The simplest queries: one group of alternatives, or several groups.
+ * @param {Criterion[]} criteria
+ * @returns {UiQuery}
+ */
 export const included = (...criteria: Criterion[]): UiQuery => ({ inclusion: [criteria] })
 
 let counter = 0
 
-/** A pneumonia criterion, registered with the provider that the translator reads from. */
+/**
+ * A pneumonia criterion, registered with the provider that the translator reads from.
+ * @param {{ termCodes?: TerminologyCode[], timeRestriction?: AbstractTimeRestriction, valueFilters?: ValueFilter[], attributeFilters?: AttributeFilter[] }} options
+ * @returns {Criterion}
+ */
 export function criterion(
   options: {
     termCodes?: TerminologyCode[]
@@ -118,7 +142,11 @@ export function criterion(
   return built
 }
 
-/** A criterion that another criterion points at through a reference filter. */
+/**
+ * A criterion that another criterion points at through a reference filter.
+ * @param {AbstractTimeRestriction | undefined} timeRestriction
+ * @returns {Criterion}
+ */
 export function referenceCriterion(timeRestriction?: AbstractTimeRestriction) {
   const id = `reference-${++counter}`
   const builder = new CriterionBuilder({
@@ -138,10 +166,27 @@ export function referenceCriterion(timeRestriction?: AbstractTimeRestriction) {
   return built
 }
 
+/**
+ * Builds a quantity comparator filter in years or months.
+ * @param {QuantityComparisonOption} option
+ * @param {number} value
+ * @param {QuantityUnit} unit
+ * @returns {QuantityComparatorFilter}
+ */
 export const comparator = (option: QuantityComparisonOption, value: number, unit = YEARS) =>
   new QuantityComparatorFilter(unit, [YEARS, MONTHS], 0, option, value)
-export const range = (min: number, max: number) =>
-  new QuantityRangeFilter(YEARS, [YEARS], 0, min, max)
+/**
+ * Builds a quantity range filter in years.
+ * @param {number} min
+ * @param {number} max
+ * @returns {QuantityRangeFilter}
+ */
+export const range = (min: number, max: number) => new QuantityRangeFilter(YEARS, [YEARS], 0, min, max)
+/**
+ * Builds a concept filter with the given codes selected.
+ * @param {TerminologyCode[]} codes
+ * @returns {ConceptFilter}
+ */
 export const concept = (...codes: TerminologyCode[]) =>
   new ConceptFilter(
     'concept-filter',
@@ -149,13 +194,23 @@ export const concept = (...codes: TerminologyCode[]) =>
     codes.map((c) => new Concept(new Display([], c.getDisplay()), c))
   )
 
-/** A filter on the criterion's own value, e.g. the age. */
+/**
+ * A filter on the criterion's own value, e.g. the age.
+ * @param {FilterTypes} type
+ * @param {{ concept?: ConceptFilter, quantity?: QuantityComparatorFilter | QuantityRangeFilter }} parts
+ * @returns {ValueFilter}
+ */
 export const valueFilter = (
   type: FilterTypes,
   parts: { concept?: ConceptFilter; quantity?: QuantityComparatorFilter | QuantityRangeFilter }
 ) => new ValueFilter(new Display([], 'value'), type, parts.concept, parts.quantity)
 
-/** A filter on one attribute of the resource, e.g. the cause of death. */
+/**
+ * A filter on one attribute of the resource, e.g. the cause of death.
+ * @param {FilterTypes} type
+ * @param {{ concept?: ConceptFilter, quantity?: QuantityComparatorFilter | QuantityRangeFilter, reference?: ReferenceFilter }} parts
+ * @returns {AttributeFilter}
+ */
 export const attributeFilter = (
   type: FilterTypes,
   parts: {
@@ -163,29 +218,34 @@ export const attributeFilter = (
     quantity?: QuantityComparatorFilter | QuantityRangeFilter
     reference?: ReferenceFilter
   }
-) =>
-  new AttributeFilter(
-    new Display([], 'attribute'),
-    type,
-    ATTRIBUTE,
-    parts.concept,
-    parts.quantity,
-    parts.reference
-  )
+) => new AttributeFilter(new Display([], 'attribute'), type, ATTRIBUTE, parts.concept, parts.quantity, parts.reference)
 
-export const referenceTo = (referenced: Criterion) =>
-  new ReferenceFilter('reference-filter', [], [referenced.getId()])
+/**
+ * Builds a reference filter that points at one criterion.
+ * @param {Criterion} referenced
+ * @returns {ReferenceFilter}
+ */
+export const referenceTo = (referenced: Criterion) => new ReferenceFilter('reference-filter', [], [referenced.getId()])
 
 // --- Expected wire JSON ---------------------------------------------------------------------
 
-/** One pneumonia criterion on the wire, plus whatever the case adds to it. */
+/**
+ * One pneumonia criterion on the wire, plus whatever the case adds to it.
+ * @param {Json} extra
+ * @returns {Json}
+ */
 export const pneumonia = (extra: Json = {}): Json => ({
   termCodes: [{ code: '233604007', display: 'Pneumonia', system: SNOMED }],
   context: CONTEXT_WIRE,
   ...extra,
 })
 
-/** The cohort definition on the wire; `rest` overrides or adds root properties. */
+/**
+ * The cohort definition on the wire; `rest` overrides or adds root properties.
+ * @param {Json[][]} inclusionCriteria
+ * @param {Json} rest
+ * @returns {Json}
+ */
 export const cohort = (inclusionCriteria: Json[][], rest: Json = {}): Json => ({
   version: VERSION,
   display: '',
@@ -195,25 +255,26 @@ export const cohort = (inclusionCriteria: Json[][], rest: Json = {}): Json => ({
 
 // --- Running the translator -----------------------------------------------------------------
 
-/** The query as the user holds it: built from `uiQuery` and set active in the provider. */
+/**
+ * The query as the user holds it: built from `uiQuery` and set active in the provider.
+ * @param {UiQuery} uiQuery
+ * @returns {FeasibilityQuery}
+ */
 export function buildQuery({ inclusion, exclusion = [], display = '' }: UiQuery): FeasibilityQuery {
-  const query =
-    display === null ? new FeasibilityQuery('query-1') : new FeasibilityQuery('query-1', display)
+  const query = display === null ? new FeasibilityQuery('query-1') : new FeasibilityQuery('query-1', display)
   query.setInclusionCriteria(inclusion.map((group) => group.map((c) => c.getId())))
   query.setExclusionCriteria(exclusion.map((group) => group.map((c) => c.getId())))
-  TestBed.inject(FeasibilityQueryProviderService).setFeasibilityQueryById(
-    query,
-    query.getId(),
-    true
-  )
+  TestBed.inject(FeasibilityQueryProviderService).setFeasibilityQueryById(query, query.getId(), true)
   return query
 }
 
-/** The wire JSON the app would send: the translator output, serialized as on save and download. */
+/**
+ * The wire JSON the app would send: the translator output, serialized as on save and download.
+ * @param {UiQuery} uiQuery
+ * @returns {Promise<Json>}
+ */
 export async function translate(uiQuery: UiQuery): Promise<Json> {
   buildQuery(uiQuery)
-  const cohortDefinition = await firstValueFrom(
-    TestBed.inject(UIQuery2CohortDefinitionService).translateActiveQueryToCohortDefinition()
-  )
+  const cohortDefinition = await firstValueFrom(TestBed.inject(ToCohortDefinitionService).getActive())
   return JSON.parse(JSON.stringify(cohortDefinition))
 }

@@ -6,10 +6,10 @@ import { FeasibilityQueryValidationService } from '../../Validation/Internal/Fea
 import { buildQuery, translate } from './ui-to-cohort-definition.fixtures'
 
 /**
- * `UIQuery2CohortDefinitionService` must produce exactly the JSON of each case, and that JSON must be
+ * `ToCohortDefinitionService` must produce exactly the JSON of each case, and that JSON must be
  * valid CCDL v1. The cases are listed in `ui-to-cohort-definition.cases.ts`.
  */
-describe('UIQuery2CohortDefinitionService output', () => {
+describe('ToCohortDefinitionService output', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   describe.each(GROUPS)('$title', ({ cases }) => {

@@ -1,5 +1,5 @@
+import { NonEmptyArray } from 'src/app/shared/types/NonEmptyArray'
 import { CCDLCriterion } from './CCDLCriterion'
-import { NonEmptyArray } from './CCDLTermCode'
 
 /**
  * The root of a CCDL v1 document: the `cohortDefinition` of a CRTDL.

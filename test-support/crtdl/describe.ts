@@ -73,7 +73,9 @@ function describeGroup(group: AttributeGroup, all: AttributeGroup[]): string {
   const fields = group.attributes.map((attribute) => {
     const name = attribute.attributeRef.split('.').slice(1).join('.').replace('[x]', '')
     const linked = (attribute.linkedGroups ?? []).map((id) => all.find((other) => other.id === id)).filter(Boolean)
-    return `${name}${attribute.mustHave ? ' (required)' : ''}${linked.length ? ` linked to ${linked.map((other) => profileLabel(other as AttributeGroup)).join(', ')}` : ''}`
+    return `${name}${attribute.mustHave ? ' (required)' : ''}${
+      linked.length ? ` linked to ${linked.map((other) => profileLabel(other as AttributeGroup)).join(', ')}` : ''
+    }`
   })
   const extras = [
     ...(group.includeReferenceOnly ? ['only when referenced'] : []),
@@ -88,6 +90,8 @@ export function describe(crtdl: Crtdl): string {
   const extra = groups.filter((group) => group.groupReference !== PROFILES.patient.groupReference)
   const sentences = [`Includes ${describeCriteria(inclusionCriteria)}.`]
   if (exclusionCriteria) sentences.push(`Excludes ${describeCriteria(exclusionCriteria)}.`)
-  sentences.push(extra.length ? `Selects ${extra.map((group) => describeGroup(group, groups)).join('; ')}.` : 'Selects only the Patient data.')
+  sentences.push(
+    extra.length ? `Selects ${extra.map((group) => describeGroup(group, groups)).join('; ')}.` : 'Selects only the Patient data.'
+  )
   return sentences.join(' ')
 }

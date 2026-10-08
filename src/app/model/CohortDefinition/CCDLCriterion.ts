@@ -1,5 +1,6 @@
+import { NonEmptyArray } from 'src/app/shared/types/NonEmptyArray'
 import { CCDLAttributeFilter, CCDLValueFilter } from './CCDLFilters'
-import { CCDLTermCode, NonEmptyArray } from './CCDLTermCode'
+import { CCDLTermCode } from './CCDLTermCode'
 import { CCDLTimeRestriction } from './CCDLTimeRestriction'
 
 /**

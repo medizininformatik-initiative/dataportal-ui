@@ -7,7 +7,7 @@ import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelec
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { CCDLCohortDefinition } from 'src/app/model/CohortDefinition/CCDLCohortDefinition'
-import { UIQuery2CohortDefinitionService } from '../StructureQuery/UIQuery2CohortDefinition.service'
+import { ToCohortDefinitionService } from '../StructureQuery/ToCohortDefinition.service'
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ import { UIQuery2CohortDefinitionService } from '../StructureQuery/UIQuery2Cohor
 export class CreateCRTDLService {
   private dataExtractionTranslator = inject(DataSelection2DataExtraction)
   private feasibilityQueryProvider = inject(FeasibilityQueryProviderService)
-  private uiQueryTranslator = inject(UIQuery2CohortDefinitionService)
+  private uiQueryTranslator = inject(ToCohortDefinitionService)
   private dataSelectionProvider = inject(DataSelectionProviderService)
   private activeDataSelectionService = inject(ActiveDataSelectionService)
 
@@ -25,10 +25,7 @@ export class CreateCRTDLService {
   constructor() {}
 
   public createCRTDLForSave(): Observable<CRTDL> {
-    return combineLatest([
-      this.uiQueryTranslator.translateActiveQueryToCohortDefinition(),
-      this.getDataExtraction(),
-    ]).pipe(
+    return combineLatest([this.uiQueryTranslator.getActive(), this.getDataExtraction()]).pipe(
       map(([cohortDefinition, dataExtraction]) => this.buildCRTDL(cohortDefinition, dataExtraction))
     )
   }
@@ -45,10 +42,6 @@ export class CreateCRTDLService {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId()
     return this.dataSelectionProvider
       .getDataSelection(dataSelectionId)
-      .pipe(
-        map((dataSelection) =>
-          this.dataExtractionTranslator.translateToDataExtraction(dataSelection)
-        )
-      )
+      .pipe(map((dataSelection) => this.dataExtractionTranslator.translateToDataExtraction(dataSelection)))
   }
 }

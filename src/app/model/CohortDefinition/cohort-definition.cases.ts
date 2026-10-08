@@ -9,12 +9,7 @@ import {
 } from '../../../../test-support/crtdl/ontology'
 import { CCDLCohortDefinition } from './CCDLCohortDefinition'
 import { CCDLCriterion } from './CCDLCriterion'
-import {
-  CCDLAttributeFilter,
-  CCDLComparator,
-  CCDLReferencedCriterion,
-  CCDLValueFilter,
-} from './CCDLFilters'
+import { CCDLAttributeFilter, CCDLComparator, CCDLReferencedCriterion, CCDLValueFilter } from './CCDLFilters'
 import { CCDLTermCode } from './CCDLTermCode'
 import { CCDLTimeRestriction } from './CCDLTimeRestriction'
 
@@ -48,6 +43,11 @@ const EQUAL = 'eq' satisfies CCDLComparator
 const COMPARATORS: CCDLComparator[] = [GREATER_THAN, LESS_THAN, EQUAL]
 const UNIT_NAMES = Object.keys(UNITS) as Array<keyof typeof UNITS>
 
+/**
+ * Copies a term code so the expected data does not share references with the fixtures.
+ * @param {CCDLTermCode} termCode
+ * @returns {CCDLTermCode}
+ */
 const termCode = ({ code, system, display }: CCDLTermCode): CCDLTermCode => ({
   code,
   system,
@@ -96,13 +96,24 @@ const deathByJ13OrJ15Filter: CCDLAttributeFilter = {
   selectedConcepts: [J13, J15_0],
 }
 
-/** A criterion by its name in the ontology, e.g. `criterion(AGE, { valueFilter })`. */
+/**
+ * A criterion by its name in the ontology, e.g. `criterion(AGE, { valueFilter })`.
+ * @param {CriterionName} name
+ * @param {Partial<CCDLCriterion>} extra
+ * @returns {CCDLCriterion}
+ */
 const criterion = (name: CriterionName, extra: Partial<CCDLCriterion> = {}): CCDLCriterion => ({
   context: context(CRITERIA[name].context) as unknown as CCDLTermCode,
   termCodes: [termCode(CRITERIA[name])],
   ...extra,
 })
 
+/**
+ * Builds a cohort definition with the default version and display.
+ * @param {CCDLCohortDefinition['inclusionCriteria']} inclusionCriteria
+ * @param {CCDLCohortDefinition['exclusionCriteria']} exclusionCriteria
+ * @returns {CCDLCohortDefinition}
+ */
 const cohort = (
   inclusionCriteria: CCDLCohortDefinition['inclusionCriteria'],
   exclusionCriteria?: CCDLCohortDefinition['exclusionCriteria']
@@ -213,15 +224,9 @@ const criterionWithExtraProperty = { ...pneumonia, extra: 1 }
 /** Typed `unknown` on purpose: these are documents the app must never produce. */
 export const rejectedCases: [string, unknown][] = [
   ['a property the schema does not know', cohort([[criterionWithExtraProperty]])],
-  [
-    'an empty time restriction',
-    cohort([[criterion(PNEUMONIA, { timeRestriction: emptyTimeRestriction })]]),
-  ],
+  ['an empty time restriction', cohort([[criterion(PNEUMONIA, { timeRestriction: emptyTimeRestriction })]])],
   // The compiler cannot check a date format, only the schema can.
-  [
-    'a date that is not YYYY-MM-DD',
-    cohort([[criterion(PNEUMONIA, { timeRestriction: { afterDate: 'yesterday' } })]]),
-  ],
+  ['a date that is not YYYY-MM-DD', cohort([[criterion(PNEUMONIA, { timeRestriction: { afterDate: 'yesterday' } })]])],
   ['a criterion without term codes', cohort([[criterion(PNEUMONIA, { termCodes: noTermCodes })]])],
   [
     'a comparator the schema does not know',
@@ -237,18 +242,13 @@ export const rejectedCases: [string, unknown][] = [
       ],
     ]),
   ],
-  [
-    'an attribute filter without attributeCode',
-    cohort([[criterion(CAUSE_OF_DEATH, { attributeFilters: [filterWithoutCode] })]]),
-  ],
+  ['an attribute filter without attributeCode', cohort([[criterion(CAUSE_OF_DEATH, { attributeFilters: [filterWithoutCode] })]])],
   [
     'a reference inside a reference',
     cohort([
       [
         criterion(CAUSE_OF_DEATH, {
-          attributeFilters: [
-            { ...referenceFilter, criteria: [nestedReference] } as CCDLAttributeFilter,
-          ],
+          attributeFilters: [{ ...referenceFilter, criteria: [nestedReference] } as CCDLAttributeFilter],
         }),
       ],
     ]),

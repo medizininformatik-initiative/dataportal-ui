@@ -26,7 +26,10 @@ const toAttribute = (selection: FieldName | FieldSelection): Attribute => {
 }
 
 /** One feature (attribute group) of a profile. The app omits a false `includeReferenceOnly`, so only true is sent. */
-export function attributeGroup(profile: ProfileName, { id = profile, fields = [], referenceOnly, filters }: GroupOptions = {}): AttributeGroup {
+export function attributeGroup(
+  profile: ProfileName,
+  { id = profile, fields = [], referenceOnly, filters }: GroupOptions = {}
+): AttributeGroup {
   return {
     id,
     ...PROFILES[profile],

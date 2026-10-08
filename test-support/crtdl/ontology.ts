@@ -21,8 +21,20 @@ export const context = (code: string): Json => ({ ...CONTEXT, code, display: cod
 /** Criteria a scenario can name. `profile` is the ui-profile that decides which filters it has. */
 export const CRITERIA = {
   pneumonia: { system: SYSTEMS.snomed, code: '233604007', display: 'Pneumonia', context: 'Diagnose', profile: 'time restriction only' },
-  causeOfDeath: { system: SYSTEMS.loinc, code: '79378-6', display: 'Cause of death', context: 'Todesursache', profile: 'one ICD-10-WHO concept attribute' },
-  age: { system: SYSTEMS.snomed, code: '424144002', display: 'Gegenwärtiges chronologisches Alter', context: 'Patient', profile: 'quantity value filter, units a and mo' },
+  causeOfDeath: {
+    system: SYSTEMS.loinc,
+    code: '79378-6',
+    display: 'Cause of death',
+    context: 'Todesursache',
+    profile: 'one ICD-10-WHO concept attribute',
+  },
+  age: {
+    system: SYSTEMS.snomed,
+    code: '424144002',
+    display: 'Gegenwärtiges chronologisches Alter',
+    context: 'Patient',
+    profile: 'quantity value filter, units a and mo',
+  },
   gender: { system: SYSTEMS.snomed, code: '263495000', display: 'Geschlecht', context: 'Patient', profile: 'concept value filter' },
 } as const
 export type CriterionName = keyof typeof CRITERIA
@@ -52,9 +64,15 @@ export type Comparator = (typeof COMPARATORS)[number]
 /** Feature profiles (data extraction), with the fields the tests select. */
 const MII = 'https://www.medizininformatik-initiative.de/fhir/core'
 export const PROFILES = {
-  patient: { groupReference: `${MII}/modul-person/StructureDefinition/PatientPseudonymisiert`, name: 'MII PR Person Patient (Pseudonymisiert)' },
+  patient: {
+    groupReference: `${MII}/modul-person/StructureDefinition/PatientPseudonymisiert`,
+    name: 'MII PR Person Patient (Pseudonymisiert)',
+  },
   condition: { groupReference: `${MII}/modul-diagnose/StructureDefinition/Diagnose`, name: 'Diagnose' },
-  medicationAdministration: { groupReference: `${MII}/modul-medikation/StructureDefinition/MedicationAdministration`, name: 'Medikationsverabreichung' },
+  medicationAdministration: {
+    groupReference: `${MII}/modul-medikation/StructureDefinition/MedicationAdministration`,
+    name: 'Medikationsverabreichung',
+  },
   medication: { groupReference: `${MII}/modul-medikation/StructureDefinition/Medication`, name: 'Medikation' },
 } as const
 export type ProfileName = keyof typeof PROFILES

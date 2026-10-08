@@ -32,7 +32,7 @@ import {
 } from './ui-to-cohort-definition.fixtures'
 
 /**
- * Every accepted UI query of `UIQuery2CohortDefinitionService`, with the exact JSON it must produce.
+ * Every accepted UI query of `ToCohortDefinitionService`, with the exact JSON it must produce.
  * Read top to bottom: one entry is one case, grouped by what it exercises.
  *
  * Characterization: the expectations were derived from the serialized keys of the current classes
@@ -58,12 +58,27 @@ const MONTH = { ui: MONTHS, wire: MONTHS_WIRE }
 
 // --- Small helpers that keep the entries below one-liners -----------------------------------
 
+/**
+ * Builds a case that checks how a time restriction is translated.
+ * @param {string} name
+ * @param {AbstractTimeRestriction} restriction
+ * @param {Json} onWire
+ * @returns {Case}
+ */
 const timeCase = (name: string, restriction: AbstractTimeRestriction, onWire: Json): Case => ({
   name,
   query: () => included(criterion({ timeRestriction: restriction })),
   expected: cohort([[pneumonia({ timeRestriction: onWire })]]),
 })
 
+/**
+ * Builds a case that checks how a quantity comparator is translated.
+ * @param {string} name
+ * @param {QuantityComparisonOption} option
+ * @param {'eq' | 'lt' | 'gt'} onWire
+ * @param {{ ui: QuantityUnit, wire: Json }} unit
+ * @returns {Case}
+ */
 const comparatorCase = (
   name: string,
   option: QuantityComparisonOption,
@@ -162,14 +177,7 @@ export const GROUPS: CaseGroup[] = [
         query: () =>
           included(
             criterion({
-              termCodes: [
-                new TerminologyCode(
-                  '33355-9',
-                  'Urea nitrogen [Moles/volume] in 24 hour Urine',
-                  'http://loinc.org',
-                  '2.81'
-                ),
-              ],
+              termCodes: [new TerminologyCode('33355-9', 'Urea nitrogen [Moles/volume] in 24 hour Urine', 'http://loinc.org', '2.81')],
             })
           ),
         expected: cohort([
@@ -210,29 +218,10 @@ export const GROUPS: CaseGroup[] = [
     cases: [
       comparatorCase('quantity comparator: equal', QuantityComparisonOption.EQUAL, 'eq'),
       comparatorCase('quantity comparator: less than', QuantityComparisonOption.LESS_THAN, 'lt'),
-      comparatorCase(
-        'quantity comparator: greater than',
-        QuantityComparisonOption.GREATER_THAN,
-        'gt'
-      ),
-      comparatorCase(
-        'quantity comparator in months: equal',
-        QuantityComparisonOption.EQUAL,
-        'eq',
-        MONTH
-      ),
-      comparatorCase(
-        'quantity comparator in months: less than',
-        QuantityComparisonOption.LESS_THAN,
-        'lt',
-        MONTH
-      ),
-      comparatorCase(
-        'quantity comparator in months: greater than',
-        QuantityComparisonOption.GREATER_THAN,
-        'gt',
-        MONTH
-      ),
+      comparatorCase('quantity comparator: greater than', QuantityComparisonOption.GREATER_THAN, 'gt'),
+      comparatorCase('quantity comparator in months: equal', QuantityComparisonOption.EQUAL, 'eq', MONTH),
+      comparatorCase('quantity comparator in months: less than', QuantityComparisonOption.LESS_THAN, 'lt', MONTH),
+      comparatorCase('quantity comparator in months: greater than', QuantityComparisonOption.GREATER_THAN, 'gt', MONTH),
       {
         name: 'quantity range',
         query: () =>
@@ -387,9 +376,7 @@ export const GROUPS: CaseGroup[] = [
         query: () =>
           included(
             criterion({
-              attributeFilters: [
-                attributeFilter(FilterTypes.QUANTITY_RANGE, { quantity: range(1, 2) }),
-              ],
+              attributeFilters: [attributeFilter(FilterTypes.QUANTITY_RANGE, { quantity: range(1, 2) })],
             })
           ),
         expected: cohort([

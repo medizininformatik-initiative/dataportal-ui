@@ -12,15 +12,6 @@
  */
 
 /**
- * An array with at least one element, as required by `minItems: 1` in the schema.
- * Empty arrays are not allowed. .map() returns a normal array,
- * so you need a cast or helper to use the result as a NonEmptyArray.
- *
- * @template T - The type of the elements.
- */
-export type NonEmptyArray<T> = [T, ...T[]]
-
-/**
  * A concept from a coding system. The triplet of code, system and version identifies the concept.
  *
  * @see `$defs/termCode` in the CCDL v1 schema.
@@ -47,5 +38,3 @@ export interface CCDLTermCode {
    */
   version?: string
 }
-
-export const isNonEmpty = <T>(items: T[]): items is NonEmptyArray<T> => items.length > 0
