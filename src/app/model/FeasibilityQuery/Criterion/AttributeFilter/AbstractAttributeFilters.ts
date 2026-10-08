@@ -1,10 +1,9 @@
-import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { ConceptFilter } from './Concept/ConceptFilter'
 import { ReferenceFilter } from './Concept/ReferenceFilter'
+import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter'
 import { QuantityNotSet } from './Quantity/QuantityNotSet'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
 
 export abstract class AbstractAttributeFilters {
   private display: Display
@@ -45,7 +44,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns The display name.
    */
-  getDisplay(): Display {
+  public getDisplay(): Display {
     return this.display
   }
 
@@ -54,7 +53,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @param display - The new display name.
    */
-  setDisplay(display: Display): void {
+  public setDisplay(display: Display): void {
     this.display = display
   }
 
@@ -63,7 +62,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns The concept filter or false if not set.
    */
-  getConcept(): ConceptFilter {
+  public getConcept(): ConceptFilter {
     return this.concept
   }
 
@@ -72,7 +71,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @param concept - The concept filter to set.
    */
-  setConcept(concept: ConceptFilter): void {
+  public setConcept(concept: ConceptFilter): void {
     this.concept = concept
   }
 
@@ -81,7 +80,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns The quantity filter or false if not set.
    */
-  getQuantity(): AbstractQuantityFilter {
+  public getQuantity(): AbstractQuantityFilter {
     return this.quantity
   }
 
@@ -90,7 +89,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @param quantity - The quantity filter to set.
    */
-  setQuantity(quantity: AbstractQuantityFilter): void {
+  public setQuantity(quantity: AbstractQuantityFilter): void {
     this.quantity = quantity
   }
 
@@ -99,7 +98,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns The reference filter or false if not set.
    */
-  getReference(): ReferenceFilter {
+  public getReference(): ReferenceFilter {
     return this.reference
   }
 
@@ -108,7 +107,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @param reference - The reference filter to set.
    */
-  setReference(reference: ReferenceFilter): void {
+  public setReference(reference: ReferenceFilter): void {
     this.reference = reference
   }
 
@@ -117,7 +116,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns True if the filter is optional, false otherwise.
    */
-  getOptional(): boolean {
+  public getOptional(): boolean {
     return this.optional
   }
 
@@ -126,7 +125,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @param optional - True to make the filter optional, false otherwise.
    */
-  setOptional(optional: boolean): void {
+  public setOptional(optional: boolean): void {
     this.optional = optional
   }
 
@@ -135,7 +134,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns True if the concept filter is set, false otherwise.
    */
-  isConceptSet(): boolean {
+  public isConceptSet(): boolean {
     return this.concept !== undefined
   }
 
@@ -144,7 +143,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns True if the quantity filter is set, false otherwise.
    */
-  isQuantitySet(): boolean {
+  public isQuantitySet(): boolean {
     return this.quantity !== undefined
   }
 
@@ -153,7 +152,7 @@ export abstract class AbstractAttributeFilters {
    *
    * @returns True if the reference filter is set, false otherwise.
    */
-  isReferenceSet(): boolean {
+  public isReferenceSet(): boolean {
     return this.reference !== undefined
   }
 
@@ -170,7 +169,10 @@ export abstract class AbstractAttributeFilters {
     return hasConcepts || hasReferences || hasQuantity
   }
 
-  getFilterType(): FilterTypes {
+  /**
+   *
+   */
+  public getFilterType(): FilterTypes {
     return this.filterType
   }
 }
