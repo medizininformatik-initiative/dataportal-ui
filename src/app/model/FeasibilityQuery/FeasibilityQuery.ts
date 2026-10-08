@@ -39,13 +39,9 @@ export class FeasibilityQuery {
    * @param id - The id of the query.
    * @param display - The display name of the query.
    * @param consent - The consent status of the query.
+   * @param resultIDs
    */
-  constructor(
-    id: string,
-    display: string = 'Ausgewählte Merkmale',
-    consent: boolean = false,
-    resultIDs: string[] = []
-  ) {
+  constructor(id: string, display: string = 'Ausgewählte Merkmale', consent: boolean = false, resultIDs: string[] = []) {
     this.id = id
     this.consent = consent
     this.display = display
@@ -54,7 +50,10 @@ export class FeasibilityQuery {
     this.resultIDs = resultIDs
   }
 
-  getId(): string {
+  /**
+   *
+   */
+  public getId(): string {
     return this.id
   }
   /**
@@ -62,7 +61,7 @@ export class FeasibilityQuery {
    *
    * @returns The consent name of the query.
    */
-  getConsent(): boolean {
+  public getConsent(): boolean {
     return this.consent
   }
 
@@ -71,7 +70,7 @@ export class FeasibilityQuery {
    *
    * @param consent - The new consent name of the query.
    */
-  setConsent(consent: boolean): void {
+  public setConsent(consent: boolean): void {
     this.consent = consent
   }
 
@@ -80,7 +79,7 @@ export class FeasibilityQuery {
    *
    * @returns The display name of the query.
    */
-  getDisplay(): string {
+  public getDisplay(): string {
     return this.display
   }
 
@@ -89,7 +88,7 @@ export class FeasibilityQuery {
    *
    * @param display - The new display name of the query.
    */
-  setDisplay(display: string): void {
+  public setDisplay(display: string): void {
     this.display = display
   }
 
@@ -98,7 +97,7 @@ export class FeasibilityQuery {
    *
    * @returns The inclusion criteria of the query.
    */
-  getInclusionCriteria(): string[][] {
+  public getInclusionCriteria(): string[][] {
     return this.inclusionCriteria
   }
 
@@ -107,7 +106,7 @@ export class FeasibilityQuery {
    *
    * @param inclusionCriteria - The new inclusion criteria of the query.
    */
-  setInclusionCriteria(inclusionCriteria: string[][]): void {
+  public setInclusionCriteria(inclusionCriteria: string[][]): void {
     this.inclusionCriteria = inclusionCriteria.filter((group) => group.length > 0)
   }
 
@@ -116,7 +115,7 @@ export class FeasibilityQuery {
    *
    * @returns The exclusion criteria of the query.
    */
-  getExclusionCriteria(): string[][] {
+  public getExclusionCriteria(): string[][] {
     return this.exclusionCriteria
   }
 
@@ -125,22 +124,36 @@ export class FeasibilityQuery {
    *
    * @param exclusionCriteria - The new exclusion criteria of the query.
    */
-  setExclusionCriteria(exclusionCriteria: string[][]): void {
+  public setExclusionCriteria(exclusionCriteria: string[][]): void {
     this.exclusionCriteria = exclusionCriteria.filter((group) => group.length > 0)
   }
 
+  /**
+   *
+   */
   public getResultIds(): string[] {
     return this.resultIDs
   }
 
+  /**
+   *
+   * @param resultIds
+   */
   public setResultIds(resultIds: string[]): void {
     this.resultIDs = resultIds
   }
 
+  /**
+   *
+   * @param resultId
+   */
   public addResultId(resultId: string): void {
     this.resultIDs.push(resultId)
   }
 
+  /**
+   *
+   */
   public clone(): FeasibilityQuery {
     const copy = new FeasibilityQuery(this.id, this.display, this.consent, [...this.resultIDs])
 

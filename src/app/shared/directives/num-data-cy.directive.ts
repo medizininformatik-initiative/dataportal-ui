@@ -16,9 +16,14 @@ import { Directive, HostBinding, input } from '@angular/core'
   standalone: true,
 })
 export class NumDataCyDirective {
-  readonly numDataCy = input.required<string>()
+  public readonly numDataCy = input.required<string>()
 
-  @HostBinding('attr.data-cy') get dataCy(): string {
+  /**
+   * Returns the value bound to the host's `data-cy` attribute.
+   * @returns {string}
+   */
+  @HostBinding('attr.data-cy')
+  public get dataCy(): string {
     return this.numDataCy()
   }
 }
