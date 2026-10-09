@@ -1,5 +1,5 @@
 .container {
-  margin: 16px;
+  margin: var(--spacing-16);
   display: flex;
   flex-direction: column;
   width: 60em;
@@ -16,7 +16,7 @@
 }
 
 .select-button {
-  padding-bottom: 16px;
+  padding-bottom: var(--spacing-16);
   margin-left: 2%;
   margin-top: 2%;
 }

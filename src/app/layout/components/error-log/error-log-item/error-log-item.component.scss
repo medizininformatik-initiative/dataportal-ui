@@ -1,7 +1,7 @@
 .error-item {
   display: flex;
   gap: 1rem;
-  padding: 1rem;
+  padding: var(--spacing-16);
   background-color: rgba(90, 121, 175, 0.1);
   border-left: 4px solid #9bb823;
   border-radius: 4px;
@@ -27,7 +27,7 @@
 
   code {
     background: #e9ecef;
-    padding: 0.125rem 0.5rem;
+    padding: 0.125rem var(--spacing-8);
     border-radius: 3px;
     font-size: 0.875rem;
     color: #495057;
@@ -35,7 +35,7 @@
 }
 
 .error-extra {
-  margin-top: 0.5rem;
+  margin-top: var(--spacing-8);
 
   details {
     cursor: pointer;
@@ -51,7 +51,7 @@
 
 ::ng-deep code {
   background: #e9ecef;
-  padding: 0.125rem 0.5rem;
+  padding: 0.125rem var(--spacing-8);
   border-radius: 3px;
   font-size: 0.875rem;
   color: #495057;

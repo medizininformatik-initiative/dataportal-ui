@@ -1,27 +1,27 @@
 .toggle-row {
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-16);
   width: 50%;
 }
 
 .width-30 {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   width: 30%;
 }
 
 .provisionCodeDisplay {
   padding: 0.5em;
-  background-color: rgba(90, 121, 175, 0.1);
-  color: rgba(90, 121, 175, 1);
+  background-color: var(--color-accent-bg);
+  color: var(--color-accent);
   width: 50%;
 }
 
 .consent-container {
   border: 2px solid rgba(241, 242, 243, 1);
-  border-radius: 5px;
+  border-radius: var(--border-radius-card);
   padding: 1em;
   background-color: rgba(241, 242, 243, 0.1);
 }
 
 .text-blue {
-  color: #5a79af;
+  color: var(--color-accent);
 }

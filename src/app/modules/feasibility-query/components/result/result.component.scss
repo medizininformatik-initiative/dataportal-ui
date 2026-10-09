@@ -6,8 +6,12 @@
 }
 .height-59 {
   height: 42px;
-  border-radius: 5px;
-  background: var(--mid-grey, #c5cacf);
+  border-radius: var(--border-radius-card);
+  background: var(--border-color);
+}
+
+.simple-result-container {
+  height: 24%;
 }
 
 .feasibility-container {

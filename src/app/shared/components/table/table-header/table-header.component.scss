@@ -1,9 +1,9 @@
 .table-header {
   text-align: left;
-  padding: 8px;
+  padding: var(--spacing-8);
   // Extra right padding reserves the same width as tbody's scrollbar
   // (styles.scss forces a 20px webkit scrollbar), keeping columns aligned.
-  padding-right: 20px;
+  padding-right: var(--spacing-20);
   border-bottom: 1px solid #f1f2f3;
   font-family: 'Open Sans', sans-serif;
 }
@@ -25,14 +25,14 @@ tr {
 }
 
 th {
-  padding: 1rem 0.5rem;
+  padding: var(--spacing-16) var(--spacing-8);
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   line-height: 14px;
   color: #6a7483;
 }
 
 num-checkbox {
-  padding-right: 8px;
+  padding-right: var(--spacing-8);
 }

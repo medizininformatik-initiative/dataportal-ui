@@ -8,8 +8,8 @@
 
 .background-color-button {
   color: white;
-  background-color: #5a79af;
-  margin-right: 10px;
+  background-color: var(--color-accent);
+  margin-right: var(--spacing-10);
 }
 
 ::ng-deep .mat-drawer-inner-container {
@@ -25,12 +25,8 @@
 
 .box-container {
   width: 100%;
-  margin-top: 30px;
+  margin-top: var(--spacing-30);
   height: 50%;
-}
-
-.margin-right-20 {
-  margin-right: 20px;
 }
 
 .result-container {

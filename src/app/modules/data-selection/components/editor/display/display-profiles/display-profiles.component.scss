@@ -14,12 +14,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  padding: 4px 8px 8px;
+  padding: var(--spacing-4) var(--spacing-8) var(--spacing-8);
 }
 
 .match-chip {
   font-size: 11px;
-  padding: 2px 8px;
+  padding: 2px var(--spacing-8);
   border-radius: 12px;
   background-color: var(--color-accent-bg);
   color: var(--color-text-primary, #232323);
@@ -28,9 +28,9 @@
 }
 
 .search-summary {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  padding: 4px 8px;
+  padding: var(--spacing-4) var(--spacing-8);
 }
 
 .search-summary-detail {

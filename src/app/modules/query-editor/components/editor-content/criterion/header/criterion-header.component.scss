@@ -1,5 +1,5 @@
 :host {
-  --primary-light: rgba(90, 121, 175, 0.1);
+  --primary-light: var(--color-accent-bg);
 }
 
 .criterion-display {

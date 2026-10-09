@@ -4,8 +4,7 @@
     class="header-container"
     [profile]="profile()"
     (updatedLabel)="updateLabel($event)"
-  >
-  </num-profile-header>
+  ></num-profile-header>
   } @if (templates.length > 0) {
   <num-filter-tabs class="filter-tabs-container" [content]="templates"></num-filter-tabs>
   }
@@ -21,7 +20,7 @@
   <ng-template #timeRestriction>
     @for (profileTimeFilter of timeRestrictionFilters(); track trackByTimeRestrictionName($index,
     profileTimeFilter)) {
-    <div style="height: 100%">
+    <div class="height-100">
       <num-profile-time-filter
         [profileTimeRestrictionFilter]="profileTimeFilter"
         (changedProfileTimeRestrictionFilter)="updateProfileFilter($event)"

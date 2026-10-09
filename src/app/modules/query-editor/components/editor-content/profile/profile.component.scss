@@ -8,7 +8,7 @@
 
 ::ng-deep .mdc-tab {
   max-width: fit-content;
-  padding: 0 30px;
+  padding: 0 var(--spacing-30);
 }
 
 .filter-tabs-container {
@@ -29,5 +29,5 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding: 1rem;
+  padding: var(--spacing-16);
 }

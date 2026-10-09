@@ -17,9 +17,9 @@
 
 .entry-layout {
   border-radius: var(--border-radius-card);
-  padding: 4px 12px;
+  padding: var(--spacing-4) var(--spacing-12);
   height: 48px;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-8);
   text-overflow: ellipsis;
   white-space: nowrap;
   background-color: var(--color-accent-bg);

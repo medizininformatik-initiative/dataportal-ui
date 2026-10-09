@@ -31,7 +31,7 @@
   top: 1696.72px;
   font-family: var(--font-body, 'Open Sans', sans-serif);
   font-style: normal;
-  font-weight: var(--font-weight-normal, 400);
+  font-weight: var(--font-weight-normal);
   font-size: var(--font-size-sm, 14px);
   line-height: var(--line-height-sm, 19px);
   display: flex;
@@ -60,11 +60,11 @@
 .no-selected-criteria {
   width: 100%;
   height: 96px;
-  border: 1px dotted rgba(90, 121, 175, 1);
-  border-radius: 4px;
-  font-weight: 400;
+  border: 1px dotted var(--color-accent);
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-normal);
   font-size: var(--font-size-md, 14px);
-  color: rgba(90, 121, 175, 1);
+  color: var(--color-accent);
   align-content: center;
   text-align: center;
 }

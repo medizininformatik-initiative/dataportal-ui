@@ -4,7 +4,7 @@ mat-drawer-container {
 }
 ::ng-deep .mdc-tab {
   max-width: fit-content;
-  padding: 0 30px;
+  padding: 0 var(--spacing-30);
 }
 
 .full {
@@ -18,6 +18,6 @@ mat-drawer-container {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  padding: 1rem;
-  background-color: rgba(90, 121, 175, 0.1);
+  padding: var(--spacing-16);
+  background-color: var(--color-accent-bg);
 }

@@ -8,7 +8,7 @@ import { Component, DestroyRef, effect, inject, input, output } from '@angular/c
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { filter, map, switchMap } from 'rxjs'
 import { PlaceholderBoxComponent } from '../../../../../shared/components/placeholder-box/placeholder-box.component'
-import { SelectedConceptFilterProviderService } from '../../../service/ConceptFilter/SelectedConceptFilterProvider.service'
+import { ConceptSelectionHelperService } from '../../../service/ConceptSelection/ConceptSelectionHelper.service'
 import { TableComponent } from '../../../../../shared/components/table/table.component'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
@@ -27,10 +27,11 @@ export class ConceptFilterTableComponent {
   private readonly destroyRef = inject(DestroyRef)
   private readonly activeSearchTermService = inject(ActiveSearchTermService)
   private readonly conceptSearchService = inject(CodeableConceptSearchService)
-  private readonly selectedConceptProviderService = inject(SelectedConceptFilterProviderService)
+  private readonly conceptSelectionService = inject(ConceptSelectionHelperService)
 
   readonly valueSetUrl = input<string[] | undefined>(undefined)
   readonly conceptFilterId = input<string | undefined>(undefined)
+  readonly preSelectedConcepts = input<Concept[]>([])
   readonly selectedConcept = output<Concept>()
 
   readonly searchText = toSignal(this.activeSearchTermService.getActiveSearchTerm(), {
@@ -46,8 +47,9 @@ export class ConceptFilterTableComponent {
           map((results) => {
             results.getResults().forEach((entry) => {
               entry.setIsSelected(
-                this.selectedConceptProviderService.isConceptSelected(
-                  entry.getConcept().getTerminologyCode()
+                this.conceptSelectionService.isConceptSelected(
+                  entry.getConcept(),
+                  this.preSelectedConcepts()
                 )
               )
             })
@@ -59,15 +61,10 @@ export class ConceptFilterTableComponent {
     { initialValue: undefined }
   )
 
-  private selectedConcepts: Concept[] = []
-
-  private readonly serviceSelectedConcepts =
-    this.selectedConceptProviderService.getSelectedConcepts()
-
   constructor() {
     effect(() => {
       this.conceptFilterId() // track conceptFilterId changes
-      this.serviceSelectedConcepts() // track service concept changes
+      this.preSelectedConcepts() // track selection changes
       this.updateCheckboxSelection()
     })
   }
@@ -75,13 +72,15 @@ export class ConceptFilterTableComponent {
   private updateCheckboxSelection(): void {
     this.adaptedData()?.body.rows.forEach((row) => {
       const listEntry = row.originalEntry as CodeableConceptResultListEntry
-      const concept = CloneConcept.deepCopyConcept(listEntry.getConcept())
-      this.clearSelectedConceptArray()
+      const concept = listEntry.getConcept()
       const checkboxCell = row.cells.find(
         (c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT
       )
       if (checkboxCell) {
-        checkboxCell.isSelected = !!this.selectedConceptProviderService.findConcept(concept)
+        checkboxCell.isSelected = this.conceptSelectionService.isConceptSelected(
+          concept,
+          this.preSelectedConcepts()
+        )
       }
     })
   }
@@ -89,27 +88,7 @@ export class ConceptFilterTableComponent {
   public addSelectedRow(item: TableRowData): void {
     const entry = item.originalEntry as CodeableConceptResultListEntry
     const concept = CloneConcept.deepCopyConcept(entry.getConcept())
-    if (this.selectedConceptProviderService.findConcept(concept)) {
-      this.selectedConceptProviderService.removeConcept(concept)
-      this.clearSelectedConceptArray()
-    } else {
-      const foundConcept = this.selectedConcepts.find(
-        (c) => c.getTerminologyCode().getCode() === concept.getTerminologyCode().getCode()
-      )
-      if (foundConcept) {
-        this.selectedConcepts = this.selectedConcepts.filter(
-          (c) => c.getTerminologyCode().getCode() !== concept.getTerminologyCode().getCode()
-        )
-      } else {
-        this.selectedConceptProviderService.addConcepts(this.selectedConcepts)
-        this.selectedConcepts.push(concept)
-      }
-    }
     this.selectedConcept.emit(concept)
-  }
-
-  private clearSelectedConceptArray(): void {
-    this.selectedConcepts = []
   }
 
   public loadMoreSearchResults(): void {

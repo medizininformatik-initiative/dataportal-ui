@@ -147,11 +147,15 @@ export class DataSelectionProviderService {
     profiles: DataSelectionProfile[],
     profile: DataSelectionProfile
   ): DataSelectionProfile {
+    const texts = profile.getLabel().getTexts()
     const sameProfiles = profiles.filter(
       (existingProfile) =>
-        existingProfile.getLabel().getOriginal() === profile.getLabel().getOriginal()
+        existingProfile.getId() !== profile.getId() &&
+        existingProfile
+          .getLabel()
+          .getTexts()
+          .some((text) => texts.includes(text))
     )
-
     if (sameProfiles.length > 0) {
       sameProfiles.sort((a, b) => b.getLabelNumber() - a.getLabelNumber())
       const newLabelNumber = sameProfiles[0].getLabelNumber() + 1

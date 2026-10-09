@@ -92,41 +92,27 @@ export class StagedProfileService implements OnDestroy {
 
       const sameProfiles = profiles.filter(
         (existingProfile) =>
-          existingProfile.getLabel().getOriginal() === newLabel.text ||
-          existingProfile.getLabel().getTranslations()[0].getValue() === newLabel.text ||
-          existingProfile.getLabel().getTranslations()[1].getValue() === newLabel.text
+          existingProfile.getId() !== profile.getId() &&
+          existingProfile.getLabel().getTexts().includes(newLabel.text.replace(/\s+$/, ''))
       )
 
-      if (sameProfiles.length === 0) {
-        if (newLabel.number !== null) {
-          profile.setLabelNumber(newLabel.number)
-        } else {
-          profile.setLabelNumber(0)
-        }
-      } else {
-        if (newLabel.number !== null) {
-          const foundProfile = sameProfiles.find(
-            (existingProfile) => existingProfile.getLabelNumber() === newLabel.number
-          )
-          if (foundProfile) {
-            if (foundProfile.getId() !== profile.getId()) {
-              sameProfiles.sort(function (a, b) {
-                return b.getLabelNumber() - a.getLabelNumber()
-              })
-              const newLabelNumber = sameProfiles[0].getLabelNumber() + 1
-              profile.setLabelNumber(newLabelNumber)
-            }
-          } else {
-            profile.setLabelNumber(newLabel.number)
-          }
-        }
-      }
+      const wanted = newLabel.number ?? 0
+      const taken = sameProfiles.some((existing) => existing.getLabelNumber() === wanted)
+      // first profile is 0 (no suffix), first duplicate is (1)
+      profile.setLabelNumber(
+        taken ? Math.max(...sameProfiles.map((p) => p.getLabelNumber())) + 1 : wanted
+      )
       profile.setLabel(newLabel.text)
       this.buildProfile()
     }
   }
 
-  parseTrailingNumber(text) {
+  /**
+   * @todo lib needs to bee updated to newer version (es2019)
+   * @param text
+   * @returns
+   */
+  parseTrailingNumber(text: string) {
     const match = text.match(/^(.*) \((\d+)\)$/)
 
     if (!match) {

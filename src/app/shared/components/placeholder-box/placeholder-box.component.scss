@@ -11,13 +11,13 @@
   opacity: 0.5;
   color: var(--color-accent);
   text-align: center;
-  padding: 20px;
+  padding: var(--spacing-20);
   box-sizing: border-box;
 }
 
 .placeholder-icon {
   color: var(--border-color);
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-8);
 }
 
 .placeholder-content {

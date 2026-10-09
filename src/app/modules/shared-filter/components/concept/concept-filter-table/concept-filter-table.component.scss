@@ -1,5 +1,10 @@
 .add-button {
-  margin-top: 10px;
+  margin-top: var(--spacing-10);
+}
+
+.table-scroll-area {
+  overflow: auto;
+  height: 100%;
 }
 
 num-table {

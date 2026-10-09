@@ -14,7 +14,7 @@
 
 ::ng-deep .mdc-tab {
   max-width: fit-content;
-  padding: 0 30px;
+  padding: 0 var(--spacing-30);
 }
 
 .header-container {

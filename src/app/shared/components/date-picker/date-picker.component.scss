@@ -4,7 +4,7 @@
   align-items: center;
   width: 161px;
   height: 42px;
-  padding: 0 12px;
+  padding: 0 var(--spacing-12);
   background: #ffffff;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-card);
@@ -21,7 +21,7 @@
   border: none;
   outline: none;
   background: transparent;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   font-size: 16px;
   color: var(--color-text-secondary);
   padding: 0;
@@ -29,14 +29,14 @@
 
   &::placeholder {
     color: var(--border-color);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
   }
 }
 
 .date-toggle {
   display: flex;
   align-items: center;
-  margin-left: 4px;
+  margin-left: var(--spacing-4);
 
   ::ng-deep .mat-mdc-icon-button {
     width: 20px;
@@ -53,7 +53,7 @@
   }
 
   fa-icon {
-    font-size: 14px;
+    font-size: var(--font-size-md);
     color: var(--color-text-secondary);
   }
 }

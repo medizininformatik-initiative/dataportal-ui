@@ -11,8 +11,8 @@
 
 .avail-label {
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 12px;
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-sm);
   line-height: 14px;
   color: var(--color-text-secondary);
   transition: color 0.4s ease;

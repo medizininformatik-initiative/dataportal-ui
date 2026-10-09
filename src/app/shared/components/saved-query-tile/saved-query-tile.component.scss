@@ -7,7 +7,7 @@
   background-color: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
   gap: 1.5rem;
-  padding: 0 1rem;
+  padding: 0 var(--spacing-16);
   transition: background 0.2s;
 }
 
@@ -26,7 +26,7 @@
   flex: 2 1 40%;
   flex-direction: column;
   align-items: flex-start;
-  padding-left: 0.5rem;
+  padding-left: var(--spacing-8);
   gap: 0.25rem;
 }
 .tile-date {
@@ -49,7 +49,7 @@
 
 .label {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   padding-bottom: 0.1rem;
   width: 100%;
 }

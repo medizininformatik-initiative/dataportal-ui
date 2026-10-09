@@ -8,13 +8,13 @@
 .img-layout {
   height: 24px; /* multiple of 4 */
   width: 32px; /* multiple of 4 */
-  margin-right: 8px;
+  margin-right: var(--spacing-8);
 }
 
 .warning-message {
   color: var(--num-color--red);
   font-size: var(--font-size-md);
-  margin-top: 8px;
+  margin-top: var(--spacing-8);
   line-height: 24px;
   font-style: italic;
   text-decoration: underline;

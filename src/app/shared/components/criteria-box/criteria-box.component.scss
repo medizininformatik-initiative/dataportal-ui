@@ -7,7 +7,7 @@
   background-color: var(--color-accent-bg);
   border-radius: var(--border-radius-card);
   position: relative;
-  padding: 24px;
+  padding: var(--spacing-24);
   transition: var(--transition-shadow);
 
   &:hover {
@@ -19,13 +19,13 @@
 .title-section {
   font-family: var(--font-body);
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-normal);
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
   color: var(--color-text-primary);
   width: 100%;
   overflow: hidden;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-8);
 }
 
 .info-section {
@@ -35,7 +35,7 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-8);
 }
 
 .handle-icons {
@@ -48,9 +48,9 @@
 .menu-icon {
   align-self: flex-end;
   color: var(--color-accent);
-  margin-left: 8px;
-  margin-right: 8px;
-  font-size: 20px;
+  margin-left: var(--spacing-8);
+  margin-right: var(--spacing-8);
+  font-size: var(--font-size-lg);
 }
 
 .menu-icon:hover {
@@ -85,5 +85,5 @@
 .img-layout {
   height: 24px; /* multiple of 4 */
   width: 32px; /* multiple of 4 */
-  margin-right: 8px;
+  margin-right: var(--spacing-8);
 }

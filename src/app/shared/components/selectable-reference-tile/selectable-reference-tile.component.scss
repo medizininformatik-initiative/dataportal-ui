@@ -3,8 +3,8 @@
   justify-content: start;
   align-items: center;
   background: rgba(0, 0, 0, 0.02);
-  padding: 10px 16px;
-  margin: 8px 0;
+  padding: var(--spacing-10) 16px;
+  margin: var(--spacing-8) 0;
   border-radius: var(--border-radius-card);
   font-family: var(--font-body);
 }

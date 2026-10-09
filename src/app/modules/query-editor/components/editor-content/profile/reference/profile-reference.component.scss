@@ -1,6 +1,6 @@
 ::ng-deep .mdc-tab {
   max-width: fit-content;
-  padding: 0 30px;
+  padding: 0 var(--spacing-30);
 }
 
 .full {
@@ -10,16 +10,17 @@
 ::ng-deep .mat-mdc-tab .mdc-tab__text-label {
   font-weight: 500;
   font-size: medium;
-  color: rgba(90, 121, 175, 1);
+  color: var(--color-accent);
 }
 ::ng-deep .mat-mdc-tab-body.mat-mdc-tab-body-active {
   height: 100%;
 }
 .information-icon {
-  margin-right: 8px;
+  margin-right: var(--spacing-8);
 }
 mat-tab-group {
   height: 100%;
+  background-color: white;
 }
 
 ::ng-deep .mat-mdc-tab-body-wrapper {

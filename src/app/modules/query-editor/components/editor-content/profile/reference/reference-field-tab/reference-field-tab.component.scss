@@ -1,6 +1,6 @@
 ::ng-deep .mdc-tab {
   max-width: fit-content;
-  padding: 0 30px;
+  padding: 0 var(--spacing-30);
 }
 
 .container {
@@ -9,7 +9,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
-  padding-top: 16px;
+  padding-top: var(--spacing-16);
 }
 
 .reference-container {

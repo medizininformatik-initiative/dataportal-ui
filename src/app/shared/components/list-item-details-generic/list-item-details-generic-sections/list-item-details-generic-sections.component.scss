@@ -11,7 +11,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   // Keeps entry content clear of the scrollbar instead of hugging it.
-  padding-right: 8px;
+  padding-right: var(--spacing-8);
 }
 
 .display-name {
@@ -24,12 +24,12 @@
   flex-direction: column;
   min-width: 0;
   flex: 1;
-  padding: 4px 0;
+  padding: var(--spacing-4) 0;
 }
 
 // wrapping overrides — typography comes from num-text-meta
 .field-description {
   white-space: normal;
   word-break: break-word;
-  margin-top: 2px;
+  margin-top: var(--spacing-2);
 }

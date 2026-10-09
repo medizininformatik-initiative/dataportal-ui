@@ -81,12 +81,17 @@ export class DataSelectionBoxesComponent {
 
   readonly isReferenced = computed(() => {
     const dataSelection = this.activeDataSelection()
+    const profile = this.profile()
     if (!dataSelection) return false
-    return dataSelection.getProfiles().some((profile: DataSelectionProfile) =>
-      profile
+    return dataSelection.getProfiles().some((selectionProfile) =>
+      selectionProfile
         .getProfileFields()
         .getSelectedReferenceFields()
-        .some((ref) => ref.getLinkedProfileIds().includes(profile.getId()))
+        .some((selectedReferenceField) => {
+          return selectedReferenceField
+            .getLinkedProfileIds()
+            .some((linkedProfileId) => profile.getId() === linkedProfileId)
+        })
     )
   })
 

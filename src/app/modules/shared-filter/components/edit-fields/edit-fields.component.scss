@@ -1,5 +1,5 @@
 .container {
-  padding: 16px;
+  padding: var(--spacing-16);
   height: 100%;
   background-color: white;
   display: flex;
@@ -15,7 +15,7 @@
   min-height: 49px;
   background-color: white;
   border-bottom: 1px solid var(--border-color);
-  padding: 6px 0;
+  padding: var(--spacing-6) 0;
   gap: 10px;
 }
 
@@ -48,7 +48,7 @@
   font-weight: 500;
   font-size: 10px;
   line-height: 12px;
-  color: #5f6266;
+  color: var(--color-text-section);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -108,13 +108,13 @@
   flex-direction: column;
   overflow-y: auto;
   height: 100%;
-  padding-right: 16px;
+  padding-right: var(--spacing-16);
 }
 
 .sidebar {
   width: 30%;
   border-left: 1px solid var(--border-color);
-  padding-left: 16px;
+  padding-left: var(--spacing-16);
 }
 
 .main-content-fields {
@@ -124,7 +124,7 @@
 }
 
 .field-box {
-  padding-left: 16px;
+  padding-left: var(--spacing-16);
   width: 70%;
   height: 100%;
   display: flex;
