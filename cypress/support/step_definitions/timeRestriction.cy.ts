@@ -3,19 +3,25 @@ import {
   TimeRestrictionFilterType,
   TimeRestrictionFilterTypeDE,
 } from '../../e2e/Utilities/timeRestrictionFilter'
-import { time } from 'console'
 
-// Update the import path below if the file is located elsewhere
 export class TimeRestriction {
-  /**
-   * Clicks the "Add Time Restriction" button.
-   */
   public addTimeRestriction(
     date: string,
     type: TimeRestrictionFilterType | TimeRestrictionFilterTypeDE
   ) {
-    cy.get('num-timerestriction-type-selector').click()
-    cy.get('.mat-mdc-option').contains(type).click()
+    // Criteria with more than one available filter tab (e.g. a Procedure
+    // that also supports References) don't default to the Time Restriction
+    // tab — confirmed via screenshot for "Appendectomy" specifically, which
+    // opened on "References" instead. Clicking it is a harmless no-op when
+    // it's already the only/active tab.
+    cy.contains('.tab', 'Time restriction').click()
+    // num-timerestriction-type-selector renders a native <select>, not
+    // Angular Material's mat-select — confirmed by reading its actual
+    // template (timerestriction-type-selector.component.html) rather than
+    // assumed. .select() works by the option's value attribute here, which
+    // is why TimeRestrictionFilterType's values were fixed to match the
+    // real app enum exactly.
+    cy.get('num-timerestriction-type-selector select').select(type)
     cy.get('.mat-datepicker-input').clear().type(date).should('have.value', date)
   }
 }
@@ -29,8 +35,11 @@ defineStep('I set the time restriction filter to on with date {string}', (date: 
 defineStep('I set the time restriction filter to after with date {string}', (date: string) => {
   timeRestriction.addTimeRestriction(date, TimeRestrictionFilterType.After)
 })
-defineStep('I set the time restriction filter to equal with date {string}', (date: string) => {})
+// Deliberately unimplemented — not used by any current scenario. See
+// cypress/CLAUDE.md / the refactor plan: writing Gherkin against these would
+// pass without asserting anything until these bodies are filled in for real.
+defineStep('I set the time restriction filter to equal with date {string}', (_date: string) => {})
 defineStep(
   'I set the time restriction filter to between {string} and {string}',
-  (startDate: string, endDate: string) => {}
+  (_startDate: string, _endDate: string) => {}
 )

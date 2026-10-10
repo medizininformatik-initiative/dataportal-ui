@@ -15,6 +15,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { MenuComponent } from '../menu/menu.component'
 import { MissingFilterComponent } from '../missing-filter/missing-filter.component'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
 import { Observable, of } from 'rxjs'
 import { ReferenceCriteriaBoxComponent } from '../reference-criteria-box/reference-criteria-box.component'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
@@ -40,6 +41,7 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
     DisplayTranslationPipe,
     MissingFilterComponent,
+    NumDataCyDirective,
   ],
 })
 export class CriteriaBoxComponent implements OnInit {

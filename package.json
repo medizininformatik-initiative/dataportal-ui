@@ -11,7 +11,8 @@
     "lint:fix": "ng lint --fix",
     "pretty-quick": "pretty-quick --pattern \"src/**/*.{scss,html}\"",
     "e2e": "ng e2e",
-    "cypress": "npx cypress open"
+    "cypress": "npx cypress open",
+    "coverage:features": "node cypress/scripts/feature-coverage.mjs"
   },
   "private": true,
   "dependencies": {
@@ -62,7 +63,7 @@
     "@angular-eslint/template-parser": "^19.8.1",
     "@angular/cli": "^19.2.26",
     "@angular/compiler-cli": "^19.2.24",
-    "@badeball/cypress-cucumber-preprocessor": "^22.2.0",
+    "@badeball/cypress-cucumber-preprocessor": "^28.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
     "@cucumber/cucumber": "^11.3.0",
     "@schematics/angular": "^19.2.26",
@@ -72,7 +73,7 @@
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "cypress": "^14.5.1",
+    "cypress": "^16.1.0",
     "esbuild": "^0.25.5",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.3.0",

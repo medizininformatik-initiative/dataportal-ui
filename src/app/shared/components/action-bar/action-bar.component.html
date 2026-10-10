@@ -1,7 +1,7 @@
 <div class="container padding-left-right-5px">
   @if (showUpload()) {
   <input
-    [attr.data-cy]="'upload-crtdl'"
+    numDataCy="upload-crtdl"
     type="file"
     class="file-input"
     (change)="upload($event)"
@@ -24,6 +24,7 @@
   } @if (showDownload()) {
   <button
     (click)="downloadCRTDL()"
+    numDataCy="download-crtdl-button"
     [matTooltip]="
       isDataDefinitionValid()
         ? ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate)
@@ -39,6 +40,7 @@
   } @if (showSave()) {
   <button
     (click)="onSaveDataQuery()"
+    numDataCy="save-cohort-button"
     [matTooltip]="
       isDataDefinitionValid()
         ? ('SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate)

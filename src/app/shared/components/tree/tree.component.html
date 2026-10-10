@@ -1,10 +1,10 @@
-<ng-container *ngTemplateOutlet="tree; context: { node: treeData(), level: 0 }"> </ng-container>
+<ng-container *ngTemplateOutlet="tree; context: { node: treeData(), level: 0 }"></ng-container>
 
 <ng-template #tree let-node="node" let-level="level">
   <div
     class="divider"
     [style.marginLeft]="calcMarginLeft(level)"
-    [attr.data-cy]="node.data.display | displayTranslation"
+    [numDataCy]="node.data.display | displayTranslation"
   >
     <div class="width-100 node-row">
       @if (node.data.selectable) {
@@ -35,8 +35,9 @@
           matTooltipPosition="after"
           matTooltipShowDelay="300"
           [matTooltip]="node.data.display | displayTranslation"
-          >{{ node.data.display | displayTranslation }}</span
         >
+          {{ node.data.display | displayTranslation }}
+        </span>
         @if (node.data.description) {
         <div class="field-description">
           <span class="description-text" [matTooltip]="node.data.description | displayTranslation">

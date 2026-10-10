@@ -1,43 +1,42 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor';
+import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { numButton } from '../component-objects/NumButton'
 
-export class ActionBar {
-private getButtonByName(buttonName: string) {
-  return buttonName.trim().toLowerCase();
+const scope = 'num-action-bar'
+
+// num-action-bar's buttons are icon-only by design (tooltip, no visible
+// text) — a generic text-matching step can't find them. Rather than rename
+// the Gherkin's readable "Save cohort" to match the tooltip's actual text
+// ("Save"), map the few known icon-only names here to their data-cy.
+const ICON_ONLY_BUTTONS: Record<string, string> = {
+  'save cohort': 'save-cohort-button',
 }
 
-  public clickButtonByName(buttonName: string) {
-    const normalizedButtonName = this.getButtonByName(buttonName);
-    cy.get('num-action-bar button').contains(normalizedButtonName, { matchCase: false }).click();
-  }
-
-  public shouldButtonBeDisabled(buttonName: string) {
-    const normalizedButtonName = this.getButtonByName(buttonName);
-
-    cy.get('num-action-bar button')
-      .contains(normalizedButtonName, { matchCase: false })
-      .should('be.disabled');
-  }
-
-  public shouldButtonBeEnabled(buttonName: string) {
-    const normalizedButtonName = this.getButtonByName(buttonName);
-
-    cy.get('num-action-bar button')
-      .contains(normalizedButtonName, { matchCase: false })
-      .should('not.be.disabled');
-  }
+function findActionBarButton(buttonName: string) {
+  const dataCy = ICON_ONLY_BUTTONS[buttonName.trim().toLowerCase()]
+  return dataCy ? cy.get(scope).find(`[data-cy="${dataCy}"]`) : null
 }
-
-
-const actionBar = new ActionBar();
 
 defineStep('the button {string} should be disabled', (buttonName: string) => {
-  actionBar.shouldButtonBeDisabled(buttonName);
-});
-
+  const iconOnly = findActionBarButton(buttonName)
+  if (iconOnly) {
+    iconOnly.should('be.disabled')
+  } else {
+    numButton.shouldBeDisabled(scope, buttonName.trim(), false)
+  }
+})
 defineStep('the button {string} should be enabled', (buttonName: string) => {
-  actionBar.shouldButtonBeEnabled(buttonName);
-});
-
+  const iconOnly = findActionBarButton(buttonName)
+  if (iconOnly) {
+    iconOnly.should('not.be.disabled')
+  } else {
+    numButton.shouldBeEnabled(scope, buttonName.trim(), false)
+  }
+})
 defineStep('I click on the button {string}', (buttonName: string) => {
-  actionBar.clickButtonByName(buttonName);
-});
+  const iconOnly = findActionBarButton(buttonName)
+  if (iconOnly) {
+    iconOnly.click()
+  } else {
+    numButton.clickByText(scope, buttonName.trim(), false)
+  }
+})
