@@ -15,6 +15,7 @@ const GERMAN: Record<string, string> = {
   'Department key': 'Fachabteilungsschlüssel',
   'Extended department key': 'Erweiterter Fachabteilungsschlüssel',
   Gender: 'Geschlecht',
+  'Terminology Codes': 'Terminologie-Codes',
 }
 
 export function label(englishName: string): string {
