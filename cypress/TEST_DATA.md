@@ -4,20 +4,22 @@ Which exact criterium names the Cypress feature files search for, from which
 ontology **context**, and how to re-verify or replace one. For *why* this
 matters (translation fallback behavior, ontology-reload instability, and other
 mechanisms), see `cypress/CLAUDE.md` — this file is just the current reference
-table and the verification commands.
+table and the verification commands. The values themselves live in
+`support/test-data/concepts.json` (used as `{{group.key}}`, see `TESTING.md`); this table only
+explains why each one was picked.
 
 ## Current criteria in use
 
 | Criterium (exact `display.en`, verified non-empty — see `CLAUDE.md`) | Context | Termcode (for code-search) | Used for | Used in |
 |---|---|---|---|---|
 | `Age` | `Laboruntersuchung` | LOINC `30525-0` | General add→drag→run flows (Time Restriction tab only — see below) | `SavedQueries/saved-queries.feature` (load scenario), `CohorttResult/cohort-result.feature` |
-| `Current chronological age` | `Patient` | SNOMED `424144002` | Numeric value + unit comparator filter (`No filter` → `greater`, value `5`, unit `a`) | `CohortEdit/cohort-edit.feature` ("Changing a criterium's filter comparison...") |
+| `Current chronological age` | `Patient` | SNOMED `424144002` | Numeric value + unit comparator filter (`No filter` → `greater`, value `5`, unit `a`). Operator offers exactly: No filter, equal, less than, greater than, between (eq, lt, gt, quantity-range; no ge/le/ne). Units: `a`, `mo`. Verified in the running app | `CohortEdit/CriterionEdit/ValueFilter/QuantityComparator/`, `.../QuantityRange/` |
 | `Pneumonia` | `Diagnose` | | Time-restriction filter (before/on); general add→drag→run flows | `cohort-edit.feature` ("Applying a time-restriction filter..." and "Adding a criterium to the Inclusion list..."), `cohort-exclusion.feature`, `DataQueryCohort/data-query-cohort.feature` |
 | `Appendectomy` | `MII Onkologie Therapie` (and several other Onkologie sub-contexts — 50 total matches) | | Time-restriction filter (after, second row for context variety); general flows | `cohort-edit.feature`, `saved-queries.feature` (delete scenario) |
-| `Cause of death` (by code `79378-6`, LOINC) | `Todesursache` (a second "Cause of death" exists in `MII Onkologie Tod`, icd-10-gm only — always add by code) | LOINC `79378-6` | **Attribute filter, concept**: one concept attribute backed by `http://hl7.org/fhir/sid/icd-10/vs`; search `pneumoniae` → `J13`, `J15.0`, `J15.7` | `Criterion/AttributeFilter/Concept/attribute-concept-*.feature` |
+| `Cause of death` (by code `79378-6`, LOINC) | `Todesursache` (a second "Cause of death" exists in `MII Onkologie Tod`, icd-10-gm only — always add by code) | LOINC `79378-6` | **Attribute filter, concept**: one concept attribute backed by `http://hl7.org/fhir/sid/icd-10/vs`; search `pneumoniae` → `J13`, `J15.0`, `J15.7` | `CriterionEdit/AttributeFilter/Concept/attribute-concept-*.feature` |
 | `inpatient encounter` (code `IMP`; siblings `ambulatory` `AMB`, `pre-admission` `PRENC`, …) | `Fall` (6 criteria) | v3-ActCode `IMP` | **Attribute filter, several concept filters**: profile `MII_PR_Fall_KontaktGesundheitseinrichtung` has 4 concept attributes — tabs `Type of encounter` (`kontaktart-de`: `konsil`, `nachstationaer`), `Level of encounter` (`kontaktebene-de`: `abteilungskontakt`), `Department key` (`1500`), `Extended department key` | `attribute-concept-multiple.feature` |
-| `Gender` (by code `263495000`, SNOMED) | `Patient` | SNOMED `263495000` | **Value filter, concept**: profile `MII_PR_Person_Patient1`, value set `administrative-gender` → `female`, `male`, `other`, `unknown` | `Criterion/ValueFilter/Concept/value-concept-select.feature` |
-| `BIOMAT erheben` | `Einwilligung` (124 criteria) | `urn:oid:2.16.840.1.113883.3.1937.777.24.5.3` / `…24.5.3.19` | **No filter at all**: profile `MII_PR_Consent_Einwilligung` has `timeRestrictionAllowed=false`, no `valueDefinition`, no attribute definitions. English UI shows the German original (en translation is empty) | `Criterion/NoFilter/criterion-without-filters.feature` |
+| `Gender` (by code `263495000`, SNOMED) | `Patient` | SNOMED `263495000` | **Value filter, concept**: profile `MII_PR_Person_Patient1`, value set `administrative-gender` → `female`, `male`, `other`, `unknown` | `CriterionEdit/ValueFilter/Concept/value-concept-select.feature` |
+| `BIOMAT erheben` | `Einwilligung` (124 criteria) | `urn:oid:2.16.840.1.113883.3.1937.777.24.5.3` / `…24.5.3.19` | **No filter at all**: profile `MII_PR_Consent_Einwilligung` has `timeRestrictionAllowed=false`, no `valueDefinition`, no attribute definitions. English UI shows the German original (en translation is empty) | `CriterionEdit/NoFilter/criterion-without-filters.feature` |
 
 Picking from different contexts is deliberate — a numeric-value criterium
 exercises the value-filter UI a `Diagnose`/time-restriction-only one doesn't,
@@ -171,8 +173,9 @@ without touching a step definition. Verified against the local backend with
 | `Appendectomy` | SNOMED `80146002` (4 contexts, e.g. `Procedure`) | `cohort-edit` (via `{{appendectomy.code}}`) | Same rows as the by-name search. |
 | `Age` | LOINC `30525-0` | `cohort-search`, `cohort-result` | A name search for "Age" is outranked by unrelated "...age..." matches. |
 | Bulk search codes | `E10`, `E11`, `E66`, terminology `ICD-10-GM`, context `Diagnose`; `ZZZ99` does not exist | `BulkSearch/bulk-search.feature` | ICD-10-GM category codes. The search button needs the codes AND both filters. |
+| Bulk search -> one criterium, several termcodes | codes `E66, E10, E11` (listed in that order), criterium `Adipositas` (first code's display; same in `en`), remove `E10` then `E11` | `BulkSearch/bulk-search-criterium.feature` | Same codes as above. At one remaining code the editor's Terminology Codes tab disappears. |
 | Code Filter concept | ATC `A10BA02` (display `Metformin`) on the profile `Medication administration`, tab `Code Filter` | `data-selection-search.feature` (scenario 2) | The profile's code filter is ATC based. This replaced the old display text "Test": the concept is selected by code, the chip is asserted on the display text, so the two Examples columns must belong together. |
-| Criterium without filters | `BIOMAT erheben` | `criterium-actions.feature`, `Criterion/NoFilter` | Stable, has no filter tabs. |
+| Criterium without filters | `BIOMAT erheben` | `criterium-actions.feature`, `CriterionEdit/NoFilter` | Stable, has no filter tabs. |
 
 **Known gap:** setting a time restriction in the *profile* editor (data selection) does
 not produce an "Applied filters" header chip, so that part of the old data selection

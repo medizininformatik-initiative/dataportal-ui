@@ -11,8 +11,8 @@ ontology context, and how to re-verify one).
 
 `package.json`'s `cypress-cucumber-preprocessor.stepDefinitions` glob resolves a
 `.feature` file's steps from either (a) a `.ts` file with the **exact same
-basename**, in the same directory (`CohortEdit/cohort-edit.ts` ↔
-`CohortEdit/cohort-edit.feature`), or (b) anything under
+basename**, in the same directory (`CohortSearch/cohort-search.ts` ↔
+`CohortSearch/cohort-search.feature`), or (b) anything under
 `cypress/support/step_definitions/` (loaded globally, for every feature).
 There's no third option — placing new steps in an unrelated same-folder file
 (e.g. adding a new feature's steps into an existing sibling's `.ts`) silently
@@ -34,7 +34,7 @@ Cypress component-object (see below) that reads it:
 | Component | `numDataCy` value(s) | Read by |
 |---|---|---|
 | `checkbox` | `"checkbox"` | `NumCheckbox` |
-| `criteria-box` | `criterion().getDisplay()` (dynamic, on the inner `.container` div — **not** the `num-criteria-box` host tag, so a plain `[data-cy="..."]` lookup needs `.container[data-cy="..."]` to stay unambiguous, see below); `"criterion-content"` | `criterionToEditor.cy.ts`, `NumFilterChips`, `cohort-edit.ts` |
+| `criteria-box` | `criterion().getDisplay()` (dynamic, on the inner `.container` div — **not** the `num-criteria-box` host tag, so a plain `[data-cy="..."]` lookup needs `.container[data-cy="..."]` to stay unambiguous, see below); `"criterion-content"` | `criterionToEditor.cy.ts`, `NumFilterChips`, `quantityFilter.cy.ts` |
 | `side-menu` | `'nav-' + navItem.routeTo` (dynamic, one of the `BasePaths.*` values) | `sideNav.cy.ts` |
 | `save-dataquery-modal` | `"dialog-title-input"`, `"dialog-comment-input"` | `NumModal`/`support/step_definitions/cohortResult.cy.ts` |
 | `saved-query-tile` | `"saved-query-delete-icon"` | `savedQueries.cy.ts` |
@@ -68,7 +68,7 @@ Discovered while retrofitting `save-dataquery-modal`: an empty `<input>`/
 `<textarea>` or a bare icon (`fa-icon`, no label) has nothing to match against,
 so `data-cy` is the right tool. A button with a real, stable, translated label
 does — Cypress's own guidance already covers that case (see below), and this
-codebase already does it successfully (`action-bar.cy.ts`, `cohort-edit.ts`'s
+codebase already does it successfully (`action-bar.cy.ts`, `cohort-edit.feature`'s
 `cy.contains('button', 'Select')`). Adding `data-cy` to every button would just
 duplicate what text-matching already does correctly. When multiple instances of
 the same component share one label (e.g. every `saved-query-tile` has a
@@ -177,7 +177,7 @@ plain by-name one.
 
 ## A value filter's chip can share its data-cy with its own criteria-box
 
-`NumFilterChips`/`cohort-edit.ts` look up a criteria-box by
+`NumFilterChips`/`quantityFilter.cy.ts` look up a criteria-box by
 `[data-cy="<criterium display>"]`. For a **value** (not attribute) quantity
 filter, the filter concept *is* the criterion itself, so its filter-chip
 block ends up carrying the exact same `data-cy` text as the criteria-box it
@@ -207,8 +207,8 @@ never showed this because their update path happens to settle before the
 "Selected Filters" summary (`.header-col-chips`, fed by the same round trip)
 shows the new value **before** clicking "Close" — Cypress's normal retry
 absorbs the propagation delay without a fixed `cy.wait()`. See
-`CohortEdit.shouldSeeChipValueInFilterSummary` in
-`cypress/e2e/CohortEdit/cohort-edit.ts`.
+the step `I should see {string} applied in the filter summary` in
+`cypress/support/step_definitions/quantityFilter.cy.ts`.
 
 ## A quantity comparator filter chip's exact text is `"<symbol> <value> <unit>"`
 
