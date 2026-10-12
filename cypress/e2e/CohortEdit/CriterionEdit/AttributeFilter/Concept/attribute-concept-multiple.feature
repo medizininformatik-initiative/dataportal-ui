@@ -13,7 +13,7 @@
 # department key, Level of encounter, Type of encounter - plus Time restriction.
 # The criteria, the filter names and the concept codes are Examples data, so another
 # profile with several concept filters can be tried by changing the tables only.
-@area:shared-filter
+@area:feasibility-query
 Feature: Attribute filter (concept) - criterium with several concept filters
 
   Background:
@@ -21,6 +21,7 @@ Feature: Attribute filter (concept) - criterium with several concept filters
     And I am on the "Feasibility Search" page
     And I set the language to the configured language
 
+  @component:criterion-editor @behavior:select @filter:attribute-filter @type:concept
   Scenario Outline: Each attribute keeps its own selection
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -37,16 +38,17 @@ Feature: Attribute filter (concept) - criterium with several concept filters
       | <secondConcept> |
 
     Examples:
-      | criterium           | criteriumCode | firstFilter       | firstConcept | secondFilter       | secondConcept     |
-      | inpatient encounter | IMP           | Type of encounter | konsil       | Level of encounter | abteilungskontakt |
+      | criterium               | criteriumCode      | firstFilter           | firstConcept            | secondFilter           | secondConcept            |
+      | {{encounter.criterium}} | {{encounter.code}} | {{encounter.typeTab}} | {{encounter.typeFirst}} | {{encounter.levelTab}} | {{encounter.levelFirst}} |
 
+  @component:criterion-editor @behavior:remove @filter:attribute-filter @type:concept
   Scenario Outline: Removing a concept in one attribute does not touch the others
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
     And I open the editor tab "<firstFilter>"
     And I have selected the concepts in the filter "<firstFilter>":
-      | <firstConcept>  |
-      | <thirdConcept>  |
+      | <firstConcept> |
+      | <thirdConcept> |
     And I have selected the concepts in the filter "<secondFilter>":
       | <secondConcept> |
     When I remove the concept "<firstConcept>" from the selected concepts of the filter "<firstFilter>"
@@ -58,33 +60,35 @@ Feature: Attribute filter (concept) - criterium with several concept filters
       | <secondConcept> |
 
     Examples:
-      | criterium           | criteriumCode | firstFilter       | firstConcept | thirdConcept   | secondFilter       | secondConcept     |
-      | inpatient encounter | IMP           | Type of encounter | konsil       | nachstationaer | Level of encounter | abteilungskontakt |
+      | criterium               | criteriumCode      | firstFilter           | firstConcept            | thirdConcept             | secondFilter           | secondConcept            |
+      | {{encounter.criterium}} | {{encounter.code}} | {{encounter.typeTab}} | {{encounter.typeFirst}} | {{encounter.typeSecond}} | {{encounter.levelTab}} | {{encounter.levelFirst}} |
 
+  @component:criterion-editor @behavior:persist @filter:attribute-filter @type:concept
   Scenario Outline: Selections of all four attributes survive closing and reopening
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
     And I open the editor tab "<firstFilter>"
-    And I have selected one concept in each of these concept filters:
-      | filter         | code         |
-      | <firstFilter>  | <firstCode>  |
-      | <secondFilter> | <secondCode> |
-      | <thirdFilter>  | <thirdCode>  |
-      | <fourthFilter> | <fourthCode> |
+    And I have selected one concept from the value set of each of these attribute filters:
+      | attribute filter | concept         |
+      | <firstFilter>    | <firstConcept>  |
+      | <secondFilter>   | <secondConcept> |
+      | <thirdFilter>    | <thirdConcept>  |
+      | <fourthFilter>   | <fourthConcept> |
     When I click on the button "Close"
     And I open the editor of the added criterium
     And I open the editor tab "<firstFilter>"
-    Then each of these concept filters has <count> selected concept:
-      | filter         |
-      | <firstFilter>  |
-      | <secondFilter> |
-      | <thirdFilter>  |
-      | <fourthFilter> |
+    Then each of these attribute filters has <count> selected concept:
+      | attribute filter |
+      | <firstFilter>    |
+      | <secondFilter>   |
+      | <thirdFilter>    |
+      | <fourthFilter>   |
 
     Examples:
-      | criterium           | criteriumCode | firstFilter       | firstCode | secondFilter       | secondCode        | thirdFilter    | thirdCode | fourthFilter            | fourthCode | count |
-      | inpatient encounter | IMP           | Type of encounter | konsil    | Level of encounter | abteilungskontakt | Department key | 1500      | Extended department key | 1500       | 1     |
+      | criterium               | criteriumCode      | firstFilter           | firstConcept            | secondFilter           | secondConcept            | thirdFilter                 | thirdConcept                  | fourthFilter                        | fourthConcept                 | count |
+      | {{encounter.criterium}} | {{encounter.code}} | {{encounter.typeTab}} | {{encounter.typeFirst}} | {{encounter.levelTab}} | {{encounter.levelFirst}} | {{encounter.departmentTab}} | {{encounter.departmentFirst}} | {{encounter.extendedDepartmentTab}} | {{encounter.departmentFirst}} | 1     |
 
+  @component:criterion-editor @behavior:isolate @filter:attribute-filter @type:concept
   Scenario Outline: Two criteria of the same profile keep separate selections
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -100,5 +104,5 @@ Feature: Attribute filter (concept) - criterium with several concept filters
     Then the filter "<filter>" has no selected concepts
 
     Examples:
-      | criterium           | criteriumCode | filter            | concept | otherCriterium | otherCode |
-      | inpatient encounter | IMP           | Type of encounter | konsil  | ambulatory     | AMB       |
+      | criterium               | criteriumCode      | filter                | concept                 | otherCriterium               | otherCode               |
+      | {{encounter.criterium}} | {{encounter.code}} | {{encounter.typeTab}} | {{encounter.typeFirst}} | {{encounter.otherCriterium}} | {{encounter.otherCode}} |

@@ -1,7 +1,8 @@
 import { resolve } from '../testData'
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numConceptFilter } from '../component-objects/NumConceptFilter'
 import { t } from '../i18n'
+import { label } from '../labels'
 import { numMenu } from '../component-objects/NumMenu'
 
 /**
@@ -44,3 +45,24 @@ defineStep(
       .should('contain', resolve(chipText))
   }
 )
+
+// The termcode editor (a criterium with several termcodes, e.g. from the bulk search) lists
+// one `.concept-item` per code, each with a "Remove" button; its tab disappears at one code.
+defineStep('the editor lists the termcodes {string}', (codes: string) => {
+  const list = resolve(codes)
+    .split(',')
+    .map((code) => code.trim())
+  cy.get('.concept-item').should('have.length', list.length)
+  list.forEach((code) => cy.get('.concept-item').contains(code))
+})
+defineStep('I remove the termcode {string} in the editor', (code: string) => {
+  cy.contains('.concept-item', resolve(code))
+    .contains('button', t('FEASIBILITY.EDITOR.MODAL.REMOVE'))
+    .click()
+})
+defineStep('the editor has the tab {string}', (tab: string) => {
+  cy.contains('.tab', new RegExp(`^\\s*${label(tab)}\\s*$`, 'i')).should('exist')
+})
+defineStep('the editor has no tab {string}', (tab: string) => {
+  cy.get('.tab').should('exist').and('not.contain.text', label(tab))
+})

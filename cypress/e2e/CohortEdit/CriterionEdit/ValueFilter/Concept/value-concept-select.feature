@@ -3,7 +3,7 @@
 # valueDefinition.type=concept), value set http://hl7.org/fhir/ValueSet/administrative-gender:
 # female, male, other, unknown (system http://hl7.org/fhir/administrative-gender).
 # The criterium, its code, the tab, the concepts and the system are Examples data.
-@area:shared-filter
+@area:feasibility-query
 Feature: Value filter (concept) - selecting and removing concepts
 
   Background:
@@ -11,6 +11,7 @@ Feature: Value filter (concept) - selecting and removing concepts
     And I am on the "Feasibility Search" page
     And I set the language to the configured language
 
+  @component:criterion-editor @behavior:select @filter:value-filter @type:concept
   Scenario Outline: Selecting a concept adds it to the selection
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -22,9 +23,10 @@ Feature: Value filter (concept) - selecting and removing concepts
       | <first> | <system> |
 
     Examples:
-      | criterium | criteriumCode | tab    | first  | system                                    |
-      | Gender    | 263495000     | Gender | female | http://hl7.org/fhir/administrative-gender |
+      | criterium            | criteriumCode   | tab            | first            | system            |
+      | {{gender.criterium}} | {{gender.code}} | {{gender.tab}} | {{gender.first}} | {{gender.system}} |
 
+  @component:criterion-editor @behavior:remove @filter:value-filter @type:concept
   Scenario Outline: Removing one concept keeps the others
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -41,9 +43,10 @@ Feature: Value filter (concept) - selecting and removing concepts
       | <third> |
 
     Examples:
-      | criterium | criteriumCode | tab    | first  | second | third |
-      | Gender    | 263495000     | Gender | female | male   | other |
+      | criterium            | criteriumCode   | tab            | first            | second            | third            |
+      | {{gender.criterium}} | {{gender.code}} | {{gender.tab}} | {{gender.first}} | {{gender.second}} | {{gender.third}} |
 
+  @component:criterion-editor @behavior:isolate @filter:value-filter @type:concept
   Scenario Outline: The value filter selection is independent of attribute filters
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -58,9 +61,10 @@ Feature: Value filter (concept) - selecting and removing concepts
       | <first> |
 
     Examples:
-      | criterium | criteriumCode | tab    | first  |
-      | Gender    | 263495000     | Gender | female |
+      | criterium            | criteriumCode   | tab            | first            |
+      | {{gender.criterium}} | {{gender.code}} | {{gender.tab}} | {{gender.first}} |
 
+  @component:criterion-editor @behavior:sync-ui @filter:value-filter @type:concept
   Scenario Outline: Removing a concept in the Selected tab unchecks it in the search results
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -76,5 +80,5 @@ Feature: Value filter (concept) - selecting and removing concepts
     And the concept "<second>" is checked in the search results
 
     Examples:
-      | criterium | criteriumCode | tab    | first  | second |
-      | Gender    | 263495000     | Gender | female | male   |
+      | criterium            | criteriumCode   | tab            | first            | second            |
+      | {{gender.criterium}} | {{gender.code}} | {{gender.tab}} | {{gender.first}} | {{gender.second}} |

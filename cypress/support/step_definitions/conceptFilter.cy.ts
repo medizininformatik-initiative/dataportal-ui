@@ -1,4 +1,5 @@
-import { DataTable, defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { DataTable } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numConceptFilter } from '../component-objects/NumConceptFilter'
 import { resolve } from '../testData'
 
@@ -124,22 +125,25 @@ defineStep('the concept results table is scrollable within the editor', () => {
 // Multi-attribute helpers (criteria with several concept filters, e.g. the "Fall" profile,
 // see cypress/TEST_DATA.md). The filters and codes come from the scenario's data table,
 // so they can be swapped in an Examples block; nothing is hard-coded here.
-//   | filter            | code   |
-//   | Type of encounter | konsil |
+// Each attribute filter picks its concept from its own value set.
+//   | attribute filter  | concept |
+//   | Type of encounter | konsil  |
 defineStep(
-  'I have selected one concept in each of these concept filters:',
+  'I have selected one concept from the value set of each of these attribute filters:',
   (table: DataTable) => {
     table
       .hashes()
-      .forEach((row) => numConceptFilter.selectCodes([resolve(row.code)], resolve(row.filter)))
+      .forEach((row) =>
+        numConceptFilter.selectCodes([resolve(row.concept)], resolve(row['attribute filter']))
+      )
   }
 )
 defineStep(
-  'each of these concept filters has {int} selected concept:',
+  'each of these attribute filters has {int} selected concept:',
   (count: number, table: DataTable) => {
     table.hashes().forEach((row) => {
-      numConceptFilter.openTab('Selected Concepts', resolve(row.filter))
-      numConceptFilter.selectedShouldHaveCount(count, resolve(row.filter))
+      numConceptFilter.openTab('Selected Concepts', resolve(row['attribute filter']))
+      numConceptFilter.selectedShouldHaveCount(count, resolve(row['attribute filter']))
     })
   }
 )
