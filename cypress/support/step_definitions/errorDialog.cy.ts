@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numErrorDisplay } from '../component-objects/NumErrorDisplay'
 
 /** Steps for the error overlay (`num-error-display`) that failed requests open. */

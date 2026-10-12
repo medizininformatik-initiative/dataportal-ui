@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numUserMenu } from '../component-objects/NumUserMenu'
 
 defineStep('I open the user menu', () => numUserMenu.open())

@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 
 /**
  * A lost session, as opposed to `my session has expired` (an API answering 401). Dropping the
