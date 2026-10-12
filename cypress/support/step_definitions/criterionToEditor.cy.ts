@@ -1,4 +1,4 @@
-import { defineStep } from "@badeball/cypress-cucumber-preprocessor"
+import { defineStep } from '../defineStep'
 import { resolve } from "../testData"
 import { CriterionSearch } from "../../e2e/CohortSearch/cohort-search"
 

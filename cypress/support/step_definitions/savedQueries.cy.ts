@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numButton } from '../component-objects/NumButton'
 
 const TILE = '.saved-query-tile'
