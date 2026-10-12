@@ -88,8 +88,8 @@ export const CASES: Cases = {
   'one concept': included(DEATH_BY_J13),
   'several concepts': included(deathBy(['J13', 'J15.0'])),
   'concept and time': included(deathBy(['J13'], atTime(TIMES.before))),
-  'age greater than': included(OLDER_THAN_FIVE_CRITERION),
-  'age range': included(WORKING_AGE_CRITERION),
+  'age quantity-comparator': included(OLDER_THAN_FIVE_CRITERION),
+  'age quantity-range': included(WORKING_AGE_CRITERION),
   'gender concept': included(criterion('gender', withValue(conceptValue([GENDER_CONCEPTS.female])))),
 
   'exclusion with filter': crtdl({ exclusion: [[criterion('age', withValue(YOUNGER_THAN_LIMIT))]] }),
