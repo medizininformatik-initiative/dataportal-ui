@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { NavItemValue, NavItemPaths, NavItemBaseRoutes } from '../../e2e/Utilities/NavItems'
 import { Page } from '../../e2e/Utilities/pages'
 import { getUrlPathByPage } from '../../e2e/Utilities/pathResolver'

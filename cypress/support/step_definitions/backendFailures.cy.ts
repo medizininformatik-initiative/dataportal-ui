@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 
 /**
  * Steps that make the backend misbehave, for the negative-path scenarios. They register a
