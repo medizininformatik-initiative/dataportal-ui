@@ -6,6 +6,7 @@ Feature: Cohort Search
     And I am on the "Feasibility Search" page
     And I set the language to English
 
+  @component:criteria-search @behavior:search
   Scenario Outline: Search for Criterium "<criterium>"
     Given the table should have 20 rows
     And the button "<button1>" should be disabled
@@ -16,12 +17,13 @@ Feature: Cohort Search
     Then the table should have 20 rows
 
     Examples: Search Criteria
-      | criterium | button1                  | button2                |
-      | Age       | Add to cohort selection  | Show cohort selection  |
-      | Diabetes  | Add to cohort selection  | Show cohort selection  |
+      | criterium            | button1                 | button2               |
+      | {{labAge.criterium}} | Add to cohort selection | Show cohort selection |
+      | Diabetes             | Add to cohort selection | Show cohort selection |
 
   # Searched by termcode: a name search for "Age" is outranked by unrelated "...age..."
   # matches, so the exact row is not on the first page (see cypress/CLAUDE.md).
+  @component:criteria-search @behavior:select
   Scenario Outline: Select Cohort elements
     When I type "<code>" in the search input field
     When I select the checkbox in the row containing "<criterium>"
@@ -32,5 +34,5 @@ Feature: Cohort Search
     Then I am on the "Feasibility Editor" page
 
     Examples: Selection Criteria
-      | criterium | code    | button1                  | button2                |
-      | Age       | 30525-0 | Add to cohort selection  | Show cohort selection  |
+      | criterium            | code            | button1                 | button2               |
+      | {{labAge.criterium}} | {{labAge.code}} | Add to cohort selection | Show cohort selection |
