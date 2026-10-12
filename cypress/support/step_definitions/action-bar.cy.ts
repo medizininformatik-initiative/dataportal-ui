@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numButton } from '../component-objects/NumButton'
 
 const scope = 'num-action-bar'
@@ -39,4 +39,18 @@ defineStep('I click on the button {string}', (buttonName: string) => {
   } else {
     numButton.clickByText(scope, buttonName.trim(), false)
   }
+})
+
+// The upload <input type=file> is visually hidden behind its icon button, so it
+// only has to exist; download and save are real buttons and must be visible.
+defineStep('the action bar offers upload, download and save', () => {
+  cy.get(scope).find('[data-cy="upload-crtdl"]').should('exist')
+  cy.get(scope).find('[data-cy="download-crtdl-button"]').should('be.visible')
+  cy.get(scope).find('[data-cy="save-cohort-button"]').should('be.visible')
+})
+defineStep('the action bar offers no upload, download or save', () => {
+  cy.get(scope).should('exist')
+  cy.get(scope).find('[data-cy="upload-crtdl"]').should('not.exist')
+  cy.get(scope).find('[data-cy="download-crtdl-button"]').should('not.exist')
+  cy.get(scope).find('[data-cy="save-cohort-button"]').should('not.exist')
 })
