@@ -12,6 +12,8 @@
     "pretty-quick": "pretty-quick --pattern \"src/**/*.{scss,html}\"",
     "e2e": "ng e2e",
     "cypress": "npx cypress open",
+    "gherkin:align": "node cypress/scripts/align-tables.cjs",
+    "gherkin:lint": "node cypress/scripts/lint-features.mjs",
     "coverage:features": "node cypress/scripts/feature-coverage.mjs"
   },
   "private": true,
@@ -102,6 +104,10 @@
     }
   },
   "lint-staged": {
+    "cypress/e2e/**/*.feature": [
+      "node cypress/scripts/align-tables.cjs",
+      "node cypress/scripts/lint-features.mjs"
+    ],
     "src/**/*.{ts}": [
       "ng-lint-staged lint --fix --"
     ]
