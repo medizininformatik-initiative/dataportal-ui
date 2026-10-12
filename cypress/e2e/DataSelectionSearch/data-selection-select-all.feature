@@ -8,6 +8,7 @@ Feature: Data Selection Search - select all
     And I am on the "Data Selection Search" page
     And I set the language to English
 
+  @component:data-selection-search @behavior:select-all
   Scenario Outline: Adding is disabled while nothing is selected
     Then the button "<addButton>" should be disabled
 
@@ -15,6 +16,7 @@ Feature: Data Selection Search - select all
       | addButton        |
       | Add to Selection |
 
+  @component:data-selection-search @behavior:select-all
   Scenario Outline: Select all checks every loaded row and enables adding
     When I toggle the select all checkbox of the table
     Then all rows in the table should be selected
@@ -24,6 +26,7 @@ Feature: Data Selection Search - select all
       | addButton        |
       | Add to Selection |
 
+  @component:data-selection-search @behavior:select-all
   Scenario Outline: Toggling select all a second time clears the selection
     When I toggle the select all checkbox of the table
     Then all rows in the table should be selected

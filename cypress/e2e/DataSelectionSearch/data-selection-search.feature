@@ -6,6 +6,7 @@ Feature: Data Selection Search
     And I am on the "Data Selection Search" page
     And I set the language to English
 
+  @component:data-selection-search @behavior:select
   Scenario Outline: User selects a data selection feature
     Given I type "<feature>" in the search input field
     And I select the checkbox in the row containing "<feature>"
@@ -22,7 +23,7 @@ Feature: Data Selection Search
 
     Examples: Selection Criteria
       | feature                   | button1          | button2        | field |
-      | Medication administration | Add to Selection | Show Selection | photo |
+      | {{dataSelection.feature}} | Add to Selection | Show Selection | photo |
 
 
   # NOTE (rewritten against the current UI):
@@ -38,6 +39,7 @@ Feature: Data Selection Search
   #   does not show up in the "Applied filters" header chips (header read: "Code Filter /
   #   Metformin", nothing else), also not after switching tabs. Whether that is intended or
   #   a bug needs a product decision; the steps were removed instead of left failing.
+  @component:data-selection-feature-editor @behavior:edit-filter
   Scenario Outline: User edits the feature "<feature>" and applies filters
     Given I type "<feature>" in the search input field
     And I select the checkbox in the row containing "<feature>"
@@ -64,5 +66,5 @@ Feature: Data Selection Search
     And I click on the button "Close"
 
     Examples: Selection Criteria
-      | feature                   | button1          | button2        | field | filterTab   | code    | concept   | reference |
-      | Medication administration | Add to Selection | Show Selection | Note  | Code Filter | A10BA02 | Metformin | Procedure |
+      | feature                   | button1          | button2        | field | filterTab                   | code                   | concept                   | reference                   |
+      | {{dataSelection.feature}} | Add to Selection | Show Selection | Note  | {{dataSelection.filterTab}} | {{dataSelection.code}} | {{dataSelection.concept}} | {{dataSelection.reference}} |
