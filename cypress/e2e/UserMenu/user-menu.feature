@@ -9,6 +9,7 @@ Feature: User menu
     And I am on the "Feasibility Search" page
     And I set the language to English
 
+  @component:user-menu @behavior:open-menu
   Scenario Outline: The user menu offers about, log and log out
     When I open the user menu
     Then the user menu should offer "<about>"
@@ -19,6 +20,7 @@ Feature: User menu
       | about            | log | logout  |
       | About the Portal | Log | Log Out |
 
+  @component:user-menu @behavior:open-log
   Scenario Outline: The log entry is disabled while there are no errors to show
     When I open the user menu
     Then the user menu item "<log>" should be disabled
@@ -27,6 +29,7 @@ Feature: User menu
       | log |
       | Log |
 
+  @component:user-menu @behavior:open-about
   Scenario Outline: The about entry opens the about dialog
     When I open the user menu
     And I click on the user menu item "<about>"
@@ -36,6 +39,7 @@ Feature: User menu
       | about            |
       | About the Portal |
 
+  @component:user-menu @behavior:logout
   Scenario Outline: Logging out returns to the sign-in page
     When I open the user menu
     And I click on the user menu item "<logout>"

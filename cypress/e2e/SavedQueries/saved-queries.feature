@@ -6,6 +6,7 @@ Feature: Saved Queries
     And I am on the "Feasibility Search" page
     And I set the language to English
 
+  @component:saved-queries @behavior:load
   Scenario Outline: A saved query appears in the list and can be loaded back into the editor
     Given I add the criterium "<criterium>" via code "<code>" to the editor
     And I drag "<criterium>" criterium to the "Inclusion" list
@@ -19,9 +20,10 @@ Feature: Saved Queries
     Then I should see "<criterium>" in the cohort definition editor
 
     Examples:
-      | criterium | code    | title      | comment       |
-      | Age       | 30525-0 | Test Query | A test cohort |
+      | criterium            | code            | title      | comment       |
+      | {{labAge.criterium}} | {{labAge.code}} | Test Query | A test cohort |
 
+  @component:saved-queries @behavior:delete
   Scenario Outline: Deleting a saved query removes it from the list
     Given I add the criterium "<criterium>" to the editor
     And I drag "<criterium>" criterium to the "Inclusion" list
@@ -34,5 +36,5 @@ Feature: Saved Queries
     Then I should not see the saved query "<title>" in the list
 
     Examples:
-      | criterium    | title           | comment       |
-      | Appendectomy | Query To Delete | A test cohort |
+      | criterium                  | title           | comment       |
+      | {{appendectomy.criterium}} | Query To Delete | A test cohort |
