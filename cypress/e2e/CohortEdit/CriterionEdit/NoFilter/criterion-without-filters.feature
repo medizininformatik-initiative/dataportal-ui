@@ -3,7 +3,7 @@
 # timeRestrictionAllowed=false, no valueDefinition, no attributeDefinitions).
 # The English UI shows the German original name (en translation is empty).
 # The criterium, the list and the menu entry are Examples data.
-@area:query-editor
+@area:feasibility-query
 Feature: Criterion without any filter
 
   Background:
@@ -11,6 +11,7 @@ Feature: Criterion without any filter
     And I am on the "Feasibility Search" page
     And I set the language to the configured language
 
+  @component:criterion-editor @behavior:add @filter:none
   Scenario Outline: The criterium can be added and placed without configuring anything
     Given I add the criterium "<criterium>" to the editor
     When I drag "<criterium>" criterium to the "<list>" list
@@ -18,17 +19,19 @@ Feature: Criterion without any filter
     And the button "<button>" should be enabled
 
     Examples:
-      | criterium      | list      | button      |
-      | BIOMAT erheben | Inclusion | Feasibility |
+      | criterium              | list      | button      |
+      | {{noFilter.criterium}} | Inclusion | Feasibility |
 
+  @component:criterion-editor @behavior:show-chips @filter:none
   Scenario Outline: The criterium shows no filter chips
     Given I add the criterium "<criterium>" to the editor
     Then the criterium "<criterium>" shows no filter chips
 
     Examples:
-      | criterium      |
-      | BIOMAT erheben |
+      | criterium              |
+      | {{noFilter.criterium}} |
 
+  @component:criterion-editor @behavior:show @filter:none
   Scenario Outline: The editor offers no filter tabs
     Given I add the criterium "<criterium>" to the editor
     When I open the menu
@@ -37,5 +40,5 @@ Feature: Criterion without any filter
     And the editor has no filter tabs
 
     Examples:
-      | criterium      | menuItem  | page                    |
-      | BIOMAT erheben | Configure | Query Editor - Criteria |
+      | criterium              | menuItem  | page                    |
+      | {{noFilter.criterium}} | Configure | Query Editor - Criteria |

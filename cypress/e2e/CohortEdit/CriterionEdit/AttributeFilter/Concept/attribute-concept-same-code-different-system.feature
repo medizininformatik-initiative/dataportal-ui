@@ -11,7 +11,7 @@
 # The search table shows the system as its display name in its own cell, so a row is picked by
 # code AND that name. The selected-concepts list shows only display and code, never the system,
 # so it is asserted by entry count.
-@area:shared-filter
+@area:feasibility-query
 Feature: Concept filter - same code in different code systems
 
   Background:
@@ -19,6 +19,7 @@ Feature: Concept filter - same code in different code systems
     And I am on the "Data Selection Search" page
     And I set the language to English
 
+  @component:criterion-editor @behavior:select @filter:attribute-filter @type:concept
   Scenario Outline: Selecting a code does not select the same code from another system
     Given I type "<profile>" in the search input field
     And I select the checkbox in the row containing "<profile>"
@@ -37,6 +38,7 @@ Feature: Concept filter - same code in different code systems
       | profile   | tab         | code | firstSystem | secondSystem |
       | Diagnosis | Code Filter | I26  | ICD-10-GM   | Alpha-ID     |
 
+  @component:criterion-editor @behavior:select @behavior:remove @filter:attribute-filter @type:concept
   Scenario Outline: The same code in two systems keeps both entries until each is removed
     Given I type "<profile>" in the search input field
     And I select the checkbox in the row containing "<profile>"

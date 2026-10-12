@@ -6,7 +6,7 @@
 # (icd-10-gm only), hence the add-by-code step.
 # All data (criterium, code, tab, search term, concepts, system) is in the Examples
 # tables, so another criterium or concept can be tried without touching a step.
-@area:shared-filter
+@area:feasibility-query
 Feature: Attribute filter (concept) - selecting concepts
 
   Background:
@@ -14,6 +14,7 @@ Feature: Attribute filter (concept) - selecting concepts
     And I am on the "Feasibility Search" page
     And I set the language to the configured language
 
+  @component:criterion-editor @behavior:select @filter:attribute-filter @type:concept
   Scenario Outline: Selecting a concept adds it to the selection
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -25,9 +26,10 @@ Feature: Attribute filter (concept) - selecting concepts
       | <first> | <system> |
 
     Examples:
-      | criterium      | criteriumCode | tab        | term       | first | system                         |
-      | Cause of death | 79378-6       | ICD-10-WHO | pneumoniae | J13   | http://hl7.org/fhir/sid/icd-10 |
+      | criterium                  | criteriumCode         | tab                  | term                        | first              | system                  |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} | {{concepts.first}} | {{causeOfDeath.system}} |
 
+  @component:criterion-editor @behavior:select @filter:attribute-filter @type:concept
   Scenario Outline: Selecting several concepts keeps all of them
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -41,9 +43,10 @@ Feature: Attribute filter (concept) - selecting concepts
       | <second> | <system> |
 
     Examples:
-      | criterium      | criteriumCode | tab        | term       | first | second | system                         |
-      | Cause of death | 79378-6       | ICD-10-WHO | pneumoniae | J13   | J15.0  | http://hl7.org/fhir/sid/icd-10 |
+      | criterium                  | criteriumCode         | tab                  | term                        | first              | second              | system                  |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} | {{concepts.first}} | {{concepts.second}} | {{causeOfDeath.system}} |
 
+  @component:criterion-editor @behavior:remove @filter:attribute-filter @type:concept
   Scenario Outline: Deselecting a concept in the search results removes it from the selection
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -58,9 +61,10 @@ Feature: Attribute filter (concept) - selecting concepts
       | <second> |
 
     Examples:
-      | criterium      | criteriumCode | tab        | term       | first | second |
-      | Cause of death | 79378-6       | ICD-10-WHO | pneumoniae | J13   | J15.0  |
+      | criterium                  | criteriumCode         | tab                  | term                        | first              | second              |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} | {{concepts.first}} | {{concepts.second}} |
 
+  @component:criterion-editor @behavior:persist @filter:attribute-filter @type:concept
   Scenario Outline: The selection persists after closing and reopening the editor
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -77,12 +81,13 @@ Feature: Attribute filter (concept) - selecting concepts
       | <second> |
 
     Examples:
-      | criterium      | criteriumCode | tab        | first | second |
-      | Cause of death | 79378-6       | ICD-10-WHO | J13   | J15.0  |
+      | criterium                  | criteriumCode         | tab                  | first              | second              |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} |
 
   # A concept chip shows the concept's DISPLAY text, not its code. The ontology only has the
   # German original for these concepts, so the chip text is German in the English UI too.
   # <firstChip> / <secondChip> must belong to <first> / <second>.
+  @component:criterion-editor @behavior:show-chips @filter:attribute-filter @type:concept
   Scenario Outline: Selected concepts are shown as filter chips on the criterium
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -95,5 +100,5 @@ Feature: Attribute filter (concept) - selecting concepts
     And the criterium "<criterium>" shows a filter chip for "<secondChip>"
 
     Examples:
-      | criterium      | criteriumCode | tab        | first | second | firstChip                              | secondChip                            |
-      | Cause of death | 79378-6       | ICD-10-WHO | J13   | J15.0  | Pneumonie durch Streptococcus pneumoniae | Pneumonie durch Klebsiella pneumoniae |
+      | criterium                  | criteriumCode         | tab                  | first              | second              | firstChip              | secondChip              |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} | {{concepts.firstChip}} | {{concepts.secondChip}} |

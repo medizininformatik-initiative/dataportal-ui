@@ -4,7 +4,7 @@
 # Regression for bug-reports/selected-concept-list-remove-wipes-selection.md
 # Data: see attribute-concept-select.feature. Every value is an Examples cell; a cell may
 # be a literal or a {{placeholder}} from support/test-data/concepts.json.
-@area:shared-filter
+@area:feasibility-query
 Feature: Attribute filter (concept) - removing concepts
 
   Background:
@@ -12,6 +12,7 @@ Feature: Attribute filter (concept) - removing concepts
     And I am on the "Feasibility Search" page
     And I set the language to the configured language
 
+  @component:criterion-editor @behavior:remove @filter:attribute-filter @type:concept
   Scenario Outline: Removing one concept keeps the others
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -26,11 +27,12 @@ Feature: Attribute filter (concept) - removing concepts
     And the selected concepts list does not contain "<removed>"
 
     Examples:
-      | criterium                  | criteriumCode        | tab                | first               | second               | third               | removed             |
+      | criterium                  | criteriumCode         | tab                  | first              | second              | third              | removed             |
       | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} | {{concepts.third}} | {{concepts.first}}  |
       | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} | {{concepts.third}} | {{concepts.second}} |
       | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} | {{concepts.third}} | {{concepts.third}}  |
 
+  @component:criterion-editor @behavior:remove @filter:attribute-filter @type:concept
   Scenario Outline: Removing concepts one after another
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -47,9 +49,10 @@ Feature: Attribute filter (concept) - removing concepts
       | <third> |
 
     Examples:
-      | criterium                  | criteriumCode        | tab                | first               | second               | third               |
+      | criterium                  | criteriumCode         | tab                  | first              | second              | third              |
       | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} | {{concepts.third}} |
 
+  @component:criterion-editor @behavior:remove @filter:attribute-filter @type:concept
   Scenario Outline: Removing every concept leaves an empty list
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -65,9 +68,10 @@ Feature: Attribute filter (concept) - removing concepts
     Then the selected concepts list is empty
 
     Examples:
-      | criterium                  | criteriumCode        | tab                | first               | second               | third               |
+      | criterium                  | criteriumCode         | tab                  | first              | second              | third              |
       | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} | {{concepts.third}} |
 
+  @component:criterion-editor @behavior:remove @behavior:persist @filter:attribute-filter @type:concept
   Scenario Outline: A removal survives closing and reopening the editor
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -87,5 +91,5 @@ Feature: Attribute filter (concept) - removing concepts
       | <third>  |
 
     Examples:
-      | criterium                  | criteriumCode        | tab                | first               | second               | third               |
+      | criterium                  | criteriumCode         | tab                  | first              | second              | third              |
       | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} | {{concepts.third}} |

@@ -2,7 +2,7 @@
 # tabs and empty state, and that the tabs stay in sync with each other.
 # Selection/removal logic itself is in the sibling -select / -remove files.
 # All data (criterium, code, tab, search terms, concepts, count) is in Examples cells.
-@area:shared-filter
+@area:feasibility-query
 Feature: Attribute filter (concept) - UI state
 
   Background:
@@ -10,6 +10,7 @@ Feature: Attribute filter (concept) - UI state
     And I am on the "Feasibility Search" page
     And I set the language to the configured language
 
+  @component:criterion-editor @behavior:sync-ui @filter:attribute-filter @type:concept
   Scenario Outline: A selected concept is checked in the search results, others are not
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -20,9 +21,10 @@ Feature: Attribute filter (concept) - UI state
     And the concept "<second>" is not checked in the search results
 
     Examples:
-      | criterium      | criteriumCode | tab        | term       | first | second |
-      | Cause of death | 79378-6       | ICD-10-WHO | pneumoniae | J13   | J15.0  |
+      | criterium                  | criteriumCode         | tab                  | term                        | first              | second              |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} | {{concepts.first}} | {{concepts.second}} |
 
+  @component:criterion-editor @behavior:sync-ui @filter:attribute-filter @type:concept
   Scenario Outline: Removing a concept in the Selected tab unchecks it in the search results
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -38,9 +40,10 @@ Feature: Attribute filter (concept) - UI state
     And the concept "<second>" is checked in the search results
 
     Examples:
-      | criterium      | criteriumCode | tab        | term       | first | second |
-      | Cause of death | 79378-6       | ICD-10-WHO | pneumoniae | J13   | J15.0  |
+      | criterium                  | criteriumCode         | tab                  | term                        | first              | second              |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} | {{concepts.first}} | {{concepts.second}} |
 
+  @component:criterion-editor @behavior:sync-ui @filter:attribute-filter @type:concept
   Scenario Outline: Existing selections are pre-checked when reopening the editor
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -56,9 +59,10 @@ Feature: Attribute filter (concept) - UI state
     And the concept "<second>" is checked in the search results
 
     Examples:
-      | criterium      | criteriumCode | tab        | term       | first | second |
-      | Cause of death | 79378-6       | ICD-10-WHO | pneumoniae | J13   | J15.0  |
+      | criterium                  | criteriumCode         | tab                  | term                        | first              | second              |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} | {{concepts.first}} | {{concepts.second}} |
 
+  @component:criterion-editor @behavior:sync-ui @filter:attribute-filter @type:concept
   Scenario Outline: A new search keeps the checked state of already selected concepts
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -70,9 +74,10 @@ Feature: Attribute filter (concept) - UI state
     Then the concept "<first>" is checked in the search results
 
     Examples:
-      | criterium      | criteriumCode | tab        | term       | otherTerm | first |
-      | Cause of death | 79378-6       | ICD-10-WHO | pneumoniae | Sepsis    | J13   |
+      | criterium                  | criteriumCode         | tab                  | term                        | otherTerm | first              |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} | Sepsis    | {{concepts.first}} |
 
+  @component:criterion-editor @behavior:sync-ui @filter:attribute-filter @type:concept
   Scenario Outline: The Selected tab is disabled while nothing is selected
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -80,9 +85,10 @@ Feature: Attribute filter (concept) - UI state
     Then the concept filter tab "Selected Concepts" is disabled
 
     Examples:
-      | criterium      | criteriumCode | tab        |
-      | Cause of death | 79378-6       | ICD-10-WHO |
+      | criterium                  | criteriumCode         | tab                  |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} |
 
+  @component:criterion-editor @behavior:sync-ui @filter:attribute-filter @type:concept
   Scenario Outline: The Selected tab label shows the number of selected concepts
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -93,9 +99,10 @@ Feature: Attribute filter (concept) - UI state
     Then the concept filter tab "Selected Concepts" shows the count <count>
 
     Examples:
-      | criterium      | criteriumCode | tab        | first | second | count |
-      | Cause of death | 79378-6       | ICD-10-WHO | J13   | J15.0  | 2     |
+      | criterium                  | criteriumCode         | tab                  | first              | second              | count |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} | 2     |
 
+  @component:criterion-editor @behavior:scroll @filter:attribute-filter @type:concept
   Scenario Outline: The search table scrolls inside the editor instead of overflowing
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
@@ -104,5 +111,5 @@ Feature: Attribute filter (concept) - UI state
     Then the concept results table is scrollable within the editor
 
     Examples:
-      | criterium      | criteriumCode | tab        | term       |
-      | Cause of death | 79378-6       | ICD-10-WHO | pneumoniae |
+      | criterium                  | criteriumCode         | tab                  | term                        |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} |
