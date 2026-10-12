@@ -2,6 +2,7 @@
 @cross-cutting
 Feature: Lost session
 
+  @component:session @behavior:redirect-to-login
   Scenario Outline: A signed-out user is sent to the sign-in page
     Given I am logged in as a user
     When my session is lost
@@ -9,7 +10,7 @@ Feature: Lost session
     Then I am asked to sign in
 
     Examples:
-      | page                          |
-      | data-query/cohort-definition  |
-      | feasibility-query/search      |
-      | saved-queries                 |
+      | page                         |
+      | data-query/cohort-definition |
+      | feasibility-query/search     |
+      | saved-queries                |

@@ -10,39 +10,42 @@ Feature: Upload - invalid files
     And I am on the "Data Query - Cohort Definition" page
     And I set the language to English
     And I upload the file "Single_Inclusion_Criteria_With_Patient"
-    And I should see "18-Oxydase-Mangel" in the cohort definition editor
+    And I should see "<kept>" in the cohort definition editor
 
+  @component:upload @behavior:reject-invalid-file
   Scenario Outline: A file that is not JSON is reported and the cohort is kept
     When I upload a file named "<fileName>" containing "<contents>"
     Then an error dialog is shown
-    And the error dialog shows "is not valid JSON"
+    And the error dialog shows "<message>"
     When I close the error dialog
-    Then I should see "18-Oxydase-Mangel" in the cohort definition editor
+    Then I should see "<kept>" in the cohort definition editor
 
     Examples:
-      | fileName      | contents         |
-      | not-json.json | this is not json |
+      | fileName      | contents         | message           | kept              |
+      | not-json.json | this is not json | is not valid JSON | 18-Oxydase-Mangel |
 
+  @component:upload @behavior:reject-invalid-file
   Scenario Outline: A JSON file without a data definition is rejected by validation
     When I upload a file named "<fileName>" containing '<contents>'
     Then the error log dialog is open
     And the error log shows "<message>"
     When I close the error log dialog
-    Then I should see "18-Oxydase-Mangel" in the cohort definition editor
+    Then I should see "<kept>" in the cohort definition editor
 
     Examples:
-      | fileName          | contents                | message                                        |
-      | empty-object.json | {}                      | required property 'cohortDefinition' not found |
-      | unknown-prop.json | {"inclusionCriteria":1} | is not defined in the schema                   |
+      | fileName          | contents                | message                                        | kept              |
+      | empty-object.json | {}                      | required property 'cohortDefinition' not found | 18-Oxydase-Mangel |
+      | unknown-prop.json | {"inclusionCriteria":1} | is not defined in the schema                   | 18-Oxydase-Mangel |
 
   # DEFECT: the dialog for a non-JSON file is titled `GENERIC_ERROR` and shows the raw
   # SyntaxError text. Expected: a translated title and a sentence naming the file.
+  @component:upload @behavior:reject-invalid-file
   @pending
   Scenario Outline: A file that is not JSON gets a readable message
     When I upload a file named "<fileName>" containing "<contents>"
     Then an error dialog is shown
-    And the error dialog does not show "GENERIC_ERROR"
+    And the error dialog does not show "<text>"
 
     Examples:
-      | fileName      | contents         |
-      | not-json.json | this is not json |
+      | fileName      | contents         | text          |
+      | not-json.json | this is not json | GENERIC_ERROR |
