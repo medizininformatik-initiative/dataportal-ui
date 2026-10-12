@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 
 /**
  * Generic Inclusion/Exclusion list existence checks — parametrized by list
@@ -26,3 +26,7 @@ defineStep(
     cy.get(`#${list}`).should('not.contain', criterium)
   }
 )
+// Each criterium in a list is one `.cdk-drag` (the same handle the drag step grabs).
+defineStep('the {string} list should contain {int} criteria', (list: string, count: number) => {
+  cy.get(`#${list} .cdk-drag`).should('have.length', count)
+})
