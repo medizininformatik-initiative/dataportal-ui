@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numCheckbox } from '../component-objects/NumCheckbox'
 import { t } from '../i18n'
 

@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 
 export class DownloadFile {
   public downloadFile(fileName: string): void {

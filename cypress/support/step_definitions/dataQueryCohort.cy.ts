@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 
 // Shared by data-query-cohort.feature and saved-queries.feature — did not
 // exist anywhere before this pass (grepped every defineStep in the codebase).

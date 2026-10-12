@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { t } from '../i18n'
 
 /** Steps for what a search shows when it finds nothing, or answers slowly. */

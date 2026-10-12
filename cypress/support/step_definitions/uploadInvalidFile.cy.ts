@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 
 /**
  * Uploads in-memory content through the real upload input, so a malformed or schema-violating

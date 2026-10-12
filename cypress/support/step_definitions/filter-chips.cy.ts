@@ -1,4 +1,4 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numFilterChips } from '../component-objects/NumFilterChips'
 
 defineStep(
