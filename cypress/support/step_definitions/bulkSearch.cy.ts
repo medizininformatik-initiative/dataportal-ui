@@ -1,5 +1,6 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numBulkSearch } from '../component-objects/NumBulkSearch'
+import { t } from '../i18n'
 
 defineStep('I enter the bulk search codes {string}', (codes: string) => {
   numBulkSearch.enterCodes(codes)
@@ -27,4 +28,10 @@ defineStep('the bulk search should not have found {int} codes', (count: number) 
 })
 defineStep('the bulk search result should list the code {string}', (code: string) => {
   numBulkSearch.shouldListCode(code)
+})
+defineStep('I add the bulk search result as one criterium', () => {
+  cy.contains('button', t('FEASIBILITY.BULK_SEARCH.ACTION_BAR.ADD_TO_STAGE')).click()
+})
+defineStep('I view the cohort selection', () => {
+  cy.contains('button', t('FEASIBILITY.BULK_SEARCH.ACTION_BAR.VIEW_STAGE')).click()
 })
