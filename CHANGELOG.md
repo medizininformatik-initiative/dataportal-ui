@@ -1,5 +1,16 @@
 # Changelog
 
+## v7.3.2 (2026-10-09)
+
+### Fixed
+* Fixed an issue preventing `onlyIfReferenced` from being set [#641](https://github.com/medizininformatik-initiative/dataportal-ui/issues/641)
+* Fixed wrong code selection in the feature selection filter when ICD10 codes and Alpha-IDs share the same code [#626](https://github.com/medizininformatik-initiative/dataportal-ui/issues/626)
+
+### Changed
+* Cleaned up the spacing system in `styles.scss` [#639](https://github.com/medizininformatik-initiative/dataportal-ui/issues/639)
+
+
+
 ## v7.3.1 (2026-09-18)
 
 ### Fixed

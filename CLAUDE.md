@@ -49,46 +49,9 @@ If a rule and a request conflict, follow the request and say which rule you brok
 
 ## Architecture
 
-**Bootstrap & startup sequence.** The app is bootstrapped via `bootstrapApplication` in
-`src/main.ts` using `appConfig` (`src/app/app.config.ts`) — there is no root `AppModule`
-(`app.module.ts` is a stub left only as a pointer to `app.config.ts`). Before the UI is usable,
-`CoreInitService.init()` (`src/app/CoreInit.service.ts`) runs as an app initializer and chains,
-in order: load runtime app config → init OAuth → load dataportal settings → init user profile →
-backend health check → fetch UI profiles → load actuator info → init terminology systems → init
-patient profile → init providers. Each step's failure surfaces via `catchError`/`throwError`, so
-when startup is broken, check this file first to see which stage failed.
-
-**Runtime config, not build-time env vars.** `src/environments/environment*.ts` only carries
-`name`/`production` flags. Actual config (auth issuer/realm/client id, backend base URL, legal
-text, theme) is fetched at runtime from `src/assets/config/config.<env>.json` by
-`AppConfigService` and stored in `AppConfigProviderService`
-(`src/app/core/settings/AppConfigProvider.service.ts`). `config.deploy.json` uses
-`#{placeholder}` tokens substituted during deployment (e.g. by octopus/CI variable replacement) —
-don't treat those as literal values. A second, parallel settings pipeline
-(`DataportalConfigService` / `DataportalConfigProviderService`) loads portal-specific settings
-from the backend after the app config is ready. Both provider services are "set-once" —
-`setAppConfigMap`/`setDataportalConfig` silently no-op (with a console warning) if called after
-data is already present, so config is effectively immutable once loaded.
-
-**Auth.** OAuth2/OIDC via `angular-oauth2-oidc`, configured in
-`src/app/core/auth/AuthConfig.service.ts` from the runtime config above. `AuthTokenInterceptor`
-(`src/app/core/interceptors/AuthToken.interceptor.ts`) attaches the bearer token to outgoing
-requests except URLs matching `excludedUrls` (assets, local auth server). Route access is gated
-by `RouteGuard`/`auth.guard.ts` in `src/app/core/auth/guards/`.
-
-**Routing & feature modules.** Route path segments are centralized as constants in
-`src/app/app-paths.ts` (`BasePaths`, `PathSegments`, `UrlPaths`) — use these instead of hardcoding
-path strings. Top-level routes in `app-routing.module.ts` lazy-load feature areas under
-`src/app/modules/`: `feasibility-query`, `data-selection`, `data-query` (combines the two into a
-cohort definition), `query-editor` (a shared criterion/feature/reference editor reused across the
-query flows, routed as `query-editor/criterion|feature|reference/:id`), and `saved-queries`.
-`shared-filter` holds filter logic shared by the search UIs across those modules.
-
-**Domain model.** Queries are represented as `StructuredQuery`/`CRTDL`
-(`src/app/model/StructuredQuery`, `src/app/model/CRTDL`, `src/app/model/AnnotatedCRTDL`) built up
-from `Criterion` objects. `src/app/service/Criterion/` and `src/app/service/Factory/` contain the
-builders/factories that turn UI selections into these query structures before they're sent to the
-backend or saved.
+Startup sequence (`CoreInitService`), runtime config, auth, routing, domain model: read
+`docs/architecture.md` before touching `src/app/core/`, `CoreInit.service.ts`, config, auth, routing
+or the `StructuredQuery`/`CRTDL` model.
 
 **Non-standard file naming.** Most services, providers, and models use **PascalCase filenames**
 (e.g. `AppConfig.service.ts`, `CriterionMetadata.service.ts`) and PascalCase subfolders under
@@ -152,6 +115,11 @@ Method names start with a verb and don't repeat the service noun: `get…` reads
 code), `translate…`/`to…`/`build…` converts, `validate…` checks, `is…`/`has…`/`can…` returns a
 boolean. Split pure `(input) => output` logic from reactive wiring.
 
+Enforced by `@typescript-eslint/naming-convention` (warn repo-wide, error on files changed by the Stop
+hook): no leading underscore on private/protected members, PascalCase types, camelCase otherwise
+(UPPER_CASE constants, PascalCase enum aliases allowed). Functions returning `boolean` start with
+`is`/`has`/`can` (`no-restricted-syntax`, explicit `: boolean` return types only).
+
 **i18n.** Uses `@ngx-translate/core` with German (`de`) as the default language;
 `DisplayTranslationPipe` (`src/app/shared/pipes/`) is the app-wide translation pipe. Route data
 objects carry `breadcrumb`/`title` as translation keys resolved against `src/assets/i18n/`.
@@ -162,6 +130,22 @@ files. `moduleNameMapper` in `jest.config.js` redirects `environments/*` imports
 config-loading pipeline described above. E2E tests are Cypress + Cucumber
 (`cypress/e2e/**/*.feature` + matching `.ts` step definitions), with shared page objects/helpers
 in `cypress/e2e/Utilities/`.
+
+## Strictness guards
+
+- `tsconfig.json` enables `alwaysStrict`, `noImplicitThis`, `strictBindCallApply`, `useUnknownInCatchVariables`,
+  `noFallthroughCasesInSwitch`. Not yet repo-wide: `strict` (333 errors), `strictTemplates` (24 errors).
+- Ratchet: `tsconfig.strict.json` (`strict`, `noImplicitOverride`, `noImplicitReturns`). The Stop hook runs it
+  on changed `src/` files only, so new code must pass strict even if old code does not.
+- `.eslintrc.json` extends `recommended-type-checked`. New rules (floating promises, `any`, non-null `!`,
+  `eqeqeq`, `no-console`, `complexity`, ...) warn repo-wide and are promoted to errors on changed files by the
+  Stop hook (`PROMOTED_RULES` in `.claude/hooks/stop-check.cjs`).
+- `.dependency-cruiser.cjs` (`npx depcruise src --config .dependency-cruiser.cjs`): services and models must not
+  import components/modules/layout (modals excepted); `shared/types/` imports nothing from the domain.
+
+## Changelog
+
+Format and workflow: `.claude/rules/changelog.md` (loads when `CHANGELOG.md` is touched).
 
 ## Agent skills
 

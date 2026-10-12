@@ -6,12 +6,13 @@ Status: `have` = exists. `todo` = build.
 
 | Event | Matcher | Hook | Does | Status |
 | --- | --- | --- | --- | --- |
-| `Stop` | none | `lint-check.cjs` -> `stop-check.cjs` | Runs eslint, prettier, tsc, jest on changed files. FAIL: block (max 3 per cycle). ERROR or budget used: allow + report. Details: [Stop hook](#stop-hook). | have (1.1, 2, 3.1, 4.2 only) |
-| `PostToolUse` | `Edit\|Write` | `post-edit.cjs` | One pipeline: prettier --write, then eslint and repo rules (routes, data-cy, design tokens, i18n, gherkin). Warns only, never blocks. Details: [post-edit hook](#post-edit-hook). | todo |
-| `UserPromptSubmit` | none | `cycle-reset.cjs` | Set `attempts` = 0 in `dod-<session_id>.json` (new completion cycle starts each user prompt). No output. Uses `readInput()`, `loadState()` / `saveState()`. | todo |
-| `PreToolUse` | `Bash` | `guard-bash.cjs` | Block `git commit --no-verify`, `git push --force`, `git reset --hard` / `git checkout -- .`, `rm -rf`. Exit 2 + reason (`deny()`). Uses `readInput()`. | todo |
-| `PreToolUse` | `Write` | `guard-new-file.cjs` | Deny a new file in `service/`, `model/`, `core/` unless its stem is PascalCase. Details: [guard-new-file hook](#guard-new-file-hook). | todo |
-| `SessionStart` | `startup\|resume` | `session-info.cjs` | One quick Docker + dev server check at start, report only. `--wait` retries on demand. Details: [session-info hook](#session-info-hook). | todo |
+| `Stop` | none | `lint-check.cjs` -> `stop-check.cjs` | Runs eslint, prettier, tsc, jest on changed files. FAIL: block (max 3 per cycle). ERROR or budget used: allow + report. Details: [Stop hook](#stop-hook). | have |
+| `PostToolUse` | `Edit\|Write` | `post-edit.cjs` | One pipeline: prettier --write, then eslint and repo rules (routes, data-cy, design tokens, i18n, gherkin). Warns only, never blocks. Details: [post-edit hook](#post-edit-hook). | have |
+| `PostToolUse` | `Edit\|Write` | `lib/rules/file-size.cjs` (rule inside `post-edit.cjs`) | Size and complexity limits for components, services, html, only for files with a git diff. Soft band warns, hard limit is an ESLint error that the Stop hook blocks on. Details: [post-edit hook](#post-edit-hook) 5.8. | have |
+| `UserPromptSubmit` | none | `cycle-reset.cjs` | Set `attempts` = 0 in `dod-<session_id>.json` (new completion cycle starts each user prompt). No output. Uses `readInput()`, `loadState()` / `saveState()`. | have |
+| `PreToolUse` | `Bash` | `guard-bash.cjs` | Block `git commit --no-verify`, `git push --force`, `git reset --hard` / `git checkout -- .`, `rm -rf`. Exit 2 + reason (`deny()`). Uses `readInput()`. | have |
+| `PreToolUse` | `Write` | `guard-new-file.cjs` | Deny a new file in `service/`, `model/`, `core/` unless its stem is PascalCase. Details: [guard-new-file hook](#guard-new-file-hook). | have |
+| `SessionStart` | `startup\|resume` | `session-info.cjs` | One quick Docker + dev server check at start, report only. `--wait` retries on demand. Details: [session-info hook](#session-info-hook). | have |
 
 ## Hook details
 
@@ -25,7 +26,7 @@ How to read a step:
 
 ### Stop hook
 
-Event `Stop`, no matcher. File `stop-check.cjs` (replaces `lint-check.cjs`). Outcomes: see "Stop outcomes". Status: have (1.1, 2, 3.1, 4.2 only).
+Event `Stop`, no matcher. File `stop-check.cjs` (replaces `lint-check.cjs`). Outcomes: see "Stop outcomes". Status: have.
 
 **1. Input and state**
 
@@ -113,7 +114,7 @@ Event `Stop`, no matcher. File `stop-check.cjs` (replaces `lint-check.cjs`). Out
 - **4.2 eslint**
   - **What:** Lint the changed `.ts` and `.html` files, errors only.
   - **Why:** About 600 old warnings exist, they must not block. Warnings on new code are reported by `post-edit` (5.1 there).
-  - **How:** `options` = `['--quiet']`. `files` = `eslintFiles` = entries of `changedFiles` ending `.ts` or `.html` (`.eslintrc.json` has rules for `*.ts` and `*.html` only, a `.scss` path would fail). Skip if empty.
+  - **How:** `options` = `['--quiet', '--format', 'json']` (JSON gives `ruleId` for the hints of 7.8; the exit code still decides PASS/FAIL in 6). `files` = `eslintFiles` = entries of `changedFiles` ending `.ts` or `.html` (`.eslintrc.json` has rules for `*.ts` and `*.html` only, a `.scss` path would fail). Skip if empty. The size rules of post-edit 5.8 (`max-lines`, `max-lines-per-function`, `max-depth`) are set to `error` with the hard value, so `--quiet` still reports them and the Stop hook blocks on them.
 - **4.3 prettier**
   - **What:** Check the formatting of all changed files.
   - **Why:** `post-edit` formats only after the `Edit` and `Write` tools. A file changed through Bash (`sed -i`, `npm run lint:fix`) is never formatted by it. This check finds those files, because the list comes from `git diff`, not from the tool that changed them.
@@ -200,6 +201,18 @@ Event `Stop`, no matcher. File `stop-check.cjs` (replaces `lint-check.cjs`). Out
   - **Why:** Silence must always mean "all good".
   - **How:** Allowed: 3.1 (no relevant files), 3.2 (fingerprint equals `lastPassHash`), or 8. Every other `exit 0` prints a `systemMessage`: budget exhausted (7.4), ERROR only (7.6), or a tool crashed (`lib/output.cjs` `allow()`).
 
+- **7.8 Add fix hints to FAIL output**
+  - **What:** Append a one-sentence fix hint under each ESLint error, plus one scope line per block.
+  - **Why:** The message names the problem, not the repo's way to fix it. Without a hint the LLM may squeeze lines or rewrite old code.
+  - **How:**
+    - 7.8.1 Run eslint with `--format json` (4.2 `options`). Each message then has a `ruleId` field, no text parsing needed.
+    - 7.8.2 Map `ruleId` to hint (`lib/hints.cjs` `hintsFor()`, table `RULE_HINTS`). Unknown rule: no hint.
+    - 7.8.3 Print each hint once per rule, not once per error.
+    - 7.8.4 Add the scope line once at the end of the reason: "Fix only violations on lines you changed. Do not touch old warnings or refactor old code."
+    - 7.8.5 Hints go first in the tool's output, so the cap of 7.5 cannot cut them.
+    - 7.8.6 No hint for `no-restricted-syntax`: its message in `.eslintrc.json` already names the fix. Stop uses `--quiet`, so warning rules (`jsdoc/*`, `typedef`) only show up through `post-edit` 5.1; the hint table serves both hooks.
+    - 7.8.7 Example hints: `jsdoc/require-param-type` -> "Write @param {Type} name, no description."; `jsdoc/require-returns` -> "Add @returns {Type} (omit for void)."; `max-lines` -> "File too long. Extract a module function or sub-component, do not just shorten lines."; `max-depth` -> "Too nested. Use early return or extract the inner block."
+
 **8. All pass**
 
 > **Goal:** Remember the verified state.
@@ -213,7 +226,7 @@ Event `Stop`, no matcher. File `stop-check.cjs` (replaces `lint-check.cjs`). Out
 
 ### post-edit hook
 
-Event `PostToolUse`, matcher `Edit|Write`. File `post-edit.cjs`. Status: todo.
+Event `PostToolUse`, matcher `Edit|Write`. File `post-edit.cjs`. Status: have.
 
 ONE script, one pipeline. Two hooks on the same event would run in parallel, and format and lint must run in order.
 
@@ -315,6 +328,28 @@ ONE script, one pipeline. Two hooks on the same event would run in parallel, and
   - **How:** Type `feature`:
     - 5.7.1 Needs an `@area:<module>` or `@cross-cutting` tag.
     - 5.7.2 Warn if a `.ts` file in the same folder has a near-match basename.
+- **5.8 File size and complexity**
+  - **What:** Check size and complexity limits of components, services and html templates.
+  - **Why:** Big files and long functions mean too many responsibilities. Today: components avg 120 lines (max 266), services avg 138 (max 307), html avg 59 (max 252).
+  - **How:** Types `ts` and `html`, only for files with a git diff (the edited file here; `getChangedFiles(base)` in the Stop hook). Untouched old files are never flagged. Red line ±10: up to red line −10 fine, red line −10 to +10 soft (warning from `file-size.cjs`), above red line +10 hard (ESLint error, see Stop 4.2, the Stop hook blocks). Metrics:
+
+    | Metric | Applies to | Red line | Soft | Hard (error) | Implemented by |
+    | --- | --- | --- | --- | --- | --- |
+    | Lines per file | `*.component.ts` | 200 | 190 to 210 | over 210 | ESLint `max-lines` + `file-size.cjs` |
+    | Lines per file | `*.service.ts` | 200 | 190 to 210 | over 210 | ESLint `max-lines` + `file-size.cjs` |
+    | Lines per file | `*.component.html` | 50 | 40 to 60 | over 60 | `file-size.cjs` (ESLint html has no line rule) |
+    | Lines per function/method | all `.ts` | 20 | 18 to 22 | over 22 | ESLint `max-lines-per-function` |
+    | Nesting depth of logic | all `.ts` | 3 | n/a | over 3 | ESLint `max-depth` |
+    | Parameters per function/method | all `.ts` | 3 | n/a | over 3 | ESLint `max-params` |
+    | Constructor / `inject()` dependencies | services only (components excluded) | 3 | n/a | over 3 | custom, `file-size.cjs` |
+    | Public methods | services only (assumption) | 10 | 9 to 11 | over 11 | custom, `file-size.cjs` |
+    | Template nesting depth | `.html` | 5 | n/a | over 5 | custom, `file-size.cjs` |
+    | Inline `template:` / `styles:` | `*.component.ts` | 5 lines (assumption) | n/a | over 5 | custom, `file-size.cjs` |
+
+    - 5.8.1 Count total file lines. Rounding: soft band bounds are red line ±10 for file lines, ±10% for the other metrics with a band.
+    - 5.8.2 ESLint rules go in `.eslintrc.json` with the hard value (red line +10 for file lines) at level `error`. The soft band is reported only by `file-size.cjs`.
+    - 5.8.3 Depth, parameter and dependency-count metrics have no band: over the red line is hard.
+    - 5.8.4 Hint for `max-params` (7.8): "Group the parameters into one typed object, or split the function."
 
 **6. Aggregate**
 
@@ -348,7 +383,7 @@ ONE script, one pipeline. Two hooks on the same event would run in parallel, and
 
 ### guard-new-file hook
 
-Event `PreToolUse`, matcher `Write`. File `guard-new-file.cjs`. Status: todo.
+Event `PreToolUse`, matcher `Write`. File `guard-new-file.cjs`. Status: have.
 
 **1. Input**
 
@@ -472,7 +507,7 @@ Event `PreToolUse`, matcher `Write`. File `guard-new-file.cjs`. Status: todo.
 
 ### session-info hook
 
-Event `SessionStart`, matcher `startup|resume`. File `session-info.cjs`. Status: todo.
+Event `SessionStart`, matcher `startup|resume`. File `session-info.cjs`. Status: have.
 
 **1. Quick check (no retry, no background)**
 
@@ -622,10 +657,12 @@ One entry file per hook, shared code in `lib/`, one module per `post-edit` rule.
         ├── git-changes.cjs   changed files vs base, added lines (stop-check, post-edit)
         ├── run-command.cjs   spawnSync(toolPath, [...options, ...files]), timeout (stop-check, post-edit, session-info)
         ├── diagnostics.cjs   PASS/FAIL/ERROR classify, per-tool truncation, report lines (stop-check, post-edit)
+        ├── hints.cjs         eslint ruleId -> one-sentence fix hint (stop-check, post-edit)
         ├── state.cjs         dod-<session_id>.json read/write (stop-check, cycle-reset)
         ├── output.cjs        print JSON + exit code: allow, addContext, blockStop, notify, deny (all)
         └── rules/            each exports check({ relPath, type, content, addedLines }) -> string[] warnings
             ├── design-tokens.cjs
+            ├── file-size.cjs   (soft band warnings, custom metrics)
             ├── i18n.cjs        (+ i18n-baseline.json)
             ├── routes.cjs
             ├── data-cy.cjs
@@ -656,6 +693,7 @@ Repeated work lives once in `lib/`. Hooks `require` these functions (same proces
 | `lib/diagnostics.cjs` | `classify(tool, result)` | -> `'PASS'`, `'FAIL'` or `'ERROR'` (rules of Stop 6) | stop-check |
 | `lib/diagnostics.cjs` | `reportLine(label, status, detail)` | -> `ESLint: FAIL (2 errors)` | stop-check |
 | `lib/diagnostics.cjs` | `trimOutput(text, maxChars = 3000)` | -> first `maxChars` characters | stop-check, post-edit |
+| `lib/hints.cjs` | `hintsFor(eslintJson)` | parsed `eslint --format json` -> one `ruleId: hint` line per distinct known rule | stop-check, post-edit |
 | `lib/state.cjs` | `loadState(sessionId)` and `saveState(sessionId, state)` | file `dod-<session_id>.json`, defaults per Stop 1.3 | stop-check, cycle-reset |
 | `lib/state.cjs` | `fingerprint(files)` | -> hash of the file list + file contents | stop-check |
 | `lib/output.cjs` | `allow()` | silent `exit 0` | all |
@@ -668,9 +706,20 @@ Rule modules in `lib/rules/*.cjs` have one interface: `check({ relPath, type, co
 
 ## Wiring
 
-All hooks go in `.claude/settings.local.json` (personal, not committed) under `hooks`. Command: `node "$CLAUDE_PROJECT_DIR/.claude/hooks/<name>.cjs"`.
+All hooks go in `.claude/settings.local.json` (personal, not committed; wired). Stop timeout 900 s (jest), PostToolUse 200 s under `hooks`. Command: `node "$CLAUDE_PROJECT_DIR/.claude/hooks/<name>.cjs"`.
+
+## Implementation notes
+
+- Stop also runs, beyond the plan above: strict tsc on changed `src/` files (`tsconfig.strict.json`, ratchet), `depcruise` (`.dependency-cruiser.cjs`), and promotes lint rules to errors via `--rule` (`PROMOTED_RULES` in `stop-check.cjs`). Hard size limits: ESLint `max-lines-per-function` (hard 22 via `--rule`), `max-depth`, `max-params`; file/template/dependency limits via `lib/rules/file-size.cjs` `checkHard()` (ESLint `max-lines` is not used: `--rule` cannot target only component/service files).
+- `.eslintrc.json` keeps the size rules at `warn` with the soft value (18 lines/function, depth 3, params 3). Spec files are exempt.
+- Deviation: `post-edit` route check looks at added lines only (like data-cy, tokens).
+- Tests: `node --test .claude/hooks/test/hooks.test.cjs`.
 
 ## Open
+
+- ASSUMED (size rule, post-edit 5.8): inline `template:`/`styles:` limit of 5 lines; public-method cap applies to services only. Confirm.
+
+- OPEN (size rule): ESLint cannot limit itself to files with a git diff. A full `npm run lint` will report every old file over the hard limit as error. Scope comes from running eslint on changed files only (Stop hook, lint-staged). Options if the full run hurts: `overrides` that list legacy files, or keep the hard value at `warn` and let the hook escalate.
 
 - DECIDED: `post-edit` does not persist info (edited file, type, checks) for the Stop hook. Stop gets its file list from `git diff` (also covers Bash edits) and has its own fingerprint cache (3.2). Shared state between the two hooks would add a race for little gain.
 
