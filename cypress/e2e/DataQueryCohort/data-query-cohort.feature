@@ -5,15 +5,17 @@ Feature: Data Query Cohort
         And I am on the "Data Query - Cohort Definition" page
         And I set the language to English
 
+    @component:cohort-definition @behavior:upload
     Scenario Outline: User uploads file "<fileName>"
         Given I upload the file "<fileName>"
         Then I download the file "<fileName>"
 
 
         Examples:
-            | fileName                                 |
+            | fileName                               |
             | Single_Inclusion_Criteria_With_Patient |
 
+    @component:cohort-definition @behavior:advance
     Scenario Outline: Defining a cohort and advancing to the Data Selection step
         Given I am on the "Feasibility Search" page
         And I set the language to English
