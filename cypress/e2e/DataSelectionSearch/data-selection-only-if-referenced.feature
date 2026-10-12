@@ -10,6 +10,7 @@ Feature: Data Selection - Only if referenced
     And I am on the "Data Selection Search" page
     And I set the language to English
 
+  @component:data-selection-editor @behavior:toggle-only-if-referenced
   Scenario Outline: A referenced profile offers the "Only if referenced" option and it can be switched off and on
     Given I type "<feature>" in the search input field
     And I select the checkbox in the row containing "<feature>"
@@ -33,5 +34,5 @@ Feature: Data Selection - Only if referenced
     Then the "Only if referenced" option of the data selection box "<reference>" is enabled
 
     Examples:
-      | feature                   | reference |
-      | Medication administration | Procedure |
+      | feature                   | reference                   |
+      | {{dataSelection.feature}} | {{dataSelection.reference}} |
