@@ -5,7 +5,7 @@ ontology **context**, and how to re-verify or replace one. For *why* this
 matters (translation fallback behavior, ontology-reload instability, and other
 mechanisms), see `cypress/CLAUDE.md` — this file is just the current reference
 table and the verification commands. The values themselves live in
-`support/test-data/concepts.json` (used as `{{group.key}}`, see `TESTING.md`); this table only
+`cypress/test-data/*.json` (`criteria`, `bulk-search`, `data-selection`, `files`, `pages`, `ui-labels`) (used as `{{group.key}}`, see `TESTING.md`); this table only
 explains why each one was picked.
 
 ## Current criteria in use
@@ -169,7 +169,7 @@ without touching a step definition. Verified against the local backend with
 
 | Data | Value | Used in | Why this value |
 |---|---|---|---|
-| `Pneumonia` | SNOMED `233604007`, context `Diagnose` | `cohort-edit`, `cohort-exclusion`, `data-query-cohort` (via `{{pneumonia.code}}` in `test-data/concepts.json`) | A name search is outranked by "Klebsiella pneumoniae ..." LOINC rows, so it is added by code. `display.en` is empty, the UI shows the original `Pneumonia`. |
+| `Pneumonia` | SNOMED `233604007`, context `Diagnose` | `cohort-edit`, `cohort-exclusion`, `data-query-cohort` (via `{{pneumonia.code}}` in `cypress/test-data/criteria.json`) | A name search is outranked by "Klebsiella pneumoniae ..." LOINC rows, so it is added by code. `display.en` is empty, the UI shows the original `Pneumonia`. |
 | `Appendectomy` | SNOMED `80146002` (4 contexts, e.g. `Procedure`) | `cohort-edit` (via `{{appendectomy.code}}`) | Same rows as the by-name search. |
 | `Age` | LOINC `30525-0` | `cohort-search`, `cohort-result` | A name search for "Age" is outranked by unrelated "...age..." matches. |
 | Bulk search codes | `E10`, `E11`, `E66`, terminology `ICD-10-GM`, context `Diagnose`; `ZZZ99` does not exist | `BulkSearch/bulk-search.feature` | ICD-10-GM category codes. The search button needs the codes AND both filters. |
