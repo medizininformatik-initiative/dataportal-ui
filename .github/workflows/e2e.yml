@@ -11,7 +11,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     env:
-      ONTOLOGY_GIT_TAG: v3.9.0-experimental.0 # Or dynamically set it
+      ONTOLOGY_GIT_TAG: v5.0.1 # Or dynamically set it
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -72,7 +72,7 @@ jobs:
         with:
           # Disable running of tests within install job
           runTests: false
-          build: npm run build
+          build: npm run build -- --configuration=deploy
 
       - name: Save build folder
         uses: actions/upload-artifact@v4
