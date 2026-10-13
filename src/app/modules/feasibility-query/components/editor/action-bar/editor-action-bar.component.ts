@@ -27,10 +27,6 @@ export class EditorActionBarComponent implements OnInit {
     this.navigation.navigateBackToFeasibilitySearch()
   }
 
-  navigateToBulkCriteriaSearch(): void {
-    this.navigation.navigateToFeasibilityQueryBulkSearch()
-  }
-
   sendRequest(): void {
     this.navigation.navigateToFeasibilityQueryResult()
   }

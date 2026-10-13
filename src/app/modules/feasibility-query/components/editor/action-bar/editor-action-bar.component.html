@@ -1,15 +1,5 @@
 <num-action-bar>
   <num-button
-    icon="arrow-up"
-    type="green"
-    class="bulk-search-button"
-    (click)="navigateToBulkCriteriaSearch()"
-    [matTooltip]="'FEASIBILITY.EDITOR.ACTION_BAR.BULK_SEARCH_TOOLTIP' | translate"
-  >
-    {{ 'FEASIBILITY.EDITOR.ACTION_BAR.BULK_SEARCH' | translate }}
-  </num-button>
-
-  <num-button
     type="green"
     [isDisabled]="!isFeasibilityQueryValid()"
     (click)="sendRequest()"
