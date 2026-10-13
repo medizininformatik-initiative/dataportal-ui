@@ -6,7 +6,7 @@ Feature: Cohort definition - empty state
 
   Background:
     Given I am logged in as a user
-    And I am on the "Data Query - Cohort Definition" page
+    And I am on the "{{pages.dataQueryCohortDefinition}}" page
     And I set the language to English
 
   @component:cohort-definition @behavior:show-empty-state
@@ -19,8 +19,8 @@ Feature: Cohort definition - empty state
     And the button "<save>" should be disabled
 
     Examples:
-      | feasibility       | save        |
-      | Feasibility Query | Save cohort |
+      | feasibility                                | save                  |
+      | {{cohortDefinitionEmpty.feasibilityQuery}} | {{labels.saveCohort}} |
 
   @component:cohort-definition @behavior:create-cohort
   Scenario Outline: New cohort opens the criteria search
@@ -28,5 +28,5 @@ Feature: Cohort definition - empty state
     Then I should arrive on the "<page>" page
 
     Examples:
-      | newCohort  | page               |
-      | New Cohort | Feasibility Search |
+      | newCohort                           | page                        |
+      | {{cohortDefinitionEmpty.newCohort}} | {{pages.feasibilitySearch}} |

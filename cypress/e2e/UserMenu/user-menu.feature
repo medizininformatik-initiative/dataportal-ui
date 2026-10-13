@@ -6,7 +6,7 @@ Feature: User menu
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to English
 
   @component:user-menu @behavior:open-menu
@@ -17,8 +17,8 @@ Feature: User menu
     And the user menu should offer "<logout>"
 
     Examples:
-      | about            | log | logout  |
-      | About the Portal | Log | Log Out |
+      | about                       | log              | logout              |
+      | {{userMenu.aboutThePortal}} | {{userMenu.log}} | {{userMenu.logOut}} |
 
   @component:user-menu @behavior:open-log
   Scenario Outline: The log entry is disabled while there are no errors to show
@@ -26,8 +26,8 @@ Feature: User menu
     Then the user menu item "<log>" should be disabled
 
     Examples:
-      | log |
-      | Log |
+      | log              |
+      | {{userMenu.log}} |
 
   @component:user-menu @behavior:open-about
   Scenario Outline: The about entry opens the about dialog
@@ -36,8 +36,8 @@ Feature: User menu
     Then I should see the about dialog
 
     Examples:
-      | about            |
-      | About the Portal |
+      | about                       |
+      | {{userMenu.aboutThePortal}} |
 
   @component:user-menu @behavior:logout
   Scenario Outline: Logging out returns to the sign-in page
@@ -46,5 +46,5 @@ Feature: User menu
     Then I should be on the sign-in page
 
     Examples:
-      | logout  |
-      | Log Out |
+      | logout              |
+      | {{userMenu.logOut}} |

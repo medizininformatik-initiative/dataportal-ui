@@ -8,7 +8,7 @@ Feature: Search details panel
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to English
 
   @component:criteria-search @behavior:open
@@ -45,7 +45,7 @@ Feature: Search details panel
     When I click on the row containing "<criterium>"
     And I open the details panel tab "<childTab>"
     And I click on the related criterium "<child>" in the details panel
-    And I open the details panel tab "Details"
+    And I open the details panel tab "{{labels.details}}"
     Then the details panel should show the title "<child>"
 
     Examples:
@@ -58,7 +58,7 @@ Feature: Search details panel
     When I click on the row containing "<criterium>"
     And I open the details panel tab "<parentTab>"
     And I open the menu of the related criterium "<parent>"
-    And I click on the menu item "Use as search term"
+    And I click on the menu item "{{labels.useAsSearchTerm}}"
     Then I should see a row containing "<parent>"
     And the details panel should be open
 

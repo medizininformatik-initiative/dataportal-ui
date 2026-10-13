@@ -7,7 +7,7 @@ Feature: Attribute filter (concept) - UI state
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to the configured language
 
   @component:criterion-editor @behavior:sync-ui @filter:attribute-filter @type:concept
@@ -32,9 +32,9 @@ Feature: Attribute filter (concept) - UI state
     And I have selected the concepts:
       | <first>  |
       | <second> |
-    When I open the concept filter tab "Selected Concepts"
+    When I open the concept filter tab "{{labels.selectedConcepts}}"
     And I remove the concept "<first>" from the selected concepts list
-    And I open the concept filter tab "Single Search"
+    And I open the concept filter tab "{{labels.singleSearch}}"
     And I search for the concept "<term>"
     Then the concept "<first>" is not checked in the search results
     And the concept "<second>" is checked in the search results
@@ -51,7 +51,7 @@ Feature: Attribute filter (concept) - UI state
     And I have selected the concepts:
       | <first>  |
       | <second> |
-    When I click on the button "Close"
+    When I click on the button "{{labels.close}}"
     And I open the editor of the added criterium
     And I open the editor tab "<tab>"
     And I search for the concept "<term>"
@@ -74,15 +74,15 @@ Feature: Attribute filter (concept) - UI state
     Then the concept "<first>" is checked in the search results
 
     Examples:
-      | criterium                  | criteriumCode         | tab                  | term                        | otherTerm | first              |
-      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} | Sepsis    | {{concepts.first}} |
+      | criterium                  | criteriumCode         | tab                  | term                        | otherTerm                         | first              |
+      | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{causeOfDeath.searchTerm}} | {{attributeConceptUiSync.sepsis}} | {{concepts.first}} |
 
   @component:criterion-editor @behavior:sync-ui @filter:attribute-filter @type:concept
   Scenario Outline: The Selected tab is disabled while nothing is selected
     Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor
     And I open the editor of the added criterium
     And I open the editor tab "<tab>"
-    Then the concept filter tab "Selected Concepts" is disabled
+    Then the concept filter tab "{{labels.selectedConcepts}}" is disabled
 
     Examples:
       | criterium                  | criteriumCode         | tab                  |
@@ -96,7 +96,7 @@ Feature: Attribute filter (concept) - UI state
     And I have selected the concepts:
       | <first>  |
       | <second> |
-    Then the concept filter tab "Selected Concepts" shows the count <count>
+    Then the concept filter tab "{{labels.selectedConcepts}}" shows the count <count>
 
     Examples:
       | criterium                  | criteriumCode         | tab                  | first              | second              | count |

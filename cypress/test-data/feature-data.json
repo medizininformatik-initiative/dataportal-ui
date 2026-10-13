@@ -1,0 +1,99 @@
+{
+  "bulkSearch": {
+    "oneUnknown": "E11, ZZZ99",
+    "newlineSeparated": "E10\nE11\nE66",
+    "spaceSeparated": "E10 E11 E66",
+    "commaSeparated": "E10,E11,E66"
+  },
+  "attributeConceptSameCodeDifferentSystem": {
+    "alphaID": "Alpha-ID",
+    "i26": "I26",
+    "diagnosis": "Diagnosis"
+  },
+  "attributeConceptUiSync": {
+    "sepsis": "Sepsis"
+  },
+  "timeRestriction": {
+    "theStartDateMustBeEarlier": "The start date must be earlier than the end date",
+    "v04042045": "04.04.2045",
+    "before04042045": "TODO",
+    "v01012045": "01.01.2045",
+    "from01012045To04": "From 01.01.2045 to 04.04.2045"
+  },
+  "quantityComparatorUpdateChip": {
+    "v5A": "> 5 a",
+    "greater": "greater",
+    "noFilter": "No filter"
+  },
+  "quantityRangeInvalid": {
+    "noFilterEqualLessThanGreater": "No filter, equal, less than, greater than, between",
+    "theMinimumValueMustBeLess": "The minimum value must be less than the maximum value"
+  },
+  "criteriumActions": {
+    "delete": "Delete",
+    "duplicate": "Duplicate"
+  },
+  "cohortSearch": {
+    "showCohortSelection": "Show cohort selection",
+    "diabetes": "Diabetes"
+  },
+  "cohortResult": {
+    "bla": "Bla"
+  },
+  "cohortDefinitionEmpty": {
+    "newCohort": "New Cohort",
+    "feasibilityQuery": "Feasibility Query"
+  },
+  "dataSelectionSearch": {
+    "note": "Note",
+    "photo": "photo"
+  },
+  "languageSwitch": {
+    "merkmalselektion": "Merkmalselektion",
+    "dataSelection": "Data Selection",
+    "german": "German",
+    "savedDataDefinitions": "Saved data definitions",
+    "cohortSelection": "Cohort Selection",
+    "english": "English",
+    "gespeicherteDatendefinitionen": "Gespeicherte Datendefinitionen",
+    "kohortenselektion": "Kohortenselektion"
+  },
+  "sideNavigation": {
+    "featureSelection": "Feature Selection"
+  },
+  "dataSelectionSearchFailures": {
+    "zzzqqqxxx": "zzzqqqxxx"
+  },
+  "searchFailures": {
+    "pneumonia": "pneumonia",
+    "gENERICERROR": "GENERIC_ERROR",
+    "terminologyEntrySearch": "terminology/entry/search",
+    "objectObject": "[object Object]"
+  },
+  "session": {
+    "savedQueries": "saved-queries",
+    "feasibilityQuerySearch": "feasibility-query/search",
+    "dataQueryCohortDefinition": "data-query/cohort-definition"
+  },
+  "uploadFailures": {
+    "thisIsNotJson": "this is not json",
+    "notJsonJson": "not-json.json",
+    "isNotDefinedInTheSchema": "is not defined in the schema",
+    "inclusionCriteria1": "{\"inclusionCriteria\":1}",
+    "unknownPropJson": "unknown-prop.json",
+    "requiredPropertyCohortDefinitionNotFound": "required property 'cohortDefinition' not found",
+    "value": "{}",
+    "emptyObjectJson": "empty-object.json",
+    "isNotValidJSON": "is not valid JSON"
+  },
+  "savedQueries": {
+    "aTestCohort": "A test cohort",
+    "queryToDelete": "Query To Delete",
+    "testQuery": "Test Query"
+  },
+  "userMenu": {
+    "logOut": "Log Out",
+    "aboutThePortal": "About the Portal",
+    "log": "Log"
+  }
+}

@@ -6,15 +6,15 @@ Feature: CRTDL upload and download roundtrip
 
   Background:
     Given I am logged in as a user
-    And I am on the "Data Query - Cohort Definition" page
+    And I am on the "{{pages.dataQueryCohortDefinition}}" page
     And I set the language to English
 
   @component:crtdl @behavior:roundtrip
   Scenario Outline: A data definition with <case> survives upload and download
     When I upload the generated data definition "<case>"
-    And I am on the "Data Query - Cohort Definition" page
-    And I download the file "roundtrip"
-    Then the downloaded file "roundtrip" matches the generated data definition "<case>"
+    And I am on the "{{pages.dataQueryCohortDefinition}}" page
+    And I download the file "{{files.roundtrip}}"
+    Then the downloaded file "{{files.roundtrip}}" matches the generated data definition "<case>"
 
     Examples: Time restrictions
       | case         |
@@ -58,9 +58,9 @@ Feature: CRTDL upload and download roundtrip
   @component:crtdl @behavior:roundtrip @filter:value-filter @type:quantity-comparator
   Scenario Outline: A quantity-comparator value filter keeps its comparator and unit (<case>)
     When I upload the generated data definition "<case>"
-    And I am on the "Data Query - Cohort Definition" page
-    And I download the file "roundtrip"
-    Then the downloaded file "roundtrip" matches the generated data definition "<case>"
+    And I am on the "{{pages.dataQueryCohortDefinition}}" page
+    And I download the file "{{files.roundtrip}}"
+    Then the downloaded file "{{files.roundtrip}}" matches the generated data definition "<case>"
 
     @doc-collapse
     Examples: Comparators the editor offers
