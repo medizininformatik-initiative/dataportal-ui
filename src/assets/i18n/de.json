@@ -517,9 +517,11 @@
     "DISCLOSURE": "Impressum"
   },
   "NAVIGATION": {
+    "COHORT_DEFINITION": "Kohortendefinition",
     "DASHBOARD": "Startseite",
     "DATAQUERY": "Datendefinition",
     "DATASELECTION": "Merkmalselektion",
+    "DATASELECTION_DEFINITION": "Merkmaldefinition",
     "OPTIONS": "Einstellungen",
     "QUERYBUILDER_EDITOR": "Kohortenselektion",
     "QUERYBUILDER_OVERVIEW": "Gespeicherte Datendefinitionen",

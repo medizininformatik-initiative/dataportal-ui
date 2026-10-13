@@ -124,6 +124,10 @@
       white-space: nowrap;
       flex: 1 1 auto;
       min-width: 0;
+
+      &--child {
+        padding-left: 24px;
+      }
     }
 
     @if ($name == 'fdpg') {

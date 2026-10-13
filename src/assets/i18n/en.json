@@ -528,9 +528,11 @@
     "DISCLOSURE": "Imprint"
   },
   "NAVIGATION": {
+    "COHORT_DEFINITION": "Cohort Definition",
     "DASHBOARD": "Home",
     "DATAQUERY": "Data Definition",
     "DATASELECTION": "Feature Selection",
+    "DATASELECTION_DEFINITION": "Feature Definition",
     "OPTIONS": "Settings",
     "QUERYBUILDER_EDITOR": "Cohort Selection",
     "QUERYBUILDER_OVERVIEW": "Saved data definitions",

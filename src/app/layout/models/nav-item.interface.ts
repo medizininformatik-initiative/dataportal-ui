@@ -5,4 +5,5 @@ export default interface INavItem {
   translationKey: string
   tabNav?: INavItem[]
   id?: string
+  children?: INavItem[]
 }
