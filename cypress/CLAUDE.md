@@ -301,3 +301,33 @@ value) references exactly one value set. The two ICD value sets sit in different
 `http://fhir.de/ValueSet/bfarm/icd-10-gm` in `MII_PR_Onko_Tod`), so one code can never appear in
 two systems in the same table. That is why `attribute-concept-same-code-different-system.feature`
 is `@pending`.
+
+## Time restriction is one shared component: keep its scenarios in step
+
+`num-edit-time-restriction` is used by the criterion editor, the profile (data selection) editor and
+the reference editor. Its scenarios (comparators before/at/after, between, invalid between) must exist
+in every feature that edits one; the rule and steps are in `TESTING.md`. The datepicker commits on
+blur, so an unblurred date shows no chip and is not applied yet.
+
+A run can also end on `data-query/cohort-definition` in German mid-scenario (seen once on a ~30s data
+selection scenario, same symptom as the OAuth refresh note above). Rerun before debugging the step.
+
+## Step files: one class, steps only call it (enforced by `cypress/.eslintrc.json`)
+
+Every file with `defineStep` declares a class that holds all `cy.*`, selectors, waits, validation and
+data-table parsing; each step body is one call on that class's instance. ESLint (`npm run cypress:lint`,
+also run on staged `cypress/**/*.ts` with Prettier) rejects `cy.*`, `expect`/`if`/`switch`/`throw` or a
+multi-statement body inside `defineStep`, and a step file without a class. Forwarding to a `Num*`
+component-object still goes through a thin method of the file's own class.
+
+## Comment style (enforced by `cypress/.eslintrc.json` and `cypress/eslint-rules/comment-format.js`)
+
+Every comment in `cypress/**/*.ts` is a multi-line block: `/**` alone on the first line, ` * text`
+lines, closing ` * */`, no trailing spaces. `//` comments and one-line `/** x */` blocks are rejected;
+directives (`@ts-*`, `eslint-*`, `/// <reference`) are exempt. Classes, methods, function declarations
+and top-level function consts need a block (`defineStep` callbacks do not). The description must
+start with a capital letter or a backtick, end with `.`, and avoid the words a/an/the/just/really/
+basically/actually/simply/very/please: write terse, article-free sentences ("Open editor of criterium
+added last."). A description cannot start with a quote character, so move the quoted text later.
+`npm run cypress:lint` loads the local rule via `--rulesdir`; an editor ESLint plugin shows it only if
+`eslint.options.rulePaths` points at `cypress/eslint-rules`.

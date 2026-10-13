@@ -1,26 +1,35 @@
 import { defineStep } from '../defineStep'
 
 /**
- * Generic Inclusion/Exclusion list checks — parametrized by list name so the same steps serve
- * both groups (display.component.html renders them as sibling id="Inclusion"/id="Exclusion"
- * containers), not Exclusion-specific.
- */
+ * Inclusion/Exclusion list checks. Parametrized by list name, serves both groups
+ * (display.component.html renders sibling `id="Inclusion"` / `id="Exclusion"` containers).
+ * */
 export class CriteriaList {
+  /**
+   * Assert list contains criterium.
+   * */
   public shouldContain(criterium: string, list: string) {
     cy.get(`#${list}`).should('contain', criterium)
   }
 
+  /**
+   * Assert list lacks criterium.
+   * */
   public shouldNotContain(criterium: string, list: string) {
     cy.get(`#${list}`).should('not.contain', criterium)
   }
 
-  // A criterium's box is the `.container` carrying its display text as data-cy
-  // (see cypress/CLAUDE.md, "A value filter's chip can share its data-cy ...").
+  /**
+   * Criterium box = `.container` carrying display text as `data-cy` (see cypress/CLAUDE.md, section on
+   * value filter chip sharing data-cy).
+   * */
   public shouldHaveCriteriaNamed(count: number, criterium: string) {
     cy.get(`.container[data-cy="${criterium}"]`).should('have.length', count)
   }
 
-  // Each criterium in a list is one `.cdk-drag` (the same handle the drag step grabs).
+  /**
+   * Each criterium in list is one `.cdk-drag`, same handle drag step grabs.
+   * */
   public shouldHaveCount(list: string, count: number) {
     cy.get(`#${list} .cdk-drag`).should('have.length', count)
   }

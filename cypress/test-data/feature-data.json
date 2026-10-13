@@ -16,9 +16,10 @@
   "timeRestriction": {
     "theStartDateMustBeEarlier": "The start date must be earlier than the end date",
     "v04042045": "04.04.2045",
-    "before04042045": "TODO",
     "v01012045": "01.01.2045",
-    "from01012045To04": "From 01.01.2045 to 04.04.2045"
+    "from01012045To04": "From 01.01.2045 to 04.04.2045",
+    "from04042045To01": "From 04.04.2045 to 01.01.2045",
+    "from04042045To04": "From 04.04.2045 to 04.04.2045"
   },
   "quantityComparatorUpdateChip": {
     "v5A": "> 5 a",

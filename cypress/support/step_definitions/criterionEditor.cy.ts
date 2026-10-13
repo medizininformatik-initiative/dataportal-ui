@@ -6,46 +6,58 @@ import { label } from '../labels'
 import { numMenu } from '../component-objects/NumMenu'
 
 /**
- * Opening the editor of the criterium that was just added, and switching
- * between the criterion editor's top-level filter tabs. Those tabs mirror the
- * Criterion data model: "Time restriction" (timeRestriction), "Attribute
- * Filter" (attributeFilters), "Value Filter" (valueFilters), "References".
- */
+ * Open editor of criterium added last. Switch top-level filter tabs, mirroring Criterion data
+ * model: "Time restriction" (`timeRestriction`), "Attribute Filter" (`attributeFilters`),
+ * "Value Filter" (`valueFilters`), "References".
+ * */
 export class CriterionEditor {
+  /**
+   * Open menu of added criterium, click Edit.
+   * */
   public openEditorOfAddedCriterium() {
     numMenu.open()
     numMenu.clickItem(t('SHARED_COMPONENTS.MENU.EDIT') as never)
   }
 
-  // Filter tabs are named after the filter itself (the attribute's / value's English
-  // display, e.g. "ICD-10-WHO", "Gender", "Type of encounter", "Time restriction") and
-  // rendered upper-case by CSS - match case-insensitively. There is no generic
-  // "Attribute Filter" / "Value Filter" tab.
+  /**
+   * Tabs are named after filter itself (English display of attribute or value, e.g.
+   * "ICD-10-WHO", "Gender", "Type of encounter", "Time restriction"), upper-cased by CSS: match
+   * case-insensitively. No generic "Attribute Filter" / "Value Filter" tab exists.
+   * */
   public openTab(tab: string) {
     numConceptFilter.openEditorTab(resolve(tab))
   }
 
-  // A criterium with no timeRestriction/attribute/value filter renders no tab bar at all.
+  /**
+   * Criterium without timeRestriction, attribute or value filter renders no tab bar at all.
+   * */
   public shouldHaveNoFilterTabs() {
     cy.get('num-filter-tabs, .tabs-container, .header-col-chips').should('exist')
     cy.get('.tab').should('not.exist')
   }
 
+  /**
+   * Assert criterium box shows no filter chips.
+   * */
   public shouldShowNoFilterChips(criterium: string) {
     cy.get(`.container[data-cy="${criterium}"]`).find('.chip-container').should('not.exist')
   }
 
-  // A concept filter chip shows the concept's DISPLAY text (not its code) under a block with
-  // the filter's name, e.g. "ICD-10-WHO". The display text is the ontology's original, so
-  // it can be German in the English UI when no English translation exists.
+  /**
+   * Concept filter chip shows concept DISPLAY text, not code, under block named after filter,
+   * e.g. "ICD-10-WHO". Display text is ontology original: can be German in English UI when no
+   * English translation exists.
+   * */
   public shouldShowFilterChip(criterium: string, chipText: string) {
     cy.get(`.container[data-cy="${resolve(criterium)}"]`)
       .find('.chip-container')
       .should('contain', resolve(chipText))
   }
 
-  // The termcode editor (a criterium with several termcodes, e.g. from the bulk search) lists
-  // one `.concept-item` per code, each with a "Remove" button; its tab disappears at one code.
+  /**
+   * Termcode editor (criterium with several termcodes, e.g. from bulk search) lists one
+   * `.concept-item` per code, each with "Remove" button. Tab disappears at one code.
+   * */
   public shouldListTermcodes(codes: string) {
     const list = resolve(codes)
       .split(',')
@@ -54,16 +66,25 @@ export class CriterionEditor {
     list.forEach((code) => cy.get('.concept-item').contains(code))
   }
 
+  /**
+   * Remove termcode via its "Remove" button.
+   * */
   public removeTermcode(code: string) {
     cy.contains('.concept-item', resolve(code))
       .contains('button', t('FEASIBILITY.EDITOR.MODAL.REMOVE'))
       .click()
   }
 
+  /**
+   * Assert editor has tab, case-insensitive.
+   * */
   public shouldHaveTab(tab: string) {
     cy.contains('.tab', new RegExp(`^\\s*${label(tab)}\\s*$`, 'i')).should('exist')
   }
 
+  /**
+   * Assert editor lacks tab.
+   * */
   public shouldHaveNoTab(tab: string) {
     cy.get('.tab').should('exist').and('not.contain.text', label(tab))
   }

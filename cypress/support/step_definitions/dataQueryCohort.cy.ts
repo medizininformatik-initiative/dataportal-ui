@@ -1,8 +1,13 @@
 import { defineStep } from '../defineStep'
 
-// Shared by data-query-cohort.feature and saved-queries.feature — did not
-// exist anywhere before this pass (grepped every defineStep in the codebase).
+/**
+ * Shared by data-query-cohort.feature and saved-queries.feature. Did not exist before (grepped
+ * every `defineStep`).
+ * */
 export class DataQueryCohort {
+  /**
+   * Assert cohort definition editor shows criterium.
+   * */
   public shouldShowInEditor(criterium: string) {
     cy.get('num-display-feasibility-query').should('contain', criterium)
   }

@@ -1,12 +1,12 @@
 import { Json } from './types'
 
 /**
- * Facts about the local test ontology, and nothing else: no JSON shapes, no logic. Every value
- * here was looked up in the `ontology` Elasticsearch index, `GET terminology/ui-profile` or
- * `GET dse/profile-data` (commands in `cypress/TEST_DATA.md`). When the ontology version
- * changes, this is the only file to re-verify; `npm run crtdl:validate` then checks that the
- * backend still accepts every generated case.
- */
+ * Facts about local test ontology, nothing else: no JSON shapes, no logic. Every value was
+ * looked up in `ontology` Elasticsearch index, `GET terminology/ui-profile` or `GET
+ * dse/profile-data` (commands in `cypress/TEST_DATA.md`). On ontology version change this is
+ * only file to re-verify: `npm run crtdl:validate` then checks backend still accepts every
+ * generated case.
+ * */
 export const SYSTEMS = {
   snomed: 'http://snomed.info/sct',
   loinc: 'http://loinc.org',
@@ -16,9 +16,14 @@ export const SYSTEMS = {
 } as const
 
 const CONTEXT = { system: 'fdpg.mii.cds', version: '1.0.0' }
+/**
+ * Build context object for code.
+ * */
 export const context = (code: string): Json => ({ ...CONTEXT, code, display: code })
 
-/** Criteria a scenario can name. `profile` is the ui-profile that decides which filters it has. */
+/**
+ * Criteria scenario can name. `profile` = ui-profile deciding which filters criterion has.
+ * */
 export const CRITERIA = {
   pneumonia: {
     system: SYSTEMS.snomed,
@@ -51,7 +56,9 @@ export const CRITERIA = {
 } as const
 export type CriterionName = keyof typeof CRITERIA
 
-/** Concepts offered by the ICD-10-WHO attribute of `causeOfDeath`. */
+/**
+ * Concepts offered by ICD-10-WHO attribute of `causeOfDeath`.
+ * */
 export const ICD_CONCEPTS = {
   J13: {
     system: SYSTEMS.icd10who,
@@ -70,22 +77,30 @@ export const GENDER_CONCEPTS = {
   male: { system: SYSTEMS.gender, code: 'male', display: 'male' },
 } as const
 
-/** The concept attribute of `causeOfDeath`, as the backend names it. */
+/**
+ * Concept attribute of `causeOfDeath`, as backend names it.
+ * */
 export const ICD_ATTRIBUTE_CODE = {
   code: 'icd10-who',
   system: 'http://hl7.org/fhir/StructureDefinition',
   display: 'ICD-10-WHO',
 }
 
-/** Units of the quantity value filter. A unit is `{code, display}`, with no `system`. */
+/**
+ * Units of quantity value filter. Unit is `{code, display}`, no `system`.
+ * */
 export const UNITS = { a: { code: 'a', display: 'a' }, mo: { code: 'mo', display: 'mo' } } as const
 export type UnitName = keyof typeof UNITS
 
-/** Comparators the backend accepts. `ne` is absent: `validation/crtdl` answers 500 for it. */
+/**
+ * Comparators backend accepts. `ne` absent: `validation/crtdl` answers 500 for it.
+ * */
 export const COMPARATORS = ['gt', 'lt', 'ge', 'le', 'eq'] as const
 export type Comparator = (typeof COMPARATORS)[number]
 
-/** Feature profiles (data extraction), with the fields the tests select. */
+/**
+ * Feature profiles (data extraction), with fields tests select.
+ * */
 const MII = 'https://www.medizininformatik-initiative.de/fhir/core'
 export const PROFILES = {
   patient: {
@@ -115,7 +130,9 @@ export const FIELDS = {
   medicationCode: 'Medication.code',
 } as const
 
-/** Filters of the feature profiles, as the backend names them (`dse/profile-data` `filters`). */
+/**
+ * Filters of feature profiles, as backend names them (`dse/profile-data` `filters`).
+ * */
 export const EXTRACTION_FILTERS = {
   conditionDate: { type: 'date', name: 'recorded-date' },
   conditionCode: { type: 'token', name: 'code', system: SYSTEMS.icd10gm },

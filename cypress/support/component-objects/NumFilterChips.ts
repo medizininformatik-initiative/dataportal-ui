@@ -1,32 +1,42 @@
 /**
- * Query/interaction helper for the `num-filter-chips` shared component.
- * Relocated from `cypress/support/step_definitions/filter-chips.cy.ts` and
- * fixed to use the `numDataCy` values `filter-chips.component.html` already
- * carries on `.block`/`.chip-container`, instead of the raw classes — removes
- * the old non-breaking-space text-scraping workaround entirely, since matching
- * an attribute value isn't subject to render-time whitespace quirks the way
- * scraped DOM text is.
- */
+ * Query and interaction helper for `num-filter-chips` shared component. Moved from
+ * `cypress/support/step_definitions/filter-chips.cy.ts`, fixed to use `numDataCy` values
+ * `filter-chips.component.html` already carries on `.block` / `.chip-container`, not raw
+ * classes. Removes old non-breaking-space text-scraping workaround: attribute match is immune
+ * to render-time whitespace quirks.
+ * */
 export class NumFilterChips {
+  /**
+   * Find criteria box by criterium label.
+   * */
   private getCriteriaBoxByLabel(criterium: string) {
-    // `.container` (not the `num-criteria-box` host tag) is what actually
-    // carries the data-cy — criteria-box.component.html puts [numDataCy] on
-    // its own inner root div, not the host element. Scoping by it matters: a
-    // quantity/value filter's own chip block can carry the exact same
-    // data-cy as its criterion (the filter concept *is* the criterion, e.g.
-    // "Current chronological age"), which makes an unscoped
-    // `[data-cy="..."]` match both the box and its own chip block.
+    /**
+     * `.container`, not `num-criteria-box` host tag, carries `data-cy`:
+     * criteria-box.component.html puts `[numDataCy]` on own inner root div. Scoping matters:
+     * quantity or value filter chip block can carry exact same `data-cy` as its criterion (filter
+     * concept IS criterion, e.g. "Current chronological age"), so unscoped `[data-cy="..."]`
+     * matches box and own chip block.
+     * */
     return cy.get(`.container[data-cy="${criterium}"]`)
   }
 
+  /**
+   * Assert chip block name.
+   * */
   private assertBlockName(expectedBlockName: string) {
     cy.get(`[data-cy="${expectedBlockName}"]`).should('exist')
   }
 
+  /**
+   * Assert chip visible.
+   * */
   private assertChipVisible(chipName: string) {
     cy.get(`[data-cy="${chipName}"]`).should('be.visible')
   }
 
+  /**
+   * Assert criterium shows chip inside block.
+   * */
   public getFilterChipByName(criterium: string, chipName: string, blockName: string) {
     this.getCriteriaBoxByLabel(criterium).within(() => {
       this.assertBlockName(blockName)
@@ -34,6 +44,9 @@ export class NumFilterChips {
     })
   }
 
+  /**
+   * Assert criterium shows chip block.
+   * */
   public getFilterChipBlock(criterium: string, blockName: string) {
     this.getCriteriaBoxByLabel(criterium).within(() => {
       this.assertBlockName(blockName)

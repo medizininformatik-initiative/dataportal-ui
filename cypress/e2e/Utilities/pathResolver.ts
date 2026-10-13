@@ -1,7 +1,12 @@
-// cypress/support/utils/pageUrlMapper.ts
+/**
+ * Resolve page names to URL paths.
+ * */
 import { BasePaths, UrlPaths } from '../../support/e2e'
 import { Page } from './pages'
 
+/**
+ * Return URL path of page.
+ * */
 export function getUrlPathByPage(page: Page): string {
   switch (page) {
     case Page.FeasibilityEditor:

@@ -2,39 +2,69 @@ import { defineStep } from '../defineStep'
 import { numDetailsPanel } from '../component-objects/NumDetailsPanel'
 import { numTable } from '../component-objects/NumTable'
 
+/**
+ * Steps for search-result details panel and related criteria.
+ * */
 export class DetailsPanel {
+  /**
+   * Click table row containing `text`.
+   * */
   public clickRow(text: string) {
     numTable.getRowByText(text).find('td').contains(text).click()
   }
 
+  /**
+   * Assert panel open.
+   * */
   public shouldBeOpen() {
     numDetailsPanel.shouldBeOpen()
   }
 
+  /**
+   * Assert panel closed.
+   * */
   public shouldBeClosed() {
     numDetailsPanel.shouldBeClosed()
   }
 
+  /**
+   * Close panel.
+   * */
   public close() {
     numDetailsPanel.close()
   }
 
+  /**
+   * Open panel tab.
+   * */
   public openTab(label: string) {
     numDetailsPanel.openTab(label)
   }
 
+  /**
+   * Assert panel offers tab.
+   * */
   public shouldOfferTab(label: string) {
     numDetailsPanel.shouldOfferTab(label)
   }
 
+  /**
+   * Assert panel title.
+   * */
   public shouldShowTitle(title: string) {
     numDetailsPanel.shouldShowTitle(title)
   }
 
+  /**
+   * Click related criterium.
+   * */
   public clickRelated(name: string) {
     numDetailsPanel.relative(name).click()
   }
 
+  /**
+   * Open menu of related criterium.
+   * */
   public openMenuOfRelated(name: string) {
     numDetailsPanel.relative(name).find('[data-cy="openMenu"]').click()
   }

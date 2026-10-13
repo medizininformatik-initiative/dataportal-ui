@@ -2,8 +2,13 @@ import { defineStep } from '../defineStep'
 import { caseNamed } from '../crtdl/cases'
 import { differences } from '../crtdl/roundtrip'
 
-/** Upload -> download roundtrip. What counts as "the same" is `crtdl/roundtrip.ts`. */
+/**
+ * Upload to download roundtrip. What counts as same: `crtdl/roundtrip.ts`.
+ * */
 export class CrtdlRoundtrip {
+  /**
+   * Upload generated CRTDL case `name` through upload input.
+   * */
   public uploadGenerated(name: string) {
     cy.get('[data-cy="upload-crtdl"]').selectFile(
       {
@@ -15,6 +20,9 @@ export class CrtdlRoundtrip {
     )
   }
 
+  /**
+   * Assert downloaded file matches generated case `name`.
+   * */
   public downloadedShouldMatchGenerated(file: string, name: string) {
     cy.readFile(`cypress/downloads/${file}.json`).then((downloaded) => {
       const problems = differences(caseNamed(name), downloaded)

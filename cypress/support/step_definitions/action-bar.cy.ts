@@ -3,46 +3,67 @@ import { numButton } from '../component-objects/NumButton'
 
 const scope = 'num-action-bar'
 
-// num-action-bar's buttons are icon-only by design (tooltip, no visible
-// text) — a generic text-matching step can't find them. Rather than rename
-// the Gherkin's readable "Save cohort" to match the tooltip's actual text
-// ("Save"), map the few known icon-only names here to their data-cy.
+/**
+ * Action-bar buttons are icon-only: tooltip, no visible text. Text-matching steps cannot find
+ * them. Map known icon-only names to their `data-cy` instead of renaming Gherkin "Save cohort"
+ * to tooltip text "Save".
+ * */
 const ICON_ONLY_BUTTONS: Record<string, string> = {
   'save cohort': 'save-cohort-button',
 }
 
+/**
+ * Steps for buttons and offered actions of `num-action-bar`.
+ * */
 export class ActionBar {
+  /**
+   * Find icon-only button by Gherkin name. Return null for text buttons.
+   * */
   private iconOnlyButton(buttonName: string) {
     const dataCy = ICON_ONLY_BUTTONS[buttonName.trim().toLowerCase()]
     return dataCy ? cy.get(scope).find(`[data-cy="${dataCy}"]`) : null
   }
 
+  /**
+   * Assert button disabled.
+   * */
   public shouldBeDisabled(buttonName: string) {
     const iconOnly = this.iconOnlyButton(buttonName)
     if (iconOnly) iconOnly.should('be.disabled')
     else numButton.shouldBeDisabled(scope, buttonName.trim(), false)
   }
 
+  /**
+   * Assert button enabled.
+   * */
   public shouldBeEnabled(buttonName: string) {
     const iconOnly = this.iconOnlyButton(buttonName)
     if (iconOnly) iconOnly.should('not.be.disabled')
     else numButton.shouldBeEnabled(scope, buttonName.trim(), false)
   }
 
+  /**
+   * Click button.
+   * */
   public click(buttonName: string) {
     const iconOnly = this.iconOnlyButton(buttonName)
     if (iconOnly) iconOnly.click()
     else numButton.clickByText(scope, buttonName.trim(), false)
   }
 
-  // The upload <input type=file> is visually hidden behind its icon button, so it
-  // only has to exist; download and save are real buttons and must be visible.
+  /**
+   * Upload `<input type=file>` hides behind icon button, so must only exist. Download and save
+   * are real buttons, must be visible.
+   * */
   public shouldOfferUploadDownloadAndSave() {
     cy.get(scope).find('[data-cy="upload-crtdl"]').should('exist')
     cy.get(scope).find('[data-cy="download-crtdl-button"]').should('be.visible')
     cy.get(scope).find('[data-cy="save-cohort-button"]').should('be.visible')
   }
 
+  /**
+   * Assert upload, download and save are all absent.
+   * */
   public shouldOfferNoUploadDownloadOrSave() {
     cy.get(scope).should('exist')
     cy.get(scope).find('[data-cy="upload-crtdl"]').should('not.exist')

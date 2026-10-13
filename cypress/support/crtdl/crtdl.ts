@@ -8,7 +8,9 @@ export interface CrtdlOptions {
   groups?: AttributeGroup[]
 }
 
-/** A complete CRTDL. The defaults are the smallest valid one: Pneumonia included, Patient selected. */
+/**
+ * Build complete CRTDL. Defaults are smallest valid one: Pneumonia included, Patient selected.
+ * */
 export function crtdl({
   inclusion = [[criterion('pneumonia')]],
   exclusion,

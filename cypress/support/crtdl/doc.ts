@@ -1,9 +1,9 @@
 /**
- * Renders `docs/crtdl-roundtrip-cases.md`, the readable list of roundtrip cases: `npm run crtdl:doc`.
- * `npm run crtdl:doc:check` fails when the committed file is stale. Groups and order come from
- * the Examples tables of `crtdl-roundtrip.feature`, so the doc lists exactly what runs; the
- * sentences come from `describe.ts`.
- */
+ * Render `docs/crtdl-roundtrip-cases.md`, readable list of roundtrip cases: `npm run
+ * crtdl:doc`. `npm run crtdl:doc:check` fails when committed file is stale. Groups and order
+ * come from Examples tables of `crtdl-roundtrip.feature`: doc lists exactly what runs.
+ * Sentences come from `describe.ts`.
+ * */
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { caseNamed } from './cases'
@@ -12,7 +12,10 @@ import { describe } from './describe'
 const ROOT = join(__dirname, '..', '..', '..')
 const FEATURE = join(ROOT, 'cypress', 'e2e', 'DataQueryCohort', 'crtdl-roundtrip.feature')
 const OUTPUT = join(ROOT, 'docs', 'crtdl-roundtrip-cases.md')
-/** `collapse` comes from a `@doc-collapse` tag above the Examples table: it folds generated, repetitive cases away. */
+/**
+ * `collapse` comes from `@doc-collapse` tag above Examples table: folds generated, repetitive
+ * cases away.
+ * */
 interface Group {
   title: string
   collapse: boolean
@@ -20,6 +23,9 @@ interface Group {
   cases: string[]
 }
 
+/**
+ * Read case groups from feature file.
+ * */
 function readGroups(feature: string): Group[] {
   const groups: Group[] = []
   let collapse = false
@@ -36,14 +42,23 @@ function readGroups(feature: string): Group[] {
       inTable = false
     } else if (line.startsWith('|') && groups.length) {
       if (inTable) groups[groups.length - 1].cases.push(line.split('|')[1].trim())
-      inTable = true // the first row is the header
+      /**
+       * First row is header.
+       * */
+      inTable = true
     }
   }
   return groups
 }
 
+/**
+ * Render one case as markdown bullet.
+ * */
 const bullet = (name: string) => `- **${name}**: ${describe(caseNamed(name))}`
 
+/**
+ * Render all groups as markdown.
+ * */
 function render(groups: Group[]): string {
   const lines = [
     '# CRTDL roundtrip: cases we cover',

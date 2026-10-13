@@ -1,15 +1,27 @@
 import { defineStep } from '../defineStep'
 import { numMenu } from '../component-objects/NumMenu'
 
+/**
+ * Steps for generic menu (`num-menu`).
+ * */
 export class Menu {
+  /**
+   * Open menu.
+   * */
   public open() {
     numMenu.open()
   }
 
+  /**
+   * Assert menu offers item.
+   * */
   public shouldOfferItem(menuItem: string) {
     numMenu.shouldOfferItem(menuItem)
   }
 
+  /**
+   * Click menu item.
+   * */
   public clickItem(menuItem: string) {
     numMenu.clickItem(menuItem)
   }

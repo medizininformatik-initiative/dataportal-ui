@@ -1,18 +1,23 @@
 import { MenuItemValue } from '../../e2e/Utilities/menuItems'
 
 /**
- * Query/interaction helper for the `num-menu` shared component. Relocated
- * from `cypress/support/step_definitions/menu.cy.ts`. Its internal
- * `.mat-mdc-menu-content`/`.mat-mdc-menu-item` are Angular Material's own
- * generated DOM — no template of ours to attach `data-cy` to, so these stay
- * `cy.contains()` per cypress/CLAUDE.md's data-cy principle; the trigger
- * itself already has `data-cy="openMenu"`.
- */
+ * Query and interaction helper for `num-menu` shared component. Moved from
+ * `cypress/support/step_definitions/menu.cy.ts`. Inner `.mat-mdc-menu-content` /
+ * `.mat-mdc-menu-item` are Material generated DOM: no template of ours for `data-cy`, so
+ * `cy.contains()` stays (cypress/CLAUDE.md data-cy principle). Trigger already has
+ * `data-cy="openMenu"`.
+ * */
 export class NumMenu {
+  /**
+   * Click menu trigger.
+   * */
   public open() {
     cy.get('[data-cy="openMenu"]').click()
   }
 
+  /**
+   * Assert menu offers item.
+   * */
   public shouldOfferItem(menuItemLabel: MenuItemValue) {
     cy.get('.mat-mdc-menu-content:visible')
       .should('exist')
@@ -21,6 +26,9 @@ export class NumMenu {
       })
   }
 
+  /**
+   * Click menu item.
+   * */
   public clickItem(menuItemLabel: MenuItemValue) {
     cy.get('.mat-mdc-menu-content:visible')
       .should('exist')

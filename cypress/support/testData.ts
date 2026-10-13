@@ -7,12 +7,14 @@ import pages from '../test-data/pages.json'
 import uiLabels from '../test-data/ui-labels.json'
 
 /**
- * Named test data for feature files. A step argument may contain `{{path.to.value}}`
- * (e.g. `{{concepts.second}}`), which `resolve()` replaces with the value from
- * `cypress/test-data/*.json`. Changing a code there changes every scenario that uses the
- * placeholder; text without a placeholder passes through untouched.
- */
-// Each file holds top-level groups; the group name is the first segment of the placeholder.
+ * Named test data for feature files. Step argument may hold `{{path.to.value}}` (e.g.
+ * `{{concepts.second}}`): `resolve()` replaces it with value from `cypress/test-data/*.json`.
+ * Changing code there changes every scenario using placeholder. Text without placeholder
+ * passes through untouched.
+ * */
+/**
+ * Each file holds top-level groups. Group name = first segment of placeholder.
+ * */
 const TEST_DATA: Record<string, unknown> = {
   ...criteria,
   ...bulkSearch,
@@ -23,6 +25,9 @@ const TEST_DATA: Record<string, unknown> = {
   ...uiLabels,
 }
 
+/**
+ * Replace every `{{path}}` placeholder in text with test data value.
+ * */
 export function resolve(text: string): string {
   return text.replace(/\{\{\s*([\w.]+)\s*\}\}/g, (_, path: string) => {
     const value = path

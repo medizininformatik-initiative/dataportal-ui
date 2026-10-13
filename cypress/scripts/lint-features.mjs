@@ -1,25 +1,25 @@
 // Lints .feature files. Rule `tags`: only the tag vocabulary below, on the right level, in order (TAGS).
-// Rule `no-hardcoded-values`: a step in a Scenario may quote only a UI label
-// (button, tab, list, page name - see UI_LABELS) or a <placeholder>. Test data - criteria, codes,
+// Rule `no-hardcoded-values`: a step in a Scenario or Background may quote only a <placeholder> or a
+// {{group.key}} test-data placeholder (page names: {{pages.*}}, UI labels: {{labels.*}}) that exists in
+// cypress/test-data/*.json. Every `pages` value must be a Page enum value (pages.ts).
+// Single- and double-quoted strings, DocStrings and data-table cells are checked. Test data - criteria, codes,
 // concepts, dates, chip texts - belongs in an Examples cell (cypress/TESTING.md, "Data lives in Examples").
+// Rule `examples-data`: an Examples cell is a number, a `case`/`comparator`/`block` token or a {{placeholder}}.
+// Rule `area-module`: `@area:<x>` must name a folder src/app/modules/<x>.
 // Usage: node cypress/scripts/lint-features.mjs [files...]   (all features when no file is given)
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { AstBuilder, GherkinClassicTokenMatcher, Parser } from '@cucumber/gherkin'
 import { IdGenerator } from '@cucumber/messages'
 
 const root = new URL('../..', import.meta.url).pathname
-const pages = [...readFileSync(join(root, 'cypress/e2e/Utilities/pages.ts'), 'utf8').matchAll(/= '([^']+)'/g)].map((m) => m[1])
-const UI_LABELS = new Set([
-  ...pages,
-  'Close', 'Configure', 'Feasibility', 'Inclusion', 'Exclusion', 'Stage', 'Save cohort',
-  'Edit cohort selection', 'Add to cohort selection', 'Add to Selection', 'Show Selection',
-  'To Feature Selection', 'Data Definition', 'Selected Concepts', 'Single Search',
-  'Selected Reference', 'Selected Filters', 'References', 'Part of', 'Only if referenced',
-  'Details', 'Use as search term', 'Terminology Codes', 'Time restriction',
-  // File name the roundtrip steps download to and read back: an artifact name, not test data.
-  'roundtrip',
-])
+const dataDir = join(root, 'cypress/test-data')
+const testData = Object.assign(
+  {},
+  ...readdirSync(dataDir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(readFileSync(join(dataDir, f), 'utf8')))
+)
+const pageEnum = [...readFileSync(join(root, 'cypress/e2e/Utilities/pages.ts'), 'utf8').matchAll(/= '([^']+)'/g)].map((m) => m[1])
+const lookup = (path) => path.split('.').reduce((node, key) => node?.[key], testData)
 
 // Tag vocabulary (cypress/TESTING.md, "Tags"). A new value is added here and to that table, in the
 // same change. `@component:` is the screen under test (a page), not a UI widget: it must belong to
@@ -71,6 +71,9 @@ const checkTags = (file, level, tags) => {
   let last = -1
   for (const { name, location } of tags) {
     const [, facet, value] = name.match(/^@([a-z-]+)(?::(.+))?$/) ?? []
+    if (facet === 'area' && value !== undefined && !existsSync(join(root, 'src/app/modules', value))) {
+      report(file, location.line, `@area:${value} has no module folder src/app/modules/${value}`)
+    }
     if (!LEVELS[level].includes(facet)) {
       report(file, location.line, `tag ${name} not allowed on a ${level} (allowed: ${LEVELS[level].map((f) => '@' + f).join(' ')})`)
     } else if (value !== undefined && !VALUES[facet]?.includes(value)) {
@@ -87,6 +90,28 @@ const checkTags = (file, level, tags) => {
   }
   return [...seen].map((n) => n.slice(1).split(':'))
 }
+// A data table's first row is its header (column names), not data.
+// A value is data unless it is a <placeholder> or a {{group.key}} placeholder found in cypress/test-data/*.json.
+const isAllowed = (v) => /^<[^>]+>$/.test(v) || (/^\{\{[\w.]+\}\}$/.test(v) && typeof lookup(v.slice(2, -2)) === 'string')
+const checkStep = (file, step) => {
+  const values = [...step.text.matchAll(/"([^"]*)"|'([^']*)'/g)].map((m) => m[1] ?? m[2])
+  if (step.docString) values.push(step.docString.content)
+  for (const row of (step.dataTable?.rows ?? []).slice(1)) values.push(...row.cells.map((c) => c.value))
+  for (const value of values) {
+    if (!isAllowed(value)) report(file, step.location.line, `hard-coded value "${value}" - move it to an Examples cell or a {{group.key}} placeholder`)
+  }
+}
+// Examples cells: a number, a token of LITERAL_COLUMNS or a {{group.key}} placeholder; no free text.
+const LITERAL_COLUMNS = new Set(['case', 'comparator', 'block'])
+const checkExamples = (file, examples) => {
+  const cols = examples.tableHeader?.cells.map((c) => c.value) ?? []
+  for (const row of examples.tableBody) {
+    row.cells.forEach(({ value, location }, i) => {
+      if (value === '' || LITERAL_COLUMNS.has(cols[i]) || /^-?\d+([.,]\d+)?$/.test(value) || isAllowed(value)) return
+      report(file, location.line, `hard-coded Examples value "${value}" (column ${cols[i]}) - move it to cypress/test-data/*.json`)
+    })
+  }
+}
 const scenariosOf = (children) => children.flatMap((c) => (c.rule ? scenariosOf(c.rule.children) : c.scenario ? [c.scenario] : []))
 
 for (const file of files.length ? files : walk(join(root, 'cypress/e2e'))) {
@@ -96,7 +121,8 @@ for (const file of files.length ? files : walk(join(root, 'cypress/e2e'))) {
   const area = featureTags.find(([f]) => f === 'area' || f === 'cross-cutting')
   if (!area) report(file, feature.location.line, 'Feature needs one @area:<name> or @cross-cutting')
   const areaName = area?.[0] === 'cross-cutting' ? 'cross-cutting' : area?.[1]
-  // A Background cannot use <placeholders>, so only scenarios are checked.
+  const background = feature.children.find((c) => c.background)?.background
+  for (const step of background?.steps ?? []) checkStep(file, step)
   for (const scenario of scenariosOf(feature.children)) {
     const tags = checkTags(file, 'scenario', scenario.tags)
     const values = (facet) => tags.filter(([f]) => f === facet).map(([, v]) => v)
@@ -107,14 +133,15 @@ for (const file of files.length ? files : walk(join(root, 'cypress/e2e'))) {
     }
     if (!values('behavior').length) report(file, scenario.location.line, 'Scenario needs at least one @behavior:<verb>')
     if (values('type').length && !values('filter').length) report(file, scenario.location.line, '@type needs a @filter')
-    for (const examples of scenario.examples) checkTags(file, 'examples', examples.tags)
-    for (const step of scenario.steps) {
-      for (const [, value] of step.text.matchAll(/"([^"]*)"/g)) {
-        if (/^<[^>]+>$/.test(value) || UI_LABELS.has(value)) continue
-        report(file, step.location.line, `hard-coded value "${value}" - move it to an Examples cell`)
-      }
+    for (const examples of scenario.examples) {
+      checkTags(file, 'examples', examples.tags)
+      checkExamples(file, examples)
     }
+    for (const step of scenario.steps) checkStep(file, step)
   }
+}
+for (const [key, name] of Object.entries(testData.pages ?? {})) {
+  if (!pageEnum.includes(name)) report(join(root, 'cypress/test-data/*.json'), 1, `pages.${key} "${name}" is not a Page in cypress/e2e/Utilities/pages.ts`)
 }
 console.log(problems ? `\n${problems} problem(s)` : 'no problems')
 process.exit(problems ? 1 : 0)
