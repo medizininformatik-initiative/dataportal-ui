@@ -4,9 +4,9 @@ import { Attribute, AttributeGroup, Json } from './types'
 type FieldName = keyof typeof FIELDS
 
 /**
- * A selected field. `linksTo` makes it a reference to another feature of the same CRTDL; a
- * group's id defaults to its profile name, so the link needs no id spelled out.
- */
+ * Selected field. `linksTo` makes it reference to another feature of same CRTDL. Group id
+ * defaults to profile name: link needs no id spelled out.
+ * */
 export interface FieldSelection {
   field: FieldName
   mustHave?: boolean
@@ -20,6 +20,9 @@ export interface GroupOptions {
   filters?: Json[]
 }
 
+/**
+ * Normalise field selection to attribute.
+ * */
 const toAttribute = (selection: FieldName | FieldSelection): Attribute => {
   const {
     field,
@@ -29,7 +32,10 @@ const toAttribute = (selection: FieldName | FieldSelection): Attribute => {
   return { attributeRef: FIELDS[field], mustHave, ...(linksTo ? { linkedGroups: [linksTo] } : {}) }
 }
 
-/** One feature (attribute group) of a profile. The app omits a false `includeReferenceOnly`, so only true is sent. */
+/**
+ * One feature (attribute group) of profile. App omits false `includeReferenceOnly`: only true
+ * is sent.
+ * */
 export function attributeGroup(
   profile: ProfileName,
   { id = profile, fields = [], referenceOnly, filters }: GroupOptions = {}
@@ -43,5 +49,7 @@ export function attributeGroup(
   }
 }
 
-/** The Patient feature that every data selection keeps. */
+/**
+ * Patient feature every data selection keeps.
+ * */
 export const patient = () => attributeGroup('patient', { fields: ['patientActive'] })

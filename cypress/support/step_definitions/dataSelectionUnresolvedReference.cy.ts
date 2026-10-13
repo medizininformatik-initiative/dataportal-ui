@@ -5,27 +5,37 @@ import de from '../../../src/assets/i18n/de.json'
 import { t } from '../i18n'
 
 /**
- * The "unresolved reference" warning of a data selection box.
- *
- * A profile reference field the ontology marks `recommended` (here `ReferenzPrimaerdiagnose` on the
- * Condition profiles) shows a red warning until it is linked to another selected feature. The box
- * and its reference tile are siblings under `num-data-selection-boxes`, so the tile is found from
- * the box's parent. Clicking the warning opens the profile editor on that reference's tab.
- */
+ * Warning "Unresolved reference" of data selection box. Profile reference field marked
+ * `recommended` by ontology (here `ReferenzPrimaerdiagnose` on Condition profiles) shows red
+ * warning until linked to another selected feature. Box and reference tile are siblings under
+ * `num-data-selection-boxes`: find tile from box parent. Click on warning opens profile editor
+ * on that reference tab.
+ * */
 export class DataSelectionUnresolvedReference {
+  /**
+   * Find visible selection box by profile name.
+   * */
   private box(name: string) {
     return cy.get(`.selection-box[data-cy="${name}"]`).should('be.visible')
   }
 
+  /**
+   * Find reference tile of box, sibling of box.
+   * */
   private tile(name: string) {
     return this.box(name).parent().find('num-profile-reference-tile')
   }
 
+  /**
+   * Translated "not linked" label.
+   * */
   private notLinked() {
     return t('SHARED_COMPONENTS.REFERENCE_TILE.NOT_LINKED')
   }
 
-  // The "Required" checkbox is the only checkbox in a linked reference tile.
+  /**
+   * Checkbox "Required" is only checkbox in linked reference tile.
+   * */
   private required(field: string, name: string) {
     return this.tile(name)
       .contains(field)
@@ -33,32 +43,53 @@ export class DataSelectionUnresolvedReference {
       .find('[data-cy="checkbox"]')
   }
 
+  /**
+   * Search feature, tick it, click Add.
+   * */
   public addFeature(feature: string) {
     searchInstance.typeInInputField(feature)
     tableInstance.selectCheckboxInRow(feature)
     cy.contains('button', t('DATASELECTION.SEARCH.ACTION_BAR.ADD'), { matchCase: false }).click()
   }
 
+  /**
+   * Assert box warns about unresolved reference field.
+   * */
   public boxShouldWarnAbout(name: string, field: string) {
     this.tile(name).should('contain.text', field).and('contain.text', this.notLinked())
   }
 
+  /**
+   * Assert box shows no warning.
+   * */
   public boxShouldHaveNoWarning(name: string) {
     this.box(name).parent().find('.warning-message').should('not.exist')
   }
 
+  /**
+   * Click unresolved-reference warning of box.
+   * */
   public clickWarning(name: string) {
     this.tile(name).find('.warning-message').contains(this.notLinked()).click()
   }
 
+  /**
+   * Assert reference tab active.
+   * */
   public tabShouldBeActive(field: string) {
     cy.get('.mdc-tab--active').should('contain.text', field)
   }
 
+  /**
+   * Tick feature in reference tile to link it.
+   * */
   public linkToFeature(feature: string) {
     cy.contains('num-selectable-reference-tile', feature).find('[data-cy="checkbox"]').click()
   }
 
+  /**
+   * Assert reference linked to target, no warning left.
+   * */
   public boxShouldShowReferenceLinkedTo(name: string, field: string, target: string) {
     this.tile(name)
       .should('contain.text', field)
@@ -67,27 +98,45 @@ export class DataSelectionUnresolvedReference {
       .and('not.contain.text', this.notLinked())
   }
 
+  /**
+   * Click remove action of reference tile.
+   * */
   public removeReference(field: string, name: string) {
     this.tile(name).contains(field).closest('num-profile-reference-tile').find('.actions').click()
   }
 
+  /**
+   * Untick feature in reference tile. Click re-renders tile: read state from fresh lookup, not
+   * chained.
+   * */
   public unlinkFromFeature(feature: string) {
     const checkbox = () =>
       cy.contains('num-selectable-reference-tile', feature).find('[data-cy="checkbox"]')
     checkbox().should('have.attr', 'aria-checked', 'true')
     checkbox().click()
-    // The click re-renders the tile, so the state is read from a fresh lookup, not chained.
+    /**
+     * Click re-renders tile: read state from fresh lookup, not chained.
+     * */
     checkbox().should('have.attr', 'aria-checked', 'false')
   }
 
+  /**
+   * Toggle required checkbox of reference.
+   * */
   public toggleRequired(field: string, name: string) {
     this.required(field, name).click()
   }
 
+  /**
+   * Assert required option of reference enabled or disabled.
+   * */
   public requiredShouldBe(field: string, name: string, state: string) {
     this.required(field, name).should('have.attr', 'aria-checked', String(state === 'enabled'))
   }
 
+  /**
+   * Assert warning shown in German.
+   * */
   public boxShouldWarnInGerman(name: string) {
     this.tile(name).should('contain.text', de.SHARED_COMPONENTS.REFERENCE_TILE.NOT_LINKED)
   }

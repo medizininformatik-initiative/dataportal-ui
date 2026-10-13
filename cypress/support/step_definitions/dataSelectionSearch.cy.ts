@@ -4,15 +4,23 @@ import { numMenu } from '../component-objects/NumMenu'
 import { Search } from './search.cy'
 import { t } from '../i18n'
 
-// The section is a {string}, not literal text in the pattern: Cucumber matches the pattern before
-// `{{placeholders}}` are resolved. Keys are the English section labels (`labels.selected*`).
+/**
+ * Section is `{string}`, not literal pattern text: Cucumber matches pattern before
+ * `{{placeholders}}` resolve. Keys = English section labels (`labels.selected*`).
+ * */
 const CHIP_SECTIONS: Record<string, string> = {
   'Selected Fields': 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS',
   'Selected Filters': 'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER',
   'Selected Reference': 'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES',
 }
 
+/**
+ * Steps for data selection search: tree, boxes, tabs, chips, reference modal.
+ * */
 export class DataSelectionSearch {
+  /**
+   * Expand root category, click feature node.
+   * */
   public getTreeNodeByName(name: string, root: string) {
     cy.get(`[data-cy="${root}"]`)
       .should('be.visible')
@@ -22,23 +30,34 @@ export class DataSelectionSearch {
     cy.get(`[data-cy="${name}"]`).contains(name).should('be.visible').click()
   }
 
+  /**
+   * Assert data selection box visible.
+   * */
   public getDataSelectionBoxByName(name: string) {
     cy.get(`[data-cy="${name}"]`).contains(name).should('be.visible')
   }
 
+  /**
+   * Open menu of data selection box.
+   * */
   public openMenuOnDataSelectionBox(name: string) {
     cy.get(`[data-cy="${name}"]`).within(() => {
       numMenu.open()
     })
   }
 
+  /**
+   * Click checkbox by label.
+   * */
   public selectCheckboxByLabel(label: string) {
     cy.get(`[data-cy="${label}"]`).contains(label).should('be.visible').click()
   }
 
-  // The profile header renders fields, filters and references as three `.header-col`
-  // blocks, each a translated label above a `.header-col-chips` block. The section is
-  // found by that label (from the app's own translation file), not by a CSS class.
+  /**
+   * Profile header renders fields, filters, references as three `.header-col` blocks: translated
+   * label above `.header-col-chips`. Find section by label (app translation file), not CSS
+   * class.
+   * */
   public getChip(sectionLabelKey: string, chipName: string) {
     cy.contains('.header-col', t(sectionLabelKey))
       .find('.header-col-chips')
@@ -47,26 +66,40 @@ export class DataSelectionSearch {
       })
   }
 
-  // The header chips cap at 3 visible per group (`maxVisible` in num-filter-chips) and put
-  // the rest in a "+N" tooltip, so a freshly selected field may have no chip of its own.
-  // The editor's own selected-fields list always shows every selected field.
+  /**
+   * Header chips cap at 3 visible per group (`maxVisible` in num-filter-chips), rest in "+N"
+   * tooltip: freshly selected field may lack own chip. Editor selected-fields list always shows
+   * every selected field.
+   * */
   public fieldShouldBeInSelectedList(field: string) {
     cy.get('.selected-fields-box .field-name').should('contain', field)
   }
 
+  /**
+   * Assert chip appears in named section.
+   * */
   public chipShouldAppearInSection(chipName: string, section: string) {
     if (!CHIP_SECTIONS[section]) throw new Error(`Unknown section "${section}"`)
     this.getChip(CHIP_SECTIONS[section], chipName)
   }
 
+  /**
+   * Click editor tab. Main tabs are `div.tab` in `.tabs-container` (num-filter-tabs). Nested tab
+   * groups, e.g. references "Part of", are Material tabs.
+   * */
   public selecteTabByName(tabName: string) {
-    // The editor's main tabs are `div.tab` in `.tabs-container` (num-filter-tabs); nested
-    // tab groups, such as the references' "Part of", are Material tabs.
+    /**
+     * Main editor tabs are `div.tab` in `.tabs-container` (num-filter-tabs). Nested tab groups,
+     * e.g. references "Part of", are Material tabs.
+     * */
     cy.contains('.tabs-container .tab, .mdc-tab__text-label', tabName, { matchCase: false })
       .should('be.visible')
       .click()
   }
 
+  /**
+   * Type concept into profile filter search.
+   * */
   public searchForConcept(conceptName: string) {
     const searchInstance = new Search()
     cy.get('num-profile-filter').within(() => {
@@ -74,18 +107,30 @@ export class DataSelectionSearch {
     })
   }
 
+  /**
+   * Assert placeholder box visible.
+   * */
   public placeHolderBeVisible() {
     cy.get('.placeholder-box').should('be.visible')
   }
 
+  /**
+   * Click "Add new reference".
+   * */
   public openReferenceModal() {
     cy.get('num-button').contains(' Add new reference ').should('be.visible').click()
   }
 
+  /**
+   * Assert reference modal visible.
+   * */
   public getReferenceModal() {
     cy.get('num-modal-window').should('be.visible')
   }
 
+  /**
+   * Tick reference in modal.
+   * */
   public addReference(name: string) {
     cy.get('num-modal-window').within(() => {
       cy.get(`[data-cy="${name}"]`)
@@ -96,6 +141,9 @@ export class DataSelectionSearch {
     })
   }
 
+  /**
+   * Confirm reference modal.
+   * */
   public saveReference() {
     cy.get('num-modal-window').within(() => {
       cy.get('num-button').first().should('be.visible').click()

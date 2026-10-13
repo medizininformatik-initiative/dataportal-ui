@@ -6,13 +6,19 @@ import { getUrlPathByPage } from '../../e2e/Utilities/pathResolver'
 /**
  * Class for side navigation component tests.
  * @see NavItemValue
- */
+ * */
 export class SideNavTests {
+  /**
+   * Click nav item, assert URL.
+   * */
   public navigateTo(navItemSelector: NavItemValue) {
     cy.get(`[data-cy="nav-${NavItemBaseRoutes[navItemSelector]}"]`).click()
     cy.url().should('include', NavItemPaths[navItemSelector])
   }
 
+  /**
+   * Visit page URL only when not already there.
+   * */
   public visitUrl(url: Page) {
     const resolvedUrl: string = getUrlPathByPage(url)
     cy.url().then((currentUrl) => {
@@ -23,36 +29,53 @@ export class SideNavTests {
     cy.url().should('include', resolvedUrl)
   }
 
-  // The toggle is matched inside the nav list rather than by its aria-label, because that
-  // label is translated and follows the app's current language, not the language the suite
-  // runs in.
+  /**
+   * Match toggle inside nav list, not by `aria-label`: label is translated, follows app
+   * language, not suite language.
+   * */
   public toggle() {
     cy.get('mat-nav-list .num-logo-row button').click()
   }
 
+  /**
+   * Assert nav collapsed.
+   * */
   public shouldBeCollapsed() {
     cy.get('mat-nav-list').should('have.class', 'collapsed')
   }
 
+  /**
+   * Assert nav expanded.
+   * */
   public shouldBeExpanded() {
     cy.get('mat-nav-list').should('not.have.class', 'collapsed')
   }
 
+  /**
+   * Assert nav lists `count` areas.
+   * */
   public shouldListAreas(count: number) {
     cy.get('mat-nav-list a.num-mat-list-item').should('have.length', count)
   }
 
+  /**
+   * Assert nav shows label.
+   * */
   public shouldShowLabel(label: string) {
     cy.get('mat-nav-list .navItem-font').should('contain', label)
   }
 
+  /**
+   * Assert nav shows no labels.
+   * */
   public shouldShowNoLabels() {
     cy.get('mat-nav-list .navItem-font').should('not.exist')
   }
 
-  // Unlike `visitUrl`, this never navigates: that does a hard cy.visit() when the URL does
-  // not match, so used after a click it can hide a navigation that never happened. This
-  // one only asserts.
+  /**
+   * Unlike `visitUrl`, never navigates. `visitUrl` does hard `cy.visit()` on URL mismatch: after
+   * click it can hide navigation that never happened. This only asserts.
+   * */
   public shouldArriveOn(page: Page) {
     cy.url().should('include', getUrlPathByPage(page))
   }

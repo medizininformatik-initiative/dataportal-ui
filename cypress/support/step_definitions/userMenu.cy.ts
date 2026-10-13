@@ -1,27 +1,48 @@
 import { defineStep } from '../defineStep'
 import { numUserMenu } from '../component-objects/NumUserMenu'
 
+/**
+ * Steps for user menu.
+ * */
 export class UserMenu {
+  /**
+   * Open user menu.
+   * */
   public open() {
     numUserMenu.open()
   }
 
+  /**
+   * Assert user menu offers label.
+   * */
   public shouldOffer(label: string) {
     numUserMenu.shouldOffer(label)
   }
 
+  /**
+   * Assert user menu item disabled.
+   * */
   public shouldHaveItemDisabled(label: string) {
     numUserMenu.shouldHaveItemDisabled(label)
   }
 
+  /**
+   * Click user menu item.
+   * */
   public clickItem(label: string) {
     numUserMenu.clickItem(label)
   }
 
+  /**
+   * Assert about dialog shown.
+   * */
   public shouldShowAboutDialog() {
     numUserMenu.shouldShowAboutDialog()
   }
 
+  /**
+   * Assert sign-in page reached.
+   * */
   public shouldBeOnSignInPage() {
     numUserMenu.shouldBeOnSignInPage()
   }

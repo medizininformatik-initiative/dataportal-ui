@@ -1,18 +1,26 @@
 import { defineStep } from '../defineStep'
 
+/**
+ * Steps for search bar input.
+ * */
 export class Search {
   /**
-   * First clears the input field and the types the specified text into the input field of the search bar.
-   * @param text
-   */
+   * Clear search input, then type text.
+   * */
   public typeInInputField(text: string) {
     cy.get('num-searchbar input').clear().type(text).should('have.value', text)
   }
 
+  /**
+   * Clear search input.
+   * */
   public clearInputField() {
     cy.get('num-searchbar input').clear().should('have.value', '')
   }
 
+  /**
+   * Assert search input value.
+   * */
   public inputShouldKeepText(text: string) {
     cy.get('num-searchbar input').should('have.value', text)
   }

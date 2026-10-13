@@ -2,28 +2,43 @@ import { defineStep } from '../defineStep'
 import { materialSelect } from '../component-objects/MaterialSelect'
 import { numFilterChips } from '../component-objects/NumFilterChips'
 
-// Every feature that edits a quantity value filter (comparator, value, unit, range).
+/**
+ * Every feature editing quantity value filter: comparator, value, unit, range.
+ * */
 export class QuantityFilter {
+  /**
+   * Pick comparator in comparison select.
+   * */
   public selectComparator(option: string) {
     materialSelect.selectOptionByText('num-quantity-comparision-select', option)
   }
 
+  /**
+   * Pick unit in allowed-units select.
+   * */
   public selectUnit(unit: string) {
     materialSelect.selectOptionByText('num-allowed-units', unit)
   }
 
-  // num-quantity-range renders two num-value-select inputs, minimum first. The unit must be chosen
-  // before the values: the component only validates (and shows its warning) once a unit is set.
+  /**
+   * `num-quantity-range` renders two `num-value-select` inputs, minimum first. Choose unit
+   * before values: component validates, shows warning, only once unit set.
+   * */
   public selectRange(min: number, max: number) {
     cy.get('num-quantity-range num-value-select input').eq(0).clear().type(min.toString())
     cy.get('num-quantity-range num-value-select input').eq(1).clear().type(max.toString())
   }
 
+  /**
+   * Assert range warning visible.
+   * */
   public shouldShowRangeWarning(warning: string) {
     cy.get('num-quantity-range .warning').should('be.visible').and('contain.text', warning)
   }
 
-  // Opens the operator dropdown, compares its options with the comma-separated list, and closes it.
+  /**
+   * Open operator dropdown, compare options with comma-separated list, close it.
+   * */
   public operatorShouldOffer(comparators: string) {
     cy.get('num-quantity-comparision-select mat-select').click()
     cy.get('.mat-mdc-option')
@@ -35,34 +50,49 @@ export class QuantityFilter {
     cy.get('body').type('{esc}')
   }
 
+  /**
+   * Assert panel visible.
+   * */
   public shouldSeePanel(panelName: string) {
     cy.get(`[data-cy="${panelName}"]`).should('be.visible')
   }
 
+  /**
+   * Assert comparator selected in panel.
+   * */
   public shouldSeeSelectedInPanel(selected: string, panelName: string) {
     cy.get(`[data-cy="${panelName}"]`).within(() => {
       cy.get('num-quantity-comparision-select').contains(selected).should('be.visible')
     })
   }
 
-  // num-value-select wraps a plain matInput - target it directly rather than the host tag (the host
-  // has no dimensions of its own, and .type() needs the focusable element).
+  /**
+   * `num-value-select` wraps plain `matInput`: target input directly. Host tag has no
+   * dimensions, `.type()` needs focusable element.
+   * */
   public selectValue(value: number) {
     cy.get('num-value-select input').clear().type(value.toString())
   }
 
-  // The criterion page's own "Selected Filters" summary (criterion-header.component.html's
-  // `.header-col-chips`) is fed by the same criterion() -> EditCriterionService round trip as the
-  // Feasibility Editor's criteria list. Waiting for it (Cypress retries, no fixed wait) before "Close"
-  // rules out a race where "Close" navigates before the value filter has propagated.
+  /**
+   * Criterion page "Selected Filters" summary (criterion-header.component.html
+   * `.header-col-chips`) fed by same `criterion()` to `EditCriterionService` round trip as
+   * Feasibility Editor criteria list. Wait for it (Cypress retry, no fixed wait) before "Close":
+   * rules out race where "Close" navigates before value filter propagated.
+   * */
   public shouldSeeInFilterSummary(chipValue: string) {
     cy.get('.header-col-chips').contains(chipValue).should('be.visible')
   }
 
+  /**
+   * Assert cohort criteria list shows criterium with panel and chip.
+   * */
   public shouldSeeInCohortCriteriaList(criterium: string, panelName: string, chipValue: string) {
     numFilterChips.getFilterChipBlock(criterium, panelName)
-    // Scoped by .container (the actual data-cy host, see NumFilterChips): a value filter's chip block
-    // can share its criterion's exact data-cy value, so an unscoped `[data-cy="..."]` is ambiguous.
+    /**
+     * Scope by `.container`, real `data-cy` host (see NumFilterChips): value filter chip block can
+     * share criterion exact `data-cy` value, so unscoped `[data-cy="..."]` is ambiguous.
+     * */
     cy.get(`.container[data-cy="${criterium}"]`).within(() => {
       cy.get('[data-cy="criterion-content"]')
         .should('contain', criterium)

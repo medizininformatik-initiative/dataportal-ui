@@ -229,6 +229,21 @@ npx cypress run --expose tags='@filter:attribute-filter and @type:concept and no
 npx cypress run --expose tags='@area:feasibility-query and @filter:time-restriction'
 ```
 
+### Time restriction: one component, same scenarios everywhere
+
+The criterion editor, the data selection feature editor and the reference editor all render the same
+`num-edit-time-restriction`. So whenever a time restriction scenario is written or changed, in **any** of
+them, all of these must be covered, in every feature that edits one (today `time-restriction.feature`
+under `CohortEdit` and `data-selection-time-restriction.feature`):
+
+- comparators `before`, `at`, `after` (`@comparator:` tag each), with the date check in the editor
+  (`the time restriction date is`) and the chip
+- `between` with both dates (`the time restriction dates are ... and ...`) and the chip `From <start> to <end>`
+- `between` rejected when start is after the end and when both are equal (`I see the time restriction warning`), no chip
+
+Use the steps of `support/step_definitions/timeRestriction.cy.ts` only; a new place that edits a time
+restriction needs no new steps. The date input commits on blur, so every step that types a date blurs it.
+
 ### Tables are column-aligned
 
 Every Gherkin table (`Examples` and step data tables) has its `|` aligned in a column, one space

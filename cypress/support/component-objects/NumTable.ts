@@ -1,19 +1,23 @@
 import { numCheckbox } from './NumCheckbox'
 
 /**
- * Query/interaction helper for the `table`/`table-body` shared components.
- * Row-finding stays text-based (`cy.contains('td', text)`) deliberately — a
- * row's internal `id` traces back to an opaque backend/Elasticsearch hash a
- * test author can't predict in advance (checked before deciding this; see
- * cypress/CLAUDE.md). Matching by the criterium's real display text is both
- * what Cypress recommends for meaningful text and the only thing a test
- * author actually knows ahead of time.
- */
+ * Escape regex metacharacters in text.
+ * */
 function escapeRegex(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
+/**
+ * Query and interaction helper for `table` / `table-body` shared components. Row finding stays
+ * text-based (`cy.contains('td', text)`) on purpose: row internal `id` traces back to opaque
+ * backend/Elasticsearch hash test author cannot predict (checked, see cypress/CLAUDE.md). Real
+ * display text is what Cypress recommends for meaningful text, and only thing author knows
+ * ahead.
+ * */
 export class NumTable {
+  /**
+   * Find table row containing text.
+   * */
   public getRowByText(text: string) {
     return cy
       .get('num-table tbody > tr')
@@ -22,11 +26,10 @@ export class NumTable {
   }
 
   /**
-   * Exact (whole-cell) match, not substring — for actions where clicking the
-   * wrong row matters (selecting a checkbox), not just confirming some row
-   * exists. Substring matching bit us for real: searching "Age" matched
-   * "AGel amyloidosis" (a genuine, different criterium) before this existed.
-   */
+   * Exact whole-cell match, not substring: for actions where clicking wrong row matters (ticking
+   * checkbox), not only confirming some row exists. Substring matching failed for real:
+   * searching "Age" matched "AGel amyloidosis", different criterium, before this existed.
+   * */
   private getRowByExactText(text: string) {
     return cy
       .get('num-table tbody > tr')
@@ -34,40 +37,55 @@ export class NumTable {
       .closest('tr')
   }
 
+  /**
+   * Assert table has row containing text.
+   * */
   public shouldContainRow(text: string) {
     this.getRowByText(text).should('exist')
   }
 
+  /**
+   * Assert table has no row containing text.
+   * */
   public shouldNotContainRow(text: string) {
     cy.get('num-table tbody > tr')
       .contains('td', new RegExp(escapeRegex(text), 'i'))
       .should('not.exist')
   }
 
+  /**
+   * Tick checkbox in row by exact text.
+   * */
   public selectCheckboxInRow(text: string) {
     this.getRowByExactText(text).within(() => numCheckbox.toggle())
   }
 
-  /** Toggles the "select all" checkbox in the table header. */
+  /**
+   * Toggle "select all" checkbox in table header.
+   * */
   public toggleSelectAll() {
     cy.get('num-table thead').within(() => numCheckbox.toggle())
   }
 
   /**
-   * Asserts on the rows currently rendered (the table is infinite-scrolled, so
-   * "all" means every loaded row). Uses a retrying `.should(callback)` on
-   * `aria-checked` because the row checkboxes update a moment after the header
-   * one — asserting right after the click sees the header ticked and the rows
-   * still unticked.
-   */
+   * Assert on rows currently rendered: table is infinite-scrolled, so "all" = every loaded row.
+   * Use retrying `.should(callback)` on `aria-checked`: row checkboxes update moment after
+   * header one, asserting right after click sees header ticked, rows still unticked.
+   * */
   public shouldHaveAllRowsChecked() {
     this.shouldHaveRowsCheckedState('true')
   }
 
+  /**
+   * Assert no row checked.
+   * */
   public shouldHaveNoRowChecked() {
     this.shouldHaveRowsCheckedState('false')
   }
 
+  /**
+   * Assert all rendered rows have `aria-checked` state.
+   * */
   private shouldHaveRowsCheckedState(expected: 'true' | 'false') {
     cy.get('num-table tbody > tr [data-cy="checkbox"]').should(($boxes) => {
       expect($boxes.length, 'number of row checkboxes').to.be.greaterThan(0)

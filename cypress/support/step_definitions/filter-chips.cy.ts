@@ -1,11 +1,20 @@
 import { defineStep } from '../defineStep'
 import { numFilterChips } from '../component-objects/NumFilterChips'
 
+/**
+ * Steps for filter chips of criteria boxes.
+ * */
 export class FilterChips {
+  /**
+   * Assert criterium shows filter chip block.
+   * */
   public shouldShowBlock(criterium: string, blockName: string) {
     numFilterChips.getFilterChipBlock(criterium, blockName)
   }
 
+  /**
+   * Assert criterium shows chip inside block.
+   * */
   public shouldShowChip(criterium: string, chipName: string, blockName: string) {
     numFilterChips.getFilterChipByName(criterium, chipName, blockName)
   }

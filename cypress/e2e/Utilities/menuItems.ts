@@ -1,8 +1,9 @@
-// Real English display text for num-menu items (src/assets/i18n/en.json,
-// SHARED_COMPONENTS.MENU.*) — the previous German values here never matched
-// what any scenario actually passes (confirmed real usage: "Apply filter",
-// "Delete", "Duplicate"; "Configure" is EDIT's real text, distinct from a
-// different, unrelated "Edit" string a separate module's own menu uses).
+/**
+ * Real English display text of `num-menu` items (src/assets/i18n/en.json,
+ * `SHARED_COMPONENTS.MENU.*`). Old German values never matched what scenarios pass (real
+ * usage: "Apply filter", "Delete", "Duplicate"). "Configure" is EDIT real text, distinct from
+ * unrelated "Edit" string of another module menu.
+ * */
 export const menuItems = {
   addToCohort: 'Add to cohort selection',
   addToProfile: 'Add to profile selection',

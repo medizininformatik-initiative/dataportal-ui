@@ -1,14 +1,16 @@
 import { Json } from './types'
 
 /**
- * Constructors for every filter shape in a CRTDL. They take the values and know nothing about
- * the ontology, so a filter is reusable with any criterion or feature that offers it.
- */
+ * Constructors for every filter shape in CRTDL. Take values, know nothing of ontology: filter
+ * is reusable with any criterion or feature offering it.
+ * */
 export const timeRestriction = {
   before: (date: string): Json => ({ beforeDate: date }),
   after: (date: string): Json => ({ afterDate: date }),
   between: (after: string, before: string): Json => ({ afterDate: after, beforeDate: before }),
-  /** One day: the editor's "at". */
+  /**
+   * One day: editor "at".
+   * */
   at: (date: string): Json => ({ afterDate: date, beforeDate: date }),
 }
 
@@ -18,14 +20,18 @@ interface Coded {
   display: string
 }
 
-/** Concept filter on a criterion's attribute. */
+/**
+ * Concept filter on criterion attribute.
+ * */
 export const conceptAttribute = (attributeCode: Coded, concepts: readonly Coded[]): Json => ({
   type: 'concept',
   attributeCode,
   selectedConcepts: concepts,
 })
 
-/** Concept filter on a criterion's value. */
+/**
+ * Concept filter on criterion value.
+ * */
 export const conceptValue = (concepts: readonly Coded[]): Json => ({
   type: 'concept',
   selectedConcepts: concepts,
@@ -36,6 +42,9 @@ interface Unit {
   display: string
 }
 
+/**
+ * Quantity filter with comparator, value, unit.
+ * */
 export const quantityComparator = (comparator: string, value: number, unit: Unit): Json => ({
   type: 'quantity-comparator',
   comparator,
@@ -43,6 +52,9 @@ export const quantityComparator = (comparator: string, value: number, unit: Unit
   unit,
 })
 
+/**
+ * Quantity filter with range, unit.
+ * */
 export const quantityRange = (minValue: number, maxValue: number, unit: Unit): Json => ({
   type: 'quantity-range',
   minValue,
@@ -50,7 +62,9 @@ export const quantityRange = (minValue: number, maxValue: number, unit: Unit): J
   unit,
 })
 
-/** Filters of a feature (data extraction). */
+/**
+ * Filters of feature (data extraction).
+ * */
 export const dateFilter = (name: string, start?: string, end?: string): Json => ({
   type: 'date',
   name,
@@ -58,6 +72,9 @@ export const dateFilter = (name: string, start?: string, end?: string): Json => 
   ...(end ? { end } : {}),
 })
 
+/**
+ * Token filter with system and codes.
+ * */
 export const tokenFilter = (
   name: string,
   system: string,

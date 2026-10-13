@@ -8,28 +8,34 @@ const HEADER_SECTIONS: Record<string, string> = {
 }
 
 /**
- * The tabs of the profile editor (`query-editor/feature/:id`) that the data selection
- * opens: Fields, Code Filter, Time restriction and Information. Opening a tab, selecting a field
- * or a concept and the chip assertions reuse the steps of `dataSelectionSearch.cy.ts` and
- * `conceptFilter.cy.ts`; only what they lack is here.
- */
+ * Tabs of profile editor (`query-editor/feature/:id`) opened by data selection: Fields, Code
+ * Filter, Time restriction, Information. Opening tab, selecting field or concept and chip
+ * assertions reuse steps of `dataSelectionSearch.cy.ts` and `conceptFilter.cy.ts`. Only
+ * missing parts live here.
+ * */
 export class DataSelectionFeatureEditorTabs {
   /**
-   * The "Mark as required" panel on the right of the Fields tab (`.selected-fields-box`): one row per
-   * selected field with a checkbox (required) and an X (remove from the selection). The header's
-   * "Selected fields" column groups the chips into a Required and an Optional `.filter-wrapper`.
-   */
+   * Panel "Mark as required" right of Fields tab (`.selected-fields-box`): one row per selected
+   * field, checkbox (required) and X (remove from selection). Header column "Selected fields"
+   * groups chips into Required and Optional `.filter-wrapper`.
+   * */
   private panelRow(field: string) {
     return cy
       .get('.selected-fields-box .selected-filter-container')
       .filter((_, row) => row.querySelector('.field-name')?.textContent?.trim() === field)
   }
 
+  /**
+   * Assert field absent from selected-fields list.
+   * */
   public fieldShouldNotBeInSelectedList(field: string) {
     cy.get('.selected-fields-box').should('be.visible')
     cy.get('.selected-fields-box .field-name').should('not.contain', field)
   }
 
+  /**
+   * Assert header section has no chip `chipName`.
+   * */
   public noChipShouldAppearInSection(chipName: string, section: string) {
     if (!HEADER_SECTIONS[section]) throw new Error(`Unknown section "${section}"`)
     cy.contains('.header-col', t(HEADER_SECTIONS[section]))
@@ -37,30 +43,48 @@ export class DataSelectionFeatureEditorTabs {
       .should('not.exist')
   }
 
+  /**
+   * Assert information tab explains `title`.
+   * */
   public informationShouldExplain(title: string) {
     cy.get('.information-templates num-information-section').contains(title).should('be.visible')
   }
 
+  /**
+   * Toggle required checkbox of field.
+   * */
   public toggleRequired(field: string) {
     this.panelRow(field).find('[data-cy="checkbox"]').click()
   }
 
+  /**
+   * Assert required option of field enabled or disabled.
+   * */
   public requiredShouldBe(field: string, state: string) {
     this.panelRow(field)
       .find('[data-cy="checkbox"]')
       .should('have.attr', 'aria-checked', String(state === 'enabled'))
   }
 
+  /**
+   * Assert selected field sits in group.
+   * */
   public selectedFieldShouldBeInGroup(field: string, group: string) {
     cy.contains('.header-col', t('DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS'))
       .find(`.filter-wrapper:has(.block[data-cy="${group}"]) .chip-container[data-cy="${field}"]`)
       .should('be.visible')
   }
 
+  /**
+   * Remove field from selected-fields list.
+   * */
   public removeSelectedField(field: string) {
     this.panelRow(field).find('.delete-button').click()
   }
 
+  /**
+   * Assert field unticked in fields tree.
+   * */
   public fieldShouldNotBeTicked(field: string) {
     cy.get(`num-tree [data-cy="${field}"]`)
       .first()
@@ -70,9 +94,9 @@ export class DataSelectionFeatureEditorTabs {
   }
 
   /**
-   * The header's "Selected fields" column shows 3 chips per group, the rest sits behind a "+N" badge
-   * whose tooltip lists them — a newly ticked field usually lands there, so look in both places.
-   */
+   * Header column "Selected fields" shows 3 chips per group, rest sits behind "+N" badge
+   * tooltip. Newly ticked field usually lands there: look in both places.
+   * */
   public headerShouldListSelectedField(field: string) {
     const column = () =>
       cy

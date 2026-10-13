@@ -6,7 +6,12 @@
         "project": ["./cypress/tsconfig.json"]
       },
       "rules": {
-        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
         "no-restricted-syntax": [
           "error",
           {
@@ -25,7 +30,38 @@
             "selector": "Program:has(CallExpression[callee.name='defineStep']):not(:has(ClassDeclaration))",
             "message": "A file with defineStep steps needs a class holding the cy.* code (see cypress/CLAUDE.md)."
           }
-        ]
+        ],
+        "comment-format": "error",
+        "jsdoc/require-jsdoc": [
+          "error",
+          {
+            "publicOnly": false,
+            "require": {
+              "ClassDeclaration": true,
+              "MethodDefinition": true,
+              "FunctionDeclaration": true
+            },
+            "contexts": [
+              "Program > VariableDeclaration > VariableDeclarator > :matches(ArrowFunctionExpression, FunctionExpression)",
+              "ExportNamedDeclaration > VariableDeclaration > VariableDeclarator > :matches(ArrowFunctionExpression, FunctionExpression)"
+            ],
+            "checkConstructors": false
+          }
+        ],
+        "jsdoc/require-description": [
+          "error",
+          {
+            "contexts": ["any"]
+          }
+        ],
+        "jsdoc/match-description": [
+          "error",
+          {
+            "matchDescription": "^(?![\\s\\S]*\\b(?:[Aa]n?|[Tt]he|[Jj]ust|[Rr]eally|[Bb]asically|[Aa]ctually|[Ss]imply|[Vv]ery|[Pp]lease)\\b)[A-Z`][\\s\\S]*\\.$",
+            "contexts": ["any"]
+          }
+        ],
+        "jsdoc/no-bad-blocks": "error"
       }
     },
     {
@@ -35,5 +71,6 @@
         "@typescript-eslint/no-unused-vars": "off"
       }
     }
-  ]
+  ],
+  "plugins": ["jsdoc"]
 }

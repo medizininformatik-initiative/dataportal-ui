@@ -1,21 +1,30 @@
 import { defineStep } from '../defineStep'
 
+/**
+ * Steps for session loss and sign-in.
+ * */
 export class Session {
   /**
-   * A lost session, as opposed to `my session has expired` (an API answering 401). Dropping the
-   * browser's cookies and storage removes both the app's OAuth tokens (sessionStorage) and the
-   * Keycloak SSO cookie, so the next navigation cannot silently sign in again.
-   */
+   * Lost session, unlike `my session has expired` (API answers 401). Clearing cookies and
+   * storage removes app OAuth tokens (sessionStorage) and Keycloak SSO cookie: next navigation
+   * cannot silently sign in again.
+   * */
   public lose() {
     cy.clearAllCookies()
     cy.clearAllSessionStorage()
     cy.clearAllLocalStorage()
   }
 
+  /**
+   * Visit portal path.
+   * */
   public openPage(path: string) {
     cy.visit(path)
   }
 
+  /**
+   * Assert Keycloak login form visible.
+   * */
   public shouldBeAskedToSignIn() {
     cy.origin(Cypress.expose('redirectUrl'), () => {
       cy.get('#kc-login').should('be.visible')

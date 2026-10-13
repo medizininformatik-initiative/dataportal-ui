@@ -2,9 +2,9 @@ import { CRITERIA, CriterionName, PROFILES, ProfileName } from './ontology'
 import { AttributeGroup, Criterion, Crtdl, Json } from './types'
 
 /**
- * Turns a CRTDL into one plain English sentence, so the cases we cover can be read without
- * reading `cases.ts`: `npm run crtdl:doc` renders them. Pure; it only reads the CRTDL JSON.
- */
+ * Turn CRTDL into one plain English sentence, so covered cases read without `cases.ts`: `npm
+ * run crtdl:doc` renders them. Pure: only reads CRTDL JSON.
+ * */
 const CRITERION_LABELS: Record<CriterionName, string> = {
   pneumonia: 'Pneumonia',
   causeOfDeath: 'Cause of death',
@@ -29,11 +29,23 @@ const COMPARATOR_SYMBOLS: Record<string, string> = {
 }
 const UNIT_LABELS: Record<string, string> = { a: 'years', mo: 'months' }
 
+/**
+ * Cast value to JSON object.
+ * */
 const asJson = (value: unknown) => value as Json
+/**
+ * Unit display of quantity filter.
+ * */
 const unitOf = (filter: Json) =>
   UNIT_LABELS[asJson(filter.unit).code as string] ?? (asJson(filter.unit).code as string)
+/**
+ * Join concept codes with comma.
+ * */
 const codes = (concepts: unknown) => (concepts as Json[]).map((concept) => concept.code).join(', ')
 
+/**
+ * Describe time restriction.
+ * */
 function describeTime(restriction: Json): string {
   const { afterDate, beforeDate } = restriction
   if (afterDate && afterDate === beforeDate) return `on ${afterDate}`
@@ -41,6 +53,9 @@ function describeTime(restriction: Json): string {
   return afterDate ? `after ${afterDate}` : `before ${beforeDate}`
 }
 
+/**
+ * Describe value filter.
+ * */
 function describeValue(filter: Json): string {
   switch (filter.type) {
     case 'quantity-comparator':
@@ -54,6 +69,9 @@ function describeValue(filter: Json): string {
   }
 }
 
+/**
+ * Describe criterion.
+ * */
 function describeCriterion(criterion: Criterion): string {
   const code = criterion.termCodes[0].code
   const name = (Object.keys(CRITERIA) as CriterionName[]).find((key) => CRITERIA[key].code === code)
@@ -66,10 +84,15 @@ function describeCriterion(criterion: Criterion): string {
   return parts.join(' ')
 }
 
-/** Criteria in one group are alternatives; the groups must all apply. */
+/**
+ * Criteria in one group are alternatives. Groups must all apply.
+ * */
 const describeCriteria = (groups: Criterion[][]) =>
   groups.map((group) => group.map(describeCriterion).join(' or ')).join(', and ')
 
+/**
+ * Label of attribute group profile.
+ * */
 const profileLabel = (group: AttributeGroup) => {
   const profile = (Object.keys(PROFILES) as ProfileName[]).find(
     (key) => PROFILES[key].groupReference === group.groupReference
@@ -77,11 +100,17 @@ const profileLabel = (group: AttributeGroup) => {
   return profile ? PROFILE_LABELS[profile] : group.name
 }
 
+/**
+ * Describe one filter.
+ * */
 function describeFilter(filter: Json): string {
   if (filter.type === 'token') return `${filter.name} ${codes(filter.codes)}`
   return `${filter.name} ${describeTime({ afterDate: filter.start, beforeDate: filter.end })}`
 }
 
+/**
+ * Describe attribute group.
+ * */
 function describeGroup(group: AttributeGroup, all: AttributeGroup[]): string {
   const fields = group.attributes.map((attribute) => {
     const name = attribute.attributeRef.split('.').slice(1).join('.').replace('[x]', '')
@@ -101,6 +130,9 @@ function describeGroup(group: AttributeGroup, all: AttributeGroup[]): string {
   return `${profileLabel(group)} (${[...fields, ...extras].join(', ')})`
 }
 
+/**
+ * Describe CRTDL as English sentence.
+ * */
 export function describe(crtdl: Crtdl): string {
   const { inclusionCriteria, exclusionCriteria } = crtdl.cohortDefinition
   const groups = crtdl.dataExtraction.attributeGroups

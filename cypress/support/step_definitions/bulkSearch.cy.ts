@@ -2,47 +2,84 @@ import { defineStep } from '../defineStep'
 import { numBulkSearch } from '../component-objects/NumBulkSearch'
 import { t } from '../i18n'
 
+/**
+ * Steps for bulk search: enter codes, pick terminology and context, run, check counts, add
+ * result.
+ * */
 export class BulkSearch {
+  /**
+   * Type codes into bulk search input.
+   * */
   public enterCodes(codes: string) {
     numBulkSearch.enterCodes(codes)
   }
 
+  /**
+   * Select terminology system.
+   * */
   public selectTerminology(system: string) {
     numBulkSearch.selectTerminology(system)
   }
 
+  /**
+   * Select context.
+   * */
   public selectContext(context: string) {
     numBulkSearch.selectContext(context)
   }
 
+  /**
+   * Run bulk search.
+   * */
   public search() {
     numBulkSearch.search()
   }
 
+  /**
+   * Assert search button enabled.
+   * */
   public shouldHaveSearchButtonEnabled() {
     numBulkSearch.shouldHaveSearchButtonEnabled()
   }
 
+  /**
+   * Assert search button disabled.
+   * */
   public shouldHaveSearchButtonDisabled() {
     numBulkSearch.shouldHaveSearchButtonDisabled()
   }
 
+  /**
+   * Assert found-codes count.
+   * */
   public shouldShowFoundCount(count: number) {
     numBulkSearch.shouldShowFoundCount(count)
   }
 
+  /**
+   * Assert not-found-codes count.
+   * */
   public shouldShowNotFoundCount(count: number) {
     numBulkSearch.shouldShowNotFoundCount(count)
   }
 
+  /**
+   * Assert result lists `code`.
+   * */
   public shouldListCode(code: string) {
     numBulkSearch.shouldListCode(code)
   }
 
+  /**
+   * Add bulk search result to stage as one criterium.
+   * */
   public addResultAsOneCriterium() {
     cy.contains('button', t('FEASIBILITY.BULK_SEARCH.ACTION_BAR.ADD_TO_STAGE')).click()
   }
 
+  /**
+   * Open cohort selection (stage) from bulk search.
+   * */
   public viewCohortSelection() {
     cy.contains('button', t('FEASIBILITY.BULK_SEARCH.ACTION_BAR.VIEW_STAGE')).click()
   }

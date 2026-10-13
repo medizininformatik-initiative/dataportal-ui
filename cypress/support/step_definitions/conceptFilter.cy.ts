@@ -4,88 +4,134 @@ import { numConceptFilter } from '../component-objects/NumConceptFilter'
 import { resolve } from '../testData'
 
 /**
- * The concept editor (attribute filter / value filter). Assertions on
- * "the selected concepts" go through the Selected tab's list only; "checked in
- * the search results" assertions go through the search table. Keeping those two
- * apart is what lets a failing scenario say whether the selection state or its
- * rendering is wrong.
- *
- * Tables: a one-column table lists codes; a table with a header row
- * (`| code | system |`) is asserted column by column. Unscoped methods act on the
- * only concept editor on screen; the `filter` variants scope to one named concept
- * attribute (criteria with several concept filters).
- */
+ * Concept editor steps (attribute filter, value filter). "Selected concepts" assertions use
+ * Selected tab list only. "Checked in search results" assertions use search table. Separation
+ * shows whether selection state or rendering is wrong. Tables: one column = codes. Header row
+ * (`code`, `system`) = asserted column by column. Unscoped methods act on only concept editor
+ * on screen. `filter` variants scope to one named concept attribute (criteria with several
+ * concept filters).
+ * */
 export class ConceptFilter {
+  /**
+   * Resolve code column of data table. Skip header row when first cell is `code`.
+   * */
   private codesOf(table: DataTable): string[] {
     const rows = table.raw()
     const hasHeader = rows[0]?.[0] === 'code'
     return (hasHeader ? rows.slice(1) : rows).map((row) => resolve(row[0]))
   }
 
+  /**
+   * Open concept filter tab, optionally within named filter.
+   * */
   public openTab(tab: string, filter?: string) {
     numConceptFilter.openTab(tab, filter)
   }
 
+  /**
+   * Assert tab disabled.
+   * */
   public tabShouldBeDisabled(tab: string) {
     numConceptFilter.tabShouldBeDisabled(tab)
   }
 
+  /**
+   * Assert tab count badge.
+   * */
   public tabShouldShowCount(tab: string, count: number) {
     numConceptFilter.tabShouldShowCount(tab, count)
   }
 
+  /**
+   * Search concepts by term.
+   * */
   public search(term: string) {
     numConceptFilter.search(term)
   }
 
+  /**
+   * Clear concept search.
+   * */
   public clearSearch() {
     numConceptFilter.clearSearch()
   }
 
+  /**
+   * Toggle search result `code` within `system`.
+   * */
   public toggleInSystem(code: string, system: string) {
     numConceptFilter.toggleResultInSystem(resolve(code), system)
   }
 
+  /**
+   * Search `code` in Single Search tab, toggle its result in `system`.
+   * */
   public selectViaSearch(code: string, system: string) {
     numConceptFilter.openTab('Single Search')
     numConceptFilter.search(resolve(code))
     numConceptFilter.toggleResultInSystem(resolve(code), system)
   }
 
+  /**
+   * Assert result `code` in `system` checked or unchecked.
+   * */
   public shouldBeCheckedInSystem(code: string, system: string, checked: boolean) {
     numConceptFilter.resultInSystemShouldBeChecked(resolve(code), system, checked)
   }
 
+  /**
+   * Toggle search result `code`.
+   * */
   public toggle(code: string) {
     numConceptFilter.toggleResult(resolve(code))
   }
 
+  /**
+   * Assert result `code` checked or unchecked.
+   * */
   public shouldBeChecked(code: string, checked: boolean) {
     numConceptFilter.resultShouldBeChecked(resolve(code), checked)
   }
 
+  /**
+   * Select codes from data table, optionally within named filter.
+   * */
   public selectCodes(table: DataTable, filter?: string) {
     numConceptFilter.selectCodes(this.codesOf(table), filter)
   }
 
+  /**
+   * Remove `code` from selected list.
+   * */
   public removeSelected(code: string) {
     numConceptFilter.removeSelected(resolve(code))
   }
 
+  /**
+   * Open Selected Concepts tab of `filter`, remove `code`.
+   * */
   public removeSelectedInFilter(code: string, filter: string) {
     numConceptFilter.openTab('Selected Concepts', filter)
     numConceptFilter.removeSelected(resolve(code), filter)
   }
 
+  /**
+   * Assert selected-list entry count, optionally within named filter.
+   * */
   public selectedShouldHaveCount(count: number, filter?: string) {
     numConceptFilter.selectedShouldHaveCount(count, filter)
   }
 
+  /**
+   * Assert selected list contains or lacks `code`.
+   * */
   public selectedShouldContain(code: string, contained: boolean) {
     numConceptFilter.selectedShouldContain(resolve(code), contained)
   }
 
-  // Asserts the exact set of selected concepts (order-independent) via the Selected tab.
+  /**
+   * Assert exact set of selected concepts, order-independent, via Selected tab.
+   * */
   public selectedShouldBe(table: DataTable, filter?: string) {
     const codes = this.codesOf(table)
     numConceptFilter.openTab('Selected Concepts', filter)
@@ -93,6 +139,9 @@ export class ConceptFilter {
     codes.forEach((code) => numConceptFilter.selectedShouldContain(code, true, filter))
   }
 
+  /**
+   * Assert concept results table scrolls inside editor.
+   * */
   public resultsTableShouldScroll() {
     cy.get('num-concept-filter-table').should(($el) => {
       const overflowY = getComputedStyle($el[0]).overflowY
@@ -100,12 +149,12 @@ export class ConceptFilter {
     })
   }
 
-  // Multi-attribute helpers (criteria with several concept filters, e.g. the "Fall" profile,
-  // see cypress/TEST_DATA.md). The filters and codes come from the scenario's data table,
-  // so they can be swapped in an Examples block; nothing is hard-coded here.
-  // Each attribute filter picks its concept from its own value set.
-  //   | attribute filter  | concept |
-  //   | Type of encounter | konsil  |
+  /**
+   * Multi-attribute helpers for criteria with several concept filters, e.g. profile "Fall" (see
+   * cypress/TEST_DATA.md). Filters and codes come from scenario data table, swappable in
+   * Examples block, nothing hard-coded. Each attribute filter picks concept from own value set.
+   * Table columns: `attribute filter`, `concept`.
+   * */
   public selectOneConceptPerAttributeFilter(table: DataTable) {
     table
       .hashes()
@@ -114,6 +163,9 @@ export class ConceptFilter {
       )
   }
 
+  /**
+   * Assert each attribute filter in table has `count` selected concepts.
+   * */
   public eachAttributeFilterShouldHaveSelected(count: number, table: DataTable) {
     table.hashes().forEach((row) => {
       numConceptFilter.openTab('Selected Concepts', resolve(row['attribute filter']))

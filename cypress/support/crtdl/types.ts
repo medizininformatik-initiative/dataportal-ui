@@ -1,4 +1,6 @@
-/** The slice of the CRTDL JSON that the roundtrip tests build. Mirrors `src/app/model/Interface`. */
+/**
+ * Slice of CRTDL JSON built by roundtrip tests. Mirrors `src/app/model/Interface`.
+ * */
 export type Json = Record<string, unknown>
 
 export interface Criterion {
@@ -9,7 +11,9 @@ export interface Criterion {
   valueFilter?: Json
 }
 
-/** A change to a criterion; criteria are composed by applying modifiers in order. */
+/**
+ * Change to criterion. Criteria compose by applying modifiers in order.
+ * */
 export type CriterionModifier = (criterion: Criterion) => Criterion
 
 export interface Attribute {

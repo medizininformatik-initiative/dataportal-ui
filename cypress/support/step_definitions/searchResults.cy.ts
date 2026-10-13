@@ -1,8 +1,13 @@
 import { defineStep } from '../defineStep'
 import { t } from '../i18n'
 
-/** What a search shows when it finds nothing, or answers slowly. */
+/**
+ * What search shows when it finds nothing or answers slowly.
+ * */
 export class SearchResults {
+  /**
+   * Assert no-results placeholder names search term.
+   * */
   public shouldShowNoResultsMessage(term: string) {
     cy.get('num-placeholder-box')
       .should('be.visible')
@@ -10,6 +15,9 @@ export class SearchResults {
       .and('contain.text', term)
   }
 
+  /**
+   * Assert results table gets rows within `seconds`.
+   * */
   public tableShouldShowResultsWithin(seconds: number) {
     cy.get('num-table tbody > tr', { timeout: seconds * 1000 }).should('have.length.greaterThan', 0)
   }

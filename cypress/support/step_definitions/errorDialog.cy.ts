@@ -2,44 +2,71 @@ import { defineStep } from '../defineStep'
 import { numErrorDisplay } from '../component-objects/NumErrorDisplay'
 
 /**
- * The error overlay (`num-error-display`) that failed requests open, and the error LOG dialog
- * (`num-error-log-modal`): a different overlay that lists the backend's validation problems for a
- * rejected upload.
- */
+ * Error overlay (`num-error-display`) opened by failed requests. Also error LOG dialog
+ * (`num-error-log-modal`): different overlay listing backend validation problems of rejected
+ * upload.
+ * */
 export class ErrorDialog {
+  /**
+   * Assert error dialog open.
+   * */
   public shouldBeOpen() {
     numErrorDisplay.shouldBeOpen()
   }
 
+  /**
+   * Assert error dialog closed.
+   * */
   public shouldBeClosed() {
     numErrorDisplay.shouldBeClosed()
   }
 
+  /**
+   * Assert error dialog title.
+   * */
   public shouldHaveTitle(title: string) {
     numErrorDisplay.shouldHaveTitle(title)
   }
 
+  /**
+   * Assert error dialog shows text.
+   * */
   public shouldShow(text: string) {
     numErrorDisplay.shouldContain(text)
   }
 
+  /**
+   * Assert error dialog lacks text.
+   * */
   public shouldNotShow(text: string) {
     numErrorDisplay.shouldNotContain(text)
   }
 
+  /**
+   * Close error dialog, assert closed.
+   * */
   public close() {
     numErrorDisplay.close()
     numErrorDisplay.shouldBeClosed()
   }
 
+  /**
+   * Assert error log dialog exists.
+   * */
   public logShouldBeOpen() {
     cy.get('num-error-log-modal').should('exist')
   }
 
+  /**
+   * Assert error log shows text.
+   * */
   public logShouldShow(text: string) {
     cy.get('num-error-log-modal').should('contain.text', text)
   }
 
+  /**
+   * Click last button of error log actions, assert dialog gone.
+   * */
   public closeLog() {
     cy.get('num-error-log-modal num-error-log-actions num-button').last().click()
     cy.get('num-error-log-modal').should('not.exist')

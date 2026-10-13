@@ -1,7 +1,13 @@
 import { defineStep } from '../defineStep'
 import { t } from '../i18n'
 
+/**
+ * Steps for cohort definition page.
+ * */
 export class CohortDefinition {
+  /**
+   * Assert empty-cohort placeholder shown.
+   * */
   public shouldShowEmptyMessage() {
     cy.get('num-placeholder-box').should('contain', t('DATAQUERY.COHORT.EMPTY'))
   }
