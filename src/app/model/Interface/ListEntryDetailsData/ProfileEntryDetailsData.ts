@@ -5,9 +5,7 @@ import { ProfileEntryDetailsFieldData } from '../../Search/EntryDetails/Profile/
 
 export interface ProfileEntryDetailsData extends ListEntryDetailsData<ProfileRelativeData> {
   id: string
-  description: {
-    display: DisplayData
-  }
+  description: DisplayData
   fields: ProfileEntryDetailsFieldData[]
   url: string
 }
