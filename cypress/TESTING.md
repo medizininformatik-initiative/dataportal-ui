@@ -129,6 +129,37 @@ Use `--expose`, not `--env`: this project is on Cypress 16, where the preprocess
 `tags` option from the exposed config values. `--env tags=...` and `--env TAGS=...` are silently
 ignored. A skipped scenario shows up as 0 passing in a few milliseconds instead of failing.
 
+### Run by tag (quick)
+
+Want one test. Pick tags. Run:
+
+```console
+npm run cypress:run -- --expose tags='@component:user-menu and @behavior:open-menu'
+```
+
+- Use `npm run cypress:run`. It uses Chrome. Plain `npx cypress run` uses old Electron.
+- Use `--expose tags=...`. Not `--env`. `--env` does nothing.
+- Wrap filter in single quotes `'...'`.
+- Join with `and`, `or`, `not`. Space does not join.
+- Match is exact. `@component:user-menu` finds only that tag.
+- Only spec files with a match run. Others do not start.
+- No tag filter = all tests run, `@pending` too. Add `and not @pending`.
+- Find tags: look at line above `Scenario`, or see table below.
+- Always run by tag first, never the whole suite. Data Selection Editor (all 5 features): `--expose tags='@component:data-selection-feature-editor and not @pending'` (~75s).
+- One failed spec: rerun only it with `--spec 'cypress/e2e/<Folder>/<name>.feature'`.
+- Failure screenshots go to `cypress/screenshots/`. `before:run` wipes them on the next run: look at them (or copy them away) before rerunning.
+- Fails once, then passes alone and on rerun = flaky. Capture the first failure's screenshot and error, then check the app with Chrome DevTools MCP.
+
+**Tests for my changes.** Module changed? Run only its area:
+
+```console
+npm run cypress:run -- --expose tags="$(node cypress/scripts/tests-for-changes.mjs)"
+```
+
+Script reads `git diff`. `src/app/modules/<x>/` changed = `@area:<x>`. Optional arg is a git ref
+(`main`). Module with no tagged features (`query-editor`, `shared-filter`) is not covered: run all.
+`npm run gherkin:lint` fails if `@area:<x>` has no folder `src/app/modules/<x>`.
+
 ### Tags
 
 Tag matching is exact: `@a:b:c` does not match a filter for `@a:b`. So tags are **facets**, one
@@ -209,7 +240,9 @@ editing one; the pre-commit hook does it for staged `.feature` files; `node cypr
 `npm run gherkin:lint` (also run on commit for staged `.feature` files) fails when a scenario step
 quotes anything but a `<placeholder>` or a UI label. Criteria, codes, concepts, dates, chip texts,
 messages, search terms and endpoints go in an `Examples` cell, even when a scenario has one row:
-make it a `Scenario Outline`. A `Background` is not checked, because it cannot use placeholders.
+make it a `Scenario Outline`. A `Background` is checked too: it cannot use `<placeholders>`, but a
+`{{group.key}}` placeholder works there. File names count as data (`{{files.*}}`). Single- and
+double-quoted strings, DocStrings and data-table cells are checked.
 A new UI label (button, tab, list or page name) is added to `UI_LABELS` in
 `cypress/scripts/lint-features.mjs`.
 
@@ -217,15 +250,22 @@ A new UI label (button, tab, list or page name) is added to `UI_LABELS` in
 
 Criteria, codes, concepts, tab names, labels and dates belong in an `Examples` table, never in a
 step, so a value can be swapped without touching a step definition. A `Background` cannot use
-`<placeholders>`, so a scenario that needs data adds its criterium inside the scenario
+`<placeholders>` (use `{{group.key}}` there), or add the criterium inside the scenario
 (`Given I add the criterium "<criterium>" via code "<criteriumCode>" to the editor`). A cell may
-be a literal or a `{{group.key}}` placeholder from `support/test-data/concepts.json`, one group per
+be a literal or a `{{group.key}}` placeholder from `cypress/test-data/*.json` (`criteria`, `bulk-search`, `data-selection`, `files`, `pages`, `ui-labels`), one group per
 criterium (`age`, `causeOfDeath`, `gender`, `encounter`, ...) holding its code, filter tabs and concepts.
 Prefer the placeholder for every criterium, code, tab, concept and system: one edit in the JSON
 updates every scenario. Every step resolves placeholders, because step files import `defineStep`
 from `support/defineStep.ts` (not from the preprocessor), which runs `resolve()` on each string
 argument. Step definitions must not hard-code a filter name or code; take them from the scenario's
 data table instead (see `I have selected one concept from the value set of each of these attribute filters:`).
+
+### See what a `{{placeholder}}` means (VS Code)
+
+Hover `{{pages.feasibilitySearch}}` in a `.feature` file: shows `Feasibility Search`. A faded
+`= Feasibility Search` also sits after it. Install once: Command Palette ->
+"Developer: Install Extension from Location..." -> `cypress/tools/gherkin-placeholders`. Reads
+`cypress/test-data/*.json` live; unknown key shows `?`.
 
 ## Implemented Step Definitions
 
