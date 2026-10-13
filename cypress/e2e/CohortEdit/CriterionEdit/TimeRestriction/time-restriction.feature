@@ -12,6 +12,7 @@ Feature: Criterion editor - time restriction
     When I click on the menu item "{{labels.configure}}"
     Then I am on the "{{pages.queryEditorCriteria}}" page
     When I set the time restriction to <comparator> with date "<date>"
+    Then the time restriction date is "<date>"
     When I click on the button "{{labels.close}}"
     Then I am on the "{{pages.feasibilityEditor}}" page
     Then I see the criterium "<criterium>" with filter chip "<date>" in the block "<block>"
@@ -44,6 +45,7 @@ Feature: Criterion editor - time restriction
     When I click on the menu item "{{labels.configure}}"
     Then I am on the "{{pages.queryEditorCriteria}}" page
     When I set the time restriction to between "<after>" and "<before>"
+    Then the time restriction dates are "<after>" and "<before>"
     When I click on the button "{{labels.close}}"
     Then I am on the "{{pages.feasibilityEditor}}" page
     Then I see the criterium "<criterium>" with filter chip "<chip>" in the block "<block>"

@@ -15,21 +15,21 @@ const box = (name: string) => cy.get(`.selection-box[data-cy="${name}"]`).should
 
 const optionLabel = () => t('DATASELECTION.EDITOR.DISPLAY.REFERENCE')
 
-defineStep('the data selection box {string} offers the "Only if referenced" option', (name: string) => {
+defineStep('the data selection box {string} offers the {string} option', (name: string, _option: string) => {
   box(name).find('num-reference-col').should('be.visible').and('contain.text', optionLabel())
 })
 
-defineStep('the data selection box {string} does not offer the "Only if referenced" option', (name: string) => {
+defineStep('the data selection box {string} does not offer the {string} option', (name: string, _option: string) => {
   box(name).find('num-reference-col').should('not.exist')
 })
 
-defineStep('I toggle the "Only if referenced" option of the data selection box {string}', (name: string) => {
+defineStep('I toggle the {string} option of the data selection box {string}', (_option: string, name: string) => {
   box(name)
     .find('num-reference-col')
     .within(() => numCheckbox.toggle())
 })
 
-defineStep('the "Only if referenced" option of the data selection box {string} is {word}', (name: string, state: string) => {
+defineStep('the {string} option of the data selection box {string} is {word}', (_option: string, name: string, state: string) => {
   box(name)
     .find('num-reference-col [data-cy="checkbox"]')
     .should('have.attr', 'aria-checked', String(state === 'enabled'))

@@ -101,10 +101,6 @@ defineStep('I select the checkbox labeled {string}', (label: string) => {
   dataSelectionSearch.selectCheckboxByLabel(label);
 });
 
-defineStep('a chip labeled {string} should appear in the "Selected Fields" section', (chipName: string) => {
-  dataSelectionSearch.getChip('DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS', chipName);
-});
-
 // The header chips cap at 3 visible per group (`maxVisible` in num-filter-chips) and put
 // the rest in a "+N" tooltip, so a freshly selected field may have no chip of its own.
 // The editor's own selected-fields list always shows every selected field.
@@ -118,10 +114,6 @@ defineStep('I click the {string} tab', (tabName: string) => {
 
 defineStep('I enter {string} into the filter search field', (conceptName: string) => {
   dataSelectionSearch.searchForConcept(conceptName);
-});
-
-defineStep('a chip labeled {string} should appear in the "Selected Filters" section', (chipName: string) => {
-  dataSelectionSearch.getChip('DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER', chipName);
 });
 
 defineStep('I should see the placeholder', () => {
@@ -142,6 +134,15 @@ defineStep('I add a reference named {string}', (name: string) => {
 defineStep('I add the reference', () => {
   dataSelectionSearch.saveReference();
 })
-defineStep('a chip labeled {string} should appear in the "Selected Reference" section', (chipName: string) => {
-  dataSelectionSearch.getChip('DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES', chipName);
-});
+
+// The section is a {string}, not literal text in the pattern: Cucumber matches the pattern before
+// `{{placeholders}}` are resolved. Keys are the English section labels (`labels.selected*`).
+const CHIP_SECTIONS: Record<string, string> = {
+  'Selected Fields': 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS',
+  'Selected Filters': 'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER',
+  'Selected Reference': 'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES',
+}
+defineStep('a chip labeled {string} should appear in the {string} section', (chipName: string, section: string) => {
+  if (!CHIP_SECTIONS[section]) throw new Error(`Unknown section "${section}"`)
+  dataSelectionSearch.getChip(CHIP_SECTIONS[section], chipName)
+})

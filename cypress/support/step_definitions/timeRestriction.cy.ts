@@ -22,7 +22,9 @@ export class TimeRestriction {
     // is why TimeRestrictionFilterType's values were fixed to match the
     // real app enum exactly.
     cy.get('num-timerestriction-type-selector select').select(type)
-    cy.get('.mat-datepicker-input').clear().type(date).should('have.value', date)
+    // The datepicker commits (`dateChange`) on blur, so blur here: without it the filter is not applied yet
+    // (header chip missing) until the next click happens to blur the input.
+    cy.get('.mat-datepicker-input').clear().type(date).should('have.value', date).blur()
   }
 
   // BETWEEN renders two date inputs (num-between-filter). The app only emits
@@ -69,3 +71,19 @@ defineStep(
 defineStep('I see the time restriction warning {string}', (warning: string) => {
   cy.get('num-between-filter .date-warning').should('be.visible').and('contain.text', warning)
 })
+// The date picker shows the date without leading zeros (04.04.2045 -> 4.4.2045).
+const plainDate = (d: string) => d.replace(/\b0(\d)/g, '$1')
+const expectDate = (input: JQuery<HTMLElement>, date: string) =>
+  expect(plainDate(String(input.val()))).to.eq(plainDate(date))
+defineStep('the time restriction date is {string}', (date: string) => {
+  cy.get('.mat-datepicker-input').should(($input) => expectDate($input, date))
+})
+defineStep(
+  'the time restriction dates are {string} and {string}',
+  (startDate: string, endDate: string) => {
+    cy.get('num-between-filter .mat-datepicker-input').should(($inputs) => {
+      expectDate($inputs.eq(0), startDate)
+      expectDate($inputs.eq(1), endDate)
+    })
+  }
+)

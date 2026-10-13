@@ -5,7 +5,7 @@ Feature: Data Selection Search - select all
 
   Background:
     Given I am logged in as a user
-    And I am on the "Data Selection Search" page
+    And I am on the "{{pages.dataSelectionSearch}}" page
     And I set the language to English
 
   @component:data-selection-search @behavior:select-all
@@ -13,8 +13,8 @@ Feature: Data Selection Search - select all
     Then the button "<addButton>" should be disabled
 
     Examples:
-      | addButton        |
-      | Add to Selection |
+      | addButton                 |
+      | {{labels.addToSelection}} |
 
   @component:data-selection-search @behavior:select-all
   Scenario Outline: Select all checks every loaded row and enables adding
@@ -23,8 +23,8 @@ Feature: Data Selection Search - select all
     And the button "<addButton>" should be enabled
 
     Examples:
-      | addButton        |
-      | Add to Selection |
+      | addButton                 |
+      | {{labels.addToSelection}} |
 
   @component:data-selection-search @behavior:select-all
   Scenario Outline: Toggling select all a second time clears the selection
@@ -35,5 +35,5 @@ Feature: Data Selection Search - select all
     And the button "<addButton>" should be disabled
 
     Examples:
-      | addButton        |
-      | Add to Selection |
+      | addButton                 |
+      | {{labels.addToSelection}} |
