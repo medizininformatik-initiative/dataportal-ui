@@ -1,7 +1,20 @@
 import { defineStep } from '../defineStep'
 import { currentLanguage } from '../i18n'
 
+// {word}, not literal English/German: Cucumber matches the pattern before `{{placeholders}}` are resolved.
+const LANGUAGES: Record<string, 'en' | 'de'> = { English: 'en', German: 'de' }
+
 export class Language {
+  public setLanguageByName(name: string) {
+    if (!LANGUAGES[name]) throw new Error(`Unknown language "${name}"`)
+    this.setLanguage(LANGUAGES[name])
+  }
+
+  public setConfiguredLanguage() {
+    // Uses the language configured for the run (`--expose language=de`, default 'en').
+    this.setLanguage(currentLanguage())
+  }
+
   public setLanguage(language: 'en' | 'de' = 'en') {
     cy.get('[data-cy="language-select"]').first().click()
     cy.get(`[data-cy="language-option-${language}"]`).click()
@@ -15,13 +28,9 @@ export class Language {
 
 export const languageInstance = new Language()
 
-defineStep('I set the language to English', () => {
-  languageInstance.setLanguage('en')
-})
-defineStep('I set the language to German', () => {
-  languageInstance.setLanguage('de')
-})
-// Uses the language configured for the run (`--expose language=de`, default 'en').
-defineStep('I set the language to the configured language', () => {
-  languageInstance.setLanguage(currentLanguage())
-})
+defineStep('I set the language to {word}', (language: string) =>
+  languageInstance.setLanguageByName(language)
+)
+defineStep('I set the language to the configured language', () =>
+  languageInstance.setConfiguredLanguage()
+)

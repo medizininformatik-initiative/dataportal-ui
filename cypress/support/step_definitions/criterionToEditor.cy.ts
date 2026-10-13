@@ -1,6 +1,6 @@
 import { defineStep } from '../defineStep'
-import { resolve } from "../testData"
-import { CriterionSearch } from "../../e2e/CohortSearch/cohort-search"
+import { resolve } from '../testData'
+import { CriterionSearch } from '../../e2e/CohortSearch/cohort-search'
 
 export class CriterionToEditor {
   public addCriteriumToEditor(criterium: string) {
@@ -37,7 +37,7 @@ export class CriterionToEditor {
     })
   }
 
-  public dragCriteriumRightBy200px(type = "Inclusion") {
+  public dragCriteriumRightBy200px(type = 'Inclusion') {
     const draggableSelector = '.cdk-drag'
     cy.wait(1000) // ensure UI is ready
     cy.get(draggableSelector).trigger('mousedown', {
@@ -50,14 +50,23 @@ export class CriterionToEditor {
         waitForAnimations: true,
       })
       .click()
-      cy.wait(1000)
+    cy.wait(1000)
   }
 }
 
 export const criterionToEditor = new CriterionToEditor()
-defineStep('I add the criterium {string} to the editor', (criterium: string) => {criterionToEditor.addCriteriumToEditor(criterium)})
-defineStep('I add the criterium {string} via code {string} to the editor', (criterium: string, code: string) => {criterionToEditor.addCriteriumToEditorByCode(resolve(code), resolve(criterium))})
-defineStep('I should see the criterium {string} in the editor', (criterium: string) => {criterionToEditor.shouldSeeCriteriumInEditor(criterium)})
-defineStep('I drag {string} criterium to the {string} list', (criterium: string, type: string) =>
+
+defineStep('I add the criterium {string} to the editor', (criterium: string) =>
+  criterionToEditor.addCriteriumToEditor(criterium)
+)
+defineStep(
+  'I add the criterium {string} via code {string} to the editor',
+  (criterium: string, code: string) =>
+    criterionToEditor.addCriteriumToEditorByCode(resolve(code), resolve(criterium))
+)
+defineStep('I should see the criterium {string} in the editor', (criterium: string) =>
+  criterionToEditor.shouldSeeCriteriumInEditor(criterium)
+)
+defineStep('I drag {string} criterium to the {string} list', (_criterium: string, type: string) =>
   criterionToEditor.dragCriteriumRightBy200px(type)
 )

@@ -6,12 +6,18 @@
 import { CASES } from './cases'
 
 const BACKEND = process.env.BACKEND_URL ?? 'http://localhost:8090/api/v6'
-const AUTH = process.env.AUTH_URL ?? 'http://localhost:8080/realms/dataportal/protocol/openid-connect/token'
+const AUTH =
+  process.env.AUTH_URL ?? 'http://localhost:8080/realms/dataportal/protocol/openid-connect/token'
 
 async function token(): Promise<string> {
   const response = await fetch(AUTH, {
     method: 'POST',
-    body: new URLSearchParams({ grant_type: 'password', client_id: 'dataportal-webapp', username: 'testuser', password: 'testpassword' }),
+    body: new URLSearchParams({
+      grant_type: 'password',
+      client_id: 'dataportal-webapp',
+      username: 'testuser',
+      password: 'testpassword',
+    }),
   })
   return (await response.json()).access_token
 }
@@ -27,7 +33,9 @@ async function main() {
     })
     if (response.status !== 200) {
       invalid++
-      console.log(`INVALID  ${name}  (${response.status})  ${(await response.text()).slice(0, 240)}`)
+      console.log(
+        `INVALID  ${name}  (${response.status})  ${(await response.text()).slice(0, 240)}`
+      )
     }
   }
   console.log(`${Object.keys(CASES).length} cases, ${invalid} invalid`)

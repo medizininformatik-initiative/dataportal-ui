@@ -1,0 +1,39 @@
+{
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["./cypress/tsconfig.json"]
+      },
+      "rules": {
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "CallExpression[callee.name='defineStep'] MemberExpression[object.name='cy']",
+            "message": "No cy.* in a step body. Put it in a method of this file's class and call that."
+          },
+          {
+            "selector": "CallExpression[callee.name='defineStep'] :matches(CallExpression[callee.name='expect'], IfStatement, SwitchStatement, ThrowStatement)",
+            "message": "No logic (expect/if/switch/throw) in a step body. Move it into a method of this file's class."
+          },
+          {
+            "selector": "CallExpression[callee.name='defineStep'] BlockStatement[body.length>1]",
+            "message": "A step body is one call on this file's class instance."
+          },
+          {
+            "selector": "Program:has(CallExpression[callee.name='defineStep']):not(:has(ClassDeclaration))",
+            "message": "A file with defineStep steps needs a class holding the cy.* code (see cypress/CLAUDE.md)."
+          }
+        ]
+      }
+    },
+    {
+      "files": ["support/commands.ts"],
+      "rules": {
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    }
+  ]
+}

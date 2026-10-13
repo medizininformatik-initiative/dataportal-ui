@@ -19,11 +19,19 @@ const PROFILE_LABELS: Record<ProfileName, string> = {
   medication: 'Medication',
 }
 
-const COMPARATOR_SYMBOLS: Record<string, string> = { gt: '>', lt: '<', ge: '≥', le: '≤', eq: '=', ne: '≠' }
+const COMPARATOR_SYMBOLS: Record<string, string> = {
+  gt: '>',
+  lt: '<',
+  ge: '≥',
+  le: '≤',
+  eq: '=',
+  ne: '≠',
+}
 const UNIT_LABELS: Record<string, string> = { a: 'years', mo: 'months' }
 
 const asJson = (value: unknown) => value as Json
-const unitOf = (filter: Json) => UNIT_LABELS[asJson(filter.unit).code as string] ?? (asJson(filter.unit).code as string)
+const unitOf = (filter: Json) =>
+  UNIT_LABELS[asJson(filter.unit).code as string] ?? (asJson(filter.unit).code as string)
 const codes = (concepts: unknown) => (concepts as Json[]).map((concept) => concept.code).join(', ')
 
 function describeTime(restriction: Json): string {
@@ -36,7 +44,9 @@ function describeTime(restriction: Json): string {
 function describeValue(filter: Json): string {
   switch (filter.type) {
     case 'quantity-comparator':
-      return `${COMPARATOR_SYMBOLS[filter.comparator as string] ?? filter.comparator} ${filter.value} ${unitOf(filter)}`
+      return `${COMPARATOR_SYMBOLS[filter.comparator as string] ?? filter.comparator} ${
+        filter.value
+      } ${unitOf(filter)}`
     case 'quantity-range':
       return `between ${filter.minValue} and ${filter.maxValue} ${unitOf(filter)}`
     default:
@@ -57,10 +67,13 @@ function describeCriterion(criterion: Criterion): string {
 }
 
 /** Criteria in one group are alternatives; the groups must all apply. */
-const describeCriteria = (groups: Criterion[][]) => groups.map((group) => group.map(describeCriterion).join(' or ')).join(', and ')
+const describeCriteria = (groups: Criterion[][]) =>
+  groups.map((group) => group.map(describeCriterion).join(' or ')).join(', and ')
 
 const profileLabel = (group: AttributeGroup) => {
-  const profile = (Object.keys(PROFILES) as ProfileName[]).find((key) => PROFILES[key].groupReference === group.groupReference)
+  const profile = (Object.keys(PROFILES) as ProfileName[]).find(
+    (key) => PROFILES[key].groupReference === group.groupReference
+  )
   return profile ? PROFILE_LABELS[profile] : group.name
 }
 
@@ -72,8 +85,14 @@ function describeFilter(filter: Json): string {
 function describeGroup(group: AttributeGroup, all: AttributeGroup[]): string {
   const fields = group.attributes.map((attribute) => {
     const name = attribute.attributeRef.split('.').slice(1).join('.').replace('[x]', '')
-    const linked = (attribute.linkedGroups ?? []).map((id) => all.find((other) => other.id === id)).filter(Boolean)
-    return `${name}${attribute.mustHave ? ' (required)' : ''}${linked.length ? ` linked to ${linked.map((other) => profileLabel(other as AttributeGroup)).join(', ')}` : ''}`
+    const linked = (attribute.linkedGroups ?? [])
+      .map((id) => all.find((other) => other.id === id))
+      .filter(Boolean)
+    return `${name}${attribute.mustHave ? ' (required)' : ''}${
+      linked.length
+        ? ` linked to ${linked.map((other) => profileLabel(other as AttributeGroup)).join(', ')}`
+        : ''
+    }`
   })
   const extras = [
     ...(group.includeReferenceOnly ? ['only when referenced'] : []),
@@ -88,6 +107,10 @@ export function describe(crtdl: Crtdl): string {
   const extra = groups.filter((group) => group.groupReference !== PROFILES.patient.groupReference)
   const sentences = [`Includes ${describeCriteria(inclusionCriteria)}.`]
   if (exclusionCriteria) sentences.push(`Excludes ${describeCriteria(exclusionCriteria)}.`)
-  sentences.push(extra.length ? `Selects ${extra.map((group) => describeGroup(group, groups)).join('; ')}.` : 'Selects only the Patient data.')
+  sentences.push(
+    extra.length
+      ? `Selects ${extra.map((group) => describeGroup(group, groups)).join('; ')}.`
+      : 'Selects only the Patient data.'
+  )
   return sentences.join(' ')
 }

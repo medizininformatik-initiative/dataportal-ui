@@ -47,43 +47,54 @@ export class TimeRestriction {
       // blur here instead of relying on the next click to do it.
       .blur()
   }
+
+  public shouldShowBetweenWarning(warning: string) {
+    cy.get('num-between-filter .date-warning').should('be.visible').and('contain.text', warning)
+  }
+
+  public dateShouldBe(date: string) {
+    cy.get('.mat-datepicker-input').should(($input) => expectDate($input, date))
+  }
+
+  public datesShouldBe(startDate: string, endDate: string) {
+    cy.get('num-between-filter .mat-datepicker-input').should(($inputs) => {
+      expectDate($inputs.eq(0), startDate)
+      expectDate($inputs.eq(1), endDate)
+    })
+  }
 }
+
+// The date picker shows the date without leading zeros (04.04.2045 -> 4.4.2045).
+const plainDate = (d: string) => d.replace(/\b0(\d)/g, '$1')
+const expectDate = (input: JQuery<HTMLElement>, date: string) =>
+  expect(plainDate(String(input.val()))).to.eq(plainDate(date))
+
 export const timeRestriction = new TimeRestriction()
-defineStep('I set the time restriction to before with date {string}', (date: string) => {
+defineStep('I set the time restriction to before with date {string}', (date: string) =>
   timeRestriction.addTimeRestriction(date, TimeRestrictionFilterType.Before)
-})
-defineStep('I set the time restriction to at with date {string}', (date: string) => {
+)
+defineStep('I set the time restriction to at with date {string}', (date: string) =>
   timeRestriction.addTimeRestriction(date, TimeRestrictionFilterType.On)
-})
-defineStep('I set the time restriction to after with date {string}', (date: string) => {
+)
+defineStep('I set the time restriction to after with date {string}', (date: string) =>
   timeRestriction.addTimeRestriction(date, TimeRestrictionFilterType.After)
-})
+)
 // Deliberately unimplemented — not used by any current scenario. See
 // cypress/CLAUDE.md / the refactor plan: writing Gherkin against these would
 // pass without asserting anything until these bodies are filled in for real.
 defineStep('I set the time restriction to equal with date {string}', (_date: string) => {})
 defineStep(
   'I set the time restriction to between {string} and {string}',
-  (startDate: string, endDate: string) => {
+  (startDate: string, endDate: string) =>
     timeRestriction.addBetweenTimeRestriction(startDate, endDate)
-  }
 )
-defineStep('I see the time restriction warning {string}', (warning: string) => {
-  cy.get('num-between-filter .date-warning').should('be.visible').and('contain.text', warning)
-})
-// The date picker shows the date without leading zeros (04.04.2045 -> 4.4.2045).
-const plainDate = (d: string) => d.replace(/\b0(\d)/g, '$1')
-const expectDate = (input: JQuery<HTMLElement>, date: string) =>
-  expect(plainDate(String(input.val()))).to.eq(plainDate(date))
-defineStep('the time restriction date is {string}', (date: string) => {
-  cy.get('.mat-datepicker-input').should(($input) => expectDate($input, date))
-})
+defineStep('I see the time restriction warning {string}', (warning: string) =>
+  timeRestriction.shouldShowBetweenWarning(warning)
+)
+defineStep('the time restriction date is {string}', (date: string) =>
+  timeRestriction.dateShouldBe(date)
+)
 defineStep(
   'the time restriction dates are {string} and {string}',
-  (startDate: string, endDate: string) => {
-    cy.get('num-between-filter .mat-datepicker-input').should(($inputs) => {
-      expectDate($inputs.eq(0), startDate)
-      expectDate($inputs.eq(1), endDate)
-    })
-  }
+  (startDate: string, endDate: string) => timeRestriction.datesShouldBe(startDate, endDate)
 )

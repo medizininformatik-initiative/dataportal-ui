@@ -2,6 +2,14 @@ import { defineStep } from '../defineStep'
 
 // Shared by data-query-cohort.feature and saved-queries.feature — did not
 // exist anywhere before this pass (grepped every defineStep in the codebase).
-defineStep('I should see {string} in the cohort definition editor', (criterium: string) => {
-  cy.get('num-display-feasibility-query').should('contain', criterium)
-})
+export class DataQueryCohort {
+  public shouldShowInEditor(criterium: string) {
+    cy.get('num-display-feasibility-query').should('contain', criterium)
+  }
+}
+
+export const dataQueryCohort = new DataQueryCohort()
+
+defineStep('I should see {string} in the cohort definition editor', (criterium: string) =>
+  dataQueryCohort.shouldShowInEditor(criterium)
+)

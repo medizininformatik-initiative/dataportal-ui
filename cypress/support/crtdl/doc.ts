@@ -55,7 +55,11 @@ function render(groups: Group[]): string {
   ]
   for (const group of groups) {
     lines.push('', `## ${group.title}`, '')
-    if (group.pending) lines.push('> **Known defect, not passing yet.** The app currently loses data for these cases.', '')
+    if (group.pending)
+      lines.push(
+        '> **Known defect, not passing yet.** The app currently loses data for these cases.',
+        ''
+      )
     if (group.collapse) {
       lines.push('<details>', `<summary>Show all ${group.cases.length} cases</summary>`, '')
       lines.push(...group.cases.map(bullet), '', '</details>')
