@@ -2,7 +2,9 @@ import { defineStep } from '../defineStep'
 
 export class UploadFile {
   uploadFile(fileName: string): void {
-    cy.get('[data-cy="upload-crtdl"]').selectFile(`cypress/fixtures/${fileName}.json`, { force: true })
+    cy.get('[data-cy="upload-crtdl"]').selectFile(`cypress/fixtures/${fileName}.json`, {
+      force: true,
+    })
     // Real post-condition instead of a fixed wait: UploadService navigates to
     // Data Query - Cohort Definition and renders the uploaded criterium once
     // processing finishes (checked against fixtures/Single_Inclusion_Criteria_
@@ -12,6 +14,4 @@ export class UploadFile {
 }
 
 export const uploadFile = new UploadFile()
-defineStep('I upload the file {string}', (fileName: string) => {
-  uploadFile.uploadFile(fileName)
-})
+defineStep('I upload the file {string}', (fileName: string) => uploadFile.uploadFile(fileName))

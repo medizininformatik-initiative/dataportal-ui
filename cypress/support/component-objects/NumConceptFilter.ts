@@ -55,7 +55,11 @@ export class NumConceptFilter {
   }
 
   public tabShouldBeDisabled(name: string) {
-    cy.contains('.mdc-tab, .mat-mdc-tab', tabLabel(name)).should('have.attr', 'aria-disabled', 'true')
+    cy.contains('.mdc-tab, .mat-mdc-tab', tabLabel(name)).should(
+      'have.attr',
+      'aria-disabled',
+      'true'
+    )
   }
 
   public tabShouldShowCount(name: string, count: number) {
@@ -71,7 +75,10 @@ export class NumConceptFilter {
   }
 
   public clearSearch(filterName?: string) {
-    this.scope(filterName).find('num-concept-filter num-searchbar input').clear().should('have.value', '')
+    this.scope(filterName)
+      .find('num-concept-filter num-searchbar input')
+      .clear()
+      .should('have.value', '')
   }
 
   private resultRow(code: string, filterName?: string) {
@@ -94,7 +101,9 @@ export class NumConceptFilter {
     return this.scope(filterName)
       .find('num-concept-filter-table tbody > tr')
       .filter((_, row) => {
-        const cells = Array.from(row.querySelectorAll('td')).map((td) => (td.textContent ?? '').trim())
+        const cells = Array.from(row.querySelectorAll('td')).map((td) =>
+          (td.textContent ?? '').trim()
+        )
         return cells.includes(code) && cells.includes(system)
       })
       .should('have.length', 1)
@@ -155,7 +164,10 @@ export class NumConceptFilter {
       this.scope(filterName)
         .find('num-selected-concept-list')
         .should(($list) => {
-          const codes = $list.find('.item span').toArray().map((el) => el.textContent ?? '')
+          const codes = $list
+            .find('.item span')
+            .toArray()
+            .map((el) => el.textContent ?? '')
           expect(codes.some((text) => matcher.test(text))).to.equal(false)
         })
     }

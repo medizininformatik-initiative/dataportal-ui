@@ -26,7 +26,10 @@ export const conceptAttribute = (attributeCode: Coded, concepts: readonly Coded[
 })
 
 /** Concept filter on a criterion's value. */
-export const conceptValue = (concepts: readonly Coded[]): Json => ({ type: 'concept', selectedConcepts: concepts })
+export const conceptValue = (concepts: readonly Coded[]): Json => ({
+  type: 'concept',
+  selectedConcepts: concepts,
+})
 
 interface Unit {
   code: string
@@ -55,7 +58,11 @@ export const dateFilter = (name: string, start?: string, end?: string): Json => 
   ...(end ? { end } : {}),
 })
 
-export const tokenFilter = (name: string, system: string, codes: ReadonlyArray<{ code: string; display: string }>): Json => ({
+export const tokenFilter = (
+  name: string,
+  system: string,
+  codes: ReadonlyArray<{ code: string; display: string }>
+): Json => ({
   type: 'token',
   name,
   codes: codes.map(({ code, display }) => ({ code, system, display })),

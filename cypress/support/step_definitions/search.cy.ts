@@ -12,15 +12,17 @@ export class Search {
   public clearInputField() {
     cy.get('num-searchbar input').clear().should('have.value', '')
   }
+
+  public inputShouldKeepText(text: string) {
+    cy.get('num-searchbar input').should('have.value', text)
+  }
 }
 
 export const searchInstance = new Search()
-defineStep('I type {string} in the search input field', (text: string) => {
+defineStep('I type {string} in the search input field', (text: string) =>
   searchInstance.typeInInputField(text)
-})
-defineStep('I clear the search input field', () => {
-  searchInstance.clearInputField()
-})
-defineStep('the search input should keep the text {string}', (text: string) => {
-  cy.get('num-searchbar input').should('have.value', text)
-})
+)
+defineStep('I clear the search input field', () => searchInstance.clearInputField())
+defineStep('the search input should keep the text {string}', (text: string) =>
+  searchInstance.inputShouldKeepText(text)
+)

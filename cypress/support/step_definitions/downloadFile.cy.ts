@@ -10,7 +10,10 @@ export class DownloadFile {
     cy.focused().should(($el) => {
       expect($el.closest('[data-cy="download-modal"]')).to.have.length(1)
     })
-    cy.get('[data-cy="download-modal"]').find('input[type="text"]').type(fileName).should('have.value', fileName)
+    cy.get('[data-cy="download-modal"]')
+      .find('input[type="text"]')
+      .type(fileName)
+      .should('have.value', fileName)
     cy.get('[data-cy="save-file-button"]').click()
     // No fixed wait: cy.readFile() already retries until the file exists or
     // the command times out, so waiting before it is pure redundancy.
@@ -18,6 +21,6 @@ export class DownloadFile {
   }
 }
 export const downloadFile = new DownloadFile()
-defineStep('I download the file {string}', (fileName: string) => {
+defineStep('I download the file {string}', (fileName: string) =>
   downloadFile.downloadFile(fileName)
-})
+)
