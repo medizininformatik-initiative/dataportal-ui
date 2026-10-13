@@ -1,3 +1,4 @@
+import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
 
 /**
@@ -8,7 +9,7 @@ export class UploadFile {
    * Select fixture file, wait for uploaded criterium.
    * */
   uploadFile(fileName: string): void {
-    cy.get('[data-cy="upload-crtdl"]').selectFile(`cypress/fixtures/${fileName}.json`, {
+    cy.get(dataCy('upload-crtdl')).selectFile(`cypress/fixtures/${fileName}.json`, {
       force: true,
     })
     /**

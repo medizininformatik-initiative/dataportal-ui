@@ -1,3 +1,4 @@
+import { dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
 
 /**
@@ -24,7 +25,7 @@ export class CriteriaList {
    * value filter chip sharing data-cy).
    * */
   public shouldHaveCriteriaNamed(count: number, criterium: string) {
-    cy.get(`.container[data-cy="${criterium}"]`).should('have.length', count)
+    cy.get(dataCyOf(criterium, '.container')).should('have.length', count)
   }
 
   /**

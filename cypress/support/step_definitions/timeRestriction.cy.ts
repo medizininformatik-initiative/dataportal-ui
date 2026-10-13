@@ -1,13 +1,30 @@
 import { defineStep } from '../defineStep'
+import { expectDate, numBetweenFilter } from '../component-objects/NumBetweenFilter'
 import {
   TimeRestrictionFilterType,
   TimeRestrictionFilterTypeDE,
 } from '../../e2e/Utilities/timeRestrictionFilter'
 
+const DATE_INPUT = '.mat-datepicker-input'
+
 /**
  * Steps for time restriction filter: comparators, between, date assertions.
  * */
 export class TimeRestriction {
+  /**
+   * Open Time restriction tab. No-op when it is only or active tab.
+   * */
+  private openTab() {
+    cy.contains('.tab', 'Time restriction').click()
+  }
+
+  /**
+   * Pick comparator type in native select.
+   * */
+  private pickType(type: TimeRestrictionFilterType | TimeRestrictionFilterTypeDE) {
+    cy.get('num-timerestriction-type-selector select').select(type)
+  }
+
   /**
    * Open Time restriction tab, pick comparator type, type date, blur.
    * */
@@ -20,78 +37,50 @@ export class TimeRestriction {
      * to Time Restriction tab: "Appendectomy" opened on "References", confirmed by screenshot.
      * Click is harmless no-op when it is only or active tab.
      * */
-    cy.contains('.tab', 'Time restriction').click()
+    this.openTab()
     /**
      * `num-timerestriction-type-selector` renders native `<select>`, not Material `mat-select`
      * (read from timerestriction-type-selector.component.html). `.select()` picks by option
      * `value` attribute: `TimeRestrictionFilterType` values match real app enum exactly.
      * */
-    cy.get('num-timerestriction-type-selector select').select(type)
+    this.pickType(type)
     /**
      * Datepicker commits (`dateChange`) on blur: blur here. Without it filter stays unapplied,
      * header chip missing, until next click blurs input.
      * */
-    cy.get('.mat-datepicker-input').clear().type(date).should('have.value', date).blur()
+    cy.get(DATE_INPUT).clear().type(date).should('have.value', date).blur()
   }
 
   /**
-   * Set BETWEEN range. Renders two date inputs (num-between-filter). App emits only once both
-   * set AND first < second, else shows date warning: type earlier date first.
+   * Set BETWEEN range. Renders two date inputs, see `NumBetweenFilter`.
    * */
   public addBetweenTimeRestriction(startDate: string, endDate: string) {
-    cy.contains('.tab', 'Time restriction').click()
-    cy.get('num-timerestriction-type-selector select').select(TimeRestrictionFilterType.Between)
-    cy.get('num-between-filter .mat-datepicker-input')
-      .eq(0)
-      .clear()
-      .type(startDate)
-      .should('have.value', startDate)
-    cy.get('num-between-filter .mat-datepicker-input')
-      .eq(1)
-      .clear()
-      .type(endDate)
-      .should('have.value', endDate)
-      /**
-       * Datepicker commits (`dateChange`) on blur, order check runs on that event: blur here, not on
-       * next click.
-       * */
-      .blur()
+    this.openTab()
+    this.pickType(TimeRestrictionFilterType.Between)
+    numBetweenFilter.setRange(startDate, endDate)
   }
 
   /**
    * Assert BETWEEN date warning visible.
    * */
   public shouldShowBetweenWarning(warning: string) {
-    cy.get('num-between-filter .date-warning').should('be.visible').and('contain.text', warning)
+    numBetweenFilter.shouldShowWarning(warning)
   }
 
   /**
    * Assert single datepicker value.
    * */
   public dateShouldBe(date: string) {
-    cy.get('.mat-datepicker-input').should(($input) => expectDate($input, date))
+    cy.get(DATE_INPUT).should(($input) => expectDate($input, date))
   }
 
   /**
    * Assert both BETWEEN datepicker values.
    * */
   public datesShouldBe(startDate: string, endDate: string) {
-    cy.get('num-between-filter .mat-datepicker-input').should(($inputs) => {
-      expectDate($inputs.eq(0), startDate)
-      expectDate($inputs.eq(1), endDate)
-    })
+    numBetweenFilter.shouldHaveRange(startDate, endDate)
   }
 }
-
-/**
- * Date picker shows dates without leading zeros: 04.04.2045 shows as 4.4.2045.
- * */
-const plainDate = (d: string) => d.replace(/\b0(\d)/g, '$1')
-/**
- * Compare input value with expected date, ignoring leading zeros.
- * */
-const expectDate = (input: JQuery<HTMLElement>, date: string) =>
-  expect(plainDate(String(input.val()))).to.eq(plainDate(date))
 
 export const timeRestriction = new TimeRestriction()
 defineStep('I set the time restriction to before with date {string}', (date: string) =>

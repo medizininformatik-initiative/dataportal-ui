@@ -27,11 +27,16 @@
             "message": "A step body is one call on this file's class instance."
           },
           {
+            "selector": "Literal[value=/data-cy/], TemplateElement[value.raw=/data-cy/]",
+            "message": "No raw data-cy selector. Use dataCy() from support/dataCy.ts."
+          },
+          {
             "selector": "Program:has(CallExpression[callee.name='defineStep']):not(:has(ClassDeclaration))",
             "message": "A file with defineStep steps needs a class holding the cy.* code (see cypress/CLAUDE.md)."
           }
         ],
         "comment-format": "error",
+        "no-duplicate-selector": "error",
         "jsdoc/require-jsdoc": [
           "error",
           {
@@ -62,6 +67,12 @@
           }
         ],
         "jsdoc/no-bad-blocks": "error"
+      }
+    },
+    {
+      "files": ["support/dataCy.ts"],
+      "rules": {
+        "no-restricted-syntax": "off"
       }
     },
     {

@@ -1,9 +1,11 @@
 import { defineStep } from '../defineStep'
 import { numErrorDisplay } from '../component-objects/NumErrorDisplay'
 
+const NUM_ERROR_LOG_MODAL = 'num-error-log-modal'
+
 /**
  * Error overlay (`num-error-display`) opened by failed requests. Also error LOG dialog
- * (`num-error-log-modal`): different overlay listing backend validation problems of rejected
+ * (NUM_ERROR_LOG_MODAL): different overlay listing backend validation problems of rejected
  * upload.
  * */
 export class ErrorDialog {
@@ -54,14 +56,14 @@ export class ErrorDialog {
    * Assert error log dialog exists.
    * */
   public logShouldBeOpen() {
-    cy.get('num-error-log-modal').should('exist')
+    cy.get(NUM_ERROR_LOG_MODAL).should('exist')
   }
 
   /**
    * Assert error log shows text.
    * */
   public logShouldShow(text: string) {
-    cy.get('num-error-log-modal').should('contain.text', text)
+    cy.get(NUM_ERROR_LOG_MODAL).should('contain.text', text)
   }
 
   /**
@@ -69,7 +71,7 @@ export class ErrorDialog {
    * */
   public closeLog() {
     cy.get('num-error-log-modal num-error-log-actions num-button').last().click()
-    cy.get('num-error-log-modal').should('not.exist')
+    cy.get(NUM_ERROR_LOG_MODAL).should('not.exist')
   }
 }
 

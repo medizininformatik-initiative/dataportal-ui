@@ -1,3 +1,4 @@
+import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { currentLanguage } from '../i18n'
 
@@ -33,8 +34,8 @@ export class Language {
    * Open language select, pick option, wait for matching flag icon.
    * */
   public setLanguage(language: 'en' | 'de' = 'en') {
-    cy.get('[data-cy="language-select"]').first().click()
-    cy.get(`[data-cy="language-option-${language}"]`).click()
+    cy.get(dataCy('language-select')).first().click()
+    cy.get(dataCy(`language-option-${language}`)).click()
     /**
      * Real post-condition, no fixed wait: ngx-translate language switch can be async. Flag icon
      * renders only once `translate.currentLang` switched.

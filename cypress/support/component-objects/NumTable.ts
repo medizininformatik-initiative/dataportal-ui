@@ -1,4 +1,8 @@
+import { dataCy } from '../dataCy'
 import { numCheckbox } from './NumCheckbox'
+
+const NUM_TABLE = 'num-table'
+const NUM_TABLE_TBODY_TR = `${NUM_TABLE} tbody > tr`
 
 /**
  * Escape regex metacharacters in text.
@@ -20,7 +24,7 @@ export class NumTable {
    * */
   public getRowByText(text: string) {
     return cy
-      .get('num-table tbody > tr')
+      .get(NUM_TABLE_TBODY_TR)
       .contains('td', new RegExp(escapeRegex(text), 'i'))
       .closest('tr')
   }
@@ -32,7 +36,7 @@ export class NumTable {
    * */
   private getRowByExactText(text: string) {
     return cy
-      .get('num-table tbody > tr')
+      .get(NUM_TABLE_TBODY_TR)
       .contains('td', new RegExp(`^\\s*${escapeRegex(text)}\\s*$`, 'i'))
       .closest('tr')
   }
@@ -48,7 +52,7 @@ export class NumTable {
    * Assert table has no row containing text.
    * */
   public shouldNotContainRow(text: string) {
-    cy.get('num-table tbody > tr')
+    cy.get(NUM_TABLE_TBODY_TR)
       .contains('td', new RegExp(escapeRegex(text), 'i'))
       .should('not.exist')
   }
@@ -64,7 +68,7 @@ export class NumTable {
    * Toggle "select all" checkbox in table header.
    * */
   public toggleSelectAll() {
-    cy.get('num-table thead').within(() => numCheckbox.toggle())
+    cy.get(`${NUM_TABLE} thead`).within(() => numCheckbox.toggle())
   }
 
   /**
@@ -87,7 +91,7 @@ export class NumTable {
    * Assert all rendered rows have `aria-checked` state.
    * */
   private shouldHaveRowsCheckedState(expected: 'true' | 'false') {
-    cy.get('num-table tbody > tr [data-cy="checkbox"]').should(($boxes) => {
+    cy.get(`${NUM_TABLE_TBODY_TR} ${dataCy('checkbox')}`).should(($boxes) => {
       expect($boxes.length, 'number of row checkboxes').to.be.greaterThan(0)
       $boxes.each((_, box) => {
         expect(box.getAttribute('aria-checked'), 'aria-checked').to.eq(expected)

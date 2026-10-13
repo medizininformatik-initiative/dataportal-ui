@@ -1,10 +1,13 @@
+import { dataCy, dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { numCheckbox } from '../component-objects/NumCheckbox'
 import { t } from '../i18n'
 
+const NUM_REFERENCE_COL = 'num-reference-col'
+
 /**
  * Option "Only if referenced" of data selection box (issue #641). Option is
- * `num-reference-col`, rendered only in box of profile referenced by another selected profile.
+ * NUM_REFERENCE_COL, rendered only in box of profile referenced by another selected profile.
  * Regression in `isReferenced` (shadowed variable, never true) removed option entirely, so
  * assert existence, not only toggling. Find box by profile name on `.selection-box[data-cy]`:
  * reference chips in other boxes carry same `data-cy` text, class keeps lookup unambiguous.
@@ -14,7 +17,7 @@ export class DataSelectionOnlyIfReferenced {
    * Find visible selection box by profile name.
    * */
   private box(name: string) {
-    return cy.get(`.selection-box[data-cy="${name}"]`).should('be.visible')
+    return cy.get(dataCyOf(name, '.selection-box')).should('be.visible')
   }
 
   /**
@@ -22,7 +25,7 @@ export class DataSelectionOnlyIfReferenced {
    * */
   public boxShouldOfferOption(name: string) {
     this.box(name)
-      .find('num-reference-col')
+      .find(NUM_REFERENCE_COL)
       .should('be.visible')
       .and('contain.text', t('DATASELECTION.EDITOR.DISPLAY.REFERENCE'))
   }
@@ -31,7 +34,7 @@ export class DataSelectionOnlyIfReferenced {
    * Assert box lacks option.
    * */
   public boxShouldNotOfferOption(name: string) {
-    this.box(name).find('num-reference-col').should('not.exist')
+    this.box(name).find(NUM_REFERENCE_COL).should('not.exist')
   }
 
   /**
@@ -39,7 +42,7 @@ export class DataSelectionOnlyIfReferenced {
    * */
   public toggleOption(name: string) {
     this.box(name)
-      .find('num-reference-col')
+      .find(NUM_REFERENCE_COL)
       .within(() => numCheckbox.toggle())
   }
 
@@ -48,7 +51,7 @@ export class DataSelectionOnlyIfReferenced {
    * */
   public optionShouldBe(name: string, state: string) {
     this.box(name)
-      .find('num-reference-col [data-cy="checkbox"]')
+      .find(`num-reference-col ${dataCy('checkbox')}`)
       .should('have.attr', 'aria-checked', String(state === 'enabled'))
   }
 }

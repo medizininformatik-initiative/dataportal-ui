@@ -1,3 +1,4 @@
+import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { numButton } from '../component-objects/NumButton'
 import { numModal } from '../component-objects/NumModal'
@@ -61,14 +62,14 @@ export class CohortResult {
     cy.get('.mat-mdc-dialog-container')
       .should('have.class', 'mdc-dialog--open')
       .and('not.have.class', 'mdc-dialog--opening')
-    cy.get('[data-cy="dialog-title-input"]').type(title).should('have.value', title)
+    cy.get(dataCy('dialog-title-input')).type(title).should('have.value', title)
   }
 
   /**
    * Type comment into save dialog.
    * */
   public addComment(comment: string) {
-    cy.get('[data-cy="dialog-comment-input"]').type(comment)
+    cy.get(dataCy('dialog-comment-input')).type(comment)
   }
 
   /**

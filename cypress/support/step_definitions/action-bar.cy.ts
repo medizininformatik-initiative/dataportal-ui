@@ -1,3 +1,4 @@
+import { dataCy, Hook } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { numButton } from '../component-objects/NumButton'
 
@@ -8,7 +9,7 @@ const scope = 'num-action-bar'
  * them. Map known icon-only names to their `data-cy` instead of renaming Gherkin "Save cohort"
  * to tooltip text "Save".
  * */
-const ICON_ONLY_BUTTONS: Record<string, string> = {
+const ICON_ONLY_BUTTONS: Record<string, Hook> = {
   'save cohort': 'save-cohort-button',
 }
 
@@ -20,8 +21,8 @@ export class ActionBar {
    * Find icon-only button by Gherkin name. Return null for text buttons.
    * */
   private iconOnlyButton(buttonName: string) {
-    const dataCy = ICON_ONLY_BUTTONS[buttonName.trim().toLowerCase()]
-    return dataCy ? cy.get(scope).find(`[data-cy="${dataCy}"]`) : null
+    const hook = ICON_ONLY_BUTTONS[buttonName.trim().toLowerCase()]
+    return hook ? cy.get(scope).find(dataCy(hook)) : null
   }
 
   /**
@@ -56,9 +57,9 @@ export class ActionBar {
    * are real buttons, must be visible.
    * */
   public shouldOfferUploadDownloadAndSave() {
-    cy.get(scope).find('[data-cy="upload-crtdl"]').should('exist')
-    cy.get(scope).find('[data-cy="download-crtdl-button"]').should('be.visible')
-    cy.get(scope).find('[data-cy="save-cohort-button"]').should('be.visible')
+    cy.get(scope).find(dataCy('upload-crtdl')).should('exist')
+    cy.get(scope).find(dataCy('download-crtdl-button')).should('be.visible')
+    cy.get(scope).find(dataCy('save-cohort-button')).should('be.visible')
   }
 
   /**
@@ -66,9 +67,9 @@ export class ActionBar {
    * */
   public shouldOfferNoUploadDownloadOrSave() {
     cy.get(scope).should('exist')
-    cy.get(scope).find('[data-cy="upload-crtdl"]').should('not.exist')
-    cy.get(scope).find('[data-cy="download-crtdl-button"]').should('not.exist')
-    cy.get(scope).find('[data-cy="save-cohort-button"]').should('not.exist')
+    cy.get(scope).find(dataCy('upload-crtdl')).should('not.exist')
+    cy.get(scope).find(dataCy('download-crtdl-button')).should('not.exist')
+    cy.get(scope).find(dataCy('save-cohort-button')).should('not.exist')
   }
 }
 

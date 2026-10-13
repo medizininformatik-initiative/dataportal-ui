@@ -1,3 +1,4 @@
+import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { numDetailsPanel } from '../component-objects/NumDetailsPanel'
 import { numTable } from '../component-objects/NumTable'
@@ -66,7 +67,7 @@ export class DetailsPanel {
    * Open menu of related criterium.
    * */
   public openMenuOfRelated(name: string) {
-    numDetailsPanel.relative(name).find('[data-cy="openMenu"]').click()
+    numDetailsPanel.relative(name).find(dataCy('openMenu')).click()
   }
 }
 

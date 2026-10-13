@@ -1,3 +1,4 @@
+import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { caseNamed } from '../crtdl/cases'
 import { differences } from '../crtdl/roundtrip'
@@ -10,7 +11,7 @@ export class CrtdlRoundtrip {
    * Upload generated CRTDL case `name` through upload input.
    * */
   public uploadGenerated(name: string) {
-    cy.get('[data-cy="upload-crtdl"]').selectFile(
+    cy.get(dataCy('upload-crtdl')).selectFile(
       {
         contents: Cypress.Buffer.from(JSON.stringify(caseNamed(name))),
         fileName: `${name}.json`,

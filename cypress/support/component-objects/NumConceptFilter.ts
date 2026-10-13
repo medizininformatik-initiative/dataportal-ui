@@ -1,6 +1,14 @@
+import { dataCy } from '../dataCy'
 import { label } from '../labels'
 import { t } from '../i18n'
 import { numCheckbox } from './NumCheckbox'
+
+const SELECTED_LIST = 'num-selected-concept-list'
+const ITEM = '.item'
+
+const MDC_TAB_MAT_MDC_TAB = '.mdc-tab, .mat-mdc-tab'
+const NUM_CONCEPT_FILTER_NUM_SEARCHBAR_INPUT = 'num-concept-filter num-searchbar input'
+const NUM_CONCEPT_FILTER_TABLE_TBODY_TR = 'num-concept-filter-table tbody > tr'
 
 /**
  * Gherkin tab name to translation key, resolved in configured UI language.
@@ -62,25 +70,21 @@ export class NumConceptFilter {
    * Open inner tab, optionally within named filter.
    * */
   public openTab(name: string, filterName?: string) {
-    this.scope(filterName).contains('.mdc-tab, .mat-mdc-tab', tabLabel(name)).click()
+    this.scope(filterName).contains(MDC_TAB_MAT_MDC_TAB, tabLabel(name)).click()
   }
 
   /**
    * Assert inner tab disabled.
    * */
   public tabShouldBeDisabled(name: string) {
-    cy.contains('.mdc-tab, .mat-mdc-tab', tabLabel(name)).should(
-      'have.attr',
-      'aria-disabled',
-      'true'
-    )
+    cy.contains(MDC_TAB_MAT_MDC_TAB, tabLabel(name)).should('have.attr', 'aria-disabled', 'true')
   }
 
   /**
    * Assert inner tab count badge.
    * */
   public tabShouldShowCount(name: string, count: number) {
-    cy.contains('.mdc-tab, .mat-mdc-tab', tabLabel(name)).should('contain.text', `(${count})`)
+    cy.contains(MDC_TAB_MAT_MDC_TAB, tabLabel(name)).should('contain.text', `(${count})`)
   }
 
   /**
@@ -88,7 +92,7 @@ export class NumConceptFilter {
    * */
   public search(term: string, filterName?: string) {
     this.scope(filterName)
-      .find('num-concept-filter num-searchbar input')
+      .find(NUM_CONCEPT_FILTER_NUM_SEARCHBAR_INPUT)
       .clear()
       .type(term)
       .should('have.value', term)
@@ -99,7 +103,7 @@ export class NumConceptFilter {
    * */
   public clearSearch(filterName?: string) {
     this.scope(filterName)
-      .find('num-concept-filter num-searchbar input')
+      .find(NUM_CONCEPT_FILTER_NUM_SEARCHBAR_INPUT)
       .clear()
       .should('have.value', '')
   }
@@ -109,7 +113,7 @@ export class NumConceptFilter {
    * */
   private resultRow(code: string, filterName?: string) {
     return this.scope(filterName)
-      .find('num-concept-filter-table tbody > tr')
+      .find(NUM_CONCEPT_FILTER_TABLE_TBODY_TR)
       .contains('td', new RegExp(`^\\s*${escapeRegex(code)}\\s*$`))
       .closest('tr')
   }
@@ -128,7 +132,7 @@ export class NumConceptFilter {
    * */
   private resultRowInSystem(code: string, system: string, filterName?: string) {
     return this.scope(filterName)
-      .find('num-concept-filter-table tbody > tr')
+      .find(NUM_CONCEPT_FILTER_TABLE_TBODY_TR)
       .filter((_, row) => {
         const cells = Array.from(row.querySelectorAll('td')).map((td) =>
           (td.textContent ?? '').trim()
@@ -150,7 +154,7 @@ export class NumConceptFilter {
    * */
   public resultInSystemShouldBeChecked(code: string, system: string, checked: boolean) {
     this.resultRowInSystem(code, system)
-      .find('[data-cy="checkbox"]')
+      .find(dataCy('checkbox'))
       .should('have.attr', 'aria-checked', String(checked))
   }
 
@@ -159,7 +163,7 @@ export class NumConceptFilter {
    * */
   public resultShouldBeChecked(code: string, checked: boolean) {
     this.resultRow(code)
-      .find('[data-cy="checkbox"]')
+      .find(dataCy('checkbox'))
       .should('have.attr', 'aria-checked', String(checked))
   }
 
@@ -178,7 +182,7 @@ export class NumConceptFilter {
    * Selected-list items, optionally within named filter.
    * */
   private selectedItems(filterName?: string) {
-    return this.scope(filterName).find('num-selected-concept-list .selected-items-list .item')
+    return this.scope(filterName).find(`${SELECTED_LIST} .selected-items-list ${ITEM}`)
   }
 
   /**
@@ -191,7 +195,7 @@ export class NumConceptFilter {
      * */
     this.selectedItems(filterName)
       .contains('span', new RegExp(`^\\s*${escapeRegex(code)}\\s*$`))
-      .closest('.item')
+      .closest(ITEM)
       .find('button.delete-button')
       .click()
   }
@@ -201,7 +205,7 @@ export class NumConceptFilter {
    * */
   public selectedShouldHaveCount(count: number, filterName?: string) {
     if (count === 0) {
-      this.scope(filterName).find('num-selected-concept-list .item').should('not.exist')
+      this.scope(filterName).find(`${SELECTED_LIST} ${ITEM}`).should('not.exist')
     } else {
       this.selectedItems(filterName).should('have.length', count)
     }
@@ -216,10 +220,10 @@ export class NumConceptFilter {
       this.selectedItems(filterName).contains('span', matcher).should('exist')
     } else {
       this.scope(filterName)
-        .find('num-selected-concept-list')
+        .find(SELECTED_LIST)
         .should(($list) => {
           const codes = $list
-            .find('.item span')
+            .find(`${ITEM} span`)
             .toArray()
             .map((el) => el.textContent ?? '')
           expect(codes.some((text) => matcher.test(text))).to.equal(false)
