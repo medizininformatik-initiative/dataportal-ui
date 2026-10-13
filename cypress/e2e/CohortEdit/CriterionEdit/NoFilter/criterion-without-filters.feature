@@ -8,7 +8,7 @@ Feature: Criterion without any filter
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to the configured language
 
   @component:criterion-editor @behavior:add @filter:none
@@ -19,8 +19,8 @@ Feature: Criterion without any filter
     And the button "<button>" should be enabled
 
     Examples:
-      | criterium              | list      | button      |
-      | {{noFilter.criterium}} | Inclusion | Feasibility |
+      | criterium              | list                 | button                 |
+      | {{noFilter.criterium}} | {{labels.inclusion}} | {{labels.feasibility}} |
 
   @component:criterion-editor @behavior:show-chips @filter:none
   Scenario Outline: The criterium shows no filter chips
@@ -40,5 +40,5 @@ Feature: Criterion without any filter
     And the editor has no filter tabs
 
     Examples:
-      | criterium              | menuItem  | page                    |
-      | {{noFilter.criterium}} | Configure | Query Editor - Criteria |
+      | criterium              | menuItem             | page                          |
+      | {{noFilter.criterium}} | {{labels.configure}} | {{pages.queryEditorCriteria}} |

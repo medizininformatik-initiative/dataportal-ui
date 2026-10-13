@@ -8,7 +8,7 @@ Feature: Bulk search
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Bulk Search" page
+    And I am on the "{{pages.feasibilityBulkSearch}}" page
     And I set the language to English
 
   @component:criteria-bulk-search @behavior:validate
@@ -37,10 +37,10 @@ Feature: Bulk search
     And the bulk search result should list the code "<third>"
 
     Examples:
-      | codes         | terminology          | context          | count | first          | second          | third          |
-      | E10,E11,E66   | {{bulk.terminology}} | {{bulk.context}} | 3     | {{bulk.first}} | {{bulk.second}} | {{bulk.third}} |
-      | E10 E11 E66   | {{bulk.terminology}} | {{bulk.context}} | 3     | {{bulk.first}} | {{bulk.second}} | {{bulk.third}} |
-      | E10\nE11\nE66 | {{bulk.terminology}} | {{bulk.context}} | 3     | {{bulk.first}} | {{bulk.second}} | {{bulk.third}} |
+      | codes                           | terminology          | context          | count | first          | second          | third          |
+      | {{bulkSearch.commaSeparated}}   | {{bulk.terminology}} | {{bulk.context}} | 3     | {{bulk.first}} | {{bulk.second}} | {{bulk.third}} |
+      | {{bulkSearch.spaceSeparated}}   | {{bulk.terminology}} | {{bulk.context}} | 3     | {{bulk.first}} | {{bulk.second}} | {{bulk.third}} |
+      | {{bulkSearch.newlineSeparated}} | {{bulk.terminology}} | {{bulk.context}} | 3     | {{bulk.first}} | {{bulk.second}} | {{bulk.third}} |
 
   @component:criteria-bulk-search @behavior:report-not-found
   Scenario Outline: A code that does not exist is reported as not found
@@ -52,5 +52,5 @@ Feature: Bulk search
     And the bulk search should not have found <notFound> codes
 
     Examples:
-      | codes      | terminology          | context          | found | notFound |
-      | E11, ZZZ99 | {{bulk.terminology}} | {{bulk.context}} | 1     | 1        |
+      | codes                     | terminology          | context          | found | notFound |
+      | {{bulkSearch.oneUnknown}} | {{bulk.terminology}} | {{bulk.context}} | 1     | 1        |

@@ -6,7 +6,7 @@ Feature: Side navigation
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to English
 
   @component:navigation @behavior:show
@@ -18,8 +18,8 @@ Feature: Side navigation
     And the side navigation should show the label "<fourth>"
 
     Examples:
-      | count | first           | second           | third             | fourth                 |
-      | 4     | Data Definition | Cohort Selection | Feature Selection | Saved data definitions |
+      | count | first                     | second                             | third                               | fourth                                  |
+      | 4     | {{labels.dataDefinition}} | {{languageSwitch.cohortSelection}} | {{sideNavigation.featureSelection}} | {{languageSwitch.savedDataDefinitions}} |
 
   @component:navigation @behavior:collapse
   Scenario: Collapsing the side navigation hides the labels
@@ -36,5 +36,5 @@ Feature: Side navigation
     And the side navigation should show the label "<label>"
 
     Examples:
-      | label            |
-      | Cohort Selection |
+      | label                              |
+      | {{languageSwitch.cohortSelection}} |

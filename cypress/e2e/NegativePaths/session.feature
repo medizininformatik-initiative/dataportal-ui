@@ -10,7 +10,7 @@ Feature: Lost session
     Then I am asked to sign in
 
     Examples:
-      | page                         |
-      | data-query/cohort-definition |
-      | feasibility-query/search     |
-      | saved-queries                |
+      | page                                  |
+      | {{session.dataQueryCohortDefinition}} |
+      | {{session.feasibilityQuerySearch}}    |
+      | {{session.savedQueries}}              |

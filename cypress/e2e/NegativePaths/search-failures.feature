@@ -8,20 +8,20 @@ Feature: Search - nothing found and backend failures
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to English
 
   @component:criteria-search @behavior:report-not-found
   Scenario Outline: A search without matches says so and offers nothing to add
     When I type "<term>" in the search input field
     Then I should see the no-results message for "<term>"
-    And the button "Add to cohort selection" should be disabled
+    And the button "{{labels.addToCohortSelection}}" should be disabled
     When I clear the search input field
     Then the table should have 20 rows
 
     Examples:
-      | term      |
-      | zzzqqqxxx |
+      | term                                      |
+      | {{dataSelectionSearchFailures.zzzqqqxxx}} |
 
   @component:criteria-search @behavior:tolerate-slow-backend
   Scenario Outline: A slow backend answer is still shown without an error
@@ -31,8 +31,8 @@ Feature: Search - nothing found and backend failures
     And no error dialog is shown
 
     Examples:
-      | term      | seconds | endpoint                 |
-      | pneumonia | 6       | terminology/entry/search |
+      | term                         | seconds | endpoint                                  |
+      | {{searchFailures.pneumonia}} | 6       | {{searchFailures.terminologyEntrySearch}} |
 
   @component:criteria-search @behavior:report-backend-error
   Scenario Outline: A backend error on search opens an error dialog that can be closed
@@ -44,9 +44,9 @@ Feature: Search - nothing found and backend failures
     And the search input should keep the text "<term>"
 
     Examples:
-      | term      | status | endpoint                 |
-      | pneumonia | 500    | terminology/entry/search |
-      | pneumonia | 504    | terminology/entry/search |
+      | term                         | status | endpoint                                  |
+      | {{searchFailures.pneumonia}} | 500    | {{searchFailures.terminologyEntrySearch}} |
+      | {{searchFailures.pneumonia}} | 504    | {{searchFailures.terminologyEntrySearch}} |
 
   @component:criteria-search @behavior:report-backend-error
   Scenario Outline: A backend that cannot be reached opens an error dialog
@@ -57,8 +57,8 @@ Feature: Search - nothing found and backend failures
     Then no error dialog is shown
 
     Examples:
-      | term      | endpoint                 |
-      | pneumonia | terminology/entry/search |
+      | term                         | endpoint                                  |
+      | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} |
 
   # DEFECT: a network failure and a 504 render `Error 1: [object Object]`, because the raw
   # HttpErrorResponse is stringified (`DataportalErrorHandlerService`, non-validation branch).
@@ -71,8 +71,8 @@ Feature: Search - nothing found and backend failures
     And the error dialog does not show "<text>"
 
     Examples:
-      | term      | endpoint                 | text            |
-      | pneumonia | terminology/entry/search | [object Object] |
+      | term                         | endpoint                                  | text                            |
+      | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} | {{searchFailures.objectObject}} |
 
   # DEFECT: the dialog title is the raw error type `GENERIC_ERROR` (hard-coded, untranslated),
   # and the 500 body says "No error details available".
@@ -85,8 +85,8 @@ Feature: Search - nothing found and backend failures
     And the error dialog does not show "<text>"
 
     Examples:
-      | term      | endpoint                 | text          |
-      | pneumonia | terminology/entry/search | GENERIC_ERROR |
+      | term                         | endpoint                                  | text                            |
+      | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} | {{searchFailures.gENERICERROR}} |
 
   # DEFECT: `HttpErrorHandlerService` handles 401 as "Not implemented", so an API answering
   # "unauthorised" (revoked token, restarted backend) shows the generic error dialog instead
@@ -99,5 +99,5 @@ Feature: Search - nothing found and backend failures
     Then I am asked to sign in
 
     Examples:
-      | term      |
-      | pneumonia |
+      | term                         |
+      | {{searchFailures.pneumonia}} |

@@ -9,7 +9,7 @@ Feature: Attribute filter (concept) - removing concepts
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to the configured language
 
   @component:criterion-editor @behavior:remove @filter:attribute-filter @type:concept
@@ -21,7 +21,7 @@ Feature: Attribute filter (concept) - removing concepts
       | <first>  |
       | <second> |
       | <third>  |
-    And I open the concept filter tab "Selected Concepts"
+    And I open the concept filter tab "{{labels.selectedConcepts}}"
     When I remove the concept "<removed>" from the selected concepts list
     Then the selected concepts list has 2 entries
     And the selected concepts list does not contain "<removed>"
@@ -41,7 +41,7 @@ Feature: Attribute filter (concept) - removing concepts
       | <first>  |
       | <second> |
       | <third>  |
-    And I open the concept filter tab "Selected Concepts"
+    And I open the concept filter tab "{{labels.selectedConcepts}}"
     When I remove the concept "<first>" from the selected concepts list
     And I remove the concept "<second>" from the selected concepts list
     Then the selected concepts are:
@@ -61,7 +61,7 @@ Feature: Attribute filter (concept) - removing concepts
       | <first>  |
       | <second> |
       | <third>  |
-    And I open the concept filter tab "Selected Concepts"
+    And I open the concept filter tab "{{labels.selectedConcepts}}"
     When I remove the concept "<first>" from the selected concepts list
     And I remove the concept "<second>" from the selected concepts list
     And I remove the concept "<third>" from the selected concepts list
@@ -80,9 +80,9 @@ Feature: Attribute filter (concept) - removing concepts
       | <first>  |
       | <second> |
       | <third>  |
-    And I open the concept filter tab "Selected Concepts"
+    And I open the concept filter tab "{{labels.selectedConcepts}}"
     When I remove the concept "<first>" from the selected concepts list
-    And I click on the button "Close"
+    And I click on the button "{{labels.close}}"
     And I open the editor of the added criterium
     And I open the editor tab "<tab>"
     Then the selected concepts are:

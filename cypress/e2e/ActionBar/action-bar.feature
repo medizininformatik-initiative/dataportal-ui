@@ -11,23 +11,24 @@ Feature: Action bar - upload, download and save
     Given I am on the "<page>" page
     Then the action bar offers upload, download and save
     Examples:
-      | page                           |
-      | Feasibility Search             |
-      | Feasibility Bulk Search        |
-      | Feasibility Editor             |
-      | Data Selection Search          |
-      | Data Selection Editor          |
-      | Data Query - Cohort Definition |
-      | Data Query - Data Selection    |
+      | page                                |
+      | {{pages.feasibilitySearch}}         |
+      | {{pages.feasibilityBulkSearch}}     |
+      | {{pages.feasibilityEditor}}         |
+      | {{pages.dataSelectionSearch}}       |
+      | {{pages.dataSelectionEditor}}       |
+      | {{pages.dataQueryCohortDefinition}} |
+      | {{pages.dataQueryDataSelection}}    |
 
   @component:action-bar @behavior:hide-file-actions
   Scenario Outline: The query editor hides upload, download and save
-    Given I am on the "Feasibility Search" page
+    Given I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
     And I add the criterium "<criterium>" via code "<code>" to the editor
     When I open the menu
-    And I click on the menu item "Configure"
-    Then I am on the "Query Editor - Criteria" page
+    And I click on the menu item "{{labels.configure}}"
+    Then I am on the "{{pages.queryEditorCriteria}}" page
     And the action bar offers no upload, download or save
     Examples:
-      | criterium | code               |
-      | Pneumonia | {{pneumonia.code}} |
+      | criterium               | code               |
+      | {{pneumonia.criterium}} | {{pneumonia.code}} |

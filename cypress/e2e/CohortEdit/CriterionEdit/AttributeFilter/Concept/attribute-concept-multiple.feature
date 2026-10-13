@@ -18,7 +18,7 @@ Feature: Attribute filter (concept) - criterium with several concept filters
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to the configured language
 
   @component:criterion-editor @behavior:select @filter:attribute-filter @type:concept
@@ -74,7 +74,7 @@ Feature: Attribute filter (concept) - criterium with several concept filters
       | <secondFilter>   | <secondConcept> |
       | <thirdFilter>    | <thirdConcept>  |
       | <fourthFilter>   | <fourthConcept> |
-    When I click on the button "Close"
+    When I click on the button "{{labels.close}}"
     And I open the editor of the added criterium
     And I open the editor tab "<firstFilter>"
     Then each of these attribute filters has <count> selected concept:
@@ -95,8 +95,8 @@ Feature: Attribute filter (concept) - criterium with several concept filters
     And I open the editor tab "<filter>"
     And I have selected the concepts in the filter "<filter>":
       | <concept> |
-    When I click on the button "Close"
-    And I am on the "Feasibility Search" page
+    When I click on the button "{{labels.close}}"
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to the configured language
     And I add the criterium "<otherCriterium>" via code "<otherCode>" to the editor
     And I open the editor of the added criterium

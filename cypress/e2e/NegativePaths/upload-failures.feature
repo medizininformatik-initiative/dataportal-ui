@@ -7,10 +7,10 @@ Feature: Upload - invalid files
 
   Background:
     Given I am logged in as a user
-    And I am on the "Data Query - Cohort Definition" page
+    And I am on the "{{pages.dataQueryCohortDefinition}}" page
     And I set the language to English
-    And I upload the file "Single_Inclusion_Criteria_With_Patient"
-    And I should see "<kept>" in the cohort definition editor
+    And I upload the file "{{files.singleInclusion}}"
+    And I should see "{{files.singleInclusionCriterium}}" in the cohort definition editor
 
   @component:upload @behavior:reject-invalid-file
   Scenario Outline: A file that is not JSON is reported and the cohort is kept
@@ -21,8 +21,8 @@ Feature: Upload - invalid files
     Then I should see "<kept>" in the cohort definition editor
 
     Examples:
-      | fileName      | contents         | message           | kept              |
-      | not-json.json | this is not json | is not valid JSON | 18-Oxydase-Mangel |
+      | fileName                       | contents                         | message                           | kept                               |
+      | {{uploadFailures.notJsonJson}} | {{uploadFailures.thisIsNotJson}} | {{uploadFailures.isNotValidJSON}} | {{files.singleInclusionCriterium}} |
 
   @component:upload @behavior:reject-invalid-file
   Scenario Outline: A JSON file without a data definition is rejected by validation
@@ -33,9 +33,9 @@ Feature: Upload - invalid files
     Then I should see "<kept>" in the cohort definition editor
 
     Examples:
-      | fileName          | contents                | message                                        | kept              |
-      | empty-object.json | {}                      | required property 'cohortDefinition' not found | 18-Oxydase-Mangel |
-      | unknown-prop.json | {"inclusionCriteria":1} | is not defined in the schema                   | 18-Oxydase-Mangel |
+      | fileName                           | contents                              | message                                                     | kept                               |
+      | {{uploadFailures.emptyObjectJson}} | {{uploadFailures.value}}              | {{uploadFailures.requiredPropertyCohortDefinitionNotFound}} | {{files.singleInclusionCriterium}} |
+      | {{uploadFailures.unknownPropJson}} | {{uploadFailures.inclusionCriteria1}} | {{uploadFailures.isNotDefinedInTheSchema}}                  | {{files.singleInclusionCriterium}} |
 
   # DEFECT: the dialog for a non-JSON file is titled `GENERIC_ERROR` and shows the raw
   # SyntaxError text. Expected: a translated title and a sentence naming the file.
@@ -47,5 +47,5 @@ Feature: Upload - invalid files
     And the error dialog does not show "<text>"
 
     Examples:
-      | fileName      | contents         | text          |
-      | not-json.json | this is not json | GENERIC_ERROR |
+      | fileName                       | contents                         | text                            |
+      | {{uploadFailures.notJsonJson}} | {{uploadFailures.thisIsNotJson}} | {{searchFailures.gENERICERROR}} |

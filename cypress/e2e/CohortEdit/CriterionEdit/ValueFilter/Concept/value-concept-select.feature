@@ -8,7 +8,7 @@ Feature: Value filter (concept) - selecting and removing concepts
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to the configured language
 
   @component:criterion-editor @behavior:select @filter:value-filter @type:concept
@@ -35,7 +35,7 @@ Feature: Value filter (concept) - selecting and removing concepts
       | <first>  |
       | <second> |
       | <third>  |
-    When I open the concept filter tab "Selected Concepts"
+    When I open the concept filter tab "{{labels.selectedConcepts}}"
     And I remove the concept "<second>" from the selected concepts list
     Then the selected concepts are:
       | code    |
@@ -53,7 +53,7 @@ Feature: Value filter (concept) - selecting and removing concepts
     And I open the editor tab "<tab>"
     And I have selected the concepts:
       | <first> |
-    When I click on the button "Close"
+    When I click on the button "{{labels.close}}"
     And I open the editor of the added criterium
     And I open the editor tab "<tab>"
     Then the selected concepts are:
@@ -72,9 +72,9 @@ Feature: Value filter (concept) - selecting and removing concepts
     And I have selected the concepts:
       | <first>  |
       | <second> |
-    When I open the concept filter tab "Selected Concepts"
+    When I open the concept filter tab "{{labels.selectedConcepts}}"
     And I remove the concept "<first>" from the selected concepts list
-    And I open the concept filter tab "Single Search"
+    And I open the concept filter tab "{{labels.singleSearch}}"
     And I clear the concept search
     Then the concept "<first>" is not checked in the search results
     And the concept "<second>" is checked in the search results

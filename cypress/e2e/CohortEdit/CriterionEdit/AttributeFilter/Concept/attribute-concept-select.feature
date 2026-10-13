@@ -11,7 +11,7 @@ Feature: Attribute filter (concept) - selecting concepts
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to the configured language
 
   @component:criterion-editor @behavior:select @filter:attribute-filter @type:concept
@@ -72,7 +72,7 @@ Feature: Attribute filter (concept) - selecting concepts
     And I have selected the concepts:
       | <first>  |
       | <second> |
-    When I click on the button "Close"
+    When I click on the button "{{labels.close}}"
     And I open the editor of the added criterium
     And I open the editor tab "<tab>"
     Then the selected concepts are:
@@ -95,7 +95,7 @@ Feature: Attribute filter (concept) - selecting concepts
     And I have selected the concepts:
       | <first>  |
       | <second> |
-    When I click on the button "Close"
+    When I click on the button "{{labels.close}}"
     Then the criterium "<criterium>" shows a filter chip for "<firstChip>"
     And the criterium "<criterium>" shows a filter chip for "<secondChip>"
 

@@ -59,24 +59,5 @@
   },
   "noFilter": {
     "criterium": "BIOMAT erheben"
-  },
-  "bulk": {
-    "codes": "E10, E11, E66",
-    "terminology": "ICD-10-GM",
-    "context": "Diagnose",
-    "first": "E10",
-    "second": "E11",
-    "third": "E66",
-    "criterium": "Adipositas",
-    "codes3": "E66, E10, E11",
-    "removed": "E10",
-    "remaining": "E66, E11"
-  },
-  "dataSelection": {
-    "feature": "Medication administration",
-    "reference": "Procedure",
-    "filterTab": "Code Filter",
-    "code": "A10BA02",
-    "concept": "Metformin"
   }
 }

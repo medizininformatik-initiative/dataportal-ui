@@ -2,7 +2,7 @@
 Feature: Data Query Cohort
     Background: I am logged in and on the Data Query Cohort page
         Given I am logged in as a user
-        And I am on the "Data Query - Cohort Definition" page
+        And I am on the "{{pages.dataQueryCohortDefinition}}" page
         And I set the language to English
 
     @component:cohort-definition @behavior:upload
@@ -12,20 +12,20 @@ Feature: Data Query Cohort
 
 
         Examples:
-            | fileName                               |
-            | Single_Inclusion_Criteria_With_Patient |
+            | fileName                  |
+            | {{files.singleInclusion}} |
 
     @component:cohort-definition @behavior:advance
     Scenario Outline: Defining a cohort and advancing to the Data Selection step
-        Given I am on the "Feasibility Search" page
+        Given I am on the "{{pages.feasibilitySearch}}" page
         And I set the language to English
         And I add the criterium "<criterium>" via code "<code>" to the editor
-        And I drag "<criterium>" criterium to the "Inclusion" list
-        When I navigate to the "Data Definition" page
+        And I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
+        When I navigate to the "{{labels.dataDefinition}}" page
         Then I should see "<criterium>" in the cohort definition editor
-        When I click on the button "To Feature Selection"
-        Then I am on the "Data Query - Data Selection" page
+        When I click on the button "{{labels.toFeatureSelection}}"
+        Then I am on the "{{pages.dataQueryDataSelection}}" page
 
         Examples:
-            | criterium | code               |
-            | Pneumonia | {{pneumonia.code}} |
+            | criterium               | code               |
+            | {{pneumonia.criterium}} | {{pneumonia.code}} |
