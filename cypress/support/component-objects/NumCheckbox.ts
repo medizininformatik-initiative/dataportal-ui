@@ -1,3 +1,4 @@
+import { dataCy } from '../dataCy'
 /**
  * Query and interaction helper for `num-checkbox` shared component: `<span role="checkbox">`
  * with click handler, never real `<input>`. `cy.check()` / `input[type="checkbox"]` cannot
@@ -12,7 +13,7 @@ export class NumCheckbox {
    * wrong checkbox.
    * */
   public toggle() {
-    cy.get('[data-cy="checkbox"]').click()
+    cy.get(dataCy('checkbox')).click()
   }
 }
 

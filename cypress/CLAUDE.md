@@ -45,6 +45,16 @@ Cypress component-object (see below) that reads it:
 | `tree` | `node.data.display \| displayTranslation` (dynamic, per tree node) | `data-selection-search.ts` |
 | `action-bar` | `"upload-crtdl"` (the file `<input>`); `"download-crtdl-button"` (opens the download modal); `"save-cohort-button"` | `uploadFile.cy.ts`; `action-bar.cy.ts` (icon-only buttons — see its `ICON_ONLY_BUTTONS` lookup, since the other action-bar buttons are text-matched, this one has no visible text) |
 
+Cypress code never writes `[data-cy="..."]` itself, and never passes a free string as a fixed hook:
+- `dataCy(hook)` (`support/dataCy.ts`) takes only a `Hook`: a value of `FIXED_HOOKS` or `nav-<route>`.
+  A typo is a `tsc` error.
+- `dataCyOf(text, carrier)` is for hooks that carry entity text (criterium, chip, tree node, ...).
+  `carrier` is the element class/tag from the `Carrier` union, so no bare wildcard lookup exists.
+- New `numDataCy="literal"` in a template: add it to `FIXED_HOOKS`. Spec
+  `num-data-cy.registry.spec.ts` fails on a literal missing from `FIXED_HOOKS` and on an entry no
+  template uses. New text-carrying element: add its selector to `Carrier`.
+- `cypress:lint` (`no-restricted-syntax`) rejects any raw `data-cy` string outside `dataCy.ts`.
+
 Deliberately **not** migrated: `dashboard`, `data-selection-boxes`,
 `query-editor/criterion`, `reference-edit`, `save-dialog` (feasibility-query
 result), `value-filter` — these had raw `data-cy` before this pass and weren't
@@ -311,6 +321,21 @@ blur, so an unblurred date shows no chip and is not applied yet.
 
 A run can also end on `data-query/cohort-definition` in German mid-scenario (seen once on a ~30s data
 selection scenario, same symptom as the OAuth refresh note above). Rerun before debugging the step.
+
+## A selector root appears once per file, and once per suite (enforced per file by `no-duplicate-selector`)
+
+Rule `cypress/eslint-rules/no-duplicate-selector.js` compares the **root** (first token) of a static
+selector, so `.box`, `.box .row` and `.box .name` are three uses of `.box`, not three different
+strings. It checks the first argument of `cy.get`, `.find`, `.closest`, `.filter`, `.children`,
+`.parents` and 2-argument `.contains`; template literals count up to their first `${}`. Bare tags
+(`td`) and attribute-only selectors (`[role="tab"]`) are exempt. Fix by where it is used:
+- One file: file-level `const NAME = '...'` above the class (or a private method when it takes a
+  parameter or the whole `cy.get(...)` chain repeats).
+- Two or more files: it belongs to a component, so move it into that component's class in
+  `support/component-objects/` (`NumBetweenFilter` for `num-between-filter`). Step classes call its
+  methods and never hold the selector. No shared `selectors.ts` bag.
+- Fixed `data-cy` value: `dataCy()` as above.
+ESLint sees one file at a time, so the cross-file case has no rule: check it in review.
 
 ## Step files: one class, steps only call it (enforced by `cypress/.eslintrc.json`)
 

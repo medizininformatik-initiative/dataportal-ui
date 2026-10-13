@@ -1,3 +1,4 @@
+import { dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { resolve } from '../testData'
 import { CriterionSearch } from '../../e2e/CohortSearch/cohort-search'
@@ -44,7 +45,7 @@ export class CriterionToEditor {
    * Assert criterium shown in editor content.
    * */
   public shouldSeeCriteriumInEditor(criterium: string) {
-    cy.get(`[data-cy="${criterium}"]`).within(() => {
+    cy.get(dataCyOf(criterium, '.container')).within(() => {
       cy.get('.content').should('contain', criterium).should('contain', criterium)
     })
   }

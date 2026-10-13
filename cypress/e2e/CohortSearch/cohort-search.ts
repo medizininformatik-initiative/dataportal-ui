@@ -2,6 +2,8 @@ import { numButton } from '../../support/component-objects/NumButton'
 import { numTable } from '../../support/component-objects/NumTable'
 import { Table } from '../../support/step_definitions/table.cy'
 
+const NUM_SEARCHBAR_INPUT = 'num-searchbar input'
+
 /**
  * Criterion search page object: search input, result select, action bar.
  * */
@@ -10,9 +12,9 @@ export class CriterionSearch {
    * Type text into search input.
    * */
   public searchInput(text: string) {
-    cy.get('num-searchbar input').should('be.visible')
-    cy.get('num-searchbar input').clear().type(text)
-    cy.get('num-searchbar input').should('have.value', text)
+    cy.get(NUM_SEARCHBAR_INPUT).should('be.visible')
+    cy.get(NUM_SEARCHBAR_INPUT).clear().type(text)
+    cy.get(NUM_SEARCHBAR_INPUT).should('have.value', text)
   }
 
   /**

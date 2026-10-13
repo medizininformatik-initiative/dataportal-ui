@@ -1,5 +1,7 @@
 import { defineStep } from '../defineStep'
 
+const NUM_SEARCHBAR_INPUT = 'num-searchbar input'
+
 /**
  * Steps for search bar input.
  * */
@@ -8,21 +10,21 @@ export class Search {
    * Clear search input, then type text.
    * */
   public typeInInputField(text: string) {
-    cy.get('num-searchbar input').clear().type(text).should('have.value', text)
+    cy.get(NUM_SEARCHBAR_INPUT).clear().type(text).should('have.value', text)
   }
 
   /**
    * Clear search input.
    * */
   public clearInputField() {
-    cy.get('num-searchbar input').clear().should('have.value', '')
+    cy.get(NUM_SEARCHBAR_INPUT).clear().should('have.value', '')
   }
 
   /**
    * Assert search input value.
    * */
   public inputShouldKeepText(text: string) {
-    cy.get('num-searchbar input').should('have.value', text)
+    cy.get(NUM_SEARCHBAR_INPUT).should('have.value', text)
   }
 }
 

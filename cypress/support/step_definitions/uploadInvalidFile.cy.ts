@@ -1,3 +1,4 @@
+import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
 
 /**
@@ -9,7 +10,7 @@ export class UploadInvalidFile {
    * no fixture on disk. Works on every page with action bar.
    * */
   public uploadContent(fileName: string, contents: string) {
-    cy.get('[data-cy="upload-crtdl"]').selectFile(
+    cy.get(dataCy('upload-crtdl')).selectFile(
       { contents: Cypress.Buffer.from(contents), fileName, mimeType: 'application/json' },
       { force: true }
     )

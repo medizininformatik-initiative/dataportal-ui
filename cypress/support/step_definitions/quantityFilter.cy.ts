@@ -1,6 +1,11 @@
+import { dataCy, dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { materialSelect } from '../component-objects/MaterialSelect'
 import { numFilterChips } from '../component-objects/NumFilterChips'
+
+const COMPARISON_SELECT = 'num-quantity-comparision-select'
+
+const NUM_QUANTITY_RANGE_NUM_VALUE_SELECT_INPUT = 'num-quantity-range num-value-select input'
 
 /**
  * Every feature editing quantity value filter: comparator, value, unit, range.
@@ -10,7 +15,7 @@ export class QuantityFilter {
    * Pick comparator in comparison select.
    * */
   public selectComparator(option: string) {
-    materialSelect.selectOptionByText('num-quantity-comparision-select', option)
+    materialSelect.selectOptionByText(COMPARISON_SELECT, option)
   }
 
   /**
@@ -25,8 +30,8 @@ export class QuantityFilter {
    * before values: component validates, shows warning, only once unit set.
    * */
   public selectRange(min: number, max: number) {
-    cy.get('num-quantity-range num-value-select input').eq(0).clear().type(min.toString())
-    cy.get('num-quantity-range num-value-select input').eq(1).clear().type(max.toString())
+    cy.get(NUM_QUANTITY_RANGE_NUM_VALUE_SELECT_INPUT).eq(0).clear().type(min.toString())
+    cy.get(NUM_QUANTITY_RANGE_NUM_VALUE_SELECT_INPUT).eq(1).clear().type(max.toString())
   }
 
   /**
@@ -40,7 +45,7 @@ export class QuantityFilter {
    * Open operator dropdown, compare options with comma-separated list, close it.
    * */
   public operatorShouldOffer(comparators: string) {
-    cy.get('num-quantity-comparision-select mat-select').click()
+    cy.get(`${COMPARISON_SELECT} mat-select`).click()
     cy.get('.mat-mdc-option')
       .then(($options) => Array.from($options).map((o) => o.textContent.trim()))
       .should(
@@ -54,15 +59,15 @@ export class QuantityFilter {
    * Assert panel visible.
    * */
   public shouldSeePanel(panelName: string) {
-    cy.get(`[data-cy="${panelName}"]`).should('be.visible')
+    cy.get(dataCyOf(panelName, 'num-quantity')).should('be.visible')
   }
 
   /**
    * Assert comparator selected in panel.
    * */
   public shouldSeeSelectedInPanel(selected: string, panelName: string) {
-    cy.get(`[data-cy="${panelName}"]`).within(() => {
-      cy.get('num-quantity-comparision-select').contains(selected).should('be.visible')
+    cy.get(dataCyOf(panelName, 'num-quantity')).within(() => {
+      cy.get(COMPARISON_SELECT).contains(selected).should('be.visible')
     })
   }
 
@@ -93,10 +98,8 @@ export class QuantityFilter {
      * Scope by `.container`, real `data-cy` host (see NumFilterChips): value filter chip block can
      * share criterion exact `data-cy` value, so unscoped `[data-cy="..."]` is ambiguous.
      * */
-    cy.get(`.container[data-cy="${criterium}"]`).within(() => {
-      cy.get('[data-cy="criterion-content"]')
-        .should('contain', criterium)
-        .should('contain', chipValue)
+    cy.get(dataCyOf(criterium, '.container')).within(() => {
+      cy.get(dataCy('criterion-content')).should('contain', criterium).should('contain', chipValue)
     })
     numFilterChips.getFilterChipByName(criterium, chipValue, panelName)
   }

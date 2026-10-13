@@ -1,9 +1,14 @@
+import { dataCyOf } from '../dataCy'
 import { resolve } from '../testData'
 import { defineStep } from '../defineStep'
 import { numConceptFilter } from '../component-objects/NumConceptFilter'
 import { t } from '../i18n'
 import { label } from '../labels'
 import { numMenu } from '../component-objects/NumMenu'
+
+const CHIP_CONTAINER = '.chip-container'
+const CONCEPT_ITEM = '.concept-item'
+const TAB = '.tab'
 
 /**
  * Open editor of criterium added last. Switch top-level filter tabs, mirroring Criterion data
@@ -33,14 +38,14 @@ export class CriterionEditor {
    * */
   public shouldHaveNoFilterTabs() {
     cy.get('num-filter-tabs, .tabs-container, .header-col-chips').should('exist')
-    cy.get('.tab').should('not.exist')
+    cy.get(TAB).should('not.exist')
   }
 
   /**
    * Assert criterium box shows no filter chips.
    * */
   public shouldShowNoFilterChips(criterium: string) {
-    cy.get(`.container[data-cy="${criterium}"]`).find('.chip-container').should('not.exist')
+    cy.get(dataCyOf(criterium, '.container')).find(CHIP_CONTAINER).should('not.exist')
   }
 
   /**
@@ -49,28 +54,28 @@ export class CriterionEditor {
    * English translation exists.
    * */
   public shouldShowFilterChip(criterium: string, chipText: string) {
-    cy.get(`.container[data-cy="${resolve(criterium)}"]`)
-      .find('.chip-container')
+    cy.get(dataCyOf(resolve(criterium), '.container'))
+      .find(CHIP_CONTAINER)
       .should('contain', resolve(chipText))
   }
 
   /**
    * Termcode editor (criterium with several termcodes, e.g. from bulk search) lists one
-   * `.concept-item` per code, each with "Remove" button. Tab disappears at one code.
+   * CONCEPT_ITEM per code, each with "Remove" button. Tab disappears at one code.
    * */
   public shouldListTermcodes(codes: string) {
     const list = resolve(codes)
       .split(',')
       .map((code) => code.trim())
-    cy.get('.concept-item').should('have.length', list.length)
-    list.forEach((code) => cy.get('.concept-item').contains(code))
+    cy.get(CONCEPT_ITEM).should('have.length', list.length)
+    list.forEach((code) => cy.get(CONCEPT_ITEM).contains(code))
   }
 
   /**
    * Remove termcode via its "Remove" button.
    * */
   public removeTermcode(code: string) {
-    cy.contains('.concept-item', resolve(code))
+    cy.contains(CONCEPT_ITEM, resolve(code))
       .contains('button', t('FEASIBILITY.EDITOR.MODAL.REMOVE'))
       .click()
   }
@@ -79,14 +84,14 @@ export class CriterionEditor {
    * Assert editor has tab, case-insensitive.
    * */
   public shouldHaveTab(tab: string) {
-    cy.contains('.tab', new RegExp(`^\\s*${label(tab)}\\s*$`, 'i')).should('exist')
+    cy.contains(TAB, new RegExp(`^\\s*${label(tab)}\\s*$`, 'i')).should('exist')
   }
 
   /**
    * Assert editor lacks tab.
    * */
   public shouldHaveNoTab(tab: string) {
-    cy.get('.tab').should('exist').and('not.contain.text', label(tab))
+    cy.get(TAB).should('exist').and('not.contain.text', label(tab))
   }
 }
 

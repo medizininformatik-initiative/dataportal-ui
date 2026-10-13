@@ -1,8 +1,13 @@
+import { dataCy, dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { searchInstance } from './search.cy'
 import { tableInstance } from './table.cy'
 import de from '../../../src/assets/i18n/de.json'
 import { t } from '../i18n'
+
+const NUM_PROFILE_REFERENCE_TILE = 'num-profile-reference-tile'
+const WARNING_MESSAGE = '.warning-message'
+const NUM_SELECTABLE_REFERENCE_TILE = 'num-selectable-reference-tile'
 
 /**
  * Warning "Unresolved reference" of data selection box. Profile reference field marked
@@ -16,14 +21,14 @@ export class DataSelectionUnresolvedReference {
    * Find visible selection box by profile name.
    * */
   private box(name: string) {
-    return cy.get(`.selection-box[data-cy="${name}"]`).should('be.visible')
+    return cy.get(dataCyOf(name, '.selection-box')).should('be.visible')
   }
 
   /**
    * Find reference tile of box, sibling of box.
    * */
   private tile(name: string) {
-    return this.box(name).parent().find('num-profile-reference-tile')
+    return this.box(name).parent().find(NUM_PROFILE_REFERENCE_TILE)
   }
 
   /**
@@ -39,8 +44,8 @@ export class DataSelectionUnresolvedReference {
   private required(field: string, name: string) {
     return this.tile(name)
       .contains(field)
-      .closest('num-profile-reference-tile')
-      .find('[data-cy="checkbox"]')
+      .closest(NUM_PROFILE_REFERENCE_TILE)
+      .find(dataCy('checkbox'))
   }
 
   /**
@@ -63,14 +68,14 @@ export class DataSelectionUnresolvedReference {
    * Assert box shows no warning.
    * */
   public boxShouldHaveNoWarning(name: string) {
-    this.box(name).parent().find('.warning-message').should('not.exist')
+    this.box(name).parent().find(WARNING_MESSAGE).should('not.exist')
   }
 
   /**
    * Click unresolved-reference warning of box.
    * */
   public clickWarning(name: string) {
-    this.tile(name).find('.warning-message').contains(this.notLinked()).click()
+    this.tile(name).find(WARNING_MESSAGE).contains(this.notLinked()).click()
   }
 
   /**
@@ -84,7 +89,7 @@ export class DataSelectionUnresolvedReference {
    * Tick feature in reference tile to link it.
    * */
   public linkToFeature(feature: string) {
-    cy.contains('num-selectable-reference-tile', feature).find('[data-cy="checkbox"]').click()
+    cy.contains(NUM_SELECTABLE_REFERENCE_TILE, feature).find(dataCy('checkbox')).click()
   }
 
   /**
@@ -102,7 +107,7 @@ export class DataSelectionUnresolvedReference {
    * Click remove action of reference tile.
    * */
   public removeReference(field: string, name: string) {
-    this.tile(name).contains(field).closest('num-profile-reference-tile').find('.actions').click()
+    this.tile(name).contains(field).closest(NUM_PROFILE_REFERENCE_TILE).find('.actions').click()
   }
 
   /**
@@ -111,7 +116,7 @@ export class DataSelectionUnresolvedReference {
    * */
   public unlinkFromFeature(feature: string) {
     const checkbox = () =>
-      cy.contains('num-selectable-reference-tile', feature).find('[data-cy="checkbox"]')
+      cy.contains(NUM_SELECTABLE_REFERENCE_TILE, feature).find(dataCy('checkbox'))
     checkbox().should('have.attr', 'aria-checked', 'true')
     checkbox().click()
     /**

@@ -1,3 +1,4 @@
+import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { numButton } from '../component-objects/NumButton'
 
@@ -32,7 +33,7 @@ export class SavedQueries {
    * Click delete icon of tile, confirm.
    * */
   public delete(title: string) {
-    cy.contains(TILE, title).find('[data-cy="saved-query-delete-icon"]').click()
+    cy.contains(TILE, title).find(dataCy('saved-query-delete-icon')).click()
     /**
      * `onDelete()` opens `confirm-delete-modal`, MatDialog rendered outside tile DOM via CDK
      * overlay: delete needs confirm click too.

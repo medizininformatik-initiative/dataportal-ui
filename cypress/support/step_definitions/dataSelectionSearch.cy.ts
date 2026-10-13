@@ -1,8 +1,12 @@
+import { dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { numCheckbox } from '../component-objects/NumCheckbox'
 import { numMenu } from '../component-objects/NumMenu'
 import { Search } from './search.cy'
 import { t } from '../i18n'
+
+const NUM_MODAL_WINDOW = 'num-modal-window'
+const NUM_BUTTON = 'num-button'
 
 /**
  * Section is `{string}`, not literal pattern text: Cucumber matches pattern before
@@ -22,26 +26,26 @@ export class DataSelectionSearch {
    * Expand root category, click feature node.
    * */
   public getTreeNodeByName(name: string, root: string) {
-    cy.get(`[data-cy="${root}"]`)
+    cy.get(dataCyOf(root, '.divider'))
       .should('be.visible')
       .within(() => {
         cy.get('.tree-node').click()
       })
-    cy.get(`[data-cy="${name}"]`).contains(name).should('be.visible').click()
+    cy.get(dataCyOf(name, '.divider')).contains(name).should('be.visible').click()
   }
 
   /**
    * Assert data selection box visible.
    * */
   public getDataSelectionBoxByName(name: string) {
-    cy.get(`[data-cy="${name}"]`).contains(name).should('be.visible')
+    cy.get(dataCyOf(name, '.selection-box')).contains(name).should('be.visible')
   }
 
   /**
    * Open menu of data selection box.
    * */
   public openMenuOnDataSelectionBox(name: string) {
-    cy.get(`[data-cy="${name}"]`).within(() => {
+    cy.get(dataCyOf(name, '.selection-box')).within(() => {
       numMenu.open()
     })
   }
@@ -50,7 +54,7 @@ export class DataSelectionSearch {
    * Click checkbox by label.
    * */
   public selectCheckboxByLabel(label: string) {
-    cy.get(`[data-cy="${label}"]`).contains(label).should('be.visible').click()
+    cy.get(dataCyOf(label, '.divider')).contains(label).should('be.visible').click()
   }
 
   /**
@@ -62,7 +66,7 @@ export class DataSelectionSearch {
     cy.contains('.header-col', t(sectionLabelKey))
       .find('.header-col-chips')
       .within(() => {
-        cy.get(`[data-cy="${chipName}"]`).contains(chipName).should('be.visible')
+        cy.get(dataCyOf(chipName, '.chip-container')).contains(chipName).should('be.visible')
       })
   }
 
@@ -118,22 +122,22 @@ export class DataSelectionSearch {
    * Click "Add new reference".
    * */
   public openReferenceModal() {
-    cy.get('num-button').contains(' Add new reference ').should('be.visible').click()
+    cy.get(NUM_BUTTON).contains(' Add new reference ').should('be.visible').click()
   }
 
   /**
    * Assert reference modal visible.
    * */
   public getReferenceModal() {
-    cy.get('num-modal-window').should('be.visible')
+    cy.get(NUM_MODAL_WINDOW).should('be.visible')
   }
 
   /**
    * Tick reference in modal.
    * */
   public addReference(name: string) {
-    cy.get('num-modal-window').within(() => {
-      cy.get(`[data-cy="${name}"]`)
+    cy.get(NUM_MODAL_WINDOW).within(() => {
+      cy.get(dataCyOf(name, '.divider'))
         .should('be.visible')
         .within(() => {
           numCheckbox.toggle()
@@ -145,8 +149,8 @@ export class DataSelectionSearch {
    * Confirm reference modal.
    * */
   public saveReference() {
-    cy.get('num-modal-window').within(() => {
-      cy.get('num-button').first().should('be.visible').click()
+    cy.get(NUM_MODAL_WINDOW).within(() => {
+      cy.get(NUM_BUTTON).first().should('be.visible').click()
     })
   }
 }

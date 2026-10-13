@@ -1,3 +1,4 @@
+const NUM_ERROR_DISPLAY_ERROR_DISPLAY_CONTAINER = 'num-error-display .error-display-container'
 /**
  * Query and interaction helper for `num-error-display`: overlay opened by global error handler
  * for failed requests and uncaught errors. Title is raw error type. Labels ("Request URL",
@@ -9,7 +10,7 @@ export class NumErrorDisplay {
    * Find error display container.
    * */
   private container() {
-    return cy.get('num-error-display .error-display-container')
+    return cy.get(NUM_ERROR_DISPLAY_ERROR_DISPLAY_CONTAINER)
   }
 
   /**
@@ -23,7 +24,7 @@ export class NumErrorDisplay {
    * Assert overlay closed.
    * */
   public shouldBeClosed() {
-    cy.get('num-error-display .error-display-container').should('not.exist')
+    cy.get(NUM_ERROR_DISPLAY_ERROR_DISPLAY_CONTAINER).should('not.exist')
   }
 
   /**

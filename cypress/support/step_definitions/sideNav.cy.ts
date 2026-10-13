@@ -1,7 +1,11 @@
+import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { NavItemValue, NavItemPaths, NavItemBaseRoutes } from '../../e2e/Utilities/NavItems'
 import { Page } from '../../e2e/Utilities/pages'
 import { getUrlPathByPage } from '../../e2e/Utilities/pathResolver'
+
+const MAT_NAV_LIST = 'mat-nav-list'
+const NAV_ITEM_FONT = `${MAT_NAV_LIST} .navItem-font`
 
 /**
  * Class for side navigation component tests.
@@ -12,7 +16,7 @@ export class SideNavTests {
    * Click nav item, assert URL.
    * */
   public navigateTo(navItemSelector: NavItemValue) {
-    cy.get(`[data-cy="nav-${NavItemBaseRoutes[navItemSelector]}"]`).click()
+    cy.get(dataCy(`nav-${NavItemBaseRoutes[navItemSelector]}`)).click()
     cy.url().should('include', NavItemPaths[navItemSelector])
   }
 
@@ -34,42 +38,42 @@ export class SideNavTests {
    * language, not suite language.
    * */
   public toggle() {
-    cy.get('mat-nav-list .num-logo-row button').click()
+    cy.get(`${MAT_NAV_LIST} .num-logo-row button`).click()
   }
 
   /**
    * Assert nav collapsed.
    * */
   public shouldBeCollapsed() {
-    cy.get('mat-nav-list').should('have.class', 'collapsed')
+    cy.get(MAT_NAV_LIST).should('have.class', 'collapsed')
   }
 
   /**
    * Assert nav expanded.
    * */
   public shouldBeExpanded() {
-    cy.get('mat-nav-list').should('not.have.class', 'collapsed')
+    cy.get(MAT_NAV_LIST).should('not.have.class', 'collapsed')
   }
 
   /**
    * Assert nav lists `count` areas.
    * */
   public shouldListAreas(count: number) {
-    cy.get('mat-nav-list a.num-mat-list-item').should('have.length', count)
+    cy.get(`${MAT_NAV_LIST} a.num-mat-list-item`).should('have.length', count)
   }
 
   /**
    * Assert nav shows label.
    * */
   public shouldShowLabel(label: string) {
-    cy.get('mat-nav-list .navItem-font').should('contain', label)
+    cy.get(NAV_ITEM_FONT).should('contain', label)
   }
 
   /**
    * Assert nav shows no labels.
    * */
   public shouldShowNoLabels() {
-    cy.get('mat-nav-list .navItem-font').should('not.exist')
+    cy.get(NAV_ITEM_FONT).should('not.exist')
   }
 
   /**

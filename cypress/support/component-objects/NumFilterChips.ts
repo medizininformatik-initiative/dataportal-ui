@@ -1,3 +1,4 @@
+import { dataCyOf } from '../dataCy'
 /**
  * Query and interaction helper for `num-filter-chips` shared component. Moved from
  * `cypress/support/step_definitions/filter-chips.cy.ts`, fixed to use `numDataCy` values
@@ -17,21 +18,21 @@ export class NumFilterChips {
      * concept IS criterion, e.g. "Current chronological age"), so unscoped `[data-cy="..."]`
      * matches box and own chip block.
      * */
-    return cy.get(`.container[data-cy="${criterium}"]`)
+    return cy.get(dataCyOf(criterium, '.container'))
   }
 
   /**
    * Assert chip block name.
    * */
   private assertBlockName(expectedBlockName: string) {
-    cy.get(`[data-cy="${expectedBlockName}"]`).should('exist')
+    cy.get(dataCyOf(expectedBlockName, '.block')).should('exist')
   }
 
   /**
    * Assert chip visible.
    * */
   private assertChipVisible(chipName: string) {
-    cy.get(`[data-cy="${chipName}"]`).should('be.visible')
+    cy.get(dataCyOf(chipName, '.chip-container')).should('be.visible')
   }
 
   /**

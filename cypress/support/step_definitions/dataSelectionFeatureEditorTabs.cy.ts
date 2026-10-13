@@ -1,5 +1,10 @@
+import { dataCy, dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { t } from '../i18n'
+
+const SELECTED_FIELDS_BOX = '.selected-fields-box'
+const HEADER_COL = '.header-col'
+const HEADER_COL_CHIPS = '.header-col-chips'
 
 const HEADER_SECTIONS: Record<string, string> = {
   'Selected Fields': 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS',
@@ -21,7 +26,7 @@ export class DataSelectionFeatureEditorTabs {
    * */
   private panelRow(field: string) {
     return cy
-      .get('.selected-fields-box .selected-filter-container')
+      .get(`${SELECTED_FIELDS_BOX} .selected-filter-container`)
       .filter((_, row) => row.querySelector('.field-name')?.textContent?.trim() === field)
   }
 
@@ -29,8 +34,8 @@ export class DataSelectionFeatureEditorTabs {
    * Assert field absent from selected-fields list.
    * */
   public fieldShouldNotBeInSelectedList(field: string) {
-    cy.get('.selected-fields-box').should('be.visible')
-    cy.get('.selected-fields-box .field-name').should('not.contain', field)
+    cy.get(SELECTED_FIELDS_BOX).should('be.visible')
+    cy.get(`${SELECTED_FIELDS_BOX} .field-name`).should('not.contain', field)
   }
 
   /**
@@ -38,8 +43,8 @@ export class DataSelectionFeatureEditorTabs {
    * */
   public noChipShouldAppearInSection(chipName: string, section: string) {
     if (!HEADER_SECTIONS[section]) throw new Error(`Unknown section "${section}"`)
-    cy.contains('.header-col', t(HEADER_SECTIONS[section]))
-      .find(`.header-col-chips [data-cy="${chipName}"]`)
+    cy.contains(HEADER_COL, t(HEADER_SECTIONS[section]))
+      .find(`${HEADER_COL_CHIPS} ${dataCyOf(chipName, '.chip-container')}`)
       .should('not.exist')
   }
 
@@ -54,7 +59,7 @@ export class DataSelectionFeatureEditorTabs {
    * Toggle required checkbox of field.
    * */
   public toggleRequired(field: string) {
-    this.panelRow(field).find('[data-cy="checkbox"]').click()
+    this.panelRow(field).find(dataCy('checkbox')).click()
   }
 
   /**
@@ -62,7 +67,7 @@ export class DataSelectionFeatureEditorTabs {
    * */
   public requiredShouldBe(field: string, state: string) {
     this.panelRow(field)
-      .find('[data-cy="checkbox"]')
+      .find(dataCy('checkbox'))
       .should('have.attr', 'aria-checked', String(state === 'enabled'))
   }
 
@@ -70,8 +75,10 @@ export class DataSelectionFeatureEditorTabs {
    * Assert selected field sits in group.
    * */
   public selectedFieldShouldBeInGroup(field: string, group: string) {
-    cy.contains('.header-col', t('DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS'))
-      .find(`.filter-wrapper:has(.block[data-cy="${group}"]) .chip-container[data-cy="${field}"]`)
+    cy.contains(HEADER_COL, t('DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS'))
+      .find(
+        `.filter-wrapper:has(${dataCyOf(group, '.block')}) ${dataCyOf(field, '.chip-container')}`
+      )
       .should('be.visible')
   }
 
@@ -86,9 +93,9 @@ export class DataSelectionFeatureEditorTabs {
    * Assert field unticked in fields tree.
    * */
   public fieldShouldNotBeTicked(field: string) {
-    cy.get(`num-tree [data-cy="${field}"]`)
+    cy.get(`num-tree ${dataCyOf(field, '.divider')}`)
       .first()
-      .find('[data-cy="checkbox"]')
+      .find(dataCy('checkbox'))
       .first()
       .should('have.attr', 'aria-checked', 'false')
   }
@@ -100,11 +107,11 @@ export class DataSelectionFeatureEditorTabs {
   public headerShouldListSelectedField(field: string) {
     const column = () =>
       cy
-        .contains('.header-col', t('DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS'))
-        .find('.header-col-chips')
+        .contains(HEADER_COL, t('DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS'))
+        .find(HEADER_COL_CHIPS)
     column().find('.chip-container').should('exist')
     column().then(($chips) => {
-      if ($chips.find(`.chip-container[data-cy="${field}"]`).length) return
+      if ($chips.find(dataCyOf(field, '.chip-container')).length) return
       cy.wrap($chips.find('.count-badge')).each(($badge) => cy.wrap($badge).trigger('mouseenter'))
       cy.get('.mat-mdc-tooltip').should('contain', field)
     })
