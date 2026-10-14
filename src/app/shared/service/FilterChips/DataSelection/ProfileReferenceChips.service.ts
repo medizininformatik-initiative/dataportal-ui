@@ -37,12 +37,20 @@ export class ProfileReferenceChipsService {
     return referenceGroup
   }
 
-  private getLinkedProfileDisplays(selectedReferenceField: SelectedReferenceField): Display[] {
+  private getLinkedProfileDisplays(
+    selectedReferenceField: SelectedReferenceField
+  ): { display: Display; number: number }[] {
     return selectedReferenceField
       .getLinkedProfileIds()
-      .map((id) => this.profileProviderService.getOne(id).getLabel())
+      .map((id) => ({
+        display: this.profileProviderService.getOne(id).getLabel(),
+        number: this.profileProviderService.getOne(id).getLabelNumber(),
+      }))
 
-      .filter((profileDisplay): profileDisplay is Display => !!profileDisplay)
+      .filter(
+        (profileDisplay): profileDisplay is { display: Display; number: number } =>
+          !!profileDisplay.display
+      )
   }
 
   private adaptToProfileReferenceChipData(groups: ProfileReferenceGroup): ProfileReferenceChipData {
