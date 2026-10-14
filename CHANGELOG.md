@@ -1,5 +1,13 @@
 # Changelog
 
+## v7.3.3 (2026-10-14)
+
+### Fixed
+* Add label number to Filterchips in feature list
+* Adapt to new description shape in profile detail response [#647](https://github.com/medizininformatik-initiative/dataportal-ui/issues/647)
+
+
+
 ## v7.3.2 (2026-10-09)
 
 ### Fixed
