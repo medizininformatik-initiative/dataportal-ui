@@ -10,6 +10,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatIconButton } from '@angular/material/button'
 import { TranslateModule } from '@ngx-translate/core'
+import { NumDataCyDirective } from '../../../shared/directives/num-data-cy.directive'
 
 @Component({
   selector: 'num-side-menu',
@@ -27,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatIcon,
     MatIconButton,
     TranslateModule,
+    NumDataCyDirective,
   ],
 })
 export class SideMenuComponent {

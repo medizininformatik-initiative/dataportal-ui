@@ -1,0 +1,14 @@
+{
+  "bulk": {
+    "codes": "E10, E11, E66",
+    "terminology": "ICD-10-GM",
+    "context": "Diagnose",
+    "first": "E10",
+    "second": "E11",
+    "third": "E66",
+    "criterium": "Adipositas",
+    "codes3": "E66, E10, E11",
+    "removed": "E10",
+    "remaining": "E66, E11"
+  }
+}
