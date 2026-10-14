@@ -11,7 +11,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     env:
-      ONTOLOGY_GIT_TAG: v3.9.0-experimental.0 # Or dynamically set it
+      ONTOLOGY_GIT_TAG: v5.0.1 # Or dynamically set it
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,12 +26,14 @@ jobs:
 
       - name: Check backend health with curl (wait until ready)
         run: |
-          max_attempts=20
+          max_attempts=60
           attempt=0
-          until curl --fail http://localhost:8090/api/v5/actuator/health; do
+          until curl --fail http://localhost:8090/api/v6/actuator/health; do
             attempt=$((attempt+1))
             if [ $attempt -ge $max_attempts ]; then
               echo "Backend did not become healthy after $max_attempts attempts"
+              docker ps -a
+              docker logs dataportal-backend
               exit 1
             fi
             echo "Waiting for backend to be healthy... attempt $attempt"
@@ -70,7 +72,7 @@ jobs:
         with:
           # Disable running of tests within install job
           runTests: false
-          build: npm run build
+          build: npm run build -- --configuration=deploy
 
       - name: Save build folder
         uses: actions/upload-artifact@v4

@@ -51,7 +51,7 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
     return new ProfileEntryDetails(
       json.id,
       Display.fromJson(json.display),
-      Display.fromJson(json.description.display),
+      Display.fromJson(json.description),
       json.fields.map((field) => ProfileEntryDetailsField.fromJson(field)),
       json.parents.map((parent) => ProfileEntryRelative.fromJson(parent)),
       json.children.map((child) => ProfileEntryRelative.fromJson(child)),

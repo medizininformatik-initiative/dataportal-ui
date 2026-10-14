@@ -6,6 +6,7 @@ import { Injectable, inject } from '@angular/core'
 import { LoadDataSelectionProfilesService } from './DataSelection/LoadDataSelectionProfiles.service'
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
 import { ProfileProviderService } from './Provider/ProfileProvider.service'
+import { DisplayTranslationPipe } from '../shared/pipes/DisplayTranslationPipe'
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class PossibleReferencesService {
   private dataSelectionProviderService = inject(DataSelectionProviderService)
   private elementIdMapService = inject(ElementIdMapService)
   private profileProviderService = inject(ProfileProviderService)
+  private translation = inject(DisplayTranslationPipe)
 
   /**
    * id vom profile --> elementId --> PossibleProfileReferenceData Array
@@ -140,7 +142,7 @@ export class PossibleReferencesService {
   ): PossibleProfileReferenceData {
     return {
       id: profile.getId(),
-      label: profile.getLabel().getOriginal(),
+      label: this.translation.transform(profile.getLabel()),
       display: profile.getDisplay(),
       url: profile.getUrl(),
       isSelected,
