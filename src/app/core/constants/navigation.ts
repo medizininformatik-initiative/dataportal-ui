@@ -1,7 +1,7 @@
-import { BasePaths } from 'src/app/app-paths'
-import INavItem from '../../layout/models/nav-item.interface'
+import { BasePaths, UrlPaths } from 'src/app/app-paths'
+import NavItemData from '../../layout/models/nav-item.interface'
 
-export const mainNavItems: INavItem[] = [
+export const mainNavItems: NavItemData[] = [
   /*{
     routeTo: BasePaths.home,
     icon: 'home',
@@ -10,17 +10,58 @@ export const mainNavItems: INavItem[] = [
   {
     routeTo: BasePaths.dataQuery,
     icon: 'clipboard-list',
-    translationKey: 'NAVIGATION.DATAQUERY',
+    translationKey: 'NAVIGATION.DATAQUERY.TITLE',
+    children: [
+      {
+        routeTo: UrlPaths.dataQuery.cohortDefinition,
+        icon: 'file',
+        translationKey: 'NAVIGATION.DATAQUERY.COHORT_DEFINITION',
+      },
+      {
+        routeTo: UrlPaths.dataQuery.dataSelection,
+        icon: 'file',
+        translationKey: 'NAVIGATION.DATAQUERY.DATASELECTION_DEFINITION',
+      },
+    ],
   },
   {
     routeTo: BasePaths.feasibilityQuery,
     icon: 'file',
-    translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR',
+    translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.TITLE',
+    children: [
+      {
+        routeTo: UrlPaths.feasibilityQuery.search,
+        icon: 'file',
+        translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.SEARCH',
+      },
+      {
+        routeTo: UrlPaths.feasibilityQuery.bulkSearch,
+        icon: 'file',
+        translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.BULK_SEARCH',
+      },
+      {
+        routeTo: UrlPaths.feasibilityQuery.editor,
+        icon: 'file',
+        translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.EDITOR',
+      },
+    ],
   },
   {
     routeTo: BasePaths.dataSelection,
     icon: 'database',
-    translationKey: 'NAVIGATION.DATASELECTION',
+    translationKey: 'NAVIGATION.DATASELECTION.TITLE',
+    children: [
+      {
+        routeTo: UrlPaths.dataSelection.search,
+        icon: 'file',
+        translationKey: 'NAVIGATION.DATASELECTION.SEARCH',
+      },
+      {
+        routeTo: UrlPaths.dataSelection.editor,
+        icon: 'file',
+        translationKey: 'NAVIGATION.DATASELECTION.EDITOR',
+      },
+    ],
   },
   {
     routeTo: BasePaths.savedQueries,

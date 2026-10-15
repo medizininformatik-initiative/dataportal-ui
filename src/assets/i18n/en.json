@@ -529,10 +529,23 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Home",
-    "DATAQUERY": "Data Definition",
-    "DATASELECTION": "Feature Selection",
+    "DATAQUERY": {
+      "COHORT_DEFINITION": "Cohort Definition",
+      "DATASELECTION_DEFINITION": "Feature Definition",
+      "TITLE": "Data Definition"
+    },
+    "DATASELECTION": {
+      "EDITOR": "Features",
+      "SEARCH": "Feature Search",
+      "TITLE": "Feature Selection"
+    },
     "OPTIONS": "Settings",
-    "QUERYBUILDER_EDITOR": "Cohort Selection",
+    "QUERYBUILDER_EDITOR": {
+      "BULK_SEARCH": "Bulk Search",
+      "EDITOR": "Criteria editor",
+      "SEARCH": "Criteria search",
+      "TITLE": "Cohort Selection"
+    },
     "QUERYBUILDER_OVERVIEW": "Saved data definitions",
     "QUERYBUILDER_RESULT": "Send Feasibility Query",
     "SIGNOUT": "Sign Out"

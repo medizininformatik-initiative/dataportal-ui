@@ -15,7 +15,7 @@ export class SideNavTests {
    * @param navItemSelector 
    */
   public navigateTo(navItemSelector: NavItemValue) {
-    cy.get('mat-nav-list')
+    cy.get('num-side-menu')
       .should('be.visible')
       .within(() => {
         cy.contains(navItemSelector).click().then(() => {

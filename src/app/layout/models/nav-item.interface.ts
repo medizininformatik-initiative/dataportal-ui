@@ -1,8 +1,9 @@
-export default interface INavItem {
+export default interface NavItemData {
   routeTo: string
   icon?: string
   svgIcon?: string
   translationKey: string
-  tabNav?: INavItem[]
+  tabNav?: NavItemData[]
   id?: string
+  children?: NavItemData[]
 }

@@ -2,7 +2,7 @@ import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterio
 import { BeforeFilterComponent } from '../../criterion-modal/time-restriction/before-filter/before-filter.component'
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
 import { BetweenFilterComponent } from '../../criterion-modal/time-restriction/between-filter/between-filter.component'
-import { ButtonComponent } from 'src/app/shared/components/shared-components.module'
+import { ButtonComponent } from 'src/app/shared/components/button/button.component'
 import { Component, computed, inject, signal } from '@angular/core'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
