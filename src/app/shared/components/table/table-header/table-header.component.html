@@ -1,6 +1,6 @@
-<tr>
+<tr role="row">
   @for (headerItem of tableData()?.header?.headers; track headerItem; let i = $index) {
-  <th [style.width.%]="getWidth(i)">
+  <th role="columnheader" [style.width.%]="getWidth(i)">
     <div class="header-cell">
       @if (headerItem.addAllCheckbox) {
       <num-checkbox
