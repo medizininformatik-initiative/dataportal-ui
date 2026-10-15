@@ -1,91 +1,114 @@
 @use '@angular/material' as mat;
+
+// No literal colours, sizes or fonts in here: everything comes from the theme
+// palettes/typography ($theme) or the global tokens in styles.scss (:root).
 @mixin side-menu-component_themed($theme) {
   $accent: map-get($theme, accent);
   $primary: map-get($theme, primary);
-  $name: map-get($theme, name);
+  $typography: map-get($theme, num-typography);
 
   num-side-menu {
-    mat-nav-list {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 100%;
+    // Menu-local tokens, derived from the global spacing scale
+    --side-menu-line-x: calc(
+      var(--spacing-16) + var(--spacing-12) - var(--spacing-2) / 2
+    ); // centred under parent icon
+    --side-menu-pill-x: calc(var(--side-menu-line-x) + var(--spacing-12));
+    --side-menu-child-indent: calc(var(--side-menu-pill-x) + var(--spacing-12));
+
+    // Colours by role: hover = light grey, active = accent tint, focus = ring
+    --side-menu-bg: #{mat.m2-get-color-from-palette($primary, 'white')};
+    --side-menu-bg-hover: #{mat.m2-get-color-from-palette($primary, 100)};
+    --side-menu-bg-active: var(--color-accent-bg);
+    --side-menu-text: var(--color-text-section);
+    --side-menu-text-active: #{mat.m2-get-color-from-palette($accent, 900)};
+    --side-menu-icon: #{mat.m2-get-color-from-palette($primary, 900)};
+    --side-menu-icon-active: var(--color-accent);
+    --side-menu-line: var(--border-color);
+    --side-menu-focus-ring: #{mat.m2-get-color-from-palette($accent, 900)};
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: var(--spacing-16) var(--spacing-12) 0;
+
+    .num-nav-list {
+      list-style: none;
       margin: 0;
-      padding: 16px 12px 0 12px;
+      padding: 0;
+      min-width: 0; // let rows shrink to the menu width so labels can wrap
+    }
 
-      &.collapsed {
-        .num-mat-list-item {
-          justify-content: center;
-          padding-left: 0;
-          padding-right: 0;
-          gap: 0;
-        }
+    // breathing room between groups only
+    .num-nav-group + .num-nav-group {
+      margin-top: var(--spacing-20);
+    }
 
-        .navItem-font {
-          display: none !important;
-        }
+    // parent of the active child reads as the active section (icon + text tint, no pill)
+    .num-nav-group:has(.num-nav-link--child.num-nav-link--active) > .num-nav-link {
+      color: var(--side-menu-text-active);
 
-        fa-icon,
-        .nav-svg-icon {
-          margin: 0 auto;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+      fa-icon {
+        color: var(--side-menu-icon-active);
       }
     }
 
-    .mdc-list-item__primary-text {
-      display: flex;
-    }
-
-    .mdc-list-item.mdc-list-item--with-one-line {
-      height: 40px !important;
-    }
-
-    .num-mat-list-item {
+    .num-nav-link {
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding: 8px 16px;
-      gap: 4px;
-      width: 100%;
-      min-height: 40px;
-      height: auto;
-      background: #ffffff;
-      border-radius: 5px;
-      margin-bottom: 8px;
+      gap: var(--spacing-4);
+      padding: var(--spacing-6) var(--spacing-16);
+      margin-bottom: var(--spacing-2);
+      border-radius: var(--border-radius-card);
+      background: var(--side-menu-bg);
+      color: var(--side-menu-text);
+      font-family: var(--font-body);
+      font-size: var(--font-size-nav);
+      line-height: var(--line-height-nav);
+      font-weight: var(--font-weight-bold);
       text-decoration: none;
-      white-space: nowrap;
-      overflow: visible;
+      overflow-wrap: anywhere; // long German labels wrap instead of clipping (WCAG 1.4.10)
+      cursor: pointer;
 
-      &--active {
-        background-color: #f1f2f3;
-        color: rgba(95, 98, 102, 1);
+      &:hover {
+        background: var(--side-menu-bg-hover);
+      }
+
+      &:focus-visible {
+        outline: var(--spacing-2) solid var(--side-menu-focus-ring);
+        outline-offset: calc(var(--spacing-2) * -1);
+      }
+
+      &--active,
+      &--active:hover {
+        background: var(--side-menu-bg-active);
+        color: var(--side-menu-text-active);
 
         .navItem-font {
-          color: #5f6266;
+          color: var(--side-menu-text-active);
         }
 
         fa-icon {
-          color: #206fa8;
+          color: var(--side-menu-icon-active);
         }
       }
     }
 
-    fa-icon {
-      color: #5d707f;
-      margin-right: 0;
+    .navItem-font {
+      padding-left: var(--spacing-4);
+      flex: 1 1 auto;
+      min-width: 0;
+    }
 
-      svg {
-        vertical-align: middle;
-      }
+    fa-icon {
+      color: var(--side-menu-icon);
     }
 
     .nav-svg-icon {
-      width: 32px;
-      height: 32px;
-      font-size: 32px;
+      width: var(--spacing-32);
+      height: var(--spacing-32);
+      font-size: var(--spacing-32);
       flex-shrink: 0;
 
       svg {
@@ -94,85 +117,123 @@
       }
     }
 
-    .num-logo-row {
+    // ── Child items ──────────────────────────────────────────────
+    .navItem-font--child {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .num-nav-link.num-nav-link--child {
+      position: relative;
+      isolation: isolate; // keeps the ::before pill (z-index -1) above the row, below the text
+      padding: var(--spacing-6) var(--spacing-12) var(--spacing-6) var(--side-menu-child-indent);
+      margin-bottom: 0;
+      border-radius: 0;
+      background: transparent;
+      font-size: var(--font-size-nav-child);
+      line-height: var(--line-height-nav-child);
+      font-weight: #{mat.m2-font-weight($typography, body-2)};
+
+      // highlight pill (hover + active), starts on the guide line so both share one left edge
+      &::before {
+        content: '';
+        position: absolute;
+        inset: var(--spacing-1) 0 var(--spacing-1) var(--side-menu-line-x);
+        border-radius: 0 var(--border-radius-card) var(--border-radius-card) 0;
+        background: var(--side-menu-bg-hover);
+        opacity: 0;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      &:hover::before,
+      &:focus-visible::before {
+        opacity: 1;
+      }
+
+      // ring is drawn on the inset pill instead of the full-width row
+      &:focus-visible {
+        outline: none;
+
+        &::before {
+          outline: var(--spacing-2) solid var(--side-menu-focus-ring);
+          outline-offset: calc(var(--spacing-2) * -1);
+        }
+      }
+
+      // tree guide line under the parent icon
+      &::after {
+        content: '';
+        position: absolute;
+        left: var(--side-menu-line-x);
+        top: 0;
+        bottom: 0;
+        width: var(--spacing-2);
+        background: var(--side-menu-line);
+        pointer-events: none;
+      }
+
+      &.num-nav-link--active {
+        background: transparent;
+
+        &::before {
+          opacity: 1;
+          background: var(--side-menu-bg-active);
+        }
+
+        &::after {
+          background: var(--side-menu-icon-active);
+        }
+
+        .navItem-font--child {
+          font-weight: var(--font-weight-bold);
+          color: var(--side-menu-text-active);
+        }
+      }
+    }
+
+    // ── Collapsed: icon-only rail ────────────────────────────────
+    &.collapsed {
+      .num-nav-link {
+        justify-content: center;
+        padding-left: 0;
+        padding-right: 0;
+        gap: 0;
+      }
+
+      .num-nav-link--child::after {
+        display: none;
+      }
+    }
+
+    .num-toggle-row {
       display: flex;
-      flex-direction: row;
       align-items: center;
       justify-content: flex-end;
       margin-top: auto;
-      height: 48px;
-
-      button {
-        width: auto;
-        background: transparent !important;
-        padding: 0;
-
-        &:hover {
-          background: mat.m2-get-color-from-palette($accent, 200) !important;
-          color: mat.m2-get-contrast-color-from-palette($accent, 200) !important;
-        }
-      }
+      height: var(--spacing-48);
     }
 
-    .navItem-font {
-      font-style: normal;
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
-      color: #5f6266 !important;
-      padding-left: 7px;
-      white-space: nowrap;
-      flex: 1 1 auto;
-      min-width: 0;
+    .num-toggle-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--spacing-40);
+      height: var(--spacing-40);
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--side-menu-icon);
+      cursor: pointer;
 
-      &--child {
-        padding-left: 24px;
-      }
-    }
-
-    @if ($name == 'fdpg') {
-      .mat-mdc-nav-list {
-        background: transparent !important;
+      &:hover {
+        background: mat.m2-get-color-from-palette($accent, 200);
+        color: mat.m2-get-contrast-color-from-palette($accent, 200);
       }
 
-      .num-logo-row a {
-        color: mat.m2-get-contrast-color-from-palette($primary, 200) !important;
-      }
-
-      .num-mat-list-item {
-        color: #5f6266 !important;
-        font-family: 'Titillium Web', sans-serif !important;
-        font-size: 16px !important;
-        font-weight: 600 !important;
-        line-height: 24px !important;
-        letter-spacing: normal !important;
-        background: #ffffff !important;
-        border-radius: 5px !important;
-
-        &--active {
-          background: #f1f2f3 !important;
-          color: #5f6266 !important;
-          font-weight: 600 !important;
-
-          div {
-            color: #5f6266 !important;
-            font-weight: 600 !important;
-          }
-
-          fa-icon {
-            color: rgba(90, 121, 175, 1) !important;
-          }
-        }
-
-        &:hover {
-          background: #e8ebf0 !important;
-          color: #5f6266 !important;
-        }
-
-        &:focus {
-          background: #f1f2f3 !important;
-          color: #5f6266 !important;
-        }
+      &:focus-visible {
+        outline: var(--spacing-2) solid var(--side-menu-focus-ring);
       }
     }
   }
