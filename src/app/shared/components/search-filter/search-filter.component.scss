@@ -15,7 +15,7 @@
 
 /* Form field flex */
 ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-text-secondary); // WCAG 1.4.11: control boundary needs 3:1
   padding: 0 var(--spacing-16);
   border-radius: var(--border-radius-card);
   height: 42px;
@@ -37,6 +37,7 @@
 
 /* Search option — hide checkbox and disabled overlay */
 ::ng-deep .select-search-option {
+  padding: var(--spacing-4) var(--spacing-8) !important;
   cursor: default !important;
   pointer-events: auto !important;
   opacity: 1 !important;
@@ -59,10 +60,15 @@
   align-items: center;
   border: 1px solid var(--border-color, #ccc);
   border-radius: 4px;
-  padding: 2px var(--spacing-8);
+  padding: 0 var(--spacing-8);
+  min-height: 40px;
   background: #fff;
   width: 100%;
   box-sizing: border-box;
+
+  .icon-design {
+    height: 100%;
+  }
 }
 
 /* Search input inside mat-select */
@@ -72,8 +78,20 @@
   outline: none;
   padding: var(--spacing-4) 0;
   background: transparent;
-  font-size: var(--font-size-md);
+  font-size: 1rem;
   color: inherit;
+}
+
+/* Keyboard focus: same accent border + glow as the searchbar (WCAG 2.4.7) */
+::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex:has(mat-select:focus-visible) {
+  border-width: 2px;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px -4px var(--color-accent);
+}
+
+.select-search-wrapper:focus-within {
+  border-width: 2px;
+  border-color: var(--color-accent);
 }
 
 /* Remove default line ripple */
@@ -107,19 +125,58 @@
 /* Options group — scroll container for options only */
 ::ng-deep .scrollable-options-group {
   display: block;
+  padding-bottom: var(--spacing-4);
   overflow-y: auto;
   max-height: 40vh;
 
   .mat-mdc-optgroup-label {
     display: none;
   }
+
+  // inset rows: hover / active highlight no longer touches the panel edges
+  .mat-mdc-option {
+    margin: var(--spacing-2) var(--spacing-8);
+    border-radius: var(--border-radius-sm);
+  }
+}
+
+/* Selected count, above the search field */
+::ng-deep .select-count {
+  padding: 0 var(--spacing-16) var(--spacing-4);
+  font-size: var(--font-size-md);
+  color: var(--color-text-section);
+}
+
+/* Trigger: first value (ellipsis) + "+N" chip */
+::ng-deep mat-select-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-width: 0;
+
+  .trigger-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .trigger-count {
+    flex-shrink: 0;
+    padding: 0 var(--spacing-6);
+    border-radius: var(--border-radius-sm);
+    background: var(--color-accent-border);
+    // WCAG 1.4.3: 6:1+ on the chip, also on the grey focus fill
+    color: var(--num-color--accent-900);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+  }
 }
 
 ::ng-deep .mat-pseudo-checkbox-full {
-  width: 15px !important;
-  height: 15px !important;
+  width: 18px !important;
+  height: 18px !important;
   background: #ffffff !important;
-  border: 1px solid var(--border-color) !important;
+  border: 1px solid var(--color-text-secondary) !important;
   border-radius: 3px !important;
 
   &::after {
@@ -127,16 +184,19 @@
   }
 }
 
+// checked = filled accent box + white tick (5:1 and 4.4:1 against white, 1.4.11)
 ::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked,
 ::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate {
-  background: #ffffff !important;
-  border-color: var(--border-color) !important;
+  background: var(--color-accent-strong) !important;
+  border-color: var(--color-accent-strong) !important;
 
   &::after {
-    color: var(--color-accent) !important;
+    color: #ffffff !important;
   }
 }
 
+// keyboard-active option: side-menu look (grey hover fill + dark accent focus ring, WCAG 2.4.7)
 ::ng-deep .mat-mdc-option.mat-mdc-option-active {
-  background-color: #ffffff !important;
+  background-color: var(--num-color--grey-hover) !important;
+  box-shadow: inset 0 0 0 var(--spacing-2) var(--num-color--accent-900); // Material resets option outlines
 }

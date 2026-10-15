@@ -575,6 +575,7 @@
       "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
       "RESOURCETYPE": "FHIR Datentyp",
       "SEARCH": "Suchen...",
+      "SELECTED_COUNT": "{{count}} von {{total}} ausgewählt",
       "TERMINOLOGY": "Terminologie"
     },
     "HEADER": {
