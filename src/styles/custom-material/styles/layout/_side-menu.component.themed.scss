@@ -13,7 +13,7 @@
       var(--spacing-16) + var(--spacing-12) - var(--spacing-2) / 2
     ); // centred under parent icon
     --side-menu-pill-x: calc(var(--side-menu-line-x) + var(--spacing-12));
-    --side-menu-child-indent: calc(var(--side-menu-pill-x) + var(--spacing-12));
+    --side-menu-child-indent: calc(var(--side-menu-pill-x) + var(--spacing-24));
 
     // Colours by role: hover = light grey, active = accent tint, focus = ring
     --side-menu-bg: #{mat.m2-get-color-from-palette($primary, 'white')};
