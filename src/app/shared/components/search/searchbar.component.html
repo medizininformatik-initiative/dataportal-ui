@@ -5,13 +5,14 @@
     }
     <input
       placeholder="{{ label() | translate }}"
+      [attr.aria-label]="label() | translate"
       [value]="inputValue()"
       (input)="onInput($event)"
       class="input-design"
     />
   </div>
   @if (showWarning()) {
-  <span class="search-warning">
+  <span class="search-warning" role="alert">
     {{ 'SHARED_COMPONENTS.SEARCH.MIN_LENGTH' | translate }}
   </span>
   }

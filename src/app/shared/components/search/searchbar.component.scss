@@ -22,7 +22,7 @@
 
 /* Form container */
 .form-design {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-text-secondary); // WCAG 1.4.11: input boundary needs 3:1 (--border-color is ~1.7:1)
   border-radius: var(--border-radius-card);
   background-color: #fff;
   width: 100%;
@@ -33,7 +33,7 @@
     font-weight: var(--font-weight-bold);
     border-width: 2px;
     border-color: var(--color-accent);
-    background-color: var(--color-accent-bg);
+    // no tint under the text: contrast is measured against the real background, a shadow does not count
     box-shadow: 0 0 8px -4px var(--color-accent);
   }
 }
@@ -70,5 +70,5 @@
 
 /* Warning message */
 .search-warning {
-  color: var(--num-color--warn, var(--num-color--red, #b30519));
+  color: var(--num-color--error-on-white);
 }

@@ -22,13 +22,34 @@
   // Used by: dashboard (text), selected-items-list, menu (icon), ui-classes (card link)
   --num-color--accent-400: #{mat.m2-get-color-from-palette($accent, 400)};
 
+  // Hover / keyboard-active row fill, same value as the side menu hover.
+  // Used by: search-filter (keyboard-active option)
+  --num-color--grey-hover: #{mat.m2-get-color-from-palette($primary, 100)};
+
+  // Keyboard focus ring / dark accent, same value as the side menu focus ring.
+  // Used by: search-filter (keyboard-active option)
+  --num-color--accent-900: #{mat.m2-get-color-from-palette($accent, 900)};
+
   // Used by: between-filter (range thumb)
   --num-color--accent-600: #{mat.m2-get-color-from-palette($accent, 600)};
 
-  // ── Status colours ─────────────────────────────────────────────────────────
-  // Used by: searchbar (validation error colour)
-  --num-color--warn: #{mat.m2-get-color-from-palette($warn)};
+  // ── Status colours: error text ─────────────────────────────────────────────
+  // Pick by the background the text sits on (WCAG 1.4.3, AA needs 4.5:1).
+  // Contrast measured for #c4122f / #b30519:
+  //   white #fff ............. 6.0 / 7.1
+  //   accent tint #eef2f7 .... 5.4 / 6.3   (--color-accent-bg over white)
+  //   grey tint #f5f6f6 ...... 5.6 / 6.6
+  //   accent tint hover #e1e7f1  4.9 / 5.7
+  // Never use --num-color--red (#ff4545) for text: 3.4:1 on white, 3.0:1 on tint.
 
-  // Used by: searchbar (fallback when --num-color--warn is unavailable)
+  // Use on WHITE or near-white surfaces.
+  // Used by: searchbar (min-length validation message)
+  --num-color--error-on-white: #{mat.m2-get-color-from-palette($warn, error-on-white)};
+
+  // Use on TINTED / grey surfaces (--color-accent-bg, grey tiles); also fine on white.
+  // Used by: missing-filter (required-filter message in criteria-box, reference tile, fields-col)
+  --num-color--error-on-tint: #{mat.m2-get-color-from-palette($warn, error)};
+
+  // Non-text only (icons, borders, large decoration) on white; 3:1 for UI components.
   --num-color--red: #{mat.m2-get-color-from-palette($primary, 'red')};
 }
