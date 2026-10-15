@@ -1,62 +1,54 @@
-<mat-nav-list [ngClass]="{ collapsed: isCollapsed() }">
-  @for (navItem of mainNavItems; track navItem) {
+<ng-template #navLink let-item let-child="child">
+  @let label = item.translationKey | translate;
   <a
-    class="num-mat-list-item"
-    [routerLinkActive]="'num-mat-list-item--active'"
-    mat-list-item
-    [disableRipple]="true"
-    [routerLink]="navItem.routeTo"
-    (click)="menuItemClicked($event, navItem)"
-    [matTooltip]="isCollapsed() ? (navItem.translationKey | translate) : null"
+    class="num-nav-link"
+    [class.num-nav-link--child]="child"
+    routerLinkActive="num-nav-link--active"
+    ariaCurrentWhenActive="page"
+    [routerLinkActiveOptions]="{ exact: !child && isSideMenuExpanded() }"
+    [routerLink]="item.routeTo"
+    [attr.aria-label]="label"
+    [matTooltip]="isCollapsed() ? label : null"
     matTooltipPosition="right"
   >
-    @if (navItem.icon) {
-    <fa-icon size="lg" [fixedWidth]="true" [icon]="navItem.icon"></fa-icon>
-    } @if (navItem.svgIcon) {
-    <mat-icon class="nav-svg-icon" [svgIcon]="navItem.svgIcon"></mat-icon>
-    } @if (isSideMenuExpanded()) {
-    <div class="navItem-font">
-      {{ navItem.translationKey | translate }}
-    </div>
+    @if (!child) { @if (item.icon) {
+    <fa-icon size="lg" [fixedWidth]="true" [icon]="item.icon"></fa-icon>
+    } } @if (isSideMenuExpanded()) {
+    <span [class]="child ? 'navItem-font--child' : 'navItem-font'">{{ label }}</span>
     }
   </a>
-  @for (navItemChild of navItem.children; track navItemChild) {
-  <a
-    class="num-mat-list-item"
-    [routerLinkActive]="'num-mat-list-item--active'"
-    mat-list-item
-    [disableRipple]="true"
-    [routerLink]="navItemChild.routeTo"
-    (click)="menuItemClicked($event, navItemChild)"
-    [matTooltip]="isCollapsed() ? (navItemChild.translationKey | translate) : null"
-    matTooltipPosition="right"
-    style="padding-left: 16px"
-  >
-    <!-- @if (navItem.icon) {
-          <fa-icon size="lg" [fixedWidth]="true" [icon]="navItem.icon"></fa-icon>
-        } @if (navItem.svgIcon) {
-        <mat-icon class="nav-svg-icon" [svgIcon]="navItem.svgIcon"></mat-icon>
-      }-->
-    @if (isSideMenuExpanded()) {
-    <div class="navItem-font--child">
-      {{ navItemChild.translationKey | translate }}
-    </div>
-    }
-  </a>
-  } }
+</ng-template>
 
-  <div class="num-logo-row">
-    <button
-      type="button"
-      [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate"
-      mat-icon-button
-      (click)="toggleMenu()"
-    >
-      @if (isSideMenuExpanded()) {
-      <fa-icon size="1x" icon="angle-double-left"></fa-icon>
-      } @if (isCollapsed()) {
-      <fa-icon size="1x" icon="angle-double-right"></fa-icon>
+<ul class="num-nav-list" role="list">
+  @for (navItem of mainNavItems; track navItem.routeTo) {
+  <li class="num-nav-group">
+    <ng-container *ngTemplateOutlet="navLink; context: { $implicit: navItem, child: false }" />
+    @if (navItem.children?.length) {
+    <ul class="num-nav-list" role="list">
+      @for (navItemChild of navItem.children; track navItemChild.routeTo) {
+      <li>
+        <ng-container
+          *ngTemplateOutlet="navLink; context: { $implicit: navItemChild, child: true }"
+        />
+      </li>
       }
-    </button>
-  </div>
-</mat-nav-list>
+    </ul>
+    }
+  </li>
+  }
+</ul>
+
+<div class="num-toggle-row">
+  <button
+    type="button"
+    class="num-toggle-button"
+    [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate"
+    [attr.aria-expanded]="isSideMenuExpanded()"
+    (click)="toggleMenu()"
+  >
+    <fa-icon
+      size="1x"
+      [icon]="isSideMenuExpanded() ? 'angle-double-left' : 'angle-double-right'"
+    ></fa-icon>
+  </button>
+</div>

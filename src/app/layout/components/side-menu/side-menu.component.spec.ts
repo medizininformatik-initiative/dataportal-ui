@@ -1,127 +1,122 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
+import { Component } from '@angular/core'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { provideNoopAnimations } from '@angular/platform-browser/animations'
+import { provideRouter, Router } from '@angular/router'
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
+import { TranslateModule } from '@ngx-translate/core'
+import INavItem from '../../models/nav-item.interface'
+import { SideMenuComponent } from './side-menu.component'
 
-import { SideMenuComponent } from './side-menu.component';
-import { MaterialModule } from '../../material/material.module';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { DirectivesModule } from 'src/app/shared/directives/directives.module';
-import { RoleGuard } from '../../../core/auth/guards/role.guard';
-import { FeatureService } from '../../../service/Feature.service';
+// the real constants import via 'src/...', which Jest does not map; the spec sets its own items
+jest.mock('../../../core/constants/navigation', () => ({ mainNavItems: [] }))
+
+@Component({ standalone: true, template: '' })
+class DummyPageComponent {}
+
+const navItems: INavItem[] = [
+  {
+    routeTo: '/data',
+    icon: 'clipboard-list',
+    translationKey: 'NAV.DATA',
+    children: [
+      { routeTo: '/data/one', icon: 'file', translationKey: 'NAV.ONE' },
+      { routeTo: '/data/two', icon: 'file', translationKey: 'NAV.TWO' },
+    ],
+  },
+  { routeTo: '/saved', icon: 'folder-open', translationKey: 'NAV.SAVED' },
+]
 
 describe('SideMenuComponent', () => {
-  let component: SideMenuComponent;
-  let fixture: ComponentFixture<SideMenuComponent>;
+  let fixture: ComponentFixture<SideMenuComponent>
+  let component: SideMenuComponent
+  let root: HTMLElement
 
-  const authService = {
-    logOut: () => {},
-    loadUserProfile: () => Promise.resolve({}),
-  } as OAuthService;
+  const links = (selector = '.num-nav-link'): HTMLAnchorElement[] =>
+    Array.from(root.querySelectorAll<HTMLAnchorElement>(selector))
+  const linkFor = (label: string): HTMLAnchorElement =>
+    links().find((l) => l.getAttribute('aria-label') === label)
 
   beforeEach(async () => {
-    const featureService = {
-      useFeatureOptionsPage: (): boolean => true,
-      getRoles: (site: string): string[] => ['test'],
-    } as FeatureService;
-
     await TestBed.configureTestingModule({
-      declarations: [SideMenuComponent],
-      imports: [
-        FontAwesomeTestingModule,
-        MaterialModule,
-        RouterTestingModule.withRoutes([]),
-        TranslateModule.forRoot(),
-        DirectivesModule,
-      ],
+      imports: [SideMenuComponent, FontAwesomeTestingModule, TranslateModule.forRoot()],
       providers: [
-        {
-          provide: FeatureService,
-          useValue: featureService,
-        },
-        {
-          provide: OAuthService,
-          useValue: authService,
-        },
+        provideNoopAnimations(),
+        provideRouter([
+          { path: 'data', component: DummyPageComponent },
+          { path: 'data/one', component: DummyPageComponent },
+          { path: 'data/two', component: DummyPageComponent },
+          { path: 'saved', component: DummyPageComponent },
+        ]),
       ],
-    }).compileComponents();
-  });
+    }).compileComponents()
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SideMenuComponent);
-    component = fixture.componentInstance;
-    jest.spyOn(component.toggleSideMenu, 'emit');
-    jest.spyOn(authService, 'logOut').mockImplementation(() => Promise.resolve());
-  });
+    fixture = TestBed.createComponent(SideMenuComponent)
+    component = fixture.componentInstance
+    component.mainNavItems = navItems
+    root = fixture.nativeElement
+    fixture.detectChanges()
+  })
 
-  it('should create', () => {
-    fixture.detectChanges();
-    expect(component).toBeTruthy();
-  });
+  it('renders one group per item with its children in a nested list', () => {
+    expect(root.querySelectorAll('.num-nav-group')).toHaveLength(2)
+    expect(root.querySelectorAll('.num-nav-group ul .num-nav-link--child')).toHaveLength(2)
+    expect(links()).toHaveLength(4)
+  })
 
-  it('Calls emit on toggleSideMenu when menu item is clicked', () => {
-    component.mainNavItems = [
-      {
-        icon: 'test',
-        routeTo: '/test',
-        translationKey: 'test',
-      },
-    ];
-    fixture.detectChanges();
-    const nativeElement = fixture.debugElement.nativeElement;
-    const button = nativeElement.querySelector('.mat-mdc-list-item');
-    button.click();
-    expect(component.toggleSideMenu.emit).toHaveBeenCalled();
-  });
+  it('uses native list semantics instead of Material list directives', () => {
+    expect(root.querySelector('ul.num-nav-list')).not.toBeNull()
+    expect(root.querySelector('mat-nav-list, .mat-mdc-list-item')).toBeNull()
+  })
 
-  it('should merge roles from mainNavItem and corresponding route', () => {
-    component.mainNavItems = [
-      {
-        icon: 'test',
-        routeTo: '/test',
-        translationKey: 'test',
-        roles: ['test-role1'],
-      },
-    ];
-    component.routes = [
-      {
-        path: '/test_second',
-        canLoad: [RoleGuard],
-        data: {
-          navId: 'test_second',
-          roles: ['test-role_second'],
-        },
-      },
-      {
-        path: '/test',
-        canLoad: [RoleGuard],
-        data: {
-          navId: 'test',
-          roles: ['test-role2'],
-        },
-      },
-    ];
-    fixture.detectChanges();
-    const nativeElement = fixture.debugElement.nativeElement;
-    const button = nativeElement.querySelector('.mat-mdc-list-item');
-    button.click();
-    expect(component.mainNavItems[0].roles).toEqual(['test-role1', 'test-role2']);
-  });
+  it('shows icons on parents only', () => {
+    expect(linkFor('NAV.DATA').querySelector('fa-icon')).not.toBeNull()
+    expect(linkFor('NAV.ONE').querySelector('fa-icon')).toBeNull()
+  })
 
-  it('Calls logout function when logout button is clicked', () => {
-    component.mainNavItems = null;
-    component.secondaryNavItems = [
-      {
-        icon: 'test',
-        routeTo: '#logout',
-        translationKey: 'test',
-      },
-    ];
-    fixture.detectChanges();
-    const nativeElement = fixture.debugElement.nativeElement;
-    const button = nativeElement.querySelector('.mat-mdc-list-item');
-    button.click();
-    fixture.detectChanges();
-    expect(authService.logOut).toHaveBeenCalled();
-  });
-});
+  it('marks only the exact parent route as active, not parent of an active child', async () => {
+    await TestBed.inject(Router).navigateByUrl('/data')
+    fixture.detectChanges()
+    expect(linkFor('NAV.DATA').getAttribute('aria-current')).toBe('page')
+
+    await TestBed.inject(Router).navigateByUrl('/data/one')
+    fixture.detectChanges()
+    expect(linkFor('NAV.DATA').getAttribute('aria-current')).toBeNull()
+    expect(linkFor('NAV.ONE').getAttribute('aria-current')).toBe('page')
+    expect(links('.num-nav-link--active')).toHaveLength(1)
+  })
+
+  it('highlights the parent of the current page when collapsed, since children are hidden', async () => {
+    fixture.componentRef.setInput('isSideMenuExpanded', false)
+    await TestBed.inject(Router).navigateByUrl('/data/one')
+    fixture.detectChanges()
+    await fixture.whenStable() // RouterLinkActive updates in a microtask
+
+    expect(linkFor('NAV.DATA').getAttribute('aria-current')).toBe('page')
+  })
+
+  it('keeps links keyboard focusable with an accessible name when collapsed', () => {
+    fixture.componentRef.setInput('isSideMenuExpanded', false)
+    fixture.detectChanges()
+
+    expect(root.classList).toContain('collapsed')
+    expect(root.querySelector('.navItem-font, .navItem-font--child')).toBeNull()
+    links().forEach((link) => {
+      expect(link.getAttribute('href')).toBeTruthy()
+      expect(link.getAttribute('aria-label')).toBeTruthy()
+      expect(link.tabIndex).not.toBe(-1)
+    })
+  })
+
+  it('toggles the menu and emits the new state', () => {
+    const emitted: boolean[] = []
+    component.toggleSideMenu.subscribe((v) => emitted.push(v))
+    const button = root.querySelector<HTMLButtonElement>('.num-toggle-button')
+
+    expect(button.getAttribute('aria-expanded')).toBe('true')
+    button.click()
+    fixture.detectChanges()
+
+    expect(emitted).toEqual([false])
+    expect(button.getAttribute('aria-expanded')).toBe('false')
+  })
+})
