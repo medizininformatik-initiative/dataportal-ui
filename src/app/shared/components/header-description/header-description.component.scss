@@ -1,9 +1,15 @@
-.header-description {
+:host .header-description {
   width: 100%;
+  margin: 1em 0 !important; // same as the former <p>; global h2 margin is !important
+  padding: 0 !important;
+  border: 0 !important;
+  letter-spacing: normal !important;
+  // body has .mat-typography, which gives h2 its own font
+  font-family: var(--font-body, 'Titillium Web', sans-serif);
   font-style: normal;
-  font-weight: var(--font-weight-bold);
+  font-weight: 550;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 1.5; // WCAG 1.4.12: at least 1.5 for body text
   display: flex;
   align-items: center;
   color: #325a7e;
