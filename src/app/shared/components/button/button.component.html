@@ -1,6 +1,8 @@
 @if (type() === 'blue') {
 <button
   class="num-button blue"
+  role="button"
+  [attr.aria-label]="ariaLabel()"
   [ngClass]="isDisabled() ? 'disabled' : ''"
   color="primary"
   [disabled]="isDisabled()"
@@ -16,6 +18,8 @@
 } @if (type() === 'green') {
 <button
   class="num-button green"
+  role="button"
+  [attr.aria-label]="ariaLabel()"
   color="primary"
   [ngClass]="isDisabled() ? 'disabled' : ''"
   [disabled]="isDisabled()"
@@ -32,6 +36,8 @@
 <button
   class="num-button red"
   color="primary"
+  role="button"
+  [attr.aria-label]="ariaLabel()"
   [ngClass]="isDisabled() ? 'disabled' : ''"
   [disabled]="isDisabled()"
   [matTooltip]="tooltip()"
@@ -46,6 +52,8 @@
 } @if (type() === 'cancel') {
 <button
   class="num-button cancel"
+  role="button"
+  [attr.aria-label]="ariaLabel()"
   [ngClass]="isDisabled() ? 'disabled' : ''"
   [disabled]="isDisabled()"
   [matTooltip]="tooltip()"

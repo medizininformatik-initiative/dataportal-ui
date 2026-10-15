@@ -1,9 +1,10 @@
-<span
+<input
+  type="checkbox"
   class="checkbox"
-  [class.checked]="checked()"
-  [class.disabled]="disabled()"
-  (click)="toggle($event)"
-  role="checkbox"
-  [attr.aria-checked]="checked()"
-  [attr.aria-disabled]="disabled()"
-></span>
+  [checked]="checked()"
+  [disabled]="disabled()"
+  [attr.tabindex]="tabbable() ? null : -1"
+  [attr.aria-label]="label()"
+  (click)="$event.stopPropagation()"
+  (change)="checkedChange.emit($any($event.target).checked)"
+/>
