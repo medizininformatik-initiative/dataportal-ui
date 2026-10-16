@@ -304,7 +304,7 @@ const contrast = (a: string, b: string): number => {
       </section>
       @if (showsGreenTabs()) {
       <mat-tab-group
-        [selectedIndex]="tabIndex(['green-button-shades', 'green-button-techniques'])"
+        [selectedIndex]="tabIndex(['green-button-shades', 'green-button-techniques', 'num-button-test'])"
         animationDuration="0ms"
       >
         <mat-tab label="Green button shades">
@@ -371,6 +371,10 @@ const contrast = (a: string, b: string): number => {
             }
           </div>
         </mat-tab>
+          <mat-tab label="test">
+            <h2 id="num-button-test">test</h2>
+            <p>New design. Ask Claude Code to build it here.</p>
+          </mat-tab>
       </mat-tab-group>
       }
       }
@@ -416,7 +420,7 @@ const contrast = (a: string, b: string): number => {
         }
       </section>
       <mat-tab-group
-        [selectedIndex]="tabIndex(['criteria-box-variants', 'criteria-box-layouts'])"
+        [selectedIndex]="tabIndex(['criteria-box-variants', 'criteria-box-layouts', 'criteria-box-twenty', 'criteria-box-compact', 'criteria-box-compact-20', 'criteria-box-divider', 'criteria-box-footer-divider', 'criteria-box-proposal', 'criteria-box-refined', 'criteria-box-impeccable'])"
         animationDuration="0ms"
       >
         <mat-tab label="Colour variants">
@@ -1160,6 +1164,683 @@ const contrast = (a: string, b: string): number => {
             </div>
           </div>
         </mat-tab>
+        <mat-tab label="Twenty boxes">
+          <h2 id="criteria-box-twenty">twenty criteria boxes (toggle: plain / with filters)</h2>
+          <div class="row">
+            @for (n of twenty; track n) {
+            <div>
+              <button
+                type="button"
+                [attr.aria-expanded]="expandedBoxes().has(n)"
+                (click)="toggleBox(n)"
+              >
+                <fa-icon [icon]="expandedBoxes().has(n) ? 'chevron-up' : 'chevron-down'" />
+                {{ n }}
+              </button>
+              <num-criteria-box
+                [criterion]="expandedBoxes().has(n) ? criterionWithFilters : criterion"
+                [isEditable]="true"
+              />
+            </div>
+            }
+          </div>
+        </mat-tab>
+        <mat-tab label="Compact modes">
+          <h2 id="criteria-box-compact">
+            20 criteria box designs, 3 detail levels each (chevron on a card swaps it to the other
+            level: minimal/reduced expand to full, full collapses to minimal)
+          </h2>
+          <div class="cd-grid cd-headrow">
+            @for (l of cdLevels; track l.level) {
+            <strong>{{ l.label }}: {{ l.hint }}</strong>
+            }
+          </div>
+          @for (d of cdDesigns; track d.name; let i = $index) {
+          <div class="cd-row">
+            <code>{{ i + 1 }} · {{ d.name }}</code>
+            <div class="cd-grid">
+              @for (l of cdLevels; track l.level) {
+              <div
+                class="cd cd-{{ d.layout }}"
+                [style.--bg]="d.skin.bg"
+                [style.--bd]="d.skin.bd"
+                [style.--ac]="d.skin.ac"
+                [style.--r]="d.skin.r"
+                [style.--bw]="d.skin.bw"
+                [style.--sh]="d.skin.sh"
+              >
+                @let lv = cdLevel(i, l.level);
+                <div class="cd-head">
+                  <div class="cd-main">
+                    <div class="cd-title">Hypertonie mit vielen Filtern</div>
+                    @if (lv >= 1) {
+                    <div class="cd-info">Diagnose · I10 · ICD-10-GM</div>
+                    }
+                  </div>
+                  <div class="cd-act">
+                    @if (lv === 0) {
+                    <span class="cd-badge">{{ cdFilters.length }} Filter</span>
+                    } @if (lv >= 1) {
+                    <fa-icon icon="cog" aria-label="Bearbeiten" />
+                    } @if (lv === 2) {
+                    <fa-icon icon="expand-arrows-alt" aria-label="Verschieben" />
+                    }
+                    <button
+                      type="button"
+                      class="cd-tog"
+                      [attr.aria-label]="lv === 2 ? 'Details einklappen' : 'Details ausklappen'"
+                      [attr.aria-expanded]="lv === 2"
+                      (click)="cdToggle(i, l.level)"
+                    >
+                      <fa-icon [icon]="lv === 2 ? 'chevron-up' : 'chevron-down'" />
+                    </button>
+                  </div>
+                </div>
+                @if (lv === 2) {
+                <div class="cd-body">
+                  @for (f of cdFilters; track f.type) {
+                  <div class="mk-frow">
+                    <span class="mk-chip">{{ f.type }}</span>
+                    @for (v of f.values; track v) {
+                    <span class="mk-pill">{{ v }}</span>
+                    }
+                  </div>
+                  }
+                </div>
+                } @else if (lv === 1) {
+                <div class="cd-body mk-frow">
+                  @for (f of cdFilters; track f.type) {
+                  <span class="mk-pill">{{ f.type }} · {{ f.values.length }}</span>
+                  }
+                </div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Compact designs">
+          <h2 id="criteria-box-compact-20">
+            20 compact structures, 3 detail levels each (chevron swaps a card to the other level;
+            "hover" design shows details on hover)
+          </h2>
+          <div class="cd-grid cd-headrow">
+            @for (l of cdLevels; track l.level) {
+            <strong>{{ l.label }}: {{ l.hint }}</strong>
+            }
+          </div>
+          @for (d of cnDesigns; track d.name; let i = $index) {
+          <div class="cd-row">
+            <code>{{ i + 1 }} · {{ d.name }}</code>
+            <div class="cd-grid">
+              @for (l of cdLevels; track l.level) { @let lv = cdLevel(i + 100, l.level);
+              <div class="cn cn-k-{{ d.cls }}" [class.cn-open]="lv === 2">
+                @if (d.cls === 'ticket') {
+                <span class="cn-lead">I10</span>
+                } @if (d.cls === 'icon') {
+                <span class="cn-lead">D</span>
+                }
+                <div class="cn-main">
+                  <span class="cn-title">Hypertonie mit vielen Filtern</span>
+                  <span class="cn-info" [class.cn-off]="!(lv === 2 || (lv === 1 && d.info))">
+                    Diagnose · I10 · ICD-10-GM
+                  </span>
+                </div>
+                @if (lv < 2) {
+                <div class="cn-sum">
+                  @switch (lv === 1 ? d.s1 : d.s0) { @case ('badge') {
+                  <span class="cd-badge">{{ cdFilters.length }} Filter</span>
+                  } @case ('count') {
+                  <span class="cd-badge">{{ cdFilters.length }}</span>
+                  } @case ('dots') {
+                  <span class="cn-dots"><i></i><i></i><i></i></span>
+                  } @case ('bar') {
+                  <span class="cn-bar"><i></i><i></i><i></i></span>
+                  } @case ('names') { @for (f of cdFilters; track f.type) {
+                  <span class="mk-pill">{{ f.type }}</span>
+                  } } @case ('more') {
+                  <span class="mk-pill">{{ cdFilters[0].type }}</span>
+                  <span class="cn-more">+{{ cdFilters.length - 1 }}</span>
+                  } @case ('text') {
+                  <span class="cn-text">{{ cnNames }}</span>
+                  } @case ('values') {
+                  <span class="cn-text">{{ cnValues }}</span>
+                  } }
+                </div>
+                } @if (lv >= 1 || d.cls === 'hover') {
+                <div class="cn-act">
+                  <fa-icon icon="cog" aria-label="Bearbeiten" />
+                  @if (lv === 2) {
+                  <fa-icon icon="expand-arrows-alt" aria-label="Verschieben" />
+                  }
+                </div>
+                }
+                <button
+                  type="button"
+                  class="cd-tog cn-tog"
+                  [attr.aria-label]="lv === 2 ? 'Details einklappen' : 'Details ausklappen'"
+                  [attr.aria-expanded]="lv === 2"
+                  (click)="cdToggle(i + 100, l.level)"
+                >
+                  <fa-icon [icon]="lv === 2 ? 'chevron-up' : 'chevron-down'" />
+                </button>
+                @if (lv === 2) {
+                <div class="cn-body">
+                  @for (f of cdFilters; track f.type) {
+                  <div class="mk-frow">
+                    <span class="mk-chip">{{ f.type }}</span>
+                    @for (v of f.values; track v) {
+                    <span class="mk-pill">{{ v }}</span>
+                    }
+                  </div>
+                  }
+                </div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Divider column">
+          <h2 id="criteria-box-divider">
+            layout 5 (divider column, labelled icons) at the real box width of 448px; 12 ways to
+            compact it (chevron swaps a card to the other level)
+          </h2>
+          <div class="dcg cd-headrow">
+            @for (l of cdLevels; track l.level) {
+            <strong>{{ l.label }}</strong>
+            }
+          </div>
+          @for (v of dcVariants; track v.name; let i = $index) {
+          <div class="cd-row">
+            <code>{{ i + 1 }} · {{ v.name }}</code>
+            <div class="dcg">
+              @for (l of cdLevels; track l.level) { @let lv = cdLevel(i + 200, l.level); @let c =
+              v.lv[lv];
+              <div class="dc dc-{{ c.col }}" [class.dc-grid]="c.grid">
+                <div class="dc-text">
+                  <div class="dc-top">
+                    <div class="mk-title">Hypertonie mit vielen Filtern</div>
+                    <button
+                      type="button"
+                      class="cd-tog"
+                      [attr.aria-label]="lv === 2 ? 'Details einklappen' : 'Details ausklappen'"
+                      [attr.aria-expanded]="lv === 2"
+                      (click)="cdToggle(i + 200, l.level)"
+                    >
+                      <fa-icon [icon]="lv === 2 ? 'chevron-up' : 'chevron-down'" />
+                    </button>
+                  </div>
+                  @if (c.info) {
+                  <div class="mk-info">Diagnose · I10 · ICD-10-GM</div>
+                  } @switch (c.f) { @case ('rows') {
+                  <div class="mk-foot mk-filters">
+                    @for (f of cdFilters; track f.type) {
+                    <div class="mk-frow">
+                      <span class="mk-chip">{{ f.type }}</span>
+                      @for (x of f.values; track x) {
+                      <span class="mk-pill">{{ x }}</span>
+                      }
+                    </div>
+                    }
+                  </div>
+                  } @case ('names') {
+                  <div class="mk-frow">
+                    @for (f of cdFilters; track f.type) {
+                    <span class="mk-pill">{{ f.type }} · {{ f.values.length }}</span>
+                    }
+                  </div>
+                  } @case ('values') {
+                  <span class="cn-text">{{ cnValues }}</span>
+                  } @case ('count') {
+                  <div><span class="cd-badge">{{ cdFilters.length }} Filter</span></div>
+                  } }
+                </div>
+                @if (c.t.length || c.kebab) {
+                <div class="dc-tools">
+                  @for (k of c.t; track k) {
+                  <button
+                    type="button"
+                    class="dc-tool"
+                    [class.dc-ico]="!c.lab"
+                    [attr.title]="c.lab ? null : dcTools[k].label"
+                    [attr.aria-label]="dcTools[k].label"
+                  >
+                    <fa-icon [icon]="dcTools[k].icon" />
+                    @if (c.lab) {
+                    {{ dcTools[k].label }}
+                    }
+                  </button>
+                  } @if (c.kebab) {
+                  <button type="button" class="dc-tool dc-ico" aria-label="Mehr" title="Mehr">
+                    <fa-icon icon="ellipsis-v" />
+                  </button>
+                  }
+                </div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Footer + divider">
+          <h2 id="criteria-box-footer-divider">
+            footer bar (dark top, light bottom) + divider column, 448px. Grip always left; reduced:
+            edit + delete right; minimal: menu right (chevron swaps a card to the other level)
+          </h2>
+          <div class="dcg cd-headrow">
+            @for (l of cdLevels; track l.level) {
+            <strong>{{ l.label }}</strong>
+            }
+          </div>
+          @for (v of fbVariants; track v.name; let i = $index) {
+          <div class="cd-row">
+            <code>{{ i + 1 }} · {{ v.name }}</code>
+            <div class="dcg">
+              @for (l of cdLevels; track l.level) { @let lv = cdLevel(i + 300, l.level); @let lab =
+              v.lab[lv]; @let foot = lv > 0 || v.f0 === 'foot';
+              <div
+                class="fb"
+                [class.fb-rail-head]="v.rail === 'head'"
+                [class.fb-col-head]="v.col === 'head'"
+                [class.fb-white]="v.white"
+              >
+                <button
+                  type="button"
+                  class="dc-tool fb-rail"
+                  [class.dc-ico]="!lab"
+                  aria-label="Ziehen"
+                  [attr.title]="lab ? null : 'Ziehen'"
+                >
+                  <fa-icon icon="expand-arrows-alt" />
+                  @if (lab) { Ziehen }
+                </button>
+                <div class="fb-head">
+                  <div class="dc-top">
+                    <div class="mk-title">Hypertonie mit vielen Filtern</div>
+                    <button
+                      type="button"
+                      class="cd-tog"
+                      [attr.aria-label]="lv === 2 ? 'Details einklappen' : 'Details ausklappen'"
+                      [attr.aria-expanded]="lv === 2"
+                      (click)="cdToggle(i + 300, l.level)"
+                    >
+                      <fa-icon [icon]="lv === 2 ? 'chevron-up' : 'chevron-down'" />
+                    </button>
+                  </div>
+                  @if (lv > 0) {
+                  <div class="mk-info">Diagnose · I10 · ICD-10-GM</div>
+                  } @else if (v.f0 === 'badge') {
+                  <div><span class="cd-badge">{{ cdFilters.length }} Filter</span></div>
+                  }
+                </div>
+                @if (foot) {
+                <div class="fb-foot">
+                  @if (lv === 2) { @if (v.f2 === 'rows') {
+                  <div class="mk-filters">
+                    @for (f of cdFilters; track f.type) {
+                    <div class="mk-frow">
+                      <span class="mk-chip">{{ f.type }}</span>
+                      @for (x of f.values; track x) {
+                      <span class="mk-pill">{{ x }}</span>
+                      }
+                    </div>
+                    }
+                  </div>
+                  } @else {
+                  <div class="mk-frow">
+                    @for (f of cdFilters; track f.type) {
+                    <span class="mk-chip">{{ f.type }}</span>
+                    @for (x of f.values; track x) {
+                    <span class="mk-pill">{{ x }}</span>
+                    } }
+                  </div>
+                  } } @else if (lv === 1) { @if (v.f1 === 'values') {
+                  <span class="cn-text">{{ cnValues }}</span>
+                  } @else {
+                  <div class="mk-frow">
+                    @for (f of cdFilters; track f.type) {
+                    <span class="mk-pill">{{ f.type }} · {{ f.values.length }}</span>
+                    }
+                  </div>
+                  } } @else {
+                  <span class="cd-badge">{{ cdFilters.length }} Filter</span>
+                  }
+                </div>
+                }
+                <div class="dc-tools fb-tools">
+                  @if (lv === 0) {
+                  <button
+                    type="button"
+                    class="dc-tool"
+                    [class.dc-ico]="!lab"
+                    aria-label="Menü"
+                    [attr.title]="lab ? null : 'Menü'"
+                  >
+                    <fa-icon icon="ellipsis-v" />
+                    @if (lab) { Menü }
+                  </button>
+                  } @else { @for (k of lv === 2 ? 'ecd' : 'ed'; track k) {
+                  <button
+                    type="button"
+                    class="dc-tool"
+                    [class.dc-ico]="!lab"
+                    [attr.aria-label]="dcTools[k].label"
+                    [attr.title]="lab ? null : dcTools[k].label"
+                  >
+                    <fa-icon [icon]="dcTools[k].icon" />
+                    @if (lab) {
+                    {{ dcTools[k].label }}
+                    }
+                  </button>
+                  } }
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Proposal">
+          <h2 id="criteria-box-proposal">
+            proposal: two tones (dark header, white footer), everything on the right, one accent
+            colour, info (I10, ICD-10-GM) as small tags. 448px (chevron swaps a card to the other
+            level)
+          </h2>
+          <div class="dcg cd-headrow">
+            @for (l of cdLevels; track l.level) {
+            <strong>{{ l.label }}</strong>
+            }
+          </div>
+          @for (v of fcVariants; track v.name; let i = $index) {
+          <div class="cd-row">
+            <code>{{ i + 1 }} · {{ v.name }}</code>
+            <div class="dcg">
+              @for (l of cdLevels; track l.level) { @let lv = cdLevel(i + 400, l.level); @let lab = lv
+              === 2 || (lv === 1 && v.lab); @let metaFoot = v.info === 'footer' || v.info ===
+              'eyebrow';
+              <div
+                class="fc"
+                [class.fc-row]="lv === 0"
+                [style.--tw]="lv === 0 ? '96px' : lab ? '72px' : '48px'"
+              >
+                <div class="fc-head">
+                  @if (v.info === 'eyebrow' && lv > 0) {
+                  <div class="fc-eyebrow">Diagnose</div>
+                  }
+                  <div class="dc-top">
+                    <div class="mk-title">Hypertonie mit vielen Filtern</div>
+                    <button
+                      type="button"
+                      class="cd-tog"
+                      [attr.aria-label]="lv === 2 ? 'Details einklappen' : 'Details ausklappen'"
+                      [attr.aria-expanded]="lv === 2"
+                      (click)="cdToggle(i + 400, l.level)"
+                    >
+                      <fa-icon [icon]="lv === 2 ? 'chevron-up' : 'chevron-down'" />
+                    </button>
+                  </div>
+                  @if (lv > 0 && v.info === 'tags') {
+                  <div class="fc-meta">
+                    <span class="fc-plain">Diagnose</span>
+                    <span class="fc-tag">I10</span>
+                    <span class="fc-tag">ICD-10-GM</span>
+                  </div>
+                  } @if (lv > 0 && v.info === 'text') {
+                  <div class="fc-text">Diagnose · I10 · ICD-10-GM</div>
+                  } @if (lv === 0) {
+                  <div><span class="cd-badge">{{ cdFilters.length }} Filter</span></div>
+                  }
+                </div>
+                @if (lv > 0) {
+                <div class="fc-foot">
+                  @if (metaFoot) {
+                  <div class="fc-meta">
+                    @if (v.info === 'footer') {
+                    <span class="fc-plain">Diagnose</span>
+                    }
+                    <span class="fc-tag">I10</span>
+                    <span class="fc-tag">ICD-10-GM</span>
+                  </div>
+                  } @if (lv === 2) {
+                  <div class="mk-filters">
+                    @for (f of cdFilters; track f.type) {
+                    <div class="mk-frow">
+                      <span class="mk-chip">{{ f.type }}</span>
+                      @for (x of f.values; track x) {
+                      <span class="mk-pill">{{ x }}</span>
+                      }
+                    </div>
+                    }
+                  </div>
+                  } @else if (v.f1 === 'values') {
+                  <span class="cn-text">{{ cnValues }}</span>
+                  } @else {
+                  <div class="mk-frow">
+                    @for (f of cdFilters; track f.type) {
+                    <span class="mk-pill">{{ f.type }} · {{ f.values.length }}</span>
+                    }
+                  </div>
+                  }
+                </div>
+                }
+                <div class="fc-tools">
+                  @for (k of lv === 2 ? 'ecdg' : lv === 1 ? 'edg' : 'g'; track k) {
+                  <button
+                    type="button"
+                    class="dc-tool"
+                    [class.dc-ico]="!lab"
+                    [attr.aria-label]="dcTools[k].label"
+                    [attr.title]="lab ? null : dcTools[k].label"
+                  >
+                    <fa-icon [icon]="dcTools[k].icon" />
+                    @if (lab) {
+                    {{ dcTools[k].label }}
+                    }
+                  </button>
+                  } @if (lv === 0) {
+                  <button type="button" class="dc-tool dc-ico" aria-label="Menü" title="Menü">
+                    <fa-icon icon="ellipsis-v" />
+                  </button>
+                  }
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Refined">
+          <h2 id="criteria-box-refined">
+            refined proposal: hierarchy title › info › filter values › actions. Quiet labels and
+            icons, soft value pills, accent only on hover/focus. 448px (chevron swaps a card to the
+            other level)
+          </h2>
+          <div class="dcg cd-headrow">
+            @for (l of cdLevels; track l.level) {
+            <strong>{{ l.label }}</strong>
+            }
+          </div>
+          @for (v of fmVariants; track v.name; let i = $index) {
+          <div class="cd-row">
+            <code>{{ i + 1 }} · {{ v.name }}</code>
+            <div class="dcg">
+              @for (l of cdLevels; track l.level) { @let lv = cdLevel(i + 500, l.level); @let col =
+              v.tools === 'col' || v.tools === 'icons'; @let lab = v.tools === 'col' && lv > 0; @let
+              keys = lv === 2 ? 'ecdg' : lv === 1 ? 'edg' : 'g';
+              <div
+                class="fm"
+                [class.fm-edge]="v.edge"
+                [class.fm-mini]="lv === 0"
+                [class.fm-hov]="v.tools === 'hover'"
+                [class.fm-rowv]="!col"
+                [style.--tw]="col ? (lv === 0 ? '88px' : lab ? '72px' : '48px') : '0px'"
+                [style.--tr]="lv === 2 ? '156px' : lv === 1 ? '120px' : '92px'"
+              >
+                <div class="fm-head">
+                  <div class="fm-top">
+                    <button
+                      type="button"
+                      class="fm-tog"
+                      [attr.aria-label]="lv === 2 ? 'Details einklappen' : 'Details ausklappen'"
+                      [attr.aria-expanded]="lv === 2"
+                      (click)="cdToggle(i + 500, l.level)"
+                    >
+                      <fa-icon [icon]="lv === 2 ? 'chevron-up' : 'chevron-down'" />
+                    </button>
+                    <div class="fm-title">Hypertonie mit vielen Filtern</div>
+                  </div>
+                  @if (lv > 0) {
+                  <div class="fm-meta">
+                    Diagnose <span class="fm-sep">·</span> <span class="fm-code">I10</span>
+                    <span class="fm-sep">·</span> ICD-10-GM
+                  </div>
+                  } @else {
+                  <div class="fm-meta">
+                    <span class="fm-count">{{ cdFilters.length }} Filter</span>
+                  </div>
+                  }
+                </div>
+                @if (lv === 2) {
+                <div class="fm-foot">
+                  @for (f of cdFilters; track f.type) {
+                  <div class="fm-row">
+                    <span class="fm-lab">{{ f.type }}</span>
+                    <span class="fm-vals">
+                      @for (x of f.values; track x) {
+                      <span class="fm-val">{{ x }}</span>
+                      }
+                    </span>
+                  </div>
+                  }
+                </div>
+                } @else if (lv === 1) {
+                <div class="fm-foot fm-sumrow">
+                  <span class="fm-count">{{ cdFilters.length }} Filter</span>
+                  <span class="cn-text">{{ cnNames }}</span>
+                </div>
+                }
+                <div [class]="col ? 'fm-tools' : 'fm-rowtools'">
+                  @for (k of keys; track k) {
+                  <button
+                    type="button"
+                    class="fm-tool"
+                    [class.fm-del]="k === 'd'"
+                    [attr.aria-label]="dcTools[k].label"
+                    [attr.title]="lab ? null : dcTools[k].label"
+                  >
+                    <fa-icon [icon]="dcTools[k].icon" />
+                    @if (lab) {
+                    {{ dcTools[k].label }}
+                    }
+                  </button>
+                  } @if (lv === 0) {
+                  <button type="button" class="fm-tool" aria-label="Menü" title="Menü">
+                    <fa-icon icon="ellipsis-v" />
+                  </button>
+                  }
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Impeccable">
+          <h2 id="criteria-box-impeccable">
+            impeccable proposal: one reading order (title › context › filters › actions), the code
+            in its own hue, actions on a solid rail. 448px (chevron swaps a card to the other level)
+          </h2>
+          <div class="dcg cd-headrow">
+            @for (l of cdLevels; track l.level) {
+            <strong>{{ l.label }}</strong>
+            }
+          </div>
+          @for (r of imRows; track r.name; let i = $index) {
+          <div class="cd-row">
+            <code>{{ i + 1 }} · {{ r.name }}</code>
+            <div class="dcg">
+              @for (l of cdLevels; track l.level) { @let lv = cdLevel(i + 600, l.level); @let lab =
+              r.lab && lv > 0; @let keys = lv === 2 ? 'ecdg' : lv === 1 ? 'edg' : 'g';
+              <div
+                class="im"
+                [class.im-mini]="lv === 0"
+                [style.--tw]="lv === 0 ? '88px' : lab ? '76px' : '48px'"
+              >
+                <div class="im-head">
+                  <div class="im-top">
+                    <button
+                      type="button"
+                      class="im-tog"
+                      [attr.aria-label]="lv === 2 ? 'Details einklappen' : 'Details ausklappen'"
+                      [attr.aria-expanded]="lv === 2"
+                      (click)="cdToggle(i + 600, l.level)"
+                    >
+                      <fa-icon [icon]="lv === 2 ? 'chevron-up' : 'chevron-down'" />
+                    </button>
+                    <div class="im-title">{{ r.item.title }}</div>
+                    @if (lv === 0) {
+                    <span class="im-count">{{ r.item.filters.length }} Filter</span>
+                    }
+                  </div>
+                  @if (lv > 0) {
+                  <div class="im-meta">
+                    <span>{{ r.item.type }}</span>
+                    <span class="im-sep">·</span>
+                    <span class="im-code">{{ r.item.code }}</span>
+                    <span class="im-sep">·</span>
+                    <span>{{ r.item.system }}</span>
+                  </div>
+                  }
+                </div>
+                @if (lv === 2) {
+                <div class="im-foot">
+                  @for (f of r.item.filters; track f.type) {
+                  <div class="im-row">
+                    <span class="im-lab">{{ f.type }}</span>
+                    <span class="im-vals">
+                      @for (x of f.values; track x) {
+                      <span class="im-val">{{ x }}</span>
+                      }
+                    </span>
+                  </div>
+                  }
+                </div>
+                } @else if (lv === 1) {
+                <div class="im-foot im-sum">
+                  <span class="im-count">{{ r.item.filters.length }} Filter</span>
+                  <span class="im-names">{{ imNames(r.item) }}</span>
+                </div>
+                }
+                <div class="im-tools">
+                  @for (k of keys; track k) {
+                  <button
+                    type="button"
+                    class="im-tool"
+                    [class.im-del]="k === 'd'"
+                    [attr.aria-label]="dcTools[k].label"
+                    [attr.title]="lab ? null : dcTools[k].label"
+                  >
+                    <fa-icon [icon]="dcTools[k].icon" />
+                    @if (lab) {
+                    <span>{{ dcTools[k].label }}</span>
+                    }
+                  </button>
+                  } @if (lv === 0) {
+                  <button type="button" class="im-tool" aria-label="Menü" title="Menü">
+                    <fa-icon icon="ellipsis-v" />
+                  </button>
+                  }
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </mat-tab>
       </mat-tab-group>
       }
       @if (shows('num-data-selection-boxes')) {
@@ -1816,7 +2497,189 @@ const contrast = (a: string, b: string): number => {
         </div>
         }
       </section>
-      <mat-tab-group [selectedIndex]="tabIndex(['action-bar-variants'])" animationDuration="0ms">
+      <mat-tab-group
+        [selectedIndex]="tabIndex(['action-bar-split', 'action-bar-glass', 'action-bar-best', 'action-bar-aero', 'action-bar-segment', 'action-bar-redesign', 'action-bar-redesign-more', 'action-bar-white-disabled', 'action-bar-white-disabled-best', 'action-bar-variants'])"
+        animationDuration="0ms"
+      >
+        <mat-tab label="Split, 8">
+          <h2 id="action-bar-split">split style closer to the current bar, with a soft glass touch: 8 designs</h2>
+          @for (v of splitVariants; track v.label) {
+          <div [style]="v.vars">
+            <code>{{ v.label }}</code>
+            @for (off of [false, true]; track off) {
+            <div class="sp-bar">
+              <div class="sp-plate">
+                @for (a of rdActions; track a.icon) {
+                <button type="button" [disabled]="off && !$first">
+                  <fa-icon [icon]="a.icon" /><span>{{ a.label }}</span>
+                </button>
+                }
+              </div>
+              <span class="sp-sel">Selected <b>3</b></span>
+            </div>
+            }
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Glass, 20">
+          <h2 id="action-bar-glass">glass edge on the current action bar look: 20 designs (no backdrop)</h2>
+          @for (v of glassVariants; track v.label) {
+          <div [style]="v.vars">
+            <code>{{ v.label }}</code>
+            @for (off of [false, true]; track off) {
+            <div class="gl-bar">
+              <div class="gl-grp">
+                @for (a of rdActions; track a.icon) {
+                <button type="button" [disabled]="off && !$first">
+                  <fa-icon [icon]="a.icon" /><span>{{ a.label }}</span>
+                </button>
+                }
+              </div>
+              <span class="gl-sel">Selected <b>3</b></span>
+            </div>
+            }
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Best">
+          <h2 id="action-bar-best">best: joined segment, icon + label, white disabled, keyboard and screen-reader friendly</h2>
+          @for (off of [false, true]; track off) {
+          <div class="best-bar">
+            <div class="best-seg" role="group" aria-label="Query actions">
+              <button type="button" class="best-primary">
+                <fa-icon [icon]="'upload'" /><span>Upload</span>
+              </button>
+              <button
+                type="button"
+                [attr.aria-disabled]="off ? 'true' : null"
+                [attr.aria-describedby]="off ? 'best-why' : null"
+              >
+                <fa-icon [icon]="'download'" /><span>Download</span>
+              </button>
+              <button
+                type="button"
+                [attr.aria-disabled]="off ? 'true' : null"
+                [attr.aria-describedby]="off ? 'best-why' : null"
+              >
+                <fa-icon [icon]="'save'" /><span>Save</span>
+              </button>
+            </div>
+            <p class="best-sel" role="status">Selected <b>3</b></p>
+          </div>
+          @if (off) {
+          <p id="best-why" class="best-why">
+            Download and save need at least one valid criterion.
+          </p>
+          } }
+        </mat-tab>
+        <mat-tab label="Aero glass">
+          <h2 id="action-bar-aero">Windows Vista / Aero glass style: 6 designs (top all enabled, bottom download + save disabled)</h2>
+          @for (d of aeros; track d) {
+          <div class="aero-stage">
+            <code>{{ d }}</code>
+            @for (off of [false, true]; track off) {
+            <div [class]="'rd rd-' + d">
+              @for (a of rdActions; track a.icon) {
+              <button type="button" [disabled]="off && !$first">
+                <fa-icon [icon]="a.icon" /><span>{{ a.label }}</span>
+              </button>
+              }
+              <span class="rd-sel">Selected <b>3</b></span>
+            </div>
+            }
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Segment, 5">
+          <h2 id="action-bar-segment">segment style: 5 designs (top all enabled, bottom download + save disabled)</h2>
+          @for (d of segments; track d) {
+          <div class="rd-wrap">
+            <code>{{ d }}</code>
+            @for (off of [false, true]; track off) {
+            <div [class]="'rd rd-' + d">
+              @for (a of rdActions; track a.icon) {
+              <button type="button" [disabled]="off && !$first">
+                <fa-icon [icon]="a.icon" /><span>{{ a.label }}</span>
+              </button>
+              }
+              <span class="rd-sel">Selected <b>3</b></span>
+            </div>
+            }
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Redesign">
+          <h2 id="action-bar-redesign">action bar redesign: six concepts (top all enabled, bottom download + save disabled)</h2>
+          @for (d of redesigns; track d) {
+          <div class="rd-wrap">
+            <code>{{ d }}</code>
+            @for (off of [false, true]; track off) {
+            <div [class]="'rd rd-' + d">
+              @for (a of rdActions; track a.icon) {
+              <button type="button" [disabled]="off && !$first">
+                <fa-icon [icon]="a.icon" /><span>{{ a.label }}</span>
+              </button>
+              }
+              <span class="rd-sel">Selected <b>3</b></span>
+            </div>
+            }
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="Redesign, 20 more">
+          <h2 id="action-bar-redesign-more">action bar redesign: 20 more concepts (top all enabled, bottom download + save disabled)</h2>
+          @for (d of redesigns2; track d) {
+          <div class="rd-wrap">
+            <code>{{ d }}</code>
+            @for (off of [false, true]; track off) {
+            <div [class]="'rd rd-' + d">
+              @for (a of rdActions; track a.icon) {
+              <button type="button" [disabled]="off && !$first">
+                <fa-icon [icon]="a.icon" /><span>{{ a.label }}</span>
+              </button>
+              }
+              <span class="rd-sel">Selected <b>3</b></span>
+            </div>
+            }
+          </div>
+          }
+        </mat-tab>
+        <mat-tab label="White disabled">
+          <h2 id="action-bar-white-disabled">num-action-bar with white disabled buttons</h2>
+          <div class="white-disabled"><num-action-bar /></div>
+          <div class="variants">
+            @for (v of whiteDisabled; track v.label) {
+            <div
+              class="wd"
+              [style.--bg]="v.bg"
+              [style.--fg]="v.fg"
+              [style.--sh]="v.sh"
+              [style.--wd-op]="v.op"
+            >
+              <code>{{ v.label }}</code>
+              <num-action-bar />
+            </div>
+            }
+          </div>
+        </mat-tab>
+        <mat-tab label="White disabled, best 20">
+          <h2 id="action-bar-white-disabled-best">white disabled: 20 most usable (readable icon, clearly not clickable)</h2>
+          <div class="variants">
+            @for (v of whiteDisabledBest; track v.label) {
+            <div
+              class="wd"
+              [style.--bg]="v.bg"
+              [style.--fg]="v.fg"
+              [style.--sh]="v.sh"
+              [style.--wd-op]="v.op"
+              [style.--ol]="v.ol"
+            >
+              <code>{{ v.label }}</code>
+              <num-action-bar />
+            </div>
+            }
+          </div>
+        </mat-tab>
         <mat-tab label="Variants">
           <h2 id="action-bar-variants">num-action-bar variants (tint / opacity / badge color)</h2>
           <div class="variants">
@@ -2048,6 +2911,262 @@ const contrast = (a: string, b: string): number => {
     .css-edit ::ng-deep .t-var { color: #4ec9b0; }
     .css-edit ::ng-deep .t-str { color: #ce9178; }
     num-action-bar { display: block; flex: 1 1 auto; min-width: 0; width: 100%; }
+    .white-disabled ::ng-deep .num-button.green.icon.disabled { background-color: #fff; position: relative; }
+    .wd code { display: block; margin-bottom: 4px; font-size: 12px; }
+    .wd ::ng-deep .num-button.green.icon.disabled {
+      position: relative;
+      background-color: var(--bg);
+      color: var(--fg);
+      box-shadow: var(--sh);
+      opacity: var(--wd-op);
+      outline: var(--ol, none);
+      outline-offset: -1px;
+    }
+    .rd-wrap { margin-bottom: 28px; }
+    .rd-wrap code { display: block; margin-bottom: 6px; font-size: 12px; }
+    .rd { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; padding: 8px 12px; font: 600 13px 'Open Sans', sans-serif; }
+    .rd button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; transition: transform .15s, background-color .15s, box-shadow .15s; }
+    .rd button:disabled { cursor: not-allowed; }
+    .rd button span { display: none; }
+    .rd-sel { margin-left: auto; font-size: 12px; opacity: .8; }
+    .rd-sel b { display: inline-block; min-width: 20px; padding: 1px 4px; border: 2px solid currentColor; border-radius: 5px; text-align: center; }
+    .rd-pill { width: fit-content; min-width: 420px; background: #fff; border-radius: 999px; box-shadow: 0 6px 18px rgba(0,0,0,.12); color: #566a0e; }
+    .rd-pill button { width: 44px; height: 44px; border-radius: 50%; color: #566a0e; }
+    .rd-pill button:first-of-type { background: #9bb823; color: #fff; }
+    .rd-pill button:not(:disabled):not(:first-of-type):hover { background: #eef3d6; }
+    .rd-pill button:first-of-type:hover { background: #87a01c; }
+    .rd-pill button:disabled { color: #c4c4c4; }
+    .rd-segment { width: fit-content; min-width: 420px; padding: 0; border: 1px solid #9bb823; border-radius: 10px; overflow: hidden; color: #566a0e; background: #fff; }
+    .rd-segment button { width: 56px; height: 46px; border-right: 1px solid #c5d37a; }
+    .rd-segment button:first-of-type { background: #9bb823; color: #fff; }
+    .rd-segment button:not(:disabled):not(:first-of-type):hover { background: #eef3d6; }
+    .rd-segment button:disabled { background: repeating-linear-gradient(45deg, #fff 0 5px, #f3f3f3 5px 10px); color: #c4c4c4; }
+    .rd-segment .rd-sel { padding-right: 14px; }
+    .rd-glass { width: fit-content; min-width: 420px; padding: 8px 14px; background: linear-gradient(135deg, #2f3a1c, #1d2412); border-radius: 14px; box-shadow: 0 8px 20px rgba(0,0,0,.25); color: #dfe9a8; }
+    .rd-glass button { width: 44px; height: 44px; border-radius: 10px; }
+    .rd-glass button:first-of-type { background: #9bb823; color: #1d2412; }
+    .rd-glass button:not(:disabled):not(:first-of-type):hover { background: rgba(255,255,255,.12); }
+    .rd-glass button:disabled { color: rgba(255,255,255,.25); }
+    .rd-labeled { background: #fff; border-bottom: 3px solid #9bb823; border-radius: 4px 4px 0 0; color: #566a0e; box-shadow: 0 2px 6px rgba(0,0,0,.06); }
+    .rd-labeled button { height: 40px; padding: 0 14px; border-radius: 6px; }
+    .rd-labeled button span { display: inline; }
+    .rd-labeled button:first-of-type { background: #9bb823; color: #fff; }
+    .rd-labeled button:not(:disabled):not(:first-of-type):hover { background: #eef3d6; }
+    .rd-labeled button:disabled { color: #b5b5b5; }
+    .rd-stripe { background: #f4f7e6; border-left: 5px solid #9bb823; border-radius: 4px 10px 10px 4px; color: #566a0e; }
+    .rd-stripe button { width: 42px; height: 42px; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
+    .rd-stripe button:first-of-type { background: #566a0e; color: #fff; }
+    .rd-stripe button:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,.2); }
+    .rd-stripe button:disabled { box-shadow: none; outline: 1px dashed #b9c98a; outline-offset: -1px; color: #b5b5b5; background: transparent; }
+    .rd-dock { width: fit-content; min-width: 420px; padding: 10px 16px; background: linear-gradient(135deg, #9bb823, #566a0e); border-radius: 18px; box-shadow: 0 8px 20px rgba(86,106,14,.35); color: #fff; }
+    .rd-dock button { width: 48px; height: 48px; border-radius: 14px; background: #fff; color: #566a0e; }
+    .rd-dock button:not(:disabled):hover { transform: translateY(-4px) scale(1.08); box-shadow: 0 8px 14px rgba(0,0,0,.25); }
+    .rd-dock button:disabled { background: rgba(255,255,255,.22); color: rgba(255,255,255,.6); }
+    .rd-neon { width: fit-content; min-width: 420px; background: #0b0f06; border-radius: 12px; color: #b6ff3b; }
+    .rd-neon button { width: 44px; height: 44px; border-radius: 10px; border: 1px solid #b6ff3b; box-shadow: 0 0 8px #b6ff3b, inset 0 0 6px rgba(182,255,59,.4); text-shadow: 0 0 6px #b6ff3b; }
+    .rd-neon button:first-of-type { background: #b6ff3b; color: #0b0f06; }
+    .rd-neon button:not(:disabled):hover { box-shadow: 0 0 16px #b6ff3b, 0 0 30px rgba(182,255,59,.6); }
+    .rd-neon button:disabled { border-color: #3a4a22; box-shadow: none; color: #3a4a22; text-shadow: none; }
+    .rd-ticket { width: fit-content; min-width: 420px; padding: 10px 28px; background: radial-gradient(circle at 0 50%, #fff 0 9px, transparent 10px) left / 51% 100% no-repeat, radial-gradient(circle at 100% 50%, #fff 0 9px, transparent 10px) right / 51% 100% no-repeat; background-color: #eef3d6; color: #566a0e; filter: drop-shadow(0 2px 3px rgba(0,0,0,.15)); }
+    .rd-ticket button { width: 42px; height: 42px; border-radius: 6px; border: 1px dashed #9bb823; }
+    .rd-ticket button:first-of-type { background: #9bb823; color: #fff; border-style: solid; }
+    .rd-ticket button:disabled { border-color: #ccd; color: #bbb; }
+    .rd-paper { background: #fffbe8; border: 1px solid #e6dca8; box-shadow: 2px 3px 0 #e6dca8; transform: rotate(-.4deg); font-family: 'Comic Sans MS', cursive; color: #4b5a10; }
+    .rd-paper button { height: 38px; padding: 0 12px; text-decoration: underline wavy #9bb823; }
+    .rd-paper button span { display: inline; }
+    .rd-paper button:hover:not(:disabled) { background: #fff2a8; }
+    .rd-paper button:disabled { text-decoration: line-through; color: #aaa; }
+    .rd-terminal { background: #000; color: #3dff6a; font-family: Consolas, monospace; border-radius: 4px; padding: 10px 14px; }
+    .rd-terminal button { padding: 4px 6px; }
+    .rd-terminal button fa-icon { display: none; }
+    .rd-terminal button span { display: inline; text-transform: lowercase; }
+    .rd-terminal button span::before { content: '[ '; } .rd-terminal button span::after { content: ' ]'; }
+    .rd-terminal button:hover:not(:disabled) { background: #3dff6a; color: #000; }
+    .rd-terminal button:disabled { color: #1d6b32; }
+    .rd-retro { background: #c0c0c0; color: #000; border: 2px solid; border-color: #fff #808080 #808080 #fff; font-family: Tahoma, sans-serif; }
+    .rd-retro button { height: 32px; padding: 0 12px; background: #c0c0c0; border: 2px solid; border-color: #fff #404040 #404040 #fff; }
+    .rd-retro button span { display: inline; }
+    .rd-retro button:active:not(:disabled) { border-color: #404040 #fff #fff #404040; }
+    .rd-retro button:disabled { color: #808080; text-shadow: 1px 1px #fff; }
+    .rd-neumorph { width: fit-content; min-width: 420px; padding: 14px 18px; background: #e8ecdc; border-radius: 20px; box-shadow: 8px 8px 16px #c7cbbb, -8px -8px 16px #fff; color: #566a0e; }
+    .rd-neumorph button { width: 46px; height: 46px; border-radius: 14px; background: #e8ecdc; box-shadow: 4px 4px 8px #c7cbbb, -4px -4px 8px #fff; }
+    .rd-neumorph button:active:not(:disabled), .rd-neumorph button:first-of-type { box-shadow: inset 3px 3px 6px #c7cbbb, inset -3px -3px 6px #fff; color: #7c9618; }
+    .rd-neumorph button:disabled { box-shadow: none; color: #b7bba8; }
+    .rd-gradborder { width: fit-content; min-width: 420px; background: linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #9bb823, #2fb4a6, #5a79af) border-box; border: 2px solid transparent; border-radius: 14px; color: #566a0e; }
+    .rd-gradborder button { width: 42px; height: 42px; border-radius: 10px; }
+    .rd-gradborder button:first-of-type { background: linear-gradient(135deg, #9bb823, #2fb4a6); color: #fff; }
+    .rd-gradborder button:not(:disabled):hover { background: #eef3d6; }
+    .rd-gradborder button:disabled { color: #ccc; }
+    .rd-fab { padding-left: 0; color: #fff; }
+    .rd-fab button { width: 40px; height: 40px; border-radius: 50%; background: #566a0e; box-shadow: 0 3px 6px rgba(0,0,0,.25); margin-left: -8px; border: 2px solid #fff; }
+    .rd-fab button:first-of-type { width: 56px; height: 56px; background: #9bb823; margin-left: 0; z-index: 1; }
+    .rd-fab button:not(:disabled):hover { transform: scale(1.12); }
+    .rd-fab button:disabled { background: #cfd5bd; box-shadow: none; }
+    .rd-fab .rd-sel { color: #566a0e; }
+    .rd-folder { align-items: flex-end; padding-bottom: 0; border-bottom: 3px solid #9bb823; gap: 3px; color: #566a0e; }
+    .rd-folder button { height: 36px; padding: 0 16px; border-radius: 10px 10px 0 0; background: #eef3d6; }
+    .rd-folder button span { display: inline; }
+    .rd-folder button:first-of-type { height: 42px; background: #9bb823; color: #fff; }
+    .rd-folder button:disabled { background: #f3f3f3; color: #b5b5b5; }
+    .rd-slide { gap: 18px; color: #566a0e; border-bottom: 1px solid #dfe6bd; }
+    .rd-slide button { height: 40px; padding: 0 6px; background: linear-gradient(#9bb823, #9bb823) bottom / 0 3px no-repeat; transition: background-size .25s; }
+    .rd-slide button:not(:disabled):hover, .rd-slide button:first-of-type { background-size: 100% 3px; }
+    .rd-slide button:disabled { color: #c9c9c9; }
+    .rd-stamp { gap: 12px; color: #566a0e; }
+    .rd-stamp button { padding: 8px 14px; border: 2px dashed #9bb823; border-radius: 8px; text-transform: uppercase; letter-spacing: 1px; transform: rotate(-3deg); }
+    .rd-stamp button:nth-of-type(2) { transform: rotate(2deg); }
+    .rd-stamp button span { display: inline; }
+    .rd-stamp button:first-of-type { background: #9bb823; color: #fff; border-style: solid; }
+    .rd-stamp button:disabled { border-color: #ccc; color: #bbb; }
+    .rd-chips { gap: 8px; color: #566a0e; }
+    .rd-chips button { height: 34px; padding: 0 14px; border: 1px solid #9bb823; border-radius: 999px; }
+    .rd-chips button span { display: inline; }
+    .rd-chips button:first-of-type { background: #9bb823; color: #fff; }
+    .rd-chips button:not(:disabled):hover { background: #eef3d6; }
+    .rd-chips button:first-of-type:hover { background: #87a01c !important; }
+    .rd-chips button:disabled { border-color: #ddd; color: #bbb; }
+    .rd-cards { gap: 10px; color: #566a0e; }
+    .rd-cards button { flex-direction: column; gap: 4px; width: 84px; height: 66px; background: #fff; border: 1px solid #dfe6bd; border-radius: 12px; font-size: 12px; }
+    .rd-cards button span { display: inline; }
+    .rd-cards button:first-of-type { background: #9bb823; color: #fff; border-color: #9bb823; }
+    .rd-cards button:not(:disabled):hover { box-shadow: 0 6px 12px rgba(0,0,0,.12); transform: translateY(-2px); }
+    .rd-cards button:disabled { background: #fafafa; color: #c4c4c4; border-style: dashed; }
+    .rd-ribbon { width: fit-content; min-width: 460px; padding: 10px 56px 10px 16px; background: #9bb823; color: #fff; clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 50%, calc(100% - 28px) 100%, 0 100%); }
+    .rd-ribbon button { width: 42px; height: 42px; border-radius: 8px; background: #566a0e; }
+    .rd-ribbon button:not(:disabled):hover { background: #3f4f0a; }
+    .rd-ribbon button:disabled { background: rgba(255,255,255,.25); color: rgba(255,255,255,.6); }
+    .rd-hairline { gap: 28px; padding: 14px 4px; border-bottom: 1px solid #566a0e; color: #566a0e; }
+    .rd-hairline button { width: 24px; height: 24px; }
+    .rd-hairline button:not(:disabled):hover { color: #9bb823; transform: translateY(-2px); }
+    .rd-hairline button:disabled { color: #d0d0d0; }
+    .rd-track { width: fit-content; min-width: 420px; padding: 6px; background: #e3e8cf; border-radius: 999px; box-shadow: inset 0 2px 5px rgba(0,0,0,.12); color: #566a0e; }
+    .rd-track button { width: 44px; height: 44px; border-radius: 50%; }
+    .rd-track button:first-of-type { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,.25); color: #7c9618; }
+    .rd-track button:not(:disabled):hover { background: rgba(255,255,255,.7); }
+    .rd-track button:disabled { color: #a9b08f; }
+    .rd-blueprint { background: #12457a; background-image: linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px); background-size: 14px 14px; color: #fff; border-radius: 4px; font-family: Consolas, monospace; }
+    .rd-blueprint button { width: 44px; height: 44px; border: 1px dashed #fff; }
+    .rd-blueprint button:first-of-type { border-style: solid; background: rgba(255,255,255,.2); }
+    .rd-blueprint button:not(:disabled):hover { background: rgba(255,255,255,.3); }
+    .rd-blueprint button:disabled { border-color: rgba(255,255,255,.3); color: rgba(255,255,255,.35); }
+    .rd-candy { gap: 12px; color: #fff; }
+    .rd-candy button { width: 52px; height: 48px; border-radius: 16px; background: linear-gradient(#b7d447, #8ba91d); border-bottom: 5px solid #566a0e; }
+    .rd-candy button:nth-of-type(2) { background: linear-gradient(#6fb3ff, #3a86e0); border-bottom-color: #1f55a0; }
+    .rd-candy button:nth-of-type(3) { background: linear-gradient(#ffb85c, #f08a1c); border-bottom-color: #a85c0a; }
+    .rd-candy button:active:not(:disabled) { transform: translateY(4px); border-bottom-width: 1px; }
+    .rd-candy button:disabled { background: #e6e6e6; border-bottom-color: #c9c9c9; color: #fff; }
+    .rd-glasslight { width: fit-content; min-width: 420px; padding: 12px 16px; background: rgba(255,255,255,.45); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.7); border-radius: 18px; box-shadow: 0 8px 24px rgba(86,106,14,.2); color: #3f4f0a; position: relative; }
+    .rd-glasslight::before { content: ''; position: absolute; inset: -20px; z-index: -1; background: radial-gradient(circle at 20% 30%, #9bb823 0 40px, transparent 41px), radial-gradient(circle at 80% 70%, #2fb4a6 0 50px, transparent 51px); }
+    .rd-glasslight button { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,.55); }
+    .rd-glasslight button:not(:disabled):hover { background: rgba(255,255,255,.9); }
+    .rd-glasslight button:disabled { opacity: .45; }
+    .rd-brutal { gap: 12px; background: #e9f56a; border: 3px solid #000; box-shadow: 6px 6px 0 #000; color: #000; text-transform: uppercase; width: fit-content; min-width: 460px; }
+    .rd-brutal button { height: 40px; padding: 0 12px; background: #fff; border: 3px solid #000; box-shadow: 3px 3px 0 #000; }
+    .rd-brutal button span { display: inline; }
+    .rd-brutal button:first-of-type { background: #9bb823; }
+    .rd-brutal button:active:not(:disabled) { transform: translate(3px, 3px); box-shadow: none; }
+    .rd-brutal button:disabled { background: #ddd; color: #777; box-shadow: none; border-style: dashed; }
+    .rd-seg { padding: 0; width: fit-content; min-width: 460px; gap: 0; overflow: hidden; }
+    .rd-seg button { height: 46px; padding: 0 20px; }
+    .rd-seg button span { display: inline; }
+    .rd-seg .rd-sel { padding: 0 16px; }
+    .rd-seg-outline { border: 2px solid #566a0e; border-radius: 12px; color: #566a0e; background: #fff; }
+    .rd-seg-outline button + button { border-left: 2px solid #566a0e; }
+    .rd-seg-outline button:first-of-type { background: #566a0e; color: #fff; }
+    .rd-seg-outline button:not(:disabled):not(:first-of-type):hover { background: #eef3d6; }
+    .rd-seg-outline button:disabled { background: #f4f4f4; color: #9a9a9a; }
+    .rd-seg-pill { border-radius: 999px; background: #e3e8cf; padding: 4px; color: #566a0e; box-shadow: inset 0 1px 3px rgba(0,0,0,.15); }
+    .rd-seg-pill button { border-radius: 999px; height: 40px; }
+    .rd-seg-pill button:first-of-type { background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.25); }
+    .rd-seg-pill button:not(:disabled):not(:first-of-type):hover { background: rgba(255,255,255,.6); }
+    .rd-seg-pill button:disabled { color: #a3aa89; }
+    .rd-seg-filled { border-radius: 10px; background: #9bb823; color: #fff; }
+    .rd-seg-filled button + button { border-left: 1px solid rgba(255,255,255,.55); }
+    .rd-seg-filled button:first-of-type { background: #566a0e; }
+    .rd-seg-filled button:not(:disabled):hover { background: #87a01c; }
+    .rd-seg-filled button:first-of-type:hover { background: #3f4f0a !important; }
+    .rd-seg-filled button:disabled { background: repeating-linear-gradient(45deg, #b5c95a 0 6px, #aabf4a 6px 12px); color: rgba(255,255,255,.7); }
+    .rd-seg-underline { border-bottom: 2px solid #dfe6bd; color: #566a0e; border-radius: 0; }
+    .rd-seg-underline button { border-bottom: 3px solid transparent; margin-bottom: -2px; border-radius: 0; }
+    .rd-seg-underline button:first-of-type { border-bottom-color: #9bb823; font-weight: 700; }
+    .rd-seg-underline button:not(:disabled):hover { background: #f4f7e6; border-bottom-color: #9bb823; }
+    .rd-seg-underline button:disabled { color: #bdbdbd; }
+    .rd-seg-split { border-radius: 10px; background: #fff; color: #566a0e; box-shadow: 0 3px 10px rgba(0,0,0,.14); }
+    .rd-seg-split button { border-radius: 0; }
+    .rd-seg-split button:first-of-type { background: #9bb823; color: #fff; padding: 0 28px; clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%); margin-right: -10px; padding-right: 36px; }
+    .rd-seg-split button:not(:disabled):not(:first-of-type):hover { background: #eef3d6; }
+    .rd-seg-split button:disabled { color: #c0c0c0; }
+    .aero-stage { position: relative; margin-bottom: 20px; padding: 18px; border-radius: 10px; overflow: hidden; background: radial-gradient(circle at 15% 20%, #e8ff8a 0 60px, transparent 140px), radial-gradient(circle at 85% 80%, #5fd3e0 0 70px, transparent 160px), linear-gradient(135deg, #1f5a3a, #6f9a1a 45%, #2a8f9a 75%, #3a5fa0); }
+    .aero-stage code { display: block; margin-bottom: 8px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.6); font-size: 12px; }
+    .rd-aero { width: fit-content; min-width: 440px; gap: 8px; color: #fff; text-shadow: none; }
+    .rd-aero button { transition: background-color .15s; }
+    .rd-aero button:disabled { opacity: .45; }
+    .rd-aero-glass { padding: 10px 14px; background: rgba(255,255,255,.22); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.4); border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+    .rd-aero-glass button { width: 44px; height: 42px; border-radius: 8px; background: rgba(255,255,255,.12); }
+    .rd-aero-glass button:first-of-type { background: rgba(255,255,255,.4); }
+    .rd-aero-glass button:not(:disabled):hover { background: rgba(255,255,255,.3); }
+    .rd-aero-orb { padding: 8px 14px; gap: 14px; background: rgba(0,0,0,.25); backdrop-filter: blur(10px); border-radius: 40px; }
+    .rd-aero-orb button { width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); background: rgba(255,255,255,.14); }
+    .rd-aero-orb button:first-of-type { background: #7f9f1c; border-color: transparent; }
+    .rd-aero-orb button:not(:disabled):hover { background: rgba(255,255,255,.3); }
+    .rd-aero-orb button:first-of-type:hover { background: #8fb11f !important; }
+    .rd-aero-taskbar { padding: 6px 10px; background: rgba(20,24,16,.6); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,.25); border-radius: 0; }
+    .rd-aero-taskbar button { width: 52px; height: 40px; border-radius: 6px; }
+    .rd-aero-taskbar button:first-of-type { background: rgba(255,255,255,.18); }
+    .rd-aero-taskbar button:not(:disabled):hover { background: rgba(255,255,255,.14); }
+    .rd-aero-explorer { padding: 6px 10px; background: #f0f4fa; border: 1px solid #c9d5e4; border-radius: 4px; color: #1b3a5c; font-family: 'Segoe UI', 'Open Sans', sans-serif; }
+    .rd-aero-explorer button { height: 32px; padding: 0 12px; border-radius: 3px; }
+    .rd-aero-explorer button span { display: inline; }
+    .rd-aero-explorer button:first-of-type { background: #dde8f5; }
+    .rd-aero-explorer button:not(:disabled):hover { background: #e4edf8; }
+    .rd-aero-explorer button:disabled { color: #8a98a8; opacity: 1; }
+    .rd-aero-explorer .rd-sel { color: #3b5878; }
+    .rd-aero-gel { padding: 10px 14px; gap: 10px; background: rgba(255,255,255,.18); backdrop-filter: blur(10px); border-radius: 14px; }
+    .rd-aero-gel button { height: 40px; padding: 0 18px; border-radius: 20px; background: #7f9f1c; }
+    .rd-aero-gel button span { display: inline; }
+    .rd-aero-gel button:not(:disabled):hover { background: #8fb11f; }
+    .rd-aero-gel button:disabled { background: rgba(255,255,255,.2); }
+    .rd-aero-frame { padding: 8px; background: rgba(255,255,255,.25); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.45); border-radius: 10px; box-shadow: 0 4px 14px rgba(0,0,0,.2); flex-wrap: wrap; }
+    .rd-aero-frame::before { content: 'Actions'; flex: 1 0 100%; padding: 0 6px 6px; font-weight: 700; }
+    .rd-aero-frame button { height: 38px; padding: 0 16px; background: rgba(255,255,255,.88); color: #3f5a0a; border-radius: 6px; }
+    .rd-aero-frame button span { display: inline; }
+    .rd-aero-frame button:first-of-type { background: #fff; font-weight: 700; }
+    .rd-aero-frame button:not(:disabled):hover { background: #fff; }
+    .rd-aero-frame .rd-sel { margin-left: auto; padding-right: 6px; }
+    .best-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 16px; margin-top: 8px; background: rgba(155,184,35,.15); border: 1px solid rgba(63,79,10,.25); border-radius: 12px; }
+    .best-seg { display: inline-flex; overflow: hidden; background: #fff; border: 2px solid #3f4f0a; border-radius: 10px; }
+    .best-seg button { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 18px; border: 0; background: #fff; color: #2f3b08; font: 600 15px 'Open Sans', sans-serif; cursor: pointer; }
+    .best-seg button + button { border-left: 2px solid #3f4f0a; }
+    .best-seg .best-primary { background: #3f4f0a; color: #fff; }
+    .best-seg button:hover:not([aria-disabled='true']) { background: #e4ebc4; text-decoration: underline; text-underline-offset: 3px; }
+    .best-seg .best-primary:hover { background: #2f3b08; }
+    .best-seg button:focus-visible { outline: 3px solid #111; outline-offset: -5px; }
+    .best-seg button[aria-disabled='true'] { background: #fff; color: #767676; cursor: not-allowed; }
+    .best-sel { display: flex; align-items: center; gap: 8px; margin: 0 0 0 auto; color: #2f3b08; font: 600 13px 'Open Sans', sans-serif; }
+    .best-sel b { min-width: 24px; padding: 1px 5px; background: #fff; border: 2px solid #3f4f0a; border-radius: 6px; text-align: center; }
+    .best-why { margin: 6px 4px 20px; color: #404040; font: 13px/1.4 'Open Sans', sans-serif; }
+    @media (prefers-reduced-motion: no-preference) { .best-seg button { transition: background-color .15s; } }
+    @media (forced-colors: active) { .best-seg, .best-seg button + button { border-color: ButtonText; } .best-seg button[aria-disabled='true'] { color: GrayText; } }
+    .gl-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; margin: 6px 0 10px; background: var(--bb); border: var(--bbd); border-radius: var(--brad); box-shadow: var(--bsh); }
+    .gl-grp { display: inline-flex; gap: var(--gap); overflow: var(--ov); background: var(--gbg); border: var(--gbd); border-radius: var(--grad); }
+    .gl-grp button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--h); min-width: var(--w); padding: 0 var(--px); border: var(--bd); border-radius: var(--rad); background: var(--bg); color: var(--fg); box-shadow: var(--sh); font: 600 15px 'Open Sans', sans-serif; cursor: pointer; }
+    .gl-grp button span { display: var(--lab); }
+    .gl-grp button + button { border-left: var(--div); }
+    .gl-grp button:first-of-type { background: var(--pb); color: var(--pf); }
+    .gl-grp button:hover:not(:disabled) { filter: brightness(.93); }
+    .gl-grp button:disabled { background: #fff; color: var(--dfg); border-color: var(--dbd); box-shadow: none; cursor: not-allowed; }
+    .gl-sel { display: flex; align-items: center; gap: 8px; margin-left: auto; color: var(--tx); font: 600 12px 'Open Sans', sans-serif; }
+    .gl-sel b { min-width: 20px; padding: 1px 4px; background: #fff; border: 2px solid #566a0e; border-radius: 5px; color: #566a0e; text-align: center; }
+    .sp-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; margin: 6px 0 10px; background: var(--bb); border: var(--bbd); border-radius: 5px; box-shadow: var(--bsh); }
+    .sp-plate { display: inline-flex; background: var(--pl); border: var(--plbd); border-radius: var(--prad); box-shadow: var(--plsh); overflow: hidden; }
+    .sp-plate button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--h); min-width: var(--w); padding: 0 var(--px); border: 0; background: transparent; color: var(--fg); font: 600 15px 'Open Sans', sans-serif; cursor: pointer; }
+    .sp-plate button span { display: var(--lab); }
+    .sp-plate button:first-of-type { background: var(--pbg); color: var(--pfg); clip-path: var(--clip); padding-right: calc(var(--sl) + var(--px)); margin-right: calc(var(--sl) * -0.6); position: relative; z-index: 1; }
+    .sp-plate button:hover:not(:disabled) { background-color: rgba(155,184,35,.18); }
+    .sp-plate button:first-of-type:hover:not(:disabled) { filter: brightness(.92); }
+    .sp-plate button:disabled { background: #fff; color: #767676; cursor: not-allowed; }
+    .sp-sel { display: flex; align-items: center; gap: 8px; margin-left: auto; color: var(--tx); font: 600 12px 'Open Sans', sans-serif; }
+    .sp-sel b { min-width: 20px; padding: 1px 4px; background: #fff; border: 2px solid #566a0e; border-radius: 5px; color: #566a0e; text-align: center; }
     .row { display: flex; gap: 40px; align-items: center; margin-bottom: 48px; }
     .variants { display: grid; grid-template-columns: 1fr; gap: 0 24px; }
     .shade code { display: block; margin-bottom: 4px; font-size: 12px; }
@@ -2135,6 +3254,216 @@ const contrast = (a: string, b: string): number => {
     .mk-body { padding: 12px 16px 16px; background: #fff; }
     .mk-banded .mk-side { flex-wrap: nowrap; }
     .mk-inline { display: flex; gap: 8px; }
+    .cn { position: relative; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 8px 12px; background: #eef2f7; border: 1px solid #5a79af; border-radius: 8px; color: #2b3a55; font-size: 14px; }
+    .cn-main { flex: 1 1 0; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px; }
+    .cn-title { font-weight: 600; }
+    .cn-info { color: #5f6266; font-size: 12px; }
+    .cn-off { display: none; }
+    .cn-sum { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; min-width: 0; }
+    .cn-act { display: flex; gap: 10px; color: #48659d; }
+    .cn-tog { color: #48659d; }
+    .cn-body { flex-basis: 100%; display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+    .cn-text { color: #5f6266; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+    .cn-more { color: #48659d; font-weight: 700; font-size: 12px; }
+    .cn-dots, .cn-bar { display: inline-flex; gap: 3px; }
+    .cn-dots i { width: 8px; height: 8px; border-radius: 50%; background: #48659d; }
+    .cn-bar i { width: 28px; height: 4px; border-radius: 2px; background: #48659d; }
+    .cn .mk-pill { font-size: 12px; padding: 0 6px; }
+    .cn-lead { display: inline-flex; align-items: center; justify-content: center; font-weight: 700; color: #48659d; }
+    .cn-k-row { background: none; border: 0; border-bottom: 1px solid #c5d0e3; border-radius: 0; padding: 4px 8px; flex-wrap: nowrap; }
+    .cn-k-row .cn-main { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
+    .cn-k-row.cn-open { flex-wrap: wrap; }
+    .cn-k-pill { width: fit-content; border-radius: 999px; padding: 2px 6px 2px 14px; }
+    .cn-k-pill.cn-open { width: auto; border-radius: 14px; }
+    .cn-k-pill .cn-main { flex: 0 1 auto; }
+    .cn-k-tile { width: 200px; flex-direction: column; align-items: flex-start; padding: 10px 12px; }
+    .cn-k-tile .cn-main { flex-direction: column; flex: none; gap: 2px; }
+    .cn-k-tile .cn-act { position: absolute; top: 8px; right: 10px; }
+    .cn-k-tile.cn-open { width: auto; }
+    .cn-k-strip { background: #fff; border: 0; border-left: 4px solid #48659d; border-radius: 2px; padding: 3px 8px; }
+    .cn-k-table { display: grid; grid-template-columns: 2fr 1.4fr 1.6fr auto auto; border-radius: 4px; padding: 4px 10px; }
+    .cn-k-table .cn-main { display: contents; }
+    .cn-k-table .cn-off { display: block; visibility: hidden; }
+    .cn-k-table .cn-body { grid-column: 1 / -1; }
+    .cn-k-tag { width: fit-content; background: #48659d; color: #fff; border: 0; border-radius: 0; padding: 4px 22px 4px 12px; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%); }
+    .cn-k-tag .cn-info, .cn-k-tag .cn-act, .cn-k-tag .cn-tog { color: #fff; }
+    .cn-k-tag .cn-main { flex: 0 1 auto; }
+    .cn-k-tag.cn-open { width: auto; clip-path: none; border-radius: 8px; }
+    .cn-k-split { align-items: stretch; flex-wrap: nowrap; }
+    .cn-k-split .cn-main { flex-direction: column; }
+    .cn-k-split .cn-sum { flex: 1 1 0; justify-content: flex-end; border-left: 1px solid #c5d0e3; padding-left: 10px; }
+    .cn-k-split.cn-open { flex-wrap: wrap; }
+    .cn-k-bar { gap: 2px 10px; }
+    .cn-k-bar .cn-sum { flex-basis: 100%; order: 5; }
+    .cn-k-underline { background: none; border: 0; border-bottom: 2px solid #48659d; border-radius: 0; padding: 2px 0; }
+    .cn-k-dashed { background: transparent; border-style: dashed; border-radius: 6px; padding: 4px 10px; }
+    .cn-k-cloud { background: none; border: 0; padding: 0; gap: 4px; }
+    .cn-k-cloud .cn-title { background: #48659d; color: #fff; padding: 2px 8px; border-radius: 4px; }
+    .cn-k-cloud .cn-main { flex: 0 1 auto; }
+    .cn-k-cloud .cn-info { display: none; }
+    .cn-k-accordion { padding: 0; overflow: hidden; }
+    .cn-k-accordion .cn-tog { order: -1; margin-left: 4px; }
+    .cn-k-accordion .cn-main { padding: 6px 0; }
+    .cn-k-accordion .cn-sum, .cn-k-accordion .cn-act { padding-right: 10px; }
+    .cn-k-accordion .cn-body { background: #fff; margin: 0; padding: 8px 12px; border-top: 1px solid #c5d0e3; }
+    .cn-k-corner { margin-top: 10px; padding-right: 12px; }
+    .cn-k-corner .cn-sum { position: absolute; top: -10px; right: 8px; }
+    .cn-k-icon { border-radius: 8px; }
+    .cn-k-icon .cn-lead { width: 28px; height: 28px; border-radius: 50%; background: #48659d; color: #fff; }
+    .cn-k-right .cn-main { justify-content: space-between; }
+    .cn-k-right .cn-info { margin-left: auto; }
+    .cn-k-ticket { padding: 0; overflow: hidden; }
+    .cn-k-ticket .cn-lead { align-self: stretch; padding: 0 12px; background: #dbe3f0; border-right: 2px dashed #5a79af; }
+    .cn-k-ticket .cn-tog, .cn-k-ticket .cn-sum { margin-right: 8px; }
+    .cn-k-ticket .cn-body { padding: 0 12px 8px; }
+    .cn-k-hover .cn-info, .cn-k-hover .cn-sum, .cn-k-hover .cn-act { display: none; }
+    .cn-k-hover:hover .cn-info, .cn-k-hover:hover .cn-sum, .cn-k-hover:hover .cn-act, .cn-k-hover:focus-within .cn-sum, .cn-k-hover:focus-within .cn-act { display: flex; }
+    .cn-k-hover:hover .cn-info { display: inline; }
+    .cn-k-twoline .cn-main { flex-basis: 100%; }
+    .cn-k-twoline .cn-sum { flex-basis: 100%; order: 5; flex-wrap: nowrap; }
+    .cn-k-twoline .cn-act { order: 1; }
+    .cn-k-footer { padding: 0; overflow: hidden; }
+    .cn-k-footer .cn-main { padding: 8px 0 8px 12px; }
+    .cn-k-footer .cn-act { padding-right: 4px; }
+    .cn-k-footer .cn-sum { flex-basis: 100%; order: 5; padding: 4px 12px; background: #dbe3f0; border-top: 1px solid #c5d0e3; }
+    .cn-k-footer .cn-body { order: 4; padding: 0 12px 8px; }
+    .cn-k-stack { width: 170px; flex-direction: column; align-items: flex-start; }
+    .cn-k-stack .cn-main { flex-direction: column; flex: none; }
+    .cn-k-stack .cn-sum { flex-direction: column; align-items: flex-start; }
+    .cn-k-stack.cn-open { width: auto; }
+    .dcg { display: grid; grid-template-columns: repeat(auto-fit, minmax(448px, max-content)); gap: 16px; align-items: start; }
+    .dc { position: relative; box-sizing: border-box; width: 448px; max-width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; padding: 16px; overflow: hidden; background: #eef2f7; border-radius: var(--border-radius-card); box-shadow: 0 0 0 1px #5a79af, var(--shadow-card); }
+    .dc-text { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+    .dc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .dc-tools { display: flex; flex-direction: column; margin: -16px -16px -16px 12px; border-left: 1px solid rgba(90, 121, 175, 0.4); }
+    .dc-tool { flex: 1; width: 72px; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: 0; background: transparent; color: #48659d; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .dc-tool.dc-ico { width: 44px; }
+    .dc-tool + .dc-tool { border-top: 1px solid rgba(90, 121, 175, 0.2); }
+    .dc-tool:hover { background: #48659d; color: #fff; }
+    .dc-none, .dc-bottom { grid-template-columns: 1fr; }
+    .dc-left { grid-template-columns: auto minmax(0, 1fr); }
+    .dc-left .dc-tools { order: -1; margin: -16px 12px -16px -16px; border-left: 0; border-right: 1px solid rgba(90, 121, 175, 0.4); }
+    .dc-bottom .dc-tools { flex-direction: row; margin: 12px -16px -16px; border-left: 0; border-top: 1px solid rgba(90, 121, 175, 0.4); }
+    .dc-bottom .dc-tool { flex-direction: row; gap: 6px; min-height: 36px; width: auto; }
+    .dc-bottom .dc-tool.dc-ico { width: auto; }
+    .dc-bottom .dc-tool + .dc-tool { border-top: 0; border-left: 1px solid rgba(90, 121, 175, 0.2); }
+    .dc-grid .dc-tools { display: grid; grid-template-columns: repeat(2, auto); }
+    .dc-grid .dc-tool + .dc-tool { border-top: 0; }
+    .dc-grid .dc-tool:nth-child(even) { border-left: 1px solid rgba(90, 121, 175, 0.2); }
+    .dc-grid .dc-tool:nth-child(n + 3) { border-top: 1px solid rgba(90, 121, 175, 0.2); }
+    .fb { position: relative; box-sizing: border-box; width: 448px; max-width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; overflow: hidden; background: #f7f9fc; border-radius: var(--border-radius-card); box-shadow: 0 0 0 1px #5a79af, var(--shadow-card); }
+    .fb-white { background: #fff; }
+    .fb-head { grid-area: 1 / 2; padding: 12px 16px; background: #dbe3f0; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .fb-foot { grid-row: 2; grid-column: 2 / 3; padding: 10px 16px 12px; min-width: 0; border-top: 1px solid rgba(90, 121, 175, 0.3); }
+    .fb-rail-head .fb-foot { grid-column-start: 1; }
+    .fb-col-head .fb-foot { grid-column-end: -1; }
+    .fb-rail { grid-area: 1 / 1 / span 2; background: #e5ebf4; border-right: 1px solid rgba(90, 121, 175, 0.4); }
+    .fb-tools { grid-area: 1 / 3 / span 2; margin: 0; background: #e5ebf4; }
+    .fb-rail-head .fb-rail { grid-row: 1; background: #dbe3f0; }
+    .fb-col-head .fb-tools { grid-row: 1; background: #dbe3f0; }
+    .fc { position: relative; box-sizing: border-box; width: 448px; max-width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) var(--tw); --ac: #48659d; overflow: hidden; background: #fff; border-radius: var(--border-radius-card); box-shadow: 0 0 0 1px #5a79af, var(--shadow-card); }
+    .fc-head { grid-area: 1 / 1; min-width: 0; padding: 12px 16px; background: #dfe7f3; display: flex; flex-direction: column; gap: 6px; }
+    .fc-foot { grid-area: 2 / 1; padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; border-top: 1px solid rgba(90, 121, 175, 0.3); }
+    .fc-tools { grid-area: 1 / 2 / 3 / 3; display: flex; flex-direction: column; border-left: 1px solid rgba(90, 121, 175, 0.4); background: #fff; }
+    .fc-row .fc-tools { flex-direction: row; grid-row: 1; }
+    .fc-row .fc-tools .dc-tool + .dc-tool { border-top: 0; border-left: 1px solid rgba(90, 121, 175, 0.2); }
+    .fc-tools .dc-tool { width: auto; min-height: 40px; }
+    .fc-tools .dc-tool:hover { background: #48659d; color: #fff; }
+    .fc .dc-top { justify-content: flex-start; align-items: center; }
+    .fc .cd-tog { order: -1; margin-left: -4px; }
+    .fc-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12px; }
+    .fc-plain { color: #48659d; font-weight: 600; }
+    .fc-tag { padding: 0 8px; border-radius: 10px; background: #fff; border: 1px solid #b9c7df; color: #48659d; font-weight: 600; }
+    .fc-foot .fc-tag { background: #eef2f7; }
+    .fc-text { color: #48659d; font-size: 12px; font-weight: 600; }
+    .fc-eyebrow { color: #48659d; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .fm { --ink: #1f2d4a; --mut: #667089; --acc: #3f5f9b; --line: rgba(63, 95, 155, 0.14); --tint: #f3f6fb; --pill: #e8eef8; position: relative; box-sizing: border-box; width: 448px; max-width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) var(--tw); overflow: hidden; background: #fff; border-radius: 12px; box-shadow: 0 0 0 1px var(--line), 0 1px 2px rgba(20, 35, 70, 0.06), 0 4px 12px rgba(20, 35, 70, 0.05); }
+    .fm-edge { box-shadow: inset 3px 0 0 var(--acc), 0 0 0 1px var(--line), 0 1px 2px rgba(20, 35, 70, 0.06), 0 4px 12px rgba(20, 35, 70, 0.05); }
+    .fm-head { grid-area: 1 / 1; min-width: 0; padding: 14px 16px 12px; background: var(--tint); display: flex; flex-direction: column; gap: 2px; }
+    .fm-rowv .fm-head { padding-right: var(--tr); }
+    .fm-top { display: flex; align-items: center; gap: 4px; }
+    .fm-tog { display: inline-flex; border: 0; border-radius: 6px; background: none; color: var(--mut); padding: 4px; margin-left: -6px; font-size: 12px; cursor: pointer; }
+    .fm-tog:hover { background: var(--pill); color: var(--acc); }
+    .fm-title { font-size: 15px; line-height: 22px; font-weight: 600; color: var(--ink); }
+    .fm-meta { font-size: 12px; line-height: 18px; color: var(--mut); }
+    .fm-sep { opacity: 0.5; margin: 0 2px; }
+    .fm-code { color: var(--acc); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .fm-count { display: inline-block; padding: 0 8px; border-radius: 10px; background: var(--pill); color: var(--acc); font-size: 12px; line-height: 18px; font-weight: 600; white-space: nowrap; }
+    .fm-foot { grid-area: 2 / 1; min-width: 0; padding: 12px 16px 14px; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--line); }
+    .fm-sumrow { flex-direction: row; align-items: center; gap: 8px; padding: 10px 16px; }
+    .fm-row { display: grid; grid-template-columns: 108px 1fr; align-items: baseline; gap: 8px; }
+    .fm-lab { font-size: 12px; line-height: 20px; font-weight: 500; color: var(--mut); }
+    .fm-vals { display: flex; flex-wrap: wrap; gap: 6px; }
+    .fm-val { padding: 0 8px; border-radius: 6px; background: var(--pill); color: var(--ink); font-size: 13px; line-height: 20px; }
+    .fm-tools { grid-area: 1 / 2 / 3 / 3; display: flex; flex-direction: column; border-left: 1px solid rgba(63, 95, 155, 0.25); background: #dfe7f3; }
+    .fm-mini .fm-tools { flex-direction: row; grid-row: 1; }
+    .fm-tool { flex: 1; min-height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: 0; background: transparent; color: var(--acc); font: inherit; font-size: 11px; font-weight: 600; cursor: pointer; transition: color 0.15s, background-color 0.15s; }
+    .fm-tool:hover, .fm-tool:focus-visible { color: #fff; background: var(--acc); }
+    .fm-tool:focus-visible { outline: 2px solid var(--acc); outline-offset: -2px; }
+    .fm-tool.fm-del:hover { background: #b3261e; }
+    .fm-tools .fm-tool + .fm-tool { border-top: 1px solid rgba(63, 95, 155, 0.18); }
+    .fm-mini .fm-tools .fm-tool + .fm-tool { border-top: 0; border-left: 1px solid rgba(63, 95, 155, 0.18); }
+    .fm-rowtools { grid-area: 1 / 1; justify-self: end; align-self: start; display: flex; gap: 2px; margin: 8px 10px; padding: 2px; border-radius: 10px; background: #dfe7f3; transition: opacity 0.15s; }
+    .fm-rowtools .fm-tool { flex: none; width: 32px; min-height: 32px; border-radius: 8px; }
+    .fm-hov .fm-rowtools { opacity: 0; }
+    .fm-hov:hover .fm-rowtools, .fm-hov:focus-within .fm-rowtools { opacity: 1; }
+    .im { --ink: #17233d; --mut: #5b6682; --brand: #3f5f9b; --code: #0f6b73; --edge: rgba(23, 35, 61, 0.1); --head: #f3f6fb; --rail: #dde5f1; --pill: #e9eff8; position: relative; box-sizing: border-box; width: 448px; max-width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) var(--tw); overflow: hidden; background: #fff; color: var(--ink); border-radius: 12px; box-shadow: 0 0 0 1px var(--edge), 0 1px 2px rgba(23, 35, 61, 0.06), 0 8px 18px -8px rgba(23, 35, 61, 0.16); }
+    .im ::selection { background: #cfdcf2; color: var(--ink); }
+    .im :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+    .im-head { grid-area: 1 / 1; min-width: 0; padding: 14px 16px 12px 10px; background: var(--head); box-shadow: inset 0 1px 0 #fff; display: flex; flex-direction: column; gap: 2px; }
+    .im-top { display: flex; align-items: flex-start; gap: 4px; }
+    .im-tog { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 0; border-radius: 8px; background: none; color: var(--mut); font-size: 12px; cursor: pointer; transition: background-color 0.15s, color 0.15s; }
+    .im-tog:hover { background: var(--pill); color: var(--brand); }
+    .im-title { flex: 1; min-width: 0; padding-top: 3px; font-size: 15px; line-height: 22px; font-weight: 600; letter-spacing: -0.005em; text-wrap: pretty; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
+    .im-meta { padding-left: 32px; font-size: 12px; line-height: 18px; color: var(--mut); }
+    .im-sep { margin: 0 4px; opacity: 0.55; }
+    .im-code { color: var(--code); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
+    .im-count { flex: none; margin-top: 2px; padding: 0 8px; border-radius: 10px; background: var(--pill); color: var(--brand); font-size: 12px; line-height: 20px; font-weight: 600; white-space: nowrap; }
+    .im-foot { grid-area: 2 / 1; min-width: 0; padding: 12px 16px 14px; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--edge); animation: im-in 0.28s cubic-bezier(0.22, 1, 0.36, 1); }
+    .im-sum { flex-direction: row; align-items: center; gap: 8px; padding: 9px 16px; }
+    .im-names { min-width: 0; color: var(--mut); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .im-row { display: grid; grid-template-columns: 116px minmax(0, 1fr); align-items: baseline; gap: 8px; }
+    .im-lab { font-size: 12px; line-height: 22px; color: var(--mut); overflow-wrap: anywhere; }
+    .im-vals { display: flex; flex-wrap: wrap; gap: 4px 6px; }
+    .im-val { padding: 0 8px; border-radius: 6px; background: var(--pill); font-size: 13px; line-height: 22px; font-variant-numeric: tabular-nums; }
+    .im-tools { grid-area: 1 / 2 / 3 / 3; display: flex; flex-direction: column; background: var(--rail); border-left: 1px solid var(--edge); }
+    .im-mini .im-tools { flex-direction: row; grid-row: 1; }
+    .im-tool { flex: 1; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: 0; background: transparent; color: var(--brand); font: inherit; font-size: 12px; line-height: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.15s, color 0.15s; }
+    .im-tool + .im-tool { border-top: 1px solid rgba(63, 95, 155, 0.16); }
+    .im-mini .im-tool + .im-tool { border-top: 0; border-left: 1px solid rgba(63, 95, 155, 0.16); }
+    .im-tool:hover { background: var(--brand); color: #fff; }
+    .im-tool.im-del:hover { background: #b3261e; }
+    .im-tool:focus-visible { outline-offset: -3px; }
+    @keyframes im-in { from { opacity: 0; transform: translateY(-6px); } }
+    @media (prefers-reduced-motion: reduce) { .im-foot { animation: none; } .im-tog, .im-tool { transition: none; } }
+    .cd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; align-items: start; }
+    .cd-headrow { margin-bottom: 8px; font-size: 13px; }
+    .cd-row { margin-bottom: 24px; }
+    .cd-row code { display: block; margin-bottom: 4px; font-size: 12px; }
+    .cd { position: relative; overflow: hidden; box-sizing: border-box; padding: 12px 16px; background: var(--bg); border: var(--bw) solid var(--bd); border-radius: var(--r); box-shadow: var(--sh); }
+    .cd-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .cd-main { min-width: 0; }
+    .cd-title { font-weight: 600; color: #2b3a55; line-height: 24px; }
+    .cd-info { color: #5f6266; font-size: 14px; }
+    .cd-act { display: flex; align-items: center; gap: 12px; color: var(--ac); }
+    .cd-badge { background: var(--ac); color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+    .cd-tog { border: 0; background: none; color: var(--ac); cursor: pointer; padding: 4px; }
+    .cd-tog:focus-visible { outline: 2px solid var(--ac); outline-offset: 2px; }
+    .cd-body { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .cd-body.mk-frow { flex-direction: row; }
+    .cd .mk-chip { background: var(--ac); text-transform: uppercase; }
+    .cd .mk-pill { border-color: var(--ac); }
+    .cd-side .cd-act { align-self: stretch; padding-left: 12px; border-left: 1px solid var(--bd); }
+    .cd-leftbar { border-left: 6px solid var(--ac); }
+    .cd-banded { padding: 0; }
+    .cd-banded .cd-head { padding: 12px 16px; background: color-mix(in srgb, var(--ac) 14%, transparent); }
+    .cd-banded .cd-body { margin: 0; padding: 10px 16px 14px; background: #fff; }
+    .cd-dense { padding: 6px 12px; }
+    .cd-dense .cd-main { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+    .cd-dense .cd-title { line-height: 20px; font-size: 14px; }
+    .cd-dense .cd-info { font-size: 12px; }
+    .cd-dense .cd-body { margin-top: 4px; }
+    .cd-dense .mk-chip, .cd-dense .mk-pill { font-size: 11px; padding: 0 6px; }
     .mk-gripi { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; color: #48659d; cursor: grab; }
     .mk-split-btn { gap: 0; }
     .mk-btn-l { border-radius: 4px 0 0 4px; }
@@ -2247,6 +3576,15 @@ export class GalleryComponent implements AfterViewInit {
   )
   readonly variant = toSignal(inject(ActivatedRoute).fragment)
   readonly pinnedOpen = signal(true)
+  readonly twenty = Array.from({ length: 20 }, (_, i) => i + 1)
+  readonly expandedBoxes = signal(new Set<number>())
+  toggleBox(n: number): void {
+    this.expandedBoxes.update((s) => {
+      const t = new Set(s)
+      t.delete(n) || t.add(n)
+      return t
+    })
+  }
   tabIndex(ids: string[]): number {
     return Math.max(0, ids.indexOf(this.variant() ?? ''))
   }
@@ -2379,6 +3717,824 @@ export class GalleryComponent implements AfterViewInit {
     { display: this.display('Hauptdiagnose', 'Main diagnosis'), code: 'I10' },
     { display: this.display('Nebendiagnose', 'Secondary diagnosis'), code: 'I11' },
   ]
+
+  // white disabled buttons on the action bar: softer ways to say "not available"
+  readonly whiteDisabled = [
+    ['ring 1px green', '#fff', '#9bb823', '0 0 0 1px #9bb823', 1],
+    ['ring 1px green @0.5', '#fff', '#9bb823', '0 0 0 1px rgba(155,184,35,.5)', 1],
+    ['ring 1px green @0.3', '#fff', '#9bb823', '0 0 0 1px rgba(155,184,35,.3)', 1],
+    ['no ring, icon green', '#fff', '#9bb823', 'none', 1],
+    ['no ring, icon green @0.5', '#fff', '#9bb823', 'none', 0.5],
+    ['no ring, icon grey', '#fff', '#a8a8a8', 'none', 1],
+    ['ring grey, icon grey', '#fff', '#a8a8a8', '0 0 0 1px #d0d0d0', 1],
+    ['ring grey, icon green', '#fff', '#9bb823', '0 0 0 1px #d0d0d0', 1],
+    ['ring light green, icon grey', '#fff', '#a8a8a8', '0 0 0 1px rgba(155,184,35,.4)', 1],
+    ['whole button @0.6', '#fff', '#9bb823', '0 0 0 1px #9bb823', 0.6],
+    ['whole button @0.4', '#fff', '#9bb823', '0 0 0 1px #9bb823', 0.4],
+    ['whole button @0.4, no ring', '#fff', '#9bb823', 'none', 0.4],
+    ['soft shadow only', '#fff', '#9bb823', '0 1px 3px rgba(0,0,0,.12)', 1],
+    ['soft shadow, icon @0.5', '#fff', '#9bb823', '0 1px 3px rgba(0,0,0,.12)', 0.5],
+    ['soft shadow + ring grey', '#fff', '#a8a8a8', '0 0 0 1px #e0e0e0, 0 1px 3px rgba(0,0,0,.1)', 1],
+    ['inner ring green @0.4', '#fff', '#9bb823', 'inset 0 0 0 1px rgba(155,184,35,.4)', 1],
+    ['inner shadow (sunken)', '#fff', '#9bb823', 'inset 0 1px 3px rgba(0,0,0,.18)', 1],
+    ['off-white #fafafa, ring grey', '#fafafa', '#a8a8a8', '0 0 0 1px #e0e0e0', 1],
+    ['off-white #f5f8ea, ring green @0.3', '#f5f8ea', '#9bb823', '0 0 0 1px rgba(155,184,35,.3)', 1],
+    ['dark green icon @0.4, no ring', '#fff', '#566a0e', 'none', 0.4],
+  ].map(([label, bg, fg, sh, op]) => ({ label, bg, fg, sh, op }))
+
+  // best-of white disabled: icon contrast >= 4.5 where possible (#566a0e, #757575), ring keeps the shape visible
+  readonly whiteDisabledBest = [
+    ['1 ring green, icon dark green', '#566a0e', '0 0 0 1px #9bb823', 1],
+    ['2 ring green @0.6, icon #6b8210', '#6b8210', '0 0 0 1px rgba(155,184,35,.6)', 1],
+    ['3 ring dark green @0.4, icon dark green', '#566a0e', '0 0 0 1px rgba(86,106,14,.4)', 1],
+    ['4 ring grey, icon grey (AA)', '#757575', '0 0 0 1px #bdbdbd', 1],
+    ['5 ring grey, icon dark green', '#566a0e', '0 0 0 1px #bdbdbd', 1],
+    ['6 soft shadow, icon #6b8210', '#6b8210', '0 1px 3px rgba(0,0,0,.15)', 1],
+    ['7 dashed green outline, icon #6b8210', '#6b8210', 'none', 1, '1px dashed #9bb823'],
+    ['8 dashed grey outline, icon grey', '#757575', 'none', 1, '1px dashed #9e9e9e'],
+    ['9 ring green + soft shadow', '#566a0e', '0 0 0 1px #9bb823, 0 1px 3px rgba(0,0,0,.12)', 1],
+    ['10 ring green @0.5 + inner ring', '#6b8210', '0 0 0 1px rgba(155,184,35,.5), inset 0 0 0 1px rgba(155,184,35,.25)', 1],
+    ['11 whole button @0.7, ring green', '#566a0e', '0 0 0 1px #9bb823', 0.7],
+    ['12 ring 2px green @0.3', '#6b8210', '0 0 0 2px rgba(155,184,35,.3)', 1],
+    ['13 whole button @0.8, ring green', '#6b8210', '0 0 0 1px #9bb823', 0.8],
+    ['14 ring light green, icon #6b8210', '#6b8210', '0 0 0 1px #c5d37a', 1],
+    ['15 ring light green, icon grey', '#757575', '0 0 0 1px #c5d37a', 1],
+    ['16 inner ring light green', '#6b8210', 'inset 0 0 0 1px #c5d37a', 1],
+    ['17 ring light green + shadow, icon dark', '#566a0e', '0 0 0 1px #c5d37a, 0 2px 4px rgba(0,0,0,.08)', 1],
+    ['18 dotted green outline', '#566a0e', 'none', 0.8, '1px dotted #6b8210'],
+    ['19 ring green + white halo', '#566a0e', '0 0 0 1px #9bb823, 0 0 0 3px #fff', 1],
+    ['20 double ring light green', '#6b8210', '0 0 0 1px #c5d37a, 0 0 0 2px #fff, 0 0 0 3px #c5d37a', 1],
+  ].map(([label, fg, sh, op, ol]) => ({ label, bg: '#fff', fg, sh, op, ol }))
+
+  readonly redesigns = ['pill', 'segment', 'glass', 'labeled', 'stripe', 'dock']
+  readonly redesigns2 = ['neon', 'ticket', 'paper', 'terminal', 'retro', 'neumorph', 'gradborder', 'fab', 'folder', 'slide', 'stamp', 'chips', 'cards', 'ribbon', 'hairline', 'track', 'blueprint', 'candy', 'glasslight', 'brutal']
+  readonly segments = ['seg rd-seg-outline', 'seg rd-seg-pill', 'seg rd-seg-filled', 'seg rd-seg-underline', 'seg rd-seg-split']
+  readonly aeros = ['aero rd-aero-glass', 'aero rd-aero-orb', 'aero rd-aero-taskbar', 'aero rd-aero-explorer', 'aero rd-aero-gel', 'aero rd-aero-frame']
+  readonly glassVariants = [
+ {
+  label: "1 current look: tint bar, outlined icon buttons",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid #9bb823",
+   "--rad": "5px",
+   "--bg": "transparent",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid #9bb823"
+  }
+ },
+ {
+  label: "2 + glass edge (light border, inset highlight)",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "1px solid rgba(255,255,255,.8)",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px, inset 0 1px 0 #fff",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid #9bb823",
+   "--rad": "5px",
+   "--bg": "transparent",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid #9bb823"
+  }
+ },
+ {
+  label: "3 glass gradient bar",
+  vars: {
+   "--bb": "linear-gradient(rgba(155,184,35,.28), rgba(155,184,35,.08))",
+   "--bbd": "1px solid rgba(255,255,255,.9)",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px, inset 0 1px 0 #fff",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid #9bb823",
+   "--rad": "5px",
+   "--bg": "transparent",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid #9bb823"
+  }
+ },
+ {
+  label: "4 segment, white, green outline",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "0",
+   "--gbd": "1px solid #9bb823",
+   "--grad": "5px",
+   "--gbg": "transparent",
+   "--ov": "hidden",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "0",
+   "--rad": "0",
+   "--bg": "#fff",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "0"
+  }
+ },
+ {
+  label: "5 segment, translucent glass",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "1px solid rgba(255,255,255,.8)",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px, inset 0 1px 0 #fff",
+   "--brad": "5px",
+   "--gap": "0",
+   "--gbd": "1px solid rgba(255,255,255,.9)",
+   "--grad": "5px",
+   "--gbg": "transparent",
+   "--ov": "hidden",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "0",
+   "--rad": "0",
+   "--bg": "rgba(255,255,255,.55)",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "0"
+  }
+ },
+ {
+  label: "6 segment, tinted buttons",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "0",
+   "--gbd": "1px solid #9bb823",
+   "--grad": "5px",
+   "--gbg": "transparent",
+   "--ov": "hidden",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "0",
+   "--rad": "0",
+   "--bg": "rgba(155,184,35,.14)",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "0"
+  }
+ },
+ {
+  label: "7 separate, icon + label",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "auto",
+   "--px": "16px",
+   "--bd": "1px solid #9bb823",
+   "--rad": "5px",
+   "--bg": "transparent",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "inline",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid #9bb823"
+  }
+ },
+ {
+  label: "8 segment, icon + label",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "0",
+   "--gbd": "1px solid #9bb823",
+   "--grad": "5px",
+   "--gbg": "transparent",
+   "--ov": "hidden",
+   "--h": "46px",
+   "--w": "auto",
+   "--px": "16px",
+   "--bd": "0",
+   "--rad": "0",
+   "--bg": "#fff",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "inline",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "0"
+  }
+ },
+ {
+  label: "9 soft: radius 12, white glass buttons",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "12px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid rgba(255,255,255,.95)",
+   "--rad": "8px",
+   "--bg": "rgba(255,255,255,.6)",
+   "--fg": "#566a0e",
+   "--sh": "0 1px 3px rgba(0,0,0,.12)",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid rgba(255,255,255,.95)"
+  }
+ },
+ {
+  label: "10 pill bar, round buttons",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "999px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid #9bb823",
+   "--rad": "50%",
+   "--bg": "rgba(255,255,255,.6)",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid #9bb823"
+  }
+ },
+ {
+  label: "11 stronger tint with green edge",
+  vars: {
+   "--bb": "rgba(155,184,35,.25)",
+   "--bbd": "1px solid rgba(155,184,35,.55)",
+   "--bsh": "none",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid #9bb823",
+   "--rad": "5px",
+   "--bg": "transparent",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid #9bb823"
+  }
+ },
+ {
+  label: "12 frosted white bar, green edge",
+  vars: {
+   "--bb": "rgba(255,255,255,.7)",
+   "--bbd": "1px solid #9bb823",
+   "--bsh": "0 4px 14px rgba(86,106,14,.18)",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid #9bb823",
+   "--rad": "5px",
+   "--bg": "transparent",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid #9bb823"
+  }
+ },
+ {
+  label: "13 vertical tint gradient",
+  vars: {
+   "--bb": "linear-gradient(rgba(155,184,35,.25), rgba(155,184,35,.06))",
+   "--bbd": "none",
+   "--bsh": "none",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid #9bb823",
+   "--rad": "5px",
+   "--bg": "transparent",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid #9bb823"
+  }
+ },
+ {
+  label: "14 raised white buttons",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "0",
+   "--rad": "5px",
+   "--bg": "#fff",
+   "--fg": "#566a0e",
+   "--sh": "0 1px 3px rgba(0,0,0,.22)",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "0"
+  }
+ },
+ {
+  label: "15 segment, white, soft shadow",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "0",
+   "--gbd": "0",
+   "--grad": "5px",
+   "--gbg": "#fff",
+   "--ov": "hidden",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "0",
+   "--rad": "0",
+   "--bg": "#fff",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "0"
+  }
+ },
+ {
+  label: "16 segment pill",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "0",
+   "--gbd": "1px solid #9bb823",
+   "--grad": "999px",
+   "--gbg": "transparent",
+   "--ov": "hidden",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "6px",
+   "--bd": "0",
+   "--rad": "0",
+   "--bg": "rgba(255,255,255,.5)",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "0"
+  }
+ },
+ {
+  label: "17 flat tint, no shadow",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "none",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid #9bb823",
+   "--rad": "5px",
+   "--bg": "transparent",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid #9bb823"
+  }
+ },
+ {
+  label: "18 embossed bar and buttons",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "1px solid rgba(86,106,14,.2)",
+   "--bsh": "inset 0 1px 0 #fff, inset 0 -1px 0 rgba(86,106,14,.25)",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid rgba(86,106,14,.35)",
+   "--rad": "5px",
+   "--bg": "linear-gradient(#fff, #eef3d6)",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "1px solid rgba(86,106,14,.35)"
+  }
+ },
+ {
+  label: "19 dark green bar, light buttons",
+  vars: {
+   "--bb": "rgba(63,79,10,.92)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "8px",
+   "--gbd": "none",
+   "--grad": "0",
+   "--gbg": "transparent",
+   "--ov": "visible",
+   "--h": "46px",
+   "--w": "46px",
+   "--px": "0",
+   "--bd": "1px solid rgba(255,255,255,.5)",
+   "--rad": "5px",
+   "--bg": "rgba(255,255,255,.14)",
+   "--fg": "#fff",
+   "--sh": "none",
+   "--pb": "#fff",
+   "--pf": "#566a0e",
+   "--lab": "none",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#fff",
+   "--div": "1px solid rgba(255,255,255,.5)"
+  }
+ },
+ {
+  label: "20 text segment",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--brad": "5px",
+   "--gap": "0",
+   "--gbd": "1px solid #9bb823",
+   "--grad": "5px",
+   "--gbg": "transparent",
+   "--ov": "hidden",
+   "--h": "46px",
+   "--w": "auto",
+   "--px": "16px",
+   "--bd": "0",
+   "--rad": "0",
+   "--bg": "transparent",
+   "--fg": "#566a0e",
+   "--sh": "none",
+   "--pb": "#9bb823",
+   "--pf": "#fff",
+   "--lab": "inline",
+   "--dfg": "#767676",
+   "--dbd": "#d6d6d6",
+   "--tx": "#2f3b08",
+   "--div": "0"
+  }
+ }
+]
+  readonly splitVariants = [
+ {
+  label: "1 current look: tint bar, white plate, green slanted upload",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--pl": "#fff",
+   "--plbd": "none",
+   "--plsh": "0 1px 3px rgba(0,0,0,.14)",
+   "--prad": "5px",
+   "--pbg": "#9bb823",
+   "--pfg": "#fff",
+   "--sl": "14px",
+   "--clip": "polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%)",
+   "--lab": "none",
+   "--px": "6px",
+   "--w": "46px",
+   "--h": "46px",
+   "--fg": "#566a0e",
+   "--tx": "#2f3b08"
+  }
+ },
+ {
+  label: "2 glass edge on plate",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "1px solid rgba(255,255,255,.8)",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--pl": "#fff",
+   "--plbd": "1px solid rgba(255,255,255,.9)",
+   "--plsh": "0 1px 3px rgba(0,0,0,.14), inset 0 1px 0 #fff",
+   "--prad": "5px",
+   "--pbg": "#9bb823",
+   "--pfg": "#fff",
+   "--sl": "14px",
+   "--clip": "polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%)",
+   "--lab": "none",
+   "--px": "6px",
+   "--w": "46px",
+   "--h": "46px",
+   "--fg": "#566a0e",
+   "--tx": "#2f3b08"
+  }
+ },
+ {
+  label: "3 glass gradient bar, translucent plate",
+  vars: {
+   "--bb": "linear-gradient(rgba(155,184,35,.28), rgba(155,184,35,.08))",
+   "--bbd": "1px solid rgba(255,255,255,.9)",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px, inset 0 1px 0 #fff",
+   "--pl": "rgba(255,255,255,.65)",
+   "--plbd": "1px solid rgba(255,255,255,.95)",
+   "--plsh": "0 1px 3px rgba(0,0,0,.14)",
+   "--prad": "5px",
+   "--pbg": "#9bb823",
+   "--pfg": "#fff",
+   "--sl": "14px",
+   "--clip": "polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%)",
+   "--lab": "none",
+   "--px": "6px",
+   "--w": "46px",
+   "--h": "46px",
+   "--fg": "#566a0e",
+   "--tx": "#2f3b08"
+  }
+ },
+ {
+  label: "4 soft sheen on the green segment",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--pl": "#fff",
+   "--plbd": "1px solid rgba(255,255,255,.9)",
+   "--plsh": "0 1px 3px rgba(0,0,0,.14)",
+   "--prad": "5px",
+   "--pbg": "linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,0) 60%), #9bb823",
+   "--pfg": "#fff",
+   "--sl": "14px",
+   "--clip": "polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%)",
+   "--lab": "none",
+   "--px": "6px",
+   "--w": "46px",
+   "--h": "46px",
+   "--fg": "#566a0e",
+   "--tx": "#2f3b08"
+  }
+ },
+ {
+  label: "5 icon + label",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--pl": "#fff",
+   "--plbd": "none",
+   "--plsh": "0 1px 3px rgba(0,0,0,.14)",
+   "--prad": "5px",
+   "--pbg": "#9bb823",
+   "--pfg": "#fff",
+   "--sl": "14px",
+   "--clip": "polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%)",
+   "--lab": "inline",
+   "--px": "14px",
+   "--w": "auto",
+   "--h": "46px",
+   "--fg": "#566a0e",
+   "--tx": "#2f3b08"
+  }
+ },
+ {
+  label: "6 no outer bar, plate only",
+  vars: {
+   "--bb": "transparent",
+   "--bbd": "none",
+   "--bsh": "none",
+   "--pl": "#fff",
+   "--plbd": "none",
+   "--plsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--prad": "5px",
+   "--pbg": "#9bb823",
+   "--pfg": "#fff",
+   "--sl": "14px",
+   "--clip": "polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%)",
+   "--lab": "none",
+   "--px": "6px",
+   "--w": "46px",
+   "--h": "46px",
+   "--fg": "#566a0e",
+   "--tx": "#2f3b08"
+  }
+ },
+ {
+  label: "7 slant leaning the other way",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--pl": "#fff",
+   "--plbd": "none",
+   "--plsh": "0 1px 3px rgba(0,0,0,.14)",
+   "--prad": "5px",
+   "--pbg": "#9bb823",
+   "--pfg": "#fff",
+   "--sl": "14px",
+   "--clip": "polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%)",
+   "--lab": "none",
+   "--px": "6px",
+   "--w": "46px",
+   "--h": "46px",
+   "--fg": "#566a0e",
+   "--tx": "#2f3b08"
+  }
+ },
+ {
+  label: "8 steeper slant, dark green gradient",
+  vars: {
+   "--bb": "rgba(155,184,35,.15)",
+   "--bbd": "none",
+   "--bsh": "rgba(0,0,0,.1) 0 4px 6px -1px, rgba(0,0,0,.06) 0 2px 4px -1px",
+   "--pl": "#fff",
+   "--plbd": "none",
+   "--plsh": "0 1px 3px rgba(0,0,0,.14)",
+   "--prad": "5px",
+   "--pbg": "linear-gradient(#7f9a1c, #566a0e)",
+   "--pfg": "#fff",
+   "--sl": "24px",
+   "--clip": "polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%)",
+   "--lab": "none",
+   "--px": "6px",
+   "--w": "46px",
+   "--h": "46px",
+   "--fg": "#566a0e",
+   "--tx": "#2f3b08"
+  }
+ }
+]
+  readonly rdActions = [
+    { icon: 'upload', label: 'Upload' },
+    { icon: 'download', label: 'Download' },
+    { icon: 'save', label: 'Save' },
+  ] as const
 
   readonly barVariants = (() => {
     const out = []
@@ -2546,6 +4702,159 @@ export class GalleryComponent implements AfterViewInit {
     'Verifizierung',
     'Kontext',
   ].map((n, i) => ({ n, on: i < this.dsFields.length }))
+
+  readonly cdLevels = [
+    { level: 2, label: 'Full details', hint: 'everything, as today' },
+    { level: 1, label: 'Reduced details', hint: 'info line + filter names with count' },
+    { level: 0, label: 'Only needed', hint: 'title + filter count' },
+  ]
+  readonly cnNames = 'Schweregrad · Terminologie-Codes · Zwischen'
+  readonly cnValues = 'Leicht, Schwer · I10, I11 · 01.01.2020 – 31.12.2024'
+  readonly cnDesigns: { name: string; cls: string; info: boolean; s1: string; s0: string }[] = [
+    { name: 'one-line list row', cls: 'row', info: true, s1: 'badge', s0: 'count' },
+    { name: 'pill', cls: 'pill', info: false, s1: 'count', s0: 'count' },
+    { name: 'small tile', cls: 'tile', info: true, s1: 'badge', s0: 'count' },
+    { name: 'accent strip', cls: 'strip', info: true, s1: 'dots', s0: 'dots' },
+    { name: 'table row (columns)', cls: 'table', info: true, s1: 'values', s0: 'text' },
+    { name: 'arrow tag', cls: 'tag', info: false, s1: 'count', s0: 'none' },
+    { name: 'split: title | filters', cls: 'split', info: true, s1: 'names', s0: 'badge' },
+    { name: 'filter segment bar', cls: 'bar', info: true, s1: 'bar', s0: 'bar' },
+    { name: 'underline only', cls: 'underline', info: true, s1: 'text', s0: 'count' },
+    { name: 'dashed outline, first filter + more', cls: 'dashed', info: true, s1: 'more', s0: 'badge' },
+    { name: 'chip cloud', cls: 'cloud', info: false, s1: 'names', s0: 'count' },
+    { name: 'accordion (chevron left)', cls: 'accordion', info: true, s1: 'badge', s0: 'badge' },
+    { name: 'corner badge', cls: 'corner', info: true, s1: 'count', s0: 'count' },
+    { name: 'leading icon', cls: 'icon', info: true, s1: 'badge', s0: 'count' },
+    { name: 'info right-aligned', cls: 'right', info: true, s1: 'text', s0: 'dots' },
+    { name: 'ticket with code stub', cls: 'ticket', info: false, s1: 'badge', s0: 'count' },
+    { name: 'hover reveals details', cls: 'hover', info: true, s1: 'badge', s0: 'count' },
+    { name: 'two lines, values ellipsis', cls: 'twoline', info: false, s1: 'values', s0: 'none' },
+    { name: 'footer bar', cls: 'footer', info: true, s1: 'names', s0: 'badge' },
+    { name: 'narrow stack', cls: 'stack', info: false, s1: 'names', s0: 'count' },
+  ]
+  readonly dcTools: Record<string, { icon: string; label: string }> = {
+    e: { icon: 'pencil-alt', label: 'Ändern' },
+    c: { icon: 'clone', label: 'Kopieren' },
+    d: { icon: 'trash', label: 'Löschen' },
+    g: { icon: 'expand-arrows-alt', label: 'Ziehen' },
+  }
+  // one config per detail level [only needed, reduced, full]: tools column position, tools (e edit, c copy,
+  // d delete, g grip), labels under glyph, info line, filter display, extra (k kebab, g 2x2 grid)
+  private static dc(col: string, t: string, lab: number, info: number, f: string, x = '') {
+    return { col, t: t.split(''), lab: !!lab, info: !!info, f, kebab: x === 'k', grid: x === 'g' }
+  }
+  readonly dcVariants = (() => {
+    const d = GalleryComponent.dc
+    return [
+      { name: 'fewer tools: 4 → 2 → 1', lv: [d('right', 'g', 1, 0, 'count'), d('right', 'eg', 1, 1, 'names'), d('right', 'ecdg', 1, 1, 'rows')] },
+      { name: 'labels drop, tools stay', lv: [d('right', 'eg', 0, 0, 'none'), d('right', 'ecdg', 0, 1, 'values'), d('right', 'ecdg', 1, 1, 'rows')] },
+      { name: 'collapse into kebab', lv: [d('right', '', 0, 0, 'count', 'k'), d('right', 'e', 1, 1, 'names', 'k'), d('right', 'ecdg', 1, 1, 'rows')] },
+      { name: 'column becomes bottom bar', lv: [d('none', '', 0, 0, 'count'), d('bottom', 'ecdg', 1, 1, 'names'), d('right', 'ecdg', 1, 1, 'rows')] },
+      { name: '2×2 tool grid at full', lv: [d('right', 'g', 0, 0, 'count'), d('right', 'eg', 1, 1, 'names'), d('right', 'ecdg', 1, 1, 'rows', 'g')] },
+      { name: 'column on the left (rail)', lv: [d('left', 'g', 0, 0, 'count'), d('left', 'ecdg', 0, 1, 'names'), d('left', 'ecdg', 1, 1, 'rows')] },
+      { name: 'text compacts, tools unchanged', lv: [d('right', 'ecdg', 1, 0, 'count'), d('right', 'ecdg', 1, 1, 'names'), d('right', 'ecdg', 1, 1, 'rows')] },
+      { name: 'tools compact, text unchanged', lv: [d('right', 'g', 0, 1, 'rows'), d('right', 'eg', 0, 1, 'rows'), d('right', 'ecdg', 1, 1, 'rows')] },
+      { name: 'no tools until expanded', lv: [d('none', '', 0, 0, 'none'), d('right', 'e', 0, 1, 'names'), d('right', 'ecdg', 1, 1, 'rows')] },
+      { name: 'values line instead of chips', lv: [d('right', 'g', 0, 0, 'none'), d('right', 'eg', 1, 1, 'values'), d('right', 'ecdg', 1, 1, 'rows')] },
+      { name: 'bottom bar only at reduced', lv: [d('right', 'g', 0, 0, 'count'), d('bottom', 'eg', 1, 1, 'names'), d('right', 'ecdg', 1, 1, 'rows')] },
+      { name: 'left rail only at minimal', lv: [d('left', 'g', 0, 0, 'count'), d('right', 'eg', 1, 1, 'names'), d('right', 'ecdg', 1, 1, 'rows')] },
+    ]
+  })()
+  // rail/col: grip rail and tools column span the full height or only the dark header
+  // lab: labels under the glyph per level [minimal, reduced, full]
+  // f0: minimal shows 'badge' (count in header), 'foot' (count in footer) or nothing; f1/f2: reduced/full filter display
+  readonly fbVariants = [
+    { name: 'base', rail: 'full', col: 'full', lab: [0, 1, 1], f0: 'badge', f1: 'names', f2: 'rows', white: false },
+    { name: 'icons only below full', rail: 'full', col: 'full', lab: [0, 0, 1], f0: 'badge', f1: 'names', f2: 'rows', white: false },
+    { name: 'labels always (Ziehen, Menü)', rail: 'full', col: 'full', lab: [1, 1, 1], f0: 'badge', f1: 'names', f2: 'rows', white: false },
+    { name: 'rail + tools only in dark header', rail: 'head', col: 'head', lab: [0, 1, 1], f0: 'foot', f1: 'names', f2: 'rows', white: false },
+    { name: 'rail full, tools in header only', rail: 'full', col: 'head', lab: [0, 1, 1], f0: 'badge', f1: 'names', f2: 'rows', white: false },
+    { name: 'rail in header only, tools full', rail: 'head', col: 'full', lab: [0, 1, 1], f0: 'badge', f1: 'names', f2: 'rows', white: false },
+    { name: 'values line at reduced, footer gone at minimal', rail: 'full', col: 'full', lab: [0, 1, 1], f0: 'none', f1: 'values', f2: 'rows', white: false },
+    { name: 'inline chips at full, count footer at minimal', rail: 'full', col: 'full', lab: [0, 1, 1], f0: 'foot', f1: 'names', f2: 'chips', white: false },
+    { name: 'white footer', rail: 'full', col: 'full', lab: [0, 1, 1], f0: 'badge', f1: 'names', f2: 'rows', white: true },
+  ]
+  // info: where I10 / ICD-10-GM sit (tags in header, coloured text, tags in footer, eyebrow + tags in footer)
+  // lab: labels under the glyph at reduced; f1: reduced footer shows filter names or a values line
+  readonly fcVariants = [
+    { name: 'info tags in header', info: 'tags', lab: true, f1: 'names' },
+    { name: 'info tags in header, icons only at reduced', info: 'tags', lab: false, f1: 'names' },
+    { name: 'info as coloured text', info: 'text', lab: true, f1: 'names' },
+    { name: 'info tags in filter section', info: 'footer', lab: true, f1: 'names' },
+    { name: 'info tags in filter section, values line at reduced', info: 'footer', lab: true, f1: 'values' },
+    { name: 'eyebrow "Diagnose" + code tags in filter section', info: 'eyebrow', lab: true, f1: 'names' },
+  ]
+  // tools: 'col' labelled column, 'icons' icon column, 'row' icon row in header, 'hover' icon row shown on hover/focus
+  readonly fmVariants = [
+    { name: 'quiet column, labelled', tools: 'col', edge: false },
+    { name: 'quiet column, icons only', tools: 'icons', edge: false },
+    { name: 'icon row in header', tools: 'row', edge: false },
+    { name: 'icon row, shown on hover/focus', tools: 'hover', edge: false },
+    { name: 'labelled column + accent edge', tools: 'col', edge: true },
+  ]
+  private static readonly imItem = {
+    title: 'Hypertonie mit vielen Filtern',
+    type: 'Diagnose',
+    code: 'I10',
+    system: 'ICD-10-GM',
+    filters: [
+      { type: 'Schweregrad', values: ['Leicht', 'Schwer'] },
+      { type: 'Terminologie-Codes', values: ['I10', 'I11'] },
+      { type: 'Zwischen', values: ['Von 01.01.2020 bis 31.12.2024'] },
+    ],
+  }
+  readonly imRows = [
+    { name: 'labelled rail', lab: true, item: GalleryComponent.imItem },
+    { name: 'icon-only rail (tooltips)', lab: false, item: GalleryComponent.imItem },
+    {
+      name: 'stress test: long title, many values',
+      lab: true,
+      item: {
+        title: 'Harnstoff-Stickstoff [Masse/Volumen] in venösem Blut und weiteren Körperflüssigkeiten',
+        type: 'Laboruntersuchung',
+        code: '12962-7',
+        system: 'LOINC',
+        filters: [
+          { type: 'Wert', values: ['90 – 140 mmHg'] },
+          { type: 'Schweregrad', values: ['Leicht', 'Mittel', 'Schwer', 'Lebensbedrohlich'] },
+          { type: 'Zeitraum', values: ['Von 01.01.2020 bis 31.12.2024'] },
+        ],
+      },
+    },
+  ]
+  imNames(item: { filters: { type: string }[] }): string {
+    return item.filters.map((f) => f.type).join(' · ')
+  }
+  readonly cdFilters = [
+    { type: 'Schweregrad', values: ['Leicht', 'Schwer'] },
+    { type: 'Terminologie-Codes', values: ['I10', 'I11'] },
+    { type: 'Zwischen', values: ['Von 01.01.2020 bis 31.12.2024'] },
+  ]
+  // 5 layouts x 4 skins = 20 designs
+  private static readonly cdSkins = [
+    { n: 'classic', bg: '#eef2f7', bd: '#5a79af', ac: '#48659d', r: '8px', bw: '1px', sh: 'var(--shadow-card)' },
+    { n: 'white', bg: '#fff', bd: '#c5d0e3', ac: '#48659d', r: '4px', bw: '1px', sh: '0 1px 2px rgba(0,0,0,.12)' },
+    { n: 'flat', bg: '#f4f6fa', bd: 'transparent', ac: '#2b3a55', r: '12px', bw: '1px', sh: 'none' },
+    { n: 'bold', bg: '#fff', bd: '#48659d', ac: '#48659d', r: '2px', bw: '2px', sh: 'none' },
+  ]
+  readonly cdDesigns = ([] as { name: string; layout: string; skin: (typeof GalleryComponent.cdSkins)[number] }[]).concat(
+    ...['side', 'top', 'leftbar', 'banded', 'dense'].map((layout) =>
+      GalleryComponent.cdSkins.map((skin) => ({ name: `${layout} · ${skin.n}`, layout, skin }))
+    )
+  )
+  // key `${design}-${card level}` -> card is swapped to the other level
+  private readonly cdSwapped = signal(new Set<string>())
+  cdLevel(design: number, level: number): number {
+    return this.cdSwapped().has(`${design}-${level}`) ? (level === 2 ? 0 : 2) : level
+  }
+  cdToggle(design: number, level: number): void {
+    const k = `${design}-${level}`
+    this.cdSwapped.update((s) => {
+      const t = new Set(s)
+      t.delete(k) || t.add(k)
+      return t
+    })
+  }
 
   readonly mockFilters = [
     { type: 'VOR', values: ['07.10.2026'] },

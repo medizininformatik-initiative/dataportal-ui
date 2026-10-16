@@ -29,6 +29,13 @@ const base: GalleryEntry[] = [
     variants: [
       ['colour variants', 'criteria-box-variants'],
       ['layout proposals', 'criteria-box-layouts'],
+      ['compact modes', 'criteria-box-compact'],
+      ['compact designs', 'criteria-box-compact-20'],
+      ['divider column', 'criteria-box-divider'],
+      ['footer + divider', 'criteria-box-footer-divider'],
+      ['proposal', 'criteria-box-proposal'],
+      ['refined', 'criteria-box-refined'],
+      ['impeccable', 'criteria-box-impeccable'],
     ],
   },
   {
