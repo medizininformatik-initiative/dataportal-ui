@@ -66,6 +66,7 @@ import {
   faExclamation,
   faExclamationTriangle,
   faFolderOpen,
+  faPalette,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faClone,
@@ -144,6 +145,7 @@ export const FONT_AWESOME_ICONS = [
   faFile,
   faFileImage,
   faFolderOpen,
+  faPalette,
   faHome,
   faExclamation,
   faExclamationTriangle,

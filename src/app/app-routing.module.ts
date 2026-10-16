@@ -4,6 +4,7 @@ import { CriteriaSearchFilterResolverService } from './service/Resolver/Criteria
 
 import { Routes } from '@angular/router'
 import { environment } from 'src/environments/environment'
+import { playgroundRoutes } from './playground/playground.routes'
 
 export const routes: Routes = [
   {
@@ -103,15 +104,7 @@ export const routes: Routes = [
       title: 'TAB_TITLE.DATA_PROTECTION',
     },
   },
-  ...(environment.production
-    ? []
-    : [
-        {
-          path: 'playground',
-          loadComponent: () =>
-            import('./site/playground/playground.component').then((m) => m.PlaygroundComponent),
-        },
-      ]),
+  ...(environment.production ? [] : playgroundRoutes),
   { path: '', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
   { path: '**', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
 ]

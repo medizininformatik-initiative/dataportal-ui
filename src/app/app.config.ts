@@ -8,7 +8,7 @@ import { HttpErrorInterceptor } from './core/interceptors/HttpError.interceptor'
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core'
 import { OAuthModule } from 'angular-oauth2-oidc'
 import { provideAnimations } from '@angular/platform-browser/animations'
-import { provideRouter } from '@angular/router'
+import { provideRouter, withInMemoryScrolling } from '@angular/router'
 import { routes } from './app-routing.module'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
@@ -58,7 +58,7 @@ function provideTranslateModule() {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled' })),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
     provideNativeDateAdapter(DATE_FORMATS_GERMAN),

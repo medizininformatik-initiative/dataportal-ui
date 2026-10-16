@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "playground:tabs": "node scripts/playground-tabs.cjs",
     "build": "node --max_old_space_size=6144 ./node_modules/.bin/ng build",
     "test": "jest",
     "test-ci": "JEST_JUNIT_OUTPUT_DIR=./reports/junit/ node --expose-gc ./node_modules/.bin/jest --ci -w=1 --reporters=default --reporters=jest-junit",

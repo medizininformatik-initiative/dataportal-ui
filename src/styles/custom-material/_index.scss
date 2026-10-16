@@ -29,6 +29,7 @@
 @import './styles/components/checkbox.themed';
 @import './styles/components/action-bar.themed';
 @import './styles/components/filter-chips.themed';
+@import './styles/components/criteria.themed';
 
 /* export themed mixins */
 @mixin custom-material_themed($theme) {
@@ -51,4 +52,5 @@
   @include checkbox_themed($theme);
   @include action-bar_themed($theme);
   @include filter-chips_themed($theme);
+  @include criteria_themed($theme);
 }

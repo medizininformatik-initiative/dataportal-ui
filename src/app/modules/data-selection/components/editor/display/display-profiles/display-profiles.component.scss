@@ -8,6 +8,7 @@
 .container {
   flex: 1;
   overflow-y: auto;
+  padding-right: var(--spacing-8); // keep the scrollbar off the cards
 }
 
 .match-hint {

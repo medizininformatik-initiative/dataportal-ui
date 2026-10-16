@@ -59,6 +59,21 @@
               "optimization": false,
               "sourceMap": true,
               "vendorChunk": true
+            },
+            "playground": {
+              "budgets": [
+                {
+                  "maximumError": "16mb",
+                  "maximumWarning": "10mb",
+                  "type": "initial"
+                }
+              ],
+              "buildOptimizer": false,
+              "extractLicenses": true,
+              "namedChunks": true,
+              "optimization": false,
+              "sourceMap": true,
+              "vendorChunk": true
             }
           },
           "defaultConfiguration": "development",
@@ -123,11 +138,14 @@
             },
             "mock": {
               "buildTarget": "num-portal-webapp:build:mock"
+            },
+            "playground": {
+              "buildTarget": "num-portal-webapp:build:playground"
             }
           },
           "options": {
             "buildTarget": "num-portal-webapp:build",
-            "proxyConfig": "proxy.conf.json"
+            "proxyConfig": "proxy.conf.js"
           }
         }
       },

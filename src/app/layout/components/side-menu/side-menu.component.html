@@ -6,8 +6,9 @@
     [class.num-nav-link--grandchild]="grandchild"
     routerLinkActive="num-nav-link--active"
     ariaCurrentWhenActive="page"
-    [routerLinkActiveOptions]="{ exact: !child && isSideMenuExpanded() }"
+    [routerLinkActiveOptions]="activeOptions(item, child)"
     [routerLink]="item.routeTo"
+    [fragment]="item.fragment"
     [attr.aria-label]="label"
     [matTooltip]="isCollapsed() ? label : null"
     matTooltipPosition="right"
@@ -24,7 +25,7 @@
   @for (navItem of mainNavItems; track navItem.translationKey) {
   <li class="num-nav-group">
     <ng-container *ngTemplateOutlet="navLink; context: { $implicit: navItem, child: false }" />
-    @if (navItem.children?.length) {
+    @if (navItem.children?.length && isOpen(navItem)) {
     <ul class="num-nav-list num-nav-list--children" role="list">
       @for (navItemChild of navItem.children; track navItemChild.translationKey) {
       <li>
@@ -38,15 +39,48 @@
           <span class="navItem-font--child">{{ navItemChild.translationKey | translate }}</span>
           }
         </span>
+        } @if ((navItemChild.children?.length || navItemChild.onAdd) && isOpen(navItemChild)) {
         <ul class="num-nav-list num-nav-list--grandchildren" role="list">
-          @for (grandchild of navItemChild.children; track grandchild.translationKey) {
-          <li>
+          @for (grandchild of navItemChild.children; track grandchild.fragment ??
+          grandchild.translationKey) {
+          <li class="num-nav-item--actions">
             <ng-container
               *ngTemplateOutlet="
                 navLink;
                 context: { $implicit: grandchild, child: true, grandchild: true }
               "
             />
+            @if (grandchild.onEdit && isSideMenuExpanded()) {
+            <span class="num-nav-actions">
+              <button
+                type="button"
+                class="num-nav-action"
+                [attr.aria-label]="'Edit tab ' + grandchild.translationKey"
+                (click)="grandchild.onEdit()"
+              >
+                <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+              </button>
+              <button
+                type="button"
+                class="num-nav-action"
+                [attr.aria-label]="'Delete tab ' + grandchild.translationKey"
+                (click)="grandchild.onDelete?.()"
+              >
+                <fa-icon icon="trash" size="sm"></fa-icon>
+              </button>
+            </span>
+            }
+          </li>
+          } @if (navItemChild.onAdd && isSideMenuExpanded()) {
+          <li>
+            <button
+              type="button"
+              class="num-nav-link num-nav-link--child num-nav-link--grandchild num-nav-link--add"
+              (click)="navItemChild.onAdd()"
+            >
+              <fa-icon icon="plus" size="sm"></fa-icon>
+              <span class="navItem-font--child">Add tab</span>
+            </button>
           </li>
           }
         </ul>

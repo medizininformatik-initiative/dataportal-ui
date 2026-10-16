@@ -44,6 +44,12 @@
       min-width: 0; // let rows shrink to the menu width so labels can wrap
     }
 
+    // long menus (playground components) scroll inside the list; the toggle row stays visible
+    > .num-nav-list {
+      flex: 1 1 0;
+      overflow-y: auto;
+    }
+
     // breathing room between groups only
     .num-nav-group + .num-nav-group {
       margin-top: var(--spacing-20);
@@ -243,6 +249,49 @@
       &::before {
         left: var(--side-menu-line-x2);
       }
+    }
+
+    // playground: edit button on a tab row, "add tab" row
+    .num-nav-item--actions {
+      position: relative;
+    }
+
+    .num-nav-actions {
+      position: absolute;
+      top: 50%;
+      right: var(--spacing-8);
+      transform: translateY(-50%);
+      display: flex;
+      gap: var(--spacing-2);
+    }
+
+    .num-nav-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--spacing-24);
+      height: var(--spacing-24);
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--side-menu-icon);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--side-menu-bg-hover);
+      }
+
+      &:focus-visible {
+        outline: var(--spacing-2) solid var(--side-menu-focus-ring);
+      }
+    }
+
+    button.num-nav-link--add {
+      width: 100%;
+      border: 0;
+      text-align: left;
+      font-family: var(--font-body);
     }
 
     // non-link group label (e.g. "Suche"): no hover/pointer

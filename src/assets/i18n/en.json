@@ -528,6 +528,7 @@
     "DISCLOSURE": "Imprint"
   },
   "NAVIGATION": {
+    "PLAYGROUND": "Playground",
     "DASHBOARD": "Home",
     "DATAQUERY": {
       "COHORT_DEFINITION": "Cohort Definition",

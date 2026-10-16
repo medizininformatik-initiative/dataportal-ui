@@ -6,3 +6,4 @@ package.json
 package-lock.json
 yarn.lock
 polyfills.ts
+src/app/playground/gallery/gallery.component.ts

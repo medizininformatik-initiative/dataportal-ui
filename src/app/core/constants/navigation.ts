@@ -1,4 +1,7 @@
 import { BasePaths, UrlPaths } from 'src/app/app-paths'
+import { addedTabIds, galleryComponents } from 'src/app/playground/gallery/gallery-components'
+import { addTab, deleteTab, editTab } from 'src/app/playground/gallery/gallery-tabs-api'
+import { environment } from 'src/environments/environment'
 import NavItemData from '../../layout/models/nav-item.interface'
 
 export const mainNavItems: NavItemData[] = [
@@ -73,4 +76,32 @@ export const mainNavItems: NavItemData[] = [
     icon: 'folder-open',
     translationKey: 'NAVIGATION.QUERYBUILDER_OVERVIEW',
   },
+  ...(!environment.production
+    ? [
+        {
+          routeTo: 'playground',
+          icon: 'palette',
+          translationKey: 'NAVIGATION.PLAYGROUND',
+          expandOnActive: true,
+          // labels are raw selectors: the translate pipe returns an unknown key as-is
+          children: galleryComponents.map((c) => ({
+            routeTo: `playground/gallery/${c.page}`,
+            translationKey: c.name,
+            expandOnActive: true,
+            onAdd: () => addTab(c.page),
+            children: c.variants?.map(([label, fragment]) => ({
+              routeTo: `playground/gallery/${c.page}`,
+              fragment,
+              translationKey: label,
+              onEdit: addedTabIds.has(fragment)
+                ? () => editTab(c.page, fragment, label)
+                : undefined,
+              onDelete: addedTabIds.has(fragment)
+                ? () => deleteTab(c.page, fragment, label)
+                : undefined,
+            })),
+          })),
+        },
+      ]
+    : []),
 ]
