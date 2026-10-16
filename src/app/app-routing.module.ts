@@ -3,6 +3,7 @@ import { CriteriaSearchDataResolverService } from './service/Resolver/CriteriaSe
 import { CriteriaSearchFilterResolverService } from './service/Resolver/CriteriaSearchFilterResolver.service'
 
 import { Routes } from '@angular/router'
+import { environment } from 'src/environments/environment'
 
 export const routes: Routes = [
   {
@@ -102,6 +103,15 @@ export const routes: Routes = [
       title: 'TAB_TITLE.DATA_PROTECTION',
     },
   },
+  ...(environment.production
+    ? []
+    : [
+        {
+          path: 'playground',
+          loadComponent: () =>
+            import('./site/playground/playground.component').then((m) => m.PlaygroundComponent),
+        },
+      ]),
   { path: '', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
   { path: '**', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
 ]
