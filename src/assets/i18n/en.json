@@ -544,6 +544,7 @@
       "BULK_SEARCH": "Bulk Search",
       "EDITOR": "Criteria editor",
       "SEARCH": "Criteria search",
+      "SEARCH_GROUP": "Search",
       "TITLE": "Cohort Selection"
     },
     "QUERYBUILDER_OVERVIEW": "Saved data definitions",

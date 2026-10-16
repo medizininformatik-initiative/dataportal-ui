@@ -1,5 +1,5 @@
 export default interface NavItemData {
-  routeTo: string
+  routeTo?: string // omitted = non-link group label
   icon?: string
   svgIcon?: string
   translationKey: string

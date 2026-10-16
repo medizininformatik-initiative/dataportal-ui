@@ -3,7 +3,6 @@ import { routeAnimations } from 'src/app/route-animations'
 import { Component, OnInit, inject } from '@angular/core'
 import { filter, map, mergeMap } from 'rxjs'
 import { HeaderComponent } from '../header/header.component'
-import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
 import { SideMenuComponent } from '../side-menu/side-menu.component'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -13,21 +12,12 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./app-layout.component.scss'],
   animations: [routeAnimations],
   standalone: true,
-  imports: [
-    HeaderComponent,
-    MatSidenavContainer,
-    MatSidenav,
-    SideMenuComponent,
-    MatSidenavContent,
-    RouterOutlet,
-    TranslateModule,
-  ],
+  imports: [HeaderComponent, SideMenuComponent, RouterOutlet, TranslateModule],
 })
 export class AppLayoutComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute)
   private router = inject(Router)
 
-  isHandset: boolean
   isSideMenuExpanded = true
   showSideNav = true
 
@@ -50,9 +40,5 @@ export class AppLayoutComponent implements OnInit {
 
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
-  }
-
-  toggleSideMenu(): void {
-    this.isSideMenuExpanded = !this.isSideMenuExpanded
   }
 }

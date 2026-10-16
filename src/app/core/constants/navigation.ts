@@ -30,14 +30,19 @@ export const mainNavItems: NavItemData[] = [
     translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.TITLE',
     children: [
       {
-        routeTo: UrlPaths.feasibilityQuery.search,
-        icon: 'file',
-        translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.SEARCH',
-      },
-      {
-        routeTo: UrlPaths.feasibilityQuery.bulkSearch,
-        icon: 'file',
-        translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.BULK_SEARCH',
+        translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.SEARCH_GROUP',
+        children: [
+          {
+            routeTo: UrlPaths.feasibilityQuery.search,
+            icon: 'file',
+            translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.SEARCH',
+          },
+          {
+            routeTo: UrlPaths.feasibilityQuery.bulkSearch,
+            icon: 'file',
+            translationKey: 'NAVIGATION.QUERYBUILDER_EDITOR.BULK_SEARCH',
+          },
+        ],
       },
       {
         routeTo: UrlPaths.feasibilityQuery.editor,

@@ -1,12 +1,9 @@
 <num-dataportal-header role="banner"></num-dataportal-header>
-<mat-sidenav-container autosize fullscreen class="sidenav-container fix-overlay">
+<div class="app-body">
   @if (showSideNav) {
-  <mat-sidenav
-    fixedInViewport
-    [attr.role]="isHandset ? 'dialog' : 'navigation'"
+  <nav
+    class="sidenav"
     [attr.aria-label]="'APPLAYOUT.SIDENAV.LABEL' | translate"
-    [mode]="isHandset ? 'over' : 'side'"
-    [opened]="true"
     [class.expanded]="isSideMenuExpanded"
     [class.collapsed]="!isSideMenuExpanded"
   >
@@ -15,16 +12,12 @@
       [isSideMenuExpanded]="isSideMenuExpanded"
       (toggleSideMenu)="isSideMenuExpanded = $event"
     ></num-side-menu>
-  </mat-sidenav>
+  </nav>
   }
 
-  <mat-sidenav-content class="padding-left-4">
-    <div role="presentation" class="content-row">
-      <main class="main-content">
-        <div [@routeAnimations]="prepareRoute(outlet)" class="fullscreen">
-          <router-outlet #outlet="outlet"></router-outlet>
-        </div>
-      </main>
+  <main class="main-content padding-left-4">
+    <div [@routeAnimations]="prepareRoute(outlet)" class="fullscreen">
+      <router-outlet #outlet="outlet"></router-outlet>
     </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </main>
+</div>

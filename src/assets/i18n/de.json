@@ -533,6 +533,7 @@
       "BULK_SEARCH": "Bulksuche",
       "EDITOR": "Kriterieneditor",
       "SEARCH": "Kriteriensuche",
+      "SEARCH_GROUP": "Suche",
       "TITLE": "Kohortenselektion"
     },
     "QUERYBUILDER_OVERVIEW": "Gespeicherte Datendefinitionen",

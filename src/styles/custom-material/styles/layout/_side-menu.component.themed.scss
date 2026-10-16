@@ -14,16 +14,21 @@
     ); // centred under parent icon
     --side-menu-pill-x: calc(var(--side-menu-line-x) + var(--spacing-12));
     --side-menu-child-indent: calc(var(--side-menu-pill-x) + var(--spacing-24));
+    --side-menu-line-x2: calc(
+      var(--side-menu-child-indent) + var(--spacing-16)
+    ); // second rail (level 3)
+    --side-menu-grandchild-indent: calc(var(--side-menu-line-x2) + var(--spacing-24));
 
     // Colours by role: hover = light grey, active = accent tint, focus = ring
     --side-menu-bg: #{mat.m2-get-color-from-palette($primary, 'white')};
-    --side-menu-bg-hover: #{mat.m2-get-color-from-palette($primary, 100)};
+    --side-menu-bg-hover: #{mat.m2-get-color-from-palette($primary, 200)};
     --side-menu-bg-active: var(--color-accent-bg);
     --side-menu-text: var(--color-text-section);
     --side-menu-text-active: #{mat.m2-get-color-from-palette($accent, 900)};
     --side-menu-icon: #{mat.m2-get-color-from-palette($primary, 900)};
     --side-menu-icon-active: var(--color-accent);
     --side-menu-line: var(--border-color);
+    --side-menu-line-hover: #{mat.m2-get-color-from-palette($primary, 700)};
     --side-menu-focus-ring: #{mat.m2-get-color-from-palette($accent, 900)};
 
     display: flex;
@@ -138,8 +143,8 @@
       &::before {
         content: '';
         position: absolute;
-        inset: var(--spacing-1) 0 var(--spacing-1) var(--side-menu-line-x);
-        border-radius: 0 var(--border-radius-card) var(--border-radius-card) 0;
+        inset: var(--spacing-2) 0 var(--spacing-2) var(--side-menu-line-x); // 4px gap between pills
+        border-radius: 0; // square: rails + straight pill, no curves
         background: var(--side-menu-bg-hover);
         opacity: 0;
         z-index: -1;
@@ -161,7 +166,7 @@
         }
       }
 
-      // tree guide line under the parent icon
+      // rail segment of this row, drawn above the pill (the parent <ul> draws the full-height rail)
       &::after {
         content: '';
         position: absolute;
@@ -171,6 +176,16 @@
         width: var(--spacing-2);
         background: var(--side-menu-line);
         pointer-events: none;
+      }
+
+      // rail segment sits above the pill and darkens with it
+      &:hover::after {
+        background: var(--side-menu-line-hover);
+      }
+
+      // focus ring already outlines the pill's left edge, so the rail must not cover it
+      &:focus-visible::after {
+        background: transparent;
       }
 
       &.num-nav-link--active {
@@ -185,10 +200,61 @@
           background: var(--side-menu-icon-active);
         }
 
+        &:focus-visible::after {
+          background: transparent;
+        }
+
         .navItem-font--child {
           font-weight: var(--font-weight-bold);
           color: var(--side-menu-text-active);
         }
+      }
+    }
+
+    // grey rails: one per list level, running the full height of the list
+    .num-nav-list--children,
+    .num-nav-list--grandchildren {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: var(--side-menu-line-x);
+        width: var(--spacing-2);
+        background: var(--side-menu-line);
+        pointer-events: none;
+      }
+    }
+
+    .num-nav-list--grandchildren::before {
+      left: var(--side-menu-line-x2);
+    }
+
+    // third level: text, pill and accent segment sit on the second rail
+    .num-nav-link.num-nav-link--child.num-nav-link--grandchild {
+      padding-left: var(--side-menu-grandchild-indent);
+
+      &::after {
+        left: var(--side-menu-line-x2);
+      }
+
+      &::before {
+        left: var(--side-menu-line-x2);
+      }
+    }
+
+    // non-link group label (e.g. "Suche"): no hover/pointer
+    .num-nav-link.num-nav-link--child.num-nav-link--label {
+      cursor: default;
+
+      &:hover::before {
+        opacity: 0;
+      }
+
+      &:hover::after {
+        background: var(--side-menu-line);
       }
     }
 
@@ -201,7 +267,9 @@
         gap: 0;
       }
 
-      .num-nav-link--child::after {
+      .num-nav-link--child::after,
+      .num-nav-list--children::before,
+      .num-nav-list--grandchildren::before {
         display: none;
       }
     }

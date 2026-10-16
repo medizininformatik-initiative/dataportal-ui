@@ -1,8 +1,9 @@
-<ng-template #navLink let-item let-child="child">
+<ng-template #navLink let-item let-child="child" let-grandchild="grandchild">
   @let label = item.translationKey | translate;
   <a
     class="num-nav-link"
     [class.num-nav-link--child]="child"
+    [class.num-nav-link--grandchild]="grandchild"
     routerLinkActive="num-nav-link--active"
     ariaCurrentWhenActive="page"
     [routerLinkActiveOptions]="{ exact: !child && isSideMenuExpanded() }"
@@ -20,16 +21,36 @@
 </ng-template>
 
 <ul class="num-nav-list" role="list">
-  @for (navItem of mainNavItems; track navItem.routeTo) {
+  @for (navItem of mainNavItems; track navItem.translationKey) {
   <li class="num-nav-group">
     <ng-container *ngTemplateOutlet="navLink; context: { $implicit: navItem, child: false }" />
     @if (navItem.children?.length) {
-    <ul class="num-nav-list" role="list">
-      @for (navItemChild of navItem.children; track navItemChild.routeTo) {
+    <ul class="num-nav-list num-nav-list--children" role="list">
+      @for (navItemChild of navItem.children; track navItemChild.translationKey) {
       <li>
+        @if (navItemChild.routeTo) {
         <ng-container
           *ngTemplateOutlet="navLink; context: { $implicit: navItemChild, child: true }"
         />
+        } @else {
+        <span class="num-nav-link num-nav-link--child num-nav-link--label">
+          @if (isSideMenuExpanded()) {
+          <span class="navItem-font--child">{{ navItemChild.translationKey | translate }}</span>
+          }
+        </span>
+        <ul class="num-nav-list num-nav-list--grandchildren" role="list">
+          @for (grandchild of navItemChild.children; track grandchild.translationKey) {
+          <li>
+            <ng-container
+              *ngTemplateOutlet="
+                navLink;
+                context: { $implicit: grandchild, child: true, grandchild: true }
+              "
+            />
+          </li>
+          }
+        </ul>
+        }
       </li>
       }
     </ul>
