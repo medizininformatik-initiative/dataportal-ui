@@ -42,8 +42,7 @@
   pointer-events: auto !important;
   opacity: 1 !important;
 
-  .mat-pseudo-checkbox,
-  .mdc-checkbox {
+  .mat-pseudo-checkbox {
     display: none !important;
   }
 
@@ -169,29 +168,6 @@
     color: var(--num-color--accent-900);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-bold);
-  }
-}
-
-::ng-deep .mat-pseudo-checkbox-full {
-  width: 18px !important;
-  height: 18px !important;
-  background: #ffffff !important;
-  border: 1px solid var(--color-text-secondary) !important;
-  border-radius: 3px !important;
-
-  &::after {
-    color: var(--color-accent) !important;
-  }
-}
-
-// checked = filled accent box + white tick (5:1 and 4.4:1 against white, 1.4.11)
-::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked,
-::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate {
-  background: var(--color-accent-strong) !important;
-  border-color: var(--color-accent-strong) !important;
-
-  &::after {
-    color: #ffffff !important;
   }
 }
 

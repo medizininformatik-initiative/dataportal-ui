@@ -70,6 +70,14 @@
 
    Transitions
    --transition-shadow   : hover shadow transition shorthand
+   --transition-control  : duration + easing for form-control state changes
+
+   Form controls
+   --size-checkbox       : checkbox width/height (outer, incl. border)
+   --border-width-control: border width of form controls
+   --focus-ring-width    : focus-visible outline width
+   --focus-ring-offset   : gap between control and focus outline
+   --opacity-disabled    : opacity of disabled controls
 
    Shadow tokens
    --shadow-card         : resting elevation for cards / raised rows
@@ -78,6 +86,7 @@
    --shadow-panel        : structural panel separation (sidenav, editor)
    --shadow-menu         : floating menus / dropdowns
    --shadow-modal        : modals / dialogs
+   --shadow-control      : small checked/active controls (checkbox)
 ──────────────────────────────────────────────────────────────── */
 :root {
   /* Typography */
@@ -143,6 +152,14 @@
 
   /* Transitions */
   --transition-shadow: box-shadow 0.2s ease;
+  --transition-control: 0.15s ease;
+
+  /* Form controls */
+  --size-checkbox: 18px;
+  --border-width-control: 1px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+  --opacity-disabled: 0.4;
 
   /* Shadows */
   --shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -151,6 +168,7 @@
   --shadow-panel: -4px 0 20px rgba(0, 0, 0, 0.1);
   --shadow-menu: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-modal: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --shadow-control: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 html,
