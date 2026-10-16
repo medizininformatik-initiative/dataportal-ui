@@ -70,6 +70,7 @@ const base: GalleryEntry[] = [
   { name: 'num-date-picker', page: 'num-date-picker' },
   { name: 'num-value-select', page: 'num-date-picker' },
   { name: 'num-spinner', page: 'num-date-picker' },
+  { name: 'num-table', page: 'num-table' },
 ]
 
 // tabs added from the side menu (scripts/playground-tabs.cjs writes them here and into gallery.component.ts)

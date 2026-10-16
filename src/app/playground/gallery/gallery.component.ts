@@ -56,6 +56,9 @@ import { Translation } from 'src/app/model/DataSelection/Profile/Translation'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component'
 import { SwitchComponent } from 'src/app/shared/components/switch/switch.component'
+import { TableComponent } from 'src/app/shared/components/table/table.component'
+import { TableData } from 'src/app/shared/models/TableData/TableData'
+import { TableCellKind } from 'src/app/shared/models/TableData/Cells/TableCellKind'
 
 const PSEUDO = /:(hover|focus-visible|focus-within|focus|active)\b/g
 const PSEUDO_ANY = /::?[\w-]+(\([^)]*\))?/g
@@ -221,6 +224,7 @@ const contrast = (a: string, b: string): number => {
     ButtonComponent,
     CheckboxComponent,
     SwitchComponent,
+    TableComponent,
   ],
   host: { '[class.css-collapsed]': '!cssOpen()' },
   template: `
@@ -2842,6 +2846,13 @@ const contrast = (a: string, b: string): number => {
         <num-spinner [countdown]="10" />
       </div>
       } }
+      @if (shows('num-table')) {
+        @if (!variant()) {
+      <h2 id="num-table">num-table</h2>
+      <num-table [tableData]="tableData" />
+
+      }
+      }
     </div>
     <aside class="css-pane">
       <div class="css-head">
@@ -3712,6 +3723,29 @@ export class GalleryComponent implements AfterViewInit {
       { count: 12, display: 'Diagnose' },
       { count: 7, display: 'Prozedur' },
     ],
+  }
+  readonly tableData: TableData = {
+    header: {
+      headers: [
+        { label: 'Name', addAllCheckbox: false },
+        { label: 'Code', addAllCheckbox: false },
+      ],
+    },
+    body: {
+      rows: [
+        ['Hauptdiagnose', 'I10'],
+        ['Nebendiagnose', 'I11'],
+        ['Prozedur', '5-470'],
+      ].map(([name, code]) => ({
+        id: code,
+        // ponytail: placeholder row, the gallery never reads originalEntry
+        originalEntry: undefined as never,
+        cells: [
+          { type: TableCellKind.TEXT, value: name },
+          { type: TableCellKind.TEXT, value: code },
+        ],
+      })),
+    },
   }
   readonly selectedItems = [
     { display: this.display('Hauptdiagnose', 'Main diagnosis'), code: 'I10' },
