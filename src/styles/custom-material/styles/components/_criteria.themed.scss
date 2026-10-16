@@ -1,0 +1,132 @@
+@mixin criteria_themed($theme) {
+  // Card grid: the actions column spans the full box height; title block and filters stack beside it.
+  // Nothing is absolutely positioned, so long titles and many filter rows can never overlap the icons.
+  // Scoped to the box's own container: nested num-reference-criteria-box has its own .container.
+  // Surface, edge shadow and hover come from .num-card .num-card--raised (_ui-classes.scss);
+  // no box-shadow here, or the global :hover would be outranked.
+  num-criteria-box > .container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'content actions'
+      'filters actions';
+    width: 448px;
+    max-width: 100%;
+    padding: var(--spacing-16);
+    cursor: grab;
+    --num-card-tint: 0.1; // original 10% tint, overrides the 15% of .num-card--raised
+
+    .content {
+      grid-area: content;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+      cursor: grab;
+    }
+
+    // Long names are capped at 3 lines; the full name is in the tooltip.
+    .title-section {
+      font-family: var(--font-body);
+      font-style: normal;
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-md);
+      color: var(--color-text-title);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+    }
+
+    // --color-text-section instead of --color-text-secondary: AA on the tint
+    .info-section {
+      color: var(--color-text-section);
+      overflow-wrap: anywhere;
+
+      .separator {
+        margin-inline: var(--spacing-4);
+        opacity: 0.6;
+      }
+    }
+
+    // Drag handle + options menu as a compact icon toolbar (24px targets),
+    // matching num-menu's appearance="icon" trigger, separated from the text by a divider.
+    .handle-icons {
+      grid-area: actions;
+      align-self: stretch; // full box height: the actions area spans both grid rows
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; // menu on top, drag handle at the bottom
+      align-items: center;
+      gap: var(--spacing-4);
+      // negative block margin cancels the box padding, so the divider reaches the top and bottom edge
+      margin: calc(-1 * var(--spacing-16)) 0 calc(-1 * var(--spacing-16)) var(--spacing-12);
+      padding: var(--spacing-16) 0 var(--spacing-16) var(--spacing-12);
+      border-left: 1px solid var(--color-accent-border); // divider between text and actions
+
+      num-menu {
+        display: flex;
+        order: -1; // before the drag handle in the DOM
+      }
+
+      .menu-trigger-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+      }
+    }
+
+    .drag-handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: var(--border-radius-sm);
+      color: var(--color-accent-strong);
+      font-size: 14px;
+      cursor: grab;
+      transition: background-color 0.15s ease, color 0.15s ease;
+
+      fa-icon {
+        display: flex;
+        transform: rotateZ(45deg);
+      }
+
+      &:hover {
+        background: var(--color-accent-border);
+        color: var(--num-color--accent-400, #345396);
+      }
+    }
+
+    // Full-width filter section; num-filter-chips aligns one row per filter type.
+    .filter-chips-container {
+      grid-area: filters;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-8);
+      margin-top: var(--spacing-12);
+      padding-top: var(--spacing-12);
+      border-top: 1px solid var(--color-accent-border);
+      cursor: grab;
+    }
+
+    .img-layout {
+      height: 24px; /* multiple of 4 */
+      width: 32px; /* multiple of 4 */
+      margin-right: var(--spacing-8);
+    }
+  }
+
+  .mat-mdc-menu-panel {
+    background-color: #fff;
+    width: 100%; /* responsive instead of fixed */
+    max-width: 960px; /* multiple of 8 */
+    border-radius: var(--border-radius-sm); /* matches container */
+    box-shadow: var(--shadow-menu);
+  }
+}
