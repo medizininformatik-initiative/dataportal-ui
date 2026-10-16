@@ -28,13 +28,14 @@
   width: 100%;
   transition: background-color 0.5s;
 
+  &:hover:not(:focus-within) {
+    border-color: var(--border-color-hover);
+  }
+
   &:focus-within {
     outline: none !important;
-    font-weight: var(--font-weight-bold);
     border-width: 2px;
     border-color: var(--color-accent);
-    // no tint under the text: contrast is measured against the real background, a shadow does not count
-    box-shadow: 0 0 8px -4px var(--color-accent);
   }
 }
 
@@ -50,6 +51,10 @@
   border: none;
   background: transparent;
   min-width: 0;
+
+  &::placeholder {
+    color: var(--color-text-placeholder);
+  }
 
   &:focus {
     outline: none !important;

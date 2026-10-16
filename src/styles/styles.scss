@@ -56,6 +56,7 @@
    Text colours
    --color-text-primary  : main body text
    --color-text-secondary: muted / meta text
+   --color-text-placeholder: input placeholder text (~5.7:1 on white, WCAG 1.4.3 needs 4.5:1)
 
    Brand accent
    --color-accent        : primary blue
@@ -65,6 +66,7 @@
 
    Borders & Radius
    --border-color        : default rule / divider colour
+   --border-color-hover  : input / select border on hover (not focused)
    --border-radius-card  : standard card corner radius
    --border-radius-sm    : compact corner radius (inputs, chips, small controls)
 
@@ -104,6 +106,7 @@
   /* Text colours */
   --color-text-primary: #000000;
   --color-text-secondary: #6a7483;
+  --color-text-placeholder: #5f6773;
   --color-text-section: #5f6266;
 
   /* Type weights (fix previously-dead var() fallbacks — see spacing note above) */
@@ -119,6 +122,7 @@
 
   /* Borders & radius */
   --border-color: #c5cacf;
+  --border-color-hover: var(--color-text-primary);
   --border-radius-card: 5px;
   --border-radius-sm: 4px;
 

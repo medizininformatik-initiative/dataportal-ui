@@ -81,11 +81,17 @@
   color: inherit;
 }
 
-/* Keyboard focus: same accent border + glow as the searchbar (WCAG 2.4.7) */
+/* Hover: same as the searchbar */
+::ng-deep
+  .mat-mdc-text-field-wrapper
+  .mat-mdc-form-field-flex:hover:not(:has(mat-select:focus-visible)) {
+  border-color: var(--border-color-hover);
+}
+
+/* Keyboard focus: same accent border as the searchbar (WCAG 2.4.7) */
 ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex:has(mat-select:focus-visible) {
   border-width: 2px;
   border-color: var(--color-accent);
-  box-shadow: 0 0 8px -4px var(--color-accent);
 }
 
 .select-search-wrapper:focus-within {
