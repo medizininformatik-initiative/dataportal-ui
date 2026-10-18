@@ -1,11 +1,11 @@
 // Dev-only helper: lets the playground side menu add, rename and delete gallery tabs by editing
-// src/app/playground/gallery/gallery.component.ts and gallery-tabs.json. ng serve then reloads.
+// src/playground/gallery/gallery.component.ts and gallery-tabs.json. ng serve then reloads.
 // Started by ng serve through proxy.conf.js (also runnable alone: npm run playground:tabs).
 const http = require('node:http')
 const fs = require('node:fs')
 const path = require('node:path')
 
-const dir = path.join(__dirname, '../src/app/playground/gallery')
+const dir = path.join(__dirname, '../src/playground/gallery')
 const galleryFile = path.join(dir, 'gallery.component.ts')
 const jsonFile = path.join(dir, 'gallery-tabs.json')
 const GROUP_OPEN = (key) => `      @if (shows('${key}')) {`

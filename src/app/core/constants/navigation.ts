@@ -1,6 +1,6 @@
 import { BasePaths, UrlPaths } from 'src/app/app-paths'
-import { addedTabIds, galleryComponents } from 'src/app/playground/gallery/gallery-components'
-import { addTab, deleteTab, editTab } from 'src/app/playground/gallery/gallery-tabs-api'
+import { addedTabIds, galleryComponents } from 'src/playground/gallery/gallery-components'
+import { addTab, deleteTab, editTab } from 'src/playground/gallery/gallery-tabs-api'
 import { environment } from 'src/environments/environment'
 import NavItemData from '../../layout/models/nav-item.interface'
 
