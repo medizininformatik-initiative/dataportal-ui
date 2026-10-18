@@ -32,6 +32,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.deploy.ts"
+                },
+                {
+                  "replace": "src/playground/playground.routes.ts",
+                  "with": "src/playground/playground.routes.deploy.ts"
                 }
               ],
               "namedChunks": false,
@@ -55,6 +59,12 @@
               ],
               "buildOptimizer": false,
               "extractLicenses": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/playground/playground.routes.deploy.ts",
+                  "with": "src/playground/playground.routes.ts"
+                }
+              ],
               "namedChunks": true,
               "optimization": false,
               "sourceMap": true,

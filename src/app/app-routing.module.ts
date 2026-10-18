@@ -1,28 +1,12 @@
 import { BasePaths } from './app-paths'
-import { CriteriaSearchDataResolverService } from './service/Resolver/CriteriaSearchDataResolver.service'
-import { CriteriaSearchFilterResolverService } from './service/Resolver/CriteriaSearchFilterResolver.service'
-
+import { playgroundRoutes } from 'src/playground/playground.routes.deploy'
 import { Routes } from '@angular/router'
-import { environment } from 'src/environments/environment'
-import { playgroundRoutes } from './playground/playground.routes'
 
 export const routes: Routes = [
   {
     path: 'home',
     redirectTo: BasePaths.dataQuery,
   },
-  /* {
-    path: BasePaths.home,
-    data: {
-      navId: BasePaths.home,
-      roles: ['main'],
-      breadcrumb: 'BREADCRUMB.DASHBOARD',
-      animation: 'DashboardPage',
-      title: 'TAB_TITLE.DASHBOARD',
-    },
-    loadChildren: () =>
-      import('./modules/dashboard/dashboard-routing.module').then((m) => m.DASHBOARD_ROUTES),
-  },*/
   {
     path: BasePaths.queryEditor,
     data: {
@@ -104,7 +88,7 @@ export const routes: Routes = [
       title: 'TAB_TITLE.DATA_PROTECTION',
     },
   },
-  ...(environment.production ? [] : playgroundRoutes),
+  ...playgroundRoutes,
   { path: '', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
   { path: '**', redirectTo: BasePaths.dataQuery, pathMatch: 'full' },
 ]
