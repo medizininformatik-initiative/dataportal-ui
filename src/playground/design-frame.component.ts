@@ -1,11 +1,7 @@
 import { Component, signal } from '@angular/core'
 import { RouterLink, RouterOutlet } from '@angular/router'
 
-const VIEWPORTS = [
-  { label: 'Mobile', width: '22.5rem' },
-  { label: 'Tablet', width: '48rem' },
-  { label: 'Desktop', width: '100%' },
-]
+const VIEWPORTS = [{ label: 'Desktop', width: '100%' }]
 
 // ponytail: this narrows the container only, media queries still follow the browser window.
 // Use the browser's responsive mode to test breakpoints, or switch to an iframe if that matters.
