@@ -1,8 +1,6 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-@import './colors/accent-theme.palette.scss';
-@import './colors/primary-theme.palette.scss';
 @import 'src/styles/themes/colors/fdpg-accent-theme.palette';
 @import 'src/styles/themes/colors/fdpg-primary-theme.palette';
 @import './colors/additional-theme.palette.scss';

@@ -1,0 +1,85 @@
+@use '@angular/material' as mat;
+
+$raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+@mixin button-color($theme, $name, $color, $hover, $min-width, $gap, $outline: false) {
+  $primary: map-get($theme, primary);
+  $white: mat.m2-get-color-from-palette($primary, 'white');
+  $disabled-bg: mat.m2-get-color-from-palette($primary, 50);
+  $disabled-ring: 0px 0px 1px 1px $color;
+
+  .num-button.#{$name} {
+    min-width: $min-width !important;
+    line-height: 24px;
+    border: none;
+    background-color: $color;
+    color: $white;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 18px;
+    gap: $gap;
+
+    &:hover:not(.disabled) {
+      color: $white !important;
+      background: $hover !important;
+      box-shadow: $raised-shadow;
+    }
+
+    &.cdk-keyboard-focused {
+      background: $hover;
+    }
+
+    &.disabled {
+      background-color: $disabled-bg;
+      color: $color;
+      box-shadow: $disabled-ring;
+      cursor: unset;
+    }
+
+    @if $outline {
+      &.outline {
+        background-color: transparent;
+        border: 2px solid $color;
+        color: $color;
+        box-shadow: none;
+
+        &:hover:not(.disabled) {
+          background-color: rgba($color, 0.08) !important;
+          color: $color !important;
+          box-shadow: none;
+        }
+
+        &.disabled {
+          border-color: rgba($color, 0.4);
+          color: rgba($color, 0.4);
+          background-color: transparent;
+          box-shadow: none;
+          cursor: unset;
+        }
+      }
+    }
+
+    &.icon {
+      min-width: 50px !important;
+      width: 50px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      fa-icon {
+        margin: 0;
+      }
+
+      &.disabled {
+        background-color: $disabled-bg;
+        color: $color;
+        box-shadow: $disabled-ring;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

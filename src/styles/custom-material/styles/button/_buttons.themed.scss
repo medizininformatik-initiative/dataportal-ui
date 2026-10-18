@@ -1,13 +1,38 @@
+@use '@angular/material' as mat;
+
 @import './button-base.themed';
-@import './button-blue.themed';
-@import './button-green.themed';
-@import './button-red.themed';
+@import './button-color.themed';
 @import './button-cancel.themed';
 
 @mixin buttons($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
   @include button-base($theme);
-  @include button-blue($theme);
-  @include button-green($theme);
-  @include button-red($theme);
+  @include button-color(
+    $theme,
+    'blue',
+    mat.m2-get-color-from-palette($accent, 500),
+    mat.m2-get-color-from-palette($primary, 'blue-hover'),
+    125px,
+    15px
+  );
+  @include button-color(
+    $theme,
+    'green',
+    mat.m2-get-color-from-palette($primary, 'green'),
+    mat.m2-get-color-from-palette($primary, 'green-hover'),
+    119px,
+    4px,
+    $outline: true
+  );
+  @include button-color(
+    $theme,
+    'red',
+    mat.m2-get-color-from-palette($primary, 'red'),
+    mat.m2-get-color-from-palette($primary, 'red-hover'),
+    119px,
+    15px
+  );
   @include button-cancel($theme);
 }

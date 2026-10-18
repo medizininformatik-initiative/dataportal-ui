@@ -25,7 +25,6 @@
 @import './styles/components/lang-toggle-button.themed';
 @import './styles/components/search-input.themed';
 @import './styles/components/general_table.themed';
-@import './styles/components/code-editor.themed';
 @import './styles/components/checkbox.themed';
 @import './styles/components/action-bar.themed';
 @import './styles/components/filter-chips.themed';
@@ -46,7 +45,6 @@
   @include buttons($theme);
   @include mat-chip_themed($theme);
   @include mat-expansion-panel_themed($theme);
-  @include code-editor_themed($theme);
   @include drop-down-search-theme($theme);
   @include checkbox_themed($theme);
   @include action-bar_themed($theme);
