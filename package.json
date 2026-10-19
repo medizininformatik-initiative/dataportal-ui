@@ -9,6 +9,7 @@
     "test-ci": "JEST_JUNIT_OUTPUT_DIR=./reports/junit/ node --expose-gc ./node_modules/.bin/jest --ci -w=1 --reporters=default --reporters=jest-junit",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
+    "check:styles": "node scripts/check-styles.cjs",
     "pretty-quick": "pretty-quick --pattern \"src/**/*.{scss,html}\"",
     "e2e": "ng e2e",
     "cypress": "npx cypress open"
