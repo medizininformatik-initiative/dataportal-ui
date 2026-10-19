@@ -20,6 +20,9 @@
 @import './material/mat-expansion-panel.themed';
 @import './material/mat-tooltip.themed';
 
+/* typography groups */
+@import './typography/breadcrumbs.themed';
+
 /* buttons */
 @import './button/buttons.themed';
 
@@ -46,6 +49,7 @@
   @include mat.all-component-typographies(map-get($theme, num-typography));
   @include headings_themed($theme);
   @include links_themed($theme);
+  @include breadcrumbs_themed($theme);
   @include buttons($theme);
   @include mat-chip_themed($theme);
   @include mat-expansion-panel_themed($theme);

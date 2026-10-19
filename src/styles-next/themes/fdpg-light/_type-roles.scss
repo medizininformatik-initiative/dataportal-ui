@@ -26,4 +26,16 @@ $fdpg-light-type-roles: (
     size: 16px,
     line: 24px,
   ),
+  'app-header-breadcrumb-current': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+  ),
+  'app-header-breadcrumb-separator': (
+    family: $_brand,
+    weight: 400,
+    size: 16px,
+    line: 24px,
+  ),
 );

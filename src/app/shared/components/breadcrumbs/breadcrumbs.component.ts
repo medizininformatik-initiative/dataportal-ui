@@ -1,4 +1,4 @@
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router'
 import { BasePaths, PathSegments } from '../../../app-paths'
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
@@ -6,7 +6,7 @@ import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { filter, Subscription } from 'rxjs'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
-import { NgClass } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 import { MatTooltip } from '@angular/material/tooltip'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 
@@ -27,7 +27,7 @@ const BASE_PATH_DEFAULTS: Record<string, string> = {
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
   standalone: true,
-  imports: [NgClass, MatTooltip, DisplayTranslationPipe],
+  imports: [RouterLink, TranslateModule, MatTooltip, DisplayTranslationPipe],
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
   private router = inject(Router)
@@ -59,23 +59,17 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
     this.sub?.unsubscribe()
   }
 
-  navigateTo(url: string): void {
-    const segments = url.replace(/^\//, '').split('/')
-    const basePath = segments[0]
-    const subPath = segments[1]
-    const id = segments[2]
+  /** Router target of a crumb: the query editor trail points to its parent page, base paths to their default child. */
+  targetOf(url: string): string {
+    const [basePath, subPath] = url.replace(/^\//, '').split('/')
 
     if (basePath === BasePaths.queryEditor) {
-      const target =
-        subPath === PathSegments.feature
-          ? `/${BasePaths.dataSelection}/${PathSegments.editor}`
-          : `/${BasePaths.dataQuery}`
-      this.router.navigate([target])
-      return
+      return subPath === PathSegments.feature
+        ? `/${BasePaths.dataSelection}/${PathSegments.editor}`
+        : `/${BasePaths.dataQuery}`
     }
 
-    const targetPath = BASE_PATH_DEFAULTS[basePath] ?? url
-    this.router.navigate([targetPath])
+    return BASE_PATH_DEFAULTS[basePath] ?? url
   }
 
   private appendElementBreadcrumb(): void {

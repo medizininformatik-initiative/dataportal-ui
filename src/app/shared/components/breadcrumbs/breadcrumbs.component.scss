@@ -3,44 +3,35 @@
   align-items: center;
   flex-wrap: nowrap;
   width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .breadcrumb-item {
   display: flex;
   align-items: center;
-  font-size: var(--font-size-md);
-}
-
-.breadcrumb-item a {
-  text-decoration: none;
-  color: var(--color-accent);
-  cursor: pointer;
-}
-
-.breadcrumb-item.active {
-  gap: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.breadcrumb-item.active span {
-  font-weight: bold;
-  color: var(--color-text-secondary);
+  /* the current page (last item) shrinks and shows an ellipsis */
+  &:last-child {
+    min-width: 0;
+  }
 }
 
 .breadcrumb-separator {
-  display: flex;
-  align-items: center;
-  align-self: stretch;
-  font-size: 24px;
+  font-family: var(--font-app-header-breadcrumb-separator-family);
+  font-weight: var(--font-app-header-breadcrumb-separator-weight);
+  font-size: var(--font-app-header-breadcrumb-separator-size);
+  line-height: var(--font-app-header-breadcrumb-separator-line);
   color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-4);
   padding: 0 var(--spacing-8);
 }
 
-.last-breadcrumb {
-  gap: 4px;
+.breadcrumb-current {
+  font-family: var(--font-app-header-breadcrumb-current-family);
+  font-weight: var(--font-app-header-breadcrumb-current-weight);
+  font-size: var(--font-app-header-breadcrumb-current-size);
+  line-height: var(--font-app-header-breadcrumb-current-line);
+  color: var(--color-text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
