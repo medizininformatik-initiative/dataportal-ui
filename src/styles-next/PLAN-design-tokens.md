@@ -199,6 +199,39 @@ Console shortcut for 2: `getComputedStyle($0).fontSize` with the element selecte
 - **Palette, fix later (Shah):** 652 adds `green-3` (`#839e00`) and `green-hover` (`rgba(163, 210, 128, 0.9)`) to the OLD palette file `src/styles/themes/colors/_fdpg-primary-theme.palette.scss`. They are not the appropriate choice (arbitrary values, outside the green ramp). Taken as is in the merge only so it resolves; fix in the palette view (`styles-next/palettes/`, green ramp, role `secondary`). Checkbox candidate: `secondary 700` (`PLAN-side-menu.md` risk 3).
 - Old-tree conflicts (`_color-variables`, palette, side-menu SCSS, spec): take 652. `material.module.ts` stays deleted. Port to `styles-next`: see `PLAN-side-menu.md`.
 
+## Session notes 2026-10-19 (part 3): where we stand, gains, next step
+
+### Where we stand
+Commits since `8ae4806b`: `1b918f0c` docs and prototypes, `5e1a28d9` `check:styles` script, `3a4af5d1` button + page-header groups wired into `_index.scss`, `3803dabb` page-header switch (title, intro, eye button), `3204184d` button switch + portal link as `num-button blue` + repeated CSS removed, `cbb63437` intro measure 100ch, `a4c407d8` header selects outlined, `de39ec82` merge of 652, `ebdefd93` plans, `107ae519` side menu + `.app-body` layout ported to `styles-next`.
+- Typography groups switched in components: `text-link`, breadcrumbs, `button` (incl. portal link), `page-header`. Browser-checked by Shah: page header, buttons (looks fine). Open: side menu (just ported), header selects were checked and committed.
+- Side menu: structure and colors ported from 652 (`PLAN-side-menu.md` steps 1 to 5). Text sizes are still 652's (18/26/600, 16/24/500). Typography roles for the menu (steps 6 and 7) wait for decision 1.
+- Not ported from 652 (components render without their new look until then): checkbox (step 8), 8 unwritten variables (`PLAN-side-menu.md` section 6).
+- Uncommitted, deliberately: `angular.json` (build points at `styles-next`) and `src/app/app.component.ts` (swaps the `FDPGTheme` body class for the stylesheet name from the app config). Understand or drop `app.component.ts` before it is ever committed: if the config names another theme, the whole `.FDPGTheme { ... }` block (all variables) stops matching `<body>`.
+
+### Next step
+1. Shah's browser check of the side menu (hover, active, rails, focus ring, collapse, narrow viewport below 600px).
+2. Decide `PLAN-side-menu.md` decision 1 (two roles 16/24 at 400 and 600, or keep 652's 18/26/600 and 16/24/500), then steps 6 and 7: roles `side-menu-item` and `side-menu-item-active`, new group file, include in `_index.scss`, drop the four `--font-size-nav*` tokens.
+3. Then: Q9 (title as `<h1>`; the intro is now an `<h2>`), step 8 (checkbox), step 9 (the 8 variables, colors, green shade), the global element rule audit (`headings`), then the color pass (`PLAN.md` step 4) and the switch.
+
+### Gains
+- A second, repeatable check: `npm run check:styles` catches silent variable typos and unincluded mixins. With wider prefixes it found 8 variables the 652 merge needs (not visible by eye).
+- A repeatable "no accidental change" proof: compile both trees (`npx sass --quiet ...`), cut the blocks of one component out of each CSS file with `awk`, `diff`. The side menu port differed in exactly one line (`white` vs `#ffffff`); the button cleanup removed exactly the intended lines. Use it for every port.
+- Page header and buttons run on role variables end to end (Sass role, `type.vars`, include, component reads `var(--font-...)`), with a three-level verification table (script, DevTools computed, visual).
+- Merge handled without losing work: dry run in a temporary `git worktree`, then `git merge --no-commit`, conflicts in the old tree resolved by taking 652 (that tree is deleted at the switch), real work moved to `styles-next` by a plan. A subagent wrote the port plan in about 2 minutes while the merge stayed open (it read refs with `git show`, never touched the working tree).
+
+### Insights (new, not reported before)
+1. **Every branch that edits `src/styles/` makes `styles-next` stale.** 652 changed 8 old-tree style files and none of ours; the merge cost a whole port plan. Do the switch (`PLAN.md` step 5: point `angular.json` at `styles-next`, delete `src/styles/`) as soon as the menu, checkbox and the 8 variables are ported, and tell the team to stop editing `src/styles/` in the meantime (or to mirror edits).
+2. **`ng serve` does not reload `angular.json`.** After changing `styles` restart the server and hard-reload. `ps` showed two `ng serve` processes: kill the stale one so you do not look at the wrong build.
+3. **Theme variables live on `<body class="FDPGTheme">`, not on `:root`.** In DevTools select `<body>` (or a child, "Inherited from body") and use the console check in "How to verify a switch". The first "I cannot see it" in this session was exactly that.
+4. **Prefix coverage of the check script.** `VAR_PREFIXES` is `--font-` and `--app-content-` only. Widening it to all families fails today (insight above); widen it per family when its variables are written. The check also scans comments (can false-alarm).
+5. **Stale numbers in docs.** The intro measure is now `100ch` in `_page-header.themed.scss` (Shah's change), but the C14 note, the verification table and the comment in that file still say 70ch ("45-90 characters"). Fix the docs or revert the value.
+6. **The cancel button keeps weight 500** (role `button` says 600); marked with a comment in `_button-cancel.themed.scss`. Decide with the button review.
+7. **Duplicate class name:** both the language select and the user menu use `class="language-select"`. A rename (`header-select`) would remove the shared-name coupling that my outline rule relies on; do it with the `app-header-select` role.
+8. **Global `h2` rules are `!important`** (`base/_headings.themed.scss`, letter-spacing; margin). The intro `<h2>` needed `!important` resets to undo them. Audit `_headings` next (process insight 1) and scope it, so components stop fighting it.
+9. **Prettier in pre-commit** rewrites the prototype HTML pages on commit. Harmless, but the diff of the first commit shows reformatting.
+10. **Dictation noise, new examples:** "pagella teams" = page-header, "6.52" = 652, "feed/editor" = `feat/editor-back-to-search-origin`, "index.css" = `custom-material/_index.scss`. Keep repeating my reading before work that is hard to undo (merges).
+11. **Stash `stash@{0}`** ("On develop: timeout-component") is not ours; leave it alone.
+
 ### Dead or broken code found (delete or fix at step 7)
 - `.user-button` in `custom-material/layout/_header.themed.scss:68` (used nowhere).
 - `.portal-link-btn` rule (after C07 becomes `num-button blue`).
