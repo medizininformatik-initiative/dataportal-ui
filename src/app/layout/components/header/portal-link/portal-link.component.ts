@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core'
 @Component({
   selector: 'num-header-portal-link',
   templateUrl: './portal-link.component.html',
-  styleUrls: ['./portal-link.component.scss'],
   standalone: true,
   imports: [MatTooltip, FontAwesomeModule, TranslateModule],
 })

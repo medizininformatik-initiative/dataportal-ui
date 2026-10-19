@@ -15,9 +15,10 @@
   }
 
   .num-button {
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 600;
+    font-family: var(--font-button-family);
+    font-size: var(--font-button-size);
+    font-weight: var(--font-button-weight);
+    line-height: var(--font-button-line);
     box-shadow: $raised-shadow;
     height: 40px;
     padding: 9px 18px;

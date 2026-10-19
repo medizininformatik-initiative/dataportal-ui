@@ -16,16 +16,10 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
 
   .num-button.#{$name} {
     min-width: $min-width !important;
-    line-height: 24px;
     border: none;
     background-color: $color;
     color: $white;
-    font-size: 16px;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 9px 18px;
     gap: $gap;
 
     &:hover:not(.disabled) {
@@ -73,17 +67,8 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
       width: 50px;
       padding: 0;
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      fa-icon {
-        margin: 0;
-      }
 
       &.disabled {
-        background-color: $disabled-bg;
-        color: $color;
-        box-shadow: $disabled-ring;
         cursor: not-allowed;
       }
     }

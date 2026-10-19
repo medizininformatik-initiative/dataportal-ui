@@ -202,7 +202,7 @@ Console shortcut for 2: `getComputedStyle($0).fontSize` with the element selecte
 ### Next steps (order)
 1. Commit the docs and prototype pages (separate commit, no code).
 2. Shah checks in the browser: breadcrumbs (separator spacing, ellipsis, query-editor trail: `targetOf`), links (grey to blue, focus ring), blue button prototype.
-3. **C07 switch:** template `class="num-button blue"`, delete `.portal-link-btn`, include `button_themed` in the index, replace the `.num-button` literals (16px, 600) with `var(--font-button-*)`.
+3. **C07 switch (done 2026-10-19, waits for Shah's browser check; cancel button keeps weight 500, role says 600):** template `class="num-button blue"`, delete `.portal-link-btn`, include `button_themed` in the index, replace the `.num-button` literals (16px, 600) with `var(--font-button-*)`.
 4. **Page header switch (done 2026-10-19, waits for Shah's browser check):** include `page-header_themed`, replace literals in `shared/components/header` and `header-description`.
 5. `side-menu` (C09): prototype `typography-prototype-side-menu.html` exists, roles `side-menu-item` (400) and `side-menu-item-active` (600) proposed, waits for Shah's review. Remember the global-rule check (insight 1) first.
 6. `app-content` groups in the order of "For discussion" item 5: section, search-bar, table, action-bar.

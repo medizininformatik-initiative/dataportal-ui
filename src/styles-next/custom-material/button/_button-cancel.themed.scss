@@ -1,22 +1,7 @@
 @mixin button-cancel($theme) {
-  $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-
   .num-button.cancel {
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 500;
+    font-weight: 500; // role button says 600: decide with Shah
     height: 42px;
-    padding: 9px 18px;
-    border-radius: 5px;
-    letter-spacing: inherit;
-    cursor: pointer;
-    white-space: nowrap;
-    opacity: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: $raised-shadow;
     border: 1px solid role-color($theme, accent, 200);
     background: role-color($theme, neutral, 50);
     color: role-color($theme, accent, 600);
