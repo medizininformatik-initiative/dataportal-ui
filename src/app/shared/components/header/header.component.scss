@@ -1,8 +1,8 @@
 .header-font {
-  font-style: normal;
-  font-weight: 700;
-  font-size: 30px;
-  line-height: 46px;
+  font-family: var(--font-app-content-page-header-title-family);
+  font-weight: var(--font-app-content-page-header-title-weight);
+  font-size: var(--font-app-content-page-header-title-size);
+  line-height: var(--font-app-content-page-header-title-line);
   color: var(--color-text-secondary);
   margin: 0;
   display: inline-flex;
@@ -18,6 +18,7 @@
   cursor: pointer;
   padding: var(--spacing-5) var(--spacing-8);
   color: var(--color-accent);
+  font-size: var(--font-app-content-page-header-actions-size);
   line-height: 1;
 
   &:hover {

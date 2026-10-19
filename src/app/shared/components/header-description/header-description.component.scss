@@ -1,9 +1,10 @@
 .header-description {
   width: 100%;
-  font-style: normal;
-  font-weight: var(--font-weight-bold);
-  font-size: 18px;
-  line-height: 22px;
+  max-width: var(--app-content-page-header-intro-measure);
+  font-family: var(--font-app-content-page-header-intro-family);
+  font-weight: var(--font-app-content-page-header-intro-weight);
+  font-size: var(--font-app-content-page-header-intro-size);
+  line-height: var(--font-app-content-page-header-intro-line);
   display: flex;
   align-items: center;
   color: #325a7e;

@@ -180,6 +180,19 @@ Add a check: push `{ name, run(ctx) }` to `CHECKS`; `ctx.css` is the compiled CS
 Ideas for more checks: `font-family` names used in SCSS that are not in the role map or the Google Fonts link (decision 8); `var(--x)` with a fallback that hides a missing variable; hex / `rgba(` literals left in `custom-material/` (`PLAN.md` step 5); `@include` of a mixin name that exists in no file; stale specs (insight "Dead or broken code"). Run it before every commit that touches `styles-next`; not in CI yet.
 Known limits: comments are scanned too (a commented `var(--font-x)` can false-alarm); dynamic names `var(--font-#{$name})` are skipped.
 
+### How to verify a switch (metrics, 2026-10-19)
+Per component, three levels. A switch is "wired" when 1 and 2 pass; 3 is the visual review.
+1. **Static (script):** `npm run check:styles` is `ok`. Every `var(--font-...)` / `var(--app-content-...)` the component reads is written by the compiled CSS.
+2. **Computed (DevTools, on the running app):** select the element, tab *Computed*, compare with the role in `themes/fdpg-light/_type-roles.scss`. Expected values for the page header:
+   | Element | font-family | weight | size | line-height | other |
+   |---|---|---|---|---|---|
+   | `.header-font` (title) | Titillium Web | 600 | 24px | 32px | |
+   | `.header-description` (intro) | Titillium Web | 400 | 16px | 24px | `max-width` = 70ch (about 650px at 16px) |
+   | `.toggle-btn` (eye button) | | | 16px | 1 | |
+   In the *Styles* pane the declaration must read `var(--font-app-content-page-header-title-size)`, not a literal. If the value is crossed out or shows the inherited value, the variable is missing (typo or not included).
+3. **Visual:** the title is smaller (30 to 24px) and lighter (700 to 600); the intro is smaller and regular (18/600 to 16/400) and wraps at about 70 characters; colors unchanged.
+Console shortcut for 2: `getComputedStyle($0).fontSize` with the element selected in the Elements panel (`$0`). Variable set: `getComputedStyle(document.body).getPropertyValue('--font-app-content-page-header-title-size')` must return `24px` (not empty).
+
 ### Dead or broken code found (delete or fix at step 7)
 - `.user-button` in `custom-material/layout/_header.themed.scss:68` (used nowhere).
 - `.portal-link-btn` rule (after C07 becomes `num-button blue`).
@@ -190,7 +203,7 @@ Known limits: comments are scanned too (a commented `var(--font-x)` can false-al
 1. Commit the docs and prototype pages (separate commit, no code).
 2. Shah checks in the browser: breadcrumbs (separator spacing, ellipsis, query-editor trail: `targetOf`), links (grey to blue, focus ring), blue button prototype.
 3. **C07 switch:** template `class="num-button blue"`, delete `.portal-link-btn`, include `button_themed` in the index, replace the `.num-button` literals (16px, 600) with `var(--font-button-*)`.
-4. **Page header switch:** include `page-header_themed`, replace literals in `shared/components/header` and `header-description`.
+4. **Page header switch (done 2026-10-19, waits for Shah's browser check):** include `page-header_themed`, replace literals in `shared/components/header` and `header-description`.
 5. `side-menu` (C09): prototype `typography-prototype-side-menu.html` exists, roles `side-menu-item` (400) and `side-menu-item-active` (600) proposed, waits for Shah's review. Remember the global-rule check (insight 1) first.
 6. `app-content` groups in the order of "For discussion" item 5: section, search-bar, table, action-bar.
 7. Close Q8 (non-link text) and decision 8 (font families).

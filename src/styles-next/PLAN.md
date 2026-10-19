@@ -17,6 +17,7 @@ Role map: primary -> `neutral`, accent -> `accent`, green -> `secondary`, red ->
 ## Next steps (later)
 4. Convert the remaining `custom-material` files to `role-color` / `foreground-color` / `surface-color`:
    `base/_divider-classes`; `components/` (`_filter-chips`, `_action-bar`, `_checkbox`, `_lang-toggle-button`, `_general_table`, `_search-input`); `layout/` (`_side-menu`, `_footer`, `_app-layout`, `_header`); `material/` (`_mat-chip`, `_mat-expansion-panel`).
+   Header colors (noted 2026-10-19): the page header is not fully wired to roles. Title color is `var(--color-text-secondary)` = foreground `secondary-text` `#6a7483` (hard-coded hex in `themes/fdpg-light/_foreground.scss`), contrast 4.49 on the page background. Candidate: `role-color($theme, neutral, 900)` `#5e6c78` (5.12). Not named "secondary": that role is green. The same variable also colors the breadcrumb current page and separator. Still to check: intro color `#325a7e` (literal in `header-description.component.scss`) and the eye button (`#fff` literal).
    `_search-input` still reads `map-get($theme, background)` + `mat.m2-get-color-from-palette`; it works with the new background map (key `card`).
 5. Cleanup and switch:
    - Remove old keys from `_theme.scss`: `primary`, `accent`, `green`, `red`, `warn`. Keep `name`, `num-typography`, `roles`, `foreground`, `background`.
