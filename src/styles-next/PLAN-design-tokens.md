@@ -193,6 +193,12 @@ Per component, three levels. A switch is "wired" when 1 and 2 pass; 3 is the vis
 3. **Visual:** the title is smaller (30 to 24px) and lighter (700 to 600); the intro is smaller and regular (18/600 to 16/400) and wraps at about 70 characters; colors unchanged.
 Console shortcut for 2: `getComputedStyle($0).fontSize` with the element selected in the Elements panel (`$0`). Variable set: `getComputedStyle(document.body).getPropertyValue('--font-app-content-page-header-title-size')` must return `24px` (not empty).
 
+### Merge of 652 (2026-10-19): decisions and notes for later
+- Page-header intro becomes an `<h2>` (from 652). Page title is still a `<p>`, so the page has an `<h2>` but no `<h1>`: heading order is broken until Q9 (title as `<h1>`) is decided. Do Q9 soon, so the intro `<h2>` has its `<h1>`.
+- Intro values stay ours (role `app-content-page-header-intro`, 16/24/400, 24 / 16 = 1.5, already meets WCAG 1.4.12). 652's 18px / 550 are not taken. Its margin reset is kept (`margin: 1em 0`, `padding`, `border`, `letter-spacing` with `!important`, because the global `h2` rules are `!important`, see `base/_headings.themed.scss`).
+- **Palette, fix later (Shah):** 652 adds `green-3` (`#839e00`) and `green-hover` (`rgba(163, 210, 128, 0.9)`) to the OLD palette file `src/styles/themes/colors/_fdpg-primary-theme.palette.scss`. They are not the appropriate choice (arbitrary values, outside the green ramp). Taken as is in the merge only so it resolves; fix in the palette view (`styles-next/palettes/`, green ramp, role `secondary`). Checkbox candidate: `secondary 700` (`PLAN-side-menu.md` risk 3).
+- Old-tree conflicts (`_color-variables`, palette, side-menu SCSS, spec): take 652. `material.module.ts` stays deleted. Port to `styles-next`: see `PLAN-side-menu.md`.
+
 ### Dead or broken code found (delete or fix at step 7)
 - `.user-button` in `custom-material/layout/_header.themed.scss:68` (used nowhere).
 - `.portal-link-btn` rule (after C07 becomes `num-button blue`).
