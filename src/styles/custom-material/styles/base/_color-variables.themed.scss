@@ -25,6 +25,12 @@
   // Used by: between-filter (range thumb)
   --num-color--accent-600: #{mat.m2-get-color-from-palette($accent, 600)};
 
+  // Brand accent. Used by: ~55 components (criteria-stage, display-criteria, header, ...)
+  --color-accent: #{mat.m2-get-color-from-palette($accent, 500)};
+  --color-accent-bg: #{rgba(mat.m2-get-color-from-palette($accent, 500), 0.1)};
+  --color-accent-border: #{rgba(mat.m2-get-color-from-palette($accent, 500), 0.2)};
+  --color-accent-strong: #{mat.m2-get-color-from-palette($accent, 600)};
+
   // ── Status colours ─────────────────────────────────────────────────────────
   // Used by: searchbar (validation error colour)
   --num-color--warn: #{mat.m2-get-color-from-palette($warn)};

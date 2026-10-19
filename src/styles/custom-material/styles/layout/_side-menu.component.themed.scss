@@ -156,7 +156,7 @@
           }
 
           fa-icon {
-            color: rgba(90, 121, 175, 1) !important;
+            color: mat.m2-get-color-from-palette($accent, 500) !important;
           }
         }
 

@@ -93,11 +93,7 @@
   --font-weight-bold: 600;
   --font-size-lg: 20px;
 
-  /* Brand accent */
-  --color-accent: #5a79af;
-  --color-accent-bg: rgba(90, 121, 175, 0.1);
-  --color-accent-border: rgba(90, 121, 175, 0.2);
-  --color-accent-strong: #5170a8;
+  /* Brand accent: --color-accent* come from the blue palette (_color-variables.themed.scss) */
 
   /* Borders & radius */
   --border-color: #c5cacf;

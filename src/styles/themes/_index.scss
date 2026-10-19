@@ -1,7 +1,8 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-@import 'src/styles/themes/colors/fdpg-accent-theme.palette';
+@import 'src/styles/themes/colors/blue.palette';
+@import 'src/styles/themes/colors/green.palette';
 @import 'src/styles/themes/colors/fdpg-primary-theme.palette';
 @import './colors/additional-theme.palette.scss';
 @import './typography/typography.config';
@@ -9,7 +10,9 @@
 // Material 2 palettes (Angular Material 18+)
 $num-portal-webapp-primary-fdpg: mat.m2-define-palette($num-fdpg-primary-palette);
 
-$num-portal-webapp-accent-fdpg: mat.m2-define-palette($num-fdpg-accent-palette);
+$num-portal-webapp-accent-fdpg: mat.m2-define-palette($num-blue-palette);
+
+$num-portal-webapp-green: mat.m2-define-palette($num-green-palette);
 
 $num-portal-webapp-additional: mat.m2-define-palette($num-additional-palette, warning);
 
@@ -33,6 +36,7 @@ $num-portal-webapp-theme-fdpg: map.merge(
   (
     primary: $num-portal-webapp-primary-fdpg,
     accent: $num-portal-webapp-accent-fdpg,
+    green: $num-portal-webapp-green,
     warn: $num-portal-webapp-additional,
     additional: $num-portal-webapp-additional,
     name: 'fdpg',

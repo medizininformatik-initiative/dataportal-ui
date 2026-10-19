@@ -2,7 +2,16 @@
 
 $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
-@mixin button-color($theme, $name, $color, $hover, $min-width, $gap, $outline: false) {
+@mixin button-color(
+  $theme,
+  $name,
+  $color,
+  $hover,
+  $min-width,
+  $gap,
+  $outline: false,
+  $focus: $hover
+) {
   $primary: map-get($theme, primary);
   $white: mat.m2-get-color-from-palette($primary, 'white');
   $disabled-bg: mat.m2-get-color-from-palette($primary, 50);
@@ -29,7 +38,7 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
     }
 
     &.cdk-keyboard-focused {
-      background: $hover;
+      background: $focus;
     }
 
     &.disabled {

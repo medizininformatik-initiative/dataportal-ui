@@ -7,24 +7,27 @@
 @mixin buttons($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
+  $green: map-get($theme, green);
 
   @include button-base($theme);
   @include button-color(
     $theme,
     'blue',
     mat.m2-get-color-from-palette($accent, 500),
-    mat.m2-get-color-from-palette($primary, 'blue-hover'),
+    mat.m2-get-color-from-palette($accent, 600),
     125px,
-    15px
+    15px,
+    $focus: mat.m2-get-color-from-palette($accent, 700)
   );
   @include button-color(
     $theme,
     'green',
-    mat.m2-get-color-from-palette($primary, 'green'),
-    mat.m2-get-color-from-palette($primary, 'green-hover'),
+    mat.m2-get-color-from-palette($green, 500),
+    mat.m2-get-color-from-palette($green, 600),
     119px,
     4px,
-    $outline: true
+    $outline: true,
+    $focus: mat.m2-get-color-from-palette($green, 700)
   );
   @include button-color(
     $theme,
