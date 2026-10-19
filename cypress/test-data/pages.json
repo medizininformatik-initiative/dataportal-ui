@@ -1,0 +1,15 @@
+{
+  "pages": {
+    "feasibilityEditor": "Feasibility Editor",
+    "feasibilitySearch": "Feasibility Search",
+    "feasibilityBulkSearch": "Feasibility Bulk Search",
+    "feasibilityResult": "Feasibility Result",
+    "dataSelectionEditor": "Data Selection Editor",
+    "dataSelectionSearch": "Data Selection Search",
+    "dataQueryCohortDefinition": "Data Query - Cohort Definition",
+    "dataQueryDataSelection": "Data Query - Data Selection",
+    "queryEditorCriteria": "Query Editor - Criteria",
+    "queryEditorProfile": "Query Editor - Profile",
+    "savedQueries": "Saved Queries"
+  }
+}

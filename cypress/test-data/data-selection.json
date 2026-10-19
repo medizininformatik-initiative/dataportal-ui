@@ -1,0 +1,20 @@
+{
+  "dataSelection": {
+    "feature": "Medication administration",
+    "reference": "Procedure",
+    "filterTab": "Code Filter",
+    "code": "A10BA02",
+    "concept": "Metformin",
+    "conditionFeature": "Diagnosis",
+    "oncologyFeature": "MII PR Onkologie Diagnose Primärtumor",
+    "deathFeature": "Cause of Death",
+    "referenceField": "ReferenzPrimaerdiagnose",
+    "conditionFeatureDe": "Diagnose",
+    "conditionFilterTab": "Code Filter",
+    "conditionCode": "240338009",
+    "conditionConcept": "Viral food poisoning",
+    "selectedField": "category",
+    "defaultField": "abatement",
+    "removableField": "Code"
+  }
+}
