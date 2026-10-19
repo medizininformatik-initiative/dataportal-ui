@@ -1,22 +1,28 @@
 /* Type roles of "FDPG Light": one entry per role (family, weight, size, line height).
    Read with: type.vars($theme, 'role-name')  (see functions/_type.scss).
    The key is the role name and is the same name everywhere: here, in the group file, in the CSS variables
-   (--font-page-header-title-*) and in the prototype. No separate adjective names like 'strong' or 'large'.
+   (--font-app-content-page-header-title-*) and in the prototype. No separate adjective names like 'strong' or 'large'.
    Two roles may have equal values today (duplicates are allowed); equal entries can be merged later when the
    whole app is converted.
-   Draft: only the roles the page header needs so far. Source: typography-prototype.css. */
+   Draft: the page header and the button so far. Source: typography-prototype.css. */
 $_brand: "'Titillium Web', sans-serif";
 
 $fdpg-light-type-roles: (
-  'page-header-title': (
+  'app-content-page-header-title': (
     family: $_brand,
     weight: 600,
     size: 24px,
     line: 32px,
   ),
-  'page-header-intro': (
+  'app-content-page-header-intro': (
     family: $_brand,
     weight: 400,
+    size: 16px,
+    line: 24px,
+  ),
+  'button': (
+    family: $_brand,
+    weight: 600,
     size: 16px,
     line: 24px,
   ),

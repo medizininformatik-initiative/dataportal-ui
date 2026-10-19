@@ -3,10 +3,10 @@
 /* Group "page-header": the block above the page content (title, intro beneath it, actions).
    Writes the variables of its roles. The values are in themes/fdpg-light/_type-roles.scss under the same names.
    Parsed as: type.vars($theme, '<role>')  =  write family, weight, size and line of that role as four variables
-   (see functions/_type.scss). Components read them: font-size: var(--font-page-header-title-size); */
+   (see functions/_type.scss). Components read them: font-size: var(--font-app-content-page-header-title-size); */
 @mixin page-header_themed($theme) {
-  @include type.vars($theme, 'page-header-title');
-  @include type.vars($theme, 'page-header-intro');
-  --page-header-intro-measure: 70ch; /* 45-90 characters per line */
-  --font-page-header-actions-size: 16px; /* eye button, icon only: size, no text level */
+  @include type.vars($theme, 'app-content-page-header-title');
+  @include type.vars($theme, 'app-content-page-header-intro');
+  --app-content-page-header-intro-measure: 70ch; /* 45-90 characters per line */
+  --font-app-content-page-header-actions-size: 16px; /* eye button, icon only: size, no text level */
 }

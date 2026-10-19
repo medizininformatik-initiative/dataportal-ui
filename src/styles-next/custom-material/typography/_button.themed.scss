@@ -1,0 +1,9 @@
+@use '../../functions/type';
+
+/* Group "button": every .num-button and its color variants (.blue, .green, .red), incl. the portal link in the app header (C07, C20).
+   Writes the variables of the role "button". The values are in themes/fdpg-light/_type-roles.scss under the same name.
+   Parsed as: type.vars($theme, 'button')  =  write family, weight, size and line of that role as four variables
+   (see functions/_type.scss). Components read them: font-size: var(--font-button-size); */
+@mixin button_themed($theme) {
+  @include type.vars($theme, 'button');
+}
