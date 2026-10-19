@@ -29,6 +29,7 @@ SCSS (`_side-menu.component.themed.scss`, rewritten, 361 lines changed):
 Non-style files in 652 (checkbox, search-filter, searchbar, missing-filter, section-name, header ... `.component.scss`) merge by git; they read `--num-color--*` and `--spacing-*`, so those variables must exist in styles-next (run `npm run check:styles` after adding `--num-color--` to `VAR_PREFIXES`).
 
 ## 3. Step order (after each: sass compile + `npm run check:styles`)
+Progress 2026-10-19: steps 1 to 5 done (links rule, 4 nav tokens, `.app-body` layout, menu SCSS from 652 with role colors). Compiled menu + layout CSS equals the 652 old-tree CSS except `white` -> `#ffffff` (checked by diff). Browser check by Shah: open. Other `:root` tokens in section 2 (checkbox, focus ring, ...) are NOT added yet: step 8/9.
 1. Finish the merge for app files (templates, ts, spec). Styles-next untouched. Compile: sass command must still pass.
 2. Global-rule check (insight 1): `grep -rn "^\s*a[:{ ,]\|\ba:not\|\.mdc-list-item\|mat-nav-list\|num-mat-list-item" src/styles-next`; list every element rule that can hit `a`, `ul`, `li`, `button`, `span` inside `num-side-menu` (known: `_links.themed.scss`; audit `_headings`, `_general_table`, `_lang-toggle-button`, `_ui-classes`). Add `:not(.num-nav-link)` to `_links.themed.scss`.
 3. Add the new `:root` tokens to `styles-next/styles.scss` (list in section 2). Compile.
@@ -53,3 +54,8 @@ Non-style files in 652 (checkbox, search-filter, searchbar, missing-filter, sect
 4. `error-on-white` / `error` (#c4122f, #b30519) have no role (`danger` ramp is pure red). Recommend skip in this plan; own color pass, pick `danger 800` `#ba0000` as candidate.
 5. Straight merge of old-tree files would be fine for git, but the old tree is deleted at the switch. Recommend: no extra work on `src/styles/`, but resolve its conflicts only by taking 652 (UU: side-menu, color-variables, palette).
 6. `app-layout` drops Material sidenav (handset `over` mode gone). Recommend check the narrow viewport once in step 4 (unverified how 652 behaves below 600px).
+
+## 6. Step 9 worklist (found 2026-10-19)
+`check:styles` with wider `VAR_PREFIXES` (`--num-color--`, `--color-`, `--border-`, ...) reports variables the merged app files read that `styles-next` does not write:
+`--num-color--error-on-tint` (missing-filter:15), `--num-color--error-on-white` (searchbar:78), `--border-color-hover` (searchbar:32, search-filter:88), `--color-text-placeholder` (searchbar:56), `--num-color--accent-900` (search-filter:174, 183), `--num-color--grey-hover` (search-filter:182).
+Widen `VAR_PREFIXES` in `scripts/check-styles.cjs` when these are written (then the check guards them).

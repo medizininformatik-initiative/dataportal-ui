@@ -53,6 +53,10 @@
    --color-text-primary  : main body text
    --color-text-secondary: muted / meta text
 
+   Side menu (temporary, until type roles)
+   --font-size-nav / --line-height-nav           : main item (18px / 26px)
+   --font-size-nav-child / --line-height-nav-child: sub item (16px / 24px)
+
    Brand accent
    --color-accent        : primary blue
    --color-accent-bg     : tinted card background (10% opacity)
@@ -89,6 +93,12 @@
   --font-weight-normal: 400;
   --font-weight-bold: 600;
   --font-size-lg: 20px;
+
+  /* Side menu text, rem so it follows the browser font size (WCAG 1.4.4). Replaced by type roles later (PLAN-side-menu.md step 7) */
+  --font-size-nav: 1.125rem;
+  --line-height-nav: 1.625rem;
+  --font-size-nav-child: 1rem;
+  --line-height-nav-child: 1.5rem;
 
   /* Brand accent: --color-accent* come from the blue palette (_color-variables.themed.scss) */
 

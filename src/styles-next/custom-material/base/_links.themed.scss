@@ -1,8 +1,8 @@
-/* Global style for text links (<a>). Links that Material styles itself (buttons, list items, tab links) are excluded.
+/* Global style for text links (<a>). Links that Material styles itself (buttons, list items, tab links) and the side menu links (.num-nav-link) are excluded.
    Type: role "text-link" (custom-material/typography/_text-link.themed.scss). Colors: accent 600 (contrast 5.3 on the page
    background), underline on hover, no paler :visited, focus ring instead of a background. */
 @mixin links_themed($theme) {
-  a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link) {
+  a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link) {
     font-family: var(--font-text-link-family);
     font-weight: var(--font-text-link-weight);
     font-size: var(--font-text-link-size);
