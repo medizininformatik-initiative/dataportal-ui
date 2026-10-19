@@ -23,6 +23,8 @@
 /* typography groups */
 @import './typography/breadcrumbs.themed';
 @import './typography/text-link.themed';
+@import './typography/button.themed';
+@import './typography/page-header.themed';
 
 /* buttons */
 @import './button/buttons.themed';
@@ -52,6 +54,8 @@
   @include links_themed($theme);
   @include breadcrumbs_themed($theme);
   @include text-link_themed($theme);
+  @include button_themed($theme);
+  @include page-header_themed($theme);
   @include buttons($theme);
   @include mat-chip_themed($theme);
   @include mat-expansion-panel_themed($theme);
