@@ -1,28 +1,27 @@
-// Global style for text links (<a>). Links that Material styles itself (buttons, list items, tab links) are excluded.
+/* Global style for text links (<a>). Links that Material styles itself (buttons, list items, tab links) are excluded.
+   Type: role "text-link" (custom-material/typography/_text-link.themed.scss). Colors: accent 600 (contrast 5.3 on the page
+   background), underline on hover, no paler :visited, focus ring instead of a background. */
 @mixin links_themed($theme) {
   a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link) {
-    color: role-color($theme, neutral, 500);
-    font-size: 16px;
-    font-weight: 400 !important;
-    line-height: 24px !important;
-    letter-spacing: 0.5px !important;
+    font-family: var(--font-text-link-family);
+    font-weight: var(--font-text-link-weight);
+    font-size: var(--font-text-link-size);
+    line-height: var(--font-text-link-line);
+    color: role-color($theme, accent, 600);
+    text-decoration: none;
 
     &:hover {
-      color: role-color($theme, accent, 500);
+      text-decoration: underline;
     }
 
-    &:not(.no-focus):focus {
-      color: role-color($theme, neutral, 500);
-      outline: none;
-      background: role-color($theme, accent, 200);
-    }
-
-    &:active {
-      color: role-color($theme, neutral, 500);
+    &:not(.no-focus):focus-visible {
+      outline: 2px solid role-color($theme, accent, 500);
+      outline-offset: 2px;
+      border-radius: 2px;
     }
 
     &:visited {
-      color: role-color($theme, neutral, 300);
+      color: role-color($theme, accent, 600);
     }
   }
 }
