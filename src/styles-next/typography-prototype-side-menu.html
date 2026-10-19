@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Typography prototype: side menu (C09)</title>
+  <!-- Open in a browser. Today vs next for side-menu-item and side-menu-item-active. Not part of the app. -->
+  <link rel="stylesheet" href="typography-prototype.css" />
+  <style>
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1100px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .col {
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #c5cacf;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin: 0 0 8px;
+    }
+    .menu {
+      width: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 5px;
+      background: #fff;
+      color: #5f6266;
+    }
+    .item.active {
+      background: #f1f2f3;
+    }
+    .item:hover {
+      background: #e8ebf0;
+    }
+    .ic {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      background: #c5cacf;
+    }
+    .active .ic {
+      background: #5a79af;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 24px;
+      background: #fff;
+    }
+    td,
+    th {
+      border: 1px solid #c5cacf;
+      padding: 4px 8px;
+      text-align: left;
+    }
+  </style>
+  <h1 style="font: 600 18px/24px sans-serif; margin: 0 0 16px">Side menu (C09): today vs next</h1>
+  <div class="grid">
+    <section class="col">
+      <p class="tag">TODAY: every item 16/24/600, the active item looks the same in weight</p>
+      <div class="menu">
+        <div class="item" style="font: 600 16px/24px 'Titillium Web', sans-serif">
+          <span class="ic"></span>
+          Dashboard
+        </div>
+        <div class="item active" style="font: 600 16px/24px 'Titillium Web', sans-serif">
+          <span class="ic"></span>
+          Kriteriensuche
+        </div>
+        <div class="item" style="font: 600 16px/24px 'Titillium Web', sans-serif">
+          <span class="ic"></span>
+          Datenauswahl
+        </div>
+        <div class="item" style="font: 600 16px/24px 'Titillium Web', sans-serif">
+          <span class="ic"></span>
+          Anträge
+        </div>
+      </div>
+    </section>
+    <section class="col">
+      <p class="tag">
+        NEXT: inactive .type-side-menu-item 16/24/400, active .type-side-menu-item-active 16/24/600
+      </p>
+      <div class="menu">
+        <div class="item type-side-menu-item">
+          <span class="ic"></span>
+          Dashboard
+        </div>
+        <div class="item active type-side-menu-item-active">
+          <span class="ic"></span>
+          Kriteriensuche
+        </div>
+        <div class="item type-side-menu-item">
+          <span class="ic"></span>
+          Datenauswahl
+        </div>
+        <div class="item type-side-menu-item">
+          <span class="ic"></span>
+          Anträge
+        </div>
+      </div>
+    </section>
+  </div>
+  <table>
+    <tr>
+      <th>Label (class)</th>
+      <th>Family</th>
+      <th>Size / line</th>
+      <th>Weight</th>
+      <th>Replaces</th>
+      <th>Other users today</th>
+    </tr>
+    <tr>
+      <td>.type-side-menu-item</td>
+      <td>Titillium Web</td>
+      <td>16 / 24</td>
+      <td>400</td>
+      <td>.num-mat-list-item and .navItem-font (600, three places set it)</td>
+      <td>side menu only</td>
+    </tr>
+    <tr>
+      <td>.type-side-menu-item-active</td>
+      <td>Titillium Web</td>
+      <td>16 / 24</td>
+      <td>600</td>
+      <td>--active rule, 600 !important twice</td>
+      <td>side menu only</td>
+    </tr>
+  </table>
+  <p class="tag" style="margin-top: 12px">
+    Icons and colors here are mock-ups, only the text changes. Size, line and family stay the same;
+    only the weight of inactive items drops 600 to 400. Letter-spacing stays
+    <code>normal</code>
+    (forced today). Name check: "-active" is a state, not an adjective scale (decision 2).
+  </p>
+</html>

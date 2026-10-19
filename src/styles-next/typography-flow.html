@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Typography data flow: page header</title>
+  <!-- Data flow of: _type-roles.scss -> _theme.scss -> _page-header.themed.scss -> _type.scss -> CSS. Not part of the app. -->
+  <style>
+    body {
+      font: 14px/20px system-ui, sans-serif;
+      background: #f9f9f9;
+      color: #1b2430;
+      margin: 24px auto;
+      max-width: 980px;
+      padding: 0 16px;
+    }
+    h1 {
+      font-size: 20px;
+      line-height: 28px;
+      margin: 0 0 4px;
+    }
+    p.sub {
+      color: #5d6b7c;
+      margin: 0 0 20px;
+    }
+    code,
+    pre {
+      font: 12px/18px ui-monospace, Menlo, monospace;
+    }
+    pre {
+      margin: 6px 0 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-bottom: 20px;
+    }
+    .legend span::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 6px;
+      vertical-align: -1px;
+      border: 2px solid;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+    }
+    .n {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1b2430;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+    .box {
+      background: #fff;
+      border: 2px solid;
+      border-radius: 6px;
+      padding: 10px 12px;
+      min-width: 0;
+    }
+    .box b {
+      display: block;
+      font: 600 13px/18px ui-monospace, Menlo, monospace;
+    }
+    .box small {
+      display: block;
+      color: #5d6b7c;
+      margin-top: 2px;
+    }
+    .levels {
+      border-color: #2a4fa8;
+    }
+    .levels b {
+      color: #2a4fa8;
+    }
+    .theme {
+      border-color: #5d6b7c;
+    }
+    .theme b {
+      color: #5d6b7c;
+    }
+    .group {
+      border-color: #1d7a4a;
+    }
+    .group b {
+      color: #1d7a4a;
+    }
+    .fn {
+      border-color: #8a5a00;
+    }
+    .fn b {
+      color: #8a5a00;
+    }
+    .out {
+      border-color: #b0392b;
+    }
+    .out b {
+      color: #b0392b;
+    }
+    .later {
+      border-style: dashed;
+      border-color: #92a0b0;
+    }
+    .later b {
+      color: #5d6b7c;
+    }
+    .arrow {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+    }
+    .arrow div {
+      border-left: 2px solid #92a0b0;
+      margin-left: 17px;
+      padding: 6px 0 6px 18px;
+      color: #5d6b7c;
+      position: relative;
+    }
+    .arrow div::after {
+      content: '▼';
+      position: absolute;
+      left: -8px;
+      bottom: -4px;
+      color: #92a0b0;
+      font-size: 12px;
+    }
+    .arrow b {
+      color: #1b2430;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    @media (max-width: 640px) {
+      .split {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <h1>Page header typography: how the data flows</h1>
+  <p class="sub">
+    Read top to bottom. Colored boxes are files, arrows are what is passed, the red box is what
+    comes out. Sass runs at build time; the browser only sees the last step.
+  </p>
+  <div class="legend">
+    <span style="border-color: #2a4fa8">values (level map)</span>
+    <span style="border-color: #5d6b7c">theme</span>
+    <span style="border-color: #1d7a4a">group (roles)</span>
+    <span style="border-color: #8a5a00">function</span>
+    <span style="border-color: #b0392b">result (CSS)</span>
+    <span style="border-color: #92a0b0; border-style: dashed">not built yet</span>
+  </div>
+
+  <div class="step">
+    <div class="n">1</div>
+    <div class="box levels">
+      <b>themes/fdpg-light/_type-roles.scss</b>
+      <small>
+        Defines the values. One entry per role, same name as in the group file. Only place with
+        numbers.
+      </small>
+      <pre>
+$fdpg-light-type-roles: (
+  'app-content-page-header-title': (family: 'Titillium Web', weight: 600, size: 24px, line: 32px),
+  'app-content-page-header-intro': (family: 'Titillium Web', weight: 400, size: 16px, line: 24px),
+);</pre
+      >
+    </div>
+  </div>
+  <div class="arrow">
+    <span></span>
+    <div>
+      <b>passes</b>
+      the whole map
+      <code>$fdpg-light-type-roles</code>
+      (via
+      <code>@import</code>
+      )
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">2</div>
+    <div class="box theme">
+      <b>themes/fdpg-light/_theme.scss</b>
+      <small>
+        Puts the map into the one
+        <code>$theme</code>
+        that every mixin receives.
+      </small>
+      <pre>
+$num-portal-webapp-theme-fdpg: map.merge( ..., ( type-roles: $fdpg-light-type-roles, roles: ..., foreground: ... ) );</pre
+      >
+    </div>
+  </div>
+  <div class="arrow">
+    <span></span>
+    <div>
+      <b>passes</b>
+      <code>$theme</code>
+      as the argument of the mixin
+      <code>page-header_themed($theme)</code>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">3</div>
+    <div class="box group">
+      <b>custom-material/typography/_page-header.themed.scss</b>
+      <small>Roles only. Says which level each part of the page header uses. No numbers.</small>
+      <pre>
+@mixin page-header_themed($theme) {
+  @include type.vars($theme, 'app-content-page-header-title');
+  @include type.vars($theme, 'app-content-page-header-intro');
+}</pre
+      >
+    </div>
+  </div>
+  <div class="arrow">
+    <span></span>
+    <div>
+      <b>calls</b>
+      <code>type.vars($theme, 'app-content-page-header-title')</code>
+      &nbsp;·&nbsp; arguments: the theme and the role name (the key in step 1 and the variable
+      prefix: one name everywhere)
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">4</div>
+    <div class="box fn">
+      <b>functions/_type.scss</b>
+      <small>
+        Looks the level up and writes four variables. Not the CSS shorthand
+        <code>font:</code>
+        , because that resets every font property it does not name.
+      </small>
+      <pre>
+@mixin vars($theme, $name) {
+  $l: map.get($theme, type-roles, $name);
+  --font-#{$name}-family: #{map.get($l, family)};   /* ... also -weight, -size, -line */
+}</pre
+      >
+      <div class="split">
+        <div>
+          <small>lookup in</small>
+          <code>$theme[type-roles]['app-content-page-header-title']</code>
+        </div>
+        <div>
+          <small>writes (4 declarations)</small>
+          <code>--font-app-content-page-header-title-family / -weight / -size / -line</code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="arrow">
+    <span></span>
+    <div>
+      <b>writes</b>
+      the declarations into the mixin of step 3, so they end up inside
+      <code>.FDPGTheme</code>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">5</div>
+    <div class="box out">
+      <b>compiled CSS (what the browser gets)</b>
+      <small>Four variables per role. Built once, shared by all components.</small>
+      <pre>
+.FDPGTheme {
+  --font-app-content-page-header-title-family: 'Titillium Web', sans-serif;
+  --font-app-content-page-header-title-weight: 600;
+  --font-app-content-page-header-title-size: 24px;
+  --font-app-content-page-header-title-line: 32px;
+  --font-app-content-page-header-intro-family: 'Titillium Web', sans-serif;
+  --font-app-content-page-header-intro-weight: 400;
+  --font-app-content-page-header-intro-size: 16px;
+  --font-app-content-page-header-intro-line: 24px;
+  --app-content-page-header-intro-measure: 70ch;
+  --font-app-content-page-header-actions-size: 16px;
+}</pre
+      >
+    </div>
+  </div>
+  <div class="arrow">
+    <span></span>
+    <div>
+      <b>read by</b>
+      the component SCSS with
+      <code>var(...)</code>
+      &nbsp;·&nbsp; step 4 of the process, to be discussed
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">6</div>
+    <div class="box later">
+      <b>shared/components/header/header.component.scss (not changed yet)</b>
+      <small>
+        Four plain lines, same properties as today, but the values come from the theme. Nothing else
+        is touched.
+      </small>
+      <pre>
+.header-font {
+  font-family: var(--font-app-content-page-header-title-family);
+  font-weight: var(--font-app-content-page-header-title-weight);
+  font-size: var(--font-app-content-page-header-title-size);
+  line-height: var(--font-app-content-page-header-title-line);
+}</pre
+      >
+    </div>
+  </div>
+
+  <h1 style="margin-top: 28px">Change one value</h1>
+  <p class="sub">
+    Title should be 28px: edit one number in step 1 (
+    <code>size: 28px</code>
+    ). Steps 2 to 5 are untouched, and every component that reads
+    <code>--font-app-content-page-header-title-size</code>
+    follows.
+  </p>
+</html>

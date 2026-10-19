@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Typography prototype: link</title>
+  <!-- Open in a browser. Today vs next (option B) for the global link rule. Hover/focus/visited are shown as fixed classes (.is-hover etc.); real hover works too. Not part of the app. -->
+  <link rel="stylesheet" href="typography-prototype.css" />
+  <style>
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1100px;
+      color: #325a7e;
+    }
+    .col {
+      background: #f9f9f9;
+      padding: 16px;
+      border: 1px solid #c5cacf;
+      margin-bottom: 16px;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin: 0 0 8px;
+    }
+    .head {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      height: 64px;
+      padding: 0 16px;
+      background: #fff;
+      border: 1px solid #e3e6ea;
+    }
+    .logo {
+      width: 120px;
+      height: 32px;
+      background: #e3e6ea;
+      flex: none;
+    }
+    .crumbs {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+    .crumbs li {
+      display: flex;
+      align-items: center;
+    }
+    .sep {
+      padding: 0 8px;
+      color: #6a7483;
+      font: 400 16px/24px 'Titillium Web', sans-serif;
+    }
+    .cur {
+      color: #6a7483;
+      font: 600 16px/24px 'Titillium Web', sans-serif;
+    }
+    .states {
+      display: flex;
+      gap: 32px;
+      margin: 16px 0 8px;
+    }
+    .st {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .st small {
+      font: 11px/14px monospace;
+      color: #6a7483;
+    }
+    .mail {
+      margin: 8px 0 0;
+      font: 400 16px/24px 'Titillium Web', sans-serif;
+      color: #325a7e;
+    }
+    a {
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* TODAY: global rule, grey, 0.5px, visited paler, focus background */
+    .today a {
+      color: #9ea9b3;
+      font: 400 16px/24px 'Titillium Web', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    .today a:hover,
+    .today a.is-hover {
+      color: #5a79af;
+    }
+    .today a.is-focus {
+      background: #d3dbe9;
+      outline: none;
+    }
+    .today a.is-visited {
+      color: #c5cacf;
+    }
+
+    /* NEXT: role link + blue (accent 600), underline on hover, no visited change, visible focus ring */
+    .b a {
+      color: #49689c;
+      letter-spacing: normal;
+    }
+    .b a:hover,
+    .b a.is-hover {
+      text-decoration: underline;
+    }
+    .b a.is-focus {
+      outline: 2px solid #5a79af;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    .b a.is-visited {
+      color: #49689c;
+    }
+  </style>
+  <h1 style="font: 600 18px/24px sans-serif; margin: 0 0 16px">
+    Link (global
+    <code>a</code>
+    rule): today vs next, role
+    <code>text-link</code>
+  </h1>
+  <section class="col today">
+    <p class="tag">
+      TODAY: grey #9ea9b3 (neutral 500), hover blue, visited #c5cacf, focus light-blue background,
+      letter-spacing 0.5px !important, weight and line height !important
+    </p>
+    <div class="head">
+      <span class="logo"></span>
+      <ol class="crumbs">
+        <li>
+          <a class="">Startseite</a>
+          <span class="sep">»</span>
+        </li>
+        <li>
+          <a class="">Datenauswahl</a>
+          <span class="sep">»</span>
+        </li>
+        <li><span class="cur">Kriteriensuche</span></li>
+      </ol>
+    </div>
+    <div class="states">
+      <span class="st">
+        <a class=" ">Link</a>
+        <small>default</small>
+      </span>
+      <span class="st">
+        <a class="is-hover">Link</a>
+        <small>is-hover</small>
+      </span>
+      <span class="st">
+        <a class="is-focus">Link</a>
+        <small>is-focus</small>
+      </span>
+      <span class="st">
+        <a class="is-visited">Link</a>
+        <small>is-visited</small>
+      </span>
+    </div>
+    <p class="mail">
+      Kontakt:
+      <a class="">support@example.org</a>
+      (about modal, mailto link)
+    </p>
+  </section>
+  <section class="col b">
+    <p class="tag">
+      NEXT (decided: B): role
+      <code>text-link</code>
+      Titillium Web 16/24/400, letter-spacing normal, plus blue: accent 600 #49689c, underline on
+      hover, no paler visited, focus ring (needs a color decision)
+    </p>
+    <div class="head">
+      <span class="logo"></span>
+      <ol class="crumbs">
+        <li>
+          <a class="type-text-link">Startseite</a>
+          <span class="sep">»</span>
+        </li>
+        <li>
+          <a class="type-text-link">Datenauswahl</a>
+          <span class="sep">»</span>
+        </li>
+        <li><span class="cur">Kriteriensuche</span></li>
+      </ol>
+    </div>
+    <div class="states">
+      <span class="st">
+        <a class="type-text-link">Link</a>
+        <small>default</small>
+      </span>
+      <span class="st">
+        <a class="type-text-link is-hover">Link</a>
+        <small>is-hover</small>
+      </span>
+      <span class="st">
+        <a class="type-text-link is-focus">Link</a>
+        <small>is-focus</small>
+      </span>
+      <span class="st">
+        <a class="type-text-link is-visited">Link</a>
+        <small>is-visited</small>
+      </span>
+    </div>
+    <p class="mail">
+      Kontakt:
+      <a class="type-text-link">support@example.org</a>
+      (about modal, mailto link)
+    </p>
+  </section>
+  <table style="border-collapse: collapse; background: #fff">
+    <tr>
+      <th>Label (class)</th>
+      <th>Family</th>
+      <th>Size / line</th>
+      <th>Weight</th>
+      <th>Replaces</th>
+      <th>Users today</th>
+    </tr>
+    <tr>
+      <td>.type-text-link</td>
+      <td>Titillium Web</td>
+      <td>16 / 24</td>
+      <td>400</td>
+      <td>
+        global
+        <code>a</code>
+        rule: 16px,
+        <code>400 !important</code>
+        ,
+        <code>24px !important</code>
+        ,
+        <code>0.5px !important</code>
+      </td>
+      <td>2 templates: breadcrumbs, about-modal email</td>
+    </tr>
+  </table>
+  <style>
+    td,
+    th {
+      border: 1px solid #c5cacf;
+      padding: 4px 8px;
+      text-align: left;
+    }
+  </style>
+  <p class="tag" style="margin-top: 12px">
+    Contrast on #f9f9f9: grey #9ea9b3 about 2.3 (fails WCAG AA 4.5), accent 600 #49689c 5.33
+    (passes), from the research note. Only two templates use a plain link today, so the rule has a
+    small reach. Decided 2026-10-19 (Shah): the blue is taken (option B).
+  </p>
+</html>

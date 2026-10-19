@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Typography prototype: breadcrumbs (C04)</title>
+  <!-- Open in a browser. Today vs next for the three breadcrumb roles, plus the Q8 letter-spacing choice. Not part of the app. -->
+  <link rel="stylesheet" href="typography-prototype.css" />
+  <style>
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1100px;
+    }
+    .col {
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #c5cacf;
+      margin-bottom: 16px;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin: 0 0 8px;
+    }
+    .head {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      height: 64px;
+      padding: 0 16px;
+      background: #fff;
+      border: 1px solid #e3e6ea;
+    }
+    .logo {
+      width: 120px;
+      height: 32px;
+      background: #e3e6ea;
+      flex: none;
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+    }
+    .bar a {
+      color: #5a79af;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .bar .sp,
+    .bar .cur {
+      color: #6a7483;
+    }
+    .bar .sp {
+      padding: 0 8px;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 8px;
+      background: #fff;
+    }
+    td,
+    th {
+      border: 1px solid #c5cacf;
+      padding: 4px 8px;
+      text-align: left;
+    }
+  </style>
+  <h1 style="font: 600 18px/24px sans-serif; margin: 0 0 16px">
+    Breadcrumbs (C04, app header, left): today vs next
+  </h1>
+  <section class="col">
+    <p class="tag">
+      TODAY: link 16/24/400, current page 14/32/500, separator 24/32/500, letter-spacing 0.5px
+      (Material)
+    </p>
+    <div class="head">
+      <span class="logo"></span>
+      <div class="bar" style="letter-spacing: 0.5px">
+        <a style="font: 400 16px/24px 'Titillium Web', sans-serif">Startseite</a>
+        <span class="sp" style="font: 500 24px/32px 'Titillium Web', sans-serif">»</span>
+        <a style="font: 400 16px/24px 'Titillium Web', sans-serif">Datenauswahl</a>
+        <span class="sp" style="font: 500 24px/32px 'Titillium Web', sans-serif">»</span>
+        <span class="cur" style="font: 500 14px/32px 'Titillium Web', sans-serif">
+          Kriteriensuche
+        </span>
+      </div>
+    </div>
+  </section>
+  <section class="col">
+    <p class="tag">NEXT A: three roles, letter-spacing kept at 0.5px (as today)</p>
+    <div class="head">
+      <span class="logo"></span>
+      <div class="bar" style="letter-spacing: 0.5px">
+        <a class="type-app-header-breadcrumb-link">Startseite</a>
+        <span class="type-app-header-breadcrumb-separator sp">»</span>
+        <a class="type-app-header-breadcrumb-link">Datenauswahl</a>
+        <span class="type-app-header-breadcrumb-separator sp">»</span>
+        <span class="type-app-header-breadcrumb-current cur">Kriteriensuche</span>
+      </div>
+    </div>
+  </section>
+  <section class="col">
+    <p class="tag">NEXT B: three roles, letter-spacing normal (Q8 option "normal")</p>
+    <div class="head">
+      <span class="logo"></span>
+      <div class="bar" style="letter-spacing: normal">
+        <a class="type-app-header-breadcrumb-link">Startseite</a>
+        <span class="type-app-header-breadcrumb-separator sp">»</span>
+        <a class="type-app-header-breadcrumb-link">Datenauswahl</a>
+        <span class="type-app-header-breadcrumb-separator sp">»</span>
+        <span class="type-app-header-breadcrumb-current cur">Kriteriensuche</span>
+      </div>
+    </div>
+  </section>
+  <table>
+    <tr>
+      <th>Label (class)</th>
+      <th>Family</th>
+      <th>Size / line</th>
+      <th>Weight</th>
+      <th>Replaces</th>
+      <th>Other users today</th>
+    </tr>
+    <tr>
+      <td>.type-app-header-breadcrumb-link</td>
+      <td>Titillium Web</td>
+      <td>16 / 24</td>
+      <td>400</td>
+      <td>
+        Material (the
+        <code>14px</code>
+        on
+        <code>.breadcrumb-item</code>
+        is overridden, origin of the 16 not found)
+      </td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>.type-app-header-breadcrumb-current</td>
+      <td>Titillium Web</td>
+      <td>16 / 24</td>
+      <td>600</td>
+      <td>
+        14/32/500 (
+        <code>font-weight: bold</code>
+        rule does not match,
+        <code>span</code>
+        selector, but the template has a
+        <code>div</code>
+        )
+      </td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>.type-app-header-breadcrumb-separator</td>
+      <td>Titillium Web</td>
+      <td>16 / 24</td>
+      <td>400</td>
+      <td>
+        24/32/500 (
+        <code>font-size: 24px</code>
+        )
+      </td>
+      <td>none</td>
+    </tr>
+  </table>
+  <p class="tag" style="margin-top: 12px">
+    Colors are mock-ups (link accent, current and separator secondary). Link and separator have
+    equal values (duplicates allowed, decision 2). The separator gets smaller (24 to 16): check the
+    spacing of
+    <code>padding: 0 8px</code>
+    in the browser. Real
+    <code>text-overflow</code>
+    of the current page is not shown.
+  </p>
+</html>

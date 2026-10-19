@@ -60,10 +60,12 @@
    the real tuples, not invented. "maps" = what it would replace.
    ---------------------------------------------------------------------------
    level          family  size/line   weight  maps (examples)
-   display        brand   30/46       700     .header-font (1x) - maybe not a level, one-off
+   app-content-page-header-title brand 24/32     600     UPDATED 2026-10-19: replaces `display` (30/46/700). .header-font in
+                                              shared/components/header. Should be a real <h1> (today a <p>).
+   app-content-page-header-intro brand 16/24     400     UPDATED 2026-10-19: header-description (was 18/22/600). max-width 70ch.
    heading-1      brand   24/32       400     h1, breadcrumb separator (24px 5x)
    heading-2      brand   20/32       500     h2, --font-size-lg
-   title          brand   18/22       600     header-description (3x), error-title (2x), logic-switch label (18px 5x)
+   title          brand   18/22       600     error-title (2x), logic-switch label (18px 5x). header-description moved to `app-content-page-header-intro`.
    body-large     brand   16/24       400     h4, h5, list-item-details (16px 18x total)
    body-large-strong brand 16/24      600     save-file-modal input, section-name header
    body           brand   14/19       400     --font-size-md/--line-height-md, .num-text-body (51+15x)
@@ -88,7 +90,9 @@
   --font-weight-bold: 700;                        /* keyword `bold` today. NAME CLASH: renamed on purpose */
 
   /* ---- levels: size / line-height (weight + family set per class below) ---- */
-  --type-display-size: 30px;       --type-display-line: 46px;
+  --type-app-content-page-header-title-size: 24px;    --type-app-content-page-header-title-line: 32px;   /* was display 30/46 */
+  --type-app-content-page-header-intro-size: 16px;          --type-app-content-page-header-intro-line: 24px;         /* was header-description 18/22 */
+  --type-app-content-page-header-intro-measure: 70ch;                                       /* 45-90 characters per line */
   --type-heading-1-size: 24px;     --type-heading-1-line: 32px;
   --type-heading-2-size: 20px;     --type-heading-2-line: 32px;
   --type-title-size: 18px;         --type-title-line: 22px;
@@ -98,8 +102,29 @@
   --type-badge-size: 12px;         --type-badge-line: 12px;
 }
 
+/* app-content-page-header-actions: the eye button next to the title (shared/components/header .toggle-btn). Icon-only, so only the
+   icon size is set; line-height 1 stays as layout (Q6). Today: browser default 13.3px. */
+.type-app-content-page-header-actions { font-size: 16px; }
+
+
+/* button: .num-button (C20) and every color variant (.blue, .green, .red). Longhands, not `font:` (decision 3). Same values as today, so only the role name is new. */
+.type-button { font-family: var(--font-brand); font-weight: var(--font-weight-semibold); font-size: 16px; line-height: 24px; }
+
+/* side-menu-item / side-menu-item-active: nav items in the side menu (C09). Longhands (decision 3). Today both are 600, so weight never shows the active state. */
+.type-side-menu-item        { font-family: var(--font-brand); font-weight: var(--font-weight-regular);  font-size: 16px; line-height: 24px; }
+.type-side-menu-item-active { font-family: var(--font-brand); font-weight: var(--font-weight-semibold); font-size: 16px; line-height: 24px; }
+
+/* app-header-breadcrumb-*: location trail on the left of the app header (C04). Longhands (decision 3). */
+.type-app-header-breadcrumb-link      { font-family: var(--font-brand); font-weight: var(--font-weight-regular);  font-size: 16px; line-height: 24px; }
+.type-app-header-breadcrumb-current   { font-family: var(--font-brand); font-weight: var(--font-weight-semibold); font-size: 16px; line-height: 24px; }
+.type-app-header-breadcrumb-separator { font-family: var(--font-brand); font-weight: var(--font-weight-regular);  font-size: 16px; line-height: 24px; }
+
+/* text-link: every text link (<a>), global rule in custom-material/base/_links.themed.scss. Longhands (decision 3). Shared, no area prefix. */
+.type-text-link { font-family: var(--font-brand); font-weight: var(--font-weight-regular); font-size: 16px; line-height: 24px; }
+
 /* ---- level classes (prototype of the Sass mixin `type-style($theme, $level)`) ---- */
-.type-display          { font: var(--font-weight-bold)     var(--type-display-size)/var(--type-display-line)       var(--font-brand); }
+.type-app-content-page-header-title       { font: var(--font-weight-semibold) var(--type-app-content-page-header-title-size)/var(--type-app-content-page-header-title-line) var(--font-brand); }
+.type-app-content-page-header-intro             { font: var(--font-weight-regular)  var(--type-app-content-page-header-intro-size)/var(--type-app-content-page-header-intro-line)         var(--font-brand); max-width: var(--type-app-content-page-header-intro-measure); }
 .type-heading-1        { font: var(--font-weight-regular)  var(--type-heading-1-size)/var(--type-heading-1-line)   var(--font-brand); letter-spacing: -0.63px; }
 .type-heading-2        { font: var(--font-weight-medium)   var(--type-heading-2-size)/var(--type-heading-2-line)   var(--font-brand); letter-spacing: -0.23px; }
 .type-title            { font: var(--font-weight-semibold) var(--type-title-size)/var(--type-title-line)           var(--font-brand); }
@@ -128,7 +153,8 @@
        (accessibility, WCAG 1.4.4). Recommendation: decide before porting, switching later changes
        every value.
    Q6  Line-height unitless `1` (7x) for icons/badges: keep out of levels (layout, not typography)?
-   Q7  `display` (30/46/700) has 1 use: level or one-off in header?
+   Q7  RESOLVED 2026-10-19 (draft): `display` replaced by `app-content-page-header-title` 24/32/600. Still open: real <h1>.
+   Q10 `app-content-page-header-intro` keeps letter-spacing 0.25px (measured today, from Material) or `normal`? Same as research Q8.
    Q8  Level names are placeholders (like role names). Material names (body-1, caption) avoided on purpose.
    Q9  Keep the .num-text-* utility classes as aliases of the new levels, or delete after migration?
    ========================================================================== */
