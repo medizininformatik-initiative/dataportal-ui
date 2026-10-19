@@ -72,7 +72,7 @@
   &:hover:not(:disabled) {
     color: white !important;
     box-shadow: var(--shadow-card);
-    background: #678fd2;
+    background: var(--num-color--accent-600);
   }
 
   &:disabled {

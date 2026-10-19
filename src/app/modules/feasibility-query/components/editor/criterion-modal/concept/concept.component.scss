@@ -13,7 +13,7 @@
 }
 
 .mat-expansion-panel-header:hover {
-  background-color: rgb(90, 121, 175, 0.1);
+  background-color: var(--color-accent-bg);
 }
 ::ng-deep num-concept .mat-form-field-wrapper {
   padding-bottom: 0px !important;

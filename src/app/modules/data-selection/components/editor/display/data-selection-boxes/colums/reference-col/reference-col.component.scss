@@ -14,7 +14,7 @@
   transition: background-color 0.15s ease, border-color 0.15s ease;
 
   &--active {
-    background: rgba(90, 121, 175, 0.18);
+    background: color-mix(in srgb, var(--color-accent) 18%, transparent);
     border-color: var(--color-accent);
   }
 }

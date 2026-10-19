@@ -100,7 +100,7 @@
 .input-field-area:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 4px rgba(90, 121, 175, 0.25);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 25%, transparent);
 }
 
 ::ng-deep .mat-mdc-tab-body-wrapper {

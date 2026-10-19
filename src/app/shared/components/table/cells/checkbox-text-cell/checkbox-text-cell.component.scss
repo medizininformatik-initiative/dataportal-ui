@@ -42,7 +42,7 @@ input[type='checkbox'] {
   flex-shrink: 0;
 
   &:checked {
-    background: #5a79af;
-    border-color: #5a79af;
+    background: var(--color-accent);
+    border-color: var(--color-accent);
   }
 }

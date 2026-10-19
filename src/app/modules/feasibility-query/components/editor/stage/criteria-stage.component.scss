@@ -18,7 +18,7 @@
   left: 282.04px;
   top: 1674.85px;
   opacity: 0.2;
-  border: 1px dashed var(--color-accent, #5a79af);
+  border: 1px dashed var(--color-accent);
   border-radius: var(--border-radius-card, 5px);
   background: none;
 }
@@ -36,7 +36,7 @@
   line-height: var(--line-height-sm, 19px);
   display: flex;
   align-items: center;
-  color: var(--color-accent, #5a79af);
+  color: var(--color-accent);
   background: none;
 }
 .container {
