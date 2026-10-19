@@ -92,5 +92,30 @@
     .margin-right {
       margin-right: 16px;
     }
+
+    // Language select: fit the content. Material's form-field infix has a fixed default width (about 180px)
+    // and language.component.scss sets width: 60%, which left a wide empty box next to the user menu.
+    num-language .language-select {
+      width: auto;
+
+      .mat-mdc-form-field-infix {
+        width: auto;
+        min-width: 0;
+      }
+    }
+
+    // Language and user-menu selects: outline so they read as controls (not floating text).
+    // !important on background: the user-menu stylesheet sets `background: transparent !important`.
+    .language-select .mat-mdc-text-field-wrapper {
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-card);
+      background: #ffffff !important;
+      transition: border-color 0.2s ease, background 0.2s ease;
+
+      &:hover {
+        border-color: var(--color-accent);
+        background: var(--color-accent-bg) !important;
+      }
+    }
   }
 }
