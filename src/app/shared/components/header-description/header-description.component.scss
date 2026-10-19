@@ -1,7 +1,13 @@
-.header-description {
+:host .header-description {
   width: 100%;
   max-width: var(--app-content-page-header-intro-measure);
+  margin: 1em 0 !important; // same as the former <p>; global h2 margin is !important
+  padding: 0 !important;
+  border: 0 !important;
+  letter-spacing: normal !important;
+  // body has .mat-typography, which gives h2 its own font: the role variables override it
   font-family: var(--font-app-content-page-header-intro-family);
+  font-style: normal;
   font-weight: var(--font-app-content-page-header-intro-weight);
   font-size: var(--font-app-content-page-header-intro-size);
   line-height: var(--font-app-content-page-header-intro-line);

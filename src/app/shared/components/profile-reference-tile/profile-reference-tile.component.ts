@@ -70,10 +70,10 @@ export class ProfileReferenceTileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileReferenceMenuService.getMenuItems(this.parentId(), { elementId: this.elementId() })
-    this.initiliazeDisplayDataFiletrChips()
+    this.initializeDisplayDataFilterChips()
   }
 
-  private initiliazeDisplayDataFiletrChips() {
+  private initializeDisplayDataFilterChips() {
     if (this.referenceField()) {
       this.filterChips.push(
         this.profileReferenceChipsService.getProfileReferenceChips(this.referenceField())

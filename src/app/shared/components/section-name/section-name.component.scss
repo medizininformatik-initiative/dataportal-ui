@@ -1,4 +1,4 @@
-.section-header {
+:host .section-header {
   width: 100%;
   font-family: var(--font-body, 'Titillium Web', sans-serif);
   font-style: normal;
@@ -6,6 +6,8 @@
   font-size: var(--font-size-md, 16px);
   line-height: var(--line-height-md, 24px);
   color: var(--color-text-section);
-  margin-bottom: var(--spacing-sm);
-  margin-top: var(--spacing-sm);
+  margin: var(--spacing-sm) 0 !important; // global h3 margin is !important
+  padding: 0 !important;
+  border: 0 !important;
+  letter-spacing: normal !important;
 }

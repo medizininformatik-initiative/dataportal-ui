@@ -10,26 +10,42 @@
     matTooltipShowDelay="300"
   >
     <mat-select
+      #matSelect
       disableOptionCentering
       (selectionChange)="onSelectionChange($event.value)"
       (openedChange)="onOpenedChange($event)"
       panelClass="example-panel"
       [placeholder]="'SHARED_COMPONENTS.FILTER.' + filter()?.filterType | uppercase | translate"
+      [aria-label]="'SHARED_COMPONENTS.FILTER.' + filter()?.filterType | uppercase | translate"
       [value]="selectedValues()"
       [multiple]="multiSelect()"
     >
       <mat-select-trigger>
-        {{ getCleanValue(selectedValues()) }}
+        <span class="trigger-text">{{ firstSelected() }}</span>
+        @if (selectedCount() > 1) {
+        <span class="trigger-count">+{{ selectedCount() - 1 }}</span>
+        }
       </mat-select-trigger>
+      @if (multiSelect()) {
+      <div class="select-count" role="status">
+        {{
+          'SHARED_COMPONENTS.FILTER.SELECTED_COUNT'
+            | translate : { count: selectedCount(), total: filter()?.data?.length ?? 0 }
+        }}
+      </div>
+      }
       <mat-option disabled class="select-search-option">
         <div class="select-search-wrapper">
-          <fa-icon class="icon-design" icon="search" [fixedWidth]="true"></fa-icon>
+          <fa-icon class="icon-design" icon="search" size="lg" [fixedWidth]="true"></fa-icon>
           <input
+            #searchInput
             class="select-search-input"
+            [attr.aria-label]="'SHARED_COMPONENTS.FILTER.SEARCH' | translate"
             [placeholder]="'SHARED_COMPONENTS.FILTER.SEARCH' | translate"
             [(ngModel)]="searchText"
+            (ngModelChange)="resetActiveOption()"
             (click)="$event.stopPropagation()"
-            (keydown)="$event.stopPropagation()"
+            (keydown)="onSearchKeydown($event)"
           />
         </div>
       </mat-option>

@@ -1,4 +1,4 @@
-import { Component, computed, input, model, output } from '@angular/core'
+import { Component, ElementRef, computed, input, model, output, viewChild } from '@angular/core'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
@@ -54,7 +54,20 @@ export class SearchFilterComponent {
     return this.multiSelect() ? filter.selectedValues : filter.selectedValues[0] ?? ''
   })
 
+  readonly selectedCount = computed(() => {
+    const values = this.selectedValues()
+    return Array.isArray(values) ? values.length : values ? 1 : 0
+  })
+
+  readonly firstSelected = computed(() => {
+    const values = this.selectedValues()
+    return this.getCleanValue(Array.isArray(values) ? values[0] ?? '' : values)
+  })
+
   searchText = ''
+
+  private readonly searchInput = viewChild<ElementRef<HTMLInputElement>>('searchInput')
+  private readonly matSelect = viewChild<MatSelect>('matSelect')
 
   get filteredData() {
     const filter = this.filter()
@@ -133,6 +146,26 @@ export class SearchFilterComponent {
       this.isOpenData.isOpen = true
       this.isOpenData.targetFilter = filter?.filterType ?? ''
       this.isOpen.emit(this.isOpenData)
+      this.searchInput()?.nativeElement.focus() // keyboard users start in the search field (WCAG 2.1.1)
+    } else if (document.activeElement === document.body) {
+      this.matSelect()?.focus() // the focused input was removed with the panel; give focus back (WCAG 2.4.3)
+    }
+  }
+
+  // Filtering re-renders the options; without this the key manager keeps pointing at a removed one
+  public resetActiveOption(): void {
+    setTimeout(() => {
+      const select = this.matSelect()
+      // the open panel does not skip disabled options, so skip the search row by hand
+      const first = select?.options.toArray().findIndex((option) => !option.disabled) ?? -1
+      if (first >= 0) select?._keyManager.setActiveItem(first)
+    })
+  }
+
+  // Typing stays in the input; navigation keys still reach mat-select (options, close, tab out)
+  public onSearchKeydown(event: KeyboardEvent): void {
+    if (!['ArrowDown', 'ArrowUp', 'Enter', 'Escape', 'Tab'].includes(event.key)) {
+      event.stopPropagation()
     }
   }
 }

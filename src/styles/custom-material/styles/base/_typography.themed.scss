@@ -77,7 +77,7 @@
 
   a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(
       .command-bar__scenario-link
-    ):not(.dashboard-link) {
+    ):not(.dashboard-link):not(.num-nav-link) {
     color: mat.m2-get-color-from-palette($primary, 500);
     font-size: 16px;
     font-weight: 400 !important;

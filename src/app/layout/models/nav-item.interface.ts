@@ -1,8 +1,9 @@
-export default interface INavItem {
-  routeTo: string
+export default interface NavItemData {
+  routeTo?: string // omitted = non-link group label
   icon?: string
   svgIcon?: string
   translationKey: string
-  tabNav?: INavItem[]
+  tabNav?: NavItemData[]
   id?: string
+  children?: NavItemData[]
 }

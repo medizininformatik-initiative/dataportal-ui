@@ -519,10 +519,24 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Startseite",
-    "DATAQUERY": "Datendefinition",
-    "DATASELECTION": "Merkmalselektion",
+    "DATAQUERY": {
+      "COHORT_DEFINITION": "Kohortendefinition",
+      "DATASELECTION_DEFINITION": "Merkmaldefinition",
+      "TITLE": "Datendefinition"
+    },
+    "DATASELECTION": {
+      "EDITOR": "Merkmale",
+      "SEARCH": "Merkmalsuche",
+      "TITLE": "Merkmalselektion"
+    },
     "OPTIONS": "Einstellungen",
-    "QUERYBUILDER_EDITOR": "Kohortenselektion",
+    "QUERYBUILDER_EDITOR": {
+      "BULK_SEARCH": "Bulksuche",
+      "EDITOR": "Kriterieneditor",
+      "SEARCH": "Kriteriensuche",
+      "SEARCH_GROUP": "Suche",
+      "TITLE": "Kohortenselektion"
+    },
     "QUERYBUILDER_OVERVIEW": "Gespeicherte Datendefinitionen",
     "QUERYBUILDER_RESULT": "Machbarkeitsabfrage senden",
     "SIGNOUT": "Abmelden"
@@ -576,6 +590,7 @@
       "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
       "RESOURCETYPE": "FHIR Datentyp",
       "SEARCH": "Suchen...",
+      "SELECTED_COUNT": "{{count}} von {{total}} ausgewählt",
       "TERMINOLOGY": "Terminologie"
     },
     "HEADER": {

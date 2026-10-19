@@ -38,6 +38,30 @@ export class TableBodyComponent {
 
   readonly iconClicked = output<TableRowData>()
 
+  activeIndex = 0
+
+  public onRowKeydown(event: KeyboardEvent, row: TableRowData): void {
+    const rowEl = event.currentTarget as HTMLElement
+    if (event.target !== rowEl) return
+    const move = { ArrowDown: rowEl.nextElementSibling, ArrowUp: rowEl.previousElementSibling }[
+      event.key
+    ] as HTMLElement | null | undefined
+    if (move) {
+      event.preventDefault()
+      move.focus()
+    } else if (event.key === 'Enter' && row.isClickable) {
+      this.onRowClick(row)
+    } else if (
+      event.key === ' ' &&
+      row.cells.some(
+        (c) => c.type === TableCellKind.CHECKBOX || c.type === TableCellKind.CHECKBOXTEXT
+      )
+    ) {
+      event.preventDefault()
+      this.onCheckboxSelect(row)
+    }
+  }
+
   public onIconClick(row: TableRowData): void {
     this.iconClicked.emit(row)
   }

@@ -24,11 +24,7 @@ export class EditorActionBarComponent implements OnInit {
   ngOnInit(): void {}
 
   navigateToSearch(): void {
-    this.navigation.navigateToFeasibilityQuerySearch()
-  }
-
-  navigateToBulkCriteriaSearch(): void {
-    this.navigation.navigateToFeasibilityQueryBulkSearch()
+    this.navigation.navigateBackToFeasibilitySearch()
   }
 
   sendRequest(): void {

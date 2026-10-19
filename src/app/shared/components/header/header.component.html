@@ -1,5 +1,7 @@
-<p class="header-font">
-  <ng-content></ng-content>
+<div class="header-font">
+  <h1 class="header-title">
+    <ng-content></ng-content>
+  </h1>
   @if (showToggle()) {
   <button
     class="toggle-btn"
@@ -13,4 +15,4 @@
     <fa-icon [icon]="(toggleService.visible$ | async) ? 'eye-slash' : 'eye'"></fa-icon>
   </button>
   }
-</p>
+</div>

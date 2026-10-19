@@ -27,6 +27,9 @@ export class LanguageComponent implements OnInit {
 
     const browserLang = translate.getBrowserLang()
     translate.use(this.languages.includes(browserLang) ? browserLang : 'de')
+
+    // screen readers pick their voice from <html lang>
+    translate.onLangChange.subscribe(({ lang }) => (document.documentElement.lang = lang))
   }
 
   ngOnInit(): void {}

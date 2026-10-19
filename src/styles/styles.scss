@@ -48,10 +48,15 @@
    --font-size-sm        : secondary / label text size
    --line-height-md      : line-height for font-size-md
    --line-height-sm      : line-height for font-size-sm
+   --font-size-nav       : side-menu main item text size (18px at default)
+   --line-height-nav     : line-height for font-size-nav
+   --font-size-nav-child : side-menu sub-item text size (16px at default)
+   --line-height-nav-child: line-height for font-size-nav-child
 
    Text colours
    --color-text-primary  : main body text
    --color-text-secondary: muted / meta text
+   --color-text-placeholder: input placeholder text (~5.7:1 on white, WCAG 1.4.3 needs 4.5:1)
 
    Brand accent
    --color-accent        : primary blue
@@ -61,11 +66,20 @@
 
    Borders & Radius
    --border-color        : default rule / divider colour
+   --border-color-hover  : input / select border on hover (not focused)
    --border-radius-card  : standard card corner radius
    --border-radius-sm    : compact corner radius (inputs, chips, small controls)
 
    Transitions
    --transition-shadow   : hover shadow transition shorthand
+   --transition-control  : duration + easing for form-control state changes
+
+   Form controls
+   --size-checkbox       : checkbox width/height (outer, incl. border)
+   --border-width-control: border width of form controls
+   --focus-ring-width    : focus-visible outline width
+   --focus-ring-offset   : gap between control and focus outline
+   --opacity-disabled    : opacity of disabled controls
 
    Shadow tokens
    --shadow-card         : resting elevation for cards / raised rows
@@ -74,6 +88,7 @@
    --shadow-panel        : structural panel separation (sidenav, editor)
    --shadow-menu         : floating menus / dropdowns
    --shadow-modal        : modals / dialogs
+   --shadow-control      : small checked/active controls (checkbox)
 ──────────────────────────────────────────────────────────────── */
 :root {
   /* Typography */
@@ -82,10 +97,16 @@
   --font-size-sm: 12px;
   --line-height-md: 19px;
   --line-height-sm: 16px;
+  /* rem, not px: follows the user's browser font-size setting (WCAG 1.4.4) */
+  --font-size-nav: 1.125rem;
+  --line-height-nav: 1.625rem;
+  --font-size-nav-child: 1rem;
+  --line-height-nav-child: 1.5rem;
 
   /* Text colours */
   --color-text-primary: #000000;
   --color-text-secondary: #6a7483;
+  --color-text-placeholder: #5f6773;
   --color-text-section: #5f6266;
 
   /* Type weights (fix previously-dead var() fallbacks — see spacing note above) */
@@ -97,6 +118,7 @@
 
   /* Borders & radius */
   --border-color: #c5cacf;
+  --border-color-hover: var(--color-text-primary);
   --border-radius-card: 5px;
   --border-radius-sm: 4px;
 
@@ -110,6 +132,7 @@
      --spacing-2/5/6/10/30 are tracked exceptions, not on the 4px grid —
      kept only because each was already in repeated use. Prefer a grid
      value in new code. */
+  --spacing-1: 1px; /* exception: hairline inset */
   --spacing-4: 4px;
   --spacing-8: 8px;
   --spacing-12: 12px;
@@ -129,6 +152,14 @@
 
   /* Transitions */
   --transition-shadow: box-shadow 0.2s ease;
+  --transition-control: 0.15s ease;
+
+  /* Form controls */
+  --size-checkbox: 18px;
+  --border-width-control: 1px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+  --opacity-disabled: 0.4;
 
   /* Shadows */
   --shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -137,6 +168,7 @@
   --shadow-panel: -4px 0 20px rgba(0, 0, 0, 0.1);
   --shadow-menu: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-modal: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --shadow-control: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 html,

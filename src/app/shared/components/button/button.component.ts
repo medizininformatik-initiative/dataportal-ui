@@ -16,4 +16,5 @@ export class ButtonComponent {
   readonly type = input<'blue' | 'green' | 'red' | 'cancel'>('blue')
   readonly isDisabled = input<boolean>(false)
   readonly tooltip = input<string>(undefined)
+  readonly ariaLabel = input<string>()
 }

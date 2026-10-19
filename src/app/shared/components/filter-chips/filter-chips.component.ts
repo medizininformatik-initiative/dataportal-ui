@@ -56,4 +56,12 @@ export class FilterChipsComponent {
       .map((chip) => this.translation.transform(chip.text))
       .join(' • ')
   }
+
+  public buildChipText(chip: FilterChipPropertyData): string {
+    let label = this.translation.transform(chip.text)
+    if (chip.labelNumber && chip.labelNumber > 0) {
+      label += ` (${chip.labelNumber})`
+    }
+    return label
+  }
 }
