@@ -1,0 +1,6 @@
+// CSS variables for text colors, from the theme's foreground map.
+@mixin text-color-variables_themed($theme) {
+  --color-text-primary: #{foreground-color($theme, text)};
+  --color-text-secondary: #{foreground-color($theme, secondary-text)};
+  --color-text-section: #{foreground-color($theme, section-text)};
+}

@@ -1,0 +1,26 @@
+@mixin mat-tooltip_themed($theme) {
+  /* ── Mat tooltip — redesigned to match UI design system ─────── */
+
+  /* Mixin is intentionally empty; all overrides are global below  */
+}
+
+/* Global overrides (no theme variable needed) */
+.mat-mdc-tooltip .mdc-tooltip__surface {
+  /* Shape & spacing */
+  border-radius: 5px !important;
+  padding: 8px 12px !important;
+  max-width: 240px !important;
+
+  /* Surface */
+  background-color: #ffffff !important;
+  border: 1px solid #c3c7cd !important;
+  box-shadow: var(--shadow-menu) !important;
+
+  /* Typography — Open Sans body style */
+  font-family: 'Open Sans', sans-serif !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 17px !important;
+  color: #5f6266 !important;
+}

@@ -1,0 +1,42 @@
+@mixin button-cancel($theme) {
+  $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+  .num-button.cancel {
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    height: 42px;
+    padding: 9px 18px;
+    border-radius: 5px;
+    letter-spacing: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    opacity: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: $raised-shadow;
+    border: 1px solid role-color($theme, accent, 200);
+    background: role-color($theme, neutral, 50);
+    color: role-color($theme, accent, 600);
+
+    &:hover:not(.disabled) {
+      background: role-color($theme, neutral, 100);
+      color: role-color($theme, accent, 400);
+      box-shadow: rgba(role-color($theme, accent, 600), 0.13) 0 4px 16px;
+    }
+
+    &.cdk-keyboard-focused {
+      background: role-color($theme, neutral, 100);
+    }
+
+    &.disabled {
+      background: role-color($theme, neutral, 50);
+      color: role-color($theme, neutral, 400);
+      border-color: role-color($theme, neutral, 300);
+      box-shadow: none;
+      cursor: unset;
+    }
+  }
+}

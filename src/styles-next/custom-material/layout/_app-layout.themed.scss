@@ -1,0 +1,94 @@
+@use '@angular/material' as mat;
+
+@mixin app-layout_themed($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $name: map-get($theme, name);
+
+  // ── Shared logo wrapper (header + sidenav border alignment) ───────────────
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    flex-shrink: 0;
+    border-right: 2px solid mat.m2-get-color-from-palette($primary, 100);
+  }
+
+  // ── Sidenav container ──────────────────────────────────────────────────────
+  // Offset container + sidenav panel below the fixed header (108 px)
+  .sidenav-container {
+    z-index: unset;
+
+    &.mat-drawer-container {
+      top: 108px;
+      background-color: #ffffff;
+    }
+
+    .mat-drawer-side {
+      bottom: 0 !important;
+      border-right: none;
+      overflow: hidden;
+
+      .mat-drawer-inner-container {
+        overflow: hidden;
+      }
+    }
+    mat-sidenav.mat-drawer-side {
+      top: 108px !important;
+    }
+    // ── Sidenav panel sizing ───────────────────────────────────────────────
+    mat-sidenav {
+      &.expanded {
+        width: 320px;
+      }
+
+      &.collapsed {
+        width: 64px;
+      }
+    }
+
+    // ── Side menu slot ─────────────────────────────────────────────────────
+    .side-menu {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    // ── Scrollable content area ────────────────────────────────────────────
+    mat-sidenav-content {
+      overflow-x: hidden;
+      overflow-y: auto;
+      z-index: unset;
+    }
+
+    // ── Row wrapper (direct child of mat-sidenav-content) ─────────────────
+    .content-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      min-height: 100%;
+      width: 100%;
+      height: 100%;
+    }
+
+    // ── Main page content ──────────────────────────────────────────────────
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex: 1 1 auto;
+      width: 95%;
+      max-width: 95%;
+      height: 100%;
+      box-sizing: border-box;
+      overflow: auto;
+    }
+
+    // ── Route animation host ───────────────────────────────────────────────
+    .fullscreen {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

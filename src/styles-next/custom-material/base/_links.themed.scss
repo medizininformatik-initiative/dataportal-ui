@@ -1,0 +1,28 @@
+// Global style for text links (<a>). Links that Material styles itself (buttons, list items, tab links) are excluded.
+@mixin links_themed($theme) {
+  a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link) {
+    color: role-color($theme, neutral, 500);
+    font-size: 16px;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    letter-spacing: 0.5px !important;
+
+    &:hover {
+      color: role-color($theme, accent, 500);
+    }
+
+    &:not(.no-focus):focus {
+      color: role-color($theme, neutral, 500);
+      outline: none;
+      background: role-color($theme, accent, 200);
+    }
+
+    &:active {
+      color: role-color($theme, neutral, 500);
+    }
+
+    &:visited {
+      color: role-color($theme, neutral, 300);
+    }
+  }
+}

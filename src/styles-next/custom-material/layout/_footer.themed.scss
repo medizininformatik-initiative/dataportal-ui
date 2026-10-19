@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+@mixin footer_themed($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $name: map-get($theme, name);
+
+  @if ($name == 'fdpg') {
+    .num-footer {
+      background: role-color($theme, neutral, 0);
+      color: mat.m2-get-contrast-color-from-palette($primary, 200);
+      border-top: 1px rgba(0, 0, 0, 0.2) solid;
+    }
+  }
+  .mat-toolbar-multiple-rows {
+    box-sizing: content-box;
+  }
+}

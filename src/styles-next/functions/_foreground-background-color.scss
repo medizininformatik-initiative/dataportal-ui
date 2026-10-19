@@ -1,0 +1,27 @@
+@use 'sass:map';
+
+// foreground-color($theme, $key) / surface-color($theme, $key)
+//
+// Purpose: read a text/divider color or a surface color from the theme by purpose (key), not by hex.
+//   foreground = what is drawn on top (text, dividers)  -> themes/fdpg-light/_foreground.scss
+//   background = surfaces (page, card, dialog)          -> themes/fdpg-light/_background.scss
+// Brand colors (accent, danger, ...) are not here: use role-color for them.
+// The function is named surface-color, not background-color, so it cannot be mixed up with the CSS property.
+// A missing key gives null (no error), so check the CSS output.
+//
+// Example, used in a component mixin (custom-material/components/_search-input.themed.scss):
+//   @mixin drop-down-search-theme($theme) {
+//     .container-search-input {
+//       background-color: surface-color($theme, card);     // was: mat.m2-get-color-from-palette($background, card)
+//     }
+//     .hint {
+//       color: foreground-color($theme, secondary-text);   // #6a7483
+//     }
+//   }
+@function foreground-color($theme, $key) {
+  @return map.get(map.get($theme, foreground), $key);
+}
+
+@function surface-color($theme, $key) {
+  @return map.get(map.get($theme, background), $key);
+}

@@ -1,0 +1,15 @@
+// Background colors of "FDPG Light": surfaces, what is drawn first (page, cards, dialogs).
+// Key names follow Angular Material's M2 background map (`background`, `card`, `dialog`),
+// so this map can later replace the `background` of the Material theme.
+//
+// All values come from a palette (no hex).
+//
+// Read with: map.get($fdpg-light-background, card)
+@use 'sass:map';
+@import '../../palettes/grey.palette';
+
+$fdpg-light-background: (
+  background: map.get($num-grey-palette, 50),
+  card: map.get($num-grey-palette, 0),
+  dialog: map.get($num-grey-palette, 0),
+);

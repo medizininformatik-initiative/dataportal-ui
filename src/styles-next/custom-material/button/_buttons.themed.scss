@@ -1,0 +1,35 @@
+@import './button-base.themed';
+@import './button-color.themed';
+@import './button-cancel.themed';
+
+@mixin buttons($theme) {
+  @include button-base($theme);
+  @include button-color(
+    $theme,
+    'blue',
+    role-color($theme, accent, 500),
+    role-color($theme, accent, 600),
+    125px,
+    15px,
+    $focus: role-color($theme, accent, 700)
+  );
+  @include button-color(
+    $theme,
+    'green',
+    role-color($theme, secondary, 500),
+    role-color($theme, secondary, 600),
+    119px,
+    4px,
+    $outline: true,
+    $focus: role-color($theme, secondary, 700)
+  );
+  @include button-color(
+    $theme,
+    'red',
+    role-color($theme, danger, 500),
+    role-color($theme, danger, 300),
+    119px,
+    15px
+  );
+  @include button-cancel($theme);
+}

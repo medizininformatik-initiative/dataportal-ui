@@ -1,0 +1,42 @@
+// Theme "FDPG Light": builds the $theme map that all mixins receive.
+// palettes (hex) -> roles.scss (role -> palette) -> material.scss (Material format) -> here
+// foreground.scss / background.scss: text and surface colors, read with foreground-color / surface-color
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+@import './roles';
+@import './typography';
+@import './material';
+@import './foreground';
+@import './background';
+
+// Proper Angular Material M2 theme (satisfies Angular Material 18 theming API)
+$_fdpg-mat-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $num-portal-webapp-primary-fdpg,
+      accent: $num-portal-webapp-accent-fdpg,
+      warn: $num-portal-webapp-warn,
+    ),
+    typography: $num-typography,
+    density: 0,
+  )
+);
+
+// Extend the M2 theme with flat custom keys that the application's mixins
+// access via map-get($theme, key) for backward compatibility.
+$num-portal-webapp-theme-fdpg: map.merge(
+  $_fdpg-mat-theme,
+  (
+    primary: $num-portal-webapp-primary-fdpg,
+    accent: $num-portal-webapp-accent-fdpg,
+    green: $num-portal-webapp-green,
+    red: $num-portal-webapp-red,
+    warn: $num-portal-webapp-warn,
+    roles: $fdpg-light-roles,
+    name: 'fdpg',
+    num-typography: $num-typography,
+    foreground: $fdpg-light-foreground,
+    background: $fdpg-light-background,
+  )
+);

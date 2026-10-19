@@ -1,0 +1,17 @@
+// Foreground colors of "FDPG Light": what is drawn on top of a surface (text, dividers).
+// Key names follow Angular Material's M2 foreground map (`text`, `secondary-text`, `divider`),
+// so this map can later replace the `foreground` of the Material theme.
+//
+// Shades of a palette are taken from the palette (no hex). Values that match no palette shade
+// (the text colors) are defined here.
+//
+// Read with: map.get($fdpg-light-foreground, text)
+@use 'sass:map';
+@import '../../palettes/grey.palette';
+
+$fdpg-light-foreground: (
+  text: #000000,
+  secondary-text: #6a7483,
+  section-text: #5f6266,
+  divider: map.get($num-grey-palette, 300),
+);

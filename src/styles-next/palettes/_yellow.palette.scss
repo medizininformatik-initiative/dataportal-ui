@@ -1,0 +1,25 @@
+// Yellow ramp. 500 = #eeb70c (the old warning color), hue 44. Other shades generated at the same hue and saturation.
+$num-yellow-palette: (
+  50: #fefaec,
+  100: #fcf0c9,
+  200: #fae39c,
+  300: #f7d467,
+  400: #f5c635,
+  500: #eeb70c,
+  600: #d4a30b,
+  700: #b78d09,
+  800: #997508,
+  900: #7e6106,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #ffffff,
+  ),
+);

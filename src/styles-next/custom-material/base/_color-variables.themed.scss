@@ -1,0 +1,37 @@
+@mixin color-variables_themed($theme) {
+  // ── Primary palette exports ────────────────────────────────────────────────
+  // Used by: feasibility-query search component
+  --num-color--primary: #{role-color($theme, neutral, 500)};
+
+  // Used by: dashboard (border/conic gradient), user-menu (icon color)
+  --num-color--primary-blue: #{role-color($theme, accent, 500)};
+
+  // Used by: data-selection search, editor action bars, bulk-search action bar
+  --num-color--primary-green: #{role-color($theme, secondary, 500)};
+
+  // ── Accent palette exports ─────────────────────────────────────────────────
+  // Used by: between-filter (range track fill)
+  --num-color--accent-200: #{role-color($theme, accent, 200)};
+
+  // Used by: dashboard (text), selected-items-list, menu (icon), ui-classes (card link)
+  --num-color--accent-400: #{role-color($theme, accent, 400)};
+
+  // Used by: between-filter (range thumb)
+  --num-color--accent-600: #{role-color($theme, accent, 600)};
+
+  // Brand accent. Used by: ~55 components (criteria-stage, display-criteria, header, ...)
+  --color-accent: #{role-color($theme, accent, 500)};
+  --color-accent-bg: #{rgba(role-color($theme, accent, 500), 0.1)};
+  --color-accent-border: #{rgba(role-color($theme, accent, 500), 0.2)};
+  --color-accent-strong: #{role-color($theme, accent, 600)};
+
+  // ── Status colours ─────────────────────────────────────────────────────────
+  // Used by: searchbar (validation error colour)
+  --num-color--warn: #{role-color($theme, warning, 500)};
+
+  // Used by: searchbar (fallback when --num-color--warn is unavailable)
+  --num-color--red: #{role-color($theme, danger, 500)};
+
+  // Used by: ~38 component files (default rule / divider colour)
+  --border-color: #{foreground-color($theme, divider)};
+}

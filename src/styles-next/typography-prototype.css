@@ -1,0 +1,134 @@
+/* ============================================================================
+   TYPOGRAPHY PROTOTYPE (draft 1, 2026-10-19) - NOT imported anywhere.
+   Plain CSS on purpose: edit values here, look at them, then port to Sass
+   (@use/@forward modules) in themes/fdpg-light/_typography.scss.
+   See PLAN-design-tokens.md.
+
+   SOURCE: all 188 .scss files in src/app + src/styles-next, parsed by script (207 rule blocks
+   with font props). Counts = number of declarations, not unique components.
+
+   ---------------------------------------------------------------------------
+   WHAT EXISTS TODAY (findings)
+   ---------------------------------------------------------------------------
+   1. A token layer already exists: styles.scss :root
+        --font-body 'Titillium Web' | --font-size-md 14px | --font-size-sm 12px
+        --font-size-lg 20px | --line-height-md 19px | --line-height-sm 16px
+        --font-weight-normal 400 | --font-weight-bold 600
+      Used a lot: font-size-md 51x, font-size-sm 31x, font-weight-bold 29x,
+      line-height-md 15x, line-height-sm 9x, font-body 36x.
+      --font-size-lg is used only 2x. Prototype below builds ON these, no new names for them.
+   2. Four utility classes already ARE levels: .num-text-body (14/19/400),
+      .num-text-label (14/19/600), .num-text-meta (12/16/400), .num-text-accent (14/19/400, blue).
+      Only 8 uses in src/app, so most components re-declare the same values by hand.
+   3. Two real families, by purpose:
+        'Titillium Web'  UI text (36 via var, ~8 literal). Self-hosted (assets/font, 6 files).
+        'Open Sans'      21 literals: tables, table cells, tree, tooltips, action bar, filter chips,
+                         user button, bool-logic switch. = "data / dense text".
+                         Loaded from fonts.googleapis.com (index.html), weights 400/600/700 ONLY.
+                         => any 300/500 on Open Sans silently falls back to the nearest weight.
+                            Also: external request (privacy / offline / GDPR check for a health portal).
+      'Roboto' is self-hosted (3 files) but only used 3x as literal + 1x in a system stack
+      (snackbar.component.scss: -apple-system ... Roboto ... = one-off, matches no theme font).
+      Roboto is also Material's default font; check if still referenced after Material removal.
+   4. Font-size values in use (px unless noted), count of declarations:
+        14px 51+2(0.875rem 3) | 12px 31+4 | 16px 18+2 | 18px 11 | 24px 4+2 | 20px 2 (lg)
+        1.1rem 3 (17.6px) | 1.25rem 3 (20px) | 0.95rem 2 (15.2px) | 1.2rem 1 (19.2px)
+        1rem 2 | 13px 2 | 10px 2 | 30px 1 (site header) | 28px 1 | 1.25em 1
+        keywords: medium 6, large 2, small 1  (browser default 16px / 18px / 13px)
+      => 6 distinct sizes carry 90 percent of uses (12, 14, 16, 18, 20/1.25rem, 24).
+         Outliers (0.95rem, 1.1rem, 1.2rem, 13px, 10px, 28px) look accidental; decide per case.
+   5. Line-height in use: var(md) 15x, var(sm) 9x, 24px 9+3, unitless 1 7x, 12px 5x, 22px 4x,
+      14px 3, 16px 2+1, 20/21/17/19/32/46px 1-2 each, unitless 1.2 / 1.4 once each.
+      Pairing is mostly: 12/16, 14/19, 16/24, 18/22, 24/32.
+      Unitless 1 is used for icons / badges / switch labels (single line boxes), not for text blocks.
+   6. Font-weight in use: var(bold)=600 29x, 500 27x, 700 14x, 400 12+4, var(normal)=400 9x,
+      600 7+3, keyword bold 6x, 300 3x, keyword normal 1x.
+      TRAP: keyword `bold` = 700, but --font-weight-bold = 600. Same word, two values.
+      Weights actually in play: 300, 400, 500, 600, 700 (5). Target: 3 (400, 500 or 600, 700).
+   7. Letter-spacing: set only in headings (h1 -0.63px, h2 -0.23px, h3/h4/h5 0), plus 6 one-offs.
+      Note: Material config in the NEW tree gives 0.03125em on body-2/button/caption (old tree: normal).
+      This is the open regression from the styles-next diff; this file fixes it by owning letter-spacing.
+   8. Headings (effective values, compiled): h1 24/32/400 (theme .mat-h1) + letter-spacing -0.63px,
+      h2 20/32/500 + -0.23px, h3 16/28/400, h4 16/24/400, h5 16/24/400 (forced !important in
+      _headings.themed.scss), site header .header-font 30/46/700.
+   9. Material levels currently set: body-2 16/24/500, button 14/16/400, caption 14/16/300 (+ M2 defaults for
+      the rest). Plan step "Chrome DevTools check" still decides if any of these are needed.
+
+   ---------------------------------------------------------------------------
+   DRAFT LEVELS
+   Rule used: a level exists only if it is used >= 3x today OR is a heading. Values taken from
+   the real tuples, not invented. "maps" = what it would replace.
+   ---------------------------------------------------------------------------
+   level          family  size/line   weight  maps (examples)
+   display        brand   30/46       700     .header-font (1x) - maybe not a level, one-off
+   heading-1      brand   24/32       400     h1, breadcrumb separator (24px 5x)
+   heading-2      brand   20/32       500     h2, --font-size-lg
+   title          brand   18/22       600     header-description (3x), error-title (2x), logic-switch label (18px 5x)
+   body-large     brand   16/24       400     h4, h5, list-item-details (16px 18x total)
+   body-large-strong brand 16/24      600     save-file-modal input, section-name header
+   body           brand   14/19       400     --font-size-md/--line-height-md, .num-text-body (51+15x)
+   body-strong    brand   14/19       600     --font-weight-bold + md, .num-text-label (29x)
+   meta           brand   12/16       400     --font-size-sm/--line-height-sm, .num-text-meta (31+9x)
+   meta-strong    brand   12/16       600     searchbar labels, mark
+   data           text    14/19       400     tables, tree, tooltips (Open Sans, 21x)
+   data-strong    text    14/19       600     table header, labels in table cells
+   data-small     text    12/16       600     action-bar .selection-text (12/16/600), filter chips
+   badge          text    12/12       700     action-bar .count-badge (single line)
+   ========================================================================== */
+
+:root {
+  /* ---- families (2) ---- */
+  --font-brand: 'Titillium Web', sans-serif;      /* = today --font-body */
+  --font-text: 'Open Sans', sans-serif;           /* data, tables, dense text; see finding 3 */
+
+  /* ---- weights (names, not numbers; see finding 6) ---- */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;                      /* only if h2 / 500 usages are kept (27x) */
+  --font-weight-semibold: 600;                    /* = today --font-weight-bold */
+  --font-weight-bold: 700;                        /* keyword `bold` today. NAME CLASH: renamed on purpose */
+
+  /* ---- levels: size / line-height (weight + family set per class below) ---- */
+  --type-display-size: 30px;       --type-display-line: 46px;
+  --type-heading-1-size: 24px;     --type-heading-1-line: 32px;
+  --type-heading-2-size: 20px;     --type-heading-2-line: 32px;
+  --type-title-size: 18px;         --type-title-line: 22px;
+  --type-body-large-size: 16px;    --type-body-large-line: 24px;
+  --type-body-size: 14px;          --type-body-line: 19px;     /* = --font-size-md / --line-height-md */
+  --type-meta-size: 12px;          --type-meta-line: 16px;     /* = --font-size-sm / --line-height-sm */
+  --type-badge-size: 12px;         --type-badge-line: 12px;
+}
+
+/* ---- level classes (prototype of the Sass mixin `type-style($theme, $level)`) ---- */
+.type-display          { font: var(--font-weight-bold)     var(--type-display-size)/var(--type-display-line)       var(--font-brand); }
+.type-heading-1        { font: var(--font-weight-regular)  var(--type-heading-1-size)/var(--type-heading-1-line)   var(--font-brand); letter-spacing: -0.63px; }
+.type-heading-2        { font: var(--font-weight-medium)   var(--type-heading-2-size)/var(--type-heading-2-line)   var(--font-brand); letter-spacing: -0.23px; }
+.type-title            { font: var(--font-weight-semibold) var(--type-title-size)/var(--type-title-line)           var(--font-brand); }
+.type-body-large       { font: var(--font-weight-regular)  var(--type-body-large-size)/var(--type-body-large-line) var(--font-brand); }
+.type-body-large-strong{ font: var(--font-weight-semibold) var(--type-body-large-size)/var(--type-body-large-line) var(--font-brand); }
+.type-body             { font: var(--font-weight-regular)  var(--type-body-size)/var(--type-body-line)             var(--font-brand); }
+.type-body-strong      { font: var(--font-weight-semibold) var(--type-body-size)/var(--type-body-line)             var(--font-brand); }
+.type-meta             { font: var(--font-weight-regular)  var(--type-meta-size)/var(--type-meta-line)             var(--font-brand); }
+.type-meta-strong      { font: var(--font-weight-semibold) var(--type-meta-size)/var(--type-meta-line)             var(--font-brand); }
+.type-data             { font: var(--font-weight-regular)  var(--type-body-size)/var(--type-body-line)             var(--font-text); }
+.type-data-strong      { font: var(--font-weight-semibold) var(--type-body-size)/var(--type-body-line)             var(--font-text); }
+.type-data-small       { font: var(--font-weight-semibold) var(--type-meta-size)/var(--type-meta-line)             var(--font-text); }
+.type-badge            { font: var(--font-weight-bold)     var(--type-badge-size)/var(--type-badge-line)           var(--font-text); }
+
+/* ============================================================================
+   OPEN QUESTIONS (decide while reviewing this file)
+   ----------------------------------------------------------------------------
+   Q1  Two families by purpose (brand vs text), or merge to Titillium Web only?
+       Merging drops the external Google Fonts request and 21 literals. Visual change in tables.
+   Q2  Weight 500 (27x) vs 600 (29x+10x): are both needed? One "strong" would remove a level.
+       Open Sans has no 500 loaded, so 500 + Open Sans renders as 400 today.
+   Q3  `bold` keyword (6x, =700) vs --font-weight-bold (=600): unify to 600?
+   Q4  Outlier sizes (0.95rem, 1.1rem, 1.2rem, 13px, 10px, 28px, keywords medium/large):
+       snap to nearest level? Each is a visible 1-2px change.
+   Q5  rem vs px: today mixed. Levels in px keep CSS output identical; rem respects user font size
+       (accessibility, WCAG 1.4.4). Recommendation: decide before porting, switching later changes
+       every value.
+   Q6  Line-height unitless `1` (7x) for icons/badges: keep out of levels (layout, not typography)?
+   Q7  `display` (30/46/700) has 1 use: level or one-off in header?
+   Q8  Level names are placeholders (like role names). Material names (body-1, caption) avoided on purpose.
+   Q9  Keep the .num-text-* utility classes as aliases of the new levels, or delete after migration?
+   ========================================================================== */

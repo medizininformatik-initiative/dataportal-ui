@@ -1,0 +1,56 @@
+@use '@angular/material' as mat;
+@import '../functions/role-color';
+@import '../functions/foreground-background-color';
+
+/* base */
+@import './base/color-variables.themed';
+@import './base/text-color-variables.themed';
+@import './base/divider-classes.themed';
+@import './base/headings.themed';
+@import './base/links.themed';
+
+/* layout */
+@import './layout/app-layout.themed';
+@import './layout/header.themed';
+@import './layout/footer.themed';
+@import './layout/side-menu.component.themed';
+
+/* material */
+@import './material/mat-chip.themed';
+@import './material/mat-expansion-panel.themed';
+@import './material/mat-tooltip.themed';
+
+/* buttons */
+@import './button/buttons.themed';
+
+/* components */
+@import './components/lang-toggle-button.themed';
+@import './components/search-input.themed';
+@import './components/general_table.themed';
+@import './components/checkbox.themed';
+@import './components/action-bar.themed';
+@import './components/filter-chips.themed';
+
+/* export themed mixins */
+@mixin custom-material_themed($theme) {
+  @include color-variables_themed($theme);
+  @include text-color-variables_themed($theme);
+  @include divider-classes_themed($theme);
+  @include app-layout_themed($theme);
+  @include side-menu-component_themed($theme);
+  @include language-component_themed($theme);
+  @include general_table_themed($theme);
+  @include footer_themed($theme);
+  @include header_themed($theme);
+  @include mat-tooltip_themed($theme);
+  @include mat.all-component-typographies(map-get($theme, num-typography));
+  @include headings_themed($theme);
+  @include links_themed($theme);
+  @include buttons($theme);
+  @include mat-chip_themed($theme);
+  @include mat-expansion-panel_themed($theme);
+  @include drop-down-search-theme($theme);
+  @include checkbox_themed($theme);
+  @include action-bar_themed($theme);
+  @include filter-chips_themed($theme);
+}

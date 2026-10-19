@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+//@import '@angular/material/theming';
+
+@mixin drop-down-search-theme($theme) {
+  $background: map-get($theme, background);
+
+  .container-search-input {
+    background-color: mat.m2-get-color-from-palette($background, card);
+  }
+
+  .fa-2x {
+    font-size: 1.5em;
+  }
+  .container-search-input .input-field .fa-2x {
+    color: grey;
+  }
+}
