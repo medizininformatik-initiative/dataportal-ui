@@ -6,6 +6,7 @@
 
 @import './roles';
 @import './typography';
+@import './type-roles';
 @import './material';
 @import './foreground';
 @import './background';
@@ -36,6 +37,7 @@ $num-portal-webapp-theme-fdpg: map.merge(
     roles: $fdpg-light-roles,
     name: 'fdpg',
     num-typography: $num-typography,
+    type-roles: $fdpg-light-type-roles,
     foreground: $fdpg-light-foreground,
     background: $fdpg-light-background,
   )

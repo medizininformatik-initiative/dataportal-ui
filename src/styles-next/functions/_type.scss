@@ -1,0 +1,23 @@
+@use 'sass:map';
+
+/* type.vars($theme, $name): writes four CSS variables for one role, named with the prefix --font-<name>-.
+   Parsed as: look up $name in $theme[type-roles], write -family, -weight, -size, -line under the same name.
+   Example: type.vars($theme, 'page-header-title')  ->
+     --font-page-header-title-family: 'Titillium Web', sans-serif;  --font-page-header-title-weight: 600;
+     --font-page-header-title-size: 24px;                           --font-page-header-title-line: 32px;
+   The role names are the keys in themes/fdpg-light/_type-roles.scss. Unknown name gives no values (no error).
+
+   Why four variables and not the CSS shorthand `font`: `font` sets weight, size, line height and family in one
+   property, but it also RESETS everything it does not name (font-style, font-variant such as tabular-nums,
+   font-stretch, font-kerning, font-size-adjust, font-feature-settings) to its default. That is a hidden side effect.
+   Four plain properties set exactly what is written and nothing else. Components write the four lines themselves:
+     font-family: var(--font-page-header-title-family);  font-weight: var(--font-page-header-title-weight);
+     font-size: var(--font-page-header-title-size);      line-height: var(--font-page-header-title-line);
+   Other font properties (see research-usability-typography.md, section 11) are separate lines and are not reset. */
+@mixin vars($theme, $name) {
+  $l: map.get($theme, type-roles, $name);
+  --font-#{$name}-family: #{map.get($l, family)};
+  --font-#{$name}-weight: #{map.get($l, weight)};
+  --font-#{$name}-size: #{map.get($l, size)};
+  --font-#{$name}-line: #{map.get($l, line)};
+}
