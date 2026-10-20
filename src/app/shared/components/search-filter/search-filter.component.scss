@@ -18,7 +18,7 @@
   border: 1px solid var(--color-text-secondary); // WCAG 1.4.11: control boundary needs 3:1
   padding: 0 var(--spacing-16);
   border-radius: var(--border-radius-card);
-  height: 42px;
+  height: 40px;
   width: 152px;
   align-items: center;
   display: flex;
@@ -71,13 +71,16 @@
 }
 
 /* Search input inside mat-select */
-.select-search-input {
+.filter-search-input {
   width: 100%;
   border: none;
   outline: none;
   padding: var(--spacing-4) 0;
   background: transparent;
-  font-size: 1rem;
+  font-family: var(--font-app-content-filter-search-input-family);
+  font-weight: var(--font-app-content-filter-search-input-weight);
+  font-size: var(--font-app-content-filter-search-input-size);
+  line-height: var(--font-app-content-filter-search-input-line);
   color: inherit;
 }
 

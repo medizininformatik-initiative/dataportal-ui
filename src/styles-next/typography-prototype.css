@@ -164,3 +164,6 @@
    Q8  Level names are placeholders (like role names). Material names (body-1, caption) avoided on purpose.
    Q9  Keep the .num-text-* utility classes as aliases of the new levels, or delete after migration?
    ========================================================================== */
+
+/* app-content-search-bar-input: text typed into the searchbar input (C16). Today 14px (token), line normal, weight 400. Longhands (decision 3). */
+.type-app-content-search-bar-input { font-family: var(--font-brand); font-weight: 400; font-size: 16px; line-height: 24px; }

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Typography prototype: search bar input</title>
+  <!-- Open in a browser. Today (14px) vs next (16/24/400) for the searchbar input only. Heights are the same in both columns (not part of this step). Not part of the app. -->
+  <link rel="stylesheet" href="typography-prototype.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1400px;
+    }
+    h1.page {
+      font: 600 18px/24px sans-serif;
+      margin: 24px 0 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+    .col {
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #c5cacf;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin: 0 0 12px;
+    }
+    .box {
+      border: 1px dashed #c5cacf;
+      padding: 8px;
+      margin-bottom: 12px;
+    }
+    .box > small {
+      display: block;
+      font: 11px/14px monospace;
+      color: #6a7483;
+      margin-bottom: 4px;
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+      height: 44px;
+      border: 1px solid #6a7483;
+      border-radius: 4px;
+      background: #fff;
+      color: #1b1b1b;
+    }
+    .bar.focus {
+      border: 2px solid #1b5e9e;
+    }
+    .bar input {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      padding: 0 0 0 12px;
+    }
+    .bar .ic {
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1b5e9e;
+      font-size: 12px;
+    }
+    .sel {
+      margin-top: 8px;
+      display: inline-block;
+      border: 1px solid #6a7483;
+      border-radius: 4px;
+      padding: 9px 16px;
+      width: 152px;
+      font: 400 16px/24px 'Titillium Web', sans-serif;
+      color: #1b1b1b;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .row .sel {
+      margin-top: 0;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 4px;
+      background: #1b5e9e;
+      color: #fff;
+      font: 600 16px/24px 'Titillium Web', sans-serif;
+    }
+
+    /* TODAY: --font-size-md = 14px, line-height normal, weight 400 */
+    .today .bar input {
+      font: 400 14px 'Titillium Web', sans-serif;
+    }
+
+    /* NEXT: role app-content-search-bar-input */
+    .next .bar input {
+      font-family: 'Titillium Web', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    /* NEXT + 40: same role, control height 40 (searchbar and select) */
+    .next40 .bar {
+      height: 40px;
+    }
+    .next40 .sel {
+      padding: 7px 16px;
+    }
+
+    table.spec {
+      border-collapse: collapse;
+      margin-top: 24px;
+      background: #fff;
+    }
+    table.spec td,
+    table.spec th {
+      border: 1px solid #c5cacf;
+      padding: 4px 8px;
+      text-align: left;
+      font: 13px/18px sans-serif;
+    }
+  </style>
+
+  <h1 class="page">Search bar input: today (14px) vs next (16/24/400)</h1>
+  <p class="tag">
+    Only the input text changes. Border, height, colors, icon (12px) are the same in both columns.
+    The select below is unchanged, only there to compare size.
+  </p>
+
+  <div class="grid">
+    <section class="col today">
+      <p class="tag">TODAY</p>
+      <div class="box">
+        <small>placeholder</small>
+        <div class="bar">
+          <input placeholder="Search criteria" />
+          <span class="ic">&#9906;</span>
+        </div>
+      </div>
+      <div class="box">
+        <small>typed text, focus</small>
+        <div class="bar focus">
+          <input value="Diagnose" />
+          <span class="ic">&#9906;</span>
+        </div>
+      </div>
+      <div class="box">
+        <small>neighbours: select 44 total, reset button 40 (both unchanged)</small>
+        <div class="row">
+          <div class="sel">Terminology &#9662;</div>
+          <div class="btn">Filter zur&uuml;cksetzen</div>
+        </div>
+      </div>
+    </section>
+    <section class="col next">
+      <p class="tag">NEXT: role app-content-search-bar-input</p>
+      <div class="box">
+        <small>placeholder</small>
+        <div class="bar">
+          <input class="type-app-content-search-bar-input" placeholder="Search criteria" />
+          <span class="ic">&#9906;</span>
+        </div>
+      </div>
+      <div class="box">
+        <small>typed text, focus</small>
+        <div class="bar focus">
+          <input class="type-app-content-search-bar-input" value="Diagnose" />
+          <span class="ic">&#9906;</span>
+        </div>
+      </div>
+      <div class="box">
+        <small>neighbours: select 44 total, reset button 40 (both unchanged)</small>
+        <div class="row">
+          <div class="sel">Terminology &#9662;</div>
+          <div class="btn">Filter zur&uuml;cksetzen</div>
+        </div>
+      </div>
+    </section>
+    <section class="col next next40">
+      <p class="tag">NEXT + 40px height (just to look)</p>
+      <div class="box">
+        <small>placeholder</small>
+        <div class="bar">
+          <input class="type-app-content-search-bar-input" placeholder="Search criteria" />
+          <span class="ic">&#9906;</span>
+        </div>
+      </div>
+      <div class="box">
+        <small>typed text, focus</small>
+        <div class="bar focus">
+          <input class="type-app-content-search-bar-input" value="Diagnose" />
+          <span class="ic">&#9906;</span>
+        </div>
+      </div>
+      <div class="box">
+        <small>neighbours: select 40 total, reset button 40</small>
+        <div class="row">
+          <div class="sel">Terminology &#9662;</div>
+          <div class="btn">Filter zur&uuml;cksetzen</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <table class="spec">
+    <tr>
+      <th>Element</th>
+      <th>size / line</th>
+      <th>weight</th>
+      <th>source</th>
+      <th>other users today</th>
+    </tr>
+    <tr>
+      <td>input text, today</td>
+      <td>14 / normal</td>
+      <td>400</td>
+      <td><code>searchbar.component.scss:46</code></td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td><b>input text, next</b></td>
+      <td><b>16 / 24</b></td>
+      <td>400</td>
+      <td>
+        role
+        <code>app-content-search-bar-input</code>
+      </td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>control height</td>
+      <td colspan="4">44 today and next, 40 in the third column (preview only, not decided)</td>
+    </tr>
+    <tr>
+      <td>select value (neighbour)</td>
+      <td>16 / 24</td>
+      <td>400</td>
+      <td>Material</td>
+      <td>unchanged</td>
+    </tr>
+  </table>
+</html>

@@ -1,0 +1,11 @@
+@use '../../functions/type';
+
+/* Group "search-bar": the text field of the searchbar (C16, `num-searchbar`).
+   Writes the variables of its role. The values are in themes/fdpg-light/_type-roles.scss under the same name.
+   Parsed as: type.vars($theme, '<role>')  =  write family, weight, size, line (and letter-spacing if set) of that role as variables
+   (see functions/_type.scss). The component reads them: font-size: var(--font-app-content-search-bar-input-size); */
+@mixin search-bar_themed($theme) {
+  @include type.vars($theme, 'app-content-search-bar-input');
+  /* search field inside an open filter dropdown (C19, `.filter-search-input`): own role, same values today */
+  @include type.vars($theme, 'app-content-filter-search-input');
+}

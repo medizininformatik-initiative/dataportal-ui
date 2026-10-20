@@ -6,34 +6,22 @@
   gap: 0.25rem;
 }
 
-/* Row for icon and input */
-.searchbar-row {
+/* Field: icon and input in one bordered row */
+.searchbar-field {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  width: 100%;
   gap: 0.5rem;
-}
-
-/* Overlay layer */
-.show-above-overlay {
-  z-index: 2000;
-}
-
-/* Form container */
-.form-design {
   border: 1px solid var(--color-text-secondary); // WCAG 1.4.11: input boundary needs 3:1 (--border-color is ~1.7:1)
   border-radius: var(--border-radius-card);
   background-color: #fff;
   width: 100%;
-  transition: background-color 0.5s;
+  height: 40px; // fixed total (border-box): the 2px focus border does not grow the control
 
   &:hover:not(:focus-within) {
     border-color: var(--border-color-hover);
   }
 
   &:focus-within {
-    outline: none !important;
     border-width: 2px;
     border-color: var(--color-accent);
   }
@@ -42,11 +30,13 @@
 /* Input field */
 .input-design {
   flex: 1 1 0%;
-  height: 42px;
-  font-size: var(--font-size-md);
+  height: 100%;
+  font-family: var(--font-app-content-search-bar-input-family);
+  font-weight: var(--font-app-content-search-bar-input-weight);
+  font-size: var(--font-app-content-search-bar-input-size);
+  line-height: var(--font-app-content-search-bar-input-line);
   color: var(--color-text-primary);
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
   border: none;
   background: transparent;
@@ -67,7 +57,7 @@
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 42px;
+  height: 100%;
   color: var(--color-accent);
   font-size: var(--font-size-sm);
   padding: 0;
