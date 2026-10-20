@@ -18,3 +18,7 @@ Organism, data table. Sources: `app/shared/components/table/table.component.scss
 - Open Sans is loaded from fonts.googleapis.com with weights 400/600/700 only. Moving the table to Titillium removes most of that request. After Q1, delete the `<link>` in `index.html` if nothing else uses Open Sans (C26, tooltips, filter chips still do).
 - `text-cell` is `12/14`: decide whether it is `meta` (12/16) or `body` (14/20). Text cell shows terminology and code columns.
 - Line heights 14 and 19 are off the 4px grid.
+
+## Status 2026-10-20 (commit `dab450e3`)
+Done: header role `table-header` 14/20/600, body role `table-cell` 14/20/400 (name, text, display cells), Open Sans gone, row height 40, wrapper `height: 100%`. Option B (contrast only) chosen; name cell stays `#000`, other cells `#6a7483` (color pass).
+Open: `tabular-nums`, header height 52px, 15px checkbox, availability label (C27).

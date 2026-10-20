@@ -61,3 +61,31 @@ Reference. Moved out of `PLAN-design-tokens.md` 2026-10-20, text unchanged. Newe
 - Two roles with equal values are fine (hint and section name today): the role says what it is for, and each can change alone.
 - Dev page `/playground` (`src/app/site/playground`, not in production builds) lists the shared components. It lacks the hint and an h1 above the section name.
 
+
+## 2026-10-20: search bar and table session
+- `box-sizing: border-box` is inherited from `html` here (`*, *::before, *::after { box-sizing: inherit }`). A 40px control with a 1px border has a 38px content area; children with `height: 100%` are 38. DevTools shows 38 in the box-model middle. Check the outer size before calling it a bug.
+- A fixed total height (not height + border) stops the layout jump when the focus border goes 1px -> 2px. The old searchbar went 44 -> 46 on focus.
+- One control height (40px) makes search, select and button line up. Do it for all of them at once; one at a time leaves a mismatch for a session.
+- A wrapper with a smaller fixed height than its child (`2rem` around a 40px child) works by accident (overflow, centered). Use `height: 100%`.
+- Dead class names hide in templates: grep every `class="..."` token against the stylesheets, not only the SCSS selectors against the templates (`height-3-rem`, `clickable-row`, `table-row-text-color` were in no stylesheet).
+- Primary/secondary cells: the app already separates them by color (name cell `#000` 21:1, other cells `#6a7483` 4.73:1). Size 14 for all with color as the difference keeps rows compact and avoids a 16/14 mix in one row. No research source says more than: 3 size tiers, 2-4px steps.
+- Table density research: 40 / 48 / 56px rows are the usual condensed / regular / relaxed ([Carbon](https://preview.carbondesignsystem.com/building-blocks/core/components/data-table), [Setproduct](https://www.setproduct.com/blog/data-table-ui-design)). WCAG 2.5.8 (AA) target size 24x24 CSS px or spacing ([summary](https://www.disabilityworld.org/toolkit/standards/wcag/2-5-8-target-size-minimum/)). NN/g video "Designing Tables for Desktop Apps with Lots of Data" exists, content not read.
+- A generic component gets a role name without an area prefix (`table-header`, `table-cell`), like `button` and `text-link` (decision 10).
+- A prototype with three columns (today / proposal / alternative) lets Shah decide without asking questions. Add the alternative when he says "just to see".
+- Do not guess a measured number from code. Say what the code gives and ask what he measured (38 vs 40).
+- Shah's rule: height changes are a separate step from type changes. Do the type role first, then the height, and say so.
+
+## Improvements still possible (table)
+- Header `th` is 52px tall (16px padding top and bottom) next to 40px rows. 36px (padding 8) was tried and undone. 40px would need 10px padding (off the 8px grid).
+- Checkbox in the table cells is 15x15px, under the 24px WCAG 2.5.8 target; passes only through the spacing exception. Parked with the checkbox.
+- `tabular-nums` for number columns (new property, not added).
+- Availability label (status-bar component) 12/14 -> 12/16 (`meta`).
+- Letter-spacing of Material table text (0.25px) not looked at.
+
+## 2026-10-20: scrollbar and header selects
+- Open DevTools docked shrinks the page. Measure the layout at the real width: undock DevTools or use a timer plus `copy()`. Console numbers from a 250px page are noise.
+- Find a scroll container with: elements where `scrollWidth > clientWidth` and `overflow-x` is `auto`/`scroll`. Do not query the first `tbody`; there can be several.
+- `overflow-y: auto` also turns `overflow-x: visible` into `auto`. Any overflow of a few px then shows a horizontal scrollbar.
+- A border on a different element than the fixed height adds to the total (flex 42 + wrapper border 2 = 44). Put the height and the border on the same box, or set the total on the outer box and `height: 100%` inside.
+- `::ng-deep` rules are global: two components that style `.language-select` fight, and load order decides. Check the other component before changing one.
+- Control height 40 is now: searchbar, filter select, button, table rows, header selects, language options. Still 42: cancel button; header `th` is 52 (padding).

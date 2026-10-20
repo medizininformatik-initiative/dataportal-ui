@@ -17,6 +17,8 @@ Everything below this block = reference and history. Nothing deleted. Where old 
 - `app-content` group `section` (`num-section-name`, C18): role `app-content-section-name` 16/24/600, tag `h3` -> `h2`; the filter hint "Suche verfeinern:" is a `<p>`, component reads the variables, `!important`s gone (2026-10-20). Visual check in the app: Shah comes back. Notes: `typography/C18-section-name.md`.
 - `app-content-filter-hint`: own role for "Suche verfeinern:" (a `<p>`, 2 filter bars), same values as the section name today. Title color and hint color swapped 2026-10-20 (title `#5f6266`, hint `#6a7483`). History: `design-tokens-history.md` part 6.
 - `app-content` group `search-bar` (C16, 2026-10-20): role `app-content-search-bar-input` 16/24/400 (was 14px, line normal), group file `_search-bar.themed.scss`, `searchbar.component.scss` reads the variables. Control height decided 40px (Shah): searchbar `.searchbar-field` (was `.searchbar-row` + `.form-design`) fixed `height: 40px` (border-box, no jump on the 2px focus border), filter select `.mat-mdc-form-field-flex` 42 -> 40. `num-button` was already 40. Prototype: `typography-prototype-search-bar.html`. Shah checks the look in the app. Hover (border, hint, icon) parked: today only border color on hover, not while focused.
+- `table` (C23, 2026-10-20, `dab450e3`): roles `table-header` 14/20/600 and `table-cell` 14/20/400 (generic, no area prefix), group file `_table.themed.scss`; six components read `--font-table-*`; rows 40px; `.row-container` wrapper `height: 100%`; dead classes `height-3-rem` / `clickable-row` / `table-row-text-color` removed. Option B (primary/secondary by color, not size). Prototype `typography-prototype-table.html`. Shah looked at it: good. History part 7.
+- Control height 40 in the header (2026-10-20): language and user selects (wrapper `height: 40px`, flex `100%`), language options 40; Antragsportal button already 40. Scrollbar under the search results fixed with `overflow-x: hidden` in `profile-search-results.component.scss`. History part 7 items 8-9.
 - Still open from this: roles for modal title, FAQ title, data-protection title (parked by Shah; prototype ready, 3 open questions in the reply of 2026-10-20: underline, FAQ gap 4px vs 20px, data-protection weight). Header title color `#6a7483` (4.49) and eye button `#fff` = color pass.
 
 **Closed by Shah 2026-10-20:**
@@ -34,11 +36,12 @@ Everything below this block = reference and history. Nothing deleted. Where old 
 4. Side menu level 3 at 14/20 (option D): kept as alternative, not wanted now.
 
 **Next session (2026-10-21 or later):**
-1. Shah checks the section name (h2, 16/24/600), the hint (p) and the swapped title/hint colors in the app. Adjust values or revert.
-2. Decide: do section names that head blocks (Inclusion/Exclusion, consent, time restriction in modals) stay `h2`? Modals have an `h2` title already.
-3. Search bar leftovers: `.select-search-input` -> renamed `.filter-search-input`, own role `app-content-filter-search-input` (same values as the search bar input), done 2026-10-20; wrapper size `.select-search-wrapper` = next step (Shah designs); still open: `.icon-design` there (height 42, 12px icon); cancel button still 42 (`_button-cancel.themed.scss:3`, set 40?); `C16`/`C19` notes outdated (focus weight 600 gone, height 40); hover decision.
-4. Next group `app-content`: `table` (C23, C27; removes Open Sans leftovers), then `action-bar` (C26). Process per group below.
-5. Section-name spec is the Angular default and only checks creation; add a test only if the component grows.
+1. Table leftovers (small): availability label 12/14 -> 12/16 (C27, status-bar component, open it first); `tabular-nums` for number columns (Shah decides); header `th` height (52 now; 36 was tried and undone); 15px checkbox vs 24px target. Notes: `C23`, `C27`.
+2. Controls still not 40: cancel button 42 (`_button-cancel.themed.scss:3`), `th` 52. Search bar leftovers: `.select-search-wrapper` size + `.icon-design` 42 in `search-filter.component.scss` (Shah designs the wrapper); cancel button 42 -> 40 (`_button-cancel.themed.scss:3`); hover (border, hint, icon).
+3. Next group `app-content`: `action-bar` (C26). Then `app-header` leftovers if any.
+4. Shah checks the table in the app (header 14px, text cell 14px, rows 40px, long text fits) and the 40px controls side by side.
+5. Section names that head blocks in modals: stay `h2` (decided OK 2026-10-20). Section-name spec is the Angular default; add a test only if the component grows.
+6. Not committed on purpose: `angular.json`, `app.component.ts`. Untracked and not mine: `.impeccable/`, `.vscode/settings.json`. Nothing pushed yet this session.
 
 **Later, colors (`PLAN.md` step 4 and 5):** role for the two error reds + placeholder, green shade for checkbox, header title color (`#6a7483`, contrast 4.49), then convert rest of `custom-material`, then the switch.
 

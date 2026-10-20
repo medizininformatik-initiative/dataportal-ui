@@ -4,12 +4,13 @@
   .mat-mdc-text-field-wrapper {
     padding: 0px;
     background-color: white;
+    height: 40px; // total incl. the 1px border from the header theme (border-box)
 
     .mat-mdc-form-field-flex {
       padding: 0px var(--spacing-6);
       border-radius: 5px;
       border-color: white;
-      height: 42px;
+      height: 100%;
       align-items: center;
     }
 
@@ -61,7 +62,7 @@
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .language-panel .mat-mdc-option {
   display: flex;
   align-items: center;
-  min-height: 42px;
+  min-height: 40px;
 }
 
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .language-panel .mat-mdc-option .fi {

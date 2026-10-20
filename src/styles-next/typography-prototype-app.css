@@ -2,22 +2,28 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import '/node_modules/flag-icons/css/flag-icons.min.css';
 @font-face {
-  font-family: "Titillium Web";
+  font-family: 'Titillium Web';
   font-style: normal;
   font-weight: 400;
-  src: local("Titillium Web"), url("/assets/font/titillium-web-v14-latin-regular.woff2") format("woff2"), url("/assets/font/titillium-web-v14-latin-regular.woff") format("woff");
+  src: local('Titillium Web'),
+    url('/assets/font/titillium-web-v14-latin-regular.woff2') format('woff2'),
+    url('/assets/font/titillium-web-v14-latin-regular.woff') format('woff');
 }
 @font-face {
-  font-family: "Titillium Web";
+  font-family: 'Titillium Web';
   font-style: normal;
   font-weight: 600;
-  src: local("Titillium Web SemiBold"), url("/assets/font/titillium-web-v14-latin-600.woff2") format("woff2"), url("/assets/font/titillium-web-v14-latin-600.woff") format("woff");
+  src: local('Titillium Web SemiBold'),
+    url('/assets/font/titillium-web-v14-latin-600.woff2') format('woff2'),
+    url('/assets/font/titillium-web-v14-latin-600.woff') format('woff');
 }
 @font-face {
-  font-family: "Titillium Web";
+  font-family: 'Titillium Web';
   font-style: normal;
   font-weight: 700;
-  src: local("Titillium Web Bold"), url("/assets/font/titillium-web-v14-latin-700.woff2") format("woff2"), url("/assets/font/titillium-web-v14-latin-700.woff") format("woff");
+  src: local('Titillium Web Bold'),
+    url('/assets/font/titillium-web-v14-latin-700.woff2') format('woff2'),
+    url('/assets/font/titillium-web-v14-latin-700.woff') format('woff');
 }
 /* font-size | line-height | font-weight */
 /* Type roles of "FDPG Light": one entry per role (family, weight, size, line height).
@@ -44,7 +50,7 @@
   border: 1px solid #c3c7cd !important;
   box-shadow: var(--shadow-menu) !important;
   /* Typography — Open Sans body style */
-  font-family: "Open Sans", sans-serif !important;
+  font-family: 'Open Sans', sans-serif !important;
   font-style: normal !important;
   font-weight: 400 !important;
   font-size: 12px !important;
@@ -267,7 +273,7 @@
   transition: var(--transition-shadow);
 }
 .num-card::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   background: var(--color-accent);
@@ -337,106 +343,131 @@
 .mat-typography button,
 .mat-typography select,
 .mat-typography textarea {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
 }
 
-.mat-elevation-z0, .mat-mdc-elevation-specific.mat-elevation-z0 {
+.mat-elevation-z0,
+.mat-mdc-elevation-specific.mat-elevation-z0 {
   box-shadow: var(--mat-app-elevation-shadow-level-0, none);
 }
 
-.mat-elevation-z1, .mat-mdc-elevation-specific.mat-elevation-z1 {
+.mat-elevation-z1,
+.mat-mdc-elevation-specific.mat-elevation-z1 {
   box-shadow: var(--mat-app-elevation-shadow-level-1, none);
 }
 
-.mat-elevation-z2, .mat-mdc-elevation-specific.mat-elevation-z2 {
+.mat-elevation-z2,
+.mat-mdc-elevation-specific.mat-elevation-z2 {
   box-shadow: var(--mat-app-elevation-shadow-level-2, none);
 }
 
-.mat-elevation-z3, .mat-mdc-elevation-specific.mat-elevation-z3 {
+.mat-elevation-z3,
+.mat-mdc-elevation-specific.mat-elevation-z3 {
   box-shadow: var(--mat-app-elevation-shadow-level-3, none);
 }
 
-.mat-elevation-z4, .mat-mdc-elevation-specific.mat-elevation-z4 {
+.mat-elevation-z4,
+.mat-mdc-elevation-specific.mat-elevation-z4 {
   box-shadow: var(--mat-app-elevation-shadow-level-4, none);
 }
 
-.mat-elevation-z5, .mat-mdc-elevation-specific.mat-elevation-z5 {
+.mat-elevation-z5,
+.mat-mdc-elevation-specific.mat-elevation-z5 {
   box-shadow: var(--mat-app-elevation-shadow-level-5, none);
 }
 
-.mat-elevation-z6, .mat-mdc-elevation-specific.mat-elevation-z6 {
+.mat-elevation-z6,
+.mat-mdc-elevation-specific.mat-elevation-z6 {
   box-shadow: var(--mat-app-elevation-shadow-level-6, none);
 }
 
-.mat-elevation-z7, .mat-mdc-elevation-specific.mat-elevation-z7 {
+.mat-elevation-z7,
+.mat-mdc-elevation-specific.mat-elevation-z7 {
   box-shadow: var(--mat-app-elevation-shadow-level-7, none);
 }
 
-.mat-elevation-z8, .mat-mdc-elevation-specific.mat-elevation-z8 {
+.mat-elevation-z8,
+.mat-mdc-elevation-specific.mat-elevation-z8 {
   box-shadow: var(--mat-app-elevation-shadow-level-8, none);
 }
 
-.mat-elevation-z9, .mat-mdc-elevation-specific.mat-elevation-z9 {
+.mat-elevation-z9,
+.mat-mdc-elevation-specific.mat-elevation-z9 {
   box-shadow: var(--mat-app-elevation-shadow-level-9, none);
 }
 
-.mat-elevation-z10, .mat-mdc-elevation-specific.mat-elevation-z10 {
+.mat-elevation-z10,
+.mat-mdc-elevation-specific.mat-elevation-z10 {
   box-shadow: var(--mat-app-elevation-shadow-level-10, none);
 }
 
-.mat-elevation-z11, .mat-mdc-elevation-specific.mat-elevation-z11 {
+.mat-elevation-z11,
+.mat-mdc-elevation-specific.mat-elevation-z11 {
   box-shadow: var(--mat-app-elevation-shadow-level-11, none);
 }
 
-.mat-elevation-z12, .mat-mdc-elevation-specific.mat-elevation-z12 {
+.mat-elevation-z12,
+.mat-mdc-elevation-specific.mat-elevation-z12 {
   box-shadow: var(--mat-app-elevation-shadow-level-12, none);
 }
 
-.mat-elevation-z13, .mat-mdc-elevation-specific.mat-elevation-z13 {
+.mat-elevation-z13,
+.mat-mdc-elevation-specific.mat-elevation-z13 {
   box-shadow: var(--mat-app-elevation-shadow-level-13, none);
 }
 
-.mat-elevation-z14, .mat-mdc-elevation-specific.mat-elevation-z14 {
+.mat-elevation-z14,
+.mat-mdc-elevation-specific.mat-elevation-z14 {
   box-shadow: var(--mat-app-elevation-shadow-level-14, none);
 }
 
-.mat-elevation-z15, .mat-mdc-elevation-specific.mat-elevation-z15 {
+.mat-elevation-z15,
+.mat-mdc-elevation-specific.mat-elevation-z15 {
   box-shadow: var(--mat-app-elevation-shadow-level-15, none);
 }
 
-.mat-elevation-z16, .mat-mdc-elevation-specific.mat-elevation-z16 {
+.mat-elevation-z16,
+.mat-mdc-elevation-specific.mat-elevation-z16 {
   box-shadow: var(--mat-app-elevation-shadow-level-16, none);
 }
 
-.mat-elevation-z17, .mat-mdc-elevation-specific.mat-elevation-z17 {
+.mat-elevation-z17,
+.mat-mdc-elevation-specific.mat-elevation-z17 {
   box-shadow: var(--mat-app-elevation-shadow-level-17, none);
 }
 
-.mat-elevation-z18, .mat-mdc-elevation-specific.mat-elevation-z18 {
+.mat-elevation-z18,
+.mat-mdc-elevation-specific.mat-elevation-z18 {
   box-shadow: var(--mat-app-elevation-shadow-level-18, none);
 }
 
-.mat-elevation-z19, .mat-mdc-elevation-specific.mat-elevation-z19 {
+.mat-elevation-z19,
+.mat-mdc-elevation-specific.mat-elevation-z19 {
   box-shadow: var(--mat-app-elevation-shadow-level-19, none);
 }
 
-.mat-elevation-z20, .mat-mdc-elevation-specific.mat-elevation-z20 {
+.mat-elevation-z20,
+.mat-mdc-elevation-specific.mat-elevation-z20 {
   box-shadow: var(--mat-app-elevation-shadow-level-20, none);
 }
 
-.mat-elevation-z21, .mat-mdc-elevation-specific.mat-elevation-z21 {
+.mat-elevation-z21,
+.mat-mdc-elevation-specific.mat-elevation-z21 {
   box-shadow: var(--mat-app-elevation-shadow-level-21, none);
 }
 
-.mat-elevation-z22, .mat-mdc-elevation-specific.mat-elevation-z22 {
+.mat-elevation-z22,
+.mat-mdc-elevation-specific.mat-elevation-z22 {
   box-shadow: var(--mat-app-elevation-shadow-level-22, none);
 }
 
-.mat-elevation-z23, .mat-mdc-elevation-specific.mat-elevation-z23 {
+.mat-elevation-z23,
+.mat-mdc-elevation-specific.mat-elevation-z23 {
   box-shadow: var(--mat-app-elevation-shadow-level-23, none);
 }
 
-.mat-elevation-z24, .mat-mdc-elevation-specific.mat-elevation-z24 {
+.mat-elevation-z24,
+.mat-mdc-elevation-specific.mat-elevation-z24 {
   box-shadow: var(--mat-app-elevation-shadow-level-24, none);
 }
 
@@ -500,103 +531,128 @@ html {
   --app-content-page-header-intro-measure: 100ch; /* 45-90 characters per line */
   --font-app-content-page-header-actions-size: 16px; /* eye button, icon only: size, no text level */
 }
-.mat-elevation-z0, .mat-mdc-elevation-specific.mat-elevation-z0 {
+.mat-elevation-z0,
+.mat-mdc-elevation-specific.mat-elevation-z0 {
   box-shadow: var(--mat-app-elevation-shadow-level-0, none);
 }
 
-.mat-elevation-z1, .mat-mdc-elevation-specific.mat-elevation-z1 {
+.mat-elevation-z1,
+.mat-mdc-elevation-specific.mat-elevation-z1 {
   box-shadow: var(--mat-app-elevation-shadow-level-1, none);
 }
 
-.mat-elevation-z2, .mat-mdc-elevation-specific.mat-elevation-z2 {
+.mat-elevation-z2,
+.mat-mdc-elevation-specific.mat-elevation-z2 {
   box-shadow: var(--mat-app-elevation-shadow-level-2, none);
 }
 
-.mat-elevation-z3, .mat-mdc-elevation-specific.mat-elevation-z3 {
+.mat-elevation-z3,
+.mat-mdc-elevation-specific.mat-elevation-z3 {
   box-shadow: var(--mat-app-elevation-shadow-level-3, none);
 }
 
-.mat-elevation-z4, .mat-mdc-elevation-specific.mat-elevation-z4 {
+.mat-elevation-z4,
+.mat-mdc-elevation-specific.mat-elevation-z4 {
   box-shadow: var(--mat-app-elevation-shadow-level-4, none);
 }
 
-.mat-elevation-z5, .mat-mdc-elevation-specific.mat-elevation-z5 {
+.mat-elevation-z5,
+.mat-mdc-elevation-specific.mat-elevation-z5 {
   box-shadow: var(--mat-app-elevation-shadow-level-5, none);
 }
 
-.mat-elevation-z6, .mat-mdc-elevation-specific.mat-elevation-z6 {
+.mat-elevation-z6,
+.mat-mdc-elevation-specific.mat-elevation-z6 {
   box-shadow: var(--mat-app-elevation-shadow-level-6, none);
 }
 
-.mat-elevation-z7, .mat-mdc-elevation-specific.mat-elevation-z7 {
+.mat-elevation-z7,
+.mat-mdc-elevation-specific.mat-elevation-z7 {
   box-shadow: var(--mat-app-elevation-shadow-level-7, none);
 }
 
-.mat-elevation-z8, .mat-mdc-elevation-specific.mat-elevation-z8 {
+.mat-elevation-z8,
+.mat-mdc-elevation-specific.mat-elevation-z8 {
   box-shadow: var(--mat-app-elevation-shadow-level-8, none);
 }
 
-.mat-elevation-z9, .mat-mdc-elevation-specific.mat-elevation-z9 {
+.mat-elevation-z9,
+.mat-mdc-elevation-specific.mat-elevation-z9 {
   box-shadow: var(--mat-app-elevation-shadow-level-9, none);
 }
 
-.mat-elevation-z10, .mat-mdc-elevation-specific.mat-elevation-z10 {
+.mat-elevation-z10,
+.mat-mdc-elevation-specific.mat-elevation-z10 {
   box-shadow: var(--mat-app-elevation-shadow-level-10, none);
 }
 
-.mat-elevation-z11, .mat-mdc-elevation-specific.mat-elevation-z11 {
+.mat-elevation-z11,
+.mat-mdc-elevation-specific.mat-elevation-z11 {
   box-shadow: var(--mat-app-elevation-shadow-level-11, none);
 }
 
-.mat-elevation-z12, .mat-mdc-elevation-specific.mat-elevation-z12 {
+.mat-elevation-z12,
+.mat-mdc-elevation-specific.mat-elevation-z12 {
   box-shadow: var(--mat-app-elevation-shadow-level-12, none);
 }
 
-.mat-elevation-z13, .mat-mdc-elevation-specific.mat-elevation-z13 {
+.mat-elevation-z13,
+.mat-mdc-elevation-specific.mat-elevation-z13 {
   box-shadow: var(--mat-app-elevation-shadow-level-13, none);
 }
 
-.mat-elevation-z14, .mat-mdc-elevation-specific.mat-elevation-z14 {
+.mat-elevation-z14,
+.mat-mdc-elevation-specific.mat-elevation-z14 {
   box-shadow: var(--mat-app-elevation-shadow-level-14, none);
 }
 
-.mat-elevation-z15, .mat-mdc-elevation-specific.mat-elevation-z15 {
+.mat-elevation-z15,
+.mat-mdc-elevation-specific.mat-elevation-z15 {
   box-shadow: var(--mat-app-elevation-shadow-level-15, none);
 }
 
-.mat-elevation-z16, .mat-mdc-elevation-specific.mat-elevation-z16 {
+.mat-elevation-z16,
+.mat-mdc-elevation-specific.mat-elevation-z16 {
   box-shadow: var(--mat-app-elevation-shadow-level-16, none);
 }
 
-.mat-elevation-z17, .mat-mdc-elevation-specific.mat-elevation-z17 {
+.mat-elevation-z17,
+.mat-mdc-elevation-specific.mat-elevation-z17 {
   box-shadow: var(--mat-app-elevation-shadow-level-17, none);
 }
 
-.mat-elevation-z18, .mat-mdc-elevation-specific.mat-elevation-z18 {
+.mat-elevation-z18,
+.mat-mdc-elevation-specific.mat-elevation-z18 {
   box-shadow: var(--mat-app-elevation-shadow-level-18, none);
 }
 
-.mat-elevation-z19, .mat-mdc-elevation-specific.mat-elevation-z19 {
+.mat-elevation-z19,
+.mat-mdc-elevation-specific.mat-elevation-z19 {
   box-shadow: var(--mat-app-elevation-shadow-level-19, none);
 }
 
-.mat-elevation-z20, .mat-mdc-elevation-specific.mat-elevation-z20 {
+.mat-elevation-z20,
+.mat-mdc-elevation-specific.mat-elevation-z20 {
   box-shadow: var(--mat-app-elevation-shadow-level-20, none);
 }
 
-.mat-elevation-z21, .mat-mdc-elevation-specific.mat-elevation-z21 {
+.mat-elevation-z21,
+.mat-mdc-elevation-specific.mat-elevation-z21 {
   box-shadow: var(--mat-app-elevation-shadow-level-21, none);
 }
 
-.mat-elevation-z22, .mat-mdc-elevation-specific.mat-elevation-z22 {
+.mat-elevation-z22,
+.mat-mdc-elevation-specific.mat-elevation-z22 {
   box-shadow: var(--mat-app-elevation-shadow-level-22, none);
 }
 
-.mat-elevation-z23, .mat-mdc-elevation-specific.mat-elevation-z23 {
+.mat-elevation-z23,
+.mat-mdc-elevation-specific.mat-elevation-z23 {
   box-shadow: var(--mat-app-elevation-shadow-level-23, none);
 }
 
-.mat-elevation-z24, .mat-mdc-elevation-specific.mat-elevation-z24 {
+.mat-elevation-z24,
+.mat-mdc-elevation-specific.mat-elevation-z24 {
   box-shadow: var(--mat-app-elevation-shadow-level-24, none);
 }
 
@@ -611,22 +667,34 @@ html {
 .FDPGTheme .mat-divider {
   border-style: solid;
 }
-.FDPGTheme .mat-divider.num-d-w--1, .FDPGTheme .mat-divider.num-divider-width--1 {
+.FDPGTheme .mat-divider.num-d-w--1,
+.FDPGTheme .mat-divider.num-divider-width--1 {
   border-width: 1px;
 }
-.FDPGTheme .mat-divider.num-d-w--2, .FDPGTheme .mat-divider.num-divider-width--2 {
+.FDPGTheme .mat-divider.num-d-w--2,
+.FDPGTheme .mat-divider.num-divider-width--2 {
   border-width: 2px;
 }
-.FDPGTheme .mat-divider.num-d-w--3, .FDPGTheme .mat-divider.num-divider-width--3 {
+.FDPGTheme .mat-divider.num-d-w--3,
+.FDPGTheme .mat-divider.num-divider-width--3 {
   border-width: 3px;
 }
-.FDPGTheme .mat-divider.num-d-c--primary, .FDPGTheme .mat-divider.num-d-c--p, .FDPGTheme .mat-divider.num-divider-color--primary, .FDPGTheme .mat-divider.num-divider-color--p {
+.FDPGTheme .mat-divider.num-d-c--primary,
+.FDPGTheme .mat-divider.num-d-c--p,
+.FDPGTheme .mat-divider.num-divider-color--primary,
+.FDPGTheme .mat-divider.num-divider-color--p {
   border-color: #afb8c0;
 }
-.FDPGTheme .mat-divider.num-d-c--accent, .FDPGTheme .mat-divider.num-d-c--a, .FDPGTheme .mat-divider.num-divider-color--accent, .FDPGTheme .mat-divider.num-divider-color--a {
+.FDPGTheme .mat-divider.num-d-c--accent,
+.FDPGTheme .mat-divider.num-d-c--a,
+.FDPGTheme .mat-divider.num-divider-color--accent,
+.FDPGTheme .mat-divider.num-divider-color--a {
   border-color: #5a79af;
 }
-.FDPGTheme .mat-divider.num-d-c--warn, .FDPGTheme .mat-divider.num-d-c--w, .FDPGTheme .mat-divider.num-divider-color--warn, .FDPGTheme .mat-divider.num-divider-color--w {
+.FDPGTheme .mat-divider.num-d-c--warn,
+.FDPGTheme .mat-divider.num-d-c--w,
+.FDPGTheme .mat-divider.num-divider-color--warn,
+.FDPGTheme .mat-divider.num-divider-color--w {
   border-color: #eeb70c;
 }
 .FDPGTheme .logo-wrapper {
@@ -669,14 +737,10 @@ html {
   height: 100%;
 }
 .FDPGTheme num-side-menu {
-  --side-menu-line-x: calc(
-    var(--spacing-16) + var(--spacing-12) - var(--spacing-2) / 2
-  );
+  --side-menu-line-x: calc(var(--spacing-16) + var(--spacing-12) - var(--spacing-2) / 2);
   --side-menu-pill-x: calc(var(--side-menu-line-x) + var(--spacing-12));
   --side-menu-child-indent: calc(var(--side-menu-pill-x) + var(--spacing-24));
-  --side-menu-line-x2: calc(
-    var(--side-menu-child-indent) + var(--spacing-16)
-  );
+  --side-menu-line-x2: calc(var(--side-menu-child-indent) + var(--spacing-16));
   --side-menu-grandchild-indent: calc(var(--side-menu-line-x2) + var(--spacing-24));
   --side-menu-bg: #ffffff;
   --side-menu-bg-hover: #e8ebed;
@@ -703,10 +767,17 @@ html {
 .FDPGTheme num-side-menu .num-nav-group + .num-nav-group {
   margin-top: var(--spacing-20);
 }
-.FDPGTheme num-side-menu .num-nav-group:has(.num-nav-link--child.num-nav-link--active) > .num-nav-link {
+.FDPGTheme
+  num-side-menu
+  .num-nav-group:has(.num-nav-link--child.num-nav-link--active)
+  > .num-nav-link {
   color: var(--side-menu-text-active);
 }
-.FDPGTheme num-side-menu .num-nav-group:has(.num-nav-link--child.num-nav-link--active) > .num-nav-link fa-icon {
+.FDPGTheme
+  num-side-menu
+  .num-nav-group:has(.num-nav-link--child.num-nav-link--active)
+  > .num-nav-link
+  fa-icon {
   color: var(--side-menu-icon-active);
 }
 .FDPGTheme num-side-menu .num-nav-link {
@@ -734,14 +805,17 @@ html {
   outline: var(--spacing-2) solid var(--side-menu-focus-ring);
   outline-offset: calc(var(--spacing-2) * -1);
 }
-.FDPGTheme num-side-menu .num-nav-link--active, .FDPGTheme num-side-menu .num-nav-link--active:hover {
+.FDPGTheme num-side-menu .num-nav-link--active,
+.FDPGTheme num-side-menu .num-nav-link--active:hover {
   background: var(--side-menu-bg-active);
   color: var(--side-menu-text-active);
 }
-.FDPGTheme num-side-menu .num-nav-link--active .navItem-font, .FDPGTheme num-side-menu .num-nav-link--active:hover .navItem-font {
+.FDPGTheme num-side-menu .num-nav-link--active .navItem-font,
+.FDPGTheme num-side-menu .num-nav-link--active:hover .navItem-font {
   color: var(--side-menu-text-active);
 }
-.FDPGTheme num-side-menu .num-nav-link--active fa-icon, .FDPGTheme num-side-menu .num-nav-link--active:hover fa-icon {
+.FDPGTheme num-side-menu .num-nav-link--active fa-icon,
+.FDPGTheme num-side-menu .num-nav-link--active:hover fa-icon {
   color: var(--side-menu-icon-active);
 }
 .FDPGTheme num-side-menu .navItem-font {
@@ -778,7 +852,7 @@ html {
   font-weight: 500;
 }
 .FDPGTheme num-side-menu .num-nav-link.num-nav-link--child::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: var(--spacing-2) 0 var(--spacing-2) var(--side-menu-line-x);
   border-radius: 0;
@@ -787,7 +861,8 @@ html {
   z-index: -1;
   pointer-events: none;
 }
-.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:hover::before, .FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:focus-visible::before {
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:hover::before,
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:focus-visible::before {
   opacity: 1;
 }
 .FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:focus-visible {
@@ -798,7 +873,7 @@ html {
   outline-offset: calc(var(--spacing-2) * -1);
 }
 .FDPGTheme num-side-menu .num-nav-link.num-nav-link--child::after {
-  content: "";
+  content: '';
   position: absolute;
   left: var(--side-menu-line-x);
   top: 0;
@@ -823,10 +898,15 @@ html {
 .FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--active::after {
   background: var(--side-menu-icon-active);
 }
-.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--active:focus-visible::after {
+.FDPGTheme
+  num-side-menu
+  .num-nav-link.num-nav-link--child.num-nav-link--active:focus-visible::after {
   background: transparent;
 }
-.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--active .navItem-font--child {
+.FDPGTheme
+  num-side-menu
+  .num-nav-link.num-nav-link--child.num-nav-link--active
+  .navItem-font--child {
   font-weight: var(--font-weight-bold);
   color: var(--side-menu-text-active);
 }
@@ -836,7 +916,7 @@ html {
 }
 .FDPGTheme num-side-menu .num-nav-list--children::before,
 .FDPGTheme num-side-menu .num-nav-list--grandchildren::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   bottom: 0;
@@ -928,7 +1008,8 @@ html {
 .FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle button:hover {
   background: #9ea9b3;
 }
-.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle button:focus, .cdk-keyboard-focused .FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle button {
+.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle button:focus,
+.cdk-keyboard-focused .FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle button {
   background: #9ea9b3;
 }
 .FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle-appearance-standard {
@@ -936,10 +1017,15 @@ html {
   /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
   /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
 }
-.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+.FDPGTheme
+  .num-mat-lang-toggle-button
+  .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
   color: #a9b6c2;
 }
-.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle-appearance-standard.mat-button-toggle + .mat-button-toggle {
+.FDPGTheme
+  .num-mat-lang-toggle-button
+  .mat-button-toggle-appearance-standard.mat-button-toggle
+  + .mat-button-toggle {
   border-left: solid 2px #9ea9b3;
 }
 .FDPGTheme .num-mat-lang-toggle-button .cdk-keyboard-focused .mat-button-toggle-focus-overlay {
@@ -948,7 +1034,8 @@ html {
 .FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle-label-content {
   line-height: 32px;
 }
-.FDPGTheme .mat-mdc-row--active, .FDPGTheme .mat-mdc-row--selected {
+.FDPGTheme .mat-mdc-row--active,
+.FDPGTheme .mat-mdc-row--selected {
   background: #f2f4f8;
 }
 .FDPGTheme .mat-mdc-row:hover {
@@ -1015,7 +1102,6 @@ html {
   align-items: center;
   flex-shrink: 0;
   gap: 8px;
-  padding-right: 16px;
 }
 .FDPGTheme num-dataportal-header .user-button {
   background-color: var(--color-accent) !important;
@@ -1023,7 +1109,7 @@ html {
   min-width: 104px;
   color: #ffffff !important;
   padding: 8px 16px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -1486,7 +1572,8 @@ html {
   margin: 0 0 8px 0 !important;
   letter-spacing: 0 !important;
 }
-.FDPGTheme a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link) {
+.FDPGTheme
+  a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link) {
   font-family: var(--font-text-link-family);
   font-weight: var(--font-text-link-weight);
   font-size: var(--font-text-link-size);
@@ -1494,15 +1581,20 @@ html {
   color: #49689c;
   text-decoration: none;
 }
-.FDPGTheme a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link):hover {
+.FDPGTheme
+  a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link):hover {
   text-decoration: underline;
 }
-.FDPGTheme a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link):not(.no-focus):focus-visible {
+.FDPGTheme
+  a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link):not(
+    .no-focus
+  ):focus-visible {
   outline: 2px solid #5a79af;
   outline-offset: 2px;
   border-radius: 2px;
 }
-.FDPGTheme a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link):visited {
+.FDPGTheme
+  a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link):visited {
   color: #49689c;
 }
 .FDPGTheme .mat-mdc-button-base {
@@ -1688,13 +1780,17 @@ html {
 .FDPGTheme .container-bool-logic-inner .mat-mdc-chip.mat-mdc-standard-chip {
   padding-left: 0;
 }
-.FDPGTheme .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic .mdc-evolution-chip__action--primary {
+.FDPGTheme
+  .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic
+  .mdc-evolution-chip__action--primary {
   padding-right: 2px;
 }
 .FDPGTheme .mat-mdc-standard-chip {
   height: 26px;
 }
-.FDPGTheme .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic .mdc-evolution-chip__graphic {
+.FDPGTheme
+  .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic
+  .mdc-evolution-chip__graphic {
   padding-left: 5px;
   padding-right: 2px;
 }
@@ -1729,11 +1825,19 @@ html {
   border-width: 1px !important;
 }
 .FDPGTheme .mdc-checkbox .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
-.FDPGTheme .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
+.FDPGTheme
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
   background-color: #ffffff !important;
   border-color: #c5cacf !important;
 }
-.FDPGTheme .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true]) ~ .mdc-checkbox__background {
+.FDPGTheme
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
+    [data-indeterminate='true']
+  )
+  ~ .mdc-checkbox__background {
   background-color: #ffffff !important;
   border-color: #c3c7cd !important;
 }
@@ -1777,7 +1881,7 @@ html {
   position: relative;
 }
 .FDPGTheme num-action-bar .container::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   background: #9bb823;
@@ -1789,7 +1893,7 @@ html {
   flex: 0 0 auto;
 }
 .FDPGTheme num-action-bar .selection-text {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
@@ -1805,7 +1909,7 @@ html {
   background: #ffffff;
   border: 2px solid #9bb823;
   border-radius: 5px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   font-size: 12px;
   line-height: 12px;
@@ -1828,7 +1932,7 @@ html {
   vertical-align: middle;
   padding: 0 8px;
   height: 24px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -1871,7 +1975,7 @@ html {
   border-radius: 4px 0 0 4px;
   border: 1px solid #5a79af;
   background: #5a79af;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
@@ -1905,7 +2009,7 @@ html {
   border-top: 12px solid transparent;
   border-bottom: 12px solid transparent;
   display: inline-block;
-  content: "";
+  content: '';
 }
 .FDPGTheme num-filter-chips .block-triangle.twoLine {
   border-left: 12px solid;
@@ -1963,7 +2067,7 @@ html {
 ──────────────────────────────────────────────────────────────── */
 :root {
   /* Typography */
-  --font-body: "Titillium Web", sans-serif;
+  --font-body: 'Titillium Web', sans-serif;
   --font-size-md: 14px;
   --font-size-sm: 12px;
   --line-height-md: 19px;
@@ -2027,7 +2131,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
 }
 

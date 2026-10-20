@@ -14,3 +14,6 @@ Molecule, search input. Source: `app/shared/components/search/searchbar.componen
 - The selects below (C19) are 16/24. After the change the input matches them.
 - Weight change on focus makes the text jump in width. Show focus with the border (already done at :34-35) instead.
 - Input height `42px` (:44) stays; 16/24 fits.
+
+## Status 2026-10-20 (commits `5ddfa2b7`, `e422a046`)
+Done: role `app-content-search-bar-input` 16/24/400, focus weight jump already gone, control height 40 (`.searchbar-field`, fixed total). Table rows above are outdated (`:45`, `:33`). Open: hover (border, hint, icon), `.icon-design` 12px.
