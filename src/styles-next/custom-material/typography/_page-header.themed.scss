@@ -8,5 +8,6 @@
   @include type.vars($theme, 'app-content-page-header-title');
   @include type.vars($theme, 'app-content-page-header-intro');
   --app-content-page-header-intro-measure: 100ch; /* 45-90 characters per line */
+  --app-content-page-header-intro-color: #{role-color($theme, accent, 700)};
   --font-app-content-page-header-actions-size: 16px; /* eye button, icon only: size, no text level */
 }

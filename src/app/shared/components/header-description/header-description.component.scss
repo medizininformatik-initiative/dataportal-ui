@@ -1,26 +1,21 @@
 :host .header-description {
-  width: 100%;
   max-width: var(--app-content-page-header-intro-measure);
-  margin: 1em 0 !important; // same as the former <p>; global h2 margin is !important
-  padding: 0 !important;
-  border: 0 !important;
-  letter-spacing: normal !important;
-  // body has .mat-typography, which gives h2 its own font: the role variables override it
+  margin: 1em 0;
+  letter-spacing: var(--font-app-content-page-header-intro-letter-spacing);
   font-family: var(--font-app-content-page-header-intro-family);
-  font-style: normal;
   font-weight: var(--font-app-content-page-header-intro-weight);
   font-size: var(--font-app-content-page-header-intro-size);
   line-height: var(--font-app-content-page-header-intro-line);
-  display: flex;
-  align-items: center;
-  color: #325a7e;
+  color: var(--app-content-page-header-intro-color);
   overflow: hidden;
   max-height: 200px;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+  transition: max-height 0.3s ease, margin 0.3s ease, opacity 0.3s ease;
   opacity: 1;
 
   &.hidden {
     max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
     opacity: 0;
   }
 }
