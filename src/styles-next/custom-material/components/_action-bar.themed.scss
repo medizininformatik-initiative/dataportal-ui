@@ -30,29 +30,6 @@
       }
     }
 
-    .selection-text {
-      font-weight: 600;
-      font-size: 12px;
-      line-height: 16px;
-      color: role-color($theme, neutral, 900);
-    }
-
-    .count-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 20px;
-      height: 21px;
-      padding: 0 4px;
-      background: role-color($theme, neutral, 0);
-      border: 2px solid role-color($theme, secondary, 500);
-      border-radius: 5px;
-      font-weight: 700;
-      font-size: 12px;
-      line-height: 12px;
-      color: role-color($theme, secondary, 500);
-    }
-
     .right {
       margin-left: auto;
       display: flex;

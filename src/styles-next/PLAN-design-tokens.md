@@ -38,7 +38,7 @@ Everything below this block = reference and history. Nothing deleted. Where old 
 **Next session (2026-10-21 or later):**
 1. Table leftovers (small): availability label 12/14 -> 12/16 (C27, status-bar component, open it first); `tabular-nums` for number columns (Shah decides); header `th` height (52 now; 36 was tried and undone); 15px checkbox vs 24px target. Notes: `C23`, `C27`.
 2. Controls still not 40: cancel button 42 (`_button-cancel.themed.scss:3`), `th` 52. Search bar leftovers: `.select-search-wrapper` size + `.icon-design` 42 in `search-filter.component.scss` (Shah designs the wrapper); cancel button 42 -> 40 (`_button-cancel.themed.scss:3`); hover (border, hint, icon).
-3. Next group `app-content`: `action-bar` (C26). Then `app-header` leftovers if any.
+3. ~~`action-bar` (C26)~~ done 2026-10-20: only dead rules deleted, badge stays Material. Next: `app-header` leftovers if any, then the parked modal/FAQ/data-protection titles.
 4. Shah checks the table in the app (header 14px, text cell 14px, rows 40px, long text fits) and the 40px controls side by side.
 5. Section names that head blocks in modals: stay `h2` (decided OK 2026-10-20). Section-name spec is the Angular default; add a test only if the component grows.
 6. Not committed on purpose: `angular.json`, `app.component.ts`. Untracked and not mine: `.impeccable/`, `.vscode/settings.json`. Nothing pushed yet this session.
