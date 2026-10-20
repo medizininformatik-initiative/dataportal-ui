@@ -9,19 +9,23 @@
 $_levels: mat.m2-define-typography-config(
   $font-family: "'Titillium Web', sans-serif",
 
-  /* Strong body text */ $body-2: mat.m2-define-typography-level(16px, 24px, 500),
+  /* Strong body text */ $body-2: mat.m2-define-typography-level(16px, 24px, 400),
   $button: mat.m2-define-typography-level(14px, 16px, 400),
-  /* Smaller body and hint text */ $caption: mat.m2-define-typography-level(14px, 16px, 300),
+  /* Smaller body and hint text */ $caption: mat.m2-define-typography-level(14px, 16px, 400),
 );
 
 /* Material gives most levels a letter-spacing (0.5px / 0.03125em on body, option, select, ...). Decision Q8 (Shah, 2026-10-20): `normal` everywhere.
    Parsed as: for every level (a map) in the config, set the key `letter-spacing` to `normal`; non-map keys (font-family) stay.
+   Same loop: weights 500 and 300 become 400 (Titillium ships only 400/600/700 and the browser drew them as 400 anyway; Shah, 2026-10-20).
    Material reads it for all components (--mat-*-text-tracking, .mat-body-1, h4, ...). */
 $num-typography: ();
 @each $key, $level in $_levels {
-  $num-typography: map.set(
-    $num-typography,
-    $key,
-    if(meta.type-of($level) == 'map', map.set($level, letter-spacing, normal), $level)
-  );
+  @if meta.type-of($level) == 'map' {
+    $level: map.set($level, letter-spacing, normal);
+    $w: map.get($level, font-weight);
+    @if $w == 500 or $w == 300 {
+      $level: map.set($level, font-weight, 400);
+    }
+  }
+  $num-typography: map.set($num-typography, $key, $level);
 }

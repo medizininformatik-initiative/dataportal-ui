@@ -1,7 +1,7 @@
 @mixin button-cancel($theme) {
   .num-button.cancel {
-    font-weight: 500; // role button says 600: decide with Shah
-    height: 42px;
+    font-weight: 400;
+    height: 40px;
     border: 1px solid role-color($theme, accent, 200);
     background: role-color($theme, neutral, 50);
     color: role-color($theme, accent, 600);

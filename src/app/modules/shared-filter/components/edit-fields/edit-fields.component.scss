@@ -31,7 +31,7 @@
 .field-name {
   font-family: var(--font-body);
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--font-size-sm);
   line-height: 12px;
   color: #080707;
@@ -45,7 +45,7 @@
 .field-description {
   font-family: var(--font-body);
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 10px;
   line-height: 12px;
   color: var(--color-text-section);
@@ -104,7 +104,7 @@
 // ── Tab bar ─────────────────────────────────────────────────────
 ::ng-deep .mat-mdc-tab .mdc-tab__text-label {
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--font-size-sm);
   color: var(--color-accent);
 }

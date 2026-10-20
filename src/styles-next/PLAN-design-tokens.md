@@ -32,12 +32,12 @@ Everything below this block = reference and history. Nothing deleted. Where old 
 **Open, typography (in this order):**
 1. `headings` audit: global `h2` rules in `base/_headings.themed.scss` use `!important` (letter-spacing, margin). Intro `<h2>` fights them. Scope them or move type into roles.
 2. `app-content` groups: ~~`section`~~, ~~`search-bar`~~ (ported; Shah checks the look in the app), `table`, `action-bar` (process below, one group at a time).
-3. Font weights (decision 8 follow-up). Titillium has NO 500 and we ship only 400/600/700. Browser draws 500 and 300 as 400. Asked for 500: `$body-2` in `themes/fdpg-light/_typography.scss:10`, `button/_button-cancel.themed.scss:3`, `profile-reference-chip.component.scss:8`. Asked for 300: `$caption` (same file). Shah: not now. Options: 500 -> 400 (no visual change) or 600; 300 -> download Titillium 300 or use 400. Q8 letter-spacing: DONE 2026-10-20 (`normal` for every Material level in `themes/fdpg-light/_typography.scss`, tooltip `0.5px !important` deleted; Shah to look at selects, options, table, tooltips). Left: filter-chips `-0.03em`, headings `0 !important` (same look). Close before Material goes.
+3. ~~Font weights~~ DONE 2026-10-20 (500 and 300 -> 400 in all scss under `app/` and `styles-next/` and in the Material config; look unchanged, the browser drew them as 400). Old text: (decision 8 follow-up). Titillium has NO 500 and we ship only 400/600/700. Browser draws 500 and 300 as 400. Asked for 500: `$body-2` in `themes/fdpg-light/_typography.scss:10`, `button/_button-cancel.themed.scss:3`, `profile-reference-chip.component.scss:8`. Asked for 300: `$caption` (same file). Shah: not now. Options: 500 -> 400 (no visual change) or 600; 300 -> download Titillium 300 or use 400. Q8 letter-spacing: DONE 2026-10-20 (`normal` for every Material level in `themes/fdpg-light/_typography.scss`, tooltip `0.5px !important` deleted; Shah to look at selects, options, table, tooltips). Left: filter-chips `-0.03em`, headings `0 !important` (same look). Close before Material goes.
 4. Side menu level 3 at 14/20 (option D): kept as alternative, not wanted now.
 
 **Next session (2026-10-21 or later):**
-1. Table leftovers (small): availability label 12/14 -> 12/16 (C27, status-bar component, open it first); `tabular-nums` for number columns (Shah decides); header `th` height (52 now; 36 was tried and undone); 15px checkbox vs 24px target. Notes: `C23`, `C27`.
-2. Controls still not 40: cancel button 42 (`_button-cancel.themed.scss:3`), `th` 52. Search bar leftovers: `.select-search-wrapper` size + `.icon-design` 42 in `search-filter.component.scss` (Shah designs the wrapper); cancel button 42 -> 40 (`_button-cancel.themed.scss:3`); hover (border, hint, icon).
+1. Table leftovers (small): availability label 12/14 -> 12/16 (DONE 2026-10-20, `availability-status-bar.component.scss`); `tabular-nums` for number columns (Shah decides); header `th` height (52 now; 36 was tried and undone); 15px checkbox vs 24px target. Notes: `C23`, `C27`.
+2. Controls still not 40: `th` 52 (cancel button and `.icon-design` now 40, 2026-10-20). Search bar leftovers: `.select-search-wrapper` size + `.icon-design` 42 in `search-filter.component.scss` (Shah designs the wrapper); cancel button 42 -> 40 (`_button-cancel.themed.scss:3`); hover (border, hint, icon).
 3. ~~`action-bar` (C26)~~ done 2026-10-20: only dead rules deleted, badge stays Material. Next: `app-header` leftovers if any, then the parked modal/FAQ/data-protection titles.
 4. Shah checks the table in the app (header 14px, text cell 14px, rows 40px, long text fits) and the 40px controls side by side.
 5. Section names that head blocks in modals: stay `h2` (decided OK 2026-10-20). Section-name spec is the Angular default; add a test only if the component grows.
@@ -119,3 +119,5 @@ Wired 2026-10-19: `button_themed` and `page-header_themed` are included in `cust
 
 - Spacing/margin/padding tokens, shadows, z-index, breakpoints. Check after sizing if a pattern shows.
 - Renaming CSS variables (`--num-color--*`).
+
+**2026-10-20 (Shah):** modal / FAQ / data-protection title roles dropped for now (no questions to answer). Open `42px` heights left in modals/date picker/result (`save-file-modal`, `save-dataquery-modal`, `date-picker`, `result`, `timerestriction`, filter-chips `min-height`).
