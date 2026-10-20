@@ -30,3 +30,22 @@ Reference. Moved out of `PLAN-design-tokens.md` 2026-10-20, text unchanged. Newe
 - Roboto: 212 KB of files (9, only woff2 is fetched by modern browsers), no text used it, so it was never downloaded. Saving = repo/build size, not load time.
 - Every `font-family` literal was redundant: `body.mat-typography` already sets Titillium, children inherit. Deleting the line is enough; no replacement needed (only `criteria-stage` needed `var(--font-body)`).
 - Mistake caught: `git add src/app` also staged `app.component.ts`, which must stay uncommitted. Fixed with `reset --soft` before push. Stage by explicit file, not by folder, while `angular.json` + `app.component.ts` are held back.
+
+## 2026-10-20: h1 / h2 session
+- A global element rule (`h2`) wins over component intent: `!important` margin made the FAQ gap 20px although its scss said 4px. Moving type into roles read by the component removes this class of hidden override.
+- A heading tag used for a plain sentence (intro `<h2>`) forces resets: 4x `!important` + border/padding/font-style. Right tag (`<p>`) = no resets. Check the tag before writing overrides.
+- Component scss cannot call `role-color` (no `$theme`). Pattern: the group mixin (`page-header_themed`) emits a CSS variable from the role, the component reads `var(...)`. Used for intro color.
+- Extending `type.vars` with an optional key (`letter-spacing`, guarded by `map.has-key`) keeps old roles unchanged: no variable is written when the key is missing.
+- Collapse animation needs 4 properties together (`max-height`, `overflow`, `opacity`, `transition`); margin must be animated too or a gap stays when hidden.
+- `#325a7e` was in no palette. Nearest: accent 700 `#3c5786` (same contrast 6.88). Compare contrast numbers, not only hex distance.
+- Several leftovers were dead code: `h2` selectors in `save-dialog` / `save-file-modal` had no `<h2>` in their templates. Grep the template before keeping a selector.
+- `git add <folder>` also stages held-back files (`app.component.ts`). Stage by explicit file or run `git status` before commit.
+
+## Improvements still possible (heading / header area)
+- Roles for modal title, FAQ title, data-protection title (prototype `typography-prototype-headings.html` exists; open: keep underline?, FAQ gap 4 or 20px?, data-protection weight 400 vs 600). Until then those three headings have no global h2 look and use Material's 20/32 + their own scss.
+- `h3` (used in `section-name`, `information-section`, `error-display`, data-protection), `h4` (data-protection), `h5` (no template: dead rule): same treatment as `h2`. All still `!important` in `_headings.themed.scss`.
+- Intro: `max-height: 200px` clips text above 8 lines (long translation, narrow window). Fix only if it shows up.
+- Header title color `#6a7483` (contrast 4.49) -> candidate neutral 900 `#5e6c78` (5.12); eye button hover `#fff` literal. Color pass.
+- Weights: Titillium has no 500/300; `$body-2` 500, `$caption` 300, `_button-cancel` 500, `profile-reference-chip` 500 are drawn as 400.
+- Q8 (letter-spacing of non-link text) still open; intro keeps `normal` via role key.
+- Dead code list (`.user-button`, `.portal-link-btn`) skipped by Shah.

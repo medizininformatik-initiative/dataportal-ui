@@ -13,6 +13,7 @@ Everything below this block = reference and history. Nothing deleted. Where old 
 - 652 merged. Side menu, `.app-body`, checkbox, 6 color variables ported to `styles-next`.
 - One font: Titillium Web only (decision 8). Open Sans + Roboto removed in commit `c0c072e2` (2026-10-20). Log + undo: `design-tokens-history.md` part 5 and 5b. Shah checked in browser: looks good.
 - Global `h2` rule removed (`_headings.themed.scss`; `h3`-`h5` stay). Page intro `header-description` is a `<p>` again, role variables incl. new optional role key `letter-spacing`, color from accent 700 via `--app-content-page-header-intro-color`, margin animates with the hide. Prototypes: `typography-prototype-headings.html`, `typography-prototype-intro-color.html`.
+- h1 and h2 selectors: DONE (Shah, 2026-10-20). Insights + improvement list: `design-tokens-insights.md`, sections "h1 / h2 session".
 - Still open from this: roles for modal title, FAQ title, data-protection title (parked by Shah; prototype ready, 3 open questions in the reply of 2026-10-20: underline, FAQ gap 4px vs 20px, data-protection weight). Header title color `#6a7483` (4.49) and eye button `#fff` = color pass.
 
 **Closed by Shah 2026-10-20:**
