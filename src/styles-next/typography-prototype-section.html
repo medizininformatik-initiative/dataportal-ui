@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Typography prototype: section name (h2)</title>
+  <!-- Open in a browser. Today (h3, 14/19) vs next (h2, 16/24) for num-section-name, next to its real neighbours. Not part of the app. -->
+  <link rel="stylesheet" href="typography-prototype.css" />
+  <style>
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1200px;
+    }
+    h1.page {
+      font: 600 18px/24px sans-serif;
+      margin: 24px 0 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .col {
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #c5cacf;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin: 0 0 12px;
+    }
+    .box {
+      border: 1px dashed #c5cacf;
+      padding: 8px;
+      margin-bottom: 12px;
+    }
+    .box > small {
+      display: block;
+      font: 11px/14px monospace;
+      color: #6a7483;
+      margin-bottom: 4px;
+    }
+
+    /* ---- the neighbours (values measured in the app, Titillium Web only) ---- */
+    .n-title {
+      font: 600 24px/32px 'Titillium Web', sans-serif;
+      margin: 0;
+      color: #1b1b1b;
+    } /* page header title */
+    .n-intro {
+      font: 400 16px/24px 'Titillium Web', sans-serif;
+      margin: 0 0 16px;
+      color: #325a7e;
+      max-width: 70ch;
+    } /* page header intro */
+    .n-control {
+      font: 400 16px/24px 'Titillium Web', sans-serif;
+      color: #1b1b1b;
+    } /* select value, text-link size */
+    .n-select {
+      display: inline-block;
+      border: 1px solid #8a93a0;
+      border-radius: 4px;
+      padding: 8px 12px;
+      min-width: 150px;
+      margin-right: 8px;
+      background: #fff;
+    }
+    .n-button {
+      display: inline-block;
+      font: 600 16px/24px 'Titillium Web', sans-serif;
+      color: #fff;
+      background: #1b5e9e;
+      border-radius: 4px;
+      padding: 8px 16px;
+    }
+    .n-th {
+      font: 600 14px/19px 'Titillium Web', sans-serif;
+      color: #1b1b1b;
+      padding: 8px;
+      border-bottom: 2px solid #c5cacf;
+      text-align: left;
+    }
+    .n-td {
+      font: 400 14px/19px 'Titillium Web', sans-serif;
+      color: #1b1b1b;
+      padding: 8px;
+      border-bottom: 1px solid #e3e6e9;
+    }
+    .n-chip {
+      display: inline-block;
+      font: 600 12px/16px 'Titillium Web', sans-serif;
+      background: #e3e6e9;
+      border-radius: 12px;
+      padding: 4px 10px;
+      margin-right: 4px;
+    }
+    .info {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #5f6266;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+    }
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .cols > div {
+      border: 1px solid #e3e6e9;
+      padding: 8px;
+    }
+
+    /* ---- TODAY: <h3 class="section-header"> = component scss + global h3 rule beaten by !important ---- */
+    .today .section {
+      width: 100%;
+      font: 600 14px/19px 'Titillium Web', sans-serif; /* tokens --font-size-md / --line-height-md / --font-weight-bold */
+      color: #5f6266; /* --color-text-section */
+      margin: 8px 0;
+      padding: 0;
+      border: 0;
+    }
+
+    /* ---- NEXT: <h2>, role app-content-section-name. The component keeps only color + margin. ---- */
+    .next .section {
+      width: 100%;
+      color: #5f6266;
+      margin: 8px 0;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    table.spec {
+      margin-top: 24px;
+      background: #fff;
+      width: auto;
+    }
+    table.spec td,
+    table.spec th {
+      border: 1px solid #c5cacf;
+      padding: 4px 8px;
+      text-align: left;
+      vertical-align: top;
+      font: 13px/18px sans-serif;
+    }
+  </style>
+
+  <h1 class="page">Section name: today (&lt;h3&gt;, 14/19/600) vs next (&lt;h2&gt;, 16/24/600)</h1>
+  <p class="tag">
+    Same color #5f6266 (color pass is later). Only tag, size and line change. Neighbours are
+    unchanged in both columns.
+  </p>
+
+  <div class="grid">
+    <!-- ================= TODAY ================= -->
+    <section class="col today">
+      <p class="tag">TODAY: h1 &rarr; h3 (level skipped)</p>
+
+      <div class="box">
+        <small>page header (h1 24/32/600 + intro 16/24/400)</small>
+        <h1 class="n-title">Feasibility query</h1>
+        <p class="n-intro">Search for criteria and build your query.</p>
+      </div>
+
+      <div class="box">
+        <small>search-filter-bar: section name + info icon, then selects + button</small>
+        <div class="row">
+          <h3 class="section">Suche verfeinern:</h3>
+          <span class="info"></span>
+        </div>
+        <div class="row">
+          <span class="n-select n-control">Terminology &#9662;</span>
+          <span class="n-select n-control">Context &#9662;</span>
+          <span class="n-button">Zur&uuml;cksetzen</span>
+        </div>
+      </div>
+
+      <div class="box">
+        <small>editor display: Inclusion / Exclusion (two columns)</small>
+        <div class="cols">
+          <div>
+            <h3 class="section">Einschlusskriterien</h3>
+            <span class="n-chip">Diagnose</span>
+            <span class="n-chip">Alter</span>
+          </div>
+          <div>
+            <h3 class="section">Ausschlusskriterien</h3>
+            <span class="n-chip">Prozedur</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <small>section name above a table (header 14/19/600, cell 14/19/400)</small>
+        <h3 class="section">Datens&auml;tze</h3>
+        <table>
+          <tr>
+            <th class="n-th">Name</th>
+            <th class="n-th">Anzahl</th>
+          </tr>
+          <tr>
+            <td class="n-td">Diagnose</td>
+            <td class="n-td">1 204</td>
+          </tr>
+          <tr>
+            <td class="n-td">Prozedur</td>
+            <td class="n-td">388</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= NEXT ================= -->
+    <section class="col next">
+      <p class="tag">NEXT: h1 &rarr; h2. Role app-content-section-name (16/24/600)</p>
+
+      <div class="box">
+        <small>page header (h1 24/32/600 + intro 16/24/400)</small>
+        <h1 class="n-title">Feasibility query</h1>
+        <p class="n-intro">Search for criteria and build your query.</p>
+      </div>
+
+      <div class="box">
+        <small>search-filter-bar: section name + info icon, then selects + button</small>
+        <div class="row">
+          <h2 class="section type-app-content-section-name">Suche verfeinern:</h2>
+          <span class="info"></span>
+        </div>
+        <div class="row">
+          <span class="n-select n-control">Terminology &#9662;</span>
+          <span class="n-select n-control">Context &#9662;</span>
+          <span class="n-button">Zur&uuml;cksetzen</span>
+        </div>
+      </div>
+
+      <div class="box">
+        <small>editor display: Inclusion / Exclusion (two columns)</small>
+        <div class="cols">
+          <div>
+            <h2 class="section type-app-content-section-name">Einschlusskriterien</h2>
+            <span class="n-chip">Diagnose</span>
+            <span class="n-chip">Alter</span>
+          </div>
+          <div>
+            <h2 class="section type-app-content-section-name">Ausschlusskriterien</h2>
+            <span class="n-chip">Prozedur</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <small>section name above a table (header 14/19/600, cell 14/19/400)</small>
+        <h2 class="section type-app-content-section-name">Datens&auml;tze</h2>
+        <table>
+          <tr>
+            <th class="n-th">Name</th>
+            <th class="n-th">Anzahl</th>
+          </tr>
+          <tr>
+            <td class="n-td">Diagnose</td>
+            <td class="n-td">1 204</td>
+          </tr>
+          <tr>
+            <td class="n-td">Prozedur</td>
+            <td class="n-td">388</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <table class="spec">
+    <tr>
+      <th>Element</th>
+      <th>size / line</th>
+      <th>weight</th>
+      <th>tag</th>
+    </tr>
+    <tr>
+      <td>page title</td>
+      <td>24 / 32</td>
+      <td>600</td>
+      <td>h1</td>
+    </tr>
+    <tr>
+      <td><b>section name, today</b></td>
+      <td>14 / 19</td>
+      <td>600</td>
+      <td>h3 (skips h2)</td>
+    </tr>
+    <tr>
+      <td><b>section name, next</b></td>
+      <td>16 / 24</td>
+      <td>600</td>
+      <td>h2</td>
+    </tr>
+    <tr>
+      <td>page intro, select value, link</td>
+      <td>16 / 24</td>
+      <td>400</td>
+      <td>p / control</td>
+    </tr>
+    <tr>
+      <td>button</td>
+      <td>16 / 24</td>
+      <td>600</td>
+      <td>button</td>
+    </tr>
+    <tr>
+      <td>table header / cell</td>
+      <td>14 / 19</td>
+      <td>600 / 400</td>
+      <td>th / td</td>
+    </tr>
+    <tr>
+      <td>filter chip</td>
+      <td>12 / 16</td>
+      <td>600</td>
+      <td>chip</td>
+    </tr>
+  </table>
+</html>

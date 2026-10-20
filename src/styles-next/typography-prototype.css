@@ -125,6 +125,9 @@
 .type-app-content-faq-title               { font-family: var(--font-brand); font-weight: var(--font-weight-semibold); font-size: 20px; line-height: 28px; }
 .type-app-content-data-protection-title   { font-family: var(--font-brand); font-weight: var(--font-weight-semibold); font-size: 20px; line-height: 32px; }
 
+/* app-content-section-name: `num-section-name` (C18), now a real <h2> (h1 page title, then h2 section, no skipped level). Today 14/19/600 (token). Longhands (decision 3). */
+.type-app-content-section-name { font-family: var(--font-brand); font-weight: var(--font-weight-semibold); font-size: 16px; line-height: 24px; }
+
 /* ---- level classes (prototype of the Sass mixin `type-style($theme, $level)`) ---- */
 .type-app-content-page-header-title       { font: var(--font-weight-semibold) var(--type-app-content-page-header-title-size)/var(--type-app-content-page-header-title-line) var(--font-brand); }
 .type-app-content-page-header-intro             { font: var(--font-weight-regular)  var(--type-app-content-page-header-intro-size)/var(--type-app-content-page-header-intro-line)         var(--font-brand); max-width: var(--type-app-content-page-header-intro-measure); }

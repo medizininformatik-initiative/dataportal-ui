@@ -49,3 +49,15 @@ Reference. Moved out of `PLAN-design-tokens.md` 2026-10-20, text unchanged. Newe
 - Weights: Titillium has no 500/300; `$body-2` 500, `$caption` 300, `_button-cancel` 500, `profile-reference-chip` 500 are drawn as 400.
 - Q8 (letter-spacing of non-link text) still open; intro keeps `normal` via role key.
 - Dead code list (`.user-button`, `.portal-link-btn`) skipped by Shah.
+
+## 2026-10-20: section name session
+- `h3` for the section name skipped a level (h1 then h3). Check the heading outline before choosing a tag; the right tag also removed 4 `!important`s.
+- A custom element (`<num-button>`) is `display: inline` by default. As a flex item it is blocked, but an `inline-flex` child on a text baseline makes the host taller than the child, so `align-items: center` aligns the wrong box. Likely cause of the button offset (not measured).
+- `mat-form-field` reserves ~22px below the box for hint/error text; it pulls the visible box off a shared axis. Hide the subscript wrapper where no hints are used.
+- Layout experiments (filters in one row with the heading or with the search bar) were reverted: search bar 44px, filter 42px, button 38px. A real layout change needs the three heights agreed first.
+- A heading tag is for headings. A one-line label for controls ("Suche verfeinern:") is a hint: `<p>`, not `<h2>`/`<h3>`. The tag decides whether it shows up in the screen reader outline.
+- Equal size and weight are not equal visual weight: color counts. A darker small text can outweigh a lighter big title. Check color order (title darkest) when roles share weight 600.
+- `width: 100%` on a flex child squeezes its siblings (the `?` icon went to zero width). Prefer no width on the label in a flex row.
+- Two roles with equal values are fine (hint and section name today): the role says what it is for, and each can change alone.
+- Dev page `/playground` (`src/app/site/playground`, not in production builds) lists the shared components. It lacks the hint and an h1 above the section name.
+

@@ -1,13 +1,10 @@
 :host .section-header {
   width: 100%;
-  font-family: var(--font-body, 'Titillium Web', sans-serif);
-  font-style: normal;
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-md, 16px);
-  line-height: var(--line-height-md, 24px);
+  font-family: var(--font-app-content-section-name-family);
+  font-weight: var(--font-app-content-section-name-weight);
+  font-size: var(--font-app-content-section-name-size);
+  line-height: var(--font-app-content-section-name-line);
+  letter-spacing: var(--font-app-content-section-name-letter-spacing);
   color: var(--color-text-section);
-  margin: var(--spacing-sm) 0 !important; // global h3 margin is !important
-  padding: 0 !important;
-  border: 0 !important;
-  letter-spacing: normal !important;
+  margin: var(--spacing-sm) 0;
 }

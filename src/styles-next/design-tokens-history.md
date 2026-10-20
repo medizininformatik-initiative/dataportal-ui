@@ -170,3 +170,16 @@ What was done:
 To check in browser: tables, tree, tooltips (mat + info), filter chips, action bar, header. They inherit Titillium from `body.mat-typography` now. Also check that no Material part falls back to Roboto.
 
 Part 5b (same day): removed the last Roboto mentions in code. `styles.scss` comment line, `snackbar.component.scss` `.message-display` `font-family` (system stack with Roboto; now inherits Titillium), 3 Roboto `@font-face` in `typography-prototype-app.css` + its comment, Roboto note in `typography-prototype.css`. Undo: `git checkout -- <file>`. Docs (`*.md`) and old `src/styles/` still mention Roboto on purpose (history, deleted at switch).
+
+## Part 6 (2026-10-20, later): section name and filter hint
+What was done, in order:
+1. Read the C18 notes and the CSS. `num-section-name` was an `<h3>` at 14/19/600 (tokens), with 4x `!important` to beat the global `h3` rule. Used 10 times.
+2. Research check: "never skip a level". Page title is a real `<h1>`, so `<h3>` skipped `h2`.
+3. Prototype `typography-prototype-section.html` (today vs next with neighbours). Shah could not judge from it, so the component was edited directly as a one-time exception (literals, `<h2>`), checked in the app, then ported properly.
+4. Layout experiments in `search-filter-bar` / `search.component` (filters in one row with the heading, then beside the search bar). Heights never matched (search bar 44px, filters 42px, button 38px). Reverted with `git checkout`. Not wanted for now.
+5. Port: role `app-content-section-name` (16/24/600, `letter-spacing: normal`), group file `_section-name.themed.scss`, component reads `--font-app-content-section-name-*`. `num-section-name` stays an `<h2>`.
+6. Shah: the "Suche verfeinern:" text is a hint, not a heading. Both filter bars (`search-filter-bar`, `profile-search-bar`) now use `<p class="filter-heading__label">` with its own role `app-content-filter-hint` (group file `_filter-hint.themed.scss`), same values today.
+7. `?` icon next to the hint vanished: the hint had `width: 100%` in a flex row. Removed the width.
+8. Contrast check: `#5f6266` 6.13 on white, `#6a7483` 4.73 on white and 4.49 on the page grey. The h1 title (`#6a7483`) looked lighter than the hint (`#5f6266`) although bigger. Colors swapped: title `.header-font` now `--color-text-section`, hint `--color-text-secondary`. Breadcrumbs untouched.
+9. Dead rule `.filter-heading__label` (no template used it) was removed, then reused for the hint.
+

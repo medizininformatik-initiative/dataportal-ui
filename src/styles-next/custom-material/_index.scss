@@ -25,6 +25,8 @@
 @import './typography/text-link.themed';
 @import './typography/button.themed';
 @import './typography/page-header.themed';
+@import './typography/section-name.themed';
+@import './typography/filter-hint.themed';
 @import './typography/side-menu.themed';
 
 /* buttons */
@@ -57,6 +59,8 @@
   @include text-link_themed($theme);
   @include button_themed($theme);
   @include page-header_themed($theme);
+  @include section-name_themed($theme);
+  @include filter-hint_themed($theme);
   @include side-menu_themed($theme);
   @include buttons($theme);
   @include mat-chip_themed($theme);
