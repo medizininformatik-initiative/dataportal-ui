@@ -16,6 +16,7 @@ Everything below this block = reference and history. Nothing deleted. Where old 
 - h1 and h2 selectors: DONE (Shah, 2026-10-20). Insights + improvement list: `design-tokens-insights.md`, sections "h1 / h2 session".
 - `app-content` group `section` (`num-section-name`, C18): role `app-content-section-name` 16/24/600, tag `h3` -> `h2`; the filter hint "Suche verfeinern:" is a `<p>`, component reads the variables, `!important`s gone (2026-10-20). Visual check in the app: Shah comes back. Notes: `typography/C18-section-name.md`.
 - `app-content-filter-hint`: own role for "Suche verfeinern:" (a `<p>`, 2 filter bars), same values as the section name today. Title color and hint color swapped 2026-10-20 (title `#5f6266`, hint `#6a7483`). History: `design-tokens-history.md` part 6.
+- `app-content` group `search-bar` (C16, 2026-10-20): role `app-content-search-bar-input` 16/24/400 (was 14px, line normal), group file `_search-bar.themed.scss`, `searchbar.component.scss` reads the variables. Control height decided 40px (Shah): searchbar `.searchbar-field` (was `.searchbar-row` + `.form-design`) fixed `height: 40px` (border-box, no jump on the 2px focus border), filter select `.mat-mdc-form-field-flex` 42 -> 40. `num-button` was already 40. Prototype: `typography-prototype-search-bar.html`. Shah checks the look in the app. Hover (border, hint, icon) parked: today only border color on hover, not while focused.
 - Still open from this: roles for modal title, FAQ title, data-protection title (parked by Shah; prototype ready, 3 open questions in the reply of 2026-10-20: underline, FAQ gap 4px vs 20px, data-protection weight). Header title color `#6a7483` (4.49) and eye button `#fff` = color pass.
 
 **Closed by Shah 2026-10-20:**
@@ -28,15 +29,16 @@ Everything below this block = reference and history. Nothing deleted. Where old 
 
 **Open, typography (in this order):**
 1. `headings` audit: global `h2` rules in `base/_headings.themed.scss` use `!important` (letter-spacing, margin). Intro `<h2>` fights them. Scope them or move type into roles.
-2. `app-content` groups: ~~`section`~~ (ported; Shah checks the look in the app), `search-bar`, `table`, `action-bar` (process below, one group at a time).
+2. `app-content` groups: ~~`section`~~, ~~`search-bar`~~ (ported; Shah checks the look in the app), `table`, `action-bar` (process below, one group at a time).
 3. Font weights (decision 8 follow-up). Titillium has NO 500 and we ship only 400/600/700. Browser draws 500 and 300 as 400. Asked for 500: `$body-2` in `themes/fdpg-light/_typography.scss:10`, `button/_button-cancel.themed.scss:3`, `profile-reference-chip.component.scss:8`. Asked for 300: `$caption` (same file). Shah: not now. Options: 500 -> 400 (no visual change) or 600; 300 -> download Titillium 300 or use 400. Then: Q8 letter-spacing of non-link text, decision 9. Close before Material goes.
 4. Side menu level 3 at 14/20 (option D): kept as alternative, not wanted now.
 
 **Next session (2026-10-21 or later):**
 1. Shah checks the section name (h2, 16/24/600), the hint (p) and the swapped title/hint colors in the app. Adjust values or revert.
 2. Decide: do section names that head blocks (Inclusion/Exclusion, consent, time restriction in modals) stay `h2`? Modals have an `h2` title already.
-3. Next group `app-content`: `search-bar` (searchbar input 42px + border = 44px, filter select 42px, `num-button` 38px: agree on one control height before any layout change). Process per group below.
-4. Section-name spec is the Angular default and only checks creation; add a test only if the component grows.
+3. Search bar leftovers: `.select-search-input` -> renamed `.filter-search-input`, own role `app-content-filter-search-input` (same values as the search bar input), done 2026-10-20; wrapper size `.select-search-wrapper` = next step (Shah designs); still open: `.icon-design` there (height 42, 12px icon); cancel button still 42 (`_button-cancel.themed.scss:3`, set 40?); `C16`/`C19` notes outdated (focus weight 600 gone, height 40); hover decision.
+4. Next group `app-content`: `table` (C23, C27; removes Open Sans leftovers), then `action-bar` (C26). Process per group below.
+5. Section-name spec is the Angular default and only checks creation; add a test only if the component grows.
 
 **Later, colors (`PLAN.md` step 4 and 5):** role for the two error reds + placeholder, green shade for checkbox, header title color (`#6a7483`, contrast 4.49), then convert rest of `custom-material`, then the switch.
 

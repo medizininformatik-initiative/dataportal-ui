@@ -6,9 +6,9 @@ Molecule, filter dropdown (mat-select + search input). Source: `app/shared/compo
 |---|---|---|---|---|---|
 | select text | size / line / weight | 16 / 24 / 400 | 16 / 24 / 400 (`control`) | Material select | none |
 | select text | letter-spacing | 0.5px | open Q8 | Material | decide |
-| `.select-search-input` | font-size | `var(--font-size-md)` = 14px | 16px | :75 | change |
+| `.filter-search-input` (was `.select-search-input`) | size / line / weight | 1rem (16) / normal / 400 | 16 / 24 / 400, role `app-content-filter-search-input` | :74 | done 2026-10-20 |
 | `.icon-design` | font-size | `var(--font-size-sm)` = 12px | check: icon size | :34 | check |
 
 ## Notes
-- `.select-search-input` is the search field inside the open dropdown; it is not on the measured page (closed state). Not measured.
+- `.filter-search-input` is the search field inside the open dropdown; it is not on the measured page (closed state). Not measured.
 - Option list text (mat-option) not measured either.
