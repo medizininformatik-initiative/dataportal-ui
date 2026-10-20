@@ -119,6 +119,12 @@
 /* text-link: every text link (<a>), global rule in custom-material/base/_links.themed.scss. Longhands (decision 3). Shared, no area prefix. */
 .type-text-link { font-family: var(--font-brand); font-weight: var(--font-weight-regular); font-size: 16px; line-height: 24px; }
 
+/* headings of the 3 real <h2> (2026-10-20). Replace the global `h2` rule in custom-material/base/_headings.themed.scss. Longhands (decision 3).
+   Values = today's size, weight snapped to real Titillium files (400/600/700; there is no 500). Line height now explicit (was Material 32px). */
+.type-modal-title                         { font-family: var(--font-brand); font-weight: var(--font-weight-semibold); font-size: 18px; line-height: 24px; }
+.type-app-content-faq-title               { font-family: var(--font-brand); font-weight: var(--font-weight-semibold); font-size: 20px; line-height: 28px; }
+.type-app-content-data-protection-title   { font-family: var(--font-brand); font-weight: var(--font-weight-semibold); font-size: 20px; line-height: 32px; }
+
 /* ---- level classes (prototype of the Sass mixin `type-style($theme, $level)`) ---- */
 .type-app-content-page-header-title       { font: var(--font-weight-semibold) var(--type-app-content-page-header-title-size)/var(--type-app-content-page-header-title-line) var(--font-brand); }
 .type-app-content-page-header-intro             { font: var(--font-weight-regular)  var(--type-app-content-page-header-intro-size)/var(--type-app-content-page-header-intro-line)         var(--font-brand); max-width: var(--type-app-content-page-header-intro-measure); }

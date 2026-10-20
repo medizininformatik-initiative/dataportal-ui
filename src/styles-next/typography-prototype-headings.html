@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Typography prototype: h2 headings + page intro</title>
+  <!-- Open in a browser. Today vs next for the 3 real <h2> and the page intro. Not part of the app. -->
+  <link rel="stylesheet" href="typography-prototype.css" />
+  <style>
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1100px;
+    }
+    h1.page {
+      font: 600 18px/24px sans-serif;
+      margin: 24px 0 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .col {
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #c5cacf;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin: 0 0 12px;
+    }
+    /* TODAY: global h2 rule (_headings.themed.scss) on top of Material's h2 (20/32/500). 500 is drawn as 400 (no file). */
+    .today h2 {
+      font: 400 20px/32px 'Titillium Web', sans-serif;
+      letter-spacing: -0.23px;
+      padding: 0 0 12px;
+      margin: 0 0 20px;
+      border-bottom: 2px solid #5a79af;
+    }
+    .today .modal-header {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1b1b1b;
+    }
+    .today .faq-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1b1b1b;
+    }
+    .today .intro {
+      font: 600 16px/24px 'Titillium Web', sans-serif; /* weight/size from the role variables already */
+      font-weight: 400;
+      margin: 1em 0;
+      color: #325a7e;
+      max-width: 100ch;
+    }
+    /* NEXT: no border, no padding, no !important. Component owns its margin. */
+    .next h2,
+    .next p.intro {
+      margin: 0;
+    }
+    .next .modal-header {
+      text-align: center;
+      color: #1b1b1b;
+      margin-bottom: 16px;
+    }
+    .next .faq-title {
+      color: #1b1b1b;
+      margin-bottom: 4px;
+    }
+    .next .dp-title {
+      color: #1b1b1b;
+      margin-bottom: 20px;
+    }
+    .next .intro {
+      margin: 1em 0;
+      color: #325a7e;
+      max-width: 100ch;
+      font: 400 16px/24px 'Titillium Web', sans-serif;
+    }
+    .box {
+      border: 1px dashed #c5cacf;
+      padding: 8px;
+      margin-bottom: 12px;
+    }
+    .box small {
+      display: block;
+      font: 11px/14px monospace;
+      color: #6a7483;
+      margin-bottom: 4px;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 24px;
+      background: #fff;
+    }
+    td,
+    th {
+      border: 1px solid #c5cacf;
+      padding: 4px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+  </style>
+  <h1 class="page">Headings (3 real &lt;h2&gt;) and page intro: today vs next</h1>
+  <div class="grid">
+    <section class="col today">
+      <p class="tag">TODAY: global h2 rule + 4 !important. Blue underline on every h2.</p>
+      <div class="box">
+        <small>confirm-delete-modal .modal-header</small>
+        <h2 class="modal-header">Abfrage löschen?</h2>
+      </div>
+      <div class="box">
+        <small>dashboard-faq .faq-title (own margin 4px loses to global !important 20px)</small>
+        <h2 class="faq-title">Häufige Fragen</h2>
+      </div>
+      <div class="box">
+        <small>data-protection (no scss, pure global rule)</small>
+        <h2>Datenschutzerklärung für die Registrierung, Machbarkeitsanfragen, Antragstellung</h2>
+      </div>
+      <div class="box">
+        <small>header-description: &lt;h2&gt;, resets the global rule by hand</small>
+        <p class="intro">
+          Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen
+          können.
+        </p>
+      </div>
+    </section>
+    <section class="col next">
+      <p class="tag">NEXT: three roles, no underline, intro is a &lt;p&gt;.</p>
+      <div class="box">
+        <small>.type-modal-title 18/24/600</small>
+        <h2 class="modal-header type-modal-title">Abfrage löschen?</h2>
+      </div>
+      <div class="box">
+        <small>.type-app-content-faq-title 20/28/600, margin 4px as written in the scss</small>
+        <h2 class="faq-title type-app-content-faq-title">Häufige Fragen</h2>
+      </div>
+      <div class="box">
+        <small>.type-app-content-data-protection-title 20/32/600</small>
+        <h2 class="dp-title type-app-content-data-protection-title">
+          Datenschutzerklärung für die Registrierung, Machbarkeitsanfragen, Antragstellung
+        </h2>
+      </div>
+      <div class="box">
+        <small>
+          header-description as &lt;p&gt; (role app-content-page-header-intro 16/24/400, unchanged)
+        </small>
+        <p class="intro">
+          Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen
+          können.
+        </p>
+      </div>
+    </section>
+  </div>
+  <table>
+    <tr>
+      <th>Label (class)</th>
+      <th>Size / line</th>
+      <th>Weight</th>
+      <th>Today</th>
+      <th>Users</th>
+    </tr>
+    <tr>
+      <td>.type-modal-title</td>
+      <td>18 / 24</td>
+      <td>600</td>
+      <td>18 / 32 (Material), 600</td>
+      <td>confirm-delete-modal (1)</td>
+    </tr>
+    <tr>
+      <td>.type-app-content-faq-title</td>
+      <td>20 / 28</td>
+      <td>600</td>
+      <td>
+        20 / 32, 700 (
+        <code>bold</code>
+        )
+      </td>
+      <td>dashboard-faq (1)</td>
+    </tr>
+    <tr>
+      <td>.type-app-content-data-protection-title</td>
+      <td>20 / 32</td>
+      <td>600</td>
+      <td>20 / 32, 500 drawn as 400</td>
+      <td>data-protection (1)</td>
+    </tr>
+    <tr>
+      <td>app-content-page-header-intro</td>
+      <td>16 / 24</td>
+      <td>400</td>
+      <td>same</td>
+      <td>11 usages of num-header-description</td>
+    </tr>
+  </table>
+  <p class="tag" style="margin-top: 12px">
+    Visible changes: (1) blue underline gone on the three headings, (2) FAQ title gap shrinks 20px
+    to 4px (the scss value, today hidden by !important), (3) data-protection title gets heavier (400
+    to 600), (4) intro is a &lt;p&gt;, looks the same.
+  </p>
+</html>

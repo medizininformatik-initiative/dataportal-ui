@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Prototype: page intro color</title>
+  <!-- Open in a browser. Same intro text in 4 colors on the page background. Not part of the app. -->
+  <style>
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1100px;
+    }
+    h1 {
+      font: 600 18px/24px sans-serif;
+      margin: 0 0 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .col {
+      background: #f9f9f9;
+      padding: 16px;
+      border: 1px solid #c5cacf;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin: 0 0 8px;
+    }
+    .title {
+      font: 600 24px/32px 'Titillium Web', sans-serif;
+      color: #5e6c78;
+      margin: 0;
+    }
+    .intro {
+      font: 400 16px/24px 'Titillium Web', sans-serif;
+      max-width: 100ch;
+      margin: 1em 0 0;
+    }
+    .a {
+      color: #325a7e;
+    }
+    .b {
+      color: #3c5786;
+    }
+    .c {
+      color: #2f476f;
+    }
+    .d {
+      color: #5e6c78;
+    }
+    .white .col {
+      background: #fff;
+    }
+  </style>
+  <h1>
+    Page intro color: current vs palette candidates (title shown in today's #5e6c78-like grey for
+    context)
+  </h1>
+  <div class="grid">
+    <section class="col">
+      <p class="tag">A: current literal #325a7e (contrast 6.88 on #f9f9f9)</p>
+      <p class="title">Kriteriensuche</p>
+      <p class="intro a">
+        Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen
+        können. Für gezieltes Suchen können Sie auf bestimmte Terminologien oder KDS-Module
+        einschränken.
+      </p>
+    </section>
+    <section class="col">
+      <p class="tag">B: accent 700 #3c5786 (6.88): recommended, same lightness, slightly bluer</p>
+      <p class="title">Kriteriensuche</p>
+      <p class="intro b">
+        Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen
+        können. Für gezieltes Suchen können Sie auf bestimmte Terminologien oder KDS-Module
+        einschränken.
+      </p>
+    </section>
+    <section class="col">
+      <p class="tag">C: accent 800 #2f476f (8.86): darker, more contrast</p>
+      <p class="title">Kriteriensuche</p>
+      <p class="intro c">
+        Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen
+        können. Für gezieltes Suchen können Sie auf bestimmte Terminologien oder KDS-Module
+        einschränken.
+      </p>
+    </section>
+    <section class="col">
+      <p class="tag">D: neutral 900 #5e6c78 (5.12): same as title color, no blue</p>
+      <p class="title">Kriteriensuche</p>
+      <p class="intro d">
+        Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen
+        können. Für gezieltes Suchen können Sie auf bestimmte Terminologien oder KDS-Module
+        einschränken.
+      </p>
+    </section>
+  </div>
+</html>
