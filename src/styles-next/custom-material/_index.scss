@@ -28,6 +28,7 @@
 @import './typography/section-name.themed';
 @import './typography/filter-hint.themed';
 @import './typography/search-bar.themed';
+@import './typography/table.themed';
 @import './typography/side-menu.themed';
 
 /* buttons */
@@ -63,6 +64,7 @@
   @include section-name_themed($theme);
   @include filter-hint_themed($theme);
   @include search-bar_themed($theme);
+  @include table_themed($theme);
   @include side-menu_themed($theme);
   @include buttons($theme);
   @include mat-chip_themed($theme);

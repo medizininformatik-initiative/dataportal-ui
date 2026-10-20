@@ -10,7 +10,7 @@ tr {
   display: table;
   table-layout: fixed;
   width: 100%;
-  height: 42px;
+  height: 40px;
   background: #ffffff;
 }
 
@@ -19,13 +19,15 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-md);
+  font-family: var(--font-table-cell-family);
+  font-weight: var(--font-table-cell-weight);
+  font-size: var(--font-table-cell-size);
+  line-height: var(--font-table-cell-line);
   color: #000000;
 }
 
 .row-container {
-  height: 2rem;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Typography prototype: table</title>
+  <!-- Open in a browser. Today vs two ways to make the name cell the primary cell: B by contrast only, C by size. Padding and borders are the same everywhere. Not part of the app. -->
+  <link rel="stylesheet" href="typography-prototype.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1500px;
+    }
+    h1.page {
+      font: 600 18px/24px sans-serif;
+      margin: 24px 0 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+    .col {
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #c5cacf;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin: 0 0 12px;
+    }
+    table.t {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .t th {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 2px solid #c5cacf;
+      color: #6a7483;
+    }
+    .t td {
+      padding: 8px;
+      border-bottom: 1px solid #e3e6e9;
+    }
+    .t .n {
+      text-align: right;
+    }
+    .t td.name {
+      color: #000;
+    }
+    .t td.sec {
+      color: #6a7483;
+    }
+    .cb {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #6a7483;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    /* TODAY */
+    .today th {
+      font: 700 12px/14px 'Titillium Web', sans-serif;
+    }
+    .today td.name {
+      font: 400 14px/19px 'Titillium Web', sans-serif;
+    }
+    .today td.sec {
+      font: 400 12px/14px 'Titillium Web', sans-serif;
+    }
+
+    /* B: contrast only. Header 14/20/600, all cells 14/20/400; name cell black (21:1), other cells #6a7483 (4.73:1) as today. */
+    /* C: size. Same as B, plus the name cell 16/24/400. */
+    .c td.name {
+      font: 400 16px/24px 'Titillium Web', sans-serif;
+    }
+
+    table.spec {
+      border-collapse: collapse;
+      margin-top: 24px;
+      background: #fff;
+    }
+    table.spec td,
+    table.spec th {
+      border: 1px solid #c5cacf;
+      padding: 4px 8px;
+      text-align: left;
+      font: 13px/18px sans-serif;
+    }
+  </style>
+
+  <h1 class="page">Table: name cell as the primary cell</h1>
+  <p class="tag">
+    Colors are today's (name cell #000, other cells and header #6a7483). The color pass is later.
+    Only type changes.
+  </p>
+
+  <div class="grid">
+    <section class="col today">
+      <p class="tag">TODAY: header 12/14/700, name 14/19, other cells 12/14</p>
+      <table class="t">
+        <tr>
+          <th>Name</th>
+          <th>Code</th>
+          <th>Terminologie</th>
+          <th class="n">Anzahl</th>
+        </tr>
+        <tr>
+          <td class="name">
+            <span class="cb"></span>
+            Diagnose
+          </td>
+          <td class="sec">I10</td>
+          <td class="sec">ICD-10-GM</td>
+          <td class="sec n">1 204</td>
+        </tr>
+        <tr>
+          <td class="name">
+            <span class="cb"></span>
+            Prozedur
+          </td>
+          <td class="sec">5-470.0</td>
+          <td class="sec">OPS</td>
+          <td class="sec n">388</td>
+        </tr>
+        <tr>
+          <td class="name">
+            <span class="cb"></span>
+            Laborwert
+          </td>
+          <td class="sec">718-7</td>
+          <td class="sec">LOINC</td>
+          <td class="sec n">52 310</td>
+        </tr>
+      </table>
+    </section>
+    <section class="col b">
+      <p class="tag">B, contrast only: header 14/20/600, all cells 14/20/400</p>
+      <table class="t">
+        <tr class="type-table-header">
+          <th>Name</th>
+          <th>Code</th>
+          <th>Terminologie</th>
+          <th class="n">Anzahl</th>
+        </tr>
+        <tr class="type-table-cell">
+          <td class="name">
+            <span class="cb"></span>
+            Diagnose
+          </td>
+          <td class="sec">I10</td>
+          <td class="sec">ICD-10-GM</td>
+          <td class="sec n">1 204</td>
+        </tr>
+        <tr class="type-table-cell">
+          <td class="name">
+            <span class="cb"></span>
+            Prozedur
+          </td>
+          <td class="sec">5-470.0</td>
+          <td class="sec">OPS</td>
+          <td class="sec n">388</td>
+        </tr>
+        <tr class="type-table-cell">
+          <td class="name">
+            <span class="cb"></span>
+            Laborwert
+          </td>
+          <td class="sec">718-7</td>
+          <td class="sec">LOINC</td>
+          <td class="sec n">52 310</td>
+        </tr>
+      </table>
+    </section>
+    <section class="col b c">
+      <p class="tag">C, size: as B, name cell 16/24/400</p>
+      <table class="t">
+        <tr class="type-table-header">
+          <th>Name</th>
+          <th>Code</th>
+          <th>Terminologie</th>
+          <th class="n">Anzahl</th>
+        </tr>
+        <tr class="type-table-cell">
+          <td class="name">
+            <span class="cb"></span>
+            Diagnose
+          </td>
+          <td class="sec">I10</td>
+          <td class="sec">ICD-10-GM</td>
+          <td class="sec n">1 204</td>
+        </tr>
+        <tr class="type-table-cell">
+          <td class="name">
+            <span class="cb"></span>
+            Prozedur
+          </td>
+          <td class="sec">5-470.0</td>
+          <td class="sec">OPS</td>
+          <td class="sec n">388</td>
+        </tr>
+        <tr class="type-table-cell">
+          <td class="name">
+            <span class="cb"></span>
+            Laborwert
+          </td>
+          <td class="sec">718-7</td>
+          <td class="sec">LOINC</td>
+          <td class="sec n">52 310</td>
+        </tr>
+      </table>
+    </section>
+  </div>
+
+  <table class="spec">
+    <tr>
+      <th>Element</th>
+      <th>today</th>
+      <th>B (contrast)</th>
+      <th>C (size)</th>
+    </tr>
+    <tr>
+      <td>header</td>
+      <td>12 / 14 / 700</td>
+      <td>
+        14 / 20 / 600 (
+        <code>table-header</code>
+        )
+      </td>
+      <td>same as B</td>
+    </tr>
+    <tr>
+      <td>name cell (black, 21:1)</td>
+      <td>14 / 19 / 400</td>
+      <td>
+        14 / 20 / 400 (
+        <code>table-cell</code>
+        )
+      </td>
+      <td><b>16 / 24 / 400</b></td>
+    </tr>
+    <tr>
+      <td>other cells (#6a7483, 4.73:1)</td>
+      <td>12 / 14 / 400</td>
+      <td>
+        14 / 20 / 400 (
+        <code>table-cell</code>
+        )
+      </td>
+      <td>14 / 20 / 400</td>
+    </tr>
+    <tr>
+      <td>needs a third role?</td>
+      <td></td>
+      <td>no</td>
+      <td>
+        yes:
+        <code>table-cell-primary</code>
+      </td>
+    </tr>
+  </table>
+</html>

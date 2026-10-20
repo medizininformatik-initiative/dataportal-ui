@@ -1,7 +1,7 @@
 .name-column {
   padding-left: var(--spacing-8);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-md);
+  font-size: var(--font-table-cell-size);
+  line-height: var(--font-table-cell-line);
   color: #000000;
   flex: 1 1 auto;
   min-width: 0;
@@ -19,7 +19,7 @@
 }
 
 .row-container {
-  height: 42px;
+  height: 40px;
   display: flex;
   flex-direction: row;
   align-items: center;

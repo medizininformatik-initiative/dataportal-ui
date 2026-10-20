@@ -4,7 +4,7 @@
    (--font-app-content-page-header-title-*) and in the prototype. No separate adjective names like 'strong' or 'large'.
    Two roles may have equal values today (duplicates are allowed); equal entries can be merged later when the
    whole app is converted.
-   Draft: page header, section name, search bar input, button, breadcrumbs, text link, side menu so far. Source: typography-prototype.css. */
+   Draft: page header, section name, search bar input, table, button, breadcrumbs, text link, side menu so far. Source: typography-prototype.css. */
 $_brand: "'Titillium Web', sans-serif";
 
 $fdpg-light-type-roles: (
@@ -49,6 +49,18 @@ $fdpg-light-type-roles: (
       size: 16px,
       line: 24px,
     ),
+  'table-header': (
+    family: $_brand,
+    weight: 600,
+    size: 14px,
+    line: 20px,
+  ),
+  'table-cell': (
+    family: $_brand,
+    weight: 400,
+    size: 14px,
+    line: 20px,
+  ),
   'button': (
     family: $_brand,
     weight: 600,

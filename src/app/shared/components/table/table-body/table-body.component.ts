@@ -4,7 +4,6 @@ import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data
 import { Component, input, output } from '@angular/core'
 import { DisplayCellComponent } from '../cells/display-cell/display-cell.component'
 import { IconCellComponent } from '../cells/icon-cell/icon-cell.component'
-import { NgClass } from '@angular/common'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TextCellComponent } from '../cells/text-cell/text-cell.component'
 import { CheckboxCellComponent } from '../../shared-components.module'
@@ -20,7 +19,6 @@ import { getColumnWidthPercent } from '../table-column-width.util'
   styleUrls: ['./table-body.component.scss'],
   standalone: true,
   imports: [
-    NgClass,
     CheckboxTextCellComponent,
     AvailabilityCellComponent,
     DisplayCellComponent,

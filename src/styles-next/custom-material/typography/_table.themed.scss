@@ -1,0 +1,11 @@
+@use '../../functions/type';
+
+/* Group "table": the generic data table (C23, `num-table`), used on several pages, so no area prefix in the role names.
+   `table-cell` is for every body cell (name, text, display). The primary/secondary difference between cells is color, not type.
+   Writes the variables of its roles. The values are in themes/fdpg-light/_type-roles.scss under the same names.
+   Parsed as: type.vars($theme, '<role>')  =  write family, weight, size, line (and letter-spacing if set) of that role as variables
+   (see functions/_type.scss). The component reads them: font-size: var(--font-table-cell-size); */
+@mixin table_themed($theme) {
+  @include type.vars($theme, 'table-header');
+  @include type.vars($theme, 'table-cell');
+}
