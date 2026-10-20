@@ -27,9 +27,6 @@
                          Loaded from fonts.googleapis.com (index.html), weights 400/600/700 ONLY.
                          => any 300/500 on Open Sans silently falls back to the nearest weight.
                             Also: external request (privacy / offline / GDPR check for a health portal).
-      'Roboto' is self-hosted (3 files) but only used 3x as literal + 1x in a system stack
-      (snackbar.component.scss: -apple-system ... Roboto ... = one-off, matches no theme font).
-      Roboto is also Material's default font; check if still referenced after Material removal.
    4. Font-size values in use (px unless noted), count of declarations:
         14px 51+2(0.875rem 3) | 12px 31+4 | 16px 18+2 | 18px 11 | 24px 4+2 | 20px 2 (lg)
         1.1rem 3 (17.6px) | 1.25rem 3 (20px) | 0.95rem 2 (15.2px) | 1.2rem 1 (19.2px)
