@@ -14,7 +14,7 @@
   flex-direction: column;
 }
 
-::ng-deep .mat-mdc-tab-body-wrapper {
+:host ::ng-deep .mat-mdc-tab-body-wrapper {
   flex: 1;
   min-height: 0;
   overflow: hidden;
@@ -31,9 +31,11 @@
 }
 
 .original-item {
-  font-family: var(--font-body);
-  font-size: 18px;
-  font-weight: var(--font-weight-bold);
+  font-family: var(--font-details-panel-title-family);
+  font-weight: var(--font-details-panel-title-weight);
+  font-size: var(--font-details-panel-title-size);
+  line-height: var(--font-details-panel-title-line);
+  letter-spacing: var(--font-details-panel-title-letter-spacing);
   color: var(--color-text-primary);
   padding-bottom: var(--spacing-12);
 }
@@ -48,7 +50,7 @@
 }
 
 .detail-row.divider {
-  border-bottom: 1px solid #f1f2f3;
+  border-bottom: 1px solid var(--border-color-subtle);
 }
 
 // Rows holding a nested Parents/Children list size to their own content
@@ -61,12 +63,31 @@
   align-items: stretch;
 }
 
-// Typography comes from the shared .num-text-label / .num-text-body classes
-// applied in the template — this only carries the column layout.
 .detail-label {
   min-width: 190px;
   max-width: 190px;
   padding-right: var(--spacing-16);
+  font-family: var(--font-details-panel-label-family);
+  font-weight: var(--font-details-panel-label-weight);
+  font-size: var(--font-details-panel-label-size);
+  line-height: var(--font-details-panel-label-line);
+  letter-spacing: var(--font-details-panel-label-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.detail-value,
+.detail-empty {
+  font-family: var(--font-details-panel-value-family);
+  font-weight: var(--font-details-panel-value-weight);
+  font-size: var(--font-details-panel-value-size);
+  line-height: var(--font-details-panel-value-line);
+  letter-spacing: var(--font-details-panel-value-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.detail-empty,
+.translation-link {
+  color: var(--color-accent);
 }
 
 .detail-value {
@@ -88,6 +109,15 @@
 .translation-entry {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-8);
   padding: var(--spacing-4) 0;
+}
+
+// Tab labels: Material sets its text variables on `mat-tab-header` itself, so they are overridden there (not on the group).
+.details-tab-group ::ng-deep .mat-mdc-tab-header {
+  --mat-tab-header-label-text-font: var(--font-details-panel-tab-family);
+  --mat-tab-header-label-text-weight: var(--font-details-panel-tab-weight);
+  --mat-tab-header-label-text-size: var(--font-details-panel-tab-size);
+  --mat-tab-header-label-text-line-height: var(--font-details-panel-tab-line);
+  --mat-tab-header-label-text-tracking: var(--font-details-panel-tab-letter-spacing);
 }

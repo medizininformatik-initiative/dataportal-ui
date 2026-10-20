@@ -103,4 +103,49 @@ $fdpg-light-type-roles: (
     size: 16px,
     line: 24px,
   ),
+  /* Details panel (C22): the drawer that opens on a table row click. Generic panel, used on the criteria and the profile search.
+     letter-spacing: normal because the drawer container inherits Material's 0.25px (decision Q8). */
+    'details-panel-tab':
+    (
+      family: $_brand,
+      weight: 400,
+      size: 16px,
+      line: 24px,
+      letter-spacing: normal,
+    ),
+  'details-panel-title': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+    letter-spacing: normal,
+  ),
+  'details-panel-label': (
+    family: $_brand,
+    weight: 600,
+    size: 14px,
+    line: 20px,
+    letter-spacing: normal,
+  ),
+  'details-panel-value': (
+    family: $_brand,
+    weight: 400,
+    size: 14px,
+    line: 20px,
+    letter-spacing: normal,
+  ),
+  'details-panel-relative-name': (
+    family: $_brand,
+    weight: 600,
+    size: 14px,
+    line: 20px,
+    letter-spacing: normal,
+  ),
+  'details-panel-relative-meta': (
+    family: $_brand,
+    weight: 400,
+    size: 12px,
+    line: 16px,
+    letter-spacing: normal,
+  ),
 );

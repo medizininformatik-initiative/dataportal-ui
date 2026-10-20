@@ -10,14 +10,11 @@
   track item.id) {
   <div (click)="getSelectedRelative(item)" class="num-list-entry">
     <div class="entry-content">
-      <div
-        class="text-overflow display-name num-text-label"
-        [matTooltip]="item.display | displayTranslation"
-      >
+      <div class="text-overflow display-name" [matTooltip]="item.display | displayTranslation">
         {{ item.display | displayTranslation }}
 
         @if (item.metadata?.length) {
-        <div class="num-info-item">
+        <div class="relative-meta">
           {{ item.metadata[0] }}
           @if (item.metadata[1]) { , {{ item.metadata[1] }}
           }
@@ -25,7 +22,7 @@
         }
       </div>
       @if (item.description) {
-      <div class="field-description num-text-meta">
+      <div class="field-description relative-meta">
         {{ item.description | displayTranslation }}
       </div>
       }

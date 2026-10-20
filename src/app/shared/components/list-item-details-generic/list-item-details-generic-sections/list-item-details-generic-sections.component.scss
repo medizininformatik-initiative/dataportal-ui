@@ -17,6 +17,21 @@
 .display-name {
   cursor: pointer;
   max-width: 80%;
+  font-family: var(--font-details-panel-relative-name-family);
+  font-weight: var(--font-details-panel-relative-name-weight);
+  font-size: var(--font-details-panel-relative-name-size);
+  line-height: var(--font-details-panel-relative-name-line);
+  letter-spacing: var(--font-details-panel-relative-name-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.relative-meta {
+  font-family: var(--font-details-panel-relative-meta-family);
+  font-weight: var(--font-details-panel-relative-meta-weight);
+  font-size: var(--font-details-panel-relative-meta-size);
+  line-height: var(--font-details-panel-relative-meta-line);
+  letter-spacing: var(--font-details-panel-relative-meta-letter-spacing);
+  color: var(--color-text-secondary);
 }
 
 .entry-content {
@@ -27,7 +42,7 @@
   padding: var(--spacing-4) 0;
 }
 
-// wrapping overrides — typography comes from num-text-meta
+// wrapping (the type comes from .relative-meta)
 .field-description {
   white-space: normal;
   word-break: break-word;

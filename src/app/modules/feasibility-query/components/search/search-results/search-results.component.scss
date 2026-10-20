@@ -9,7 +9,7 @@
 .details-drawer.mat-drawer-opened {
   width: 40%;
   padding-left: var(--spacing-24);
-  border-left-width: 1px !important;
+  border-left-width: 1px;
 }
 .details-wrapper {
   width: 100%;
@@ -37,7 +37,8 @@
   flex: 1;
 }
 
-::ng-deep .mat-drawer-inner-container {
+// Material's own inner container is not reachable from this template, so it is scoped to this drawer.
+.details-drawer ::ng-deep .mat-drawer-inner-container {
   overflow: hidden;
   height: 100%;
 }

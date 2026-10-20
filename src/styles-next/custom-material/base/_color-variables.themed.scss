@@ -35,6 +35,9 @@
   // Used by: ~38 component files (default rule / divider colour)
   --border-color: #{foreground-color($theme, divider)};
 
+  // Light divider between rows inside a card or panel (grey 100, was literal #f1f2f3). Used by: details panel
+  --border-color-subtle: #{role-color($theme, neutral, 100)};
+
   // Form-control borders (checkbox) on white: 3.5:1, WCAG 1.4.11 needs 3:1. Used by: checkbox
   --num-color--control-border: #{role-color($theme, neutral, 700)};
 
