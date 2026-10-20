@@ -105,7 +105,7 @@ One iteration = one group (for example `page-header`), not one file. Reference r
 
 1. **Read** the component notes `typography/Cxx-*.md` (now / next / source line per property).
 2. **Prototype in plain CSS**: change only the roles of this group in `typography-prototype.css`.
-3. **Prototype page**: create `typography-prototype-<group>.html` next to the CSS. It shows today vs next side by side with the real texts, plus a table (label, size / line, weight, what it replaces, other users today). Give Shah the link, do not open a browser:
+3. **Prototype page**: create `typography-prototype-<group>.html` next to the CSS. It shows today vs next side by side with the real texts, plus a table (label, size / line, weight, what it replaces, other users today). **Every reply that creates or changes a prototype ends with this link (Shah, 2026-10-19; I forgot it once)**, do not open a browser:
    `file://wsl.localhost/Ubuntu/home/shah/dataportal-ui/src/styles-next/typography-prototype-<group>.html`
    (Windows form `\\wsl.localhost\Ubuntu\home\shah\dataportal-ui\src\styles-next\...`). The relative `<link>` to the CSS works over `file://`.
 4. **Review with Shah**: what changes, what the labels are. Names are agreed here.
@@ -203,14 +203,14 @@ Console shortcut for 2: `getComputedStyle($0).fontSize` with the element selecte
 
 ### Where we stand
 Commits since `8ae4806b`: `1b918f0c` docs and prototypes, `5e1a28d9` `check:styles` script, `3a4af5d1` button + page-header groups wired into `_index.scss`, `3803dabb` page-header switch (title, intro, eye button), `3204184d` button switch + portal link as `num-button blue` + repeated CSS removed, `cbb63437` intro measure 100ch, `a4c407d8` header selects outlined, `de39ec82` merge of 652, `ebdefd93` plans, `107ae519` side menu + `.app-body` layout ported to `styles-next`.
-- Typography groups switched in components: `text-link`, breadcrumbs, `button` (incl. portal link), `page-header`. Browser-checked by Shah: page header, buttons (looks fine). Open: side menu (just ported), header selects were checked and committed.
+- Typography groups switched in components: `text-link`, breadcrumbs, `button` (incl. portal link), `page-header`. Browser-checked by Shah: page header, buttons, header selects, side menu (ported, ok 2026-10-19).
 - Side menu: structure and colors ported from 652 (`PLAN-side-menu.md` steps 1 to 5). Text sizes are still 652's (18/26/600, 16/24/500). Typography roles for the menu (steps 6 and 7) wait for decision 1.
 - Not ported from 652 (components render without their new look until then): checkbox (step 8), 8 unwritten variables (`PLAN-side-menu.md` section 6).
 - Uncommitted, deliberately: `angular.json` (build points at `styles-next`) and `src/app/app.component.ts` (swaps the `FDPGTheme` body class for the stylesheet name from the app config). Understand or drop `app.component.ts` before it is ever committed: if the config names another theme, the whole `.FDPGTheme { ... }` block (all variables) stops matching `<body>`.
 
 ### Next step
-1. Shah's browser check of the side menu (hover, active, rails, focus ring, collapse, narrow viewport below 600px).
-2. Decide `PLAN-side-menu.md` decision 1 (two roles 16/24 at 400 and 600, or keep 652's 18/26/600 and 16/24/500), then steps 6 and 7: roles `side-menu-item` and `side-menu-item-active`, new group file, include in `_index.scss`, drop the four `--font-size-nav*` tokens.
+1. ~~Shah's browser check of the side menu~~ done 2026-10-19.
+2. Decision 1 made 2026-10-19: option C (three roles: parent 600, child 400, active 600; all 16/24; px). Option D (level 3 at 14/20/400) is kept as an alternative with values in `PLAN-side-menu.md` section 7. Steps 6 and 7 are planned there for C. Then steps 6 and 7: roles `side-menu-item` and `side-menu-item-active`, new group file, include in `_index.scss`, drop the four `--font-size-nav*` tokens.
 3. Then: Q9 (title as `<h1>`; the intro is now an `<h2>`), step 8 (checkbox), step 9 (the 8 variables, colors, green shade), the global element rule audit (`headings`), then the color pass (`PLAN.md` step 4) and the switch.
 
 ### Gains
@@ -218,6 +218,11 @@ Commits since `8ae4806b`: `1b918f0c` docs and prototypes, `5e1a28d9` `check:styl
 - A repeatable "no accidental change" proof: compile both trees (`npx sass --quiet ...`), cut the blocks of one component out of each CSS file with `awk`, `diff`. The side menu port differed in exactly one line (`white` vs `#ffffff`); the button cleanup removed exactly the intended lines. Use it for every port.
 - Page header and buttons run on role variables end to end (Sass role, `type.vars`, include, component reads `var(--font-...)`), with a three-level verification table (script, DevTools computed, visual).
 - Merge handled without losing work: dry run in a temporary `git worktree`, then `git merge --no-commit`, conflicts in the old tree resolved by taking 652 (that tree is deleted at the switch), real work moved to `styles-next` by a plan. A subagent wrote the port plan in about 2 minutes while the merge stayed open (it read refs with `git show`, never touched the working tree).
+
+### Notes added later 2026-10-19
+- **Checkbox is done later** (Shah). Side menu step 8 waits.
+- **Why `styles-next` goes stale (confirmed by Shah):** investigate at some point why `styles-next` stays behind the old tree (branches edit only `src/styles/`), and how to stop it. See insight 1 below. Not started.
+- Rule from Shah: when a decision needs a visual comparison, draft the prototype page as part of the plan without being asked.
 
 ### Insights (new, not reported before)
 1. **Every branch that edits `src/styles/` makes `styles-next` stale.** 652 changed 8 old-tree style files and none of ours; the merge cost a whole port plan. Do the switch (`PLAN.md` step 5: point `angular.json` at `styles-next`, delete `src/styles/`) as soon as the menu, checkbox and the 8 variables are ported, and tell the team to stop editing `src/styles/` in the meantime (or to mirror edits).
@@ -243,7 +248,7 @@ Commits since `8ae4806b`: `1b918f0c` docs and prototypes, `5e1a28d9` `check:styl
 2. Shah checks in the browser: breadcrumbs (separator spacing, ellipsis, query-editor trail: `targetOf`), links (grey to blue, focus ring), blue button prototype.
 3. **C07 switch (done 2026-10-19, waits for Shah's browser check; cancel button keeps weight 500, role says 600):** template `class="num-button blue"`, delete `.portal-link-btn`, include `button_themed` in the index, replace the `.num-button` literals (16px, 600) with `var(--font-button-*)`.
 4. **Page header switch (done 2026-10-19, waits for Shah's browser check):** include `page-header_themed`, replace literals in `shared/components/header` and `header-description`.
-5. `side-menu` (C09): prototype `typography-prototype-side-menu.html` exists, roles `side-menu-item` (400) and `side-menu-item-active` (600) proposed, waits for Shah's review. Remember the global-rule check (insight 1) first.
+5. `side-menu` (C09): prototype `typography-prototype-side-menu.html` exists, roles `side-menu-parent-item` (600), `side-menu-child-item` (400), `side-menu-child-item-active` (600), option C chosen 2026-10-19 (D = level 3 at 14/20 kept as an alternative). Remember the global-rule check (insight 1) first.
 6. `app-content` groups in the order of "For discussion" item 5: section, search-bar, table, action-bar.
 7. Close Q8 (non-link text) and decision 8 (font families).
 8. ~~Build the var check script (insight 7)~~ done: `npm run check:styles`. Still: fix or delete stale specs, add more checks.

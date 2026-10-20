@@ -29,22 +29,22 @@ SCSS (`_side-menu.component.themed.scss`, rewritten, 361 lines changed):
 Non-style files in 652 (checkbox, search-filter, searchbar, missing-filter, section-name, header ... `.component.scss`) merge by git; they read `--num-color--*` and `--spacing-*`, so those variables must exist in styles-next (run `npm run check:styles` after adding `--num-color--` to `VAR_PREFIXES`).
 
 ## 3. Step order (after each: sass compile + `npm run check:styles`)
-Progress 2026-10-19: steps 1 to 5 done (links rule, 4 nav tokens, `.app-body` layout, menu SCSS from 652 with role colors). Compiled menu + layout CSS equals the 652 old-tree CSS except `white` -> `#ffffff` (checked by diff). Browser check by Shah: open. Other `:root` tokens in section 2 (checkbox, focus ring, ...) are NOT added yet: step 8/9.
+Progress 2026-10-19: steps 1 to 5 done (links rule, 4 nav tokens, `.app-body` layout, menu SCSS from 652 with role colors). Compiled menu + layout CSS equals the 652 old-tree CSS except `white` -> `#ffffff` (checked by diff). Browser check by Shah: done 2026-10-19 (ok). Other `:root` tokens in section 2 (checkbox, focus ring, ...) are NOT added yet: step 8/9.
 1. Finish the merge for app files (templates, ts, spec). Styles-next untouched. Compile: sass command must still pass.
 2. Global-rule check (insight 1): `grep -rn "^\s*a[:{ ,]\|\ba:not\|\.mdc-list-item\|mat-nav-list\|num-mat-list-item" src/styles-next`; list every element rule that can hit `a`, `ul`, `li`, `button`, `span` inside `num-side-menu` (known: `_links.themed.scss`; audit `_headings`, `_general_table`, `_lang-toggle-button`, `_ui-classes`). Add `:not(.num-nav-link)` to `_links.themed.scss`.
 3. Add the new `:root` tokens to `styles-next/styles.scss` (list in section 2). Compile.
 4. Layout: port `.app-body` etc. into `_app-layout.themed.scss`. Compile, load app, nav visible, content scrolls.
 5. Rewrite `_side-menu.component.themed.scss` from 652 with roles for color (layout/colors first, type still `--font-body`/`--font-size-nav`). Delete old selectors. Compile + diff against the 652 CSS (only hex-normalising diffs allowed).
-6. Typography roles (process step 5): add `side-menu-item` and `side-menu-item-active` to `themes/fdpg-light/_type-roles.scss`, new `custom-material/typography/_side-menu.themed.scss` (`type.vars` x2), `@include side-menu_themed($theme)` in `_index.scss`. Compile + check:styles (mixin-included check).
-7. Switch the menu SCSS to `var(--font-side-menu-item-*)` / `-active-*`; delete `--font-size-nav*` tokens. Remove `:not(.num-nav-link)` need only if the link rule is later scoped.
+6. Typography roles (process step 5): add `side-menu-child-item` and `side-menu-child-item-active` to `themes/fdpg-light/_type-roles.scss`, new `custom-material/typography/_side-menu.themed.scss` (`type.vars` x2), `@include side-menu_themed($theme)` in `_index.scss`. Compile + check:styles (mixin-included check).
+7. Switch the menu SCSS to `var(--font-side-menu-child-item-*)` / `-active-*`; delete `--font-size-nav*` tokens. Remove `:not(.num-nav-link)` need only if the link rule is later scoped.
 8. Port checkbox (`_checkbox.themed.scss`) + tokens + green shade decision. Separate commit.
 9. Other color variables (`error-*`, `grey-hover`, `accent-900`, placeholder) as one color-pass commit with their role decision.
 
 ## 4. Verification per step (DevTools, running app)
-- Step 3/6: `getComputedStyle(document.body).getPropertyValue('--font-side-menu-item-size')` = `16px` (not empty); `--size-checkbox` = `18px`.
+- Step 3/6: `getComputedStyle(document.body).getPropertyValue('--font-side-menu-child-item-size')` = `16px` (not empty); `--size-checkbox` = `18px`.
 - Step 4: `.app-body` computed `position: fixed`, top `108px`; `nav.sidenav` width 320px (expanded) / 64px (collapsed); `main` scrolls, no horizontal scroll at 320px viewport.
 - Step 5: `num-side-menu` computed `--side-menu-bg` `rgb(255,255,255)`, hover `rgb(232,235,237)` (#e8ebed), active text `rgb(35,54,87)` (#233657), icon `rgb(94,108,120)` (#5e6c78), focus ring accent 900. In *Styles* no hex literal, only `var(--side-menu-*)`. Tab through: ring 2px, offset -2px.
-- Step 6/7: item `.num-nav-link` computed family Titillium Web, weight 400, 16px/24px; active link and active child text 600; Styles pane shows `var(--font-side-menu-item-size)`. Link rule must not apply: no underline on hover, color not `#49689c`.
+- Step 6/7: item `.num-nav-link` computed family Titillium Web, weight 400, 16px/24px; active link and active child text 600; Styles pane shows `var(--font-side-menu-child-item-size)`. Link rule must not apply: no underline on hover, color not `#49689c`.
 - All: contrast of label vs row background >= 4.5 (DevTools contrast row); active vs inactive weight differs; `npm run check:styles` ok.
 
 ## 5. Risks / open questions for Shah
@@ -59,3 +59,44 @@ Progress 2026-10-19: steps 1 to 5 done (links rule, 4 nav tokens, `.app-body` la
 `check:styles` with wider `VAR_PREFIXES` (`--num-color--`, `--color-`, `--border-`, ...) reports variables the merged app files read that `styles-next` does not write:
 `--num-color--error-on-tint` (missing-filter:15), `--num-color--error-on-white` (searchbar:78), `--border-color-hover` (searchbar:32, search-filter:88), `--color-text-placeholder` (searchbar:56), `--num-color--accent-900` (search-filter:174, 183), `--num-color--grey-hover` (search-filter:182).
 Widen `VAR_PREFIXES` in `scripts/check-styles.cjs` when these are written (then the check guards them).
+
+## 7. Plan for steps 6 and 7: menu text roles (decided 2026-10-19: option C; px)
+Prototype: `typography-prototype-side-menu.html` (A today, B two roles, C three roles, D = C with smaller level 3). Prototype is built from the real markup and compiled CSS (`typography-prototype-app.css`, regenerate with the command in the HTML comment). Decisions by Shah: **C**, sizes in **px** (one rem decision for all roles later).
+Usability basis: `research-usability-typography.md`, last section (Carbon, Qld, Salt: weight marks the level, parent 600, nested 400, max 3 levels).
+
+| Role | Family | Size / line | Weight | Used for |
+|---|---|---|---|---|
+| `side-menu-parent-item` | Titillium Web | 16px / 24px | 600 | level 1 (Datendefinition ...) |
+| `side-menu-child-item` | Titillium Web | 16px / 24px | 400 | level 2 links and the group label "Suche", level 3 links |
+| `side-menu-child-item-active` | Titillium Web | 16px / 24px | 600 | the open page, levels 2 and 3 |
+
+Names agreed with Shah 2026-10-20 (they replace the first draft names `side-menu-item-parent`, `side-menu-item`, `side-menu-item-active`). Research cross-check: see the last bullet of `research-usability-typography.md`.
+
+**Option D (kept as an alternative, not chosen).** Same as C, plus level 3 (Kriteriensuche, Bulksuche) smaller. To switch to D: add a fourth role and use it for `.num-nav-link--grandchild`.
+
+| Role (D only) | Family | Size / line | Weight | Used for |
+|---|---|---|---|---|
+| `side-menu-grandchild-item` | Titillium Web | 14px / 20px | 400 | level 3 links (inactive) |
+| `side-menu-child-item-active` | Titillium Web | 14px / 20px for level 3, else 16/24 | 600 | would need a nested-active variant or `font-size` kept on the grandchild rule |
+
+D notes: 14px is Carbon's nav size, 20 is on the 4px grid, the row stays a click target of at least 24px. Render tested in the prototype (column D): pill and rails still line up. Reconsider D if level 3 looks crowded in the real app.
+
+Progress 2026-10-20: steps 1 to 3 done (3 roles in `_type-roles.scss`, group file `typography/_side-menu.themed.scss`, include in `_index.scss`; sass ok, `check:styles` ok, 12 variables `--font-side-menu-*` in the CSS). Steps 4 and 5 done too: menu SCSS reads the role variables, `--font-size-nav*` / `--line-height-nav*` deleted from `styles.scss`. Compile diff before/after = exactly the font lines (level 1 family/size/line/weight to parent-item vars, level 2/3 to child-item vars with the literal 500 gone, active child weight to the active var) plus the removed tokens. Waits for Shah's browser check (step 7 list), then commit (step 8). The prototype CSS is a snapshot from before the switch: do not regenerate it.
+Steps (each ends with `npx sass ... > new.css` and `npm run check:styles`):
+1. `themes/fdpg-light/_type-roles.scss`: add the three roles above (family `$_brand`).
+2. New `custom-material/typography/_side-menu.themed.scss`, mixin `side-menu_themed($theme)`: `type.vars($theme, 'side-menu-parent-item')`, `'side-menu-child-item'`, `'side-menu-child-item-active'` (copy the shape of `_page-header.themed.scss`). Emits `--font-side-menu-parent-item-*`, `--font-side-menu-child-item-*`, `--font-side-menu-child-item-active-*`.
+3. `custom-material/_index.scss`: `@import './typography/side-menu.themed'` and `@include side-menu_themed($theme);`. Check: `check:styles` (mixin-included), DevTools `getComputedStyle(document.body).getPropertyValue('--font-side-menu-child-item-size')` = `16px`.
+4. Switch `_side-menu.component.themed.scss`:
+   - `.num-nav-link` (level 1): font-family/size/line/weight from `var(--font-side-menu-parent-item-*)`.
+   - `.num-nav-link.num-nav-link--child` (levels 2 and 3, and the label): from `var(--font-side-menu-child-item-*)`; drop the literal `500` and its comment.
+   - Active link: `.num-nav-link--active` and `.navItem-font--child` inside it: `font-weight: var(--font-side-menu-child-item-active-weight)` (replaces `var(--font-weight-bold)`). The parent of an active child keeps weight 600 from its own role (only color changes).
+   - Check for other literals: `grep -n "font-weight\|font-size\|line-height" _side-menu.component.themed.scss`.
+5. Delete `--font-size-nav*`, `--line-height-nav*` from `styles.scss` (tokens and doc comment). Check: `grep -rn "font-size-nav\|line-height-nav" src` finds nothing.
+6. Proof: compile before and after, `awk` cut the `num-side-menu` blocks, `diff`: only the font lines differ. Expected changes: level 1 18/26 to 16/24 (weight stays 600); levels 2 and 3 weight 500 to 400; active weight stays 600.
+7. Shah browser: table in section 4 (step 6/7 row), plus: icon size (see side effect below), long German label still wraps, collapsed menu (64px) unchanged, no underline or link color on hover, text zoom 200% readable.
+8. Commit: roles + group file + switch in one commit ("feat(styles-next): side menu type roles"); prototype page and its CSS in the same commit.
+Side effect to accept or fix: `fa-icon` is sized in `em`, so the 16px parent text shrinks the parent icons from about 22px to 20px. Fix with a fixed icon size if wanted.
+
+## 8. Later (notes)
+- **Checkbox (step 8):** Shah: done later, not now. Until then the 652 checkbox renders without its new look.
+- **Why `styles-next` stays:** see `PLAN-design-tokens.md`, "Open question for Shah" in part 3 notes.
