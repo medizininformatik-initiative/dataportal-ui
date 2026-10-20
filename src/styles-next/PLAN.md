@@ -14,6 +14,9 @@ Role map: primary -> `neutral`, accent -> `accent`, green -> `secondary`, red ->
 - [x] `base/_typography.themed` split into `base/_headings.themed` (h1-h5) and `base/_links.themed`; the Material call `all-component-typographies` is in `custom-material/_index.scss`; the typography config moved to `themes/fdpg-light/_typography.scss` (one typography file, `themes/typography/` removed). Colors via roles; dead selectors removed (`.mat-headline-3/4`, `.decision-dialog`, `.accordion`, `.mat-h5`, `.command-bar__scenario-link`, `.dashboard-link`: not used in `src/app`).
 - [x] `base/_text-color-variables.themed.scss`: `--color-text-*` from foreground. `--border-color` (= foreground `divider`) moved into `_color-variables`. Both left `:root` (`styles.scss`) and are now set on `.FDPGTheme` (body).
 
+## Status 2026-10-20
+Side menu type roles are done (`eb533865`); session notes in `PLAN-design-tokens.md`, section "Session notes 2026-10-20 (part 4)". Earlier status below.
+
 ## Status 2026-10-19
 The typography track (`PLAN-design-tokens.md`) and the side menu port (`PLAN-side-menu.md`) run beside this color plan. Current status, gains and the next step are in `PLAN-design-tokens.md`, section "Session notes 2026-10-19 (part 3)". Run `npm run check:styles` before commits that touch `styles-next`.
 

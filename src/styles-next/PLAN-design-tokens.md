@@ -237,6 +237,55 @@ Commits since `8ae4806b`: `1b918f0c` docs and prototypes, `5e1a28d9` `check:styl
 10. **Dictation noise, new examples:** "pagella teams" = page-header, "6.52" = 652, "feed/editor" = `feat/editor-back-to-search-origin`, "index.css" = `custom-material/_index.scss`. Keep repeating my reading before work that is hard to undo (merges).
 11. **Stash `stash@{0}`** ("On develop: timeout-component") is not ours; leave it alone.
 
+## Session notes 2026-10-20 (part 4): side menu roles, where we stand, insights
+
+### Where we stand
+- Commits: `eb533865` side menu type roles, `15daca71` docs (decision C, option D, nested-nav research). Working tree clean except the deliberate `angular.json` and `app.component.ts` (see part 3).
+- Typography groups switched in components and browser-checked by Shah: `text-link`, breadcrumbs, `button`, `page-header`, **`side-menu`** (new). Side menu checked 2026-10-20: "looks good".
+- Side menu roles (option C, px): `side-menu-parent-item` 16/24/600 (level 1), `side-menu-child-item` 16/24/400 (levels 2 and 3 and the group label), `side-menu-child-item-active` 16/24/600 (open page, levels 2 and 3). Temporary `--font-size-nav*` tokens deleted from `styles-next`. Details and option D (level 3 at 14/20/400, role `side-menu-grandchild-item`): `PLAN-side-menu.md` section 7.
+- `PLAN-side-menu.md`: steps 1 to 7 done (1 to 5 on 2026-10-19, 6 and 7 on 2026-10-20). Open: step 8 checkbox (Shah: later), step 9 (6 unwritten variables, green shade).
+
+### What we did this session
+1. Plan status, then `PLAN-side-menu.md` steps 6 and 7 planned before building (Shah's rule: plan first).
+2. Browser check of the ported side menu: done and ticked.
+3. Prototype of the menu text: first as mock-ups (wrong), then rebuilt from the real markup and compiled CSS with four options A to D. Checked in Chrome DevTools against Shah's screenshot.
+4. Usability: our own research file had nothing on nested nav; web search added it (Carbon, Qld, Salt: weight marks the level, max 3 levels). Written to `research-usability-typography.md`.
+5. Decision: option C. Names: `side-menu-parent-item`, `side-menu-child-item`, `side-menu-child-item-active`.
+6. Built: 3 roles, group file `typography/_side-menu.themed.scss` (mixin `side-menu_themed`), include, menu SCSS switched, tokens removed. Compile diff before/after showed only the intended lines.
+7. Noted for later: checkbox later; investigate why `styles-next` goes stale behind the old tree (insight 1 of part 3).
+
+### Next step
+Pick one (Shah decides): Q9 page title as `<h1>` (HTML change; the intro is already an `<h2>`); step 9 of the side-menu plan (6 variables, role decisions, then widen `VAR_PREFIXES`); `headings` audit (global `h2` rules with `!important`); then the color pass (`PLAN.md` step 4) and the switch. Recommended order: Q9 and `headings` audit together (same files), then step 9, then colors, then the switch.
+
+### Found 2026-10-20: page title h1 (answers Q9)
+- The h1 already exists: commit `6d520dff` (branch 652) changed `<p class="header-font">` to `<div class="header-font"><h1 class="header-title">` in the shared `num-header` component (14 uses). It is the only `<h1>` in `src/app` (plus `playground.component.ts`, a dev page). So Q9 is done for every page that uses `num-header`; open: modals that use `num-header` get a second h1 (download-crtdl, validation-modal, save-dataquery-modal, result-detail-modal) and any page without `num-header`.
+- `.header-font .header-title` (reset: margin, padding, border, letter-spacing `!important`, `font: inherit`) exists only because the global `.FDPGTheme h1` rule (`_headings.themed.scss`: margin 0 0 20px, letter-spacing -0.63px, both `!important`) would hit it. That global h1 rule now serves no other h1. **Cleanup done 2026-10-20 (Shah: yes):** delete the global h1 rule, put the four `var(--font-app-content-page-header-title-*)` lines and `margin: 0` on `.header-title` itself, drop the `!important`s and the unneeded padding/border resets. Material's `.mat-typography h1` (specificity 0,1,1) still loses to a component class (0,2,0).
+  Result: global h1 rule deleted from `_headings.themed.scss`; `.header-title` carries the four font variables, `letter-spacing: inherit` (unchanged look) and `margin: 0`, no `!important`; `.header-font` keeps color, flex, gap. Waits for Shah's browser check (Computed: Titillium Web, 24px, 600, line 32px; title position and spacing unchanged).
+- DevTools showed the inherited `.header-font` font lines crossed out because the h1 has `font: inherit`; the values still apply (check Computed).
+
+### Insights (new)
+**What to improve**
+1. **A rule in the plan is not a rule at reply time.** The "give Shah the link to the prototype" rule was written in the plan (process step 3) and I still forgot it. End every reply that touches a prototype with a self-check: link given? Commit asked? Questions listed? Do not rely on having read the plan.
+2. **Take the "today" column from the real app, never from docs.** The first prototype said "today 16/24/600" (a pre-652 state) with mock colors, borders and English text; Shah could not judge it. Build prototypes from the real markup and the compiled CSS, with the real labels (`assets/i18n/de.json`) and layout (`.app-body`, `.sidenav`). Verify with a DevTools screenshot against Shah's screenshot before reporting. Cost: two rounds.
+3. **Name roles by position and state, and show a "role covers which level" table at the start.** My `side-menu-item` meant "child" but sounded generic; "active" was unclear. Names that worked: parent / child by structure, `-active` as a state suffix on the child. Ask for names with the table, not after the build.
+4. **Research can be stale against the code.** `research-usability-typography.md` was measured on a flat menu (4 items); the nested menu came with the 652 merge. After a merge that changes a component, re-check the research rows for it. The file now has a cross-check bullet.
+5. **The prototype generator lives only in the scratchpad** (`gen.cjs`, outside the repo) and the prototype CSS is a snapshot. It cannot be rebuilt after a session. If more prototypes are needed: put the generator into `scripts/` or build the prototype by hand from the snapshot.
+6. **`check:styles` guards one direction only** (variable read but never written). Written but never read is not checked (for example a typo'd extra variable in a group mixin). A second check is cheap.
+7. **Group mixin extras:** extra values in a group are extra custom properties next to the `type.vars` includes. This is documented only in the answer to Shah, not in the file; add one comment line to `_page-header.themed.scss` and `_side-menu.themed.scss` if it comes up again.
+
+**What worked (keep)**
+8. **Copy `before.css` before editing, diff after.** It proved again that the switch changed exactly the font lines. Do it for every port.
+9. **Options as a table plus one recommendation, with the rejected option kept in the plan with its values** (option D). Shah could change his mind later at no cost.
+10. **Chrome DevTools screenshot to verify own work** (`new_page`, `resize_page`, `take_screenshot`, then Read the PNG). Quick and caught that D's pill and rails line up.
+11. **Searching only after the local file failed:** read the repo research first, search second.
+
+**What I learned**
+12. `.num-nav-link--child` is also a `.num-nav-link`: the child rule must set `font-family` too, otherwise the child inherits the parent role's variable and the two roles are coupled by accident.
+13. `fa-icon` is `em`-sized: changing the link font size changes the icon size (18px text to 16px shrinks the parent icons by about 2px). Every future size change of a text container with icons has this side effect.
+14. Weight, not size, is the common way to mark nesting levels (Carbon: 14/600 parent, 14/400 child). Our own ladder (12/14/16/24, no 18) agrees; the 652 parent at 18/26 had no support.
+15. **Dictation noise, new examples:** "route" = roles, "court definition" = Kohortendefinition, "nested charts" = nested menus, "F tools" = DevTools, "StyleNext" = `styles-next`, "pagella" = page-header. Repeat the reading before irreversible work.
+16. Prettier in the pre-commit hook reformats the prototype HTML on every commit that touches it. Harmless.
+
 ### Dead or broken code found (delete or fix at step 7)
 - `.user-button` in `custom-material/layout/_header.themed.scss:68` (used nowhere).
 - `.portal-link-btn` rule (after C07 becomes `num-button blue`).

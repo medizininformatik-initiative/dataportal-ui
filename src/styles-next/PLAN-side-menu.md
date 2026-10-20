@@ -38,6 +38,7 @@ Progress 2026-10-19: steps 1 to 5 done (links rule, 4 nav tokens, `.app-body` la
 6. Typography roles (process step 5): add `side-menu-child-item` and `side-menu-child-item-active` to `themes/fdpg-light/_type-roles.scss`, new `custom-material/typography/_side-menu.themed.scss` (`type.vars` x2), `@include side-menu_themed($theme)` in `_index.scss`. Compile + check:styles (mixin-included check).
 7. Switch the menu SCSS to `var(--font-side-menu-child-item-*)` / `-active-*`; delete `--font-size-nav*` tokens. Remove `:not(.num-nav-link)` need only if the link rule is later scoped.
 8. Port checkbox (`_checkbox.themed.scss`) + tokens + green shade decision. Separate commit.
+   **Dumped 2026-10-20 (Shah: dump first, refactor later):** 652's checkbox SCSS copied as is (only colour lookups changed to `role-color`), 7 form-control tokens added to `styles.scss`, `--num-color--control-border` (neutral 700) and `--num-color--checkbox-checked` (literal `#839e00`, role decision open) added to `_color-variables`. Compile diff vs the old tree: only `white` -> `#ffffff`; the variable values are equal. Waits for Shah's browser check, then commit. Refactor later: green shade (`secondary 700`), the tick/focus colors, `!important`-free selectors.
 9. Other color variables (`error-*`, `grey-hover`, `accent-900`, placeholder) as one color-pass commit with their role decision.
 
 ## 4. Verification per step (DevTools, running app)
@@ -58,7 +59,7 @@ Progress 2026-10-19: steps 1 to 5 done (links rule, 4 nav tokens, `.app-body` la
 ## 6. Step 9 worklist (found 2026-10-19)
 `check:styles` with wider `VAR_PREFIXES` (`--num-color--`, `--color-`, `--border-`, ...) reports variables the merged app files read that `styles-next` does not write:
 `--num-color--error-on-tint` (missing-filter:15), `--num-color--error-on-white` (searchbar:78), `--border-color-hover` (searchbar:32, search-filter:88), `--color-text-placeholder` (searchbar:56), `--num-color--accent-900` (search-filter:174, 183), `--num-color--grey-hover` (search-filter:182).
-Widen `VAR_PREFIXES` in `scripts/check-styles.cjs` when these are written (then the check guards them).
+**Dumped 2026-10-20 (Shah: dump now, decide palette later):** all 6 written in `styles-next` with the 652 values (`grey-hover` = neutral 100, `accent-900` = role accent 900, error reds and placeholder as literals, `border-color-hover` = `var(--color-text-primary)`; files `_color-variables` and `_text-color-variables`). `VAR_PREFIXES` widened to `--color-`, `--num-color--`, `--border-`; `check:styles` ok. Open (color pass): role for the two error reds, placeholder, green shade.
 
 ## 7. Plan for steps 6 and 7: menu text roles (decided 2026-10-19: option C; px)
 Prototype: `typography-prototype-side-menu.html` (A today, B two roles, C three roles, D = C with smaller level 3). Prototype is built from the real markup and compiled CSS (`typography-prototype-app.css`, regenerate with the command in the HTML comment). Decisions by Shah: **C**, sizes in **px** (one rem decision for all roles later).
