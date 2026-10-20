@@ -1,14 +1,5 @@
-// Global styles for the HTML heading elements h1 to h5.
+// Global styles for the HTML heading elements h2 to h5 (h1: only the page title in `num-header`, styled in its component).
 @mixin headings_themed($theme) {
-  h1 {
-    margin: 0 0 20px 0 !important;
-    letter-spacing: -0.63px !important;
-
-    fa-icon {
-      margin: 0 13px 0 0;
-    }
-  }
-
   h2 {
     letter-spacing: -0.23px !important;
     padding: 0 0 12px 0;

@@ -1,8 +1,4 @@
 .header-font {
-  font-family: var(--font-app-content-page-header-title-family);
-  font-weight: var(--font-app-content-page-header-title-weight);
-  font-size: var(--font-app-content-page-header-title-size);
-  line-height: var(--font-app-content-page-header-title-line);
   color: var(--color-text-secondary);
   margin: 0;
   display: flex; // inline-flex left a line-box strut that pushed the title off-centre in flex rows
@@ -28,12 +24,12 @@
   }
 }
 
-// .FDPGTheme h1 (!important) outranks a bare class, so nest it to win the specificity fight
-.header-font .header-title {
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  letter-spacing: inherit !important;
-  font: inherit;
-  color: inherit;
+// the page title: reads the role variables itself; a component class (0,2,0) beats Material's .mat-typography h1 (0,1,1)
+.header-title {
+  font-family: var(--font-app-content-page-header-title-family);
+  font-weight: var(--font-app-content-page-header-title-weight);
+  font-size: var(--font-app-content-page-header-title-size);
+  line-height: var(--font-app-content-page-header-title-line);
+  letter-spacing: inherit;
+  margin: 0;
 }
