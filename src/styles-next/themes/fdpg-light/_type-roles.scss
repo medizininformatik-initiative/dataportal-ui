@@ -44,4 +44,22 @@ $fdpg-light-type-roles: (
     size: 16px,
     line: 24px,
   ),
+  'side-menu-parent-item': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+  ),
+  'side-menu-child-item': (
+    family: $_brand,
+    weight: 400,
+    size: 16px,
+    line: 24px,
+  ),
+  'side-menu-child-item-active': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+  ),
 );

@@ -1,150 +1,570 @@
 <!DOCTYPE html>
-<html lang="en">
-  <meta charset="utf-8" />
-  <title>Typography prototype: side menu (C09)</title>
-  <!-- Open in a browser. Today vs next for side-menu-item and side-menu-item-active. Not part of the app. -->
-  <link rel="stylesheet" href="typography-prototype.css" />
-  <style>
-    body {
-      font: 14px/20px 'Titillium Web', sans-serif;
-      background: #f9f9f9;
-      margin: 24px;
-      max-width: 1100px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .col {
-      background: #fff;
-      padding: 16px;
-      border: 1px solid #c5cacf;
-    }
-    .tag {
-      font: 12px/16px monospace;
-      color: #6a7483;
-      margin: 0 0 8px;
-    }
-    .menu {
-      width: 260px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 12px;
-      border-radius: 5px;
-      background: #fff;
-      color: #5f6266;
-    }
-    .item.active {
-      background: #f1f2f3;
-    }
-    .item:hover {
-      background: #e8ebf0;
-    }
-    .ic {
-      width: 16px;
-      height: 16px;
-      border-radius: 3px;
-      background: #c5cacf;
-    }
-    .active .ic {
-      background: #5a79af;
-    }
-    table {
-      border-collapse: collapse;
-      margin-top: 24px;
-      background: #fff;
-    }
-    td,
-    th {
-      border: 1px solid #c5cacf;
-      padding: 4px 8px;
-      text-align: left;
-    }
-  </style>
-  <h1 style="font: 600 18px/24px sans-serif; margin: 0 0 16px">Side menu (C09): today vs next</h1>
-  <div class="grid">
-    <section class="col">
-      <p class="tag">TODAY: every item 16/24/600, the active item looks the same in weight</p>
-      <div class="menu">
-        <div class="item" style="font: 600 16px/24px 'Titillium Web', sans-serif">
-          <span class="ic"></span>
-          Dashboard
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Typography prototype: side menu (C09)</title>
+    <!-- Real markup of side-menu.component.html + real compiled styles-next CSS (typography-prototype-app.css). Only the A/B/C text overrides below are prototype.
+     The CSS is a SNAPSHOT from before the option C switch (2026-10-20): do not regenerate, column A would then show C. It was made with: npx sass --quiet --load-path=. --load-path=node_modules src/styles-next/styles.scss | sed "s#url('/assets/#url('../assets/#g" > src/styles-next/typography-prototype-app.css -->
+    <link rel="stylesheet" href="typography-prototype-app.css" />
+    <style>
+      body.FDPGTheme {
+        margin: 24px;
+        background: #f9f9f9;
+      }
+      .row {
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+      .pcol {
+        width: 320px;
+      }
+      .tag {
+        font: 12px/16px monospace;
+        color: #6a7483;
+        margin: 0 0 8px;
+        min-height: 48px;
+      }
+      .pcol .app-body {
+        position: relative;
+        inset: auto;
+        height: 700px;
+        width: 320px;
+        border: 1px dashed #c5cacf;
+      }
+      .fai {
+        display: inline-block;
+        font-size: 1.25em;
+        width: 1.25em;
+        text-align: center;
+        line-height: 1;
+      }
+      .svg {
+        height: 1em;
+        width: 1em;
+        vertical-align: -0.125em;
+      }
+      /* B: all items 16/24/400, active 600 (active = current link, and the parent of the active child) */
+      .vB .num-nav-link,
+      .vB .num-nav-link--child {
+        font: 400 16px/24px 'Titillium Web', sans-serif !important;
+      }
+      .vB .num-nav-link--active,
+      .vB .num-nav-group:has(.num-nav-link--active) > .num-nav-link {
+        font-weight: 600 !important;
+      }
+      .vB .num-nav-link--active .navItem-font--child {
+        font-weight: 600;
+      }
+      /* C: parent 16/24/600, child 400, active child 600 */
+      .vC .num-nav-link {
+        font: 600 16px/24px 'Titillium Web', sans-serif !important;
+      }
+      .vC .num-nav-link--child {
+        font-weight: 400 !important;
+      }
+      .vC .num-nav-link--active,
+      .vC .num-nav-link--active .navItem-font--child {
+        font-weight: 600 !important;
+      }
+      /* D: like C, but level 3 (grandchild) 14/20/400, active 600 */
+      .vD .num-nav-link {
+        font: 600 16px/24px 'Titillium Web', sans-serif !important;
+      }
+      .vD .num-nav-link--child {
+        font-weight: 400 !important;
+      }
+      .vD .num-nav-link--grandchild {
+        font-size: 14px !important;
+        line-height: 20px !important;
+      }
+      .vD .num-nav-link--active,
+      .vD .num-nav-link--active .navItem-font--child {
+        font-weight: 600 !important;
+      }
+      .row {
+        max-width: 1400px;
+      }
+    </style>
+  </head>
+  <body class="FDPGTheme mat-typography">
+    <h1 style="font: 600 18px/24px 'Titillium Web', sans-serif; margin: 0 0 16px">
+      Side menu (C09): four options on the real menu
+    </h1>
+    <div class="row">
+      <section class="pcol vA">
+        <p class="tag">A = today: parent 18/26/600, child 16/24/500, active 600</p>
+        <div class="app-body">
+          <nav class="sidenav expanded">
+            <num-side-menu class="side-menu logo-wrapper">
+              <ul class="num-nav-list" role="list">
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 384 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M336 64h-80c0-35.3-28.7-64-64-64s-64 28.7-64 64H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM96 424c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm96-192c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24zm128 368c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Datendefinition</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Kohortendefinition</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmaldefinition</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 384 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Kohortenselektion</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <span class="num-nav-link num-nav-link--child num-nav-link--label">
+                        <span class="navItem-font--child">Suche</span>
+                      </span>
+                      <ul class="num-nav-list num-nav-list--grandchildren" role="list">
+                        <li>
+                          <a
+                            class="num-nav-link num-nav-link--child num-nav-link--grandchild num-nav-link--active"
+                            href="#"
+                            aria-current="page"
+                          >
+                            <span class="navItem-font--child">Kriteriensuche</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="num-nav-link num-nav-link--child num-nav-link--grandchild"
+                            href="#"
+                          >
+                            <span class="navItem-font--child">Bulksuche</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Kriterieneditor</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 448 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M448 73.143v45.714C448 159.143 347.667 192 224 192S0 159.143 0 118.857V73.143C0 32.857 100.333 0 224 0s224 32.857 224 73.143zM448 176v102.857C448 319.143 347.667 352 224 352S0 319.143 0 278.857V176c48.125 33.143 136.208 48.572 224 48.572S399.874 209.143 448 176zm0 160v102.857C448 479.143 347.667 512 224 512S0 479.143 0 438.857V336c48.125 33.143 136.208 48.572 224 48.572S399.874 369.143 448 336z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Merkmalselektion</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmalsuche</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmale</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 576 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Gespeicherte Datendefinitionen</span>
+                  </a>
+                </li>
+              </ul>
+            </num-side-menu>
+          </nav>
         </div>
-        <div class="item active" style="font: 600 16px/24px 'Titillium Web', sans-serif">
-          <span class="ic"></span>
-          Kriteriensuche
+      </section>
+      <section class="pcol vB">
+        <p class="tag">B = two roles: all 16/24/400, active (and parent of active) 600</p>
+        <div class="app-body">
+          <nav class="sidenav expanded">
+            <num-side-menu class="side-menu logo-wrapper">
+              <ul class="num-nav-list" role="list">
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 384 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M336 64h-80c0-35.3-28.7-64-64-64s-64 28.7-64 64H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM96 424c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm96-192c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24zm128 368c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Datendefinition</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Kohortendefinition</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmaldefinition</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 384 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Kohortenselektion</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <span class="num-nav-link num-nav-link--child num-nav-link--label">
+                        <span class="navItem-font--child">Suche</span>
+                      </span>
+                      <ul class="num-nav-list num-nav-list--grandchildren" role="list">
+                        <li>
+                          <a
+                            class="num-nav-link num-nav-link--child num-nav-link--grandchild num-nav-link--active"
+                            href="#"
+                            aria-current="page"
+                          >
+                            <span class="navItem-font--child">Kriteriensuche</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="num-nav-link num-nav-link--child num-nav-link--grandchild"
+                            href="#"
+                          >
+                            <span class="navItem-font--child">Bulksuche</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Kriterieneditor</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 448 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M448 73.143v45.714C448 159.143 347.667 192 224 192S0 159.143 0 118.857V73.143C0 32.857 100.333 0 224 0s224 32.857 224 73.143zM448 176v102.857C448 319.143 347.667 352 224 352S0 319.143 0 278.857V176c48.125 33.143 136.208 48.572 224 48.572S399.874 209.143 448 176zm0 160v102.857C448 479.143 347.667 512 224 512S0 479.143 0 438.857V336c48.125 33.143 136.208 48.572 224 48.572S399.874 369.143 448 336z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Merkmalselektion</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmalsuche</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmale</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 576 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Gespeicherte Datendefinitionen</span>
+                  </a>
+                </li>
+              </ul>
+            </num-side-menu>
+          </nav>
         </div>
-        <div class="item" style="font: 600 16px/24px 'Titillium Web', sans-serif">
-          <span class="ic"></span>
-          Datenauswahl
+      </section>
+      <section class="pcol vC">
+        <p class="tag">C = three roles: parent 16/24/600, child 16/24/400, active 600</p>
+        <div class="app-body">
+          <nav class="sidenav expanded">
+            <num-side-menu class="side-menu logo-wrapper">
+              <ul class="num-nav-list" role="list">
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 384 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M336 64h-80c0-35.3-28.7-64-64-64s-64 28.7-64 64H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM96 424c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm96-192c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24zm128 368c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Datendefinition</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Kohortendefinition</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmaldefinition</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 384 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Kohortenselektion</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <span class="num-nav-link num-nav-link--child num-nav-link--label">
+                        <span class="navItem-font--child">Suche</span>
+                      </span>
+                      <ul class="num-nav-list num-nav-list--grandchildren" role="list">
+                        <li>
+                          <a
+                            class="num-nav-link num-nav-link--child num-nav-link--grandchild num-nav-link--active"
+                            href="#"
+                            aria-current="page"
+                          >
+                            <span class="navItem-font--child">Kriteriensuche</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="num-nav-link num-nav-link--child num-nav-link--grandchild"
+                            href="#"
+                          >
+                            <span class="navItem-font--child">Bulksuche</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Kriterieneditor</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 448 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M448 73.143v45.714C448 159.143 347.667 192 224 192S0 159.143 0 118.857V73.143C0 32.857 100.333 0 224 0s224 32.857 224 73.143zM448 176v102.857C448 319.143 347.667 352 224 352S0 319.143 0 278.857V176c48.125 33.143 136.208 48.572 224 48.572S399.874 209.143 448 176zm0 160v102.857C448 479.143 347.667 512 224 512S0 479.143 0 438.857V336c48.125 33.143 136.208 48.572 224 48.572S399.874 369.143 448 336z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Merkmalselektion</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmalsuche</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmale</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 576 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Gespeicherte Datendefinitionen</span>
+                  </a>
+                </li>
+              </ul>
+            </num-side-menu>
+          </nav>
         </div>
-        <div class="item" style="font: 600 16px/24px 'Titillium Web', sans-serif">
-          <span class="ic"></span>
-          Anträge
+      </section>
+      <section class="pcol vD">
+        <p class="tag">D = like C, level 3 (Kriteriensuche, Bulksuche) 14/20/400, active 600</p>
+        <div class="app-body">
+          <nav class="sidenav expanded">
+            <num-side-menu class="side-menu logo-wrapper">
+              <ul class="num-nav-list" role="list">
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 384 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M336 64h-80c0-35.3-28.7-64-64-64s-64 28.7-64 64H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM96 424c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm96-192c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24zm128 368c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Datendefinition</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Kohortendefinition</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmaldefinition</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 384 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Kohortenselektion</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <span class="num-nav-link num-nav-link--child num-nav-link--label">
+                        <span class="navItem-font--child">Suche</span>
+                      </span>
+                      <ul class="num-nav-list num-nav-list--grandchildren" role="list">
+                        <li>
+                          <a
+                            class="num-nav-link num-nav-link--child num-nav-link--grandchild num-nav-link--active"
+                            href="#"
+                            aria-current="page"
+                          >
+                            <span class="navItem-font--child">Kriteriensuche</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="num-nav-link num-nav-link--child num-nav-link--grandchild"
+                            href="#"
+                          >
+                            <span class="navItem-font--child">Bulksuche</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Kriterieneditor</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 448 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M448 73.143v45.714C448 159.143 347.667 192 224 192S0 159.143 0 118.857V73.143C0 32.857 100.333 0 224 0s224 32.857 224 73.143zM448 176v102.857C448 319.143 347.667 352 224 352S0 319.143 0 278.857V176c48.125 33.143 136.208 48.572 224 48.572S399.874 209.143 448 176zm0 160v102.857C448 479.143 347.667 512 224 512S0 479.143 0 438.857V336c48.125 33.143 136.208 48.572 224 48.572S399.874 369.143 448 336z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Merkmalselektion</span>
+                  </a>
+                  <ul class="num-nav-list num-nav-list--children" role="list">
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmalsuche</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="num-nav-link num-nav-link--child" href="#">
+                        <span class="navItem-font--child">Merkmale</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="num-nav-group">
+                  <a class="num-nav-link" href="#">
+                    <fa-icon class="fai">
+                      <svg class="svg" viewBox="0 0 576 512" aria-hidden="true">
+                        <path
+                          fill="currentColor"
+                          d="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"
+                        />
+                      </svg>
+                    </fa-icon>
+                    <span class="navItem-font">Gespeicherte Datendefinitionen</span>
+                  </a>
+                </li>
+              </ul>
+            </num-side-menu>
+          </nav>
         </div>
-      </div>
-    </section>
-    <section class="col">
-      <p class="tag">
-        NEXT: inactive .type-side-menu-item 16/24/400, active .type-side-menu-item-active 16/24/600
-      </p>
-      <div class="menu">
-        <div class="item type-side-menu-item">
-          <span class="ic"></span>
-          Dashboard
-        </div>
-        <div class="item active type-side-menu-item-active">
-          <span class="ic"></span>
-          Kriteriensuche
-        </div>
-        <div class="item type-side-menu-item">
-          <span class="ic"></span>
-          Datenauswahl
-        </div>
-        <div class="item type-side-menu-item">
-          <span class="ic"></span>
-          Anträge
-        </div>
-      </div>
-    </section>
-  </div>
-  <table>
-    <tr>
-      <th>Label (class)</th>
-      <th>Family</th>
-      <th>Size / line</th>
-      <th>Weight</th>
-      <th>Replaces</th>
-      <th>Other users today</th>
-    </tr>
-    <tr>
-      <td>.type-side-menu-item</td>
-      <td>Titillium Web</td>
-      <td>16 / 24</td>
-      <td>400</td>
-      <td>.num-mat-list-item and .navItem-font (600, three places set it)</td>
-      <td>side menu only</td>
-    </tr>
-    <tr>
-      <td>.type-side-menu-item-active</td>
-      <td>Titillium Web</td>
-      <td>16 / 24</td>
-      <td>600</td>
-      <td>--active rule, 600 !important twice</td>
-      <td>side menu only</td>
-    </tr>
-  </table>
-  <p class="tag" style="margin-top: 12px">
-    Icons and colors here are mock-ups, only the text changes. Size, line and family stay the same;
-    only the weight of inactive items drops 600 to 400. Letter-spacing stays
-    <code>normal</code>
-    (forced today). Name check: "-active" is a state, not an adjective scale (decision 2).
-  </p>
+      </section>
+    </div>
+  </body>
 </html>

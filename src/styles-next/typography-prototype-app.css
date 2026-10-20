@@ -1,0 +1,2663 @@
+@charset "UTF-8";
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '/node_modules/flag-icons/css/flag-icons.min.css';
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Roboto Light"), local("Roboto-Light"), url("/assets/font/roboto-light-300.woff2") format("woff2"), url("/assets/font/roboto-light-300.woff") format("woff"), url("/assets/font/roboto-light-300.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto"), local("Roboto Regular"), local("Roboto-Regular"), url("/assets/font/roboto-regular-400.woff2") format("woff2"), url("/assets/font/roboto-regular-400.woff") format("woff"), url("/assets/font/roboto-regular-400.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: local("Roboto Medium"), local("Roboto-Medium"), url("/assets/font/roboto-medium-500.woff2") format("woff2"), url("/assets/font/roboto-medium-500.woff") format("woff"), url("/assets/font/roboto-medium-500.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Titillium Web"), url("/assets/font/titillium-web-v14-latin-regular.woff2") format("woff2"), url("/assets/font/titillium-web-v14-latin-regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 600;
+  src: local("Titillium Web SemiBold"), url("/assets/font/titillium-web-v14-latin-600.woff2") format("woff2"), url("/assets/font/titillium-web-v14-latin-600.woff") format("woff");
+}
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Titillium Web Bold"), url("/assets/font/titillium-web-v14-latin-700.woff2") format("woff2"), url("/assets/font/titillium-web-v14-latin-700.woff") format("woff");
+}
+/* font-size | line-height | font-weight */
+/* Type roles of "FDPG Light": one entry per role (family, weight, size, line height).
+   Read with: type.vars($theme, 'role-name')  (see functions/_type.scss).
+   The key is the role name and is the same name everywhere: here, in the group file, in the CSS variables
+   (--font-app-content-page-header-title-*) and in the prototype. No separate adjective names like 'strong' or 'large'.
+   Two roles may have equal values today (duplicates are allowed); equal entries can be merged later when the
+   whole app is converted.
+   Draft: the page header and the button so far. Source: typography-prototype.css. */
+/* base */
+/* Global style for text links (<a>). Links that Material styles itself (buttons, list items, tab links) and the side menu links (.num-nav-link) are excluded.
+   Type: role "text-link" (custom-material/typography/_text-link.themed.scss). Colors: accent 600 (contrast 5.3 on the page
+   background), underline on hover, no paler :visited, focus ring instead of a background. */
+/* layout */
+/* material */
+/* Global overrides (no theme variable needed) */
+.mat-mdc-tooltip .mdc-tooltip__surface {
+  /* Shape & spacing */
+  border-radius: 5px !important;
+  padding: 8px 12px !important;
+  max-width: 240px !important;
+  /* Surface */
+  background-color: #ffffff !important;
+  border: 1px solid #c3c7cd !important;
+  box-shadow: var(--shadow-menu) !important;
+  /* Typography — Open Sans body style */
+  font-family: "Open Sans", sans-serif !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 17px !important;
+  color: #5f6266 !important;
+}
+
+/* typography groups */
+/* type.vars($theme, $name): writes four CSS variables for one role, named with the prefix --font-<name>-.
+   Parsed as: look up $name in $theme[type-roles], write -family, -weight, -size, -line under the same name.
+   Example: type.vars($theme, 'app-content-page-header-title')  ->
+     --font-app-content-page-header-title-family: 'Titillium Web', sans-serif;  --font-app-content-page-header-title-weight: 600;
+     --font-app-content-page-header-title-size: 24px;                           --font-app-content-page-header-title-line: 32px;
+   The role names are the keys in themes/fdpg-light/_type-roles.scss. Unknown name gives no values (no error).
+
+   Why four variables and not the CSS shorthand `font`: `font` sets weight, size, line height and family in one
+   property, but it also RESETS everything it does not name (font-style, font-variant such as tabular-nums,
+   font-stretch, font-kerning, font-size-adjust, font-feature-settings) to its default. That is a hidden side effect.
+   Four plain properties set exactly what is written and nothing else. Components write the four lines themselves:
+     font-family: var(--font-app-content-page-header-title-family);  font-weight: var(--font-app-content-page-header-title-weight);
+     font-size: var(--font-app-content-page-header-title-size);      line-height: var(--font-app-content-page-header-title-line);
+   Other font properties (see research-usability-typography.md, section 11) are separate lines and are not reset. */
+/* Group "breadcrumbs": the location trail on the left of the app header (C04).
+   Writes the variables of its roles. The values are in themes/fdpg-light/_type-roles.scss under the same names.
+   Parsed as: type.vars($theme, '<role>')  =  write family, weight, size and line of that role as four variables
+   (see functions/_type.scss). Components read them: font-size: var(--font-app-header-breadcrumb-current-size); */
+/* type.vars($theme, $name): writes four CSS variables for one role, named with the prefix --font-<name>-.
+   Parsed as: look up $name in $theme[type-roles], write -family, -weight, -size, -line under the same name.
+   Example: type.vars($theme, 'app-content-page-header-title')  ->
+     --font-app-content-page-header-title-family: 'Titillium Web', sans-serif;  --font-app-content-page-header-title-weight: 600;
+     --font-app-content-page-header-title-size: 24px;                           --font-app-content-page-header-title-line: 32px;
+   The role names are the keys in themes/fdpg-light/_type-roles.scss. Unknown name gives no values (no error).
+
+   Why four variables and not the CSS shorthand `font`: `font` sets weight, size, line height and family in one
+   property, but it also RESETS everything it does not name (font-style, font-variant such as tabular-nums,
+   font-stretch, font-kerning, font-size-adjust, font-feature-settings) to its default. That is a hidden side effect.
+   Four plain properties set exactly what is written and nothing else. Components write the four lines themselves:
+     font-family: var(--font-app-content-page-header-title-family);  font-weight: var(--font-app-content-page-header-title-weight);
+     font-size: var(--font-app-content-page-header-title-size);      line-height: var(--font-app-content-page-header-title-line);
+   Other font properties (see research-usability-typography.md, section 11) are separate lines and are not reset. */
+/* Group "text-link": every text link (<a>), styled by the global rule in base/_links.themed.scss (breadcrumbs, about modal email).
+   Writes the variables of the role "text-link". The values are in themes/fdpg-light/_type-roles.scss under the same name.
+   Parsed as: type.vars($theme, 'text-link')  =  write family, weight, size and line of that role as four variables
+   (see functions/_type.scss). The link rule reads them: font-size: var(--font-text-link-size); */
+/* type.vars($theme, $name): writes four CSS variables for one role, named with the prefix --font-<name>-.
+   Parsed as: look up $name in $theme[type-roles], write -family, -weight, -size, -line under the same name.
+   Example: type.vars($theme, 'app-content-page-header-title')  ->
+     --font-app-content-page-header-title-family: 'Titillium Web', sans-serif;  --font-app-content-page-header-title-weight: 600;
+     --font-app-content-page-header-title-size: 24px;                           --font-app-content-page-header-title-line: 32px;
+   The role names are the keys in themes/fdpg-light/_type-roles.scss. Unknown name gives no values (no error).
+
+   Why four variables and not the CSS shorthand `font`: `font` sets weight, size, line height and family in one
+   property, but it also RESETS everything it does not name (font-style, font-variant such as tabular-nums,
+   font-stretch, font-kerning, font-size-adjust, font-feature-settings) to its default. That is a hidden side effect.
+   Four plain properties set exactly what is written and nothing else. Components write the four lines themselves:
+     font-family: var(--font-app-content-page-header-title-family);  font-weight: var(--font-app-content-page-header-title-weight);
+     font-size: var(--font-app-content-page-header-title-size);      line-height: var(--font-app-content-page-header-title-line);
+   Other font properties (see research-usability-typography.md, section 11) are separate lines and are not reset. */
+/* Group "button": every .num-button and its color variants (.blue, .green, .red), incl. the portal link in the app header (C07, C20).
+   Writes the variables of the role "button". The values are in themes/fdpg-light/_type-roles.scss under the same name.
+   Parsed as: type.vars($theme, 'button')  =  write family, weight, size and line of that role as four variables
+   (see functions/_type.scss). Components read them: font-size: var(--font-button-size); */
+/* type.vars($theme, $name): writes four CSS variables for one role, named with the prefix --font-<name>-.
+   Parsed as: look up $name in $theme[type-roles], write -family, -weight, -size, -line under the same name.
+   Example: type.vars($theme, 'app-content-page-header-title')  ->
+     --font-app-content-page-header-title-family: 'Titillium Web', sans-serif;  --font-app-content-page-header-title-weight: 600;
+     --font-app-content-page-header-title-size: 24px;                           --font-app-content-page-header-title-line: 32px;
+   The role names are the keys in themes/fdpg-light/_type-roles.scss. Unknown name gives no values (no error).
+
+   Why four variables and not the CSS shorthand `font`: `font` sets weight, size, line height and family in one
+   property, but it also RESETS everything it does not name (font-style, font-variant such as tabular-nums,
+   font-stretch, font-kerning, font-size-adjust, font-feature-settings) to its default. That is a hidden side effect.
+   Four plain properties set exactly what is written and nothing else. Components write the four lines themselves:
+     font-family: var(--font-app-content-page-header-title-family);  font-weight: var(--font-app-content-page-header-title-weight);
+     font-size: var(--font-app-content-page-header-title-size);      line-height: var(--font-app-content-page-header-title-line);
+   Other font properties (see research-usability-typography.md, section 11) are separate lines and are not reset. */
+/* Group "page-header": the block above the page content (title, intro beneath it, actions).
+   Writes the variables of its roles. The values are in themes/fdpg-light/_type-roles.scss under the same names.
+   Parsed as: type.vars($theme, '<role>')  =  write family, weight, size and line of that role as four variables
+   (see functions/_type.scss). Components read them: font-size: var(--font-app-content-page-header-title-size); */
+/* buttons */
+/* components */
+/* export themed mixins */
+.num-margin-b-20 {
+  margin-bottom: 20px !important;
+}
+
+.num-margin-b-40 {
+  margin-bottom: 40px !important;
+}
+
+.num-margin-b-60 {
+  margin-bottom: 60px !important;
+}
+
+.num-text-body {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  color: var(--color-text-primary);
+}
+
+.num-text-label {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  color: var(--color-text-primary);
+}
+
+.num-text-meta {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--color-text-secondary);
+}
+
+.num-text-accent {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  color: var(--color-accent);
+}
+
+.num-info-item {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--color-text-secondary);
+}
+
+.num-pill {
+  display: block;
+  padding: 0 6px;
+  min-height: 22px;
+  line-height: 22px;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--border-radius-card);
+  margin-top: 4px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  width: fit-content;
+  transition: white-space 0.15s ease, var(--transition-shadow), border-color 0.2s ease;
+}
+.num-pill.expanded {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.num-list-entry {
+  border-radius: var(--border-radius-card);
+  padding: 4px 12px;
+  min-height: 48px;
+  margin-bottom: 8px;
+  background-color: var(--color-accent-bg);
+  border: 1px solid var(--color-accent-border);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-primary, #232323);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.num-list-entry:hover {
+  box-shadow: var(--shadow-card-hover);
+  cursor: pointer;
+}
+
+.label-with-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent);
+  cursor: default;
+  flex-shrink: 0;
+  user-select: none;
+  transition: color 0.15s ease;
+}
+.info-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.info-icon:hover {
+  color: var(--num-color--accent-400, #345396);
+}
+
+.num-card {
+  position: relative;
+  width: 100%;
+  border-radius: var(--border-radius-card);
+  overflow: hidden;
+  background-color: #ffffff;
+  transition: var(--transition-shadow);
+}
+.num-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  opacity: 0.1;
+  border-radius: var(--border-radius-card);
+  pointer-events: none;
+  z-index: 0;
+}
+.num-card > * {
+  position: relative;
+  z-index: 1;
+}
+.num-card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.selection-box {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 8px;
+  padding-top: 8px;
+}
+
+.header-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 1%;
+  color: var(--color-text-primary);
+}
+
+.header-col-chips {
+  flex: 1;
+  padding-top: 8px;
+  overflow-y: auto;
+}
+
+.border-right-1 {
+  border-right: 1px solid var(--border-color);
+}
+
+.empty-state {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.mat-badge-content {
+  border: 1px solid var(--num-color--primary-green) !important;
+  color: var(--num-color--primary-green) !important;
+  background-color: white !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 25% !important;
+}
+
+/* Override Material's Roboto default with our global font */
+.mat-typography,
+.mat-typography p,
+.mat-typography input,
+.mat-typography button,
+.mat-typography select,
+.mat-typography textarea {
+  font-family: "Titillium Web", sans-serif;
+}
+
+.mat-elevation-z0, .mat-mdc-elevation-specific.mat-elevation-z0 {
+  box-shadow: var(--mat-app-elevation-shadow-level-0, none);
+}
+
+.mat-elevation-z1, .mat-mdc-elevation-specific.mat-elevation-z1 {
+  box-shadow: var(--mat-app-elevation-shadow-level-1, none);
+}
+
+.mat-elevation-z2, .mat-mdc-elevation-specific.mat-elevation-z2 {
+  box-shadow: var(--mat-app-elevation-shadow-level-2, none);
+}
+
+.mat-elevation-z3, .mat-mdc-elevation-specific.mat-elevation-z3 {
+  box-shadow: var(--mat-app-elevation-shadow-level-3, none);
+}
+
+.mat-elevation-z4, .mat-mdc-elevation-specific.mat-elevation-z4 {
+  box-shadow: var(--mat-app-elevation-shadow-level-4, none);
+}
+
+.mat-elevation-z5, .mat-mdc-elevation-specific.mat-elevation-z5 {
+  box-shadow: var(--mat-app-elevation-shadow-level-5, none);
+}
+
+.mat-elevation-z6, .mat-mdc-elevation-specific.mat-elevation-z6 {
+  box-shadow: var(--mat-app-elevation-shadow-level-6, none);
+}
+
+.mat-elevation-z7, .mat-mdc-elevation-specific.mat-elevation-z7 {
+  box-shadow: var(--mat-app-elevation-shadow-level-7, none);
+}
+
+.mat-elevation-z8, .mat-mdc-elevation-specific.mat-elevation-z8 {
+  box-shadow: var(--mat-app-elevation-shadow-level-8, none);
+}
+
+.mat-elevation-z9, .mat-mdc-elevation-specific.mat-elevation-z9 {
+  box-shadow: var(--mat-app-elevation-shadow-level-9, none);
+}
+
+.mat-elevation-z10, .mat-mdc-elevation-specific.mat-elevation-z10 {
+  box-shadow: var(--mat-app-elevation-shadow-level-10, none);
+}
+
+.mat-elevation-z11, .mat-mdc-elevation-specific.mat-elevation-z11 {
+  box-shadow: var(--mat-app-elevation-shadow-level-11, none);
+}
+
+.mat-elevation-z12, .mat-mdc-elevation-specific.mat-elevation-z12 {
+  box-shadow: var(--mat-app-elevation-shadow-level-12, none);
+}
+
+.mat-elevation-z13, .mat-mdc-elevation-specific.mat-elevation-z13 {
+  box-shadow: var(--mat-app-elevation-shadow-level-13, none);
+}
+
+.mat-elevation-z14, .mat-mdc-elevation-specific.mat-elevation-z14 {
+  box-shadow: var(--mat-app-elevation-shadow-level-14, none);
+}
+
+.mat-elevation-z15, .mat-mdc-elevation-specific.mat-elevation-z15 {
+  box-shadow: var(--mat-app-elevation-shadow-level-15, none);
+}
+
+.mat-elevation-z16, .mat-mdc-elevation-specific.mat-elevation-z16 {
+  box-shadow: var(--mat-app-elevation-shadow-level-16, none);
+}
+
+.mat-elevation-z17, .mat-mdc-elevation-specific.mat-elevation-z17 {
+  box-shadow: var(--mat-app-elevation-shadow-level-17, none);
+}
+
+.mat-elevation-z18, .mat-mdc-elevation-specific.mat-elevation-z18 {
+  box-shadow: var(--mat-app-elevation-shadow-level-18, none);
+}
+
+.mat-elevation-z19, .mat-mdc-elevation-specific.mat-elevation-z19 {
+  box-shadow: var(--mat-app-elevation-shadow-level-19, none);
+}
+
+.mat-elevation-z20, .mat-mdc-elevation-specific.mat-elevation-z20 {
+  box-shadow: var(--mat-app-elevation-shadow-level-20, none);
+}
+
+.mat-elevation-z21, .mat-mdc-elevation-specific.mat-elevation-z21 {
+  box-shadow: var(--mat-app-elevation-shadow-level-21, none);
+}
+
+.mat-elevation-z22, .mat-mdc-elevation-specific.mat-elevation-z22 {
+  box-shadow: var(--mat-app-elevation-shadow-level-22, none);
+}
+
+.mat-elevation-z23, .mat-mdc-elevation-specific.mat-elevation-z23 {
+  box-shadow: var(--mat-app-elevation-shadow-level-23, none);
+}
+
+.mat-elevation-z24, .mat-mdc-elevation-specific.mat-elevation-z24 {
+  box-shadow: var(--mat-app-elevation-shadow-level-24, none);
+}
+
+html {
+  --mat-sys-on-surface: initial;
+}
+
+.mat-app-background {
+  background-color: var(--mat-app-background-color, var(--mat-sys-background, transparent));
+  color: var(--mat-app-text-color, var(--mat-sys-on-background, inherit));
+}
+
+.FDPGTheme {
+  --num-color--primary: #9ea9b3;
+  --num-color--primary-blue: #5a79af;
+  --num-color--primary-green: #9bb823;
+  --num-color--accent-200: #bbc8dd;
+  --num-color--accent-400: #7992be;
+  --num-color--accent-600: #49689c;
+  --color-accent: #5a79af;
+  --color-accent-bg: rgba(90, 121, 175, 0.1);
+  --color-accent-border: rgba(90, 121, 175, 0.2);
+  --color-accent-strong: #49689c;
+  --num-color--warn: #eeb70c;
+  --num-color--red: #ff4545;
+  --border-color: #c5cacf;
+  --color-text-primary: #000000;
+  --color-text-secondary: #6a7483;
+  --color-text-section: #5f6266;
+  /* Hint:
+    class="num-d-w--1 num-d-c--a" || class="num-divider-width--1 num-divider-color--a"
+    class="num-d-w--2 num-d-c--a" || class="num-divider-width--2 num-divider-color--a"
+    class="num-d-w--3 num-d-c--a" || class="num-divider-width--3 num-divider-color--a"
+  */
+  /* ── Mat tooltip — redesigned to match UI design system ─────── */
+  /* Mixin is intentionally empty; all overrides are global below  */
+  --font-app-header-breadcrumb-current-family: 'Titillium Web', sans-serif;
+  --font-app-header-breadcrumb-current-weight: 600;
+  --font-app-header-breadcrumb-current-size: 16px;
+  --font-app-header-breadcrumb-current-line: 24px;
+  --font-app-header-breadcrumb-separator-family: 'Titillium Web', sans-serif;
+  --font-app-header-breadcrumb-separator-weight: 400;
+  --font-app-header-breadcrumb-separator-size: 16px;
+  --font-app-header-breadcrumb-separator-line: 24px;
+  --font-text-link-family: 'Titillium Web', sans-serif;
+  --font-text-link-weight: 400;
+  --font-text-link-size: 16px;
+  --font-text-link-line: 24px;
+  --font-button-family: 'Titillium Web', sans-serif;
+  --font-button-weight: 600;
+  --font-button-size: 16px;
+  --font-button-line: 24px;
+  --font-app-content-page-header-title-family: 'Titillium Web', sans-serif;
+  --font-app-content-page-header-title-weight: 600;
+  --font-app-content-page-header-title-size: 24px;
+  --font-app-content-page-header-title-line: 32px;
+  --font-app-content-page-header-intro-family: 'Titillium Web', sans-serif;
+  --font-app-content-page-header-intro-weight: 400;
+  --font-app-content-page-header-intro-size: 16px;
+  --font-app-content-page-header-intro-line: 24px;
+  --app-content-page-header-intro-measure: 100ch; /* 45-90 characters per line */
+  --font-app-content-page-header-actions-size: 16px; /* eye button, icon only: size, no text level */
+}
+.mat-elevation-z0, .mat-mdc-elevation-specific.mat-elevation-z0 {
+  box-shadow: var(--mat-app-elevation-shadow-level-0, none);
+}
+
+.mat-elevation-z1, .mat-mdc-elevation-specific.mat-elevation-z1 {
+  box-shadow: var(--mat-app-elevation-shadow-level-1, none);
+}
+
+.mat-elevation-z2, .mat-mdc-elevation-specific.mat-elevation-z2 {
+  box-shadow: var(--mat-app-elevation-shadow-level-2, none);
+}
+
+.mat-elevation-z3, .mat-mdc-elevation-specific.mat-elevation-z3 {
+  box-shadow: var(--mat-app-elevation-shadow-level-3, none);
+}
+
+.mat-elevation-z4, .mat-mdc-elevation-specific.mat-elevation-z4 {
+  box-shadow: var(--mat-app-elevation-shadow-level-4, none);
+}
+
+.mat-elevation-z5, .mat-mdc-elevation-specific.mat-elevation-z5 {
+  box-shadow: var(--mat-app-elevation-shadow-level-5, none);
+}
+
+.mat-elevation-z6, .mat-mdc-elevation-specific.mat-elevation-z6 {
+  box-shadow: var(--mat-app-elevation-shadow-level-6, none);
+}
+
+.mat-elevation-z7, .mat-mdc-elevation-specific.mat-elevation-z7 {
+  box-shadow: var(--mat-app-elevation-shadow-level-7, none);
+}
+
+.mat-elevation-z8, .mat-mdc-elevation-specific.mat-elevation-z8 {
+  box-shadow: var(--mat-app-elevation-shadow-level-8, none);
+}
+
+.mat-elevation-z9, .mat-mdc-elevation-specific.mat-elevation-z9 {
+  box-shadow: var(--mat-app-elevation-shadow-level-9, none);
+}
+
+.mat-elevation-z10, .mat-mdc-elevation-specific.mat-elevation-z10 {
+  box-shadow: var(--mat-app-elevation-shadow-level-10, none);
+}
+
+.mat-elevation-z11, .mat-mdc-elevation-specific.mat-elevation-z11 {
+  box-shadow: var(--mat-app-elevation-shadow-level-11, none);
+}
+
+.mat-elevation-z12, .mat-mdc-elevation-specific.mat-elevation-z12 {
+  box-shadow: var(--mat-app-elevation-shadow-level-12, none);
+}
+
+.mat-elevation-z13, .mat-mdc-elevation-specific.mat-elevation-z13 {
+  box-shadow: var(--mat-app-elevation-shadow-level-13, none);
+}
+
+.mat-elevation-z14, .mat-mdc-elevation-specific.mat-elevation-z14 {
+  box-shadow: var(--mat-app-elevation-shadow-level-14, none);
+}
+
+.mat-elevation-z15, .mat-mdc-elevation-specific.mat-elevation-z15 {
+  box-shadow: var(--mat-app-elevation-shadow-level-15, none);
+}
+
+.mat-elevation-z16, .mat-mdc-elevation-specific.mat-elevation-z16 {
+  box-shadow: var(--mat-app-elevation-shadow-level-16, none);
+}
+
+.mat-elevation-z17, .mat-mdc-elevation-specific.mat-elevation-z17 {
+  box-shadow: var(--mat-app-elevation-shadow-level-17, none);
+}
+
+.mat-elevation-z18, .mat-mdc-elevation-specific.mat-elevation-z18 {
+  box-shadow: var(--mat-app-elevation-shadow-level-18, none);
+}
+
+.mat-elevation-z19, .mat-mdc-elevation-specific.mat-elevation-z19 {
+  box-shadow: var(--mat-app-elevation-shadow-level-19, none);
+}
+
+.mat-elevation-z20, .mat-mdc-elevation-specific.mat-elevation-z20 {
+  box-shadow: var(--mat-app-elevation-shadow-level-20, none);
+}
+
+.mat-elevation-z21, .mat-mdc-elevation-specific.mat-elevation-z21 {
+  box-shadow: var(--mat-app-elevation-shadow-level-21, none);
+}
+
+.mat-elevation-z22, .mat-mdc-elevation-specific.mat-elevation-z22 {
+  box-shadow: var(--mat-app-elevation-shadow-level-22, none);
+}
+
+.mat-elevation-z23, .mat-mdc-elevation-specific.mat-elevation-z23 {
+  box-shadow: var(--mat-app-elevation-shadow-level-23, none);
+}
+
+.mat-elevation-z24, .mat-mdc-elevation-specific.mat-elevation-z24 {
+  box-shadow: var(--mat-app-elevation-shadow-level-24, none);
+}
+
+.FDPGTheme html {
+  --mat-sys-on-surface: initial;
+}
+.mat-app-background {
+  background-color: var(--mat-app-background-color, var(--mat-sys-background, transparent));
+  color: var(--mat-app-text-color, var(--mat-sys-on-background, inherit));
+}
+
+.FDPGTheme .mat-divider {
+  border-style: solid;
+}
+.FDPGTheme .mat-divider.num-d-w--1, .FDPGTheme .mat-divider.num-divider-width--1 {
+  border-width: 1px;
+}
+.FDPGTheme .mat-divider.num-d-w--2, .FDPGTheme .mat-divider.num-divider-width--2 {
+  border-width: 2px;
+}
+.FDPGTheme .mat-divider.num-d-w--3, .FDPGTheme .mat-divider.num-divider-width--3 {
+  border-width: 3px;
+}
+.FDPGTheme .mat-divider.num-d-c--primary, .FDPGTheme .mat-divider.num-d-c--p, .FDPGTheme .mat-divider.num-divider-color--primary, .FDPGTheme .mat-divider.num-divider-color--p {
+  border-color: #afb8c0;
+}
+.FDPGTheme .mat-divider.num-d-c--accent, .FDPGTheme .mat-divider.num-d-c--a, .FDPGTheme .mat-divider.num-divider-color--accent, .FDPGTheme .mat-divider.num-divider-color--a {
+  border-color: #5a79af;
+}
+.FDPGTheme .mat-divider.num-d-c--warn, .FDPGTheme .mat-divider.num-d-c--w, .FDPGTheme .mat-divider.num-divider-color--warn, .FDPGTheme .mat-divider.num-divider-color--w {
+  border-color: #eeb70c;
+}
+.FDPGTheme .logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  flex-shrink: 0;
+  border-right: 2px solid #f1f2f3;
+}
+.FDPGTheme .app-body {
+  position: fixed;
+  inset: 108px 0 0 0;
+  display: flex;
+  background-color: #ffffff;
+}
+.FDPGTheme .app-body .sidenav {
+  flex: none;
+  overflow: hidden;
+}
+.FDPGTheme .app-body .sidenav.expanded {
+  width: 320px;
+}
+.FDPGTheme .app-body .sidenav.collapsed {
+  width: 64px;
+}
+.FDPGTheme .app-body .side-menu {
+  height: 100%;
+  overflow: hidden;
+}
+.FDPGTheme .app-body .main-content {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.FDPGTheme .app-body .fullscreen {
+  width: 95%;
+  height: 100%;
+}
+.FDPGTheme num-side-menu {
+  --side-menu-line-x: calc(
+    var(--spacing-16) + var(--spacing-12) - var(--spacing-2) / 2
+  );
+  --side-menu-pill-x: calc(var(--side-menu-line-x) + var(--spacing-12));
+  --side-menu-child-indent: calc(var(--side-menu-pill-x) + var(--spacing-24));
+  --side-menu-line-x2: calc(
+    var(--side-menu-child-indent) + var(--spacing-16)
+  );
+  --side-menu-grandchild-indent: calc(var(--side-menu-line-x2) + var(--spacing-24));
+  --side-menu-bg: #ffffff;
+  --side-menu-bg-hover: #e8ebed;
+  --side-menu-bg-active: var(--color-accent-bg);
+  --side-menu-text: var(--color-text-section);
+  --side-menu-text-active: #233657;
+  --side-menu-icon: #5e6c78;
+  --side-menu-icon-active: var(--color-accent);
+  --side-menu-line: var(--border-color);
+  --side-menu-line-hover: #7c8b98;
+  --side-menu-focus-ring: #233657;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: var(--spacing-16) var(--spacing-12) 0;
+}
+.FDPGTheme num-side-menu .num-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.FDPGTheme num-side-menu .num-nav-group + .num-nav-group {
+  margin-top: var(--spacing-20);
+}
+.FDPGTheme num-side-menu .num-nav-group:has(.num-nav-link--child.num-nav-link--active) > .num-nav-link {
+  color: var(--side-menu-text-active);
+}
+.FDPGTheme num-side-menu .num-nav-group:has(.num-nav-link--child.num-nav-link--active) > .num-nav-link fa-icon {
+  color: var(--side-menu-icon-active);
+}
+.FDPGTheme num-side-menu .num-nav-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-6) var(--spacing-16);
+  margin-bottom: var(--spacing-2);
+  border-radius: var(--border-radius-card);
+  background: var(--side-menu-bg);
+  color: var(--side-menu-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-nav);
+  line-height: var(--line-height-nav);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.FDPGTheme num-side-menu .num-nav-link:hover {
+  background: var(--side-menu-bg-hover);
+}
+.FDPGTheme num-side-menu .num-nav-link:focus-visible {
+  outline: var(--spacing-2) solid var(--side-menu-focus-ring);
+  outline-offset: calc(var(--spacing-2) * -1);
+}
+.FDPGTheme num-side-menu .num-nav-link--active, .FDPGTheme num-side-menu .num-nav-link--active:hover {
+  background: var(--side-menu-bg-active);
+  color: var(--side-menu-text-active);
+}
+.FDPGTheme num-side-menu .num-nav-link--active .navItem-font, .FDPGTheme num-side-menu .num-nav-link--active:hover .navItem-font {
+  color: var(--side-menu-text-active);
+}
+.FDPGTheme num-side-menu .num-nav-link--active fa-icon, .FDPGTheme num-side-menu .num-nav-link--active:hover fa-icon {
+  color: var(--side-menu-icon-active);
+}
+.FDPGTheme num-side-menu .navItem-font {
+  padding-left: var(--spacing-4);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.FDPGTheme num-side-menu fa-icon {
+  color: var(--side-menu-icon);
+}
+.FDPGTheme num-side-menu .nav-svg-icon {
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+  font-size: var(--spacing-32);
+  flex-shrink: 0;
+}
+.FDPGTheme num-side-menu .nav-svg-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.FDPGTheme num-side-menu .navItem-font--child {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child {
+  position: relative;
+  isolation: isolate;
+  padding: var(--spacing-6) var(--spacing-12) var(--spacing-6) var(--side-menu-child-indent);
+  margin-bottom: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: var(--font-size-nav-child);
+  line-height: var(--line-height-nav-child);
+  font-weight: 500;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child::before {
+  content: "";
+  position: absolute;
+  inset: var(--spacing-2) 0 var(--spacing-2) var(--side-menu-line-x);
+  border-radius: 0;
+  background: var(--side-menu-bg-hover);
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:hover::before, .FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:focus-visible::before {
+  opacity: 1;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:focus-visible {
+  outline: none;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:focus-visible::before {
+  outline: var(--spacing-2) solid var(--side-menu-focus-ring);
+  outline-offset: calc(var(--spacing-2) * -1);
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child::after {
+  content: "";
+  position: absolute;
+  left: var(--side-menu-line-x);
+  top: 0;
+  bottom: 0;
+  width: var(--spacing-2);
+  background: var(--side-menu-line);
+  pointer-events: none;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:hover::after {
+  background: var(--side-menu-line-hover);
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child:focus-visible::after {
+  background: transparent;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--active {
+  background: transparent;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--active::before {
+  opacity: 1;
+  background: var(--side-menu-bg-active);
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--active::after {
+  background: var(--side-menu-icon-active);
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--active:focus-visible::after {
+  background: transparent;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--active .navItem-font--child {
+  font-weight: var(--font-weight-bold);
+  color: var(--side-menu-text-active);
+}
+.FDPGTheme num-side-menu .num-nav-list--children,
+.FDPGTheme num-side-menu .num-nav-list--grandchildren {
+  position: relative;
+}
+.FDPGTheme num-side-menu .num-nav-list--children::before,
+.FDPGTheme num-side-menu .num-nav-list--grandchildren::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--side-menu-line-x);
+  width: var(--spacing-2);
+  background: var(--side-menu-line);
+  pointer-events: none;
+}
+.FDPGTheme num-side-menu .num-nav-list--grandchildren::before {
+  left: var(--side-menu-line-x2);
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--grandchild {
+  padding-left: var(--side-menu-grandchild-indent);
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--grandchild::after {
+  left: var(--side-menu-line-x2);
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--grandchild::before {
+  left: var(--side-menu-line-x2);
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--label {
+  cursor: default;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--label:hover::before {
+  opacity: 0;
+}
+.FDPGTheme num-side-menu .num-nav-link.num-nav-link--child.num-nav-link--label:hover::after {
+  background: var(--side-menu-line);
+}
+.FDPGTheme num-side-menu.collapsed .num-nav-link {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+  gap: 0;
+}
+.FDPGTheme num-side-menu.collapsed .num-nav-link--child::after,
+.FDPGTheme num-side-menu.collapsed .num-nav-list--children::before,
+.FDPGTheme num-side-menu.collapsed .num-nav-list--grandchildren::before {
+  display: none;
+}
+.FDPGTheme num-side-menu .num-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: auto;
+  height: var(--spacing-48);
+}
+.FDPGTheme num-side-menu .num-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-40);
+  height: var(--spacing-40);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--side-menu-icon);
+  cursor: pointer;
+}
+.FDPGTheme num-side-menu .num-toggle-button:hover {
+  background: #bbc8dd;
+  color: #000000;
+}
+.FDPGTheme num-side-menu .num-toggle-button:focus-visible {
+  outline: var(--spacing-2) solid var(--side-menu-focus-ring);
+}
+.FDPGTheme num-language fa-icon {
+  /*background: mat.m2-get-color-from-palette($primary, 500) !important;*/
+  color: #000000 !important;
+}
+.FDPGTheme .num-mat-lang-toggle-button {
+  border: none;
+  /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+  /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+  /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+  /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+  /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+}
+.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle {
+  background-color: transparent;
+}
+.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle button {
+  text-transform: uppercase !important;
+  font-size: 14px !important;
+  line-height: 16px !important;
+  font-weight: 400 !important;
+}
+.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle button:hover {
+  background: #9ea9b3;
+}
+.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle button:focus, .cdk-keyboard-focused .FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle button {
+  background: #9ea9b3;
+}
+.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle-appearance-standard {
+  color: #000000;
+  /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+  /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+}
+.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+  color: #a9b6c2;
+}
+.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle-appearance-standard.mat-button-toggle + .mat-button-toggle {
+  border-left: solid 2px #9ea9b3;
+}
+.FDPGTheme .num-mat-lang-toggle-button .cdk-keyboard-focused .mat-button-toggle-focus-overlay {
+  display: none;
+}
+.FDPGTheme .num-mat-lang-toggle-button .mat-button-toggle-label-content {
+  line-height: 32px;
+}
+.FDPGTheme .mat-mdc-row--active, .FDPGTheme .mat-mdc-row--selected {
+  background: #f2f4f8;
+}
+.FDPGTheme .mat-mdc-row:hover {
+  background: #dde3ee !important;
+}
+.FDPGTheme .mat-mdc-row:focus {
+  background: #bbc8dd !important;
+}
+.FDPGTheme .num-footer {
+  background: #ffffff;
+  color: #000000;
+  border-top: 1px rgba(0, 0, 0, 0.2) solid;
+}
+.FDPGTheme .mat-toolbar-multiple-rows {
+  box-sizing: content-box;
+}
+.FDPGTheme num-dataportal-header mat-toolbar {
+  --mat-toolbar-container-background-color: #f1f2f3;
+  --mat-toolbar-container-text-color: #000000;
+  background: #ffffff !important;
+  color: #000000 !important;
+  height: 104px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+  width: 95%;
+}
+.FDPGTheme num-dataportal-header .mat-toolbar-single-row {
+  padding-left: 0 !important;
+}
+.FDPGTheme num-dataportal-header .toolbar {
+  background: transparent;
+  font-size: 16px;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+}
+.FDPGTheme num-dataportal-header .toolbar fa-icon {
+  padding-left: 16px;
+}
+.FDPGTheme num-dataportal-header .logo-wrapper {
+  width: 320px;
+  min-width: 320px;
+}
+.FDPGTheme num-dataportal-header .FDPGTheme {
+  width: 208px;
+  max-width: 208px;
+  height: 104px;
+  object-fit: cover;
+  display: block;
+}
+.FDPGTheme num-dataportal-header .header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+}
+.FDPGTheme num-dataportal-header .header-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 8px;
+  padding-right: 16px;
+}
+.FDPGTheme num-dataportal-header .user-button {
+  background-color: var(--color-accent) !important;
+  border-radius: 19px;
+  min-width: 104px;
+  color: #ffffff !important;
+  padding: 8px 16px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+}
+.FDPGTheme num-dataportal-header .breadcrumbs-wrapper {
+  display: flex;
+  align-items: center;
+  padding-left: 24px;
+  min-width: 0;
+  margin-right: 8px;
+  flex: 1 1 auto;
+  height: 100%;
+  overflow: auto;
+}
+.FDPGTheme num-dataportal-header .margin-right {
+  margin-right: 16px;
+}
+.FDPGTheme num-dataportal-header num-language .language-select {
+  width: auto;
+}
+.FDPGTheme num-dataportal-header num-language .language-select .mat-mdc-form-field-infix {
+  width: auto;
+  min-width: 0;
+}
+.FDPGTheme num-dataportal-header .language-select .mat-mdc-text-field-wrapper {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-card);
+  background: #ffffff !important;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.FDPGTheme num-dataportal-header .language-select .mat-mdc-text-field-wrapper:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-bg) !important;
+}
+.FDPGTheme {
+  --mat-badge-text-font: 'Titillium Web', sans-serif;
+  --mat-badge-line-height: 22px;
+  --mat-badge-text-size: 12px;
+  --mat-badge-text-weight: 600;
+  --mat-badge-small-size-text-size: 9px;
+  --mat-badge-small-size-line-height: 16px;
+  --mat-badge-large-size-text-size: 24px;
+  --mat-badge-large-size-line-height: 28px;
+}
+.FDPGTheme .mat-h1,
+.FDPGTheme .mat-headline-5,
+.FDPGTheme .mat-typography .mat-h1,
+.FDPGTheme .mat-typography .mat-headline-5,
+.FDPGTheme .mat-typography h1 {
+  font: 400 24px / 32px 'Titillium Web', sans-serif;
+  letter-spacing: normal;
+  margin: 0 0 16px;
+}
+.FDPGTheme .mat-h2,
+.FDPGTheme .mat-headline-6,
+.FDPGTheme .mat-typography .mat-h2,
+.FDPGTheme .mat-typography .mat-headline-6,
+.FDPGTheme .mat-typography h2 {
+  font: 500 20px / 32px 'Titillium Web', sans-serif;
+  letter-spacing: 0.0125em;
+  margin: 0 0 16px;
+}
+.FDPGTheme .mat-h3,
+.FDPGTheme .mat-subtitle-1,
+.FDPGTheme .mat-typography .mat-h3,
+.FDPGTheme .mat-typography .mat-subtitle-1,
+.FDPGTheme .mat-typography h3 {
+  font: 400 16px / 28px 'Titillium Web', sans-serif;
+  letter-spacing: 0.009375em;
+  margin: 0 0 16px;
+}
+.FDPGTheme .mat-h4,
+.FDPGTheme .mat-body-1,
+.FDPGTheme .mat-typography .mat-h4,
+.FDPGTheme .mat-typography .mat-body-1,
+.FDPGTheme .mat-typography h4 {
+  font: 400 16px / 24px 'Titillium Web', sans-serif;
+  letter-spacing: 0.03125em;
+  margin: 0 0 16px;
+}
+.FDPGTheme .mat-h5,
+.FDPGTheme .mat-typography .mat-h5,
+.FDPGTheme .mat-typography h5 {
+  font: 500 calc(16px * 0.83) / 24px 'Titillium Web', sans-serif;
+  margin: 0 0 12px;
+}
+.FDPGTheme .mat-h6,
+.FDPGTheme .mat-typography .mat-h6,
+.FDPGTheme .mat-typography h6 {
+  font: 500 calc(16px * 0.67) / 24px 'Titillium Web', sans-serif;
+  margin: 0 0 12px;
+}
+.FDPGTheme .mat-body-strong,
+.FDPGTheme .mat-subtitle-2,
+.FDPGTheme .mat-typography .mat-body-strong,
+.FDPGTheme .mat-typography .mat-subtitle-2 {
+  font: 500 14px / 22px 'Titillium Web', sans-serif;
+  letter-spacing: 0.0071428571em;
+}
+.FDPGTheme .mat-body,
+.FDPGTheme .mat-body-2,
+.FDPGTheme .mat-typography .mat-body,
+.FDPGTheme .mat-typography .mat-body-2,
+.FDPGTheme .mat-typography {
+  font: 500 16px / 24px 'Titillium Web', sans-serif;
+  letter-spacing: normal;
+}
+.FDPGTheme .mat-body p,
+.FDPGTheme .mat-body-2 p,
+.FDPGTheme .mat-typography .mat-body p,
+.FDPGTheme .mat-typography .mat-body-2 p,
+.FDPGTheme .mat-typography p {
+  margin: 0 0 12px;
+}
+.FDPGTheme .mat-small,
+.FDPGTheme .mat-caption,
+.FDPGTheme .mat-typography .mat-small,
+.FDPGTheme .mat-typography .mat-caption {
+  font: 300 14px / 16px 'Titillium Web', sans-serif;
+  letter-spacing: normal;
+}
+.FDPGTheme .mat-headline-1,
+.FDPGTheme .mat-typography .mat-headline-1 {
+  font: 300 96px / 96px 'Titillium Web', sans-serif;
+  letter-spacing: -0.015625em;
+  margin: 0 0 56px;
+}
+.FDPGTheme .mat-headline-2,
+.FDPGTheme .mat-typography .mat-headline-2 {
+  font: 300 60px / 60px 'Titillium Web', sans-serif;
+  letter-spacing: -0.0083333333em;
+  margin: 0 0 64px;
+}
+.FDPGTheme .mat-headline-3,
+.FDPGTheme .mat-typography .mat-headline-3 {
+  font: 400 48px / 50px 'Titillium Web', sans-serif;
+  letter-spacing: normal;
+  margin: 0 0 64px;
+}
+.FDPGTheme .mat-headline-4,
+.FDPGTheme .mat-typography .mat-headline-4 {
+  font: 400 34px / 40px 'Titillium Web', sans-serif;
+  letter-spacing: 0.0073529412em;
+  margin: 0 0 64px;
+}
+.FDPGTheme {
+  --mat-bottom-sheet-container-text-font: 'Titillium Web', sans-serif;
+  --mat-bottom-sheet-container-text-line-height: 24px;
+  --mat-bottom-sheet-container-text-size: 16px;
+  --mat-bottom-sheet-container-text-tracking: normal;
+  --mat-bottom-sheet-container-text-weight: 500;
+}
+.FDPGTheme {
+  --mat-legacy-button-toggle-label-text-font: 'Titillium Web', sans-serif;
+  --mat-legacy-button-toggle-label-text-line-height: 24px;
+  --mat-legacy-button-toggle-label-text-size: 16px;
+  --mat-legacy-button-toggle-label-text-tracking: 0.03125em;
+  --mat-legacy-button-toggle-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mat-standard-button-toggle-label-text-font: 'Titillium Web', sans-serif;
+  --mat-standard-button-toggle-label-text-line-height: 24px;
+  --mat-standard-button-toggle-label-text-size: 16px;
+  --mat-standard-button-toggle-label-text-tracking: 0.03125em;
+  --mat-standard-button-toggle-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mat-datepicker-calendar-text-font: 'Titillium Web', sans-serif;
+  --mat-datepicker-calendar-text-size: 13px;
+  --mat-datepicker-calendar-body-label-text-size: 14px;
+  --mat-datepicker-calendar-body-label-text-weight: 400;
+  --mat-datepicker-calendar-period-button-text-size: 14px;
+  --mat-datepicker-calendar-period-button-text-weight: 400;
+  --mat-datepicker-calendar-header-text-size: 11px;
+  --mat-datepicker-calendar-header-text-weight: 400;
+}
+.FDPGTheme {
+  --mat-expansion-header-text-font: 'Titillium Web', sans-serif;
+  --mat-expansion-header-text-size: 14px;
+  --mat-expansion-header-text-weight: 500;
+  --mat-expansion-header-text-line-height: inherit;
+  --mat-expansion-header-text-tracking: inherit;
+  --mat-expansion-container-text-font: 'Titillium Web', sans-serif;
+  --mat-expansion-container-text-line-height: 24px;
+  --mat-expansion-container-text-size: 16px;
+  --mat-expansion-container-text-tracking: normal;
+  --mat-expansion-container-text-weight: 500;
+}
+.FDPGTheme {
+  --mat-grid-list-tile-header-primary-text-size: 16px;
+  --mat-grid-list-tile-header-secondary-text-size: 14px;
+  --mat-grid-list-tile-footer-primary-text-size: 16px;
+  --mat-grid-list-tile-footer-secondary-text-size: 14px;
+}
+.FDPGTheme {
+  --mat-stepper-container-text-font: 'Titillium Web', sans-serif;
+  --mat-stepper-header-label-text-font: 'Titillium Web', sans-serif;
+  --mat-stepper-header-label-text-size: 16px;
+  --mat-stepper-header-label-text-weight: 500;
+  --mat-stepper-header-error-state-label-text-size: 16px;
+  --mat-stepper-header-selected-state-label-text-size: 16px;
+  --mat-stepper-header-selected-state-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mat-toolbar-title-text-font: 'Titillium Web', sans-serif;
+  --mat-toolbar-title-text-line-height: 32px;
+  --mat-toolbar-title-text-size: 20px;
+  --mat-toolbar-title-text-tracking: 0.0125em;
+  --mat-toolbar-title-text-weight: 500;
+}
+.FDPGTheme {
+  --mat-tree-node-text-font: 'Titillium Web', sans-serif;
+  --mat-tree-node-text-size: 16px;
+  --mat-tree-node-text-weight: 500;
+}
+.FDPGTheme {
+  --mat-option-label-text-font: 'Titillium Web', sans-serif;
+  --mat-option-label-text-line-height: 24px;
+  --mat-option-label-text-size: 16px;
+  --mat-option-label-text-tracking: 0.03125em;
+  --mat-option-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mat-optgroup-label-text-font: 'Titillium Web', sans-serif;
+  --mat-optgroup-label-text-line-height: 24px;
+  --mat-optgroup-label-text-size: 16px;
+  --mat-optgroup-label-text-tracking: 0.03125em;
+  --mat-optgroup-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mat-card-title-text-font: 'Titillium Web', sans-serif;
+  --mat-card-title-text-line-height: 32px;
+  --mat-card-title-text-size: 20px;
+  --mat-card-title-text-tracking: 0.0125em;
+  --mat-card-title-text-weight: 500;
+  --mat-card-subtitle-text-font: 'Titillium Web', sans-serif;
+  --mat-card-subtitle-text-line-height: 22px;
+  --mat-card-subtitle-text-size: 14px;
+  --mat-card-subtitle-text-tracking: 0.0071428571em;
+  --mat-card-subtitle-text-weight: 500;
+}
+.FDPGTheme {
+  --mdc-plain-tooltip-supporting-text-font: 'Titillium Web', sans-serif;
+  --mdc-plain-tooltip-supporting-text-size: 14px;
+  --mdc-plain-tooltip-supporting-text-weight: 300;
+  --mdc-plain-tooltip-supporting-text-tracking: normal;
+}
+.FDPGTheme {
+  --mdc-filled-text-field-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-filled-text-field-label-text-size: 16px;
+  --mdc-filled-text-field-label-text-tracking: 0.03125em;
+  --mdc-filled-text-field-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mdc-outlined-text-field-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-outlined-text-field-label-text-size: 16px;
+  --mdc-outlined-text-field-label-text-tracking: 0.03125em;
+  --mdc-outlined-text-field-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mat-form-field-container-text-font: 'Titillium Web', sans-serif;
+  --mat-form-field-container-text-line-height: 24px;
+  --mat-form-field-container-text-size: 16px;
+  --mat-form-field-container-text-tracking: 0.03125em;
+  --mat-form-field-container-text-weight: 400;
+  --mat-form-field-outlined-label-text-populated-size: 16px;
+  --mat-form-field-subscript-text-font: 'Titillium Web', sans-serif;
+  --mat-form-field-subscript-text-line-height: 16px;
+  --mat-form-field-subscript-text-size: 14px;
+  --mat-form-field-subscript-text-tracking: normal;
+  --mat-form-field-subscript-text-weight: 300;
+}
+.FDPGTheme {
+  --mat-select-trigger-text-font: 'Titillium Web', sans-serif;
+  --mat-select-trigger-text-line-height: 24px;
+  --mat-select-trigger-text-size: 16px;
+  --mat-select-trigger-text-tracking: 0.03125em;
+  --mat-select-trigger-text-weight: 400;
+}
+.FDPGTheme {
+  --mdc-dialog-subhead-font: 'Titillium Web', sans-serif;
+  --mdc-dialog-subhead-line-height: 32px;
+  --mdc-dialog-subhead-size: 20px;
+  --mdc-dialog-subhead-weight: 500;
+  --mdc-dialog-subhead-tracking: 0.0125em;
+  --mdc-dialog-supporting-text-font: 'Titillium Web', sans-serif;
+  --mdc-dialog-supporting-text-line-height: 24px;
+  --mdc-dialog-supporting-text-size: 16px;
+  --mdc-dialog-supporting-text-weight: 400;
+  --mdc-dialog-supporting-text-tracking: 0.03125em;
+}
+.FDPGTheme .mat-mdc-standard-chip {
+  --mdc-chip-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-chip-label-text-line-height: 24px;
+  --mdc-chip-label-text-size: 16px;
+  --mdc-chip-label-text-tracking: normal;
+  --mdc-chip-label-text-weight: 500;
+}
+.FDPGTheme .mat-mdc-slide-toggle {
+  --mat-switch-label-text-font: 'Titillium Web', sans-serif;
+  --mat-switch-label-text-line-height: 24px;
+  --mat-switch-label-text-size: 16px;
+  --mat-switch-label-text-tracking: normal;
+  --mat-switch-label-text-weight: 500;
+}
+.FDPGTheme {
+  --mat-radio-label-text-font: 'Titillium Web', sans-serif;
+  --mat-radio-label-text-line-height: 24px;
+  --mat-radio-label-text-size: 16px;
+  --mat-radio-label-text-tracking: normal;
+  --mat-radio-label-text-weight: 500;
+}
+.FDPGTheme {
+  --mdc-slider-label-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-slider-label-label-text-size: 14px;
+  --mdc-slider-label-label-text-line-height: 22px;
+  --mdc-slider-label-label-text-tracking: 0.0071428571em;
+  --mdc-slider-label-label-text-weight: 500;
+}
+.FDPGTheme {
+  --mat-menu-item-label-text-font: 'Titillium Web', sans-serif;
+  --mat-menu-item-label-text-size: 16px;
+  --mat-menu-item-label-text-tracking: 0.03125em;
+  --mat-menu-item-label-text-line-height: 24px;
+  --mat-menu-item-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mdc-list-list-item-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-list-list-item-label-text-line-height: 24px;
+  --mdc-list-list-item-label-text-size: 16px;
+  --mdc-list-list-item-label-text-tracking: 0.03125em;
+  --mdc-list-list-item-label-text-weight: 400;
+  --mdc-list-list-item-supporting-text-font: 'Titillium Web', sans-serif;
+  --mdc-list-list-item-supporting-text-line-height: 24px;
+  --mdc-list-list-item-supporting-text-size: 16px;
+  --mdc-list-list-item-supporting-text-tracking: normal;
+  --mdc-list-list-item-supporting-text-weight: 500;
+  --mdc-list-list-item-trailing-supporting-text-font: 'Titillium Web', sans-serif;
+  --mdc-list-list-item-trailing-supporting-text-line-height: 16px;
+  --mdc-list-list-item-trailing-supporting-text-size: 14px;
+  --mdc-list-list-item-trailing-supporting-text-tracking: normal;
+  --mdc-list-list-item-trailing-supporting-text-weight: 300;
+}
+.FDPGTheme .mdc-list-group__subheader {
+  font: 400 16px / 28px 'Titillium Web', sans-serif;
+  letter-spacing: 0.009375em;
+}
+.FDPGTheme {
+  --mat-paginator-container-text-font: 'Titillium Web', sans-serif;
+  --mat-paginator-container-text-line-height: 16px;
+  --mat-paginator-container-text-size: 14px;
+  --mat-paginator-container-text-tracking: normal;
+  --mat-paginator-container-text-weight: 300;
+  --mat-paginator-select-trigger-text-size: 14px;
+}
+.FDPGTheme .mat-mdc-tab-header {
+  --mat-tab-header-label-text-font: 'Titillium Web', sans-serif;
+  --mat-tab-header-label-text-size: 14px;
+  --mat-tab-header-label-text-tracking: normal;
+  --mat-tab-header-label-text-line-height: 16px;
+  --mat-tab-header-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mat-checkbox-label-text-font: 'Titillium Web', sans-serif;
+  --mat-checkbox-label-text-line-height: 24px;
+  --mat-checkbox-label-text-size: 16px;
+  --mat-checkbox-label-text-tracking: normal;
+  --mat-checkbox-label-text-weight: 500;
+}
+.FDPGTheme {
+  --mdc-text-button-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-text-button-label-text-size: 14px;
+  --mdc-text-button-label-text-tracking: normal;
+  --mdc-text-button-label-text-weight: 400;
+  --mdc-text-button-label-text-transform: none;
+}
+.FDPGTheme {
+  --mdc-filled-button-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-filled-button-label-text-size: 14px;
+  --mdc-filled-button-label-text-tracking: normal;
+  --mdc-filled-button-label-text-weight: 400;
+  --mdc-filled-button-label-text-transform: none;
+}
+.FDPGTheme {
+  --mdc-protected-button-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-protected-button-label-text-size: 14px;
+  --mdc-protected-button-label-text-tracking: normal;
+  --mdc-protected-button-label-text-weight: 400;
+  --mdc-protected-button-label-text-transform: none;
+}
+.FDPGTheme {
+  --mdc-outlined-button-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-outlined-button-label-text-size: 14px;
+  --mdc-outlined-button-label-text-tracking: normal;
+  --mdc-outlined-button-label-text-weight: 400;
+  --mdc-outlined-button-label-text-transform: none;
+}
+.FDPGTheme {
+  --mdc-extended-fab-label-text-font: 'Titillium Web', sans-serif;
+  --mdc-extended-fab-label-text-size: 14px;
+  --mdc-extended-fab-label-text-tracking: normal;
+  --mdc-extended-fab-label-text-weight: 400;
+}
+.FDPGTheme {
+  --mdc-snackbar-supporting-text-font: 'Titillium Web', sans-serif;
+  --mdc-snackbar-supporting-text-line-height: 24px;
+  --mdc-snackbar-supporting-text-size: 16px;
+  --mdc-snackbar-supporting-text-weight: 500;
+}
+.FDPGTheme {
+  --mat-table-header-headline-font: 'Titillium Web', sans-serif;
+  --mat-table-header-headline-line-height: 22px;
+  --mat-table-header-headline-size: 14px;
+  --mat-table-header-headline-weight: 500;
+  --mat-table-header-headline-tracking: 0.0071428571em;
+  --mat-table-row-item-label-text-font: 'Titillium Web', sans-serif;
+  --mat-table-row-item-label-text-line-height: 24px;
+  --mat-table-row-item-label-text-size: 16px;
+  --mat-table-row-item-label-text-weight: 500;
+  --mat-table-row-item-label-text-tracking: normal;
+  --mat-table-footer-supporting-text-font: 'Titillium Web', sans-serif;
+  --mat-table-footer-supporting-text-line-height: 24px;
+  --mat-table-footer-supporting-text-size: 16px;
+  --mat-table-footer-supporting-text-weight: 500;
+  --mat-table-footer-supporting-text-tracking: normal;
+}
+.FDPGTheme h1 {
+  margin: 0 0 20px 0 !important;
+  letter-spacing: -0.63px !important;
+}
+.FDPGTheme h1 fa-icon {
+  margin: 0 13px 0 0;
+}
+.FDPGTheme h2 {
+  letter-spacing: -0.23px !important;
+  padding: 0 0 12px 0;
+  margin: 0 0 20px 0 !important;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: #5a79af;
+  font-weight: 500;
+}
+.FDPGTheme h3 {
+  padding: 0 0 10px 0;
+  margin: 0 0 20px 0 !important;
+  letter-spacing: 0 !important;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: #c5cacf;
+}
+.FDPGTheme h4 {
+  margin: 0 0 16px 0 !important;
+  letter-spacing: 0 !important;
+}
+.FDPGTheme h5 {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 24px !important;
+  margin: 0 0 8px 0 !important;
+  letter-spacing: 0 !important;
+}
+.FDPGTheme a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link) {
+  font-family: var(--font-text-link-family);
+  font-weight: var(--font-text-link-weight);
+  font-size: var(--font-text-link-size);
+  line-height: var(--font-text-link-line);
+  color: #49689c;
+  text-decoration: none;
+}
+.FDPGTheme a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link):hover {
+  text-decoration: underline;
+}
+.FDPGTheme a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link):not(.no-focus):focus-visible {
+  outline: 2px solid #5a79af;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.FDPGTheme a:not(.mat-mdc-button):not(.mat-mdc-list-item):not(.mat-mdc-tab-link):not(.num-nav-link):visited {
+  color: #49689c;
+}
+.FDPGTheme .mat-mdc-button-base {
+  text-transform: none !important;
+  font-family: inherit !important;
+}
+.FDPGTheme .mat-mdc-icon-button {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 0;
+}
+.FDPGTheme .num-button {
+  font-family: var(--font-button-family);
+  font-size: var(--font-button-size);
+  font-weight: var(--font-button-weight);
+  line-height: var(--font-button-line);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  height: 40px;
+  padding: 9px 18px;
+  border-radius: 5px;
+  letter-spacing: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  opacity: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.FDPGTheme .num-button fa-icon {
+  margin: 0;
+}
+.FDPGTheme .num-button.cdk-keyboard-focused .mat-button-focus-overlay {
+  display: none;
+}
+.FDPGTheme .num-button.blue {
+  min-width: 125px !important;
+  border: none;
+  background-color: #5a79af;
+  color: #ffffff;
+  display: flex;
+  gap: 15px;
+}
+.FDPGTheme .num-button.blue:hover:not(.disabled) {
+  color: #ffffff !important;
+  background: #49689c !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+.FDPGTheme .num-button.blue.cdk-keyboard-focused {
+  background: #3c5786;
+}
+.FDPGTheme .num-button.blue.disabled {
+  background-color: #f9f9f9;
+  color: #5a79af;
+  box-shadow: 0px 0px 1px 1px #5a79af;
+  cursor: unset;
+}
+.FDPGTheme .num-button.blue.icon {
+  min-width: 50px !important;
+  width: 50px;
+  padding: 0;
+  display: inline-flex;
+}
+.FDPGTheme .num-button.blue.icon.disabled {
+  cursor: not-allowed;
+}
+.FDPGTheme .num-button.green {
+  min-width: 119px !important;
+  border: none;
+  background-color: #9bb823;
+  color: #ffffff;
+  display: flex;
+  gap: 4px;
+}
+.FDPGTheme .num-button.green:hover:not(.disabled) {
+  color: #ffffff !important;
+  background: #8aa51d !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+.FDPGTheme .num-button.green.cdk-keyboard-focused {
+  background: #758c17;
+}
+.FDPGTheme .num-button.green.disabled {
+  background-color: #f9f9f9;
+  color: #9bb823;
+  box-shadow: 0px 0px 1px 1px #9bb823;
+  cursor: unset;
+}
+.FDPGTheme .num-button.green.outline {
+  background-color: transparent;
+  border: 2px solid #9bb823;
+  color: #9bb823;
+  box-shadow: none;
+}
+.FDPGTheme .num-button.green.outline:hover:not(.disabled) {
+  background-color: rgba(155, 184, 35, 0.08) !important;
+  color: #9bb823 !important;
+  box-shadow: none;
+}
+.FDPGTheme .num-button.green.outline.disabled {
+  border-color: rgba(155, 184, 35, 0.4);
+  color: rgba(155, 184, 35, 0.4);
+  background-color: transparent;
+  box-shadow: none;
+  cursor: unset;
+}
+.FDPGTheme .num-button.green.icon {
+  min-width: 50px !important;
+  width: 50px;
+  padding: 0;
+  display: inline-flex;
+}
+.FDPGTheme .num-button.green.icon.disabled {
+  cursor: not-allowed;
+}
+.FDPGTheme .num-button.red {
+  min-width: 119px !important;
+  border: none;
+  background-color: #ff4545;
+  color: #ffffff;
+  display: flex;
+  gap: 15px;
+}
+.FDPGTheme .num-button.red:hover:not(.disabled) {
+  color: #ffffff !important;
+  background: #ff8383 !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+.FDPGTheme .num-button.red.cdk-keyboard-focused {
+  background: #ff8383;
+}
+.FDPGTheme .num-button.red.disabled {
+  background-color: #f9f9f9;
+  color: #ff4545;
+  box-shadow: 0px 0px 1px 1px #ff4545;
+  cursor: unset;
+}
+.FDPGTheme .num-button.red.icon {
+  min-width: 50px !important;
+  width: 50px;
+  padding: 0;
+  display: inline-flex;
+}
+.FDPGTheme .num-button.red.icon.disabled {
+  cursor: not-allowed;
+}
+.FDPGTheme .num-button.cancel {
+  font-weight: 500;
+  height: 42px;
+  border: 1px solid #bbc8dd;
+  background: #f9f9f9;
+  color: #49689c;
+}
+.FDPGTheme .num-button.cancel:hover:not(.disabled) {
+  background: #f1f2f3;
+  color: #7992be;
+  box-shadow: rgba(73, 104, 156, 0.13) 0 4px 16px;
+}
+.FDPGTheme .num-button.cancel.cdk-keyboard-focused {
+  background: #f1f2f3;
+}
+.FDPGTheme .num-button.cancel.disabled {
+  background: #f9f9f9;
+  color: #afb8c0;
+  border-color: #c5cacf;
+  box-shadow: none;
+  cursor: unset;
+}
+.FDPGTheme .mat-mdc-chip.mat-mdc-standard-chip {
+  font-size: 14px;
+  /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
+}
+.FDPGTheme .mat-mdc-chip.mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
+  background: #9ea9b3;
+  color: #000000;
+}
+.FDPGTheme .mat-mdc-chip.mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary fa-icon {
+  color: #5a79af;
+}
+.FDPGTheme .container-bool-logic-outer .mat-mdc-chip.mat-mdc-standard-chip,
+.FDPGTheme .container-bool-logic-inner .mat-mdc-chip.mat-mdc-standard-chip {
+  padding-left: 0;
+}
+.FDPGTheme .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic .mdc-evolution-chip__action--primary {
+  padding-right: 2px;
+}
+.FDPGTheme .mat-mdc-standard-chip {
+  height: 26px;
+}
+.FDPGTheme .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic .mdc-evolution-chip__graphic {
+  padding-left: 5px;
+  padding-right: 2px;
+}
+.FDPGTheme .mat-expansion-indicator::after {
+  color: #5a79af;
+  padding: 5px !important;
+  margin-top: -10px;
+  border-width: 0 3.5px 3.5px 0 !important;
+}
+.FDPGTheme .container-search-input {
+  background-color: white;
+}
+.FDPGTheme .fa-2x {
+  font-size: 1.5em;
+}
+.FDPGTheme .container-search-input .input-field .fa-2x {
+  color: grey;
+}
+.FDPGTheme .mdc-checkbox {
+  width: 15px !important;
+  height: 15px !important;
+  padding: 0 !important;
+  flex: none !important;
+}
+.FDPGTheme .mdc-checkbox .mdc-checkbox__background {
+  width: 15px !important;
+  height: 15px !important;
+  top: 0 !important;
+  left: 0 !important;
+  border-radius: 3px !important;
+  border-color: #c5cacf !important;
+  border-width: 1px !important;
+}
+.FDPGTheme .mdc-checkbox .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
+.FDPGTheme .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
+  background-color: #ffffff !important;
+  border-color: #c5cacf !important;
+}
+.FDPGTheme .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true]) ~ .mdc-checkbox__background {
+  background-color: #ffffff !important;
+  border-color: #c3c7cd !important;
+}
+.FDPGTheme .mdc-checkbox .mdc-checkbox__checkmark {
+  color: #5a79af !important;
+}
+.FDPGTheme .mdc-checkbox .mdc-checkbox__mixedmark {
+  border-color: #5a79af !important;
+}
+.FDPGTheme .mdc-checkbox .mat-mdc-checkbox-ripple,
+.FDPGTheme .mdc-checkbox .mdc-checkbox__ripple {
+  display: none !important;
+}
+.FDPGTheme .mdc-checkbox .mat-mdc-checkbox-touch-target {
+  position: absolute;
+  left: 50%;
+  width: 48px;
+  transform: translate(-50%, -50%);
+  top: unset;
+  height: unset;
+}
+.FDPGTheme .mat-mdc-checkbox .mdc-form-field {
+  align-items: center;
+}
+.FDPGTheme .mat-mdc-checkbox .mat-internal-form-field {
+  align-items: center;
+}
+.FDPGTheme num-action-bar .container {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  height: 80px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  position: relative;
+}
+.FDPGTheme num-action-bar .container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #9bb823;
+  opacity: 0.1;
+  border-radius: 5px;
+  pointer-events: none;
+}
+.FDPGTheme num-action-bar .container > * {
+  flex: 0 0 auto;
+}
+.FDPGTheme num-action-bar .selection-text {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #5e6c78;
+}
+.FDPGTheme num-action-bar .count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 21px;
+  padding: 0 4px;
+  background: #ffffff;
+  border: 2px solid #9bb823;
+  border-radius: 5px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 12px;
+  color: #9bb823;
+}
+.FDPGTheme num-action-bar .right {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+.FDPGTheme num-action-bar .padding-left-right-5px {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.FDPGTheme num-action-bar .file-input {
+  display: none;
+}
+.FDPGTheme num-filter-chips .chip-container {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 8px;
+  height: 24px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 24px;
+  color: #5a79af;
+  background: transparent;
+  border: 1px solid rgba(90, 121, 175, 0.2);
+  border-radius: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+.FDPGTheme num-filter-chips .chip-container.expanded {
+  width: min-content;
+  min-width: 150px;
+  max-width: max-content;
+  white-space: normal;
+  overflow: visible;
+  padding-right: 5px;
+  height: auto;
+  min-height: 26px;
+}
+.FDPGTheme num-filter-chips .chip-container.count-badge {
+  background-color: rgba(90, 121, 175, 0.3);
+  color: #5a79af;
+  font-weight: bold;
+  padding: 0 8px;
+  min-width: auto;
+  max-width: none;
+}
+.FDPGTheme num-filter-chips .block {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  height: 24px;
+  border-radius: 4px 0 0 4px;
+  border: 1px solid #5a79af;
+  background: #5a79af;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #ffffff;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+.FDPGTheme num-filter-chips .block.expanded {
+  width: min-content;
+  min-width: 150px;
+  max-width: max-content;
+  white-space: normal;
+  overflow: visible;
+  padding-right: 5px;
+  height: auto;
+  min-height: 26px;
+}
+.FDPGTheme num-filter-chips .block.twoLine {
+  margin-bottom: 3px;
+  min-height: 42px;
+}
+.FDPGTheme num-filter-chips .block-triangle {
+  color: #5a79af;
+  border-left: 12px solid;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  display: inline-block;
+  content: "";
+}
+.FDPGTheme num-filter-chips .block-triangle.twoLine {
+  border-left: 12px solid;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+}
+.FDPGTheme num-filter-chips .height-100 {
+  height: 100%;
+  overflow-y: auto;
+}
+.FDPGTheme num-filter-chips .filter-wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* ── Design tokens ─────────────────────────────────────────────
+   Typography
+   --font-body           : body / UI text font stack (Titillium Web)
+   --font-size-md        : standard body text size
+   --font-size-sm        : secondary / label text size
+   --line-height-md      : line-height for font-size-md
+   --line-height-sm      : line-height for font-size-sm
+
+   Text colours
+   --color-text-primary  : main body text
+   --color-text-secondary: muted / meta text
+
+   Side menu (temporary, until type roles)
+   --font-size-nav / --line-height-nav           : main item (18px / 26px)
+   --font-size-nav-child / --line-height-nav-child: sub item (16px / 24px)
+
+   Brand accent
+   --color-accent        : primary blue
+   --color-accent-bg     : tinted card background (10% opacity)
+   --color-accent-border : pill / light border (20% opacity)
+   --color-accent-strong : darker accent for hover/interactive text (links, underlines)
+
+   Borders & Radius
+   --border-color        : default rule / divider colour
+   --border-radius-card  : standard card corner radius
+   --border-radius-sm    : compact corner radius (inputs, chips, small controls)
+
+   Transitions
+   --transition-shadow   : hover shadow transition shorthand
+
+   Shadow tokens
+   --shadow-card         : resting elevation for cards / raised rows
+   --shadow-card-hover   : elevated state on hover
+   --shadow-card-active  : active/tab elevation (upward shadow)
+   --shadow-panel        : structural panel separation (sidenav, editor)
+   --shadow-menu         : floating menus / dropdowns
+   --shadow-modal        : modals / dialogs
+──────────────────────────────────────────────────────────────── */
+:root {
+  /* Typography */
+  --font-body: "Titillium Web", sans-serif;
+  --font-size-md: 14px;
+  --font-size-sm: 12px;
+  --line-height-md: 19px;
+  --line-height-sm: 16px;
+  /* Text colours and --border-color: set per theme in custom-material/base (text-color-variables, color-variables) */
+  /* Type weights (fix previously-dead var() fallbacks — see spacing note above) */
+  --font-weight-normal: 400;
+  --font-weight-bold: 600;
+  --font-size-lg: 20px;
+  /* Side menu text, rem so it follows the browser font size (WCAG 1.4.4). Replaced by type roles later (PLAN-side-menu.md step 7) */
+  --font-size-nav: 1.125rem;
+  --line-height-nav: 1.625rem;
+  --font-size-nav-child: 1rem;
+  --line-height-nav-child: 1.5rem;
+  /* Brand accent: --color-accent* come from the blue palette (_color-variables.themed.scss) */
+  /* Borders & radius */
+  --border-radius-card: 5px;
+  --border-radius-sm: 4px;
+  /* Spacing (8px grid, 4px sub-grid for fine adjustments — standard 8pt
+     grid system). Named by pixel value for direct use in component
+     `padding`/`margin` declarations. --spacing-xs/-sm are legacy aliases:
+     they fix previously-dead var() fallbacks that referenced these names
+     without ever defining them — kept equal to their old fallback values
+     so nothing visually shifts.
+
+     --spacing-2/5/6/10/30 are tracked exceptions, not on the 4px grid —
+     kept only because each was already in repeated use. Prefer a grid
+     value in new code. */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px; /* on the 4px sub-grid, not the primary 8px grid */
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-2: 2px; /* exception */
+  --spacing-5: 5px; /* exception */
+  --spacing-6: 6px; /* exception */
+  --spacing-10: 10px; /* exception */
+  --spacing-30: 30px; /* exception */
+  --spacing-xs: var(--spacing-4);
+  --spacing-sm: var(--spacing-12);
+  /* Transitions */
+  --transition-shadow: box-shadow 0.2s ease;
+  /* Shadows */
+  --shadow-card: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  --shadow-card-hover: rgba(0, 0, 0, 0.15) 0px 8px 16px -2px, rgba(0, 0, 0, 0.1) 0px 4px 8px -2px;
+  --shadow-card-active: rgba(0, 0, 0, 0.1) 0px -3px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  --shadow-panel: -4px 0 20px rgba(0, 0, 0, 0.1);
+  --shadow-menu: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+html,
+body {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 400;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+mark {
+  background-color: var(--color-accent-bg);
+  color: var(--color-text-primary);
+  border-radius: 2px;
+  padding: 0 1px;
+  font-weight: 600;
+}
+
+/*TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
+.mat-chip-ripple {
+  display: none;
+}
+
+.text-overflow {
+  display: block;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  width: 100%;
+  overflow: hidden;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.prevent-selection {
+  pointer-events: none;
+}
+
+.padding-0 {
+  padding: 0;
+}
+
+.padding-1 {
+  padding: var(--spacing-4);
+}
+
+.padding-2 {
+  padding: var(--spacing-8);
+}
+
+.padding-3 {
+  padding: var(--spacing-16);
+}
+
+.padding-4 {
+  padding: var(--spacing-24);
+}
+
+.padding-5 {
+  padding: var(--spacing-32);
+}
+
+.padding-6 {
+  padding: var(--spacing-40);
+}
+
+.padding-7 {
+  padding: var(--spacing-48);
+}
+
+.padding-auto {
+  padding: auto;
+}
+
+.margin-0 {
+  margin: 0;
+}
+
+.margin-1 {
+  margin: var(--spacing-4);
+}
+
+.margin-2 {
+  margin: var(--spacing-8);
+}
+
+.margin-3 {
+  margin: var(--spacing-16);
+}
+
+.margin-4 {
+  margin: var(--spacing-24);
+}
+
+.margin-5 {
+  margin: var(--spacing-32);
+}
+
+.margin-6 {
+  margin: var(--spacing-40);
+}
+
+.margin-7 {
+  margin: var(--spacing-48);
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.padding-top-0 {
+  padding-top: 0;
+}
+
+.padding-right-0 {
+  padding-right: 0;
+}
+
+.padding-bottom-0 {
+  padding-bottom: 0;
+}
+
+.padding-left-0 {
+  padding-left: 0;
+}
+
+.padding-x-0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.padding-y-0 {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.padding-top-1 {
+  padding-top: var(--spacing-4);
+}
+
+.padding-right-1 {
+  padding-right: var(--spacing-4);
+}
+
+.padding-bottom-1 {
+  padding-bottom: var(--spacing-4);
+}
+
+.padding-left-1 {
+  padding-left: var(--spacing-4);
+}
+
+.padding-x-1 {
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+.padding-y-1 {
+  padding-top: var(--spacing-4);
+  padding-bottom: var(--spacing-4);
+}
+
+.padding-top-2 {
+  padding-top: var(--spacing-8);
+}
+
+.padding-right-2 {
+  padding-right: var(--spacing-8);
+}
+
+.padding-bottom-2 {
+  padding-bottom: var(--spacing-8);
+}
+
+.padding-left-2 {
+  padding-left: var(--spacing-8);
+}
+
+.padding-x-2 {
+  padding-left: var(--spacing-8);
+  padding-right: var(--spacing-8);
+}
+
+.padding-y-2 {
+  padding-top: var(--spacing-8);
+  padding-bottom: var(--spacing-8);
+}
+
+.padding-top-3 {
+  padding-top: var(--spacing-16);
+}
+
+.padding-right-3 {
+  padding-right: var(--spacing-16);
+}
+
+.padding-bottom-3 {
+  padding-bottom: var(--spacing-16);
+}
+
+.padding-left-3 {
+  padding-left: var(--spacing-16);
+}
+
+.padding-x-3 {
+  padding-left: var(--spacing-16);
+  padding-right: var(--spacing-16);
+}
+
+.padding-y-3 {
+  padding-top: var(--spacing-16);
+  padding-bottom: var(--spacing-16);
+}
+
+.padding-top-4 {
+  padding-top: var(--spacing-24);
+}
+
+.padding-right-4 {
+  padding-right: var(--spacing-24);
+}
+
+.padding-bottom-4 {
+  padding-bottom: var(--spacing-24);
+}
+
+.padding-left-4 {
+  padding-left: var(--spacing-24);
+}
+
+.padding-x-4 {
+  padding-left: var(--spacing-24);
+  padding-right: var(--spacing-24);
+}
+
+.padding-y-4 {
+  padding-top: var(--spacing-24);
+  padding-bottom: var(--spacing-24);
+}
+
+.padding-top-5 {
+  padding-top: var(--spacing-32);
+}
+
+.padding-right-5 {
+  padding-right: var(--spacing-32);
+}
+
+.padding-bottom-5 {
+  padding-bottom: var(--spacing-32);
+}
+
+.padding-left-5 {
+  padding-left: var(--spacing-32);
+}
+
+.padding-x-5 {
+  padding-left: var(--spacing-32);
+  padding-right: var(--spacing-32);
+}
+
+.padding-y-5 {
+  padding-top: var(--spacing-32);
+  padding-bottom: var(--spacing-32);
+}
+
+.padding-top-6 {
+  padding-top: var(--spacing-40);
+}
+
+.padding-right-6 {
+  padding-right: var(--spacing-40);
+}
+
+.padding-bottom-6 {
+  padding-bottom: var(--spacing-40);
+}
+
+.padding-left-6 {
+  padding-left: var(--spacing-40);
+}
+
+.padding-x-6 {
+  padding-left: var(--spacing-40);
+  padding-right: var(--spacing-40);
+}
+
+.padding-y-6 {
+  padding-top: var(--spacing-40);
+  padding-bottom: var(--spacing-40);
+}
+
+.padding-top-7 {
+  padding-top: var(--spacing-48);
+}
+
+.padding-right-7 {
+  padding-right: var(--spacing-48);
+}
+
+.padding-bottom-7 {
+  padding-bottom: var(--spacing-48);
+}
+
+.padding-left-7 {
+  padding-left: var(--spacing-48);
+}
+
+.padding-x-7 {
+  padding-left: var(--spacing-48);
+  padding-right: var(--spacing-48);
+}
+
+.padding-y-7 {
+  padding-top: var(--spacing-48);
+  padding-bottom: var(--spacing-48);
+}
+
+.padding-top-auto {
+  padding-top: auto;
+}
+
+.padding-right-auto {
+  padding-right: auto;
+}
+
+.padding-bottom-auto {
+  padding-bottom: auto;
+}
+
+.padding-left-auto {
+  padding-left: auto;
+}
+
+.padding-x-auto {
+  padding-left: auto;
+  padding-right: auto;
+}
+
+.padding-y-auto {
+  padding-top: auto;
+  padding-bottom: auto;
+}
+
+.margin-top-0 {
+  margin-top: 0;
+}
+
+.margin-right-0 {
+  margin-right: 0;
+}
+
+.margin-bottom-0 {
+  margin-bottom: 0;
+}
+
+.margin-left-0 {
+  margin-left: 0;
+}
+
+.margin-x-0 {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.margin-y-0 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.margin-top-1 {
+  margin-top: var(--spacing-4);
+}
+
+.margin-right-1 {
+  margin-right: var(--spacing-4);
+}
+
+.margin-bottom-1 {
+  margin-bottom: var(--spacing-4);
+}
+
+.margin-left-1 {
+  margin-left: var(--spacing-4);
+}
+
+.margin-x-1 {
+  margin-left: var(--spacing-4);
+  margin-right: var(--spacing-4);
+}
+
+.margin-y-1 {
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.margin-top-2 {
+  margin-top: var(--spacing-8);
+}
+
+.margin-right-2 {
+  margin-right: var(--spacing-8);
+}
+
+.margin-bottom-2 {
+  margin-bottom: var(--spacing-8);
+}
+
+.margin-left-2 {
+  margin-left: var(--spacing-8);
+}
+
+.margin-x-2 {
+  margin-left: var(--spacing-8);
+  margin-right: var(--spacing-8);
+}
+
+.margin-y-2 {
+  margin-top: var(--spacing-8);
+  margin-bottom: var(--spacing-8);
+}
+
+.margin-top-3 {
+  margin-top: var(--spacing-16);
+}
+
+.margin-right-3 {
+  margin-right: var(--spacing-16);
+}
+
+.margin-bottom-3 {
+  margin-bottom: var(--spacing-16);
+}
+
+.margin-left-3 {
+  margin-left: var(--spacing-16);
+}
+
+.margin-x-3 {
+  margin-left: var(--spacing-16);
+  margin-right: var(--spacing-16);
+}
+
+.margin-y-3 {
+  margin-top: var(--spacing-16);
+  margin-bottom: var(--spacing-16);
+}
+
+.margin-top-4 {
+  margin-top: var(--spacing-24);
+}
+
+.margin-right-4 {
+  margin-right: var(--spacing-24);
+}
+
+.margin-bottom-4 {
+  margin-bottom: var(--spacing-24);
+}
+
+.margin-left-4 {
+  margin-left: var(--spacing-24);
+}
+
+.margin-x-4 {
+  margin-left: var(--spacing-24);
+  margin-right: var(--spacing-24);
+}
+
+.margin-y-4 {
+  margin-top: var(--spacing-24);
+  margin-bottom: var(--spacing-24);
+}
+
+.margin-top-5 {
+  margin-top: var(--spacing-32);
+}
+
+.margin-right-5 {
+  margin-right: var(--spacing-32);
+}
+
+.margin-bottom-5 {
+  margin-bottom: var(--spacing-32);
+}
+
+.margin-left-5 {
+  margin-left: var(--spacing-32);
+}
+
+.margin-x-5 {
+  margin-left: var(--spacing-32);
+  margin-right: var(--spacing-32);
+}
+
+.margin-y-5 {
+  margin-top: var(--spacing-32);
+  margin-bottom: var(--spacing-32);
+}
+
+.margin-top-6 {
+  margin-top: var(--spacing-40);
+}
+
+.margin-right-6 {
+  margin-right: var(--spacing-40);
+}
+
+.margin-bottom-6 {
+  margin-bottom: var(--spacing-40);
+}
+
+.margin-left-6 {
+  margin-left: var(--spacing-40);
+}
+
+.margin-x-6 {
+  margin-left: var(--spacing-40);
+  margin-right: var(--spacing-40);
+}
+
+.margin-y-6 {
+  margin-top: var(--spacing-40);
+  margin-bottom: var(--spacing-40);
+}
+
+.margin-top-7 {
+  margin-top: var(--spacing-48);
+}
+
+.margin-right-7 {
+  margin-right: var(--spacing-48);
+}
+
+.margin-bottom-7 {
+  margin-bottom: var(--spacing-48);
+}
+
+.margin-left-7 {
+  margin-left: var(--spacing-48);
+}
+
+.margin-x-7 {
+  margin-left: var(--spacing-48);
+  margin-right: var(--spacing-48);
+}
+
+.margin-y-7 {
+  margin-top: var(--spacing-48);
+  margin-bottom: var(--spacing-48);
+}
+
+.margin-top-auto {
+  margin-top: auto;
+}
+
+.margin-right-auto {
+  margin-right: auto;
+}
+
+.margin-bottom-auto {
+  margin-bottom: auto;
+}
+
+.margin-left-auto {
+  margin-left: auto;
+}
+
+.margin-x-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.margin-y-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f2f3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5cacf;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8aeb5;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c5cacf #f1f2f3;
+}

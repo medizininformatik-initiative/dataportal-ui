@@ -62,10 +62,10 @@
       border-radius: var(--border-radius-card);
       background: var(--side-menu-bg);
       color: var(--side-menu-text);
-      font-family: var(--font-body);
-      font-size: var(--font-size-nav);
-      line-height: var(--line-height-nav);
-      font-weight: var(--font-weight-bold);
+      font-family: var(--font-side-menu-parent-item-family);
+      font-size: var(--font-side-menu-parent-item-size);
+      line-height: var(--font-side-menu-parent-item-line);
+      font-weight: var(--font-side-menu-parent-item-weight);
       text-decoration: none;
       overflow-wrap: anywhere; // long German labels wrap instead of clipping (WCAG 1.4.10)
       cursor: pointer;
@@ -129,9 +129,10 @@
       margin-bottom: 0;
       border-radius: 0;
       background: transparent;
-      font-size: var(--font-size-nav-child);
-      line-height: var(--line-height-nav-child);
-      font-weight: 500; // was Material body-2; becomes a type role (PLAN-side-menu.md step 6)
+      font-family: var(--font-side-menu-child-item-family);
+      font-size: var(--font-side-menu-child-item-size);
+      line-height: var(--font-side-menu-child-item-line);
+      font-weight: var(--font-side-menu-child-item-weight);
 
       // highlight pill (hover + active), starts on the guide line so both share one left edge
       &::before {
@@ -199,7 +200,7 @@
         }
 
         .navItem-font--child {
-          font-weight: var(--font-weight-bold);
+          font-weight: var(--font-side-menu-child-item-active-weight);
           color: var(--side-menu-text-active);
         }
       }
