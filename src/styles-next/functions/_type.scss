@@ -5,6 +5,7 @@
    Example: type.vars($theme, 'app-content-page-header-title')  ->
      --font-app-content-page-header-title-family: 'Titillium Web', sans-serif;  --font-app-content-page-header-title-weight: 600;
      --font-app-content-page-header-title-size: 24px;                           --font-app-content-page-header-title-line: 32px;
+   Optional fifth key `letter-spacing`: written as -letter-spacing only when the role sets it (Material's inherited value is overridden).
    The role names are the keys in themes/fdpg-light/_type-roles.scss. Unknown name gives no values (no error).
 
    Why four variables and not the CSS shorthand `font`: `font` sets weight, size, line height and family in one
@@ -20,4 +21,7 @@
   --font-#{$name}-weight: #{map.get($l, weight)};
   --font-#{$name}-size: #{map.get($l, size)};
   --font-#{$name}-line: #{map.get($l, line)};
+  @if map.has-key($l, letter-spacing) {
+    --font-#{$name}-letter-spacing: #{map.get($l, letter-spacing)};
+  }
 }
