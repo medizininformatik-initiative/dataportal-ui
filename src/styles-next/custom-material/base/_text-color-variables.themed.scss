@@ -3,4 +3,7 @@
   --color-text-primary: #{foreground-color($theme, text)};
   --color-text-secondary: #{foreground-color($theme, secondary-text)};
   --color-text-section: #{foreground-color($theme, section-text)};
+  // Dumped from 652, literal until the foreground map has them (PLAN-side-menu.md step 9)
+  --color-text-placeholder: #5f6773; // ~5.7:1 on white
+  --border-color-hover: var(--color-text-primary); // input / select border on hover
 }

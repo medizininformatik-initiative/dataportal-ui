@@ -1,67 +1,66 @@
-@use '@angular/material' as mat;
-
+// Ported unchanged from branch 652 (old tree), only the colour lookups are role-color. Refactor to the design later (PLAN-side-menu.md step 8).
 @mixin checkbox_themed($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
+  $tick-size: calc(var(--size-checkbox) - 2 * var(--border-width-control));
 
-  .mdc-checkbox {
-    width: 15px !important;
-    height: 15px !important;
-    padding: 0 !important;
-    flex: none !important;
+  // ── Box: num-checkbox (native input) and mat-option's pseudo checkbox (multi-select) ──
+  num-checkbox .checkbox,
+  .mat-pseudo-checkbox.mat-pseudo-checkbox-full {
+    width: var(--size-checkbox);
+    height: var(--size-checkbox);
+    box-sizing: border-box;
+    background-color: role-color($theme, neutral, 0);
+    border: var(--border-width-control) solid var(--num-color--control-border);
+    border-radius: var(--border-radius-sm);
+    transition: background-color var(--transition-control), border-color var(--transition-control),
+      box-shadow var(--transition-control);
+  }
 
-    .mdc-checkbox__background {
-      width: 15px !important;
-      height: 15px !important;
-      top: 0 !important;
-      left: 0 !important;
-      border-radius: 3px !important;
-      border-color: mat.m2-get-color-from-palette($primary, 300) !important;
-      border-width: 1px !important;
+  num-checkbox .checkbox:checked,
+  .mat-pseudo-checkbox.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked {
+    background-color: var(--num-color--checkbox-checked);
+    border-color: var(--num-color--checkbox-checked);
+    box-shadow: var(--shadow-control);
+  }
+
+  // ── Tick: shape lives in the SVG file; the mask makes it take the background colour ──
+  // (not %: it collapses to 0 in the grid, whose track is auto-sized from its content)
+  num-checkbox .checkbox:checked::after,
+  .mat-pseudo-checkbox.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after {
+    content: '';
+    width: $tick-size;
+    height: $tick-size;
+    background-color: role-color($theme, neutral, 0);
+    mask: url('/assets/img/icons/checkmark.svg') center / 100% 100% no-repeat;
+  }
+
+  // ── num-checkbox only ─────────────────────────────────────────────────────
+  num-checkbox .checkbox {
+    appearance: none;
+    margin: 0;
+    display: inline-grid;
+    vertical-align: middle; // baseline of inline-grid changes once ::after exists → box jumps down
+    place-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: var(--focus-ring-width) solid var(--num-color--checkbox-checked);
+      outline-offset: var(--focus-ring-offset);
     }
 
-    .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
-    .mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
-      background-color: role-color($theme, neutral, 0) !important;
-      border-color: mat.m2-get-color-from-palette($primary, 300) !important;
-    }
-
-    .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
-        [data-indeterminate='true']
-      )
-      ~ .mdc-checkbox__background {
-      background-color: #ffffff !important;
-      border-color: #c3c7cd !important;
-    }
-
-    .mdc-checkbox__checkmark {
-      color: mat.m2-get-color-from-palette($accent, 500) !important;
-    }
-
-    .mdc-checkbox__mixedmark {
-      border-color: mat.m2-get-color-from-palette($accent, 500) !important;
-    }
-
-    .mat-mdc-checkbox-ripple,
-    .mdc-checkbox__ripple {
-      display: none !important;
-    }
-
-    .mat-mdc-checkbox-touch-target {
-      position: absolute;
-      left: 50%;
-      width: 48px;
-      transform: translate(-50%, -50%);
-      top: unset;
-      height: unset;
+    &:disabled {
+      opacity: var(--opacity-disabled);
+      cursor: not-allowed;
     }
   }
 
-  .mat-mdc-checkbox .mdc-form-field {
-    align-items: center;
-  }
-
-  .mat-mdc-checkbox .mat-internal-form-field {
-    align-items: center;
+  // ── mat-pseudo-checkbox only: replace Material's rotated-border tick ──────
+  .mat-pseudo-checkbox.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0;
+    transform: none;
+    opacity: 1;
   }
 }

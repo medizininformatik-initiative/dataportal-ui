@@ -34,4 +34,24 @@
 
   // Used by: ~38 component files (default rule / divider colour)
   --border-color: #{foreground-color($theme, divider)};
+
+  // Form-control borders (checkbox) on white: 3.5:1, WCAG 1.4.11 needs 3:1. Used by: checkbox
+  --num-color--control-border: #{role-color($theme, neutral, 700)};
+
+  // Checked checkbox fill, white tick on it (3.06:1, 3:1 needed). Used by: checkbox
+  // Literal from 652 ('green-3'): not in the green ramp, role decision later (PLAN-side-menu.md risk 3, recommended secondary 700).
+  --num-color--checkbox-checked: #839e00;
+
+  // ── Dumped from 652 as is, role decisions later (PLAN-side-menu.md step 9) ──
+  // Hover / keyboard-active row fill (= neutral 100). Used by: search-filter
+  --num-color--grey-hover: #{role-color($theme, neutral, 100)};
+
+  // Keyboard focus ring / dark accent. Used by: search-filter
+  --num-color--accent-900: #{role-color($theme, accent, 900)};
+
+  // Error text, contrast 6.0 on white, 5.4 on accent tint (WCAG 1.4.3). Literals: no role (danger ramp is pure red).
+  // On white / near-white. Used by: searchbar
+  --num-color--error-on-white: #c4122f;
+  // On tinted / grey surfaces (also fine on white). Used by: missing-filter
+  --num-color--error-on-tint: #b30519;
 }

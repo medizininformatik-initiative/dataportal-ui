@@ -6,7 +6,7 @@ const path = require('node:path');
 
 const STYLES = 'src/styles-next';
 const SCAN = ['src/app', `${STYLES}/custom-material`]; // where reads happen
-const VAR_PREFIXES = ['--font-', '--app-content-']; // add '--color-', '--num-color--' when their reads are clean
+const VAR_PREFIXES = ['--font-', '--app-content-', '--color-', '--num-color--', '--border-']; // widened 2026-10-20 after the 652 dump
 
 const files = (dir, ext) => readdirSync(dir, { recursive: true, withFileTypes: true })
   .filter((f) => f.isFile() && ext.test(f.name))
