@@ -1,5 +1,14 @@
 :host {
   --primary-light: var(--color-accent-bg);
+  display: block;
+  min-height: 0;
+  overflow: auto;
+}
+
+// Beats the global .selection-box (height: 100%, margin-bottom: 8px); the row gap spaces the tabs
+.selection-box {
+  height: auto;
+  margin-bottom: 0;
 }
 
 .criterion-display {

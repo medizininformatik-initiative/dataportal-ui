@@ -1,3 +1,16 @@
+// Row of the editor grid: the box sizes to its content, the row scrolls when it is capped
+:host {
+  display: block;
+  min-height: 0;
+  overflow: auto;
+}
+
+// Beats the global .selection-box (height: 100%, margin-bottom: 8px); the row gap spaces the tabs
+.selection-box {
+  height: auto;
+  margin-bottom: 0;
+}
+
 // Layout Containers
 .display-container {
   display: flex;

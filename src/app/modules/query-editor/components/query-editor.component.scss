@@ -1,16 +1,19 @@
+// Page frame: one column, two rows; the card takes the rest, the action bar sits below.
 .container {
-  display: flex;
-  flex-direction: column;
   height: 100%;
-  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  row-gap: var(--spacing-16); // the one vertical rhythm between the rows
   overflow: auto;
 }
 
 .background {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr); // the editor content fills the card and scrolls inside itself
+  padding: var(--spacing-16);
+  overflow: hidden;
   background-color: var(--color-accent-bg);
-  padding: 1%;
-  overflow: auto;
-  flex: 1;
   box-shadow: var(--shadow-card);
   border-radius: var(--border-radius-sm);
 }

@@ -4,18 +4,33 @@ Written 2026-10-21 at the end of the session. Reference page: the feasibility se
 
 Not checked in a browser by Claude. Every page below needs a look at laptop size (1366x768, side nav open and collapsed), intro shown and hidden.
 
-## 0. Status (updated 2026-10-21, end of session 2)
+## 0. Status (updated 2026-10-21, end of session 3)
 
 Decision for section 3: per-page SCSS, not a shared class. Pages 2, 3 and 4 each have different rows; revisit only if the last pages end up identical.
 
-| Page                    | State                                                                  | Commit                                         |
-| ----------------------- | ---------------------------------------------------------------------- | ---------------------------------------------- |
-| 1 Feasibility search    | done                                                                   | `996391e7`                                     |
-| 2 Data-selection search | done                                                                   | `f9cb8ed6`                                     |
-| 4 Feasibility editor    | done (plus drop-target effects, grabbed state, empty-list placeholder) | `d4aeca1b`, `22b96757`, `92b58edc`, `56ef6659` |
-| 3 Bulk search           | done (checked by Shah)                                                 | `cde94e43`                                     |
-| 10 Saved queries        | **done, uncommitted**, not yet checked in a browser                    | -                                              |
-| 8, 9, 5, 6, 7           | open                                                                   | -                                              |
+| Page                    | State                                                                                   | Commit                                                                   |
+| ----------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 Feasibility search    | done                                                                                    | `996391e7`                                                               |
+| 2 Data-selection search | done                                                                                    | `f9cb8ed6`                                                               |
+| 4 Feasibility editor    | done (plus drop-target effects, grabbed state, empty-list placeholder)                  | `d4aeca1b`, `22b96757`, `92b58edc`, `56ef6659`                           |
+| 3 Bulk search           | done (checked by Shah)                                                                  | `cde94e43`                                                               |
+| 10 Saved queries        | done (checked by Shah)                                                                  | `448b626e`                                                               |
+| 11                      | Query editor (`query-editor/.../query-editor.component`; criterion, feature, reference) | card + action bar; in the card header `flex: 0 1 24%` and tabs `flex: 1` | card, action bar; inside: header (capped), tabs (rest) | `num-editor-content` owns the grid, the three editors use `display: contents`. Header row is `fit-content(40%)`, not 24% of the card. Global `.selection-box` (height, margin) leaks into both headers. `::ng-deep .mdc-tab` in three files is global, left alone. Built, only the criterion route checked. |
+| 8 Data-selection editor | done (checked by Shah, and by Claude in the app with 3 profiles)                        | `c7380638`                                                               |
+| 5 Result                | done (scrollbar flicker fixed: no `height: 100%` + `overflow: auto` in the children)    | `f25ca265`                                                               |
+| 6, 7 Cohort / Data sel. | done, shared `num-query-page` frame (`data-query/query-page/`)                          | `42c2d2c3`                                                               |
+| 11 Query editor         | done (grid in `num-editor-content`, checked by Shah)                                    | see git log                                                              |
+
+### Session 3 (2026-10-21), what we did
+
+1. Read this plan. Committed page 3 (`cde94e43`, one commit, grid and chips were too mixed in the shared html/ts/i18n files to split).
+2. Page 10 (saved queries) built, checked by Shah, committed (`448b626e`).
+3. Page 8 (data-selection editor) built, then reworked after Shah's screenshots (too tight to the search bar, time restriction button in the wrong place, box far too tall). Committed (`c7380638`).
+4. Claude logged into the local app (credentials in `.github/scripts/create-keycloak-user.sh`) and measured the DOM with Chrome DevTools to find the tall-box cause (see insight 12).
+5. Open question, not decided: the `.fullscreen` wrapper (`_app-layout.themed.scss:46`, `width: 95%`, no margin) leaves all the spare 5% on the right. Content starts at the header's 17px left padding and ends 63px from the right. Options: A center it with `margin-inline: auto` (about 47px each side, no longer lined up with the logo), B `width: 100%` plus `padding-inline: 17px` (lined up with the logo, recommended by Claude). It affects every page, so decide once. Shah has not answered yet.
+6. Seen on the profile editor (`query-editor/.../profile/profile.component`, not one of the 10 pages): tab content ("Zeitraum (optional)" etc.) starts 8px inside the white card, tabs have 30px padding. Candidate: `padding: var(--spacing-16)` on the tab content in `profile.component.scss`. Not done, Shah has not answered.
+
+### Page 10 (saved queries), what changed (commit `448b626e`)
 
 ### Page 3 (bulk search), what changed (commit `cde94e43`, one commit)
 
@@ -28,15 +43,23 @@ Decision for section 3: per-page SCSS, not a shared class. Pages 2, 3 and 4 each
 - Tried and removed: rewrite the text to one term per line on paste/blur. It did not fire and Shah did not need it.
 - Not done: no "N gefunden" count (new terms after an edit are unsearched, the number would lie); local `::-webkit-scrollbar` block in `bulk-search.component.scss` still there.
 
-### Page 10 (saved queries), what changed (uncommitted)
-
 - `saved-queries.component.scss`: `.page-wrapper` is a grid, rows `auto minmax(0, 1fr)`; `num-feasibility` host is `display: block; min-height: 0; overflow: auto` so the tile list scrolls in its row. `align-items: flex-start` and `class="width-100"` removed. No intro, so no `.page-header` wrapper.
+
+### Page 8 (data-selection editor), what changed (commit `c7380638`)
+
+- `display.component.{html,scss}`: `.page-header` + `.title-row` like page 4, rows `auto auto minmax(0, 1fr) auto` (header, section name, profiles, actions). Old `.profiles-container` height/margin/gap and the dead rules `.selection-box-container`, `.box-container`, `.profiles-box`, `.overflow` removed.
+- The time restriction (`num-apply-time-restriction`) moved from the page into `display-profiles`, in a `.toolbar` column under the search bar (Shah: it must not sit under the header, a button hidden between header and list is not visible enough). Page-level import moved with it.
+- `display-profiles` `:host` has `gap: var(--spacing-16)` (search bar, summary line, list). `.container` is a grid with `align-content: start; row-gap: var(--spacing-16)`: that is the only spacing between profiles now.
+- `data-selection-boxes.component.scss`: box `margin-bottom` removed, `height: auto` and `margin-bottom: 0` added to beat the global `.selection-box`. `linked-references`: tile `margin-bottom: 8px` became `margin-top: 8px`, so the tile hangs under its own box.
+- `apply-time-restriction.component.scss` (data-selection copy only): toggle `height: 40px`, `padding: 0 14px`; select, date input and apply button 40px too. The feasibility editor has its own copy of this component, unchanged.
+- Not done, seen: the box right edge stops at the scrollbar while the search bar runs full width; the reference tile is narrower than the box (about 80%); `min-height: 104px` makes boxes with few fields taller than needed; `num-section-name` still has its own `margin: var(--spacing-sm) 0` (also on page 4), it adds to the row gap.
 
 ### Before the next session
 
-1. Look at page 3 in the browser at 1366x768 and 1920x1080, intro shown and hidden, with 74 terms (50 codes + a sentence): the chip strip adds up to 6rem + a summary line to the input row and takes height from the table. If too tight: 2 chip rows.
-2. Look at page 10, commit it. Do not add Co-Authored-By lines. Unrelated dirty files, leave alone: `angular.json`, `ReferenceCriteriaListEntry.ts`, `playground.component.ts`, `edit.component.scss` (one stray blank line), `.vscode/settings.json`, `.impeccable/`.
-3. Next page: 8 and 9, then 5, then 6 and 7 (see section 7).
+1. Ask Shah: wrapper decision A or B (session 3, item 5) and the profile editor tab padding (item 6). Do the wrapper first, it changes how every page looks.
+2. Page 3 chip strip at 1366x768 with 74 terms (see test data below): Shah said page 3 is fine, so only look again if the chips get changed.
+3. Next page: 11 (query editor, route `/query-editor/criterion/:id`; add a criterion to the editor and press edit to reach it). The dashboard (9) was dropped from the plan. Do not add Co-Authored-By lines. Unrelated dirty files, leave alone: `angular.json`, `ReferenceCriteriaListEntry.ts`, `playground.component.ts`, `edit.component.scss` (one stray blank line), `.vscode/settings.json`, `.impeccable/`, `prototype-bulk-chips.html`.
+4. Test the page in the app yourself: log in at `localhost:4200` with Chrome DevTools, go through the in-app menu (direct URLs such as `/data-selection/editor` redirect to the cohort page). The data-selection editor is `/data-selection/overview` and only shows profiles that were added on `/data-selection/search`; a reload loses them.
 
 ### Test data for bulk search
 
@@ -55,6 +78,19 @@ Decision for section 3: per-page SCSS, not a shared class. Pages 2, 3 and 4 each
 9. Check the shared table keys before changing a label: `TABLE.DISPLAY` is shared; use another existing key (`CRITERION`) in the adapter for one table.
 10. The app has no `--color-error`; use `--num-color--error-on-white` (text on white) and `--num-color--error-on-tint` (text on a tint), with `color-mix` for border and background.
 11. Target lib is below es2020: no `String.matchAll`; use a `RegExp.exec` loop.
+
+### Insights from pages 8 and 10
+
+12. A global class with the same name leaks into a component. `.selection-box` exists in `styles-next/general-styles/_header-card.scss` (`height: 100%`, `margin-bottom: 8px`, `padding-top: 8px`) and in the data-selection box. In a block parent `height: 100%` of an auto-height parent is ignored; in a grid row it resolves against the row, which holds the box plus its children, so the box became 225px instead of 115px. Symptom: a box is taller than its content only when something sits under it. Before moving a page to a grid, grep the class names of its children in `styles-next/` and look at computed `height` / `margin` in DevTools. `.fullscreen` has the same name clash (see section 4, page 9).
+13. When moving margin spacing to `row-gap`, the global rule can still add its own margin (the 8px above). Set `margin: 0` locally in the same change.
+14. Spacing between a box and its attached child (the reference tile) belongs to the child as `margin-top`, not to the box as `margin-bottom`: an empty child then adds nothing, and the child stays tied to its own box.
+15. A page that is a grid does not need its own intro wrapper when it has none (page 10). Use `.page-header` only for title + intro.
+16. Move a page-level action (here the time restriction) to the list it acts on when the page order puts it between header and list. Controls that expand (date inputs) go on their own row (`flex-direction: column`), not next to the search bar: a side-by-side row jumps when it opens.
+17. Control heights: search bar 40px (`searchbar.component.scss`); buttons next to it should be 40px. `padding` heights drift (6px padding gave 32px); set `height: 40px` instead.
+18. Custom element hosts (`num-feasibility`) are `display: inline`. `min-height` and `overflow` do nothing until `display: block`.
+19. Dead rules can sit in a parent component's SCSS for rules that match elements in a child template (`.selection-box-container` in `display.component.scss`). Component styles are encapsulated, so they never applied: safe to delete after grepping the templates.
+20. Prettier on a `.ts` file can add `;` before a line starting with `[` (`;[a, b] = ...`). Revert that hunk, it is not part of the change (the pre-commit hook fixed it in `c7380638`).
+21. Browser check without the real page flow: `evaluate_script` with `getBoundingClientRect()` on each ancestor and `getComputedStyle().gridTemplateRows` found the cause in a few calls. A static copy of the markup (`repro.html`) did not reproduce it, because the cause was a global stylesheet, not the markup.
 
 ## 1. Goal
 
@@ -123,9 +159,8 @@ Position of the page in the app: inside `.app-body .main-content .fullscreen` (`
 | 5   | Result (`feasibility-query/.../result/result.component`)                                | flex column; `.simple-result-container height: 24%`                          | header, simple result, query display, actions                         | same percentage-height problem as page 4; `.height-59` (42px) looks unused, grep first                                                                                                                                                                                                      |
 | 6   | Cohort definition (`data-query/.../cohort-definition`)                                  | flex column, `:host` block                                                   | stepper, intro, content, actions                                      | `mat-stepper` with `num-header` in the step labels (not a page title); `!important` and `::ng-deep` on `mat-step-icon` and `mat-horizontal-content-container`; `margin-bottom-3`; `.height-400` probably dead                                                                               |
 | 7   | Data selection (`data-query/.../data-selection`)                                        | flex column                                                                  | stepper, intro, content (empty box or list), actions                  | conditional `@if` empty box with `flex: 0 1 50%`: the number of children changes (see insight 2)                                                                                                                                                                                            |
-| 8   | Data-selection editor (`data-selection/.../display/display.component`)                  | flex column; header and intro are direct children                            | header block, time restriction, section name, profiles, actions       | wrap header + intro in `.page-header`; `.profiles-container` has `height:100%`, `margin-bottom:16`, `gap:1.5rem` (becomes row-gap work); dead rules to check: `.selection-box-container`, `.box-container`, `.profiles-box`, `.overflow`                                                    |
-| 9   | Dashboard (`dashboard/.../dashboard.component`)                                         | flex column; `.cards-section` holds header, intro and an inner 3-column grid | header block, cards                                                   | inner grid already exists (`gap: 16px`, `margin-top: 24`); local class `.fullscreen` has the same name as the global `.app-body .fullscreen`, avoid confusion                                                                                                                               |
-| 10  | Saved queries (`saved-queries/.../saved-queries.component`)                             | `.page-wrapper` flex column, `align-items: flex-start`                       | header (no intro), list                                               | `width-100` on the child goes away                                                                                                                                                                                                                                                          |
+| 8   | Data-selection editor (`data-selection/.../display/display.component`)                  | flex column; header and intro are direct children                            | header block, time restriction, section name, profiles, actions       | DONE (`c7380638`), see section 0. Was: wrap header + intro in `.page-header`; `.profiles-container` has `height:100%`, `margin-bottom:16`, `gap:1.5rem` (becomes row-gap work); dead rules to check: `.selection-box-container`, `.box-container`, `.profiles-box`, `.overflow`             |
+| 10  | Saved queries (`saved-queries/.../saved-queries.component`)                             | `.page-wrapper` flex column, `align-items: flex-start`                       | header (no intro), list                                               | DONE (`448b626e`), `width-100` on the child went away                                                                                                                                                                                                                                       |
 
 Utility classes that disappear with the grid (check other users before deleting the global definitions): `margin-bottom-3`, `margin-bottom-4`, `width-100`, `margin-left-auto`.
 

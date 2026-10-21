@@ -1,73 +1,67 @@
-<div class="container">
-  @if (profile()) {
-  <num-profile-header
-    class="header-container"
-    [profile]="profile()"
-    (updatedLabel)="updateLabel($event)"
-  ></num-profile-header>
-  } @if (templates.length > 0) {
-  <num-filter-tabs class="filter-tabs-container" [content]="templates"></num-filter-tabs>
+@if (profile()) {
+<num-profile-header [profile]="profile()" (updatedLabel)="updateLabel($event)"></num-profile-header>
+} @if (templates.length > 0) {
+<num-filter-tabs class="filter-tabs-container" [content]="templates"></num-filter-tabs>
+}
+
+<ng-template #fields>
+  <num-edit-fields
+    [fieldTree]="profile().getProfileFields().getFieldTree()"
+    [selectedBasicFields]="profile().getProfileFields().getSelectedBasicFields()"
+    (updatedSelectedBasicFields)="updateSelectedFields($event)"
+  ></num-edit-fields>
+</ng-template>
+
+<ng-template #timeRestriction>
+  @for (profileTimeFilter of timeRestrictionFilters(); track trackByTimeRestrictionName($index,
+  profileTimeFilter)) {
+  <div class="height-100">
+    <num-profile-time-filter
+      [profileTimeRestrictionFilter]="profileTimeFilter"
+      (changedProfileTimeRestrictionFilter)="updateProfileFilter($event)"
+    ></num-profile-time-filter>
+  </div>
   }
+</ng-template>
 
-  <ng-template #fields>
-    <num-edit-fields
-      [fieldTree]="profile().getProfileFields().getFieldTree()"
-      [selectedBasicFields]="profile().getProfileFields().getSelectedBasicFields()"
-      (updatedSelectedBasicFields)="updateSelectedFields($event)"
-    ></num-edit-fields>
-  </ng-template>
+<ng-template #token>
+  <num-token-filter
+    [tokenFilter]="tokenFilter()"
+    (tokenFilterChanged)="updateProfileFilter($event)"
+  ></num-token-filter>
+</ng-template>
 
-  <ng-template #timeRestriction>
-    @for (profileTimeFilter of timeRestrictionFilters(); track trackByTimeRestrictionName($index,
-    profileTimeFilter)) {
-    <div class="height-100">
-      <num-profile-time-filter
-        [profileTimeRestrictionFilter]="profileTimeFilter"
-        (changedProfileTimeRestrictionFilter)="updateProfileFilter($event)"
-      ></num-profile-time-filter>
-    </div>
-    }
-  </ng-template>
+<ng-template #reference>
+  <num-profile-reference
+    class="width-100"
+    [referenceFields]="profile().getProfileFields().getReferenceFields()"
+    [selectedReferenceFields]="profile().getProfileFields().getSelectedReferenceFields()"
+    [profileId]="profile().getId()"
+    (updatedSelectedReferenceFields)="updateSelectedReferenceFields($event)"
+    [activeFieldTabId]="activeFieldTabId()"
+  ></num-profile-reference>
+</ng-template>
 
-  <ng-template #token>
-    <num-token-filter
-      [tokenFilter]="tokenFilter()"
-      (tokenFilterChanged)="updateProfileFilter($event)"
-    ></num-token-filter>
-  </ng-template>
+<ng-template #information>
+  <div class="information-templates">
+    <num-information-section>
+      <span slot="title">{{ 'INFORMATION.TIME_RESTRICTION.TITLE' | translate }}</span>
+      {{ 'INFORMATION.TIME_RESTRICTION.DESCRIPTION' | translate }}
+    </num-information-section>
 
-  <ng-template #reference>
-    <num-profile-reference
-      class="width-100"
-      [referenceFields]="profile().getProfileFields().getReferenceFields()"
-      [selectedReferenceFields]="profile().getProfileFields().getSelectedReferenceFields()"
-      [profileId]="profile().getId()"
-      (updatedSelectedReferenceFields)="updateSelectedReferenceFields($event)"
-      [activeFieldTabId]="activeFieldTabId()"
-    ></num-profile-reference>
-  </ng-template>
+    <num-information-section>
+      <span slot="title">{{ 'INFORMATION.TOKEN_FILTER.TITLE' | translate }}</span>
+      {{ 'INFORMATION.TOKEN_FILTER.DESCRIPTION' | translate }}
+    </num-information-section>
 
-  <ng-template #information>
-    <div class="information-templates">
-      <num-information-section>
-        <span slot="title">{{ 'INFORMATION.TIME_RESTRICTION.TITLE' | translate }}</span>
-        {{ 'INFORMATION.TIME_RESTRICTION.DESCRIPTION' | translate }}
-      </num-information-section>
+    <num-information-section>
+      <span slot="title">{{ 'INFORMATION.FIELD.TITLE' | translate }}</span>
+      {{ 'INFORMATION.FIELD.DESCRIPTION' | translate }}
+    </num-information-section>
 
-      <num-information-section>
-        <span slot="title">{{ 'INFORMATION.TOKEN_FILTER.TITLE' | translate }}</span>
-        {{ 'INFORMATION.TOKEN_FILTER.DESCRIPTION' | translate }}
-      </num-information-section>
-
-      <num-information-section>
-        <span slot="title">{{ 'INFORMATION.FIELD.TITLE' | translate }}</span>
-        {{ 'INFORMATION.FIELD.DESCRIPTION' | translate }}
-      </num-information-section>
-
-      <num-information-section>
-        <span slot="title">{{ 'INFORMATION.REFERENCES.TITLE' | translate }}</span>
-        {{ 'INFORMATION.REFERENCES.DESCRIPTION' | translate }}
-      </num-information-section>
-    </div>
-  </ng-template>
-</div>
+    <num-information-section>
+      <span slot="title">{{ 'INFORMATION.REFERENCES.TITLE' | translate }}</span>
+      {{ 'INFORMATION.REFERENCES.DESCRIPTION' | translate }}
+    </num-information-section>
+  </div>
+</ng-template>
