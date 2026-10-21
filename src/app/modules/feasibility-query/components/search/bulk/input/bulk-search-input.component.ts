@@ -1,6 +1,19 @@
 import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service'
+import { BULK_TERM_SEPARATOR } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchEngine.service'
 import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service'
-import { Component, computed, effect, inject, output, signal, untracked } from '@angular/core'
+import {
+  afterNextRender,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  output,
+  signal,
+  untracked,
+  viewChild,
+} from '@angular/core'
 import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
 import { FormsModule } from '@angular/forms'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -38,7 +51,20 @@ export class BulkSearchInputComponent {
 
   readonly searchTextOutput = output<string>()
 
+  /** Terms the last search did not find; their chips turn red. */
+  readonly notFoundTerms = input<string[]>([])
+
+  readonly terms = computed(() => [
+    ...new Set(this.searchText().split(BULK_TERM_SEPARATOR).filter(Boolean)),
+  ])
+  readonly notFoundSet = computed(() => new Set(this.notFoundTerms()))
+  readonly notFoundInText = computed(() => this.terms().filter((t) => this.notFoundSet().has(t)))
+
+  private readonly searchInput = viewChild.required<ElementRef<HTMLTextAreaElement>>('searchInput')
+
   constructor() {
+    afterNextRender(() => this.searchInput().nativeElement.focus())
+
     const initEffect = effect(
       () => {
         const filters = this.searchFilters()
@@ -58,6 +84,33 @@ export class BulkSearchInputComponent {
       },
       { allowSignalWrites: true }
     )
+  }
+
+  removeTerms(drop: string[]): void {
+    const dropSet = new Set(drop)
+    this.searchText.set(
+      this.searchText()
+        .split(BULK_TERM_SEPARATOR)
+        .filter((t) => t && !dropSet.has(t))
+        .join('\n')
+    )
+  }
+
+  /** Selects the first occurrence of the term in the textarea and scrolls it into view. */
+  showTerm(term: string): void {
+    const area = this.searchInput().nativeElement
+    const words = /[^\s,;]+/g
+    let match: RegExpExecArray | null
+    do {
+      match = words.exec(area.value)
+    } while (match && match[0] !== term)
+    if (!match) return
+    area.focus()
+    area.setSelectionRange(match.index, match.index + term.length)
+    // ponytail: scroll by line count, assumes no soft-wrapped lines (one term per line)
+    const lineHeight = parseFloat(getComputedStyle(area).lineHeight) || 21
+    const line = area.value.slice(0, match.index).split('\n').length - 1
+    area.scrollTop = Math.max(0, line * lineHeight - area.clientHeight / 2)
   }
 
   setElasticSearchFilter(newFilter: SearchFilterData): void {

@@ -1,6 +1,6 @@
 import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service'
 import { BulkCriteriaService } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteria.service'
-import { Component, DestroyRef, inject, signal } from '@angular/core'
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core'
 import { CriteriaBulkResultList } from 'src/app/model/Search/ResultList/CriteriaBulkResultList'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { SearchMode } from 'src/app/shared/components/search-mode-toggle/search-mode-toggle.component'
@@ -39,6 +39,12 @@ export class FeasibilityQueryBulkSearchComponent {
   private readonly navigationHelperService = inject(NavigationHelperService)
 
   readonly rawResult = signal<CriteriaBulkResultList | null>(null)
+  readonly notFoundTerms = computed(
+    () =>
+      this.rawResult()
+        ?.getNotFound()
+        .map((entry) => entry.getTermCode()) ?? []
+  )
   readonly searchtype = signal<SelectedTab>('FOUND')
 
   submitSearch(text: string): void {

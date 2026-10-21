@@ -1,12 +1,56 @@
 <div class="container">
-  <textarea
-    class="input-field-area"
-    name="searchText"
-    rows="8"
-    placeholder="{{ 'FEASIBILITY.BULK_SEARCH.INPUT_PLACEHOLDER' | translate }}"
-    [ngModel]="searchText()"
-    (ngModelChange)="searchText.set($event)"
-  ></textarea>
+  <div class="input-column">
+    <textarea
+      #searchInput
+      class="input-field-area"
+      name="searchText"
+      rows="8"
+      placeholder="{{ 'FEASIBILITY.BULK_SEARCH.INPUT_PLACEHOLDER' | translate }}"
+      [ngModel]="searchText()"
+      (ngModelChange)="searchText.set($event)"
+    ></textarea>
+
+    @if (terms().length > 0) {
+    <div class="term-summary" aria-live="polite">
+      <span>
+        {{ 'FEASIBILITY.BULK_SEARCH.TERMS_COUNT' | translate : { count: terms().length } }}
+      </span>
+      @if (notFoundInText().length > 0) {
+      <span class="not-found">
+        {{
+          'FEASIBILITY.BULK_SEARCH.TERMS_NOT_FOUND' | translate : { count: notFoundInText().length }
+        }}
+      </span>
+      <button type="button" class="link-button" (click)="removeTerms(notFoundInText())">
+        {{ 'FEASIBILITY.BULK_SEARCH.REMOVE_NOT_FOUND' | translate }}
+      </button>
+      }
+    </div>
+    <div class="chips">
+      @for (term of terms(); track term) {
+      <span class="chip" [class.not-found]="notFoundSet().has(term)">
+        <button type="button" class="chip-label" (click)="showTerm(term)">{{ term }}</button>
+        <button
+          type="button"
+          [attr.aria-label]="'FEASIBILITY.BULK_SEARCH.REMOVE_TERM' | translate : { term: term }"
+          (click)="removeTerms([term])"
+        >
+          <svg
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" />
+          </svg>
+        </button>
+      </span>
+      }
+    </div>
+    }
+  </div>
 
   <div class="filter-container">
     <div class="filter-bar">

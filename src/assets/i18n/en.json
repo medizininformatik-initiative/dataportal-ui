@@ -335,8 +335,12 @@
       "HEADER": "Bulk Search",
       "HEADER_INFO": "Here you can link several codes to one criterion at the same time. Insert a list (separated by tabs or commas) of codes from a specific system (e.g. LOINC, ICD-10, OPS) and specify the context (e.g. laboratory test, diagnosis, procedure). The query links the criteria as \"or\".",
       "INPUT_PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them.",
-      "PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them.",
-      "SEARCH_BUTTON_TOOLTIP": "Search for all entered terms with selected filters"
+      "PLACEHOLDER": "The results of your search appear here, split into found and not found codes.",
+      "REMOVE_NOT_FOUND": "Remove not found",
+      "REMOVE_TERM": "Remove {{term}}",
+      "SEARCH_BUTTON_TOOLTIP": "Search for all entered terms with selected filters",
+      "TERMS_COUNT": "{{count}} terms recognised",
+      "TERMS_NOT_FOUND": "{{count}} not found"
     },
     "EDITOR": {
       "ACTION_BAR": {

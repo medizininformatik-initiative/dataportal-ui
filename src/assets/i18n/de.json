@@ -324,8 +324,12 @@
       "HEADER": "Bulksuche",
       "HEADER_INFO": "Hier können Sie mehrere Codes gleichzeitig zu einem Kriterium verknüpfen. Fügen Sie eine Liste (Tab- oder Komma-getrennt) von Kodierungen eines spezifischen Systems (z. B. LOINC, ICD-10, OPS) ein und spezifizieren Sie den Kontext (z. B. Laboruntersuchung, Diagnose, Prozedur). Die Suche verknüpft die Kriterien als \"oder\".",
       "INPUT_PLACEHOLDER": "Geben Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
-      "PLACEHOLDER": "Fügen Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
-      "SEARCH_BUTTON_TOOLTIP": "Alle eingegebenen Begriffe mit ausgewählten Filtern suchen"
+      "PLACEHOLDER": "Hier erscheinen die Ergebnisse Ihrer Suche, getrennt nach gefundenen und nicht gefundenen Codes.",
+      "REMOVE_NOT_FOUND": "Nicht gefundene entfernen",
+      "REMOVE_TERM": "{{term}} entfernen",
+      "SEARCH_BUTTON_TOOLTIP": "Alle eingegebenen Begriffe mit ausgewählten Filtern suchen",
+      "TERMS_COUNT": "{{count}} Begriffe erkannt",
+      "TERMS_NOT_FOUND": "{{count}} nicht gefunden"
     },
     "EDITOR": {
       "ACTION_BAR": {

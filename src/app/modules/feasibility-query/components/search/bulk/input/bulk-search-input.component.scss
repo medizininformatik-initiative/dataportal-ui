@@ -10,14 +10,18 @@
   gap: 1rem;
 }
 
-.input-field-area {
-  resize: none;
+.input-column {
   width: 60%;
+}
+
+.input-field-area {
+  display: block; // no inline baseline gap above the summary
+  resize: none;
+  width: 100%;
   padding: 0.65rem 0.9rem;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-card);
   box-shadow: var(--shadow-card);
-  margin-bottom: var(--spacing-16);
   font-family: var(--font-body);
   font-size: var(--font-size-md);
   font-weight: 400;
@@ -36,7 +40,7 @@
   &:focus {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 4px var(--color-accent-bg);
+    box-shadow: inset 0 0 0 1px var(--color-accent); // 2px border like the search bar, no glow, no size change
   }
 }
 
@@ -51,6 +55,92 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+}
+
+.term-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--spacing-16);
+  margin-top: var(--spacing-8);
+  color: var(--color-text-secondary);
+
+  .not-found {
+    color: var(--num-color--error-on-white);
+  }
+}
+
+.link-button {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 6rem; // three rows, then scroll
+  margin-top: var(--spacing-8);
+  overflow: auto;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 4px 0 10px;
+  border: 1px solid var(--color-accent-border);
+  border-radius: 14px;
+  background: var(--color-accent-bg);
+  color: var(--color-text-primary);
+
+  &.not-found {
+    border-color: color-mix(in srgb, var(--num-color--error-on-tint) 45%, transparent);
+    background: color-mix(in srgb, var(--num-color--error-on-tint) 10%, transparent);
+    color: var(--num-color--error-on-tint);
+  }
+
+  .chip-label {
+    width: auto;
+    height: 100%;
+    padding: 0;
+    border-radius: 0;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background: transparent;
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
 }
 
 .search-button {

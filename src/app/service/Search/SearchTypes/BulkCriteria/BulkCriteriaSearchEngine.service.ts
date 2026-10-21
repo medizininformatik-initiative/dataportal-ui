@@ -7,6 +7,9 @@ import { Injectable, inject } from '@angular/core'
 import { map, Observable } from 'rxjs'
 import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service'
 
+/** Separator between terms in the bulk search input: whitespace, comma, semicolon. */
+export const BULK_TERM_SEPARATOR = /[\s,;]+/
+
 @Injectable({
   providedIn: 'root',
 })
@@ -39,7 +42,7 @@ export class BulkCriteriaSearchEngineService {
   private createPostData(searchterms: string): BulkSearchPostData {
     const selectedTerminologies = this.getTerminologyFilter()
     const selectedContext = this.getContextFilter()
-    const parsedSearchTerms = searchterms.split(/[\s,;]+/).filter(Boolean)
+    const parsedSearchTerms = searchterms.split(BULK_TERM_SEPARATOR).filter(Boolean)
     return {
       searchterms: parsedSearchTerms,
       terminology: selectedTerminologies,

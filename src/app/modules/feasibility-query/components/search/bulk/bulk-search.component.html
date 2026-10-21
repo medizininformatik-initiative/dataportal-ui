@@ -1,26 +1,27 @@
 <div class="bulk-container">
-  <div>
-    <div class="header-container">
-      <num-header [showToggle]="true">{{
-        'FEASIBILITY.BULK_SEARCH.HEADER' | translate
-      }}</num-header>
-      <div class="margin-left-auto">
-        <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
-      </div>
+  <div class="page-header">
+    <div class="title-row">
+      <num-header [showToggle]="true">
+        {{ 'FEASIBILITY.BULK_SEARCH.HEADER' | translate }}
+      </num-header>
+      <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
     </div>
     <num-header-description>
       {{ 'FEASIBILITY.BULK_SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
 
-  <num-bulk-search-input (searchTextOutput)="submitSearch($event)"></num-bulk-search-input>
+  <num-bulk-search-input
+    [notFoundTerms]="notFoundTerms()"
+    (searchTextOutput)="submitSearch($event)"
+  ></num-bulk-search-input>
 
   <num-bulk-search-results
     [result]="rawResult()"
     (tabChanged)="searchtype.set($event)"
   ></num-bulk-search-results>
 
-  <div class="width-100">
+  <div>
     <num-bulk-search-action-bar [resultType]="searchtype()"></num-bulk-search-action-bar>
   </div>
 </div>
