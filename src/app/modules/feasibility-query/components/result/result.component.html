@@ -1,14 +1,16 @@
 <div class="container">
-  <div>
-    @if (!resultLoaded) {
-    <num-header [showToggle]="true">
-      {{ 'FEASIBILITY.RESULT.HEADER.RESULT_NOT_LOADED' | translate }}
-    </num-header>
-    } @if (resultLoaded) {
-    <num-header [showToggle]="true">
-      {{ 'FEASIBILITY.RESULT.HEADER.RESULT_LOADED' | translate }}
-    </num-header>
-    }
+  <div class="page-header">
+    <div class="title-row">
+      @if (!resultLoaded) {
+      <num-header [showToggle]="true">
+        {{ 'FEASIBILITY.RESULT.HEADER.RESULT_NOT_LOADED' | translate }}
+      </num-header>
+      } @if (resultLoaded) {
+      <num-header [showToggle]="true">
+        {{ 'FEASIBILITY.RESULT.HEADER.RESULT_LOADED' | translate }}
+      </num-header>
+      }
+    </div>
     <num-header-description>
       {{ 'FEASIBILITY.RESULT.HEADER_DESCRIPTION' | translate }}
     </num-header-description>
