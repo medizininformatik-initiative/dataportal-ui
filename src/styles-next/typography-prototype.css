@@ -169,7 +169,7 @@
 .type-app-content-search-bar-input { font-family: var(--font-brand); font-weight: 400; font-size: 16px; line-height: 24px; }
 
 /* table-header: `th` of the data table (C23). Today 12/14/700. Longhands (decision 3). */
-.type-table-header { font-family: var(--font-brand); font-weight: 600; font-size: 14px; line-height: 20px; }
+.type-table-header { font-family: var(--font-brand); font-weight: 600; font-size: 16px; line-height: 24px; }
 
 /* table-cell: `td`, name cells, text cell, display cell (C23). Today 14/19/400 (name, body), 12/14/400 (text cell). Longhands (decision 3). */
 .type-table-cell { font-family: var(--font-brand); font-weight: 400; font-size: 14px; line-height: 20px; }

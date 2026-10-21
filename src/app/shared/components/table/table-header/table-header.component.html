@@ -9,7 +9,9 @@
         (checkedChange)="onCheckboxAllChange()"
       ></num-checkbox>
       }
-      {{ 'SHARED_COMPONENTS.TABLE.' + headerItem.label | translate }}
+      <span [class.visually-hidden]="headerItem.visuallyHidden">
+        {{ 'SHARED_COMPONENTS.TABLE.' + headerItem.label | translate }}
+      </span>
     </div>
   </th>
   }

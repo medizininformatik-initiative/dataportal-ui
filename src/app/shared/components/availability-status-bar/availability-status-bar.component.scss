@@ -14,13 +14,14 @@
   font-weight: var(--font-weight-normal);
   font-size: var(--font-size-sm);
   line-height: 16px;
-  color: var(--color-text-secondary);
-  transition: color 0.4s ease;
+  color: var(
+    --color-text-secondary
+  ); // status color is on the bar only: label colors had 2-3.6:1 contrast
 }
 
 .avail-track {
   height: 4px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   overflow: hidden;
 }

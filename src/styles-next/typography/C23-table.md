@@ -11,7 +11,7 @@ Organism, data table. Sources: `app/shared/components/table/table.component.scss
 | name cell | family / size / line | Open Sans 14 / 19 | Titillium 14 / 20 | `checkbox-cell...:3-5`, `checkbox-text-cell...:3-5` | change |
 | text cell | family / size / line / weight | Open Sans 12 / 14 / 400 | Titillium 14 / 20 / 400 (`body`) or 12 / 16 (`meta`) | `text-cell.component.scss:2-5` | decide |
 | display cell | size | 14px | 14px | `display-cell.component.scss:2` | none |
-| numbers | font-variant-numeric | normal | `tabular-nums` | not set | add |
+| numbers | font-variant-numeric | normal | normal | not set | none (2026-10-21: Titillium digits all 560 wide, no `tnum` feature; prototype `typography-prototype-tabular-nums.html`) |
 
 ## Notes
 - Header is smaller than the data (12 vs 14). Fix: header `label` 14/20/600.
@@ -21,4 +21,7 @@ Organism, data table. Sources: `app/shared/components/table/table.component.scss
 
 ## Status 2026-10-20 (commit `dab450e3`)
 Done: header role `table-header` 14/20/600, body role `table-cell` 14/20/400 (name, text, display cells), Open Sans gone, row height 40, wrapper `height: 100%`. Option B (contrast only) chosen; name cell stays `#000`, other cells `#6a7483` (color pass).
-Open: `tabular-nums`, header height 52px, 15px checkbox, availability label (C27).
+Open: header height 52px, 15px checkbox, availability label (C27).
+
+## Update 2026-10-21 (Shah)
+Header role `table-header` 14/20/600 -> 16/24/600 (existing ladder level `control-strong`, see `research-usability-typography.md` section 5: ladder 12/14/16/24, weights 400/600). Header is one tier above the 14/20/400 cells; weight 600 kept. Header `th` height 40 (padding 0 / 8), same as the rows. Undo: set `size: 14px, line: 20px` in `themes/fdpg-light/_type-roles.scss` (role `table-header`).

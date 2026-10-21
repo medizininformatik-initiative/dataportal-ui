@@ -14,7 +14,7 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
   protected buildHeaders(): TableHeaderData {
     return {
       headers: [
-        { label: 'EMPTY', addAllCheckbox: false },
+        { label: 'FEATURE.ICON', addAllCheckbox: false, visuallyHidden: true },
         { label: 'DISPLAY', addAllCheckbox: true },
         { label: 'AVAILABILITY', addAllCheckbox: false },
         { label: 'MODULE', addAllCheckbox: false },

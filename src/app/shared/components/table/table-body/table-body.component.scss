@@ -2,6 +2,10 @@
   border-top: 1px solid #f1f2f3;
 }
 
+.table-border:first-child {
+  border-top: 0; // the header line is the separator
+}
+
 .table-row-hover:hover {
   background-color: #f5f5f5;
 }

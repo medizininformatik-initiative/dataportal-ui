@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Typography prototype: table header height</title>
+  <!-- Open in a browser. Today (52px) vs A (padding), B (fixed height), C (free design). Body rows are the real 40px. Not part of the app. -->
+  <link rel="stylesheet" href="typography-prototype.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1500px;
+    }
+    h1.page {
+      font: 600 18px/24px sans-serif;
+      margin: 24px 0 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .col {
+      background: #fff;
+      padding: 16px;
+      border: 1px solid #c5cacf;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin: 0 0 12px;
+    }
+    .h {
+      font: 12px/16px monospace;
+      color: #c0392b;
+      margin: 8px 0 0;
+    }
+
+    /* The real structure: header table and body table are separate, both fixed layout.
+       Header: .table-header (padding-right 20px for the body scrollbar, border-bottom 1px #f1f2f3). Body: tr 40px, td padding 0 8px. */
+    table.t {
+      border-collapse: collapse;
+      table-layout: fixed;
+      width: 100%;
+    }
+    .t th {
+      text-align: left;
+      font: 600 14px/20px 'Titillium Web', sans-serif;
+      color: #6a7483;
+      background: #fff;
+      padding: 16px 8px; /* today */
+    }
+    .t.head {
+      border-bottom: 1px solid #f1f2f3;
+    }
+    .t.head th:last-child {
+      padding-right: 20px;
+    }
+    .t td {
+      height: 40px;
+      padding: 0 8px;
+      font: 400 14px/20px 'Titillium Web', sans-serif;
+      color: #6a7483;
+      border-top: 1px solid #f1f2f3;
+      white-space: nowrap;
+    }
+    .t td.name {
+      color: #000;
+    }
+    .n {
+      text-align: right !important;
+    }
+    .cb {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border: 2px solid #6a7483;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    col.cb-col {
+      width: 40%;
+    }
+
+    /* A: padding 10px, no fixed height. 10 + 20 + 10 = 40. Needs a 10px spacing token. */
+    .a .t th {
+      padding: 10px 8px;
+    }
+    .a .t.head th:last-child {
+      padding-right: 20px;
+    }
+
+    /* B: fixed height 40, vertical padding 0. */
+    .b .t th {
+      height: 40px;
+      padding: 0 8px;
+    }
+    .b .t.head th:last-child {
+      padding-right: 20px;
+    }
+
+    /* C: free design. 40px high like a row, but it reads as a header:
+       - tinted strip (#f4f6f9) and a 2px bottom line, so the header does not look like a 6th data row
+       - text in neutral 900 #5e6c78 (5.12:1 on white, 4.9:1 on the strip) instead of #6a7483
+       - number column header right-aligned over the numbers
+       - header checkbox in the same 40px cell and same x position as the cell checkboxes
+       - bottom line is the only separator; body rows lose the first top border */
+    .c .t th {
+      height: 40px;
+      padding: 0 8px;
+      background: #f4f6f9;
+      color: #5e6c78;
+    }
+    .c .t.head {
+      border-bottom: 2px solid #c5cacf;
+    }
+    .c .t.head th:last-child {
+      padding-right: 20px;
+    }
+    .c .t.body tr:first-child td {
+      border-top: 0;
+    }
+
+    table.spec {
+      border-collapse: collapse;
+      margin-top: 24px;
+      background: #fff;
+    }
+    table.spec td,
+    table.spec th {
+      border: 1px solid #c5cacf;
+      padding: 4px 8px;
+      text-align: left;
+      font: 13px/18px sans-serif;
+    }
+  </style>
+
+  <h1 class="page">Table header: 52px to 40px</h1>
+  <p class="tag">
+    Body = real: rows 40px, 14/20/400, td padding 0 8px, 1px #f1f2f3 line. Header text 14/20/600.
+    Red number = measured header height (px, border not included).
+  </p>
+
+  <div class="grid">
+    <section class="col today">
+      <p class="tag">TODAY: th padding 16 / 8 -> 52px</p>
+      <div class="demo"></div>
+    </section>
+    <section class="col a">
+      <p class="tag">A: th padding 10 / 8 -> 40px (needs spacing-10)</p>
+      <div class="demo"></div>
+    </section>
+    <section class="col b">
+      <p class="tag">B: th height 40, padding 0 / 8 (recommended)</p>
+      <div class="demo"></div>
+    </section>
+    <section class="col c">
+      <p class="tag">
+        C: free design, 40px, tinted strip + 2px line + darker text + right-aligned numbers
+      </p>
+      <div class="demo"></div>
+    </section>
+  </div>
+
+  <table class="spec">
+    <tr>
+      <th>Element</th>
+      <th>today</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+    <tr>
+      <td>header height</td>
+      <td>52</td>
+      <td>40</td>
+      <td>40</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <td>how</td>
+      <td>padding 16 + line 20 + 16</td>
+      <td>padding 10 + line 20 + 10</td>
+      <td>
+        <code>height: 40px</code>
+        , padding 0
+      </td>
+      <td>as B</td>
+    </tr>
+    <tr>
+      <td>new token / variable</td>
+      <td>-</td>
+      <td>spacing-10 (off the 8px grid)</td>
+      <td>none</td>
+      <td>surface for header strip, header line color, header text color (color pass)</td>
+    </tr>
+    <tr>
+      <td>survives a 2-line label</td>
+      <td>grows</td>
+      <td>grows (min 40)</td>
+      <td>clips or overflows (needs ellipsis)</td>
+      <td>as B</td>
+    </tr>
+    <tr>
+      <td>color contrast of header text</td>
+      <td>4.49</td>
+      <td>4.49</td>
+      <td>4.49</td>
+      <td>5.12 on white</td>
+    </tr>
+  </table>
+
+  <template id="tpl">
+    <table class="t head">
+      <colgroup>
+        <col style="width: 40%" />
+        <col style="width: 20%" />
+        <col style="width: 20%" />
+        <col style="width: 20%" />
+      </colgroup>
+      <tr>
+        <th>
+          <span class="cb"></span>
+          Name
+        </th>
+        <th>Code</th>
+        <th>Terminologie</th>
+        <th class="n">Anzahl</th>
+      </tr>
+    </table>
+    <table class="t body">
+      <colgroup>
+        <col style="width: 40%" />
+        <col style="width: 20%" />
+        <col style="width: 20%" />
+        <col style="width: 20%" />
+      </colgroup>
+      <tr>
+        <td class="name">
+          <span class="cb"></span>
+          Diagnose
+        </td>
+        <td>I10</td>
+        <td>ICD-10-GM</td>
+        <td class="n">1204</td>
+      </tr>
+      <tr>
+        <td class="name">
+          <span class="cb"></span>
+          Prozedur
+        </td>
+        <td>5-470.0</td>
+        <td>OPS</td>
+        <td class="n">388</td>
+      </tr>
+      <tr>
+        <td class="name">
+          <span class="cb"></span>
+          Laborwert
+        </td>
+        <td>718-7</td>
+        <td>LOINC</td>
+        <td class="n">52310</td>
+      </tr>
+    </table>
+    <p class="h"></p>
+  </template>
+  <script>
+    document.querySelectorAll('.demo').forEach((d) => {
+      d.append(document.getElementById('tpl').content.cloneNode(true))
+      d.querySelector('.h').textContent =
+        'header height: ' + d.querySelector('th').offsetHeight + 'px'
+    })
+  </script>
+</html>

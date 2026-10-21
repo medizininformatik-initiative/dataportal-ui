@@ -1,20 +1,17 @@
-.table-header {
-  text-align: left;
-  padding: var(--spacing-8);
-  // Extra right padding reserves the same width as tbody's scrollbar
-  // (styles.scss forces a 20px webkit scrollbar), keeping columns aligned.
-  padding-right: var(--spacing-20);
-  border-bottom: 1px solid #f1f2f3;
-}
-
 .header-cell {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.sticky-header {
-  background-color: #fff;
+/* label for screen readers only (icon column header) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 tr {
@@ -24,12 +21,14 @@ tr {
 }
 
 th {
-  padding: var(--spacing-16) var(--spacing-8);
+  height: 40px;
+  padding: 0 var(--spacing-8);
   font-family: var(--font-table-header-family);
   font-weight: var(--font-table-header-weight);
   font-size: var(--font-table-header-size);
   line-height: var(--font-table-header-line);
-  color: #6a7483;
+  color: #5e6c78; // neutral 900, 5.12:1 (was #6a7483, 4.49)
+  border-bottom: 1px solid var(--border-color);
 }
 
 num-checkbox {
