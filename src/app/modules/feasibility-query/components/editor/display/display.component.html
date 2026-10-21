@@ -1,5 +1,8 @@
 <div class="display-row height-100 padding-bottom-3">
-  <div class="display-col display-half">
+  <div
+    class="display-col display-half"
+    [attr.data-drop-label]="'FEASIBILITY.EDITOR.DROP_INCLUSION' | translate"
+  >
     <num-section-name>
       {{ 'FEASIBILITY.EDITOR.INCLUSION' | translate }}
     </num-section-name>
@@ -11,11 +14,13 @@
         numAppDropGroup
         groupType="Inclusion"
         [isEditable]="isEditable()"
-      >
-      </num-display-criteria>
+      ></num-display-criteria>
     </div>
   </div>
-  <div class="display-col display-half">
+  <div
+    class="display-col display-half"
+    [attr.data-drop-label]="'FEASIBILITY.EDITOR.DROP_EXCLUSION' | translate"
+  >
     <num-section-name>
       {{ 'FEASIBILITY.EDITOR.EXCLUSION' | translate }}
     </num-section-name>
@@ -27,8 +32,7 @@
         numAppDropGroup
         groupType="Exclusion"
         [isEditable]="isEditable()"
-      >
-      </num-display-criteria>
+      ></num-display-criteria>
     </div>
   </div>
 </div>

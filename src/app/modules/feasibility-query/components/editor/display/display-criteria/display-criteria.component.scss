@@ -37,6 +37,19 @@
   color: var(--color-accent);
 }
 
+// A dragged criterion is inserted by the CDK as a sibling after the empty-list hint; hiding the hint makes the criterion take its place
+:host(.cdk-drop-list-dragging) .no-selected-criteria {
+  display: none;
+}
+
+// Empty list: the dragged criterion's placeholder sits in the middle of the frame
+:host(.cdk-drop-list-dragging:has(.no-selected-criteria)) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .solid-box {
   width: 100%;
   height: 20%;

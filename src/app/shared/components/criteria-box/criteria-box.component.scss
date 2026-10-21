@@ -16,6 +16,35 @@
   }
 }
 
+// Where the criterion will land: a dashed slot (20% accent, stronger than the 10% boxes) with a faded copy of the content
+.container.cdk-drag-placeholder {
+  background-color: var(--color-accent-border);
+  outline: 2px dashed var(--color-accent);
+  outline-offset: -2px;
+
+  > * {
+    opacity: 0.35;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: placeholder-pop 0.25s cubic-bezier(0.2, 1.4, 0.4, 1);
+  }
+}
+
+// The criterion under the pointer lifts off the page: opaque (the 10% tint on white), framed, deep shadow
+.container.cdk-drag-preview {
+  background: linear-gradient(var(--color-accent-bg), var(--color-accent-bg)) #fff;
+  box-shadow: inset 0 0 0 2px var(--color-accent), 0 12px 28px rgba(0, 0, 0, 0.25);
+  cursor: grabbing;
+}
+
+@keyframes placeholder-pop {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
 .title-section {
   font-family: var(--font-body);
   font-style: normal;

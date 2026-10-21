@@ -6,6 +6,7 @@
 }
 
 .display-col {
+  position: relative; // anchor of the drop label
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -31,4 +32,91 @@
   font-size: large;
   color: rgba(95, 98, 102, 1);
   margin-bottom: 1em;
+}
+
+// Drop targets. While a criterion is dragged, both lists show a pulsing frame (receiving);
+// the list under the pointer pops: solid frame, white background, short scale-in (dragging).
+// The frame is an inset shadow: the list sits in a scroll box that would clip an outer one.
+num-display-criteria.inexclusion {
+  display: block;
+  border-radius: var(--border-radius-card);
+  box-shadow: inset 0 0 0 2px transparent;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+
+  // lighter than the criteria boxes (10% accent), so they stand out against the list
+  &.cdk-drop-list-receiving {
+    background-color: color-mix(in srgb, var(--color-accent) 3%, #fff);
+    box-shadow: inset 0 0 0 2px var(--color-accent-border);
+  }
+
+  &.cdk-drop-list-dragging {
+    background-color: #fff;
+    box-shadow: inset 0 0 0 3px var(--color-accent);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  num-display-criteria.inexclusion.cdk-drop-list-receiving {
+    animation: drop-target-pulse 1.2s ease-in-out infinite;
+  }
+
+  num-display-criteria.inexclusion.cdk-drop-list-dragging {
+    animation: drop-target-pop 0.25s cubic-bezier(0.2, 1.4, 0.4, 1);
+  }
+}
+
+@keyframes drop-target-pulse {
+  50% {
+    box-shadow: inset 0 0 0 2px var(--color-accent);
+  }
+}
+
+@keyframes drop-target-pop {
+  from {
+    transform: scale(0.97);
+  }
+}
+
+// Drop label: while a criterion is over a list, a pill in the heading row above that list's frame says what the drop does.
+// Outside the scroll box, so it never covers a criterion and never moves the list (the CDK caches the item positions).
+.display-col:has(.cdk-drop-list-dragging)::after {
+  content: '+ ' attr(data-drop-label);
+  position: absolute;
+  top: 4px; // heading row is 48px (12 + 24 + 12), the pill 40px
+  left: 50%;
+  translate: -50% 0;
+  z-index: 3;
+  height: 40px;
+  padding: 0 var(--spacing-24);
+  border-radius: var(--border-radius-card);
+  background-color: var(--color-accent);
+  box-shadow: var(--shadow-card-hover);
+  color: #fff;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: 40px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+// The pill names the list, so its own heading steps aside while the criterion is over it (idle and empty lists keep the heading)
+.display-col num-section-name {
+  transition: opacity 0.15s ease;
+}
+
+.display-col:has(.cdk-drop-list-dragging) num-section-name {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .display-col:has(.cdk-drop-list-dragging)::after {
+    animation: drop-label-in 0.3s cubic-bezier(0.2, 1.4, 0.4, 1);
+  }
+}
+
+@keyframes drop-label-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
 }

@@ -374,6 +374,8 @@
         "CANCEL": "Abbrechen"
       },
       "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
+      "DROP_EXCLUSION": "Zu den Ausschlusskriterien hinzufügen",
+      "DROP_INCLUSION": "Zu den Einschlusskriterien hinzufügen",
       "EDIT_SUCCESS": "Kriterium erfolgreich bearbeitet",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse zu ",
       "EXCLUSION": "Ausschlusskriterien",

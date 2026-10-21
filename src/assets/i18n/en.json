@@ -385,6 +385,8 @@
         "CANCEL": "Cancel"
       },
       "DRAG_AND_DROP": "Use drag & drop to sort",
+      "DROP_EXCLUSION": "Add to exclusion criteria",
+      "DROP_INCLUSION": "Add to inclusion criteria",
       "EDIT_SUCCESS": "Criterion edited successfully",
       "EMPTY": "Sorry, we could not find any results for ",
       "EXCLUSION": "Exclusion criteria",
