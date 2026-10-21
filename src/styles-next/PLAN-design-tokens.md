@@ -36,7 +36,7 @@ Everything below this block = reference and history. Nothing deleted. Where old 
 4. Side menu level 3 at 14/20 (option D): kept as alternative, not wanted now.
 
 **Next session (2026-10-21 or later):**
-1. Table leftovers (small): availability label 12/14 -> 12/16 (DONE 2026-10-20, `availability-status-bar.component.scss`); `tabular-nums` for number columns (Shah decides); header `th` height (52 now; 36 was tried and undone); 15px checkbox vs 24px target. Notes: `C23`, `C27`.
+1. Table leftovers (small): availability label 12/14 -> 12/16 (DONE 2026-10-20, `availability-status-bar.component.scss`); ~~`tabular-nums` for number columns~~ closed 2026-10-21, not needed (Titillium digits already equal width, font has no `tnum`); header `th` height (52 now; 36 was tried and undone); 15px checkbox vs 24px target. Notes: `C23`, `C27`.
 2. Controls still not 40: `th` 52 (cancel button and `.icon-design` now 40, 2026-10-20). Search bar leftovers: `.select-search-wrapper` size + `.icon-design` 42 in `search-filter.component.scss` (Shah designs the wrapper); cancel button 42 -> 40 (`_button-cancel.themed.scss:3`); hover (border, hint, icon).
 3. ~~`action-bar` (C26)~~ done 2026-10-20: only dead rules deleted, badge stays Material. Next: `app-header` leftovers if any, then the parked modal/FAQ/data-protection titles.
 4. Shah checks the table in the app (header 14px, text cell 14px, rows 40px, long text fits) and the 40px controls side by side.
@@ -46,6 +46,43 @@ Everything below this block = reference and history. Nothing deleted. Where old 
 **Later, colors (`PLAN.md` step 4 and 5):** role for the two error reds + placeholder, green shade for checkbox, header title color (`#6a7483`, contrast 4.49), then convert rest of `custom-material`, then the switch.
 
 **Always on:** `angular.json` + `app.component.ts` stay uncommitted on purpose. Run `npm run check:styles` before commits that touch `styles-next`.
+
+## Session 2026-10-21: table header, search layout (this block wins over "Next session" above)
+
+Per-change undo steps: `TODO-2026-10-21.md` (items 1 to 17). Prototype: `typography-prototype-table-header.html`.
+
+**Done**
+- `tabular-nums`: closed, not needed (Titillium digits are all 560 wide, the font has no `tnum`).
+- Table header: `th` 52 -> 40px (`height: 40px`, padding `0 8`); role `table-header` 14/20/600 -> 16/24/600 (ladder level `control-strong`); text color `#5e6c78` (5.12:1); 1px `--border-color` line under it; 8px gap under the header (`thead` margin); first row has no top border. Dead `.table-header` / `.sticky-header` rules deleted.
+- Header and body columns now line up: `thead` is `overflow-y: scroll` with an invisible scrollbar (same width as `tbody`).
+- Icon column header: label `FEATURE.ICON` / `CRITERIA.ICON` (existing tooltip keys), visible for screen readers only (`visuallyHidden` flag in `TableHeaderData`, `.visually-hidden` in the header component, three adapters).
+- Availability label: no longer colored by status (was 2 to 3.6:1), color stays on the bar; track `rgba(0,0,0,.1)`.
+- Both search pages (data-selection and feasibility): filters on the right of the search bar, heading "Suche verfeinern" / "Refine search" (no colon) above the filters with the (i) tooltip, gap bar to filters 8px (= gap between filters), search bar `flex: 1 1 20rem; max-width: 55%`, autofocus (`autofocus` input on `num-searchbar`, default false).
+- Feasibility page: frame is a CSS grid (`grid-template-rows: auto auto minmax(0,1fr) auto`, `row-gap: 16px`), title row is a grid (`1fr auto`), dead rules deleted (`.mat-mdc-icon-button`, `.filter-chips`, `.details-panel`). Intro margin comes from `--header-description-margin` (default `1em 0`, so the 10 other pages are unchanged; feasibility sets `8px 0 0`).
+- Tried and thrown away (Shah): tinted table header strip (`#f4f6f9`, `#f9fafc`), option C extras (2px line, first-row border), tinted panel with shadow around the search row.
+
+**Insights**
+1. Component-scoped styles never match the host element. A class set by the parent on a component's host (`<thead num-table-header class="table-header">`) is dead in the component's own `.scss` unless it is written with `:host`. Two rules, including the 20px scrollbar reserve, had never applied. Check with the compiled output or the browser before trusting an old rule.
+2. `* { scrollbar-width: thin }` in `styles.scss` wins over `::-webkit-scrollbar { width: 20px }` in current Chrome. A hard-coded 20px reserve is wrong. Give the header the same scrollbar (`overflow-y: scroll`, transparent color) so the widths match by construction.
+3. Measure the font before adding a font feature: with `fontTools` the shipped Titillium woff2 has only `frac` in GSUB and equal digit widths. Do not add `tabular-nums`.
+4. A status color is not a text color. `#b0b8c4`, `#d4691e`, `#c8991a`, `#9ab721` on white are all below 4.5:1. Put the color on the bar, the label stays neutral.
+5. `flex: 0 1 44%` on a child of a column flex container is ignored (the percentage basis is the height). Both search bars were full width. A `%` basis only works in a row container.
+6. Grid for the 2D frame, flex for things that wrap. The page frame (rows) is a grid; the search row (filters drop below on narrow screens) stays flex-wrap. A grid or flex item does not collapse its children's margins, so every component margin adds up. That was the cause of the uneven vertical gaps (margins in 4 files). `row-gap` on the frame is the one place to tune them.
+7. A shared component's margin can be made page-configurable with a CSS custom property that has a default: `margin: var(--header-description-margin, 1em 0)`. One page overrides it on a wrapper, no `::ng-deep`, no input, the other pages are untouched.
+8. Percent widths next to fixed-width siblings: use `flex: 1 1 <min>` plus `max-width`, not a fixed `%`. The filters need about 600px, so a fixed 55% bar would always wrap the filters at laptop widths.
+9. Shah's taste, three times: no tinted surfaces (header strip, panel). Whitespace, text color and thin lines are fine. Try those first.
+10. Autofocus on load is an accessibility trade-off (screen-reader users can miss the page title). Fine on a search-first page; option: only when the intro is hidden.
+11. Process slips to avoid: (a) a revert script that re-applied a change lost two lines, so run `git diff` after every revert; (b) `cat >> file` in a changed working directory created a stray `C23-table.md` in the wrong folder, so use absolute or repo-relative paths; (c) dictations were cut off twice ("Let's do", "and then we will"): ask instead of guessing; (d) the plan listed items already done (cancel button 40px), so grep before trusting a to-do line.
+
+**Still to do**
+1. Look at everything in the app (nothing was checked in a browser by me): table header and gaps, both search pages (laptop width, nav open and collapsed, filters wrapping), the 16px gap above the action bar, autofocus.
+2. Controls still not 40px (list and file:line in `TODO-2026-10-21.md`): modals, date picker, result, timerestriction selector, filter chips (42), feasibility search (44), outer tabs (41); decide the 48px criterion-modal controls.
+3. Apply the grid frame and `row-gap` to the data-selection page, `bulk-search` and the other pages that use `num-header-description` (10 pages still use the default margin).
+4. Search bar prominence: width and autofocus done; accent border or stronger look (option 3) still parked.
+5. `ReferenceCriteriaListEntryAdapter` uses the `plus` icon but the header and tooltip say "Show related criteria": check the text.
+6. Color pass additions: header text `#5e6c78` and the line `--border-color` are literals; availability colors `AvailabilityStatus.ts`; `th` literal `#6a7483` elsewhere; scrollbar colors.
+7. `searchbar.component.spec.ts` is stale (imports a `SearchComponent` that no longer exists).
+8. Still uncommitted on purpose or not mine: `angular.json`, `playground.component.ts`, the `console.log` removal in `ReferenceCriteriaListEntry.ts`, `.impeccable/`, `.vscode/settings.json`.
 
 ---
 
