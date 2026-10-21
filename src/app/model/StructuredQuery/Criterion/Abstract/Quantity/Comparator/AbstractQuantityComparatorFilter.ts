@@ -1,8 +1,7 @@
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
-import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
-import { AbstractQuantityFilter } from '../AbstractQuantityFilter';
-import { Comparator } from 'src/app/model/Utilities/Quantity/Comparator';
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit'
+import { AbstractQuantityFilter } from '../AbstractQuantityFilter'
+import { Comparator } from 'src/app/model/Utilities/Quantity/Comparator'
 
 /**
  * Class for quantity comparator filters in a structured query.
@@ -11,9 +10,9 @@ import { Comparator } from 'src/app/model/Utilities/Quantity/Comparator';
  * type, and value specific to quantity comparisons.
  */
 export abstract class AbstractQuantityComparatorFilter extends AbstractQuantityFilter {
-  private comparator: Comparator = Comparator.NONE;
-  protected type: FilterTypes = FilterTypes.QUANTITY_COMPARATOR;
-  private value: number = null;
+  private comparator: Comparator = Comparator.NONE
+  protected type: FilterTypes = FilterTypes.QUANTITY_COMPARATOR
+  private value: number = null
 
   /**
    * Constructor to initialize the QuantityComparatorFilter with unit, comparator, type, and value.
@@ -23,9 +22,9 @@ export abstract class AbstractQuantityComparatorFilter extends AbstractQuantityF
    * @param value - The value to be compared.
    */
   constructor(unit: QuantityUnit, comparator: Comparator, value: number) {
-    super(unit);
-    this.comparator = comparator;
-    this.value = value;
+    super(unit)
+    this.comparator = comparator
+    this.value = value
   }
 
   /**
@@ -34,7 +33,7 @@ export abstract class AbstractQuantityComparatorFilter extends AbstractQuantityF
    * @returns The comparator value.
    */
   public getComparator(): Comparator {
-    return this.comparator;
+    return this.comparator
   }
 
   /**
@@ -43,7 +42,7 @@ export abstract class AbstractQuantityComparatorFilter extends AbstractQuantityF
    * @param comparator - The new comparator value to set.
    */
   public setComparator(comparator: Comparator): void {
-    this.comparator = comparator;
+    this.comparator = comparator
   }
 
   /**
@@ -52,7 +51,7 @@ export abstract class AbstractQuantityComparatorFilter extends AbstractQuantityF
    * @returns The value.
    */
   public getValue(): number {
-    return this.value;
+    return this.value
   }
 
   /**
@@ -61,7 +60,7 @@ export abstract class AbstractQuantityComparatorFilter extends AbstractQuantityF
    * @param value - The new value to set.
    */
   public setValue(value: number): void {
-    this.value = value;
+    this.value = value
   }
 
   /**
@@ -70,6 +69,6 @@ export abstract class AbstractQuantityComparatorFilter extends AbstractQuantityF
    * @returns The type of filter.
    */
   public getType(): FilterTypes {
-    return this.type;
+    return this.type
   }
 }

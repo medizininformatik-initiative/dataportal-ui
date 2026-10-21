@@ -1,22 +1,21 @@
-import { AbstractAttributeGroupFilter } from './AttributeGrooups/AttributeGroup/AbstractAttributeGroupFilter';
-import { AttributeGroup } from './AttributeGrooups/AttributeGroup';
+import { AttributeGroup } from './AttributeGrooups/AttributeGroup'
 
 export class DataExtraction {
-  private attributeGroups: AttributeGroup[];
+  private attributeGroups: AttributeGroup[]
 
   constructor(attributeGroups: AttributeGroup[]) {
-    this.attributeGroups = attributeGroups;
+    this.attributeGroups = attributeGroups
   }
 
   public getAttributeGroups(): AttributeGroup[] {
-    return this.attributeGroups;
+    return this.attributeGroups
   }
 
   public setAttributeGroups(attributeGroups: AttributeGroup[]): void {
-    this.attributeGroups = attributeGroups;
+    this.attributeGroups = attributeGroups
   }
 
   public static fromJson(json: any, attributeGroups: AttributeGroup[]): DataExtraction {
-    return new DataExtraction(attributeGroups);
+    return new DataExtraction(attributeGroups)
   }
 }

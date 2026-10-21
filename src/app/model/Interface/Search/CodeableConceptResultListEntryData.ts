@@ -1,7 +1,6 @@
-import { ConceptData } from '../ConceptData';
-import { DisplayData } from '../DisplayData';
-import { TerminologyCodeData } from '../TerminologyCodeData';
-import { ListEntryData } from './ListEntryData';
+import { DisplayData } from '../DisplayData'
+import { TerminologyCodeData } from '../TerminologyCodeData'
+import { ListEntryData } from './ListEntryData'
 
 /**
  * Interface representing individual codeable concept search result entries from backend API responses.

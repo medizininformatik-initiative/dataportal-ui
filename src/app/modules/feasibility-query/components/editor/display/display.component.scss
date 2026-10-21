@@ -27,13 +27,6 @@
   overflow-x: hidden;
 }
 
-.title-header {
-  width: 42.5%;
-  font-size: large;
-  color: rgba(95, 98, 102, 1);
-  margin-bottom: 1em;
-}
-
 // Drop targets. While a criterion is dragged, both lists show a pulsing frame (receiving);
 // the list under the pointer pops: solid frame, white background, short scale-in (dragging).
 // The frame is an inset shadow: the list sits in a scroll box that would clip an outer one.

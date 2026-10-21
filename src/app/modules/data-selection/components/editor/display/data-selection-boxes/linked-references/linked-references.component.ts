@@ -1,4 +1,4 @@
-import { Component, computed, effect, input } from '@angular/core'
+import { Component, computed, input } from '@angular/core'
 import { LinkedBadgeComponent } from 'src/app/shared/components/linked-badge/linked-badge.component'
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields'
 import { ProfileReferenceTileComponent } from 'src/app/shared/components/profile-reference-tile/profile-reference-tile.component'

@@ -3,7 +3,6 @@ import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelec
 import { inject, Injectable } from '@angular/core'
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
-import { RemoveReferenceService } from '../../../../service/RemoveReference.service'
 
 @Injectable({
   providedIn: 'root',

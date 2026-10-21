@@ -9,29 +9,6 @@
   overflow: auto;
 }
 
-.add-button {
-  margin-top: var(--spacing-10);
-  background-color: var(--color-accent);
-  color: white;
-  width: fit-content;
-  padding: var(--spacing-10) 18px;
-  flex-shrink: 0;
-}
-
-.selectedFilterBox {
-  overflow-y: auto;
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-.selectedFilter {
-  width: 100%;
-  height: 40px;
-  background-color: white;
-  border-radius: var(--border-radius-card);
-  margin-bottom: var(--spacing-10);
-}
-
 .display-part {
   padding-left: var(--spacing-10);
   overflow: hidden;
@@ -50,27 +27,10 @@
   padding-bottom: var(--spacing-10);
 }
 
-.filter-title {
-  margin-bottom: var(--spacing-10);
-  margin-top: var(--spacing-10);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-md);
-  font-weight: 400;
-  flex-shrink: 0;
-}
-
 .attribute-code-display {
   color: var(--color-text-secondary);
   padding-bottom: var(--spacing-5);
   flex-shrink: 0;
-}
-
-.filter-selection {
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-  max-height: 40%;
-  min-height: 0;
 }
 
 .infinite-scroll {

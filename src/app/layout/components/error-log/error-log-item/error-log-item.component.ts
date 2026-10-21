@@ -1,4 +1,4 @@
-import { Component, input, Input, OnInit } from '@angular/core'
+import { Component, input, OnInit } from '@angular/core'
 import { JsonPipe } from '@angular/common'
 import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade'
 import { TranslateModule } from '@ngx-translate/core'

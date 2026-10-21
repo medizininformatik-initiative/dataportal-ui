@@ -1,6 +1,5 @@
 import { Component, OnChanges, OnInit, input, output } from '@angular/core'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
-import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry'
 import { SelectedListItem } from 'src/app/shared/components/selected-items-list/selected-items-list.component'
 import { SelectedItemsListComponent } from '../../../../shared/components/selected-items-list/selected-items-list.component'
 

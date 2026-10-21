@@ -1,10 +1,10 @@
-import { AbstractKeyedSearchEngineService } from '../Engine/AbstractKeyedSearchEngine.service';
-import { AbstractKeyedSearchResultProvider } from '../Result/AbstractKeyedSearchResultProvider.service';
-import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
-import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList';
-import { AbstractSearchMediatorService } from './AbstractSearchMediator';
-import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { AbstractKeyedSearchEngineService } from '../Engine/AbstractKeyedSearchEngine.service'
+import { AbstractKeyedSearchResultProvider } from '../Result/AbstractKeyedSearchResultProvider.service'
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
+import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList'
+import { AbstractSearchMediatorService } from './AbstractSearchMediator'
+import { Injectable } from '@angular/core'
+import { Observable, tap } from 'rxjs'
 
 /**
  * @abstract
@@ -31,7 +31,7 @@ export abstract class AbstractKeyedSearchMediator<
     protected resultProvider: AbstractKeyedSearchResultProvider<C, T>,
     protected searchEngine: AbstractKeyedSearchEngineService<C, T>
   ) {
-    super(resultProvider, searchEngine);
+    super(resultProvider, searchEngine)
   }
 
   /**
@@ -49,11 +49,11 @@ export abstract class AbstractKeyedSearchMediator<
     dataSetUrl: string[]
   ): Observable<T> {
     if (dataSetUrl.length === 0) {
-      throw new Error('KeyedSearchMediatorService requires a key parameter for search operations');
+      throw new Error('KeyedSearchMediatorService requires a key parameter for search operations')
     }
     return this.searchEngine
       .search(searchText, page, dataSetUrl)
-      .pipe(tap((result) => this.resultProvider.setSearchResults(dataSetUrl, result)));
+      .pipe(tap((result) => this.resultProvider.setSearchResults(dataSetUrl, result)))
   }
 
   /**
@@ -72,10 +72,10 @@ export abstract class AbstractKeyedSearchMediator<
     dataSetUrl: string[]
   ): Observable<T> {
     if (dataSetUrl.length === 0) {
-      throw new Error('KeyedSearchMediatorService requires a key parameter for update operations');
+      throw new Error('KeyedSearchMediatorService requires a key parameter for update operations')
     }
     return this.searchEngine
       .search(searchText, page, dataSetUrl)
-      .pipe(tap((result) => this.resultProvider.updateSearchResults(dataSetUrl, result)));
+      .pipe(tap((result) => this.resultProvider.updateSearchResults(dataSetUrl, result)))
   }
 }

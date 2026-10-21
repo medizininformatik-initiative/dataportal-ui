@@ -1,9 +1,9 @@
-import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
-import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList';
-import { AbstractSearchMediatorService } from './AbstractSearchMediator';
-import { AbstractSimpleSearchEngine } from '../Engine/AbstractSimpleSearchEngine.service';
-import { AbstractSimpleSearchResultProvider } from '../Result/AbstractSimpleSearchResultProvider.service';
-import { map, Observable, tap } from 'rxjs';
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
+import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList'
+import { AbstractSearchMediatorService } from './AbstractSearchMediator'
+import { AbstractSimpleSearchEngine } from '../Engine/AbstractSimpleSearchEngine.service'
+import { AbstractSimpleSearchResultProvider } from '../Result/AbstractSimpleSearchResultProvider.service'
+import { Observable, tap } from 'rxjs'
 
 /**
  * @abstract
@@ -19,13 +19,13 @@ export abstract class AbstractSimpleSearchMediator<
    * The simple result provider for managing single result set storage.
    * @protected
    */
-  protected resultProvider: AbstractSimpleSearchResultProvider<C, T>;
+  protected resultProvider: AbstractSimpleSearchResultProvider<C, T>
 
   /**
    * The simple search engine for executing search operations.
    * @protected
    */
-  protected searchEngine: AbstractSimpleSearchEngine<C, T>;
+  protected searchEngine: AbstractSimpleSearchEngine<C, T>
 
   /**
    * Creates an instance of AbstractSimpleSearchMediator.
@@ -37,9 +37,9 @@ export abstract class AbstractSimpleSearchMediator<
     resultProvider: AbstractSimpleSearchResultProvider<C, T>,
     searchEngine: AbstractSimpleSearchEngine<C, T>
   ) {
-    super(resultProvider, searchEngine);
-    this.resultProvider = resultProvider;
-    this.searchEngine = searchEngine;
+    super(resultProvider, searchEngine)
+    this.resultProvider = resultProvider
+    this.searchEngine = searchEngine
   }
 
   /**
@@ -52,7 +52,7 @@ export abstract class AbstractSimpleSearchMediator<
   public searchAndSetProvider(searchText: string, page: number = 0): Observable<T> {
     return this.searchEngine
       .search(searchText, page)
-      .pipe(tap((result) => this.resultProvider.setSearchResults(result)));
+      .pipe(tap((result) => this.resultProvider.setSearchResults(result)))
   }
 
   /**
@@ -65,6 +65,6 @@ export abstract class AbstractSimpleSearchMediator<
   public searchAndUpdateProvider(searchText: string, page: number): Observable<T> {
     return this.searchEngine
       .search(searchText, page)
-      .pipe(tap((result) => this.resultProvider.updateSearchResults(result)));
+      .pipe(tap((result) => this.resultProvider.updateSearchResults(result)))
   }
 }

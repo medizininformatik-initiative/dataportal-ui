@@ -1,5 +1,5 @@
 import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service'
-import { BehaviorSubject, filter, map, Observable, of, switchMap, tap } from 'rxjs'
+import { BehaviorSubject, filter, map, Observable, of, switchMap } from 'rxjs'
 import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery'
 import { inject, Injectable } from '@angular/core'
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service'

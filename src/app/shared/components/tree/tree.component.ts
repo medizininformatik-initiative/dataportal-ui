@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, input, output } from '@angular/core'
+import { Component, OnInit, input, output } from '@angular/core'
 import { TreeNode } from '../../models/TreeNode/TreeNodeInterface'
 import { NgTemplateOutlet } from '@angular/common'
 import { CheckboxComponent } from '../checkbox/checkbox.component'

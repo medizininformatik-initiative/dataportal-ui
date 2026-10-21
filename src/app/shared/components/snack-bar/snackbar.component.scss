@@ -84,10 +84,6 @@
   animation: slideInDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.snackbar-leave {
-  animation: slideOutUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 // Responsive design
 @media (max-width: 768px) {
   .snackbar {
@@ -149,56 +145,6 @@
         rgba(255, 255, 255, 0.02) 100%
       );
     }
-  }
-}
-
-// Additional snackbar variants
-.warning-snackbar {
-  background: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%);
-  color: white;
-  border-left: 4px solid #f57c00;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, #f57c00 0%, #ff9800 100%);
-    border-radius: 2px 0 0 2px;
-  }
-}
-
-// Subtle info variant (for less critical messages)
-.info-light-snackbar {
-  background: linear-gradient(135deg, #2196f3 0%, #64b5f6 100%);
-  color: white;
-  border-left: 4px solid #1976d2;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, #1976d2 0%, #2196f3 100%);
-    border-radius: 2px 0 0 2px;
-  }
-}
-
-// Loading state (if needed)
-.snackbar-loading {
-  .message-display::after {
-    content: '';
-    width: 16px;
-    height: 16px;
-    margin-left: var(--spacing-12);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top: 2px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
   }
 }
 

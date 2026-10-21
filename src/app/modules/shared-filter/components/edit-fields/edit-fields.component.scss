@@ -96,11 +96,6 @@
   min-height: 0;
 }
 
-.header-container {
-  display: flex;
-  width: 100%;
-}
-
 // ── Tab bar ─────────────────────────────────────────────────────
 ::ng-deep .mat-mdc-tab .mdc-tab__text-label {
   font-family: var(--font-body);

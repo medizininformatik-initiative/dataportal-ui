@@ -73,15 +73,6 @@
   resize: vertical;
 }
 
-.checkbox-box {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  align-items: center;
-  font-size: var(--font-size-md);
-  color: #6a7483;
-}
-
 .checkbox-label {
   display: inline-flex;
   align-items: center;
@@ -90,12 +81,6 @@
   font-family: var(--font-body);
   font-size: var(--font-size-md);
   color: var(--color-text-secondary);
-}
-
-.filter-warning {
-  font-size: 13px;
-  font-weight: 400;
-  color: #e05050;
 }
 
 .save-dialog-footer {

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { HeaderDescriptionToggleService } from '../header/header-description-toggle.service'
 import { AsyncPipe } from '@angular/common'
 

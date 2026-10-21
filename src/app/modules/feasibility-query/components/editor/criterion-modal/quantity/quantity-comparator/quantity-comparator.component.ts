@@ -1,14 +1,4 @@
-import {
-  Component,
-  OnChanges,
-  OnInit,
-  effect,
-  inject,
-  input,
-  model,
-  output,
-  untracked,
-} from '@angular/core'
+import { Component, effect, inject, input, model, output, untracked } from '@angular/core'
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'

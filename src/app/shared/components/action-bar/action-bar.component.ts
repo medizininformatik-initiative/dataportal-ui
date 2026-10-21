@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input } from '@angular/core'
+import { Component, computed, inject, input } from '@angular/core'
 import { DataDefinitionValidationService } from 'src/app/service/Validation/Internal/DataDefinitionValidation.service'
 import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component'
 import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'

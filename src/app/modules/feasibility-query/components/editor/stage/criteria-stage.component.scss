@@ -1,44 +1,5 @@
 /* No Selected Criteria Stage Styles */
-.no-selected-criteria-stage {
-  position: absolute;
-  width: 584.5px;
-  height: 70.28px;
-  left: 282.04px;
-  top: 1674.85px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.no-selected-criteria-box {
-  box-sizing: border-box;
-  position: absolute;
-  width: 584.5px;
-  height: 70.28px;
-  left: 282.04px;
-  top: 1674.85px;
-  opacity: 0.2;
-  border: 1px dashed var(--color-accent);
-  border-radius: var(--border-radius-card, 5px);
-  background: none;
-}
-
-.no-selected-criteria-text {
-  position: absolute;
-  width: 254.95px;
-  height: 28px;
-  left: 448.05px;
-  top: 1696.72px;
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: var(--font-weight-normal);
-  font-size: var(--font-size-sm, 14px);
-  line-height: var(--line-height-sm, 19px);
-  display: flex;
-  align-items: center;
-  color: var(--color-accent);
-  background: none;
-}
 .container {
   width: 100%;
   display: flex;

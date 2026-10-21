@@ -1,4 +1,3 @@
-import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion'
 import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
 import { CriterionBuilderHelperService } from './CriterionBuilderHelper.service'
 import { Injectable, inject } from '@angular/core'

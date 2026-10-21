@@ -1,18 +1,17 @@
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter';
-import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData';
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter';
-import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { Injectable } from '@angular/core';
-import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter';
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
-import { QuantityFilterBuilder } from '../../Factory/QuantityFilterBuilder';
-import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet';
-import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter';
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit';
-import { QuantityUnitData } from 'src/app/model/Interface/Unit';
-import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition';
-import { ValueFilterData } from 'src/app/model/Interface/ValueFilterData';
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
+import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData'
+import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { Injectable } from '@angular/core'
+import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
+import { QuantityFilterBuilder } from '../../Factory/QuantityFilterBuilder'
+import { QuantityNotSet } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet'
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
+import { QuantityUnitData } from 'src/app/model/Interface/Unit'
+import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition'
+import { ValueFilterData } from 'src/app/model/Interface/ValueFilterData'
 
 @Injectable({
   providedIn: 'root',
@@ -33,15 +32,15 @@ export class QuantityFilterTranslatorService {
     const quantityBuilder = this.createQuantityBuilderInstance(
       attributeDefinitionData,
       attributeFilter
-    );
-    const type = attributeFilter.type;
+    )
+    const type = attributeFilter.type
     if (type === FilterTypes.QUANTITY_RANGE) {
-      return this.buildQuantityRangeInstance(attributeFilter, quantityBuilder);
+      return this.buildQuantityRangeInstance(attributeFilter, quantityBuilder)
     }
     if (type === FilterTypes.QUANTITY_COMPARATOR) {
-      return this.buildQuantityComparatorInstance(attributeFilter, quantityBuilder);
+      return this.buildQuantityComparatorInstance(attributeFilter, quantityBuilder)
     }
-    return quantityBuilder.buildEmptyQuantityFilter();
+    return quantityBuilder.buildEmptyQuantityFilter()
   }
 
   /**
@@ -53,11 +52,11 @@ export class QuantityFilterTranslatorService {
     attributeDefinitionData: AttributeDefinitionData | ValueDefinitionData,
     attributeFilter: AttributeFilterData | ValueFilterData
   ): QuantityFilterBuilder {
-    const precision: number = attributeDefinitionData.precision;
-    const selectedUnit: QuantityUnit = QuantityUnit.fromJson(attributeFilter.unit);
+    const precision: number = attributeDefinitionData.precision
+    const selectedUnit: QuantityUnit = QuantityUnit.fromJson(attributeFilter.unit)
     const allowedUnits: QuantityUnit[] =
-      this.createAllowedUnitsFromUiProfileData(attributeDefinitionData);
-    return new QuantityFilterBuilder(allowedUnits, precision, selectedUnit);
+      this.createAllowedUnitsFromUiProfileData(attributeDefinitionData)
+    return new QuantityFilterBuilder(allowedUnits, precision, selectedUnit)
   }
 
   /**
@@ -68,8 +67,8 @@ export class QuantityFilterTranslatorService {
   private createAllowedUnitsFromUiProfileData(
     attributeDefinitionData: AttributeDefinitionData | ValueDefinitionData
   ): QuantityUnit[] {
-    const allowedUnits: QuantityUnitData[] = attributeDefinitionData.allowedUnits;
-    return allowedUnits.map((unitData: QuantityUnitData) => QuantityUnit.fromJson(unitData));
+    const allowedUnits: QuantityUnitData[] = attributeDefinitionData.allowedUnits
+    return allowedUnits.map((unitData: QuantityUnitData) => QuantityUnit.fromJson(unitData))
   }
 
   /**
@@ -82,9 +81,9 @@ export class QuantityFilterTranslatorService {
     attributeFilter: AttributeFilterData | ValueFilterData,
     quantityBuilder: QuantityFilterBuilder
   ): QuantityRangeFilter {
-    const maxValue: number = attributeFilter.maxValue;
-    const minValue: number = attributeFilter.minValue;
-    return quantityBuilder.buildQuantityRangeFilter(minValue, maxValue);
+    const maxValue: number = attributeFilter.maxValue
+    const minValue: number = attributeFilter.minValue
+    return quantityBuilder.buildQuantityRangeFilter(minValue, maxValue)
   }
 
   /**
@@ -97,10 +96,10 @@ export class QuantityFilterTranslatorService {
     attributeFilter: AttributeFilterData | ValueFilterData,
     quantityBuilder: QuantityFilterBuilder
   ): QuantityComparatorFilter {
-    const comparator = attributeFilter.comparator;
-    const value = attributeFilter.value;
+    const comparator = attributeFilter.comparator
+    const value = attributeFilter.value
     const quantityComparisonOption: QuantityComparisonOption =
-      AbstractQuantityFilter.mapComparatorToQuantityComparison(comparator);
-    return quantityBuilder.buildQuantityComparatorFilter(value, quantityComparisonOption);
+      AbstractQuantityFilter.mapComparatorToQuantityComparison(comparator)
+    return quantityBuilder.buildQuantityComparatorFilter(value, quantityComparisonOption)
   }
 }

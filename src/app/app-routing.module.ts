@@ -1,6 +1,4 @@
 import { BasePaths } from './app-paths'
-import { CriteriaSearchDataResolverService } from './service/Resolver/CriteriaSearchDataResolver.service'
-import { CriteriaSearchFilterResolverService } from './service/Resolver/CriteriaSearchFilterResolver.service'
 
 import { Routes } from '@angular/router'
 import { environment } from 'src/environments/environment'

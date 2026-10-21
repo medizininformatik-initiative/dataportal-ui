@@ -1,5 +1,4 @@
 import { Component, OnInit, input, output } from '@angular/core'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
 import { CheckboxComponent } from '../checkbox/checkbox.component'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'

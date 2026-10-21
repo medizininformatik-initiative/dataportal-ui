@@ -38,41 +38,15 @@
   width: 100%;
 }
 
-.width-1000 {
-  width: 100%;
-}
-
 ::ng-deep .mat-drawer-inner-container {
   overflow: hidden;
   height: 100%;
-}
-
-.orginal-item {
-  font-weight: 400;
-  font-size: 16px;
-}
-
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
-
-.input-field {
-  width: 90%;
-  margin: 0.5em 0;
 }
 
 .table-container {
   display: flex;
   overflow: auto;
   gap: 3rem;
-}
-
-.header-container {
-  margin-bottom: var(--spacing-16);
-  display: flex;
-  align-items: start;
 }
 
 .input-field-area {
