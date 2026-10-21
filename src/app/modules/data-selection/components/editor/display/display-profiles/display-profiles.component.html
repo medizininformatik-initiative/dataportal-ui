@@ -1,4 +1,7 @@
-<num-searchbar [minLength]="1" (searchTextChange)="searchText.set($event)" />
+<div class="toolbar">
+  <num-searchbar [minLength]="1" (searchTextChange)="searchText.set($event)" />
+  <num-apply-time-restriction />
+</div>
 @if (searchText()) {
 <div class="search-summary">
   {{ filteredProfiles().length }} / {{ profiles().length }}

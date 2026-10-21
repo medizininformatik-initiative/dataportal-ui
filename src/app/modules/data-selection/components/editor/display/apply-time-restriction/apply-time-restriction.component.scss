@@ -8,7 +8,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: var(--spacing-6) 14px;
+    height: 40px; // same height as the search bar and the other controls
+    padding: 0 14px;
     font-family: var(--font-body);
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-bold);
@@ -47,12 +48,12 @@
     }
   }
   ::ng-deep select.type-select {
-    height: 36px;
+    height: 40px;
   }
   ::ng-deep .date-input-wrapper {
-    height: 36px;
+    height: 40px;
   }
   ::ng-deep num-button .num-button {
-    height: 33px;
+    height: 40px;
   }
 }

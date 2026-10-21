@@ -3,7 +3,8 @@
   grid-template-columns: repeat(5, 1fr) auto;
   align-items: stretch;
   min-height: 104px;
-  margin-bottom: var(--spacing-16);
+  height: auto; // global .selection-box (_header-card) sets height: 100%, which a grid row turns into the whole row
+  margin-bottom: 0; // spacing is the list's row-gap
 }
 
 .card-col {

@@ -1,12 +1,23 @@
 :host {
   display: flex;
   flex-direction: column;
+  gap: var(--spacing-16); // search bar, summary and list
   height: 100%;
   overflow: hidden;
 }
 
+// Search bar, then the time restriction under it (full-width row, controls wrap when they open)
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
 .container {
   flex: 1;
+  display: grid;
+  align-content: start;
+  row-gap: var(--spacing-16); // the one spacing between profiles
   overflow-y: auto;
 }
 
