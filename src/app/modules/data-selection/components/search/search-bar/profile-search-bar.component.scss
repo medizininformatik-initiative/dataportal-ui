@@ -5,17 +5,29 @@
 
 .search-bar-container {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap; // filters drop below the search bar on narrow screens
+  align-items: flex-start; // the min-length warning grows the search bar, controls stay on top
+  gap: var(--spacing-8); // same as the gap between the filters
   width: 100%;
+  margin-bottom: var(--spacing-24); // space to the table
 }
 
-.searchbar {
-  flex: 0 1 44%;
+.search-column {
+  flex: 1 1 20rem; // takes the space the filters leave, up to 55%; wraps below 20rem
+  max-width: 55%;
+  // same height as the filter heading above the filters, so the controls share one line
+  margin-top: calc(var(--font-app-content-filter-hint-line) + 0.25rem);
+}
+
+.filter-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .filter-container {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 8px;
 }
 
@@ -25,7 +37,7 @@
   gap: 0.4rem;
 
   &__label {
-    margin: var(--spacing-sm) 0;
+    margin: 0;
     font-family: var(--font-app-content-filter-hint-family);
     font-weight: var(--font-app-content-filter-hint-weight);
     font-size: var(--font-app-content-filter-hint-size);

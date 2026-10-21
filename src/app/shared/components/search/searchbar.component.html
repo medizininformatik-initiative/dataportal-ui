@@ -4,6 +4,7 @@
     <fa-icon class="icon-design" [icon]="icon()" size="lg" [fixedWidth]="true"></fa-icon>
     }
     <input
+      #field
       placeholder="{{ label() | translate }}"
       [attr.aria-label]="label() | translate"
       [value]="inputValue()"

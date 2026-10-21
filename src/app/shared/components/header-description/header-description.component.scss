@@ -1,6 +1,6 @@
 :host .header-description {
   max-width: var(--app-content-page-header-intro-measure);
-  margin: 1em 0;
+  margin: var(--header-description-margin, 1em 0); // a page can override it
   letter-spacing: var(--font-app-content-page-header-intro-letter-spacing);
   font-family: var(--font-app-content-page-header-intro-family);
   font-weight: var(--font-app-content-page-header-intro-weight);

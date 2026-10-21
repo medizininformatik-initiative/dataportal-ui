@@ -1,34 +1,42 @@
+// Page frame: one column, four rows (header, search, results, actions); results take the rest and scroll.
 .container {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  row-gap: var(--spacing-16); // the one vertical rhythm between the four rows
   overflow: auto;
 }
 
-.header-container {
-  margin: var(--spacing-8) 0px;
-  display: flex;
+// Intro sits 8px under the title; its own 1em margins are off, the row gap spaces it from the search
+.page-header {
+  --header-description-margin: var(--spacing-8) 0 0;
+}
+
+// Title left, mode toggle right
+.title-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  justify-content: start;
+  margin-top: var(--spacing-8);
+}
+
+.search-row {
+  display: flex;
+  flex-wrap: wrap; // filters drop below the search bar on narrow screens
+  align-items: flex-start; // the min-length warning grows the search bar, controls stay on top
+  gap: var(--spacing-8); // same as the gap between the filters
+
+  > num-criteria-search-bar {
+    flex: 1 1 20rem; // takes the space the filters leave, up to 55%; wraps below 20rem
+    max-width: 48%;
+    width: auto;
+    // same height as the filter heading above the filters, so the controls share one line
+    margin-top: calc(var(--font-app-content-filter-hint-line) + 0.25rem);
+  }
 }
 
 .result-container {
-  height: 100%;
-  width: 100%;
+  min-height: 0;
   overflow: auto;
-}
-
-.mat-mdc-icon-button {
-  height: 44px;
-  width: 44px;
-  line-height: unset;
-  color: var(--num-color--primary);
-}
-
-.filter-chips {
-  display: flex;
-}
-
-.details-panel {
-  height: 96%;
 }

@@ -2,6 +2,7 @@
   <num-searchbar
     class="searchbar"
     icon="search"
+    [autofocus]="true"
     [searchText]="searchText()"
     [label]="'FEASIBILITY.SEARCH.SEARCHBAR'"
     (searchTextChange)="onSearchTextChange($event)"
