@@ -1,37 +1,23 @@
+// Page frame: one column, four rows (header, search, results, actions); results take the rest and scroll.
 .container {
   height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  row-gap: var(--spacing-16); // the one vertical rhythm between the four rows
   overflow: auto;
 }
 
-.background-color-button {
-  color: white;
-  background-color: var(--color-accent);
-  margin-right: var(--spacing-10);
+// Intro sits 8px under the title; its own 1em margins are off, the row gap spaces it from the search
+.page-header {
+  --header-description-margin: var(--spacing-8) 0 0;
 }
 
-::ng-deep .mat-drawer-inner-container {
-  overflow: hidden;
-  height: 100%;
-}
-
-.tree-container {
-  width: 100%;
-  overflow: auto;
-  height: 100%;
-}
-
-.box-container {
-  width: 100%;
-  margin-top: var(--spacing-30);
-  height: 50%;
+.title-row {
+  margin-top: var(--spacing-8);
 }
 
 .result-container {
-  width: 100%;
-  flex: 1;
   min-height: 0;
   overflow: hidden;
 }

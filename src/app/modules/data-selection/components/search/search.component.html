@@ -1,6 +1,8 @@
 <div class="container">
-  <div>
-    <num-header [showToggle]="true">{{ 'DATASELECTION.SEARCH.HEADER' | translate }}</num-header>
+  <div class="page-header">
+    <div class="title-row">
+      <num-header [showToggle]="true">{{ 'DATASELECTION.SEARCH.HEADER' | translate }}</num-header>
+    </div>
     <num-header-description>
       <span
         [innerHTML]="'DATASELECTION.EDITOR.HEADER_INFO' | translate : { email: emailLink }"
