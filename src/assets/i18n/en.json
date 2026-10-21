@@ -384,11 +384,15 @@
         "APPLY_TIME_RESTRICTION": "Apply time period to all criteria",
         "CANCEL": "Cancel"
       },
-      "DRAG_AND_DROP": "Use drag & drop to sort",
       "DROP_EXCLUSION": "Add to exclusion criteria",
       "DROP_INCLUSION": "Add to inclusion criteria",
       "EDIT_SUCCESS": "Criterion edited successfully",
       "EMPTY": "Sorry, we could not find any results for ",
+      "EMPTY_LIST": {
+        "HINT_AFTER": "and drop it here.",
+        "HINT_BEFORE": "Grab a criterion by its handle",
+        "TITLE": "Drag a criterion here"
+      },
       "EXCLUSION": "Exclusion criteria",
       "FILTER_SELECTION": "Selected items",
       "HEADER": "Criteria editor",

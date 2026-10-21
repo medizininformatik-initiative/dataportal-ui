@@ -373,11 +373,15 @@
         "APPLY_TIME_RESTRICTION": "Zeiteinschränkung für alle Kriterien hinzufügen",
         "CANCEL": "Abbrechen"
       },
-      "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
       "DROP_EXCLUSION": "Zu den Ausschlusskriterien hinzufügen",
       "DROP_INCLUSION": "Zu den Einschlusskriterien hinzufügen",
       "EDIT_SUCCESS": "Kriterium erfolgreich bearbeitet",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse zu ",
+      "EMPTY_LIST": {
+        "HINT_AFTER": "an und legen Sie es hier ab.",
+        "HINT_BEFORE": "Fassen Sie ein Kriterium am Symbol",
+        "TITLE": "Kriterium hierher ziehen"
+      },
       "EXCLUSION": "Ausschlusskriterien",
       "FILTER_SELECTION": "Ausgewählte Elemente",
       "HEADER": "Kriterieneditor",

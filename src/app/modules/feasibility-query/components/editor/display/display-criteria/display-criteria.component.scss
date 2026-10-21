@@ -24,17 +24,182 @@
   margin-bottom: 27px;
 }
 
+// Empty list: a looping sketch (a box is grabbed, dragged and dropped into a slot) next to the instruction, in a marching dashed frame.
+// :host is the container so the sketch can step aside when the list is narrow.
+:host {
+  container-type: inline-size;
+}
+
 .no-selected-criteria {
+  --ghost-width: 130px;
+  --ghost-travel: 150px; // sketch width (280px) - ghost width
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: var(--spacing-24);
   width: 100%;
-  height: 120px;
-  border: 1px dotted var(--color-accent);
+  height: 136px;
+  padding: 0 var(--spacing-24);
   border-radius: var(--border-radius-card);
-  font-weight: var(--font-weight-normal);
-  font-size: var(--font-size-lg);
+  background: linear-gradient(90deg, var(--color-accent) 50%, transparent 0) top / 16px 2px repeat-x,
+    linear-gradient(90deg, var(--color-accent) 50%, transparent 0) bottom / 16px 2px repeat-x,
+    linear-gradient(0deg, var(--color-accent) 50%, transparent 0) left / 2px 16px repeat-y,
+    linear-gradient(0deg, var(--color-accent) 50%, transparent 0) right / 2px 16px repeat-y,
+    var(--color-accent-bg);
+}
+
+.demo {
+  position: relative;
+  flex: none;
+  width: 280px;
+  height: 88px;
+}
+
+.slot,
+.ghost {
+  position: absolute;
+  top: var(--spacing-8);
+  width: var(--ghost-width);
+  height: 72px;
+  border-radius: var(--border-radius-card);
+}
+
+.slot {
+  right: 0;
+  border: 2px dashed var(--color-accent);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.ghost {
+  left: 0;
+  padding: 10px 12px;
+  background: #dde4f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+
+  i {
+    display: block;
+    height: 6px;
+    margin-bottom: 6px;
+    border-radius: 3px;
+    background: var(--color-accent);
+    opacity: 0.55;
+
+    &:nth-child(2) {
+      width: 60%;
+      opacity: 0.3;
+    }
+  }
+}
+
+.ghost-move {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  transform: rotateZ(45deg); // the icon is drawn diagonally; 45 degrees makes the straight cross
   color: var(--color-accent);
+  font-size: var(--font-size-md);
+}
+
+.cursor {
+  position: absolute;
+  left: 100px;
+  top: 50px;
+  width: 22px;
+  color: #111;
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.9));
+}
+
+.text {
+  strong {
+    display: block;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-lg, 24px);
+    color: var(--color-accent-strong);
+  }
+
+  span {
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
+  }
+}
+
+.inline-move {
+  display: inline-block;
+  transform: rotateZ(45deg);
+  color: var(--color-accent);
+}
+
+@container (max-width: 540px) {
+  .demo {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .no-selected-criteria {
+    animation: frame-march 1s linear infinite;
+  }
+
+  .ghost,
+  .cursor {
+    animation: sketch-move 4.5s ease-in-out infinite;
+  }
+
+  .ghost-move {
+    animation: sketch-nudge 4.5s ease-in-out infinite;
+  }
+}
+
+@keyframes frame-march {
+  to {
+    background-position: 16px 0, -16px 100%, 0 -16px, 100% 16px, 0 0;
+  }
+}
+
+@keyframes sketch-move {
+  0%,
+  12% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  22% {
+    transform: translate(0, 0) scale(1.06);
+    box-shadow: inset 0 0 0 2px var(--color-accent), 0 8px 18px rgba(0, 0, 0, 0.25);
+  }
+  62% {
+    transform: translate(var(--ghost-travel), 0) scale(1.06);
+    box-shadow: inset 0 0 0 2px var(--color-accent), 0 8px 18px rgba(0, 0, 0, 0.25);
+  }
+  72% {
+    transform: translate(var(--ghost-travel), 0) scale(1);
+    opacity: 1;
+  }
+  88%,
+  100% {
+    transform: translate(var(--ghost-travel), 0) scale(1);
+    opacity: 0;
+  }
+}
+
+// the move icon swells and nudges while the box is held (it is rotated by `transform`, so `scale` and `translate` are free)
+@keyframes sketch-nudge {
+  22%,
+  62% {
+    scale: 1.3;
+  }
+  30% {
+    translate: -2px 0;
+  }
+  38% {
+    translate: 2px 0;
+  }
+  46% {
+    translate: 0 -2px;
+  }
+  54% {
+    translate: 0 2px;
+  }
 }
 
 // A dragged criterion is inserted by the CDK as a sibling after the empty-list hint; hiding the hint makes the criterion take its place
@@ -48,59 +213,4 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.solid-box {
-  width: 100%;
-  height: 20%;
-  background-color: var(--color-accent-bg, var(--color-accent-border));
-  border-radius: var(--border-radius-card);
-  position: absolute;
-  left: 10%;
-  z-index: 1;
-}
-
-.dashed-box {
-  width: 80%;
-  height: 20%;
-  border: 1px dashed var(--color-accent);
-  border-radius: var(--border-radius-card);
-  position: absolute;
-  top: 50%;
-  left: 76%;
-  z-index: 2;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  height: 100%;
-  width: 100%;
-}
-
-.wrapper-solid-dashed-box {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 30%;
-  height: 100%;
-}
-
-.text-wrapper {
-  width: 40%;
-  font-size: var(--font-size-md);
-}
-
-.drag-handle {
-  position: absolute;
-  display: block;
-  transform: rotateZ(45deg);
-  bottom: 30%;
-  right: 45%;
-  font-size: large;
-  font-weight: 400;
 }

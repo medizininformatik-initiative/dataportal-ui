@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="de">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prototype: empty list placeholder (Einschluss-/Ausschlusskriterien)</title>
+  <!-- Open in a browser. Three designs for the placeholder of an empty inclusion/exclusion list (today: dotted box with a
+       drawn drag-and-drop sketch, `.no-selected-criteria` in display-criteria.component.scss). Each zone is a real drop target:
+       drag the sample criterion from the stage into it to see the "over" state. Zones are 136px high so the list row needs no scroll
+       (row = 48px heading + 136px zone + 16px padding). Not part of the app. -->
+  <style>
+    :root {
+      --color-accent: #5a79af;
+      --color-accent-bg: rgba(90, 121, 175, 0.1);
+      --color-accent-border: rgba(90, 121, 175, 0.2);
+      --color-accent-strong: #49689c;
+      --color-text-primary: #000;
+      --color-text-secondary: #6a7483;
+      --color-text-section: #5f6266;
+      --border-radius-card: 5px;
+      --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.18);
+      --zone-height: 136px;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      color: var(--color-text-primary);
+      margin: 24px;
+      max-width: 880px;
+    }
+    h1.page {
+      font: 600 18px/24px sans-serif;
+      margin: 0 0 4px;
+    }
+    p.note {
+      color: var(--color-text-secondary);
+      margin: 0 0 16px;
+    }
+    .panel {
+      background: #fff;
+      border: 1px solid #c5cacf;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    .tag {
+      font: 12px/16px monospace;
+      color: var(--color-text-secondary);
+      margin: 0 0 12px;
+    }
+    h2 {
+      font: 600 16px/24px 'Titillium Web', sans-serif;
+      color: var(--color-text-section);
+      margin: 0 0 12px;
+    }
+    button.reset {
+      font: 600 14px/20px 'Titillium Web', sans-serif;
+      padding: 6px 14px;
+      border: 1px solid var(--color-accent);
+      border-radius: var(--border-radius-card);
+      background: #fff;
+      color: var(--color-accent);
+      cursor: pointer;
+    }
+
+    /* ---- the real criterion box (448px, accent-bg) ---- */
+    .stage {
+      min-height: 136px;
+      margin-bottom: 8px;
+    }
+    .crit {
+      position: relative;
+      width: 448px;
+      min-height: 136px;
+      padding: 24px;
+      background: var(--color-accent-bg);
+      border-radius: var(--border-radius-card);
+      cursor: grab;
+      transition: box-shadow 0.2s ease;
+    }
+    .crit:hover {
+      box-shadow: var(--shadow-card-hover);
+    }
+    .crit:active {
+      cursor: grabbing;
+      box-shadow: inset 0 0 0 2px var(--color-accent), 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .crit.dragging {
+      opacity: 0.4;
+    }
+    .crit .t {
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 8px;
+      padding-right: 64px;
+    }
+    .crit .i {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+    .crit .gear {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 50px;
+      height: 40px;
+      border-radius: var(--border-radius-card);
+      background: var(--color-accent);
+    }
+    .crit .gear::after {
+      content: '\2699';
+      display: grid;
+      place-items: center;
+      height: 100%;
+      color: #fff;
+      font-size: 22px;
+    }
+    .crit .move {
+      position: absolute;
+      right: 24px;
+      bottom: 16px;
+      color: var(--color-accent);
+    }
+
+    /* ---- zone chrome shared by all three: heading + drop frame ---- */
+    .zone {
+      position: relative;
+      height: var(--zone-height);
+      border-radius: var(--border-radius-card);
+      overflow: hidden;
+      transition: box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+    .zone.over {
+      box-shadow: inset 0 0 0 3px var(--color-accent);
+      background-color: #fff;
+    }
+    .zone.filled {
+      padding: 0;
+    }
+    .zone .crit {
+      cursor: default;
+    }
+
+    svg {
+      display: block;
+    }
+
+    /* =============== A: the sketch moves (animated ghost into a slot) =============== */
+    .a {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      align-items: center;
+      gap: 24px;
+      padding: 0 24px;
+      background: var(--color-accent-bg);
+      border: 2px dashed var(--color-accent);
+      border-radius: var(--border-radius-card);
+    }
+    .a .demo {
+      position: relative;
+      height: 88px;
+    }
+    .a .slot {
+      position: absolute;
+      right: 0;
+      top: 8px;
+      width: 160px;
+      height: 72px;
+      border: 2px dashed var(--color-accent);
+      border-radius: var(--border-radius-card);
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .a .ghost {
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 160px;
+      height: 72px;
+      padding: 10px 12px;
+      border-radius: var(--border-radius-card);
+      background: #dde4f0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+      animation: a-move 4.5s ease-in-out infinite;
+    }
+    .a .ghost i {
+      display: block;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--color-accent);
+      opacity: 0.55;
+      margin-bottom: 6px;
+    }
+    .a .ghost i:nth-child(2) {
+      width: 60%;
+      opacity: 0.3;
+    }
+    .a .ghost .move {
+      position: absolute;
+      right: 8px;
+      bottom: 6px;
+      color: var(--color-accent);
+      animation: a-nudge 4.5s ease-in-out infinite;
+    }
+    .a .cursor {
+      position: absolute;
+      left: 118px;
+      top: 50px;
+      width: 22px;
+      color: #111;
+      filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.9));
+      animation: a-move 4.5s ease-in-out infinite;
+    }
+    @keyframes a-move {
+      0%,
+      12% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      22% {
+        transform: translate(0, 0) scale(1.06);
+        box-shadow: inset 0 0 0 2px var(--color-accent), 0 8px 18px rgba(0, 0, 0, 0.25);
+      }
+      62% {
+        transform: translate(180px, 0) scale(1.06);
+        box-shadow: inset 0 0 0 2px var(--color-accent), 0 8px 18px rgba(0, 0, 0, 0.25);
+      }
+      72% {
+        transform: translate(180px, 0) scale(1);
+        opacity: 1;
+      }
+      88%,
+      100% {
+        transform: translate(180px, 0) scale(1);
+        opacity: 0;
+      }
+    }
+    @keyframes a-nudge {
+      22%,
+      62% {
+        scale: 1.3;
+      }
+      30% {
+        translate: -2px 0;
+      }
+      38% {
+        translate: 2px 0;
+      }
+      46% {
+        translate: 0 -2px;
+      }
+      54% {
+        translate: 0 2px;
+      }
+    }
+    .a .text strong {
+      display: block;
+      font: 600 18px/24px 'Titillium Web', sans-serif;
+      color: var(--color-accent-strong);
+    }
+    .a .text span {
+      color: var(--color-text-secondary);
+    }
+
+    /* =============== B: three steps (grab, drag, drop) =============== */
+    .b {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      padding: 0 24px;
+      background: #fff;
+      border: 2px dashed var(--color-accent-border);
+      border-radius: var(--border-radius-card);
+    }
+    .b strong {
+      font: 600 18px/24px 'Titillium Web', sans-serif;
+      color: var(--color-accent-strong);
+      text-align: center;
+    }
+    .b ol {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .b li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px 6px 6px;
+      border-radius: 999px;
+      background: var(--color-accent-bg);
+      color: var(--color-accent-strong);
+      font-weight: 600;
+    }
+    .b li b {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+      font-size: 14px;
+    }
+    .b li.arrow {
+      padding: 0;
+      background: none;
+      color: var(--color-accent);
+    }
+    .b li:not(.arrow) {
+      animation: b-step 3.6s infinite;
+    }
+    .b li:nth-child(3) {
+      animation-delay: 1.2s;
+    }
+    .b li:nth-child(5) {
+      animation-delay: 2.4s;
+    }
+    @keyframes b-step {
+      0%,
+      33% {
+        background: var(--color-accent);
+        color: #fff;
+      }
+      40%,
+      100% {
+        background: var(--color-accent-bg);
+        color: var(--color-accent-strong);
+      }
+    }
+    .b li:not(.arrow) {
+      animation-name: b-step;
+    }
+    .b.zone.over {
+      background: #fff;
+    }
+
+    /* =============== C: one bold target (pulsing plus, marching border) =============== */
+    .c {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      background: linear-gradient(90deg, var(--color-accent) 50%, transparent 0) top / 16px 2px
+          repeat-x,
+        linear-gradient(90deg, var(--color-accent) 50%, transparent 0) bottom / 16px 2px repeat-x,
+        linear-gradient(0deg, var(--color-accent) 50%, transparent 0) left / 2px 16px repeat-y,
+        linear-gradient(0deg, var(--color-accent) 50%, transparent 0) right / 2px 16px repeat-y,
+        var(--color-accent-bg);
+      animation: c-march 1s linear infinite;
+    }
+    @keyframes c-march {
+      to {
+        background-position: 16px 0, -16px 100%, 0 -16px, 100% 16px, 0 0;
+      }
+    }
+    .c .plus {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .c .plus::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid var(--color-accent);
+      animation: c-ring 1.8s ease-out infinite;
+    }
+    @keyframes c-ring {
+      to {
+        transform: scale(1.7);
+        opacity: 0;
+      }
+    }
+    .c .text strong {
+      display: block;
+      font: 600 20px/28px 'Titillium Web', sans-serif;
+      color: var(--color-accent-strong);
+    }
+    .c .text span {
+      color: var(--color-text-secondary);
+    }
+
+    /* =============== D: skeleton card (the slot has the shape of what will land) =============== */
+    .d {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      background: #fff;
+    }
+    .d .skel {
+      position: relative;
+      width: 260px;
+      height: 92px;
+      padding: 16px;
+      border: 2px dashed var(--color-accent);
+      border-radius: var(--border-radius-card);
+      background: linear-gradient(
+          100deg,
+          var(--color-accent-bg) 30%,
+          rgba(90, 121, 175, 0.22) 50%,
+          var(--color-accent-bg) 70%
+        )
+        0 0 / 300% 100%;
+      animation: d-shimmer 2.2s linear infinite;
+    }
+    .d .skel i {
+      display: block;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--color-accent);
+      opacity: 0.35;
+      margin-bottom: 8px;
+    }
+    .d .skel i:nth-child(1) {
+      width: 70%;
+    }
+    .d .skel i:nth-child(2) {
+      width: 45%;
+      opacity: 0.2;
+    }
+    .d .skel b {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 28px;
+      height: 22px;
+      border-radius: 4px;
+      background: var(--color-accent);
+      opacity: 0.35;
+    }
+    @keyframes d-shimmer {
+      to {
+        background-position: -300% 0;
+      }
+    }
+    .d .text strong,
+    .e .text strong,
+    .g .text strong {
+      display: block;
+      font: 600 18px/24px 'Titillium Web', sans-serif;
+      color: var(--color-accent-strong);
+    }
+    .d .text span,
+    .e .text span,
+    .g .text span,
+    .f .text span {
+      color: var(--color-text-secondary);
+    }
+
+    /* =============== E: big arrow down from the stage =============== */
+    .e {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      background: var(--color-accent-bg);
+      border-top: 4px solid var(--color-accent);
+    }
+    .e .arrow {
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+      animation: e-bob 1.2s ease-in-out infinite;
+    }
+    @keyframes e-bob {
+      50% {
+        transform: translateY(10px);
+      }
+    }
+
+    /* =============== F: tray (a card falls into an inbox) =============== */
+    .f {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      background: #fff;
+      border: 2px dashed var(--color-accent-border);
+      border-radius: var(--border-radius-card);
+    }
+    .f .scene {
+      position: relative;
+      width: 160px;
+      height: 100px;
+    }
+    .f .tray {
+      position: absolute;
+      left: 10px;
+      bottom: 12px;
+      width: 140px;
+      height: 40px;
+      border: 3px solid var(--color-accent);
+      border-top: 0;
+      border-radius: 0 0 10px 10px;
+      background: var(--color-accent-bg);
+      z-index: 2;
+    }
+    .f .card {
+      position: absolute;
+      left: 36px;
+      bottom: 24px;
+      width: 88px;
+      height: 56px;
+      padding: 10px;
+      border-radius: var(--border-radius-card);
+      background: #dde4f0;
+      box-shadow: inset 0 0 0 2px var(--color-accent);
+      animation: f-drop 2.6s ease-in infinite;
+      z-index: 1;
+    }
+    .f .card i {
+      display: block;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--color-accent);
+      opacity: 0.45;
+      margin-bottom: 6px;
+    }
+    @keyframes f-drop {
+      0% {
+        transform: translateY(-70px);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      60%,
+      85% {
+        transform: translateY(8px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(8px);
+        opacity: 0;
+      }
+    }
+    .f .text strong {
+      display: block;
+      font: 600 18px/24px 'Titillium Web', sans-serif;
+      color: var(--color-accent-strong);
+    }
+
+    /* =============== G: the handle (the move icon on the box is the instruction) =============== */
+    .g {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      background: var(--color-accent-bg);
+      border-left: 4px solid var(--color-accent);
+    }
+    .g .handle {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 64px;
+      height: 64px;
+      border-radius: var(--border-radius-card);
+      background: #fff;
+      color: var(--color-accent);
+      box-shadow: inset 0 0 0 2px var(--color-accent);
+    }
+    .g .handle svg {
+      animation: g-nudge 1.6s ease-in-out infinite;
+    }
+    @keyframes g-nudge {
+      20% {
+        translate: -4px 0;
+      }
+      40% {
+        translate: 4px 0;
+      }
+      60% {
+        translate: 0 -4px;
+      }
+      80% {
+        translate: 0 4px;
+      }
+    }
+    .g .text svg {
+      display: inline-block;
+      vertical-align: -4px;
+      color: var(--color-accent);
+    }
+
+    /* =============== H: filled banner (highest pull: white on accent) =============== */
+    .h {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
+      color: #fff;
+    }
+    .h::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 2px dashed rgba(255, 255, 255, 0.6);
+      border-radius: var(--border-radius-card);
+      pointer-events: none;
+    }
+    .h .arrow {
+      animation: e-bob 1.2s ease-in-out infinite;
+    }
+    .h .text strong {
+      display: block;
+      font: 600 22px/28px 'Titillium Web', sans-serif;
+    }
+    .h .text span {
+      opacity: 1;
+    }
+    .zone.h.over {
+      background: linear-gradient(135deg, var(--color-accent-strong), var(--color-accent));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+      }
+    }
+  </style>
+
+  <h1 class="page">Prototype: placeholder of an empty criteria list</h1>
+  <p class="note">
+    Drag the sample criterion into each zone. Zone = 136px high, 740px wide (a list half). The
+    heading above stays; while a criterion is over the zone the app fades the heading and shows the
+    label pill (not drawn here).
+  </p>
+
+  <div class="panel">
+    <p class="tag">stage ("Ausgewählte Kriterien")</p>
+    <div class="stage" id="stage">
+      <div class="crit" draggable="true" id="crit">
+        <div class="t">Interne Fixierung des Humerusknochens</div>
+        <div class="i">Prozedur, 20055005, SNOMED CT</div>
+        <div class="gear"></div>
+        <svg class="move" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l4 4h-3v4h4V7l4 4-4 4v-3h-4v4h3l-4 4-4-4h3v-4H7v3l-4-4 4-4v3h4V6H8z" />
+        </svg>
+      </div>
+    </div>
+    <button class="reset" id="reset">Zurücksetzen</button>
+  </div>
+
+  <div class="panel">
+    <p class="tag">
+      A: the sketch moves (ghost box is grabbed, dragged and dropped into a slot, loops)
+    </p>
+    <h2>Einschlusskriterien</h2>
+    <div class="zone a" data-zone>
+      <div class="demo" aria-hidden="true">
+        <div class="slot"></div>
+        <div class="ghost">
+          <i></i>
+          <i></i>
+          <svg class="move" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l4 4h-3v4h4V7l4 4-4 4v-3h-4v4h3l-4 4-4-4h3v-4H7v3l-4-4 4-4v3h4V6H8z" />
+          </svg>
+        </div>
+        <svg class="cursor" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z" />
+        </svg>
+      </div>
+      <div class="text">
+        <strong>Kriterium hierher ziehen</strong>
+        <span>Greifen Sie ein Kriterium aus „Ausgewählte Kriterien“ und legen Sie es hier ab.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="tag">B: three steps (the steps light up one after the other, loops)</p>
+    <h2>Einschlusskriterien</h2>
+    <div class="zone b" data-zone>
+      <strong>Kriterium hinzufügen in drei Schritten</strong>
+      <ol>
+        <li>
+          <b>1</b>
+          Greifen
+        </li>
+        <li class="arrow">→</li>
+        <li>
+          <b>2</b>
+          Ziehen
+        </li>
+        <li class="arrow">→</li>
+        <li>
+          <b>3</b>
+          Ablegen
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="tag">C: one bold target (marching border, pulsing plus)</p>
+    <h2>Einschlusskriterien</h2>
+    <div class="zone c" data-zone>
+      <div class="plus">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z" />
+        </svg>
+      </div>
+      <div class="text">
+        <strong>Kriterium hier ablegen</strong>
+        <span>Ziehen Sie es aus „Ausgewählte Kriterien“ in die Einschlusskriterien.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="tag">D: skeleton card (dashed slot in the shape of a criterion, shimmering)</p>
+    <h2>Einschlusskriterien</h2>
+    <div class="zone d" data-zone>
+      <div class="skel">
+        <i></i>
+        <i></i>
+        <b></b>
+      </div>
+      <div class="text">
+        <strong>Hier landet Ihr Kriterium</strong>
+        <span>Ziehen Sie es aus „Ausgewählte Kriterien“ in diese Fläche.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="tag">E: arrow down (from the stage above into the list, bobbing)</p>
+    <h2>Einschlusskriterien</h2>
+    <div class="zone e" data-zone>
+      <div class="arrow">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11 4h2v12.2l4.6-4.6L19 13l-7 7-7-7 1.4-1.4 4.6 4.6z" />
+        </svg>
+      </div>
+      <div class="text">
+        <strong>Kriterium von oben hierher ziehen</strong>
+        <span>Es wird zu den Einschlusskriterien hinzugefügt.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="tag">F: tray (a card drops into an inbox, loops)</p>
+    <h2>Einschlusskriterien</h2>
+    <div class="zone f" data-zone>
+      <div class="scene" aria-hidden="true">
+        <div class="card">
+          <i></i>
+          <i></i>
+        </div>
+        <div class="tray"></div>
+      </div>
+      <div class="text">
+        <strong>Ablage für Einschlusskriterien</strong>
+        <span>Legen Sie hier ein Kriterium ab.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="tag">G: the handle (the move icon of the box is named in the text and nudges)</p>
+    <h2>Einschlusskriterien</h2>
+    <div class="zone g" data-zone>
+      <div class="handle">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l4 4h-3v4h4V7l4 4-4 4v-3h-4v4h3l-4 4-4-4h3v-4H7v3l-4-4 4-4v3h4V6H8z" />
+        </svg>
+      </div>
+      <div class="text">
+        <strong>Am Symbol greifen und ziehen</strong>
+        <span>
+          Fassen Sie ein Kriterium an
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l4 4h-3v4h4V7l4 4-4 4v-3h-4v4h3l-4 4-4-4h3v-4H7v3l-4-4 4-4v3h4V6H8z" />
+          </svg>
+          an und legen Sie es hier ab.
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="tag">H: filled banner (white on accent, the strongest pull)</p>
+    <h2>Einschlusskriterien</h2>
+    <div class="zone h" data-zone>
+      <div class="arrow">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11 4h2v12.2l4.6-4.6L19 13l-7 7-7-7 1.4-1.4 4.6 4.6z" />
+        </svg>
+      </div>
+      <div class="text">
+        <strong>Kriterium hier ablegen</strong>
+        <span>Ziehen Sie es aus „Ausgewählte Kriterien“ hierher.</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const crit = document.getElementById('crit')
+    const stage = document.getElementById('stage')
+    const zones = document.querySelectorAll('[data-zone]')
+    const saved = new Map()
+    zones.forEach((z) => saved.set(z, z.innerHTML))
+    crit.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', 'crit')
+      setTimeout(() => crit.classList.add('dragging'), 0)
+    })
+    crit.addEventListener('dragend', () => crit.classList.remove('dragging'))
+    zones.forEach((z) => {
+      z.addEventListener('dragenter', () => z.classList.add('over'))
+      z.addEventListener('dragover', (e) => e.preventDefault())
+      z.addEventListener('dragleave', (e) => {
+        if (!z.contains(e.relatedTarget)) z.classList.remove('over')
+      })
+      z.addEventListener('drop', (e) => {
+        e.preventDefault()
+        z.classList.remove('over')
+        z.classList.add('filled')
+        z.style.animation = 'none'
+        z.style.background = '#fff'
+        z.style.border = '0'
+        z.innerHTML = ''
+        const clone = crit.cloneNode(true)
+        clone.removeAttribute('id')
+        clone.removeAttribute('draggable')
+        z.appendChild(clone)
+        crit.style.visibility = 'hidden'
+      })
+    })
+    document.getElementById('reset').addEventListener('click', () => {
+      zones.forEach((z) => {
+        z.className = z.className.replace(/\b(filled|over)\b/g, '').trim()
+        z.removeAttribute('style')
+        z.innerHTML = saved.get(z)
+      })
+      crit.style.visibility = ''
+    })
+  </script>
+</html>
