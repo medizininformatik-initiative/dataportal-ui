@@ -1,43 +1,15 @@
-<div class="container">
-  <div class="stepper-container">
-    <mat-stepper
-      class="width-100"
-      (selectionChange)="navigateToDataQueryCohortDefinition()"
-      labelPosition="bottom"
-      [selectedIndex]="1"
-    >
-      <mat-step role="tab">
-        <ng-template matStepLabel>
-          <num-header>
-            {{ 'DATAQUERY.COHORT.HEADER' | translate }}
-          </num-header>
-        </ng-template>
-      </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>
-          <num-header>
-            {{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}
-          </num-header>
-        </ng-template>
-      </mat-step>
-    </mat-stepper>
-  </div>
-  <div>
-    <num-header-description>
-      <span
-        [innerHTML]="'DATASELECTION.EDITOR.HEADER_INFO' | translate : { email: emailLink }"
-      ></span>
-    </num-header-description>
-  </div>
-  @if (isDataSelectionExistent() === false) {
-  <div class="empty-data-selection-box">
-    <num-placeholder-box>
-      {{ 'DATAQUERY.DATASELECTION.EDITOR.EMPTY' | translate }}
-    </num-placeholder-box>
-  </div>
+<num-query-page [step]="1">
+  <num-header-description>
+    <span
+      [innerHTML]="'DATASELECTION.EDITOR.HEADER_INFO' | translate : { email: emailLink }"
+    ></span>
+  </num-header-description>
+  @if (isDataSelectionExistent()) {
+  <num-display-profiles [isEditable]="false"></num-display-profiles>
+  } @else {
+  <num-placeholder-box>
+    {{ 'DATAQUERY.DATASELECTION.EDITOR.EMPTY' | translate }}
+  </num-placeholder-box>
   }
-  <div class="flex-scroll">
-    <num-display-profiles [isEditable]="false"></num-display-profiles>
-  </div>
-  <num-data-selection-action-bar></num-data-selection-action-bar>
-</div>
+  <num-data-selection-action-bar actions></num-data-selection-action-bar>
+</num-query-page>

@@ -1,33 +1,4 @@
 :host {
-  width: 100%;
-  height: 100%;
   display: block;
-}
-.container {
-  width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
-
-.empty-cohort-box {
-  width: 100%;
-  flex: 1;
-}
-
-.feasibility-container {
-  overflow-y: auto;
-  flex: 1;
-}
-.height-400 {
-  height: 400px;
-}
-
-::ng-deep.mat-step-icon {
-  height: 35px !important;
-  width: 35px !important;
-}
-::ng-deep .mat-horizontal-content-container {
-  padding-bottom: 0 !important;
 }

@@ -1,0 +1,29 @@
+// Page frame: one column, three rows; the content takes the rest and scrolls inside itself.
+:host {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto; // header, content, actions
+  row-gap: var(--spacing-16); // the one vertical rhythm between the rows
+  height: 100%;
+  overflow: auto;
+}
+
+// Intro sits 8px under the stepper; its own 1em margins are off, the row gap spaces it from the content
+.page-header {
+  --header-description-margin: var(--spacing-8) 0 0;
+}
+
+.content {
+  min-height: 0;
+  overflow: hidden; // the lists inside scroll, not the row
+}
+
+// The stepper only shows the two steps, it has no step content
+::ng-deep .mat-step-icon {
+  height: 35px !important;
+  width: 35px !important;
+}
+
+::ng-deep .mat-horizontal-content-container {
+  padding-bottom: 0 !important;
+}

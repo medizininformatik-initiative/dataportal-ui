@@ -1,8 +1,9 @@
+@if (isEditable()) {
 <div class="toolbar">
   <num-searchbar [minLength]="1" (searchTextChange)="searchText.set($event)" />
   <num-apply-time-restriction />
 </div>
-@if (searchText()) {
+} @if (searchText()) {
 <div class="search-summary">
   {{ filteredProfiles().length }} / {{ profiles().length }}
   <span class="search-summary-detail">

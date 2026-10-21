@@ -1,29 +1,4 @@
-.flex-scroll {
-  flex: 1;
-  overflow: auto;
-}
-.container {
+:host {
+  display: block;
   height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
-.stepper-container {
-  display: flex; /* Enable flexbox layout */
-  justify-content: start; /* Center horizontally */
-  align-items: center; /* Center vertically (optional) */
-}
-
-::ng-deep.mat-step-icon {
-  height: 35px !important;
-  width: 35px !important;
-}
-::ng-deep .mat-horizontal-content-container {
-  padding-bottom: 0;
-}
-
-.empty-data-selection-box {
-  width: 100%;
-  flex: 0 1 50%;
 }

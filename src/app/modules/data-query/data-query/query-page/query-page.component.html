@@ -1,0 +1,23 @@
+<div class="page-header">
+  <mat-stepper
+    labelPosition="bottom"
+    [selectedIndex]="step()"
+    (selectionChange)="navigateToStep($event.selectedIndex)"
+  >
+    <mat-step>
+      <ng-template matStepLabel>
+        <num-header>{{ 'DATAQUERY.COHORT.HEADER' | translate }}</num-header>
+      </ng-template>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>
+        <num-header>{{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}</num-header>
+      </ng-template>
+    </mat-step>
+  </mat-stepper>
+  <ng-content select="num-header-description" />
+</div>
+<div class="content">
+  <ng-content />
+</div>
+<ng-content select="[actions]" />
