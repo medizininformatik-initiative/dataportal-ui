@@ -1,55 +1,50 @@
+@area:feasibility-query
 Feature: Cohort editing
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
     And I set the language to English
-  Scenario Outline: I edit <criterium> criterium
-    Given I add the criterium "<criterium>" to the editor
-    When I open the menu
-    When I click on the menu item "Apply filter"
-    Then I should see "Edit Cohort" modal opening
-    When I set the time restriction filter to before with date "04.04.2045"
-    Then I click on Auswählen button
-    Then I see the criterium "<criterium>" with filter chip "04.04.2045" in the block "before"
-    When I drag "<criterium>" criterium to the "Inclusion" list
-    Then the button "Feasibility" should be enabled
-    When I click on the button "Feasibility"
-    Then I am on the "Feasibility Result" page
-    When I click on the button "Edit cohort selection"
-    Then I am on the "Feasibility Editor" page
-    Examples:
-      | criterium                    |
-      | 17-keto reductase deficiency |
-      | 11-hydroxylase deficiency    |
 
-
-  Scenario Outline: I edit <criterium>
-    Given I add the criterium "<criterium>" to the editor
-    When I open the menu
-    When I click on the menu item "Apply filter"
-    When I see the panel with the name "<panel_name>"
-    Then I should see "<default_filter>" selected in the panel "<panel_name>"
-    When I select "<new_filter>" from the panel with the name "<panel_name>"
-    Then I should see "<new_filter>" selected in the panel "<panel_name>"
-    Then I select a value of <value>
-    And  I select the unit "<unit>"
-    When I click on Auswählen button
-    Then I should see "Edit Cohort" modal closing
-    And I should see "<criterium>" in the cohort criteria list with "<panel_name>" and "<chip_value>" selected
-    Examples:
-      | criterium                 | default_filter | new_filter | panel_name    | value | unit | chip_value |
-      | Current chronological age | No filter      | greater    | Current chronological age | 5     | a    | 5          |
-
-
-  Scenario Outline: I add criterium to inlcusion list
-    Given I add the criterium "<criterium>" to the editor
+  @component:feasibility-editor @behavior:add
+  Scenario Outline: Adding a criterium to the Inclusion list enables running Feasibility
+    Given I add the criterium "<criterium>" via code "<code>" to the editor
     Then I should see the criterium "<criterium>" in the editor
-    When I drag "<criterium>" criterium to the "Inclusion" list
-    Then the button "Feasibility" should be enabled
-    When I click on the button "Feasibility"
-    Then I am on the "Feasibility Result" page
-    And I wait for 11 seconds
+    When I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
+    Then the button "{{labels.feasibility}}" should be enabled
+    When I click on the button "{{labels.feasibility}}"
+    Then I am on the "{{pages.feasibilityResult}}" page
     Examples:
-      | criterium                    |
-      | 17-keto reductase deficiency |
+      | criterium               | code               |
+      | {{pneumonia.criterium}} | {{pneumonia.code}} |
 
+  Rule: A criterium with a mandatory value filter keeps Feasibility disabled until the filter is set
+
+    @component:feasibility-editor @behavior:mandatory-filter
+    Scenario Outline: A criterium with an unset mandatory value filter keeps Feasibility disabled
+      Given I add the criterium "<criterium>" via code "<code>" to the editor
+      When I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
+      Then the "{{labels.inclusion}}" list should contain 1 criteria
+      And the button "{{labels.feasibility}}" should be disabled
+
+      Examples:
+        | criterium         | code         |
+        | {{age.criterium}} | {{age.code}} |
+
+    @component:feasibility-editor @behavior:mandatory-filter
+    Scenario Outline: Setting the mandatory value filter enables Feasibility
+      Given I add the criterium "<criterium>" via code "<code>" to the editor
+      And I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
+      And the button "{{labels.feasibility}}" should be disabled
+      When I open the menu
+      And I click on the menu item "{{labels.configure}}"
+      And I select "<comparator>" from the panel with the name "<criterium>"
+      And I select a value of <value>
+      And I select the unit "<unit>"
+      Then I should see "<chip_value>" applied in the filter summary
+      When I click on the button "{{labels.close}}"
+      Then I am on the "{{pages.feasibilityEditor}}" page
+      And the button "{{labels.feasibility}}" should be enabled
+
+      Examples:
+        | criterium         | code         | comparator | value | unit         | chip_value                           |
+        | {{age.criterium}} | {{age.code}} | greater    | 5     | {{age.unit}} | {{quantityComparatorUpdateChip.v5A}} |

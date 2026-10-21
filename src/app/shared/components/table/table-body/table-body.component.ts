@@ -6,7 +6,7 @@ import { DisplayCellComponent } from '../cells/display-cell/display-cell.compone
 import { IconCellComponent } from '../cells/icon-cell/icon-cell.component'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TextCellComponent } from '../cells/text-cell/text-cell.component'
-import { CheckboxCellComponent } from '../../shared-components.module'
+import { CheckboxCellComponent } from '../cells/checkbox-cell/checkbox-cell.component'
 import { TableCellKind } from '../../../models/TableData/Cells/TableCellKind'
 import { TableCellUnion } from '../../../models/TableData/Cells/TableCellUnion'
 import { getColumnWidthPercent } from '../table-column-width.util'

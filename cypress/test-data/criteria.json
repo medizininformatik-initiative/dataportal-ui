@@ -1,0 +1,63 @@
+{
+  "causeOfDeath": {
+    "criterium": "Cause of death",
+    "code": "79378-6",
+    "tab": "ICD-10-WHO",
+    "system": "http://hl7.org/fhir/sid/icd-10",
+    "searchTerm": "pneumoniae"
+  },
+  "concepts": {
+    "first": "J13",
+    "second": "J15.0",
+    "third": "J15.7",
+    "firstChip": "Pneumonie durch Streptococcus pneumoniae",
+    "secondChip": "Pneumonie durch Klebsiella pneumoniae"
+  },
+  "pneumonia": {
+    "criterium": "Pneumonia",
+    "code": "233604007",
+    "parent": "Infectious disease of lung",
+    "parentTabs": "Parent element (2)",
+    "child": "Hospital acquired pneumonia",
+    "childTabs": "Child element (31)"
+  },
+  "appendectomy": {
+    "criterium": "Appendectomy",
+    "code": "80146002"
+  },
+  "age": {
+    "criterium": "Current chronological age",
+    "code": "424144002",
+    "unit": "a"
+  },
+  "labAge": {
+    "criterium": "Age",
+    "code": "30525-0"
+  },
+  "gender": {
+    "criterium": "Gender",
+    "code": "263495000",
+    "tab": "Gender",
+    "system": "http://hl7.org/fhir/administrative-gender",
+    "first": "female",
+    "second": "male",
+    "third": "other"
+  },
+  "encounter": {
+    "criterium": "inpatient encounter",
+    "code": "IMP",
+    "otherCriterium": "ambulatory",
+    "otherCode": "AMB",
+    "typeTab": "Type of encounter",
+    "typeFirst": "konsil",
+    "typeSecond": "nachstationaer",
+    "levelTab": "Level of encounter",
+    "levelFirst": "abteilungskontakt",
+    "departmentTab": "Department key",
+    "extendedDepartmentTab": "Extended department key",
+    "departmentFirst": "1500"
+  },
+  "noFilter": {
+    "criterium": "BIOMAT erheben"
+  }
+}

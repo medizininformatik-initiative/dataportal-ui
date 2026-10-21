@@ -3,13 +3,14 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { MatFormField, MatPrefix } from '@angular/material/form-field'
 import { MatSelect } from '@angular/material/select'
 import { MatOption } from '@angular/material/core'
+import { NumDataCyDirective } from '../../../shared/directives/num-data-cy.directive'
 
 @Component({
   selector: 'num-language',
   templateUrl: './language.component.html',
   styleUrls: ['./language.component.scss'],
   standalone: true,
-  imports: [MatFormField, MatPrefix, MatSelect, MatOption, TranslateModule],
+  imports: [MatFormField, MatPrefix, MatSelect, MatOption, TranslateModule, NumDataCyDirective],
 })
 export class LanguageComponent implements OnInit {
   translate = inject(TranslateService)

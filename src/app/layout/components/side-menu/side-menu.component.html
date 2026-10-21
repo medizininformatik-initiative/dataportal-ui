@@ -8,6 +8,7 @@
     ariaCurrentWhenActive="page"
     [routerLinkActiveOptions]="{ exact: !child && isSideMenuExpanded() }"
     [routerLink]="item.routeTo"
+    [numDataCy]="'nav-' + item.routeTo"
     [attr.aria-label]="label"
     [matTooltip]="isCollapsed() ? label : null"
     matTooltipPosition="right"
