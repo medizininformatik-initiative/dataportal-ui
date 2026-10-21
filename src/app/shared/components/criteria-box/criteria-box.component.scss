@@ -14,6 +14,21 @@
     box-shadow: var(--shadow-card-hover);
     cursor: grab;
   }
+
+  // Pressed on a handle (the box or the move icon): the box is grabbed - it gets a frame and a deeper shadow, a hint appears, the move icon swells (no scale: the stage and the lists are scroll boxes and would cut the edges)
+  &:has(.content:active, .menu-icon:active) {
+    box-shadow: inset 0 0 0 2px var(--color-accent), 0 8px 20px rgba(0, 0, 0, 0.2);
+    cursor: grabbing;
+
+    .content {
+      cursor: grabbing;
+    }
+
+    .drag-handle {
+      scale: 1.4;
+      color: var(--color-accent-strong);
+    }
+  }
 }
 
 // Where the criterion will land: a dashed slot (20% accent, stronger than the 10% boxes) with a faded copy of the content
@@ -96,6 +111,7 @@
 }
 
 .drag-handle {
+  transition: scale 0.15s ease, color 0.15s ease;
   position: absolute;
   display: block;
   transform: rotateZ(45deg);
@@ -115,4 +131,56 @@
   height: 24px; /* multiple of 4 */
   width: 32px; /* multiple of 4 */
   margin-right: var(--spacing-8);
+}
+
+// The hint beside the move icon, while the box is pressed and while it is dragged
+.container:has(.content:active, .menu-icon:active)::after,
+.container.cdk-drag-preview::after {
+  content: '\2194\00a0\2195\00a0'attr(data-grab-hint); // left-right and up-down arrows
+  position: absolute;
+  left: 0;
+  right: 0; // centred in the box, clear of the move icon in the corner
+  bottom: var(--spacing-16);
+  text-align: center;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent-strong);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .container:has(.content:active, .menu-icon:active)::after,
+  .container.cdk-drag-preview::after {
+    animation: grab-hint-in 0.2s ease-out;
+  }
+}
+
+@keyframes grab-hint-in {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+// The move icon nudges left, right, up and down: the box can go any way (while pressed and while dragged)
+@media (prefers-reduced-motion: no-preference) {
+  .container:has(.content:active, .menu-icon:active) .drag-handle,
+  .container.cdk-drag-preview .drag-handle {
+    animation: drag-handle-nudge 0.9s ease-in-out infinite;
+  }
+}
+
+@keyframes drag-handle-nudge {
+  20% {
+    translate: -3px 0;
+  }
+  40% {
+    translate: 3px 0;
+  }
+  60% {
+    translate: 0 -3px;
+  }
+  80% {
+    translate: 0 3px;
+  }
 }

@@ -576,7 +576,8 @@
       "TIMERESTRICTION": "Zeiteinschränkung"
     },
     "CRITERIA_BOX": {
-      "DRAG_ICON_LABEL": "Kriterium in Einschluss- oder Ausschlussgruppe verschieben (Drag & Drop)"
+      "DRAG_ICON_LABEL": "Kriterium in Einschluss- oder Ausschlussgruppe verschieben (Drag & Drop)",
+      "GRAB_HINT": "Ziehen, um zu verschieben"
     },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",

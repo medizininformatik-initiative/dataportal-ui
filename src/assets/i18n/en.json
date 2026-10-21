@@ -587,7 +587,8 @@
       "TIMERESTRICTION": "Time Restriction"
     },
     "CRITERIA_BOX": {
-      "DRAG_ICON_LABEL": "Drag criterion to inclusion or exclusion group (Drag & Drop)"
+      "DRAG_ICON_LABEL": "Drag criterion to inclusion or exclusion group (Drag & Drop)",
+      "GRAB_HINT": "Drag to move"
     },
     "DELETE_MODAL": {
       "CANCEL": "Cancel",
