@@ -5,17 +5,46 @@
   $name: map-get($theme, name);
 
   num-dataportal-header {
+    position: relative;
+    z-index: 2; // the header shadow must paint over the nav and the main content
+
     mat-toolbar {
       --mat-toolbar-container-background-color: #f1f2f3;
       --mat-toolbar-container-text-color: #000000;
       background: #ffffff !important;
       color: #000000 !important;
-      height: 104px;
+      height: var(--header-height);
       display: flex;
       flex-direction: row;
       align-items: stretch;
-      padding: 0;
-      width: 95%;
+      padding: 0 calc(var(--page-gutter) + var(--scrollbar-width)) 0 0; // right edge lines up with the page content
+      width: 100%;
+      position: relative;
+
+      // soft edge under the content column only: under the logo block it would cut across the vertical divider
+      &::before {
+        content: '';
+        position: absolute;
+        left: var(--nav-width-expanded);
+        right: 0;
+        bottom: 0;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.16);
+      }
+
+      // a shadow has one color, so the gradient is a 1px line on top, from the logo divider to the right page gutter
+      &::after {
+        content: '';
+        position: absolute;
+        left: var(--nav-width-expanded); // starts at the divider next to the logo
+        right: calc(var(--page-gutter) + var(--scrollbar-width));
+        bottom: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          var(--num-color--primary-blue),
+          var(--num-color--primary-green)
+        );
+      }
     }
 
     .mat-toolbar-single-row {
@@ -35,14 +64,14 @@
     }
 
     .logo-wrapper {
-      width: 320px;
-      min-width: 320px;
+      width: var(--nav-width-expanded);
+      min-width: var(--nav-width-expanded);
     }
 
     .FDPGTheme {
       width: 208px;
       max-width: 208px;
-      height: 104px;
+      height: 100%;
       object-fit: cover;
       display: block;
     }

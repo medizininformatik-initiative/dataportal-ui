@@ -1,5 +1,8 @@
-<num-dataportal-header role="banner"></num-dataportal-header>
-<div class="app-body">
+<a class="skip-link" href="#main-content" (click)="focusMain($event)">
+  {{ 'APPLAYOUT.SKIP_TO_CONTENT' | translate }}
+</a>
+<div class="app-shell" [class.no-nav]="!showSideNav">
+  <num-dataportal-header role="banner"></num-dataportal-header>
   @if (showSideNav) {
   <nav
     class="sidenav"
@@ -15,9 +18,11 @@
   </nav>
   }
 
-  <main class="main-content padding-left-4">
+  <main id="main-content" class="main-content" tabindex="-1">
     <div [@routeAnimations]="prepareRoute(outlet)" class="fullscreen">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
   </main>
 </div>
+<num-snackbar></num-snackbar>
+<num-error-display></num-error-display>

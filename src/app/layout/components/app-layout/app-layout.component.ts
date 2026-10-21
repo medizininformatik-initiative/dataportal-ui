@@ -4,6 +4,8 @@ import { Component, OnInit, inject } from '@angular/core'
 import { filter, map, mergeMap } from 'rxjs'
 import { HeaderComponent } from '../header/header.component'
 import { SideMenuComponent } from '../side-menu/side-menu.component'
+import { SnackbarComponent } from '../../../shared/components/snack-bar/snackbar.component'
+import { ErrorDisplayComponent } from '../../../shared/components/error-display/error-display.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -12,7 +14,14 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./app-layout.component.scss'],
   animations: [routeAnimations],
   standalone: true,
-  imports: [HeaderComponent, SideMenuComponent, RouterOutlet, TranslateModule],
+  imports: [
+    HeaderComponent,
+    SideMenuComponent,
+    RouterOutlet,
+    TranslateModule,
+    SnackbarComponent,
+    ErrorDisplayComponent,
+  ],
 })
 export class AppLayoutComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute)
@@ -36,6 +45,12 @@ export class AppLayoutComponent implements OnInit {
       .subscribe((data) => {
         this.showSideNav = data.hideSideNav ?? true
       })
+  }
+
+  /** Moves focus into <main>; a plain #hash link would be eaten by the router. */
+  focusMain(event: Event) {
+    event.preventDefault()
+    document.getElementById('main-content')?.focus()
   }
 
   prepareRoute(outlet: RouterOutlet) {

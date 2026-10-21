@@ -9,23 +9,34 @@
     border-right: 2px solid role-color($theme, neutral, 100);
   }
 
-  // ── Body below the fixed header (108 px): nav + main side by side ─────────
-  .app-body {
-    position: fixed;
-    inset: 108px 0 0 0;
-    display: flex;
+  // ── App shell: one grid for header, side nav and main ─────────────────────
+  // columns: nav | content    rows: header | body (rest of the viewport)
+  .app-shell {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: var(--header-height) minmax(0, 1fr);
+    height: 100vh;
+    height: 100dvh;
     background-color: role-color($theme, neutral, 0);
 
+    num-dataportal-header {
+      grid-column: 1 / -1;
+    }
+
     .sidenav {
-      flex: none;
+      grid-column: 1;
       overflow: hidden;
 
       &.expanded {
-        width: 320px;
+        width: var(--nav-width-expanded);
       }
 
       &.collapsed {
-        width: 64px;
+        width: var(--nav-width-collapsed);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        transition: width 0.2s ease;
       }
     }
 
@@ -35,17 +46,42 @@
     }
 
     .main-content {
-      flex: 1 1 auto;
-      min-width: 0;
+      grid-column: 2; // explicit: without a nav the content must not move into column 1
+      min-height: 0;
       overflow-x: hidden;
       overflow-y: auto;
-      box-sizing: border-box;
+      scrollbar-gutter: stable; // a scrollbar appearing must not shift the page
+      padding-inline: var(--page-gutter);
+      padding-block-start: var(--spacing-16); // space between header and page
+
+      &:focus {
+        outline: none; // focus is only moved here by the skip link
+      }
     }
 
-    // 95% of the space right of the nav (a % on a flex child would count the nav too)
+    &.no-nav .main-content {
+      grid-column: 1 / -1;
+    }
+
     .fullscreen {
-      width: 95%;
       height: 100%;
+    }
+  }
+
+  // ── Skip link: first tab stop, visible only while focused (WCAG 2.4.1) ────
+  .skip-link {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 1000;
+    padding: var(--spacing-8) var(--spacing-16);
+    background: role-color($theme, neutral, 0);
+    border: 2px solid var(--color-accent);
+    border-radius: var(--border-radius-card);
+    transform: translateY(-200%);
+
+    &:focus {
+      transform: none;
     }
   }
 }

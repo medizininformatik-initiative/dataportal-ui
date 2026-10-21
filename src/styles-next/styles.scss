@@ -84,6 +84,13 @@
    --shadow-modal        : modals / dialogs
 ──────────────────────────────────────────────────────────────── */
 :root {
+  /* App shell (custom-material/layout/_app-layout.themed.scss) */
+  --header-height: 104px;
+  --nav-width-expanded: 320px;
+  --nav-width-collapsed: 64px;
+  --page-gutter: 24px; /* left and right space of the page content */
+  --scrollbar-width: 10px; /* thin scrollbar of <main>, reserved by scrollbar-gutter: stable */
+
   /* Typography */
   --font-body: 'Titillium Web', sans-serif;
   --font-size-md: 14px;
