@@ -17,10 +17,10 @@
   @if map-get($theme, dark) {
     .header-title {
       color: #9ca8bf;
-      // highlight: soft slate fill and a left bar in the accent line tone
+      // highlight: soft slate fill and a 2px underline in the accent line tone
       background: var(--color-accent-bg-strong);
-      box-shadow: inset 3px 0 0 var(--color-accent-line);
-      border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+      box-shadow: inset 0 -2px 0 var(--color-accent-line);
+      border-radius: var(--border-radius-sm);
       padding: 0 var(--spacing-12);
     }
   }
