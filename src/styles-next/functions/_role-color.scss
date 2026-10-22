@@ -9,8 +9,8 @@
 // A missing role or shade gives null (no error), so check the CSS output.
 //
 // Examples (fdpg-light: accent -> blue palette, danger -> red palette, neutral -> grey palette):
-//   role-color($theme, accent, 500)    -> #5a79af
-//   role-color($theme, accent, 600)    -> #49689c
+//   role-color($theme, accent, 500)    -> #49689c
+//   role-color($theme, accent, 600)    -> #3c5786
 //   role-color($theme, danger, 300)    -> #ff8383
 //   role-color($theme, neutral, 0)       -> #ffffff   (0 = white)
 //

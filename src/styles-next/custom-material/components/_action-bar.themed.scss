@@ -8,26 +8,27 @@
       padding: 0 16px;
       height: 80px;
       border-radius: 5px;
-      background-color: role-color($theme, neutral, 0);
+      // 10% green tint on white, as a background (not an overlay), so buttons can stay white
+      background: linear-gradient(
+          rgba(role-color($theme, secondary, 500), 0.1),
+          rgba(role-color($theme, secondary, 500), 0.1)
+        ),
+        role-color($theme, neutral, 0);
       box-sizing: border-box;
       overflow-x: auto;
       overflow-y: hidden;
       box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
       position: relative;
 
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: role-color($theme, secondary, 500);
-        opacity: 0.1;
-        border-radius: 5px;
-        pointer-events: none;
-      }
-
       > * {
         flex: 0 0 auto;
       }
+    }
+
+    // Active = filled green, white icon/text (from button-color). Disabled = white, green icon/text and ring.
+    .num-button.disabled {
+      background: role-color($theme, neutral, 0);
+      color: role-color($theme, secondary, 500);
     }
 
     .right {

@@ -1,37 +1,21 @@
-// Brand blue ramp. 500 = brand anchor, hue 218. Lighter below 500, darker above.
-// Usage ("$accent" = mat.m2-get-color-from-palette):
+// Brand blue ramp. 500 = brand anchor (#49689c since 2026-10-22, was #5a79af), hue 218.
+// Lighter below 500, darker above. 600-900 were shifted one step darker with it.
 //
-// 50:   general table (themed)
-// 100:  general table (themed)
-// 200:  general table (themed), cancel button (border), side menu (active item), typography (background)
-//       --num-color--accent-200: between-filter
-// 300:  unused
-// 400:  cancel button (hover)
-//       --num-color--accent-400: selected-items-list, menu, ui-classes
-//       NOTE: old 400 was dark #345396, these three need a dark blue (now near 700)
-// 500:  BRAND
-//       $accent default read (= 500): divider classes, color classes, expansion panel
-//       $accent 500: typography, checkbox, filter chips, mat-chip, buttons
-//       --num-color--primary-blue: user-menu, dashboard
-//       --color-accent (defined in styles.scss, plus -bg/-border): ~55 components,
-//         e.g. header, spinner, searchbar, logic-switch, criteria-stage, display-criteria
-//       hand-pasted #5a79af: tree, checkbox-cell, checkbox-text-cell, save-dataquery-modal,
-//         error-log-header (gradient start)
-// 600:  cancel button (text), blue button (hover)
-//       --num-color--accent-600: between-filter, bulk-search-input (hover)
-// 700:  blue button (keyboard focus)
-// 800, 900, A100, A200, A400, A700: unused
+// RULES (shade jobs, hover ladder, text/icon/focus/disabled): see ACCENT-RULES.md in styles-next.
+// Short version: 50 resting fill, 75 hover of a large 50 surface, 100 emphasized fill, 200 border (300 on hover),
+// 400 non-text graphics only, 500 brand, 600 hover / text on 100-200 fills. No alpha tints for fills or borders.
 $num-blue-palette: (
   50: #f2f4f8,
+  75: #e8ecf3,
   100: #dde3ee,
   200: #bbc8dd,
   300: #98accd,
   400: #7992be,
-  500: #5a79af,
-  600: #49689c,
-  700: #3c5786,
-  800: #2f476f,
-  900: #233657,
+  500: #49689c,
+  600: #3c5786,
+  700: #2f476f,
+  800: #233657,
+  900: #182640,
   A100: #c4d3ee,
   A200: #8ca8d9,
   A400: #4173c8,

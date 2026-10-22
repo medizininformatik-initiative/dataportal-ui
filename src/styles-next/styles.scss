@@ -54,8 +54,9 @@
 
    Brand accent
    --color-accent        : primary blue
-   --color-accent-bg     : tinted card background (10% opacity)
-   --color-accent-border : pill / light border (20% opacity)
+   --color-accent-bg        : resting tinted fill (accent 50): box, tile, card, panel
+   --color-accent-bg-strong : emphasized fill (accent 100): hover, active, badge, placeholder, track
+   --color-accent-border    : line (accent 200): border, divider, inset ring
    --color-accent-strong : darker accent for hover/interactive text (links, underlines)
 
    Borders & Radius

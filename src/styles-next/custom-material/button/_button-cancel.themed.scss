@@ -8,7 +8,7 @@
 
     &:hover:not(.disabled) {
       background: role-color($theme, neutral, 100);
-      color: role-color($theme, accent, 400);
+      color: role-color($theme, accent, 500);
       box-shadow: rgba(role-color($theme, accent, 600), 0.13) 0 4px 16px;
     }
 

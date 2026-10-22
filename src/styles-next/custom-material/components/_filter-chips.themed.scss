@@ -16,7 +16,7 @@
       line-height: 24px;
       color: mat.m2-get-color-from-palette($accent, 500);
       background: transparent;
-      border: 1px solid rgba(mat.m2-get-color-from-palette($accent, 500), 0.2);
+      border: 1px solid role-color($theme, accent, 200);
       border-radius: 4px;
       margin-bottom: 4px;
       cursor: pointer;
@@ -37,8 +37,8 @@
       }
 
       &.count-badge {
-        background-color: rgba(mat.m2-get-color-from-palette($accent, 500), 0.3);
-        color: mat.m2-get-color-from-palette($accent, 500);
+        background-color: role-color($theme, accent, 100);
+        color: role-color($theme, accent, 600); // text on a filled tint: 600 (5.6:1 on accent 100)
         font-weight: bold;
         padding: 0 8px;
         min-width: auto;

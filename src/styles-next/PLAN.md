@@ -40,6 +40,9 @@ Open: role names are placeholders.
 - `PLAN-material-removal.md`: plan to remove Angular Material (later).
 - `color-variables-notes.md`: what `_color-variables` emits, usage counts, cleanup notes.
 - `PLAN-design-tokens.md`: typography track (current focus).
+- `PLAN-buttons.md`: primary / secondary button draft (open, not decided).
+- `SESSION-2026-10-22.md`: insights, what was done, where we stand, to do and to decide (buttons + blue accent). Start here.
+- `ACCENT-RULES.md`: global blue rules (shades, border, hover ladder, icons, text) + checklist of components still to align (2026-10-22).
 
 ## Check after each step
 `npx sass --load-path=. --load-path=node_modules src/styles-next/styles.scss > new.css` and diff against `src/styles/styles.scss`.

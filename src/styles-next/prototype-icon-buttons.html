@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Prototype: icon button contrast</title>
+  <!-- Open in a browser. Not part of the app. See PLAN-buttons.md. Tokens copied from the palettes. -->
+  <style>
+    :root {
+      --g500: #9bb823;
+      --g700: #758c17;
+      --g800: #607311;
+      --g900: #47550c; /* 8.2:1 on white (AAA 7:1) */
+      --b500: #5a79af;
+      --b600: #49689c;
+      --b700: #3c5786; /* 7.3:1 on white (AAA 7:1) */
+      --raised: rgba(0, 0, 0, 0.1) 0 4px 6px -1px, rgba(0, 0, 0, 0.06) 0 2px 4px -1px;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1700px;
+    }
+    h1 {
+      font: 600 20px/28px 'Titillium Web', sans-serif;
+      margin: 0 0 4px;
+    }
+    .note {
+      color: #6a7483;
+      margin: 0 0 16px;
+      max-width: 80ch;
+    }
+    table {
+      border-collapse: separate;
+      border-spacing: 0 8px;
+    }
+    th {
+      font: 600 12px/16px monospace;
+      color: #6a7483;
+      text-align: left;
+      padding: 0 12px 4px;
+      vertical-align: bottom;
+      width: 130px;
+    }
+    th.ctx {
+      width: 170px;
+    }
+    td {
+      padding: 0 12px;
+    }
+    td.ctx {
+      padding: 0;
+    }
+    .surface {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 80px;
+      padding: 0 16px;
+      border-radius: 5px;
+    }
+    .surface.bar {
+      background: linear-gradient(rgba(155, 184, 35, 0.1), rgba(155, 184, 35, 0.1)), #fff;
+      box-shadow: var(--raised);
+    }
+    .surface.white {
+      background: #fff;
+      box-shadow: var(--raised);
+    }
+    .surface.tint {
+      background: rgba(90, 121, 175, 0.1);
+    }
+    .label {
+      font: 12px/16px monospace;
+      color: #6a7483;
+      margin-bottom: 4px;
+    }
+
+    /* icon button */
+    .ib {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 5px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      margin: 0 6px; /* room for the halo */
+    }
+    .ib svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* icon outline: stroke on the glyph, drawn under the fill (paint-order) so only the outer half shows */
+    .ib.v5 svg,
+    .ib.v6 svg {
+      stroke: #000;
+      stroke-width: 40;
+      stroke-linejoin: round;
+      paint-order: stroke fill;
+    }
+    .ib.v6 svg {
+      stroke: #1d2a05; /* very dark shade of the button hue instead of pure black */
+    }
+    .b.v6 svg {
+      stroke: #101a2e;
+    }
+    .ib.v7 svg {
+      filter: drop-shadow(0 0 1px #000) drop-shadow(0 0 1px #000);
+    }
+
+    /* v8 your idea: brand 500 in the middle, dark edge. v9 inverse: dark middle, brand 500 edge */
+    .g.v8 {
+      background: radial-gradient(circle closest-side, var(--g500) 60%, var(--g900) 100%);
+      box-shadow: var(--raised);
+    }
+    .g.v9 {
+      background: radial-gradient(circle, var(--g800) 25%, var(--g500) 100%);
+      box-shadow: 0 0 0 1px var(--g800);
+    }
+    .b.v8 {
+      background: radial-gradient(circle closest-side, var(--b500) 60%, var(--b700) 100%);
+      box-shadow: var(--raised);
+    }
+    .b.v9 {
+      background: radial-gradient(circle, var(--b700) 25%, var(--b500) 100%);
+      box-shadow: 0 0 0 1px var(--b700);
+    }
+
+    /* green on the bar */
+    .g.v0 {
+      background: var(--g500);
+      box-shadow: var(--raised);
+    }
+    .g.v1 {
+      background: var(--g500);
+      box-shadow: 0 0 0 1px var(--g700);
+    }
+    .g.v2 {
+      background: var(--g500);
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--g700);
+    }
+    .g.v3 {
+      background: var(--g800);
+      box-shadow: var(--raised);
+    }
+    .g.v5,
+    .g.v6,
+    .g.v7 {
+      background: var(--g500);
+      box-shadow: var(--raised);
+    }
+    .g.v4 {
+      background: var(--g800);
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--g800);
+    }
+
+    /* blue on white / tint */
+    .b.v0 {
+      background: var(--b500);
+      box-shadow: var(--raised);
+    }
+    .b.v1 {
+      background: var(--b500);
+      box-shadow: 0 0 0 1px var(--b700);
+    }
+    .b.v2 {
+      background: var(--b500);
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--b700);
+    }
+    .b.v3 {
+      background: var(--b600);
+      box-shadow: var(--raised);
+    }
+    .b.v5,
+    .b.v6,
+    .b.v7 {
+      background: var(--b500);
+      box-shadow: var(--raised);
+    }
+    .b.v4 {
+      background: var(--b600);
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--b600);
+    }
+  </style>
+
+  <body>
+    <h1>Icon buttons: more contrast against the background</h1>
+    <p class="note">
+      Columns = variants. v0 today. v1 darker 1px ring. v2 white halo + dark ring (button edge). v3
+      darker fill (icon contrast: green 800 5.3:1, blue 600 5.6:1). v4 darker fill + white halo +
+      same-color ring. Rings are box-shadow, so the button size does not change.
+    </p>
+
+    <p class="note">
+      v5 to v7 outline the icon glyph itself (button fill stays brand 500): v5 black stroke, v6
+      stroke in a very dark shade of the button hue, v7 black glow via
+      <code>filter: drop-shadow</code>
+      . Stroke uses
+      <code>paint-order: stroke fill</code>
+      so the fill stays on top and only the outer half of the stroke shows.
+    </p>
+
+    <p class="note">
+      v8 is the fade you suggested: brand 500 behind the icon, shade 800 (green) or 700 (blue) at
+      the edge. v9 is the inverse, for comparison. Fade softened: brand 500 holds until 60% of the
+      radius, then goes to the AAA shade (7:1 against white: blue 700 = 7.3, green 900 = 8.2; green
+      800 would only be 5.3). WCAG itself asks only 3:1 for a button edge, 7:1 is the AAA text
+      level.
+    </p>
+
+    <svg style="display: none">
+      <symbol id="up" viewBox="0 0 512 512">
+        <path d="M216 328V128h-80L256 0l120 128h-80v200zM32 392v96h448v-96h-48v48H80v-48z" />
+      </symbol>
+      <symbol id="cog" viewBox="0 0 512 512">
+        <path
+          d="M487 316l-42-24a190 190 0 000-72l42-24a16 16 0 007-19 252 252 0 00-55-96 16 16 0 00-20-3l-42 24a186 186 0 00-62-36V47a16 16 0 00-12-15 256 256 0 00-110 0 16 16 0 00-12 15v48a186 186 0 00-62 36l-42-24a16 16 0 00-20 3 252 252 0 00-55 96 16 16 0 007 19l42 24a190 190 0 000 72l-42 24a16 16 0 00-7 19 252 252 0 0055 96 16 16 0 0020 3l42-24a186 186 0 0062 36v48a16 16 0 0012 15 256 256 0 00110 0 16 16 0 0012-15v-48a186 186 0 0062-36l42 24a16 16 0 0020-3 252 252 0 0055-96 16 16 0 00-7-19zM256 336a80 80 0 1180-80 80 80 0 01-80 80z"
+        />
+      </symbol>
+    </svg>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="ctx">background</th>
+          <th>v0 today</th>
+          <th>v1 dark ring</th>
+          <th>v2 halo + ring</th>
+          <th>v3 darker fill</th>
+          <th>v4 fill + halo</th>
+          <th>v5 icon outline black</th>
+          <th>v6 icon outline dark hue</th>
+          <th>v7 icon drop-shadow</th>
+          <th>v8 light middle, dark edge</th>
+          <th>v9 dark middle, light edge</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+
+    <script>
+      const rows = [
+        ['green on the action bar (10% green tint)', 'bar', 'g', 'up'],
+        ['blue on white', 'white', 'b', 'cog'],
+        ['blue on a blue-tint box (10%)', 'tint', 'b', 'cog'],
+      ]
+      const out = document.getElementById('rows')
+      for (const [name, surface, color, icon] of rows) {
+        const tr = document.createElement('tr')
+        let html = `<td class="ctx"><div class="label">${name}</div></td>`
+        for (let v = 0; v < 10; v++) {
+          html += `<td><div class="surface ${surface}"><button class="ib ${color} v${v}" aria-label="${icon}"><svg><use href="#${icon}"/></svg></button></div></td>`
+        }
+        tr.innerHTML = html
+        out.appendChild(tr)
+      }
+    </script>
+  </body>
+</html>

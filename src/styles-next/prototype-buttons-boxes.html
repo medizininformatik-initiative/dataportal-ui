@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Prototype: green buttons in criterion box and data selection box</title>
+  <!-- Open in a browser. Not part of the app. See PLAN-buttons.md. Tokens copied from the palettes. -->
+  <style>
+    :root {
+      --accent: #5a79af;
+      --accent-strong: #49689c;
+      --accent-bg: rgba(90, 121, 175, 0.1);
+      --accent-border: rgba(90, 121, 175, 0.2);
+      --green: #9bb823;
+      --green-600: #8aa51d;
+      --green-700: #758c17;
+      --text: #000;
+      --text-secondary: #6a7483;
+      --divider: #c5cacf;
+      --page: #f9f9f9;
+      --grey-100: #f1f2f3;
+      --shadow: rgba(0, 0, 0, 0.1) 0 4px 6px -1px, rgba(0, 0, 0, 0.06) 0 2px 4px -1px;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: var(--page);
+      color: var(--text);
+      margin: 24px;
+      max-width: 1100px;
+    }
+    h1 {
+      font: 600 20px/28px 'Titillium Web', sans-serif;
+      margin: 0 0 4px;
+    }
+    h2 {
+      font: 600 16px/24px 'Titillium Web', sans-serif;
+      margin: 32px 0 4px;
+    }
+    .note {
+      color: var(--text-secondary);
+      margin: 0 0 12px;
+      max-width: 80ch;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    /* ---- buttons ---- */
+    .btn {
+      font: 600 16px/24px 'Titillium Web', sans-serif;
+      height: 40px;
+      padding: 9px 18px;
+      border-radius: 5px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    /* primary: filled green */
+    .btn.primary {
+      background: var(--green);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+    .btn.primary:hover {
+      background: var(--green-600);
+    }
+    /* secondary: white, green ring, green text */
+    .btn.secondary {
+      background: #fff;
+      color: var(--green);
+      box-shadow: 0 0 1px 1px var(--green);
+    }
+    .btn.secondary:hover {
+      background: var(--green-600);
+      color: #fff;
+    }
+    .btn.secondary:disabled {
+      background: transparent;
+      color: rgba(155, 184, 35, 0.4);
+      box-shadow: 0 0 1px 1px rgba(155, 184, 35, 0.4);
+      cursor: default;
+    }
+    /* AA variant: green 800 (#607311) */
+    .btn.primary.aa {
+      background: #607311;
+    }
+    .btn.primary.aa:hover {
+      background: #47550c;
+    }
+    .btn.secondary.aa {
+      color: #607311;
+      box-shadow: 0 0 1px 1px #607311;
+    }
+    .btn.secondary.aa:hover {
+      background: #607311;
+      color: #fff;
+    }
+    .btn.icon {
+      width: 40px;
+      padding: 0;
+    }
+    svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* ---- action bar (green 10% tint over white) ---- */
+    .action-bar {
+      position: relative;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      height: 80px;
+      padding: 0 16px;
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .action-bar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 5px;
+      background: var(--green);
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    .action-bar > * {
+      position: relative; /* paint above the tint */
+    }
+    .action-bar .right {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ---- criterion box ---- */
+    .criterion {
+      width: 448px;
+      min-height: 136px;
+      padding: 24px;
+      border-radius: 5px;
+      position: relative;
+      display: flex;
+      gap: 8px;
+    }
+    .criterion .title {
+      margin-bottom: 8px;
+    }
+    .criterion .info {
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    .chip {
+      display: inline-block;
+      border-radius: 5px;
+      padding: 0 8px;
+      font-size: 12px;
+      line-height: 20px;
+      background: #fff;
+      border: 1px solid var(--accent-border);
+      color: var(--accent-strong);
+    }
+    .criterion .tools {
+      flex-shrink: 0;
+    }
+
+    /* ---- data selection box ---- */
+    .selection {
+      width: 640px;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: stretch;
+    }
+    .selection .col {
+      flex: 1;
+      padding: 16px 20px;
+      border-left: 1px solid var(--divider);
+    }
+    .selection .col:first-child {
+      border-left: none;
+    }
+    .selection .label {
+      color: var(--text-secondary);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    .selection .tools {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-left: 1px solid var(--divider);
+    }
+
+    /* ---- box colour options ---- */
+    .opt-a .criterion {
+      background: var(--accent-bg);
+    }
+    .opt-b .criterion {
+      background: var(--grey-100);
+      border: 1px solid var(--divider);
+    }
+    .opt-b .chip {
+      border-color: var(--divider);
+      color: var(--text-secondary);
+    }
+    .opt-c .criterion {
+      background: #fff;
+      border-left: 4px solid var(--accent);
+      box-shadow: var(--shadow);
+    }
+    .opt-c .selection {
+      border-left: 4px solid var(--accent);
+    }
+    .opt-c .chip {
+      background: var(--accent-bg);
+      border-color: transparent;
+    }
+    .opt-b .selection {
+      background: var(--grey-100);
+      box-shadow: none;
+      border: 1px solid var(--divider);
+    }
+  </style>
+
+  <body>
+    <h1>Green buttons, which color for the boxes?</h1>
+    <p class="note">
+      Rules: filled green = primary (one per screen), white + green ring = secondary (cog, edit,
+      reset, upload, download, save, navigation). Hover the buttons. Three options for the boxes
+      below, same buttons in all of them.
+    </p>
+
+    <svg style="display: none">
+      <symbol id="cog" viewBox="0 0 512 512">
+        <path
+          d="M487 316l-42-24a190 190 0 000-72l42-24a16 16 0 007-19 252 252 0 00-55-96 16 16 0 00-20-3l-42 24a186 186 0 00-62-36V47a16 16 0 00-12-15 256 256 0 00-110 0 16 16 0 00-12 15v48a186 186 0 00-62 36l-42-24a16 16 0 00-20 3 252 252 0 00-55 96 16 16 0 007 19l42 24a190 190 0 000 72l-42 24a16 16 0 00-7 19 252 252 0 0055 96 16 16 0 0020 3l42-24a186 186 0 0062 36v48a16 16 0 0012 15 256 256 0 00110 0 16 16 0 0012-15v-48a186 186 0 0062-36l42 24a16 16 0 0020-3 252 252 0 0055-96 16 16 0 00-7-19zM256 336a80 80 0 1180-80 80 80 0 01-80 80z"
+        />
+      </symbol>
+      <symbol id="down" viewBox="0 0 512 512">
+        <path d="M216 24v200h-80l120 128 120-128h-80V24zM32 392v96h448v-96h-48v48H80v-48z" />
+      </symbol>
+      <symbol id="save" viewBox="0 0 448 512">
+        <path
+          d="M433 129L319 15a48 48 0 00-34-15H48A48 48 0 000 48v416a48 48 0 0048 48h352a48 48 0 0048-48V163a48 48 0 00-15-34zM224 448a64 64 0 1164-64 64 64 0 01-64 64zm96-304H64V80h256z"
+        />
+      </symbol>
+      <symbol id="up" viewBox="0 0 512 512">
+        <path d="M216 328V128h-80L256 0l120 128h-80v200zM32 392v96h448v-96h-48v48H80v-48z" />
+      </symbol>
+      <symbol id="edit" viewBox="0 0 512 512">
+        <path d="M362 18l132 132-74 74-132-132zM60 320L0 512l192-60 214-214-132-132z" />
+      </symbol>
+    </svg>
+
+    <h2>Action bar (feasibility editor)</h2>
+    <p class="note">
+      One primary ("Send query"), everything else secondary. White buttons sit above the 10% green
+      tint.
+    </p>
+    <div class="action-bar">
+      <button class="btn primary">Send query</button>
+      <button class="btn secondary">Back to search</button>
+      <div class="right">
+        <button class="btn secondary icon" aria-label="Upload">
+          <svg><use href="#up" /></svg>
+        </button>
+        <button class="btn secondary icon" aria-label="Download">
+          <svg><use href="#down" /></svg>
+        </button>
+        <button class="btn secondary icon" aria-label="Save" disabled>
+          <svg><use href="#save" /></svg>
+        </button>
+      </div>
+    </div>
+
+    <h2>Contrast check</h2>
+    <p class="note">
+      Brand green 500 (#9bb823) is 2.4:1 against white, in both directions (white text on green,
+      green text on white). WCAG AA needs 4.5:1 for 16px text. Left: brand 500 (fails). Right: shade
+      800 (#607311, 5.3:1, passes). Shade 700 (#758c17) gives only 3.8:1.
+    </p>
+    <div class="row">
+      <button class="btn primary">Send query</button>
+      <button class="btn secondary">Back to search</button>
+      <button class="btn primary aa">Send query</button>
+      <button class="btn secondary aa">Back to search</button>
+    </div>
+
+    <h2>A: blue tint (today)</h2>
+    <p class="note">Boxes stay blue = content. Green = what you can press. Two hues, two jobs.</p>
+    <div class="row opt-a">
+      <div class="criterion">
+        <div>
+          <div class="title">Diagnosis (Condition)</div>
+          <div class="info">Diagnosis, 38341003, SNOMED CT</div>
+          <span class="chip">Status: confirmed</span>
+        </div>
+        <div class="tools">
+          <button class="btn secondary icon" aria-label="Options">
+            <svg><use href="#cog" /></svg>
+          </button>
+        </div>
+      </div>
+      <div class="selection">
+        <div class="col">
+          <div class="label">Profile</div>
+          Patient
+        </div>
+        <div class="col">
+          <div class="label">Fields</div>
+          12 of 40 selected
+          <div style="margin-top: 8px">
+            <button class="btn secondary">
+              <svg><use href="#edit" /></svg>
+              Edit
+            </button>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="btn secondary icon" aria-label="Options">
+            <svg><use href="#cog" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <h2>B: neutral grey</h2>
+    <p class="note">
+      Boxes become quiet grey with a grey border. Calmest, but the page loses its blue.
+    </p>
+    <div class="row opt-b">
+      <div class="criterion">
+        <div>
+          <div class="title">Diagnosis (Condition)</div>
+          <div class="info">Diagnosis, 38341003, SNOMED CT</div>
+          <span class="chip">Status: confirmed</span>
+        </div>
+        <div class="tools">
+          <button class="btn secondary icon" aria-label="Options">
+            <svg><use href="#cog" /></svg>
+          </button>
+        </div>
+      </div>
+      <div class="selection">
+        <div class="col">
+          <div class="label">Profile</div>
+          Patient
+        </div>
+        <div class="col">
+          <div class="label">Fields</div>
+          12 of 40 selected
+          <div style="margin-top: 8px">
+            <button class="btn secondary">
+              <svg><use href="#edit" /></svg>
+              Edit
+            </button>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="btn secondary icon" aria-label="Options">
+            <svg><use href="#cog" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <h2>C: white with blue edge</h2>
+    <p class="note">
+      White boxes, 4px blue left border (same as info tile / information section). Blue stays as a
+      thin marker, tint is gone.
+    </p>
+    <div class="row opt-c">
+      <div class="criterion">
+        <div>
+          <div class="title">Diagnosis (Condition)</div>
+          <div class="info">Diagnosis, 38341003, SNOMED CT</div>
+          <span class="chip">Status: confirmed</span>
+        </div>
+        <div class="tools">
+          <button class="btn secondary icon" aria-label="Options">
+            <svg><use href="#cog" /></svg>
+          </button>
+        </div>
+      </div>
+      <div class="selection">
+        <div class="col">
+          <div class="label">Profile</div>
+          Patient
+        </div>
+        <div class="col">
+          <div class="label">Fields</div>
+          12 of 40 selected
+          <div style="margin-top: 8px">
+            <button class="btn secondary">
+              <svg><use href="#edit" /></svg>
+              Edit
+            </button>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="btn secondary icon" aria-label="Options">
+            <svg><use href="#cog" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

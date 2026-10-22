@@ -5,12 +5,15 @@
   width: 448px;
   min-height: 136px;
   background-color: var(--color-accent-bg);
+  border: 1px solid var(--color-accent-border);
   border-radius: var(--border-radius-card);
   position: relative;
   padding: var(--spacing-24);
-  transition: var(--transition-shadow);
+  transition: var(--transition-shadow), background-color 0.2s ease, border-color 0.2s ease;
 
   &:hover {
+    background-color: var(--color-accent-bg-hover);
+    border-color: var(--color-accent-border-hover);
     box-shadow: var(--shadow-card-hover);
     cursor: grab;
   }
@@ -31,9 +34,9 @@
   }
 }
 
-// Where the criterion will land: a dashed slot (20% accent, stronger than the 10% boxes) with a faded copy of the content
+// Where the criterion will land: a dashed slot (accent 100, stronger than the accent 50 boxes) with a faded copy of the content
 .container.cdk-drag-placeholder {
-  background-color: var(--color-accent-border);
+  background-color: var(--color-accent-bg-strong);
   outline: 2px dashed var(--color-accent);
   outline-offset: -2px;
 
@@ -46,9 +49,9 @@
   }
 }
 
-// The criterion under the pointer lifts off the page: opaque (the 10% tint on white), framed, deep shadow
+// The criterion under the pointer lifts off the page: opaque (accent 50), framed, deep shadow
 .container.cdk-drag-preview {
-  background: linear-gradient(var(--color-accent-bg), var(--color-accent-bg)) #fff;
+  background: var(--color-accent-bg);
   box-shadow: inset 0 0 0 2px var(--color-accent), 0 12px 28px rgba(0, 0, 0, 0.25);
   cursor: grabbing;
 }

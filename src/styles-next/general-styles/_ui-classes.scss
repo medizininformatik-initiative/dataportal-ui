@@ -147,31 +147,20 @@
   }
 
   &:hover {
-    color: var(--num-color--accent-400, #345396);
+    color: var(--color-accent-strong);
   }
 }
 
-// Accent-tinted card with hover elevation
-// Base of: .selection-box in data-selection-boxes, .container in criteria-box
+// Accent-tinted card: accent 50 fill, hairline border, hover = half step (accent 75) + elevation
+// Base of: .selection-box in data-selection-boxes
 .num-card {
   position: relative;
   width: 100%;
   border-radius: var(--border-radius-card);
   overflow: hidden;
-  background-color: #ffffff;
-  transition: var(--transition-shadow);
-
-  // Blue-tint overlay via ::before so child content stays sharp
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--color-accent);
-    opacity: 0.1;
-    border-radius: var(--border-radius-card);
-    pointer-events: none;
-    z-index: 0;
-  }
+  background-color: var(--color-accent-bg);
+  border: 1px solid var(--color-accent-border);
+  transition: var(--transition-shadow), background-color 0.2s ease, border-color 0.2s ease;
 
   > * {
     position: relative;
@@ -179,6 +168,8 @@
   }
 
   &:hover {
+    background-color: var(--color-accent-bg-hover);
+    border-color: var(--color-accent-border-hover);
     box-shadow: var(--shadow-card-hover);
   }
 }

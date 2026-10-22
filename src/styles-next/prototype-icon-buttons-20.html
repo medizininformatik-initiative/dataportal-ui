@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Prototype: 20 icon button looks, blue and green</title>
+  <!-- Open in a browser. Not part of the app. See PLAN-buttons.md. Palette values copied from src/styles-next/palettes. -->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font: 14px/20px 'Titillium Web', sans-serif;
+      background: #f9f9f9;
+      margin: 24px;
+      max-width: 1200px;
+    }
+    h1 {
+      font: 600 20px/28px 'Titillium Web', sans-serif;
+      margin: 0 0 4px;
+    }
+    h2 {
+      font: 600 16px/24px 'Titillium Web', sans-serif;
+      margin: 32px 0 8px;
+    }
+    .note {
+      color: #6a7483;
+      margin: 0 0 12px;
+      max-width: 90ch;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e8ebed;
+      border-radius: 5px;
+      padding: 10px 12px 12px;
+    }
+    .name {
+      font: 600 13px/18px 'Titillium Web', sans-serif;
+    }
+    .spec {
+      font: 11px/15px monospace;
+      color: #6a7483;
+      margin: 2px 0 8px;
+      min-height: 30px;
+    }
+    .surfaces {
+      display: flex;
+      gap: 8px;
+    }
+    .surface {
+      flex: 1;
+      height: 72px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .s-white {
+      background: #fff;
+      box-shadow: 0 0 0 1px #e8ebed;
+    }
+    .s-tint {
+      background: rgba(90, 121, 175, 0.1);
+    }
+    .s-bar {
+      background: linear-gradient(rgba(155, 184, 35, 0.1), rgba(155, 184, 35, 0.1)), #fff;
+      box-shadow: 0 0 0 1px #e8ebed;
+    }
+
+    .blue {
+      --c5: #5a79af; /* brand 500 */
+      --fl: #49689c; /* flat darker fill (blue 600, 5.6:1) */
+      --dk: #3c5786; /* AAA edge (blue 700, 7.2:1) */
+    }
+    .green {
+      --c5: #9bb823; /* brand 500 */
+      --fl: #607311; /* flat darker fill (green 800, 5.3:1) */
+      --dk: #47550c; /* AAA edge (green 900, 8.2:1) */
+    }
+    .raised {
+      --raised: rgba(0, 0, 0, 0.1) 0 4px 6px -1px, rgba(0, 0, 0, 0.06) 0 2px 4px -1px;
+    }
+
+    .ib {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 5px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      background: var(--c5);
+    }
+    .ib svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+    .ib:hover {
+      filter: brightness(1.08);
+    }
+
+    .r1 {
+      background: var(--dk);
+      box-shadow: var(--raised);
+    }
+    .r2 {
+      background: var(--fl);
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--fl);
+    }
+    .r3 {
+      background: radial-gradient(circle closest-side, var(--c5) 60%, var(--dk) 100%);
+      box-shadow: var(--raised);
+    }
+    .r4 {
+      background: radial-gradient(circle closest-side, var(--c5) 30%, var(--dk) 100%);
+      box-shadow: var(--raised);
+    }
+    .r5 {
+      background: linear-gradient(180deg, var(--c5), var(--dk));
+      box-shadow: var(--raised);
+    }
+    .r6 {
+      background: linear-gradient(135deg, var(--c5) 35%, var(--dk));
+      box-shadow: var(--raised);
+    }
+    .r7 {
+      background: var(--c5);
+      box-shadow: inset 0 0 0 2px var(--dk);
+    }
+    .r8 {
+      background: var(--c5);
+      box-shadow: inset 0 0 0 2px var(--dk), 0 0 0 2px #fff, 0 0 0 3px var(--dk);
+    }
+    .r9 {
+      background: var(--c5);
+      box-shadow: 0 0 0 1px var(--dk), var(--raised);
+    }
+    .r10 {
+      background: var(--c5);
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--dk);
+    }
+    .r11 {
+      background: var(--c5);
+      box-shadow: inset 0 0 10px 1px var(--dk), var(--raised);
+    }
+    .r12 {
+      background: var(--fl);
+      box-shadow: inset 0 0 12px 2px var(--dk), var(--raised);
+    }
+    .r13 {
+      background: linear-gradient(180deg, var(--c5), var(--fl));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 0 1px var(--dk), var(--raised);
+    }
+    .r14 {
+      background: var(--dk);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45), var(--raised);
+    }
+    .r15 {
+      background: radial-gradient(circle closest-side, var(--dk) 40%, var(--c5) 100%);
+      box-shadow: 0 0 0 1px var(--dk);
+    }
+    .r16 {
+      background: radial-gradient(
+          circle closest-side,
+          rgba(255, 255, 255, 0.2) 68%,
+          transparent 70%
+        ),
+        var(--dk);
+      box-shadow: var(--raised);
+    }
+    .r17 {
+      background: var(--c5);
+      box-shadow: 0 0 0 1px var(--dk);
+    }
+    .r17 svg {
+      stroke: var(--dk);
+      stroke-width: 50;
+      stroke-linejoin: round;
+      paint-order: stroke fill;
+    }
+    .r18 {
+      background: var(--fl);
+      box-shadow: var(--raised);
+    }
+    .r18 svg {
+      filter: drop-shadow(0 1px 1px var(--dk)) drop-shadow(0 0 1px var(--dk));
+    }
+    .r19 {
+      background: var(--c5);
+      outline: 2px solid var(--dk);
+      outline-offset: 2px;
+    }
+    .r20 {
+      background: conic-gradient(from 45deg, var(--c5), var(--fl), var(--c5), var(--fl), var(--c5));
+      box-shadow: 0 0 0 1px var(--dk), var(--raised);
+    }
+  </style>
+
+  <body>
+    <h1>20 icon button looks, blue and green</h1>
+    <p class="note">
+      Same 20 recipes for both colors. Each card shows icon contrast (white on the fill, measured in
+      the middle where the icon sits) and edge contrast (the button edge against white). WCAG 2.2
+      wants 3:1 for a UI component edge and for an icon; 7:1 is the AAA text level. Hover for a
+      brightness hint. Edge colors: blue 700 (7.2:1), green 900 (8.2:1).
+    </p>
+
+    <svg style="display: none">
+      <symbol id="up" viewBox="0 0 512 512">
+        <path d="M216 328V128h-80L256 0l120 128h-80v200zM32 392v96h448v-96h-48v48H80v-48z" />
+      </symbol>
+      <symbol id="cog" viewBox="0 0 512 512">
+        <path
+          d="M487 316l-42-24a190 190 0 000-72l42-24a16 16 0 007-19 252 252 0 00-55-96 16 16 0 00-20-3l-42 24a186 186 0 00-62-36V47a16 16 0 00-12-15 256 256 0 00-110 0 16 16 0 00-12 15v48a186 186 0 00-62 36l-42-24a16 16 0 00-20 3 252 252 0 00-55 96 16 16 0 007 19l42 24a190 190 0 000 72l-42 24a16 16 0 00-7 19 252 252 0 0055 96 16 16 0 0020 3l42-24a186 186 0 0062 36v48a16 16 0 0012 15 256 256 0 00110 0 16 16 0 0012-15v-48a186 186 0 0062-36l42 24a16 16 0 0020-3 252 252 0 0055-96 16 16 0 00-7-19zM256 336a80 80 0 1180-80 80 80 0 01-80 80z"
+        />
+      </symbol>
+    </svg>
+
+    <h2>Blue (on white and on a blue-tint box)</h2>
+    <div class="grid" id="blue"></div>
+
+    <h2>Green (on the green-tint action bar)</h2>
+    <div class="grid" id="green"></div>
+
+    <script>
+      const palette = {
+        blue: { c5: '#5a79af', fl: '#49689c', dk: '#3c5786' },
+        green: { c5: '#9bb823', fl: '#607311', dk: '#47550c' },
+      }
+      // [name, centre colour key (under the icon), edge colour key]
+      const recipes = [
+        ['Flat AAA fill', 'dk', 'dk'],
+        ['Darker fill + white halo', 'fl', 'fl'],
+        ['Soft fade, 60% flat', 'c5', 'dk'],
+        ['Strong fade, 30% flat', 'c5', 'dk'],
+        ['Vertical fade', 'c5', 'dk'],
+        ['Diagonal fade', 'c5', 'dk'],
+        ['Inset 2px AAA ring', 'c5', 'dk'],
+        ['Inset ring + halo + ring', 'c5', 'dk'],
+        ['Outer 1px AAA ring', 'c5', 'dk'],
+        ['Double ring (white gap)', 'c5', 'dk'],
+        ['Inner vignette', 'c5', 'dk'],
+        ['Deep vignette, darker fill', 'fl', 'dk'],
+        ['Bevel + ring', 'c5', 'dk'],
+        ['AAA fill + inner light ring', 'dk', 'dk'],
+        ['Dark middle, light edge + ring', 'dk', 'dk'],
+        ['Icon badge (light disc)', 'dk', 'dk'],
+        ['Icon outline (stroke) + ring', 'c5', 'dk'],
+        ['Icon shadow on darker fill', 'fl', 'fl'],
+        ['Offset outline (gap)', 'c5', 'dk'],
+        ['Conic sheen + ring', 'c5', 'dk'],
+      ]
+      const lum = (hex) => {
+        const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+        const [r, g, b] = c.map((x) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4))
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b
+      }
+      const ratio = (a, b) => {
+        const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x)
+        return ((hi + 0.05) / (lo + 0.05)).toFixed(1)
+      }
+      const build = (color, icon, surfaces) => {
+        const el = document.getElementById(color)
+        recipes.forEach(([name, centre, edge], i) => {
+          const p = palette[color]
+          const btn = `<button class="ib raised r${
+            i + 1
+          }" aria-label="${icon}"><svg><use href="#${icon}"/></svg></button>`
+          el.insertAdjacentHTML(
+            'beforeend',
+            `<div class="card ${color}"><div class="name">${i + 1}. ${name}</div>
+             <div class="spec">icon ${ratio('#ffffff', p[centre])}:1 &middot; edge ${ratio(
+              '#ffffff',
+              p[edge]
+            )}:1</div>
+             <div class="surfaces">${surfaces
+               .map((s) => `<div class="surface ${s}">${btn}</div>`)
+               .join('')}</div></div>`
+          )
+        })
+      }
+      build('blue', 'cog', ['s-white', 's-tint'])
+      build('green', 'up', ['s-bar', 's-white'])
+    </script>
+  </body>
+</html>

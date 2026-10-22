@@ -13,16 +13,17 @@
   // Used by: between-filter (range track fill)
   --num-color--accent-200: #{role-color($theme, accent, 200)};
 
-  // Used by: dashboard (text), selected-items-list, menu (icon), ui-classes (card link)
-  --num-color--accent-400: #{role-color($theme, accent, 400)};
-
   // Used by: between-filter (range thumb)
   --num-color--accent-600: #{role-color($theme, accent, 600)};
 
   // Brand accent. Used by: ~55 components (criteria-stage, display-criteria, header, ...)
   --color-accent: #{role-color($theme, accent, 500)};
-  --color-accent-bg: #{rgba(role-color($theme, accent, 500), 0.1)};
-  --color-accent-border: #{rgba(role-color($theme, accent, 500), 0.2)};
+  // Tint scale (rules in palettes/_blue.palette.scss): 50 resting fill, 100 emphasized fill, 200 line.
+  --color-accent-bg: #{role-color($theme, accent, 50)};
+  --color-accent-bg-hover: #{role-color($theme, accent, 75)}; // hover on a large 50 surface (half step)
+  --color-accent-bg-strong: #{role-color($theme, accent, 100)};
+  --color-accent-border-hover: #{role-color($theme, accent, 300)}; // hover of a 200 border
+  --color-accent-border: #{role-color($theme, accent, 200)};
   --color-accent-strong: #{role-color($theme, accent, 600)};
 
   // ── Status colours ─────────────────────────────────────────────────────────
