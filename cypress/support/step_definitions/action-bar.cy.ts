@@ -63,10 +63,11 @@ export class ActionBar {
   }
 
   /**
-   * Assert upload, download and save are all absent.
+   * Assert upload, download and save are all absent. Wait for single action bar first: during
+   * route animation outgoing page keeps own bar, with its upload input, next to new one.
    * */
   public shouldOfferNoUploadDownloadOrSave() {
-    cy.get(scope).should('exist')
+    cy.get(scope).should('have.length', 1)
     cy.get(scope).find(dataCy('upload-crtdl')).should('not.exist')
     cy.get(scope).find(dataCy('download-crtdl-button')).should('not.exist')
     cy.get(scope).find(dataCy('save-cohort-button')).should('not.exist')

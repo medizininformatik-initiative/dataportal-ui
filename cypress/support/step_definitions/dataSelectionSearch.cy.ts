@@ -119,9 +119,13 @@ export class DataSelectionSearch {
   }
 
   /**
-   * Click "Add new reference".
+   * Click button "Add new reference" after fixed wait. App re-creates tab group (`@for` tracks by
+   * identity, NG0956) ~150ms after reference tab opens. Re-creation destroys tab owning modal
+   * subscription, so modal opened earlier returns result to nothing. No DOM or network signal
+   * marks end of re-creation.
    * */
   public openReferenceModal() {
+    cy.wait(1000)
     cy.get(NUM_BUTTON).contains(' Add new reference ').should('be.visible').click()
   }
 
