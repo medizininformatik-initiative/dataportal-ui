@@ -6,7 +6,7 @@
 
   @if ($name == 'fdpg') {
     .num-footer {
-      background: role-color($theme, neutral, 0);
+      background: surface-color($theme, chrome);
       color: mat.m2-get-contrast-color-from-palette($primary, 200);
       border-top: 1px
         #{if(map-get($theme, dark), foreground-color($theme, divider), rgba(0, 0, 0, 0.2))}

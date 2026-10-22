@@ -5,4 +5,6 @@ $fdpg-dark-background: (
   background: map.get($_dark-neutral, 50),
   card: map.get($_dark-neutral, 0),
   dialog: map.get($_dark-neutral, 0),
+  chrome: map.get($_dark-neutral, 50),
+  // header, side menu, footer: darker than the content, like VS Code's sidebar
 );

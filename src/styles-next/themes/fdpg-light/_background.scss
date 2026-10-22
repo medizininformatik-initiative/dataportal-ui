@@ -12,4 +12,6 @@ $fdpg-light-background: (
   background: map.get($num-grey-palette, 50),
   card: map.get($num-grey-palette, 0),
   dialog: map.get($num-grey-palette, 0),
+  chrome: map.get($num-grey-palette, 0),
+  // header, side menu, footer
 );

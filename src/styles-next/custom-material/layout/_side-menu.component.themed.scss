@@ -15,7 +15,7 @@
     --side-menu-grandchild-indent: calc(var(--side-menu-line-x2) + var(--spacing-24));
 
     // Colours by role: hover = light grey, active = accent tint, focus = ring
-    --side-menu-bg: #{role-color($theme, neutral, 0)};
+    --side-menu-bg: #{surface-color($theme, chrome)};
     --side-menu-bg-hover: #{role-color($theme, neutral, 200)};
     --side-menu-bg-active: var(--color-accent-bg);
     --side-menu-text: var(--color-text-section);

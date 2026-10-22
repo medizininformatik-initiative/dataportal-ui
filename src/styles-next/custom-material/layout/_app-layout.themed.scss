@@ -26,6 +26,7 @@
     .sidenav {
       grid-column: 1;
       overflow: hidden;
+      background-color: #{surface-color($theme, chrome)};
 
       &.expanded {
         width: var(--nav-width-expanded);

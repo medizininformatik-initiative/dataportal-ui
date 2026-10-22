@@ -11,7 +11,7 @@
     mat-toolbar {
       --mat-toolbar-container-background-color: #{role-color($theme, neutral, 100)};
       --mat-toolbar-container-text-color: #{foreground-color($theme, text)};
-      background: #{surface-color($theme, card)} !important;
+      background: #{surface-color($theme, chrome)} !important;
       color: #{foreground-color($theme, text)} !important;
       height: var(--header-height);
       display: flex;
