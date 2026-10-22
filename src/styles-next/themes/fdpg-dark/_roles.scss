@@ -43,9 +43,21 @@ $_dark-accent: map.merge(
   )
 );
 
+// Green: the light ramp is neon (#9bb823) and hurts on dark. Softer mint, base from VS Code's greens (#2ea043, #73c991).
+// 500 = fill and outline text, black text on it 8:1, 5.2:1 as text on the action bar.
+$_dark-secondary: map.merge(
+  $num-green-palette,
+  (
+    400: #8fc29d,
+    500: #66ad78,
+    600: #589e6a,
+    700: #4a8a5b,
+  )
+);
+
 $fdpg-dark-roles: (
   accent: $_dark-accent,
-  secondary: $num-green-palette,
+  secondary: $_dark-secondary,
   neutral: $_dark-neutral,
   danger: $num-red-palette,
   warning: $num-yellow-palette,

@@ -41,6 +41,16 @@ $num-portal-webapp-theme-fdpg-dark-material: map.deep-merge(
   )
 );
 
+// Light text on dark spreads (irradiation) and reads heavier and tighter. Titillium ships only 400/600/700, so the weight
+// cannot drop: body and small text get +0.01em letter-spacing instead (PLAN-dark-mode-research.md, "Beyond color").
+$_dark-type-roles: ();
+@each $name, $role in $fdpg-light-type-roles {
+  @if map.get($role, size) <= 16px {
+    $role: map.set($role, letter-spacing, 0.01em);
+  }
+  $_dark-type-roles: map.set($_dark-type-roles, $name, $role);
+}
+
 $num-portal-webapp-theme-fdpg-dark: map.merge(
   $num-portal-webapp-theme-fdpg,
   (
@@ -48,8 +58,9 @@ $num-portal-webapp-theme-fdpg-dark: map.merge(
     accent-line-shade: 400,
     accent-on-tint-shade: A100,
     accent-strong-shade: A100,
-    accent-deep-shade: A100,
+    accent-deep-shade: 300,
     dark: true,
+    type-roles: $_dark-type-roles,
     roles: $fdpg-dark-roles,
     foreground: $fdpg-dark-foreground,
     background: $fdpg-dark-background,
