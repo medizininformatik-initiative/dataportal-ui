@@ -5,6 +5,27 @@ import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
 import fs from "fs-extra";
 import path from "path";
 
+// Backend caps saved queries per user (`maxSavedQueriesPerUser`, 10): earlier runs leave queries
+// behind and the save in later runs is rejected with 403. Start every run from an empty list.
+async function clearSavedQueries(username: string, password: string): Promise<void> {
+  const token = 'http://localhost:8080/realms/dataportal/protocol/openid-connect/token';
+  const backend = 'http://localhost:8090/api/v6/query/data';
+  const login = await fetch(token, {
+    method: 'POST',
+    body: new URLSearchParams({
+      grant_type: 'password',
+      client_id: 'dataportal-webapp',
+      username,
+      password,
+    }),
+  });
+  const headers = { Authorization: `Bearer ${(await login.json()).access_token}` };
+  const queries: { id: number }[] = await (await fetch(backend, { headers })).json();
+  await Promise.all(
+    queries.map(({ id }) => fetch(`${backend}/${id}`, { method: 'DELETE', headers }))
+  );
+}
+
 export default defineConfig({
   env: {
     // Sensitive - read via cy.env() only, never exposed to the browser context.
@@ -27,7 +48,9 @@ export default defineConfig({
       config: Cypress.PluginConfigOptions
     ): Promise<Cypress.PluginConfigOptions> {
 
-       on('before:run', () => {
+       on('before:run', async () => {
+        await clearSavedQueries(config.env.username, config.env.password);
+
         const foldersToClear = [
           path.join(__dirname, 'cypress', 'downloads'),
           path.join(__dirname, 'cypress', 'screenshots'),
