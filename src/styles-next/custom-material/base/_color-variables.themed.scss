@@ -1,4 +1,7 @@
 @mixin color-variables_themed($theme) {
+  // Shades for text and line use of accent. A theme without the keys uses 500 (light).
+  $accent-text-shade: map-get($theme, accent-text-shade) or 500;
+  $accent-line-shade: map-get($theme, accent-line-shade) or 500;
   // ── Primary palette exports ────────────────────────────────────────────────
   // Used by: feasibility-query search component
   --num-color--primary: #{role-color($theme, neutral, 500)};
@@ -17,7 +20,11 @@
   --num-color--accent-600: #{role-color($theme, accent, 600)};
 
   // Brand accent. Used by: ~55 components (criteria-stage, display-criteria, header, ...)
+  // Split by job (dark mode): --color-accent is the fill, -text is text and icons, -line is border, outline, ring.
+  // Light: all three are accent 500. Dark: fill stays 500, text moves to 300, line to 400 (PLAN-dark-mode-research.md).
   --color-accent: #{role-color($theme, accent, 500)};
+  --color-accent-text: #{role-color($theme, accent, $accent-text-shade)};
+  --color-accent-line: #{role-color($theme, accent, $accent-line-shade)};
   // Tint scale (rules in palettes/_blue.palette.scss): 50 resting fill, 100 emphasized fill, 200 line.
   --color-accent-bg: #{role-color($theme, accent, 50)};
   --color-accent-bg-hover: #{role-color($theme, accent, 75)}; // hover on a large 50 surface (half step)

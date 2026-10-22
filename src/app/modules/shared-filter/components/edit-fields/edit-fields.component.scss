@@ -61,7 +61,7 @@
   margin-left: auto;
 
   &:hover {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
   }
 }
 
@@ -101,7 +101,7 @@
   font-family: var(--font-body);
   font-weight: 400;
   font-size: var(--font-size-sm);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 ::ng-deep .mat-mdc-tab-label-container {

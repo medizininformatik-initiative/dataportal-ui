@@ -28,7 +28,7 @@
   line-height: 24px;
   text-transform: uppercase;
   text-align: center;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
@@ -48,7 +48,7 @@
   height: 41px;
   opacity: 1;
   background: #ffffff;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
   box-shadow: var(--shadow-card-active);
 }

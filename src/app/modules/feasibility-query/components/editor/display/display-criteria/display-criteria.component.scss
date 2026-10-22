@@ -66,7 +66,7 @@
 
 .slot {
   right: 0;
-  border: 2px dashed var(--color-accent);
+  border: 2px dashed var(--color-accent-line);
   background: rgba(255, 255, 255, 0.6);
 }
 
@@ -96,7 +96,7 @@
   right: 10px;
   bottom: 8px;
   transform: rotateZ(45deg); // the icon is drawn diagonally; 45 degrees makes the straight cross
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: var(--font-size-md);
 }
 
@@ -127,7 +127,7 @@
 .inline-move {
   display: inline-block;
   transform: rotateZ(45deg);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 @container (max-width: 540px) {
@@ -165,11 +165,11 @@
   }
   22% {
     transform: translate(0, 0) scale(1.06);
-    box-shadow: inset 0 0 0 2px var(--color-accent), 0 8px 18px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 0 2px var(--color-accent-line), 0 8px 18px rgba(0, 0, 0, 0.25);
   }
   62% {
     transform: translate(var(--ghost-travel), 0) scale(1.06);
-    box-shadow: inset 0 0 0 2px var(--color-accent), 0 8px 18px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 0 2px var(--color-accent-line), 0 8px 18px rgba(0, 0, 0, 0.25);
   }
   72% {
     transform: translate(var(--ghost-travel), 0) scale(1);

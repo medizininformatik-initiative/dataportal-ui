@@ -21,11 +21,11 @@
 .no-selected-criteria {
   width: 100%;
   height: 96px;
-  border: 1px dotted var(--color-accent);
+  border: 1px dotted var(--color-accent-line);
   border-radius: var(--border-radius-sm);
   font-weight: var(--font-weight-normal);
   font-size: var(--font-size-md, 14px);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   align-content: center;
   text-align: center;
 }

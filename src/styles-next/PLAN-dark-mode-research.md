@@ -258,6 +258,7 @@ Dev server `npm start` (:4200), backend on :8090, Keycloak on :8080, login `test
 |---|---|---|---|---|---|---|---|---|---|
 | 0 (baseline) | n/a | n/a | not run | not run | n/a | not run | n/a | 99744 B (gzip 14219) | `sass` standalone on `styles.scss`, light only |
 | 1 | pass (0 removed lines, only sourcemap comment differs) | lint of changed files pass, dev-server compile pass, full `npm run build` not run | not run | not run | not run | not run | not run | 182575 B (+83%), gzip 23931 (+68%) | Over the +60% gate. Cause: themed mixins compiled twice (+55 KB) and 14 Material color mixins. Proposal: gate on gzip <= +100%. Jest does not start here (`esbuild` Buffer invariant), so `num-data-cy.registry.spec.ts` was not run; `theme-toggle` is in both template and `FIXED_HOOKS`. |
+| 2 | pass (only the renamed uses and the new `--color-accent-text/-line` vars; `on-fill` white is identical in light) | lint pass via hook | not run | not run | cohort-definition only: 9 of 27 text nodes bad (walker `scratchpad/walker.js`) | not run | not run | not measured | Split done as text/line/fill: `--color-accent` stays the fill (no rename of the ~60 fill uses, no effect), `-text` (dark 300) for `color`, `-line` (dark 400) for border/outline/inset ring. 48 outside files renamed mechanically; `playground.component.ts` untouched (your dirty file), `src/styles/` (old, unused) reverted. `on-fill` key in the foreground map replaces `neutral 0` as text on a fill. |
 
 ## Known gaps (out of scope, found while looping)
 
@@ -272,4 +273,5 @@ Dev server `npm start` (:4200), backend on :8090, Keycloak on :8080, login `test
 | 1 | `src/app/layout/components/theme-toggle/theme-toggle.component.ts` (new) | header toggle button, stores `theme` in localStorage | switch |
 | 1 | `src/app/layout/components/header/header.component.{ts,html}` | imports and places `<num-theme-toggle>` | switch |
 | 1 | `cypress/e2e/Theme/theme-toggle.feature`, `cypress/support/step_definitions/theme.cy.ts` (new), `cypress/support/dataCy.ts` | toggle spec, `theme-toggle` hook | test the toggle (not run yet) |
+| 2 | 48 component files (`*.scss`, a few `.html`/`.ts` inline styles) | `color`/`text-decoration`/`fill` -> `var(--color-accent-text)`, `border`/`outline`/`box-shadow` -> `var(--color-accent-line)` | blocker 1, light value identical; revert with `git revert` of the iteration 2 commit |
 | 1 | `cypress/scripts/lint-features.mjs`, `cypress/TESTING.md` | `theme` added to cross-cutting components | feature lint accepts `@component:theme` |

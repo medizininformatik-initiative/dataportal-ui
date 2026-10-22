@@ -44,7 +44,7 @@
   border: none;
   border-radius: var(--border-radius-card);
   cursor: pointer;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   transition: background 0.2s ease, color 0.2s ease;
 
   &:hover:not(:disabled) {

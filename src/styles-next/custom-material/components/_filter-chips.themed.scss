@@ -61,7 +61,7 @@
       line-height: 16px;
       letter-spacing: -0.03em;
       text-transform: uppercase;
-      color: role-color($theme, neutral, 0);
+      color: foreground-color($theme, on-fill);
       cursor: pointer;
       white-space: nowrap;
       overflow: hidden;

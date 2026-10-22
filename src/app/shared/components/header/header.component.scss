@@ -13,13 +13,13 @@
   border-radius: var(--border-radius-card);
   cursor: pointer;
   padding: var(--spacing-5) var(--spacing-8);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-size: var(--font-app-content-page-header-actions-size);
   line-height: 1;
 
   &:hover {
     background: var(--color-accent);
-    border-color: var(--color-accent);
+    border-color: var(--color-accent-line);
     color: #fff;
   }
 }

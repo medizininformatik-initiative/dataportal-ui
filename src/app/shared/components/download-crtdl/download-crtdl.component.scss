@@ -23,11 +23,11 @@
   transition: var(--transition-shadow), border-color 0.2s ease, background 0.2s ease;
 
   &:hover {
-    border-color: var(--color-accent);
+    border-color: var(--color-accent-line);
   }
 
   &--selected {
-    border-color: var(--color-accent);
+    border-color: var(--color-accent-line);
     background: var(--color-accent-bg);
   }
 

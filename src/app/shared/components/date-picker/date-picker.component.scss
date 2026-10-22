@@ -12,7 +12,7 @@
   transition: border-color 0.2s ease;
 
   &:focus-within {
-    border-color: var(--color-accent);
+    border-color: var(--color-accent-line);
   }
 }
 

@@ -18,7 +18,7 @@
     height: 18px;
     border-radius: 10px;
     flex-shrink: 0;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: var(--font-size-sm);
     transform: rotateZ(45deg);
   }
@@ -36,6 +36,6 @@
     font-weight: 700;
     font-size: var(--font-size-md);
     line-height: var(--line-height-md);
-    color: var(--color-accent);
+    color: var(--color-accent-text);
   }
 }

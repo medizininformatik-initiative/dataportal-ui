@@ -50,7 +50,7 @@
   font-weight: 400;
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .num-info-item {
@@ -135,7 +135,7 @@
   justify-content: center;
   width: 16px;
   height: 16px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   cursor: default;
   flex-shrink: 0;
   user-select: none;

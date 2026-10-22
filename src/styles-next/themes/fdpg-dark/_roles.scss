@@ -27,7 +27,7 @@ $_dark-accent: map.merge(
     // half step between 900 and 800
     100: map.get($num-blue-palette, 800),
     200: map.get($num-blue-palette, 700),
-    300: map.get($num-blue-palette, 600),
+    // 300 stays: text shade (accent-text-shade), also hover border
   )
 );
 

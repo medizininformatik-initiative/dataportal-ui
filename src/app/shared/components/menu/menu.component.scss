@@ -52,17 +52,17 @@
 .divider:hover .icon-color,
 .last-item:hover,
 .last-item:hover .icon-color {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* ── Primary item (e.g. delete) ────────────────────── */
 .menu-item--primary {
-  color: var(--color-accent) !important;
+  color: var(--color-accent-text) !important;
   font-weight: 400 !important;
 }
 
 .menu-item--primary .icon-color {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .menu-item--primary:hover .icon-color {

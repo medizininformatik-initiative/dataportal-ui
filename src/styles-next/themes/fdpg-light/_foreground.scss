@@ -13,5 +13,7 @@ $fdpg-light-foreground: (
   text: #000000,
   secondary-text: #6a7483,
   section-text: #5f6266,
+  on-fill: #ffffff,
+  // text on a colored fill (button, chip), white in both themes
   divider: map.get($num-grey-palette, 300),
 );

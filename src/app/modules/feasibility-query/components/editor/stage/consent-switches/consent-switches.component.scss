@@ -11,7 +11,7 @@
 .provisionCodeDisplay {
   padding: 0.5em;
   background-color: var(--color-accent-bg);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   width: 50%;
 }
 
@@ -23,5 +23,5 @@
 }
 
 .text-blue {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }

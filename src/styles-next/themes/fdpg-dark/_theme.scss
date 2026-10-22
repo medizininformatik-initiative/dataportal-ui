@@ -23,6 +23,8 @@ $num-portal-webapp-theme-fdpg-dark-material: mat.m2-define-dark-theme(
 $num-portal-webapp-theme-fdpg-dark: map.merge(
   $num-portal-webapp-theme-fdpg,
   (
+    accent-text-shade: 300,
+    accent-line-shade: 400,
     roles: $fdpg-dark-roles,
     foreground: $fdpg-dark-foreground,
     background: $fdpg-dark-background,

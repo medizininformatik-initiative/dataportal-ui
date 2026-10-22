@@ -20,7 +20,7 @@
     --side-menu-text: var(--color-text-section);
     --side-menu-text-active: #{role-color($theme, accent, 900)};
     --side-menu-icon: #{role-color($theme, neutral, 900)};
-    --side-menu-icon-active: var(--color-accent);
+    --side-menu-icon-active: var(--color-accent-text);
     --side-menu-line: var(--border-color);
     --side-menu-line-hover: #{role-color($theme, neutral, 700)};
     --side-menu-focus-ring: #{role-color($theme, accent, 900)};

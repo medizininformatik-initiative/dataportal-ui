@@ -15,14 +15,14 @@
 
   &--active {
     background: color-mix(in srgb, var(--color-accent) 18%, transparent);
-    border-color: var(--color-accent);
+    border-color: var(--color-accent-line);
   }
 }
 
 .reference-toggle-text {
   font-size: var(--font-size-sm);
   line-height: var(--line-height-sm);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   white-space: nowrap;
   user-select: none;
 }

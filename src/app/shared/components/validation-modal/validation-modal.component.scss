@@ -33,16 +33,16 @@
   cursor: pointer;
   text-align: left;
   transition: box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-  border-left-color: var(--color-accent);
+  border-left-color: var(--color-accent-line);
 
   &:hover {
     box-shadow: var(--shadow-card-hover);
-    border-left-color: var(--color-accent);
+    border-left-color: var(--color-accent-line);
   }
 
   &--active {
     background: var(--color-accent-bg);
-    border-left-color: var(--color-accent);
+    border-left-color: var(--color-accent-line);
     box-shadow: var(--shadow-card-hover);
   }
 
