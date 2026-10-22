@@ -17,7 +17,11 @@
     // Colours by role: hover = light grey, active = accent tint, focus = ring
     --side-menu-bg: #{surface-color($theme, chrome)};
     --side-menu-bg-hover: #{role-color($theme, neutral, 200)};
-    --side-menu-bg-active: var(--color-accent-bg);
+    --side-menu-bg-active: #{if(
+        map-get($theme, dark),
+        var(--color-accent-bg-strong),
+        var(--color-accent-bg)
+      )}; // dark: 100, the chrome is lighter than tint 50
     --side-menu-text: var(--color-text-section);
     --side-menu-text-active: #{role-color($theme, accent, $accent-on-tint-shade)};
     --side-menu-icon: #{role-color($theme, neutral, 900)};

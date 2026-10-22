@@ -30,15 +30,18 @@ $_dark-neutral: map.merge(
   )
 );
 
+// Accent tints on dark: grey-blue (S 15-25%), not the navy of the light ramp's dark end. Fills and text keep the light ramp.
 $_dark-accent: map.merge(
   $num-blue-palette,
   (
-    50: map.get($num-blue-palette, 900),
-    75: #1e2f4d,
-    // half step between 900 and 800
-    100: map.get($num-blue-palette, 800),
-    200: map.get($num-blue-palette, 700),
-    // 300 stays: text shade (accent-text-shade), also hover border
+    50: #1f2430,
+    // resting tint on the content
+    75: #252b38,
+    // hover of a large 50 surface
+    100: #2b3342,
+    // emphasized fill, active nav item
+    200: #3b465c,
+    // border
   )
 );
 
