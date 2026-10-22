@@ -12,7 +12,42 @@
 - Branch: `feat/dark-mode`, created from `chore/e2e-merge-fix`, both at `5e5227bd`. Plain `git switch -c`, no worktree, so the dev server keeps running. Unrelated uncommitted changes exist (`angular.json`, `ReferenceCriteriaListEntry.ts`, `playground.component.ts`, untracked files): commit only each iteration's files, by explicit path.
 - Approved: split `--color-accent` into text and fill (blocker 1), editing outside files as needed.
 - Commits: no `Co-Authored-By` line, no Claude attribution (Shah's global rule wins over any reminder).
-- Status: **iteration 1 done, paused for Shah's review** (2026-10-22). No subagents (Shah's call, overrides the Subagents section: all jobs run inline).
+- Status: **session 1 ended 2026-10-22: iterations 1-9 done in code (see Where we stand), iteration 10 (full Cypress, sweep, audit) pending.** No subagents (Shah's call, overrides the Subagents section).
+
+## Where we stand (end of session 1, 2026-10-22)
+
+Branch `feat/dark-mode`, 14 commits on top of `5e5227bd`, nothing pushed. Dev server `npm start` (:4200) must be running; login `testuser` / `testpassword`.
+
+**Done (all in code, committed):**
+- Theme `themes/fdpg-dark/` (roles, foreground, background, theme) built on `fdpg-light`, compiled a second time under `[data-theme=dark] .FDPGTheme`. Header toggle (`num-theme-toggle`), `theme` key in localStorage, pre-paint script in `index.html`, toggle Cypress spec, `--expose theme=dark` for the whole suite.
+- Accent split: `--color-accent` (fill), `--color-accent-text`, `--color-accent-line`, plus `--color-accent-strong`; `on-fill` and `on-bright-fill` foreground keys; surface keys `card`, `dialog`, `chrome`; variables `--color-surface`, `--color-page`, `--border-color-field`, `--color-text-table-header`. 46 component SCSS files moved from literal white / black / grey to these variables.
+- Material: 14 component color mixins from our own background and foreground map (no `all-component-colors`, that is +80 KB), placeholder fix.
+- Look (after Shah's feedback rounds): neutral greys like VS Code Dark Modern; content `#1b1b1b` is the darkest, chrome (header, side menu, footer, popups) `#232323`; grey-blue accent tints; soft borders (divider `#363636`, control `#6a6a6a`); green is VS Code's comment green `#6a9955` as button fill, `#86ad6f` as text, action bar grey; text `#bebebe` / `#9a9a9a` / `#a0a0a0`; sizes and Material levels x 1.125 (side menu x 1.0), `-webkit-text-stroke: 0.15px` as weight stand-in; page title `#9ca8bf`.
+
+**Numbers:** contrast walker (`dark-mode-tools/contrast-walker.js`) 0 violations on cohort definition, feasibility search, bulk search, editor, data-selection search and editor, data-query data-selection, saved queries, criterion editor. Light CSS: only intended variable swaps (hex identical). CSS size 184 KB / 24 KB gzip against 100 KB / 14 KB (+68% gzip; gate was +60%, proposal: gzip <= +100%). M3 (light Cypress) was 57 passed, 0 failed when I stopped it for a design change; M4 (dark Cypress) never completed: see Next session.
+
+## Insights (keep)
+
+1. **`dark-ansi` is not a palette.** Claude Code's theme here is `dark-ansi`, it uses the terminal's own ANSI colors. Shah's VS Code theme is Dark+, so the text that reads well from afar is the VS Code terminal: foreground `#cccccc`, background `#181818` to `#1e1e1e`, monospace. Colors alone do not copy that: Titillium Web is narrow with a low x-height, the table cells and the 10-12 px labels (`Unbekannt`, badges) stay small, so they read worse from distance than terminal text. The levers that remain: size (hard-coded px in component SCSS are not scaled), weight, contrast `#bebebe` (about 9.7:1 on content). Tension to decide with Shah: "softer" (lower brightness) and "readable from afar" (higher contrast) pull in opposite directions.
+2. **Palette keys 50-200 of the dark accent are remapped tints; light text shades live in theme keys** (`accent-text-shade`, `accent-line-shade`, `accent-strong-shade`, `accent-on-tint-shade`, 300 / 500 / 300 / 300). A mixin that needs a lighter blue must read a key, not `role-color(accent, 200)`.
+3. **Light diffs hide in variables.** M1 only compares compiled styles-next light CSS; component SCSS outside it (46 files) is checked by reading, the values are the same hex. `var(--x)` replacing a hex is "same hex" only if the light variable carries that exact hex.
+4. **Material tokens are set per selector, order matters.** `mat.select-color` sets `--mat-select-placeholder-text-color` on the same selector as my block: an override must come after the includes (second rule), not before.
+5. **The logo `<img>` has class `FDPGTheme`.** Any `.FDPGTheme` rule with a background or color also hits the logo (and with `filter: brightness(1.4)` it showed as a lighter tile). Page-level declarations belong on `body.FDPGTheme`.
+6. **Surface relation is Shah's call, not best-practice's.** Order tried: chrome darker (VS Code like), then chrome lighter (final), content darkest. Cards on the content have the same tone as the content (neutral 0), separation by border and the action bar, which is grey `#2b2b2b` in dark.
+7. **Cypress runs are fragile against live edits.** The dev server reloads on every `src/` save and breaks the running spec; a killed `cypress run` leaves the Electron binary holding port 4300 (`ss -ltnp | grep 4300`, kill the pid). Four runs were stopped. Never edit `src/` during a run.
+8. **German git output breaks parsing**: use `LC_ALL=C`. `git checkout -- <dirty file>` destroys uncommitted work (it did once, see Known gaps); lint-staged keeps a backup stash (`git fsck --lost-found`) that saved it.
+9. **Light flaws found, not fixed (out of scope):** white text on green or red fills is 2.26:1 (buttons, snackbar), `#5f6266` section text is fine, status literals in component SCSS (`#dc3545`, `#c62828`, error-log hex).
+
+## Next session (start here)
+
+1. Start dev server and run both suites to the end, without touching `src/`: run `src/styles-next/dark-mode-tools/run-cypress-both.sh`, or the commands are `npm run cypress:run -- --expose tags='not @pending'` (light, M3) and `npm run cypress:run -- --expose tags='not @pending and not @component:theme',theme=dark` (dark, M4). Compare with the 2026-10-21 baseline in `cypress/E2E-FAILURES-2026-10-21.md`. Fix invisible or unclickable elements the dark run finds.
+2. Shah's review of the screenshot sweep (iteration 5 pause was skipped, he reviewed live): confirm chrome vs content step (`#232323` / `#1b1b1b`), text tone (`#bebebe`), green, title grey-blue `#9ca8bf`, size x 1.125, stroke 0.15px. Open decision: lift the 10-12 px hard-coded labels (`Unbekannt`, badges, availability bar) and the table cell tone for distance reading.
+3. Missing sweeps: dialogs (save, download, error, about, validation), datepicker panel, snackbars, tooltips in dark, bulk-search results, result page, criterion modal tabs with concept filter, user menu. Run the walker on each; screenshot light and dark pairs.
+4. `npm run build` (M2 full), Lighthouse a11y dark vs light (M6), leftover hex count (M7), CSS size gate decision (M8).
+5. Open items from the Hex list: `#839e00` checkbox fill, error text in `_color-variables`, `_ui-classes` fallback `#232323`, scrollbar light literals, status literals.
+6. Cleanup before merge: decide on `-webkit-text-stroke` (non-standard, Chromium and Safari only; Firefox ignores it, so Firefox dark text is thinner), toggle `aria-label` translation keys, the `dark: true` flag in mixins (a few one-off literals), `prototype-bulk-chips.html` (untracked, Shah's).
+7. Revert list for Shah: every outside edit is in `## Outside edits`; `git diff --name-only chore/e2e-merge-fix` must match it.
+
 
 ## What the code gives us
 
@@ -246,6 +281,8 @@ What the metrics cannot judge: hierarchy, mood, whether it looks good. Shah revi
 
 ## Test setup
 
+Tools (committed): `src/styles-next/dark-mode-tools/contrast-walker.js` (paste into `evaluate_script`: lists text under 4.5:1 and light surfaces in dark, per page), `src/styles-next/dark-mode-tools/run-cypress-both.sh` (M3 + M4).
+
 Dev server `npm start` (:4200), backend on :8090, Keycloak on :8080, login `testuser` (password from Cypress config). Dark Reader snippet: load the script tag, then `DarkReader.enable({ brightness: 100, contrast: 90, sepia: 0 })`.
 
 ## Sources
@@ -262,6 +299,7 @@ Dev server `npm start` (:4200), backend on :8090, Keycloak on :8080, login `test
 | 3 | pass (light diff = iteration 2 lines + links, tabs, cancel, chips now `var(--color-accent-strong/-text)`, same hex) | lint pass via hook | not run | not run | cohort-definition: 2 of 27 bad (green button white text 2.26, iteration 4) | not run | not run | not measured | Header, footer, side menu, logo (`filter: brightness(1.4)` in dark, no new svg), links, tabs. Dark palette keys: 50-200 are remapped tints, so lighter text shades live in theme keys (`accent-on-tint-shade`, `accent-strong-shade`, `accent-deep-shade` = `A100` in dark). Mixins read `map-get($theme, dark)` for one-off literals (footer border, header shadow, logo). |
 | 4-6 | pass (light CSS diff = only intended variable swaps, same hex) | lint pass via hook | partial run, 57 passed, 0 failed, stopped by me for design changes | not run yet | walker over 10 pages and the criterion editor: 0 text violations (after fixes) | not run | not run | 184740 B, gzip 24302 | Buttons (green/red black text on fill), 46 component SCSS files to variables, Material surfaces from our map, scrollbars, shadows, autofill, tooltip, placeholder. Shah feedback: greys now VS Code Dark Modern, green softened (`#66ad78` fill, `#8fc29d` text), +0.01em letter-spacing on body/small roles in dark, page-header intro text `accent 300`. |
 | 7 | pass (only variable swaps) | lint pass via hook | not run to the end, runs were stopped four times for design changes | not run | 0 text violations on every swept page | not run | not run | not measured | Shah feedback round: chrome `#232323` vs content `#1b1b1b` (small step), grey-blue accent tints, softer borders (dividers `#363636`, control border `#6a6a6a`, accent line 500, button rings 55%), green fill `#5a9a6b` with `#8fc29d` text, type roles and Material levels x 1.125 in dark (side menu stays 1.0 so labels do not wrap) plus `-webkit-text-stroke: 0.2px` as weight stand-in, intro text neutral. |
+| 8 | pass | lint pass via hook | 57 passed, 0 failed (stopped, partial) | never completed | 0 violations on all swept pages | not run | not run | 184 KB, 24 KB gzip | Final look of session 1 (see Where we stand). |
 
 ## Known gaps (out of scope, found while looping)
 
