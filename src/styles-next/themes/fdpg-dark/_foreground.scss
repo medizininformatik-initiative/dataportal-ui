@@ -6,5 +6,7 @@ $fdpg-dark-foreground: (
   secondary-text: #a9b6c2,
   section-text: #b4bcc4,
   on-fill: #ffffff,
+  on-bright-fill: #000000,
+  // green and red button fills
   divider: map.get($_dark-neutral, 300),
 );

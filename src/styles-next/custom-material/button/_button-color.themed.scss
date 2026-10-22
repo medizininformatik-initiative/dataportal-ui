@@ -8,9 +8,15 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
   $min-width,
   $gap,
   $outline: false,
-  $focus: $hover
+  $focus: $hover,
+  $text: $color
+    // text of outline and disabled state: blue passes accent-text, a fill color can be too dark on dark
 ) {
+  // Green and red fills are bright: dark theme sets on-bright-fill (black, 8:1). Light has no key and keeps white.
   $white: foreground-color($theme, on-fill);
+  @if $name != 'blue' and foreground-color($theme, on-bright-fill) {
+    $white: foreground-color($theme, on-bright-fill);
+  }
   $disabled-bg: role-color($theme, neutral, 50);
   $disabled-ring: 0px 0px 1px 1px $color;
 
@@ -34,7 +40,7 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
 
     &.disabled {
       background-color: $disabled-bg;
-      color: $color;
+      color: $text;
       box-shadow: $disabled-ring;
       cursor: unset;
     }
@@ -43,12 +49,12 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
       &.outline {
         background-color: transparent;
         border: 2px solid $color;
-        color: $color;
+        color: $text;
         box-shadow: none;
 
         &:hover:not(.disabled) {
           background-color: rgba($color, 0.08) !important;
-          color: $color !important;
+          color: $text !important;
           box-shadow: none;
         }
 

@@ -11,7 +11,8 @@
     role-color($theme, accent, 600),
     125px,
     15px,
-    $focus: role-color($theme, accent, 700)
+    $focus: role-color($theme, accent, 700),
+    $text: var(--color-accent-text)
   );
   @include button-color(
     $theme,

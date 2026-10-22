@@ -35,6 +35,11 @@
   --color-accent-border: #{role-color($theme, accent, 200)};
   --color-accent-strong: #{role-color($theme, accent, $accent-strong-shade)};
 
+  // Surfaces and field borders for component styles (replace literal white / #f9f9f9 / #c3c7cd there).
+  --color-surface: #{surface-color($theme, card)};
+  --color-page: #{surface-color($theme, background)};
+  --border-color-field: #{if(map-get($theme, dark), role-color($theme, neutral, 700), #c3c7cd)};
+
   // ── Status colours ─────────────────────────────────────────────────────────
   // Used by: searchbar (validation error colour)
   --num-color--warn: #{role-color($theme, warning, 500)};
