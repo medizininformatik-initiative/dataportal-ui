@@ -45,8 +45,8 @@
 body.FDPGTheme {
   [data-theme='dark'] & {
     color: var(--color-text-primary);
-    // Weight stand-in: Titillium has no 450. A 0.2px stroke in the text color thickens glyphs by about one eighth.
-    -webkit-text-stroke: 0.2px;
+    // Weight stand-in: Titillium has no 450. A 0.15px stroke in the text color thickens glyphs by about one eighth.
+    -webkit-text-stroke: 0.15px;
   }
 }
 
@@ -336,6 +336,13 @@ $spacing-scale: (
 .theme-switching *::before,
 .theme-switching *::after {
   transition: none !important;
+}
+
+// After the Material color mixins above (same selector, later wins): Material's dark placeholder is the text color at
+// 60% alpha (3.8:1), use our placeholder tone.
+[data-theme='dark'] .FDPGTheme {
+  --mat-select-placeholder-text-color: var(--color-text-placeholder);
+  --mat-select-disabled-text-color: var(--color-text-placeholder);
 }
 
 // Dark scrollbars, shadows and form autofill. Shadows are near invisible on dark: stronger alpha, and surface steps plus borders carry depth.

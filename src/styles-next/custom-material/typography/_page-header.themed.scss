@@ -13,5 +13,11 @@
       foreground-color($theme, section-text),
       role-color($theme, accent, 700)
     )};
+  // Dark: the page title in a quiet blue, like a selected item (not the bright accent text)
+  @if map-get($theme, dark) {
+    .header-title {
+      color: #8b9fc2;
+    }
+  }
   --font-app-content-page-header-actions-size: 16px; /* eye button, icon only: size, no text level */
 }

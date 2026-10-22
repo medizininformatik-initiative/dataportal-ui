@@ -79,8 +79,8 @@ $num-portal-webapp-theme-fdpg-dark: map.merge(
   (
     accent-text-shade: 300,
     accent-line-shade: 500,
-    accent-on-tint-shade: A100,
-    accent-strong-shade: A100,
+    accent-on-tint-shade: 300,
+    accent-strong-shade: 300,
     dark: true,
     type-roles: $_dark-type-roles,
     num-typography: $_dark-typography,

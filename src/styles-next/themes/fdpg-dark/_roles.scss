@@ -45,15 +45,15 @@ $_dark-accent: map.merge(
   )
 );
 
-// Green: the light ramp is neon (#9bb823) and hurts on dark. Softer mint, base from VS Code's greens (#2ea043, #73c991).
-// 500 = fill, black text on it 6.4:1. Text and icons on grey use 400 (8:1).
+// Green: the light ramp is neon (#9bb823) and hurts on dark. Base is VS Code's comment green #6a9955 (sampled from Shah's reference image).
+// 500 = fill, black text on it 6.6:1. Text and icons on grey use 400 (5.7:1 on the action bar).
 $_dark-secondary: map.merge(
   $num-green-palette,
   (
-    400: #8fc29d,
-    500: #5a9a6b,
-    600: #4f8a5f,
-    700: #437a52,
+    400: #86ad6f,
+    500: #6a9955,
+    600: #5d8a4a,
+    700: #517a40,
   )
 );
 
