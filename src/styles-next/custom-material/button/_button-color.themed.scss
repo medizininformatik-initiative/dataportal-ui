@@ -18,7 +18,9 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
     $white: foreground-color($theme, on-bright-fill);
   }
   $disabled-bg: role-color($theme, neutral, 50);
-  $disabled-ring: 0px 0px 1px 1px $color;
+  // Dark: soft rings (55% of the fill color, still above 3:1), VS Code has no hard outlines
+  $ring: if(map-get($theme, dark), rgba($color, 0.55), $color);
+  $disabled-ring: 0px 0px 1px 1px $ring;
 
   .num-button.#{$name} {
     min-width: $min-width !important;
@@ -48,7 +50,7 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
     @if $outline {
       &.outline {
         background-color: transparent;
-        border: 2px solid $color;
+        border: 2px solid $ring;
         color: $text;
         box-shadow: none;
 
