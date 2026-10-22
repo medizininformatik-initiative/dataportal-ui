@@ -21,6 +21,7 @@ export const FIXED_HOOKS = [
   'save-cohort-button',
   'save-file-button',
   'saved-query-delete-icon',
+  'theme-toggle',
   'upload-crtdl',
 ] as const
 

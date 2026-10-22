@@ -40,6 +40,28 @@
   @include custom-material_themed($num-portal-webapp-theme-fdpg);
 }
 
+// Dark: same mixins, dark theme map. data-theme is set on <html> (index.html script, header toggle).
+[data-theme='dark'] .FDPGTheme {
+  color-scheme: dark;
+  // Only the Material components the app imports (all-component-colors is +80 KB). Add one here when a new one is used.
+  $_m: $num-portal-webapp-theme-fdpg-dark-material;
+  @include mat.core-color($_m);
+  @include mat.tooltip-color($_m);
+  @include mat.dialog-color($_m);
+  @include mat.tabs-color($_m);
+  @include mat.form-field-color($_m);
+  @include mat.select-color($_m);
+  @include mat.input-color($_m);
+  @include mat.badge-color($_m);
+  @include mat.sidenav-color($_m);
+  @include mat.toolbar-color($_m);
+  @include mat.stepper-color($_m);
+  @include mat.menu-color($_m);
+  @include mat.expansion-color($_m);
+  @include mat.datepicker-color($_m);
+  @include custom-material_themed($num-portal-webapp-theme-fdpg-dark);
+}
+
 /* ── Design tokens ─────────────────────────────────────────────
    Typography
    --font-body           : body / UI text font stack (Titillium Web)
@@ -297,4 +319,11 @@ $spacing-scale: (
 * {
   scrollbar-width: thin;
   scrollbar-color: #c5cacf #f1f2f3;
+}
+
+// Set by the theme toggle for two frames: no color fades while the theme switches.
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
 }

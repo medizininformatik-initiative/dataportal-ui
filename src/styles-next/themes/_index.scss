@@ -1,2 +1,3 @@
-// Active theme. Add other themes (dark, other teams) as sibling folders and import the one to use.
+// Themes. fdpg-dark builds on fdpg-light, so import it second.
 @import './fdpg-light/theme';
+@import './fdpg-dark/theme';

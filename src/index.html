@@ -6,6 +6,13 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="assets/img/fdpg_favicon.ico" />
+    <script>
+      // set the theme before first paint, so a dark reload does not flash white
+      try {
+        if (localStorage.getItem('theme') === 'dark')
+          document.documentElement.dataset.theme = 'dark'
+      } catch (e) {}
+    </script>
   </head>
   <body class="mat-typography FDPGTheme">
     <num-root>
@@ -115,6 +122,12 @@
       margin: 24px 0 8px 0;
       font-size: 2rem;
       font-weight: bold;
+    }
+    [data-theme='dark'] .error-indicator {
+      background: #12161b;
+    }
+    [data-theme='dark'] .error-indicator p {
+      color: #ccd1d6;
     }
     .error-indicator p {
       font-size: 1.1rem;

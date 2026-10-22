@@ -1,0 +1,9 @@
+// Foreground colors of "FDPG Dark": same keys as fdpg-light, values from the map in PLAN-dark-mode-research.md.
+@use 'sass:map';
+
+$fdpg-dark-foreground: (
+  text: #ccd1d6,
+  secondary-text: #a9b6c2,
+  section-text: #b4bcc4,
+  divider: map.get($_dark-neutral, 300),
+);

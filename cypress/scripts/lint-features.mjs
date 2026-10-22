@@ -29,7 +29,7 @@ const COMPONENTS = {
   'data-selection': ['data-selection-search', 'data-selection-editor', 'data-selection-feature-editor'],
   'data-query': ['cohort-definition', 'crtdl', 'upload'],
   'saved-queries': ['saved-queries'],
-  'cross-cutting': ['action-bar', 'language', 'navigation', 'login', 'session', 'user-menu'],
+  'cross-cutting': ['action-bar', 'language', 'navigation', 'login', 'session', 'user-menu', 'theme'],
 }
 const VALUES = {
   area: Object.keys(COMPONENTS).filter((a) => a !== 'cross-cutting'),

@@ -1,0 +1,30 @@
+// Theme "FDPG Dark": the light theme with dark roles, foreground and background.
+// Typography, type roles and the Material palettes are shared with fdpg-light (import it first).
+// Compiled a second time under [data-theme=dark] in styles.scss.
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+@import './roles';
+@import './foreground';
+@import './background';
+
+$num-portal-webapp-theme-fdpg-dark-material: mat.m2-define-dark-theme(
+  (
+    color: (
+      primary: $num-portal-webapp-primary-fdpg,
+      accent: $num-portal-webapp-accent-fdpg,
+      warn: $num-portal-webapp-warn,
+    ),
+    typography: $num-typography,
+    density: 0,
+  )
+);
+
+$num-portal-webapp-theme-fdpg-dark: map.merge(
+  $num-portal-webapp-theme-fdpg,
+  (
+    roles: $fdpg-dark-roles,
+    foreground: $fdpg-dark-foreground,
+    background: $fdpg-dark-background,
+  )
+);

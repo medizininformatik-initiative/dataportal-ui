@@ -200,7 +200,7 @@ Feature: ...
 | | | `crtdl` | the same page: CRTDL upload and download | |
 | | | `upload` | the same page: invalid uploads | |
 | Saved queries | `saved-queries` | `saved-queries` | Saved Queries | `/saved-queries` |
-| General (`@cross-cutting`) | none | `action-bar`, `language`, `navigation`, `login`, `session`, `user-menu` | several / the whole app | |
+| General (`@cross-cutting`) | none | `action-bar`, `language`, `navigation`, `login`, `session`, `user-menu`, `theme` | several / the whole app | |
 
 `feasibility-editor` and `criterion-editor` are two screens, not two modules: the first lists the criteria of
 a cohort definition, the second is the page you reach from one criterion's menu to edit that single criterion.

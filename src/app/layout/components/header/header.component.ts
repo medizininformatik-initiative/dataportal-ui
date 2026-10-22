@@ -4,6 +4,7 @@ import { BreadcrumbComponent } from '../../../shared/components/breadcrumbs/brea
 import { LanguageComponent } from '../language/language.component'
 import { UserMenuComponent } from './user-menu/user-menu.component'
 import { PortalLinkComponent } from './portal-link/portal-link.component'
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component'
 
 @Component({
   selector: 'num-dataportal-header',
@@ -16,6 +17,7 @@ import { PortalLinkComponent } from './portal-link/portal-link.component'
     LanguageComponent,
     UserMenuComponent,
     PortalLinkComponent,
+    ThemeToggleComponent,
   ],
 })
 export class HeaderComponent {

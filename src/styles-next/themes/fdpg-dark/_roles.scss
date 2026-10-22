@@ -1,0 +1,40 @@
+// Roles of "FDPG Dark": same role names and shade keys as fdpg-light, dark values.
+// Only the palettes that change are remapped (neutral, accent tints). Fills keep their color:
+// accent 500/600, secondary, danger and warning are the light palettes. Text and icon use of
+// accent moves to --color-accent-text (blocker 1, iteration 2). Map: PLAN-dark-mode-research.md.
+@use 'sass:map';
+
+$_dark-neutral: map.merge(
+  $num-grey-palette,
+  (
+    0: #1a1f26,
+    // card, dialog
+    50: #12161b,
+    // page
+    100: #222831,
+    // hover, track
+    200: #2b323b,
+    300: #3a434d,
+    // divider, border
+  )
+);
+
+$_dark-accent: map.merge(
+  $num-blue-palette,
+  (
+    50: map.get($num-blue-palette, 900),
+    75: #1e2f4d,
+    // half step between 900 and 800
+    100: map.get($num-blue-palette, 800),
+    200: map.get($num-blue-palette, 700),
+    300: map.get($num-blue-palette, 600),
+  )
+);
+
+$fdpg-dark-roles: (
+  accent: $_dark-accent,
+  secondary: $num-green-palette,
+  neutral: $_dark-neutral,
+  danger: $num-red-palette,
+  warning: $num-yellow-palette,
+);
