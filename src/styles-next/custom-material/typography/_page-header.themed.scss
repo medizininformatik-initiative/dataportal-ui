@@ -17,6 +17,11 @@
   @if map-get($theme, dark) {
     .header-title {
       color: #9ca8bf;
+      // highlight: soft slate fill and a left bar in the accent line tone
+      background: var(--color-accent-bg-strong);
+      box-shadow: inset 3px 0 0 var(--color-accent-line);
+      border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+      padding: 0 var(--spacing-12);
     }
   }
   --font-app-content-page-header-actions-size: 16px; /* eye button, icon only: size, no text level */
