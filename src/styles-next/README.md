@@ -11,3 +11,7 @@ Hierarchy: theme → role → palette → shade → color.
 | `general-styles/` | | Styles that use no theme color. |
 
 Entry point: `styles.scss` (set in `angular.json`).
+
+## Dark mode
+
+Branch `feat/dark-mode`. Status, insights, issues and the next steps are in `PLAN-dark-mode-research.md`, start at its section **Next session (start here)** (index at the top of **Where we stand**). Theme: `themes/fdpg-dark/`, tools: `dark-mode-tools/`.

@@ -16,7 +16,9 @@
 
 ## Where we stand (end of session 1, 2026-10-22)
 
-Branch `feat/dark-mode`, 14 commits on top of `5e5227bd`, nothing pushed. Dev server `npm start` (:4200) must be running; login `testuser` / `testpassword`.
+Section index for the next session: **Where we stand**, **Issues in session 1**, **Improvements gained in session 1**, **Insights (keep)**, **Next session (start here)**, then **Test setup** (tools) and **Outside edits (revert list)** at the bottom.
+
+Branch `feat/dark-mode`, 18 commits on top of `5e5227bd` (`git log --oneline 5e5227bd..HEAD`), nothing pushed. Dev server `npm start` (:4200) must be running; login `testuser` / `testpassword`.
 
 **Done (all in code, committed):**
 - Theme `themes/fdpg-dark/` (roles, foreground, background, theme) built on `fdpg-light`, compiled a second time under `[data-theme=dark] .FDPGTheme`. Header toggle (`num-theme-toggle`), `theme` key in localStorage, pre-paint script in `index.html`, toggle Cypress spec, `--expose theme=dark` for the whole suite.
@@ -37,6 +39,32 @@ Branch `feat/dark-mode`, 14 commits on top of `5e5227bd`, nothing pushed. Dev se
 7. **Cypress runs are fragile against live edits.** The dev server reloads on every `src/` save and breaks the running spec; a killed `cypress run` leaves the Electron binary holding port 4300 (`ss -ltnp | grep 4300`, kill the pid). Four runs were stopped. Never edit `src/` during a run.
 8. **German git output breaks parsing**: use `LC_ALL=C`. `git checkout -- <dirty file>` destroys uncommitted work (it did once, see Known gaps); lint-staged keeps a backup stash (`git fsck --lost-found`) that saved it.
 9. **Light flaws found, not fixed (out of scope):** white text on green or red fills is 2.26:1 (buttons, snackbar), `#5f6266` section text is fine, status literals in component SCSS (`#dc3545`, `#c62828`, error-log hex).
+
+## Issues in session 1 (what went wrong, so it does not repeat)
+
+| # | Issue | Cause | Fix / rule |
+|---|---|---|---|
+| 1 | Shah's uncommitted edit in `playground.component.ts` (66 lines) was wiped | I ran `git checkout -- <dir>` to undo my own regex pass over the file | Restored byte-identical from the lint-staged backup stash (`LC_ALL=C git fsck --lost-found`, commit "WIP on dark-mode"). Rule: never `git checkout --` a file that was dirty before the session; protect it by excluding it from the edit, not by reverting afterwards |
+| 2 | `git add src/styles-next` committed Shah's untracked `prototype-bulk-chips.html` once | Directory add picks up untracked files | Removed from the commit with `git rm --cached` + amend (not pushed). Rule: add by explicit path |
+| 3 | `prettier --write src/styles-next` reformatted about 40 unrelated docs | Folder-wide prettier | Restored those tracked files from git (they were clean). Rule: run prettier on the changed files only |
+| 4 | Cypress runs failed to start or were invalid six times | A killed `cypress run` leaves Electron holding port 4300 ("Port 4300 is already in use"); every later run aborted at start; editing `src/` reloads the dev server mid-run | Kill the pid from `ss -ltnp | grep 4300` and the orphaned Chrome and Electron helpers (about 80 processes found at the end). Never edit `src/` during a run |
+| 5 | Runs killed four times for design feedback, so M3 and M4 never completed | Shah gave new design direction while a 1 h suite ran | Decided 2026-10-22: no Cypress in session 1. Run both suites first thing next session |
+| 6 | Stale "task completed" notifications from abandoned waiter loops | Long `sleep 10` polling loops outlived their runs | Do not poll with long loops, use one bounded wait per run. Two waiter shells were still alive at the end and were killed |
+| 7 | Jest does not start in this environment | `esbuild`: `Buffer.from("") instanceof Uint8Array is incorrectly false` (jsdom vs Node) | Not fixed. The `num-data-cy.registry.spec.ts` check for the new `theme-toggle` hook was done by reading |
+| 8 | First attempts looked wrong: black text on dark (saved queries), lighter tile behind the logo, white placeholder, blank screenshot | Material light `app-background` sets black; logo `<img>` carries class `FDPGTheme`; Material token order; screenshot taken before render | See Insights 4 and 5. Screenshot before render: wait 3 s after reload |
+| 9 | German `git` output ("unreferenziert") broke my parsing | Locale | `LC_ALL=C` for scripted git |
+| 10 | The design direction changed seven times in one hour (blue-grey, VS Code grey, chrome dark then light, softer, green, type size, text brightness) | Shah judged by eye against the VS Code screenshot | Expected for a first look; the map in this plan is now the VS Code derived one, open points are in "Next session" |
+
+## Improvements gained in session 1
+
+- **Measured contrast instead of impressions:** `dark-mode-tools/contrast-walker.js` (text under 4.5:1, light surfaces in dark) found real defects the eye missed: placeholder at 3.8:1 from Material's 60% alpha, accent text 1.8:1 on the dark nav, black text inherited from Material, white badge, white table rows. Result: 0 violations on 10 pages.
+- **Light output protected:** M1 (compiled light CSS diff) after every iteration, kept to "same hex": every dark-only literal sits behind `map-get($theme, dark)` or a theme key.
+- **Fewer places that know a color:** 46 component SCSS files and the shell no longer hold literal white, black or grey, they read `--color-surface`, `--color-page`, `--border-color-field`, `--color-text-*`. A third theme (high contrast, a team theme) now needs only a theme folder.
+- **One accent became four jobs:** fill, text, line, strong (links, hover). The split lives in the theme, so dark moves text and line to lighter shades and keeps fills.
+- **Material themed from our own maps** (14 component mixins, not `all-component-colors`): saves 80 KB and removes the indigo-pink leaks (stepper, details drawer, select panel, menus).
+- **No flash on reload:** pre-paint script in `index.html`, transitions off during the switch.
+- **Reproducible tooling committed:** contrast walker, `run-cypress-both.sh`, `--expose theme=dark` for the whole suite, a toggle spec.
+- **Research turned into rules:** best-practice list, VS Code reference and the Dark Reader trial are now implemented, and each Shah correction is recorded with its value (grey set, green `#6a9955` from his reference image, type scale 1.125, stroke 0.15px).
 
 ## Next session (start here)
 
