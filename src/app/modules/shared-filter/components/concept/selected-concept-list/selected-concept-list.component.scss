@@ -14,7 +14,7 @@
   border-radius: var(--border-radius-sm);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   font-size: var(--font-size-md);
-  color: #2a3a4b;
+  color: var(--color-text-primary);
   justify-content: space-between;
   height: 56px;
   margin-bottom: var(--spacing-8);
@@ -31,5 +31,5 @@
   background: none;
 }
 .delete-button:hover {
-  color: #2a3a4b;
+  color: var(--color-text-primary);
 }

@@ -73,7 +73,7 @@
 .ghost {
   left: 0;
   padding: 10px 12px;
-  background: #dde4f0;
+  background: var(--color-accent-bg-strong);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 
   i {
@@ -105,7 +105,7 @@
   left: 100px;
   top: 50px;
   width: 22px;
-  color: #111;
+  color: var(--color-text-primary);
   filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.9));
 }
 

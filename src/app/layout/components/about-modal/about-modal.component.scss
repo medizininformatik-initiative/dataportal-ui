@@ -15,7 +15,7 @@
 }
 
 .about-modal-content {
-  background: white;
+  background: var(--color-surface);
   padding: var(--spacing-24);
   flex: 1;
 }
@@ -43,6 +43,6 @@
   gap: 0.5rem;
   justify-content: flex-end;
   padding: var(--spacing-16) var(--spacing-24);
-  background: white;
+  background: var(--color-surface);
   border-top: 1px solid #e9ecef;
 }

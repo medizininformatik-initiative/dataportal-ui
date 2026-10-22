@@ -32,7 +32,7 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-  background: #ffffff;
+  background: var(--color-surface);
   opacity: 0.5;
   display: flex;
   align-items: center;
@@ -47,7 +47,7 @@
 .tab.active {
   height: 41px;
   opacity: 1;
-  background: #ffffff;
+  background: var(--color-surface);
   color: var(--color-accent-text);
   border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
   box-shadow: var(--shadow-card-active);
@@ -56,7 +56,7 @@
 .tab-content {
   height: 100%;
   overflow: auto;
-  background: white;
+  background: var(--color-surface);
   padding: var(--spacing-16);
   border-radius: 0 var(--border-radius-card) var(--border-radius-card) var(--border-radius-card);
   box-shadow: var(--shadow-card);

@@ -2,7 +2,7 @@
 ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field {
   width: 100%;
   padding: 0;
-  background-color: #fff;
+  background-color: var(--color-surface);
 }
 
 .select-wrapper {
@@ -61,7 +61,7 @@
   border-radius: 4px;
   padding: 0 var(--spacing-8);
   min-height: 40px;
-  background: #fff;
+  background: var(--color-surface);
   width: 100%;
   box-sizing: border-box;
 
@@ -110,7 +110,7 @@
 
 /* Overlay panel adjustments */
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .example-panel {
-  background-color: #ffffff;
+  background-color: var(--color-surface);
   width: fit-content;
   min-width: 20%;
   max-width: 1000px;
@@ -121,7 +121,7 @@
 /* Select panel — white bg, mid-grey border, 4px radius */
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .example-panel .mat-mdc-select-panel,
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .mat-mdc-select-panel {
-  background: #ffffff;
+  background: var(--color-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-card) !important;
   box-sizing: border-box;

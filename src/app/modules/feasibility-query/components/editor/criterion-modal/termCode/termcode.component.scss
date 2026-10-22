@@ -20,12 +20,12 @@
 .concept-item {
   display: flex;
   align-items: center;
-  background: white;
+  background: var(--color-surface);
   padding: var(--spacing-8);
   border-radius: var(--border-radius-sm);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   font-size: var(--font-size-md);
-  color: #2a3a4b;
+  color: var(--color-text-primary);
   justify-content: space-between;
   height: 48px;
   margin-bottom: var(--spacing-8);
@@ -39,7 +39,7 @@
 .delete-button {
   width: auto;
   align-self: end;
-  background-color: white;
+  background-color: var(--color-surface);
   border: 0px;
   text-decoration: underline var(--color-accent-strong);
   padding-bottom: var(--spacing-10);

@@ -11,8 +11,8 @@ table {
   height: 100%;
   min-height: 0;
   width: 100%;
-  color: #000000;
-  background-color: #fff;
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
   border-radius: 5px;
   border-collapse: collapse;
 }

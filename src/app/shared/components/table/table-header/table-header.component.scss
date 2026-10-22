@@ -27,7 +27,7 @@ th {
   font-weight: var(--font-table-header-weight);
   font-size: var(--font-table-header-size);
   line-height: var(--font-table-header-line);
-  color: #5e6c78; // neutral 900, 5.12:1 (was #6a7483, 4.49)
+  color: var(--color-text-table-header); // neutral 900, 5.12:1 (was #6a7483, 4.49)
   border-bottom: 1px solid var(--border-color);
 }
 

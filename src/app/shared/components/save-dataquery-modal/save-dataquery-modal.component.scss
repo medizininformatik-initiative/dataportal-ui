@@ -26,7 +26,7 @@
   transition: color 0.2s ease, background 0.2s ease;
 
   &:hover {
-    color: #6a7483;
+    color: var(--color-text-secondary);
     background: rgba(197, 202, 207, 0.15);
   }
 
@@ -49,9 +49,9 @@
   font-weight: var(--font-weight-bold);
   font-size: 16px;
   line-height: 24px;
-  color: #000;
-  background: #ffffff;
-  border: 1px solid #c5cacf;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   box-sizing: border-box;
   outline: none;

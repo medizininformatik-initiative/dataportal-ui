@@ -3,13 +3,13 @@
 
   .mat-mdc-text-field-wrapper {
     padding: 0px;
-    background-color: white;
+    background-color: var(--color-surface);
     height: 40px; // total incl. the 1px border from the header theme (border-box)
 
     .mat-mdc-form-field-flex {
       padding: 0px var(--spacing-6);
       border-radius: 5px;
-      border-color: white;
+      border-color: var(--color-surface);
       height: 100%;
       align-items: center;
     }
@@ -47,14 +47,14 @@
 
 /* Language dropdown panel — must be at root level (overlay appended to body) */
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .language-panel {
-  background-color: #ffffff;
+  background-color: var(--color-surface);
   min-width: 140px !important;
   width: fit-content !important;
   box-sizing: border-box;
 }
 
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .language-panel .mat-mdc-select-panel {
-  background: #ffffff;
+  background: var(--color-surface);
   min-width: 140px !important;
   padding: var(--spacing-4) 0;
 }

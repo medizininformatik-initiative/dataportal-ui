@@ -21,7 +21,7 @@
 .faq-title {
   font-size: 1.25rem;
   font-weight: bold;
-  color: rgb(27, 27, 27);
+  color: var(--color-text-primary);
   margin-bottom: var(--spacing-4);
 }
 
@@ -34,5 +34,5 @@ mat-expansion-panel {
 
 mat-panel-title {
   font-weight: var(--font-weight-bold);
-  color: rgb(27, 27, 27);
+  color: var(--color-text-primary);
 }

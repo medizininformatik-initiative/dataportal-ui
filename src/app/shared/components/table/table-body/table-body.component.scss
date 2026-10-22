@@ -1,5 +1,5 @@
 .table-border {
-  border-top: 1px solid #f1f2f3;
+  border-top: 1px solid var(--border-color-subtle);
 }
 
 .table-border:first-child {
@@ -7,7 +7,7 @@
 }
 
 .table-row-hover:hover {
-  background-color: #f5f5f5;
+  background-color: var(--num-color--grey-hover);
 }
 
 tr {
@@ -15,7 +15,7 @@ tr {
   table-layout: fixed;
   width: 100%;
   height: 40px;
-  background: #ffffff;
+  background: var(--color-surface);
 }
 
 td {
@@ -27,7 +27,7 @@ td {
   font-weight: var(--font-table-cell-weight);
   font-size: var(--font-table-cell-size);
   line-height: var(--font-table-cell-line);
-  color: #000000;
+  color: var(--color-text-primary);
 }
 
 .row-container {

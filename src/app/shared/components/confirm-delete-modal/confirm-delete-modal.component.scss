@@ -1,7 +1,7 @@
 .container {
   width: 40em;
   min-height: 18vh;
-  background: #ffffff;
+  background: var(--color-surface);
   box-shadow: var(--shadow-modal);
   border-radius: var(--border-radius-card);
   display: flex;

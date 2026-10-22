@@ -67,7 +67,7 @@
 }
 
 ::ng-deep.mat-mdc-menu-panel {
-  background-color: #fff;
+  background-color: var(--color-surface);
   width: 1000px;
 }
 

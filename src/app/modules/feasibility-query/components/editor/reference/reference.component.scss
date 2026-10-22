@@ -21,7 +21,7 @@
 .delete-button {
   width: auto;
   align-self: end;
-  background-color: white;
+  background-color: var(--color-surface);
   border: 0;
   text-decoration: underline var(--color-accent-text);
   padding-bottom: var(--spacing-10);

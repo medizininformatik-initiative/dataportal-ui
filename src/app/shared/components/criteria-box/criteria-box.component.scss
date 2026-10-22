@@ -106,7 +106,7 @@
 }
 
 ::ng-deep .mat-mdc-menu-panel {
-  background-color: #fff;
+  background-color: var(--color-surface);
   width: 100%; /* responsive instead of fixed */
   max-width: 960px; /* multiple of 8 */
   border-radius: 4px; /* matches container */

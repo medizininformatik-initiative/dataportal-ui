@@ -1,6 +1,6 @@
 mat-drawer-container {
   height: 100%;
-  background-color: white;
+  background-color: var(--color-surface);
 }
 ::ng-deep .mdc-tab {
   max-width: fit-content;

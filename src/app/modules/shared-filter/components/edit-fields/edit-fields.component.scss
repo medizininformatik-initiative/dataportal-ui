@@ -1,7 +1,7 @@
 .container {
   padding: var(--spacing-16);
   height: 100%;
-  background-color: white;
+  background-color: var(--color-surface);
   display: flex;
   flex-direction: column;
 }
@@ -13,7 +13,7 @@
   align-items: center;
   width: 100%;
   min-height: 49px;
-  background-color: white;
+  background-color: var(--color-surface);
   border-bottom: 1px solid var(--border-color);
   padding: var(--spacing-6) 0;
   gap: 10px;
@@ -34,7 +34,7 @@
   font-weight: 400;
   font-size: var(--font-size-sm);
   line-height: 12px;
-  color: #080707;
+  color: var(--color-text-primary);
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -105,5 +105,5 @@
 }
 
 ::ng-deep .mat-mdc-tab-label-container {
-  background-color: white;
+  background-color: var(--color-surface);
 }

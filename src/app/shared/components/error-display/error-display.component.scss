@@ -14,7 +14,7 @@
 }
 
 .error-display-container {
-  background-color: #ffffff;
+  background-color: var(--color-surface);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   max-width: 600px;

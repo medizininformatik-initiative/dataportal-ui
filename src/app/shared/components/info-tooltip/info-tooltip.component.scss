@@ -9,8 +9,8 @@
   min-height: 109px;
   padding: 14px var(--spacing-20);
 
-  background: #ffffff;
-  border: 1px solid #c3c7cd;
+  background: var(--color-surface);
+  border: 1px solid var(--border-color-field);
   border-radius: 5px;
   box-shadow: var(--shadow-menu);
 }
@@ -30,7 +30,7 @@
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-md);
   line-height: 21px;
-  color: #000000;
+  color: var(--color-text-primary);
   flex: 1;
   padding-right: var(--spacing-8);
 }

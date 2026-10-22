@@ -2,13 +2,13 @@
   padding-left: var(--spacing-8);
   font-size: var(--font-table-cell-size);
   line-height: var(--font-table-cell-line);
-  color: #000000;
+  color: var(--color-text-primary);
 }
 
 .highlight:hover {
   text-decoration: underline;
   cursor: pointer;
-  color: #000000;
+  color: var(--color-text-primary);
 }
 
 .cursor-click {
@@ -30,8 +30,8 @@ input[type='checkbox'] {
   box-sizing: border-box;
   width: 15px;
   height: 15px;
-  background: #ffffff;
-  border: 1px solid #c3c7cd;
+  background: var(--color-surface);
+  border: 1px solid var(--border-color-field);
   border-radius: 3px;
   cursor: pointer;
   appearance: none;

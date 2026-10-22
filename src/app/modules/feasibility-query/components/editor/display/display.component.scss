@@ -38,12 +38,12 @@ num-display-criteria.inexclusion {
 
   // lighter than the criteria boxes (10% accent), so they stand out against the list
   &.cdk-drop-list-receiving {
-    background-color: color-mix(in srgb, var(--color-accent) 3%, #fff);
+    background-color: color-mix(in srgb, var(--color-accent) 3%, var(--color-surface));
     box-shadow: inset 0 0 0 2px var(--color-accent-border);
   }
 
   &.cdk-drop-list-dragging {
-    background-color: #fff;
+    background-color: var(--color-surface);
     box-shadow: inset 0 0 0 3px var(--color-accent-line);
   }
 }
