@@ -1,7 +1,7 @@
 # Model: Criterion with no timeRestriction, no attributeFilters, no valueFilters.
-# Data: "BIOMAT erheben" (context Einwilligung, profile MII_PR_Consent_Einwilligung:
+# Data: "BIOMAT raise" (context Einwilligung, profile MII_PR_Consent_Einwilligung:
 # timeRestrictionAllowed=false, no valueDefinition, no attributeDefinitions).
-# The English UI shows the German original name (en translation is empty).
+# The English UI shows the English translation (German original: BIOMAT erheben).
 # The criterium, the list and the menu entry are Examples data.
 @area:feasibility-query
 Feature: Criterion without any filter

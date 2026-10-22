@@ -180,7 +180,7 @@ depends on the criterium. The editor shows one tab per filter that the criterium
 
 ### A criterium without filters
 
-Some criteria have no filters at all (the example is "BIOMAT erheben", a consent item).
+Some criteria have no filters at all (the example is "BIOMAT raise", a consent item).
 It can be added and dragged into Inclusion without configuring anything, shows **no filter
 chips**, and its editor has **no filter tabs**.
 

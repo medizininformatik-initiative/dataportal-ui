@@ -17,7 +17,7 @@ export class UploadFile {
      * Definition, renders uploaded criterium once processing finishes (checked against
      * fixtures/Single_Inclusion_Criteria_With_Patient.json content).
      * */
-    cy.contains('18-Oxydase-Mangel', { timeout: 15000 }).should('be.visible')
+    cy.contains('18-oxidase deficiency', { timeout: 15000 }).should('be.visible')
   }
 }
 

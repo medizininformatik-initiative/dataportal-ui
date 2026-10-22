@@ -63,12 +63,12 @@ export const ICD_CONCEPTS = {
   J13: {
     system: SYSTEMS.icd10who,
     code: 'J13',
-    display: 'Pneumonie durch Streptococcus pneumoniae',
+    display: 'Pneumonia caused by Streptococcus pneumoniae',
   },
   'J15.0': {
     system: SYSTEMS.icd10who,
     code: 'J15.0',
-    display: 'Pneumonie durch Klebsiella pneumoniae',
+    display: 'Pneumonia caused by Klebsiella pneumoniae',
   },
 } as const
 

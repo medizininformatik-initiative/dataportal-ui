@@ -179,7 +179,7 @@ Duplicate and Delete. There is no move entry, so moving a criterium between the
 criterium starts in the list with `id="Stage"`. Duplicate creates a second box
 with the same name; Delete removes it.
 
-> **Test data note:** the feature uses `BIOMAT erheben`, not `Pneumonia`. In this
+> **Test data note:** the feature uses `BIOMAT raise`, not `Pneumonia`. In this
 > environment a name search for "Pneumonia" returns 20 LOINC "Klebsiella
 > pneumoniae ..." lab rows first, so the exact `Pneumonia` diagnosis never
 > appears on the first page (the ranking issue described in `cypress/CLAUDE.md`).
