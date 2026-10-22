@@ -9,6 +9,6 @@
       foreground-color($theme, secondary-text),
       #5e6c78
     )}; // light: grey 900, 5.12:1
-  --color-text-placeholder: #{if(map-get($theme, dark), #8f8f8f, #5f6773)}; // light ~5.7:1 on white, dark 7:1
+  --color-text-placeholder: #{foreground-color($theme, placeholder)};
   --border-color-hover: var(--color-text-primary); // input / select border on hover
 }

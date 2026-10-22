@@ -58,7 +58,12 @@
 
   // Checked checkbox fill, white tick on it (3.06:1, 3:1 needed). Used by: checkbox
   // Literal from 652 ('green-3'): not in the green ramp, role decision later (PLAN-side-menu.md risk 3, recommended secondary 700).
-  --num-color--checkbox-checked: #839e00;
+  // Dark: the neon literal glares like the old green did; soft green 500 with the dark tick (neutral 0) on it, 5.2:1.
+  --num-color--checkbox-checked: #{if(
+      map-get($theme, dark),
+      role-color($theme, secondary, 500),
+      #839e00
+    )};
 
   // ── Dumped from 652 as is, role decisions later (PLAN-side-menu.md step 9) ──
   // Hover / keyboard-active row fill (= neutral 100). Used by: search-filter

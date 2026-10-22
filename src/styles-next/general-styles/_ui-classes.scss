@@ -106,7 +106,7 @@
   background-color: var(--color-accent-bg);
   border: 1px solid var(--color-accent-border);
   box-shadow: var(--shadow-card);
-  color: var(--color-text-primary, #232323);
+  color: var(--color-text-primary);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
   display: flex;
   flex-direction: row;

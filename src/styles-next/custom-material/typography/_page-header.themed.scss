@@ -13,10 +13,9 @@
       foreground-color($theme, section-text),
       role-color($theme, accent, 700)
     )};
-  // Dark: the page title in a grey-blue (S ~20%), 7:1 on the content
   @if map-get($theme, dark) {
     .header-title {
-      color: #9ca8bf;
+      color: foreground-color($theme, page-title);
       // highlight: soft slate fill and a 2px underline in the accent line tone
       background: var(--color-accent-bg-strong);
       box-shadow: inset 0 -2px 0 var(--color-accent-line);

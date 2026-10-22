@@ -21,12 +21,26 @@ Section index for the next session: **Where we stand**, **Issues in session 1**,
 Branch `feat/dark-mode`, 18 commits on top of `5e5227bd` (`git log --oneline 5e5227bd..HEAD`), nothing pushed. Dev server `npm start` (:4200) must be running; login `testuser` / `testpassword`.
 
 **Done (all in code, committed):**
+
 - Theme `themes/fdpg-dark/` (roles, foreground, background, theme) built on `fdpg-light`, compiled a second time under `[data-theme=dark] .FDPGTheme`. Header toggle (`num-theme-toggle`), `theme` key in localStorage, pre-paint script in `index.html`, toggle Cypress spec, `--expose theme=dark` for the whole suite.
 - Accent split: `--color-accent` (fill), `--color-accent-text`, `--color-accent-line`, plus `--color-accent-strong`; `on-fill` and `on-bright-fill` foreground keys; surface keys `card`, `dialog`, `chrome`; variables `--color-surface`, `--color-page`, `--border-color-field`, `--color-text-table-header`. 46 component SCSS files moved from literal white / black / grey to these variables.
 - Material: 14 component color mixins from our own background and foreground map (no `all-component-colors`, that is +80 KB), placeholder fix.
 - Look (after Shah's feedback rounds): neutral greys like VS Code Dark Modern; content `#1b1b1b` is the darkest, chrome (header, side menu, footer, popups) `#232323`; grey-blue accent tints; soft borders (divider `#363636`, control `#6a6a6a`); green is VS Code's comment green `#6a9955` as button fill, `#86ad6f` as text, action bar grey; text `#bebebe` / `#9a9a9a` / `#a0a0a0`; sizes and Material levels x 1.125 (side menu x 1.0), `-webkit-text-stroke: 0.15px` as weight stand-in; page title `#9ca8bf` on a slate highlight (`accent 100` fill, 2px underline in the accent line tone; the left bar was dropped as a side-tab tell).
 
 **Numbers:** contrast walker (`dark-mode-tools/contrast-walker.js`) 0 violations on cohort definition, feasibility search, bulk search, editor, data-selection search and editor, data-query data-selection, saved queries, criterion editor. Light CSS: only intended variable swaps (hex identical). CSS size 184 KB / 24 KB gzip against 100 KB / 14 KB (+68% gzip; gate was +60%, proposal: gzip <= +100%). Cypress: Shah decided on 2026-10-22 not to run it in session 1. Partial light runs that were stopped by me for design changes: 57 passed, 0 failed (latest partial: 29 passed, 0 failed). M3 and M4 are still open: see Next session.
+
+## Session 2 (2026-10-22, read-only pass, no browser, no Cypress)
+
+Shah: "improve from all data plus own estimates, stick to styles-next, be creative". Done inside `styles-next` only; light CSS checked by `sass` compile diff (M1 pass: only `var(--shadow-card)` swaps, same values).
+
+- Checkbox checked fill in dark: `#839e00` (neon) -> secondary 500 `#6a9955`, dark tick on it 5.2:1. Same job as the green buttons.
+- `mark` (search hits) in dark: tint 50 was 1.1:1 on the content, invisible. Now tint 100 with accent text 300 (5.5:1).
+- `::selection` in dark: accent 200 grey-blue with primary text (5.2:1) instead of the browser's bright blue (VS Code style).
+- Tooltip in dark: 12px -> 13.5px / 19px (the x 1.125 rule).
+- Shadows: action bar and button hover read `var(--shadow-card)` (dark already sets stronger alpha); before they were light literals, so hover lift was invisible in dark.
+- Hex out of mixins: placeholder (`placeholder` key in both foreground maps) and page title (`page-title` in dark foreground). `_ui-classes` fallback `#232323` removed. `fdpg-dark/_background.scss` stale comment fixed.
+
+Not done (outside `styles-next`, add to the next session or Shah decides): light literals that break dark in component SCSS: `profile-reference-chip` error state (`#ffe5e5` fill, `#c62828`), `validation-modal` (`#2e7d32`, `#b71c1c` text, about 2-3:1 on dark), `error-log-modal` (`#fff3cd`), `error-log-item` (`#e9ecef`, `#495057`, `#667eea`), `info-tile` danger, `save-dataquery-modal` `#c5cacf`, `dashboard` `#555e6a`, `snackbar`. Fix: move to `--color-*` variables, or add status tint variables (`--color-danger-bg`, `--color-success-text`) to `_color-variables` first, which stays inside `styles-next`.
 
 ## Insights (keep)
 
@@ -42,18 +56,18 @@ Branch `feat/dark-mode`, 18 commits on top of `5e5227bd` (`git log --oneline 5e5
 
 ## Issues in session 1 (what went wrong, so it does not repeat)
 
-| # | Issue | Cause | Fix / rule |
-|---|---|---|---|
-| 1 | Shah's uncommitted edit in `playground.component.ts` (66 lines) was wiped | I ran `git checkout -- <dir>` to undo my own regex pass over the file | Restored byte-identical from the lint-staged backup stash (`LC_ALL=C git fsck --lost-found`, commit "WIP on dark-mode"). Rule: never `git checkout --` a file that was dirty before the session; protect it by excluding it from the edit, not by reverting afterwards |
-| 2 | `git add src/styles-next` committed Shah's untracked `prototype-bulk-chips.html` once | Directory add picks up untracked files | Removed from the commit with `git rm --cached` + amend (not pushed). Rule: add by explicit path |
-| 3 | `prettier --write src/styles-next` reformatted about 40 unrelated docs | Folder-wide prettier | Restored those tracked files from git (they were clean). Rule: run prettier on the changed files only |
-| 4 | Cypress runs failed to start or were invalid six times | A killed `cypress run` leaves Electron holding port 4300 ("Port 4300 is already in use"); every later run aborted at start; editing `src/` reloads the dev server mid-run | Kill the pid from `ss -ltnp | grep 4300` and the orphaned Chrome and Electron helpers (about 80 processes found at the end). Never edit `src/` during a run |
-| 5 | Runs killed four times for design feedback, so M3 and M4 never completed | Shah gave new design direction while a 1 h suite ran | Decided 2026-10-22: no Cypress in session 1. Run both suites first thing next session |
-| 6 | Stale "task completed" notifications from abandoned waiter loops | Long `sleep 10` polling loops outlived their runs | Do not poll with long loops, use one bounded wait per run. Two waiter shells were still alive at the end and were killed |
-| 7 | Jest does not start in this environment | `esbuild`: `Buffer.from("") instanceof Uint8Array is incorrectly false` (jsdom vs Node) | Not fixed. The `num-data-cy.registry.spec.ts` check for the new `theme-toggle` hook was done by reading |
-| 8 | First attempts looked wrong: black text on dark (saved queries), lighter tile behind the logo, white placeholder, blank screenshot | Material light `app-background` sets black; logo `<img>` carries class `FDPGTheme`; Material token order; screenshot taken before render | See Insights 4 and 5. Screenshot before render: wait 3 s after reload |
-| 9 | German `git` output ("unreferenziert") broke my parsing | Locale | `LC_ALL=C` for scripted git |
-| 10 | The design direction changed seven times in one hour (blue-grey, VS Code grey, chrome dark then light, softer, green, type size, text brightness) | Shah judged by eye against the VS Code screenshot | Expected for a first look; the map in this plan is now the VS Code derived one, open points are in "Next session" |
+| #   | Issue                                                                                                                                             | Cause                                                                                                                                                                     | Fix / rule                                                                                                                                                                                                                                                             |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Shah's uncommitted edit in `playground.component.ts` (66 lines) was wiped                                                                         | I ran `git checkout -- <dir>` to undo my own regex pass over the file                                                                                                     | Restored byte-identical from the lint-staged backup stash (`LC_ALL=C git fsck --lost-found`, commit "WIP on dark-mode"). Rule: never `git checkout --` a file that was dirty before the session; protect it by excluding it from the edit, not by reverting afterwards |
+| 2   | `git add src/styles-next` committed Shah's untracked `prototype-bulk-chips.html` once                                                             | Directory add picks up untracked files                                                                                                                                    | Removed from the commit with `git rm --cached` + amend (not pushed). Rule: add by explicit path                                                                                                                                                                        |
+| 3   | `prettier --write src/styles-next` reformatted about 40 unrelated docs                                                                            | Folder-wide prettier                                                                                                                                                      | Restored those tracked files from git (they were clean). Rule: run prettier on the changed files only                                                                                                                                                                  |
+| 4   | Cypress runs failed to start or were invalid six times                                                                                            | A killed `cypress run` leaves Electron holding port 4300 ("Port 4300 is already in use"); every later run aborted at start; editing `src/` reloads the dev server mid-run | Kill the pid from `ss -ltnp                                                                                                                                                                                                                                            | grep 4300`and the orphaned Chrome and Electron helpers (about 80 processes found at the end). Never edit`src/` during a run |
+| 5   | Runs killed four times for design feedback, so M3 and M4 never completed                                                                          | Shah gave new design direction while a 1 h suite ran                                                                                                                      | Decided 2026-10-22: no Cypress in session 1. Run both suites first thing next session                                                                                                                                                                                  |
+| 6   | Stale "task completed" notifications from abandoned waiter loops                                                                                  | Long `sleep 10` polling loops outlived their runs                                                                                                                         | Do not poll with long loops, use one bounded wait per run. Two waiter shells were still alive at the end and were killed                                                                                                                                               |
+| 7   | Jest does not start in this environment                                                                                                           | `esbuild`: `Buffer.from("") instanceof Uint8Array is incorrectly false` (jsdom vs Node)                                                                                   | Not fixed. The `num-data-cy.registry.spec.ts` check for the new `theme-toggle` hook was done by reading                                                                                                                                                                |
+| 8   | First attempts looked wrong: black text on dark (saved queries), lighter tile behind the logo, white placeholder, blank screenshot                | Material light `app-background` sets black; logo `<img>` carries class `FDPGTheme`; Material token order; screenshot taken before render                                  | See Insights 4 and 5. Screenshot before render: wait 3 s after reload                                                                                                                                                                                                  |
+| 9   | German `git` output ("unreferenziert") broke my parsing                                                                                           | Locale                                                                                                                                                                    | `LC_ALL=C` for scripted git                                                                                                                                                                                                                                            |
+| 10  | The design direction changed seven times in one hour (blue-grey, VS Code grey, chrome dark then light, softer, green, type size, text brightness) | Shah judged by eye against the VS Code screenshot                                                                                                                         | Expected for a first look; the map in this plan is now the VS Code derived one, open points are in "Next session"                                                                                                                                                      |
 
 ## Improvements gained in session 1
 
@@ -76,7 +90,6 @@ Branch `feat/dark-mode`, 18 commits on top of `5e5227bd` (`git log --oneline 5e5
 6. Cleanup before merge: decide on `-webkit-text-stroke` (non-standard, Chromium and Safari only; Firefox ignores it, so Firefox dark text is thinner), toggle `aria-label` translation keys, the `dark: true` flag in mixins (a few one-off literals), `prototype-bulk-chips.html` (untracked, Shah's).
 7. Revert list for Shah: every outside edit is in `## Outside edits`; `git diff --name-only chore/e2e-merge-fix` must match it.
 
-
 ## What the code gives us
 
 - Color reaches the UI by `role-color` (74 uses in mixins), `foreground-color` / `surface-color` (9), and CSS variables from `base/_color-variables.themed.scss` and `base/_text-color-variables.themed.scss`. Most components read the variables, so the dark theme re-emits the same variable names with dark values.
@@ -95,33 +108,33 @@ Branch `feat/dark-mode`, 18 commits on top of `5e5227bd` (`git log --oneline 5e5
 
 **Superseded twice 2026-10-22 (Shah, VS Code screenshot, then "chrome lighter, content darker"):** greys are neutral. Content and card `#181818`, page `#1c1c1c`, chrome (header, side menu, footer, Material popups) `#262626`, hover and action bar `#2c2c2c`, border `#424242`, text `#cccccc`, secondary `#9d9d9d`, section `#b0b0b0`, mid greys 400-900 neutral (`_roles.scss` in `themes/fdpg-dark/`). The table below keeps the first blue-grey draft for the accent, status and shadow rows; grey rows are historical.
 
-| Job | Light | Dark | Contrast (page / card) |
-|---|---|---|---|
-| page (`neutral 50`) | `#f9f9f9` | `#12161b` | base |
-| card, dialog (`neutral 0` as surface) | `#ffffff` | `#1a1f26` | |
-| hover, track (`neutral 100`) | `#f1f2f3` | `#222831` | |
-| `neutral 200` | `#e8ebed` | `#2b323b` | |
-| divider, border (`neutral 300`) | `#c5cacf` | `#3a434d` | 1.8 (decoration, light is 1.5) |
-| control border (`neutral 700`) | `#7c8b98` | same | 5.2 |
-| `text` | `#000000` | `#cccccc` (VS Code Dark Modern text) | 10.3 on card |
-| `secondary-text` | `#6a7483` | `#a9b6c2` | 8.8 / 8.0 |
-| `section-text` | `#5f6266` | `#b4bcc4` | 9.5 / 8.6 |
-| placeholder | `#5f6773` | `#9aa4af` | 7.2 / 6.6 |
-| accent fill 500 + white text | `#49689c` | same | white on it 5.61 |
-| accent hover 600 | `#3c5786` | same | white on it 7.24 |
-| accent text / icon / link | 500-600 | `accent 300` `#98accd` | 7.9 / 7.2 |
-| accent graphic (was 400) | `#7992be` | same | 5.8 / 5.3 |
-| accent border 200 | `#bbc8dd` | `accent 700` `#2f476f` | decoration |
-| accent tint 50 | `#f2f4f8` | `accent 900` `#182640` | tint only |
-| accent emphasized fill 100 | `#dde3ee` | `accent 800` `#233657` | text 200 on it about 8 |
-| accent hover 75 | `#e8ecf3` | new half step between 900 and 800 | |
-| focus ring | `accent 800/900` | `accent 200` `#bbc8dd` | 10.7 |
-| secondary fill (green 500, black text) | `#9bb823` | same | 8.0 |
-| secondary text (700) | `#758c17` | `secondary 400` `#bdd84f` | 11.3 |
-| danger text | `#c4122f`, `#b30519` | `danger 300` `#ff8383` | 7.6 |
-| danger fill | `#ff4545` | same, black text | |
-| warning | `#eeb70c` | same | 9.9 |
-| shadows | `rgba(0,0,0,.1)` | `.4`-`.5` | dark theme needs its own `--shadow-*` |
+| Job                                    | Light                | Dark                                 | Contrast (page / card)                |
+| -------------------------------------- | -------------------- | ------------------------------------ | ------------------------------------- |
+| page (`neutral 50`)                    | `#f9f9f9`            | `#12161b`                            | base                                  |
+| card, dialog (`neutral 0` as surface)  | `#ffffff`            | `#1a1f26`                            |                                       |
+| hover, track (`neutral 100`)           | `#f1f2f3`            | `#222831`                            |                                       |
+| `neutral 200`                          | `#e8ebed`            | `#2b323b`                            |                                       |
+| divider, border (`neutral 300`)        | `#c5cacf`            | `#3a434d`                            | 1.8 (decoration, light is 1.5)        |
+| control border (`neutral 700`)         | `#7c8b98`            | same                                 | 5.2                                   |
+| `text`                                 | `#000000`            | `#cccccc` (VS Code Dark Modern text) | 10.3 on card                          |
+| `secondary-text`                       | `#6a7483`            | `#a9b6c2`                            | 8.8 / 8.0                             |
+| `section-text`                         | `#5f6266`            | `#b4bcc4`                            | 9.5 / 8.6                             |
+| placeholder                            | `#5f6773`            | `#9aa4af`                            | 7.2 / 6.6                             |
+| accent fill 500 + white text           | `#49689c`            | same                                 | white on it 5.61                      |
+| accent hover 600                       | `#3c5786`            | same                                 | white on it 7.24                      |
+| accent text / icon / link              | 500-600              | `accent 300` `#98accd`               | 7.9 / 7.2                             |
+| accent graphic (was 400)               | `#7992be`            | same                                 | 5.8 / 5.3                             |
+| accent border 200                      | `#bbc8dd`            | `accent 700` `#2f476f`               | decoration                            |
+| accent tint 50                         | `#f2f4f8`            | `accent 900` `#182640`               | tint only                             |
+| accent emphasized fill 100             | `#dde3ee`            | `accent 800` `#233657`               | text 200 on it about 8                |
+| accent hover 75                        | `#e8ecf3`            | new half step between 900 and 800    |                                       |
+| focus ring                             | `accent 800/900`     | `accent 200` `#bbc8dd`               | 10.7                                  |
+| secondary fill (green 500, black text) | `#9bb823`            | same                                 | 8.0                                   |
+| secondary text (700)                   | `#758c17`            | `secondary 400` `#bdd84f`            | 11.3                                  |
+| danger text                            | `#c4122f`, `#b30519` | `danger 300` `#ff8383`               | 7.6                                   |
+| danger fill                            | `#ff4545`            | same, black text                     |                                       |
+| warning                                | `#eeb70c`            | same                                 | 9.9                                   |
+| shadows                                | `rgba(0,0,0,.1)`     | `.4`-`.5`                            | dark theme needs its own `--shadow-*` |
 
 Rule behind the map: fills keep their color (white text still passes), everything drawn as text, icon or line moves to a lighter shade, tints and surfaces move to the dark end.
 
@@ -129,20 +142,20 @@ Rule behind the map: fills keep their color (white text still passes), everythin
 
 Source: `extensions/theme-defaults/themes/dark_modern.json` and `light_modern.json` (microsoft/vscode, also in the local install under `resources/app/extensions/theme-defaults/themes/`). Same ~190 role-named keys (`sideBar.background`, `button.foreground`, ...) in two files with different values, each file includes a base (`dark_plus.json`). That is our `roles` + `fdpg-light` / `fdpg-dark` structure.
 
-| Job | Light | Dark | Light L% → Dark L% |
-|---|---|---|---|
-| editor (content) | `#FFFFFF` | `#1F1F1F` | 100 → 12 |
-| sidebar, activity bar, status bar (chrome) | `#F8F8F8` | `#181818` | 97 → 9 |
-| widget, menu, quick input | `#F8F8F8` | `#202020` | 97 → 13 |
-| border | `#E5E5E5` | `#2B2B2B` | 90 → 17 |
-| input fill / input border | `#FFFFFF` / `#CECECE` | `#313131` / `#3C3C3C` | 100 → 19 / 81 → 24 |
-| text | `#3B3B3B` | `#CCCCCC` | 23 → 80 |
-| inactive text | `#616161` | `#9D9D9D` | 38 → 62 |
-| placeholder | `#767676` | `#989898` | 46 → 60 |
-| button fill | `#005FB8` | `#0078D4` | 36 → 42 |
-| button hover | `#0258A8` | `#026EC1` | 33 → 38 |
-| link | `#005FB8` | `#4daafc` | 36 → 65 |
-| error | `#F85149` | `#F85149` | same |
+| Job                                        | Light                 | Dark                  | Light L% → Dark L% |
+| ------------------------------------------ | --------------------- | --------------------- | ------------------ |
+| editor (content)                           | `#FFFFFF`             | `#1F1F1F`             | 100 → 12           |
+| sidebar, activity bar, status bar (chrome) | `#F8F8F8`             | `#181818`             | 97 → 9             |
+| widget, menu, quick input                  | `#F8F8F8`             | `#202020`             | 97 → 13            |
+| border                                     | `#E5E5E5`             | `#2B2B2B`             | 90 → 17            |
+| input fill / input border                  | `#FFFFFF` / `#CECECE` | `#313131` / `#3C3C3C` | 100 → 19 / 81 → 24 |
+| text                                       | `#3B3B3B`             | `#CCCCCC`             | 23 → 80            |
+| inactive text                              | `#616161`             | `#9D9D9D`             | 38 → 62            |
+| placeholder                                | `#767676`             | `#989898`             | 46 → 60            |
+| button fill                                | `#005FB8`             | `#0078D4`             | 36 → 42            |
+| button hover                               | `#0258A8`             | `#026EC1`             | 33 → 38            |
+| link                                       | `#005FB8`             | `#4daafc`             | 36 → 65            |
+| error                                      | `#F85149`             | `#F85149`             | same               |
 
 How they got from light to dark (what we reuse):
 
@@ -166,32 +179,32 @@ Where VS Code is weaker than our bar: placeholder is exactly 4.5:1, dark button 
 
 What we have: Titillium Web as three static files (400, 600, 700; `_font.scss`), no variable axis, no `font-smoothing` rule anywhere, type roles live in the theme folder (`themes/fdpg-light/_type-roles.scss`, each role already supports `letter-spacing`).
 
-| Lever | Verdict for us |
-|---|---|
-| Lower weight by about 50 (700 → 650) | Not possible: static 400/600/700 only. 600 → 400 is too big a jump. Skip unless we add a variable font. |
-| Softer text color (done: `#ccd1d6`, 11.8:1) | Main lever. Less contrast = less bloom. Already in the map. |
+| Lever                                                         | Verdict for us                                                                                                           |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Lower weight by about 50 (700 → 650)                          | Not possible: static 400/600/700 only. 600 → 400 is too big a jump. Skip unless we add a variable font.                  |
+| Softer text color (done: `#ccd1d6`, 11.8:1)                   | Main lever. Less contrast = less bloom. Already in the map.                                                              |
 | Letter-spacing +0.01 to 0.02em on body and small text in dark | Cheap: `fdpg-dark/_type-roles.scss` copy with `letter-spacing` set. Judge by screenshot, add only if text looks cramped. |
-| Line height +0 to 2px | Optional, same file. Only if cramped. |
-| `-webkit-font-smoothing: antialiased` | macOS only, no effect on Windows/Linux, never verified for this. Skip. |
-| Dark-specific typeface | Overkill. Skip. |
-| Weight 600 for small text (table header, labels) | Keep. Thin 400 at 14px on dark is the harder case to read than 600. |
+| Line height +0 to 2px                                         | Optional, same file. Only if cramped.                                                                                    |
+| `-webkit-font-smoothing: antialiased`                         | macOS only, no effect on Windows/Linux, never verified for this. Skip.                                                   |
+| Dark-specific typeface                                        | Overkill. Skip.                                                                                                          |
+| Weight 600 for small text (table header, labels)              | Keep. Thin 400 at 14px on dark is the harder case to read than 600.                                                      |
 
 **Other levels to research and decide while looping**
 
-| Level | Light now | Dark plan |
-|---|---|---|
-| Borders | 1px `neutral 300` | Keep 1px, `#3a434d`. Borders replace shadows (VS Code, guides). Cards without border get one in dark. |
-| Shadows | `rgba(0,0,0,.1)` in `--shadow-*` (7 variables in `styles.scss`) | Barely visible on dark. Raise alpha to .4-.5, and rely on surface step plus border for depth. |
-| Elevation steps | page / card | page < card < hover < raised (menu, tooltip, dialog = one step lighter). |
-| Images, logo | dark-blue logo | Logo loses contrast on dark (Dark Reader trial). Needs a light variant or a light backing. Other raster images: slight dim or border. |
-| Icons | accent / grey fills | Use accent text variable (300). Check SVG `fill` set inline. |
-| Focus ring | accent 800/900, 2px | `accent 200` `#bbc8dd`, 2px, 3:1 minimum. Keep on `:focus-visible`. |
-| Form controls | white fill, grey border | Own fill (`hover` step), own border; autofill override so Chrome's white or yellow fill does not show. `color-scheme: dark` for native parts. |
-| Disabled state | `neutral 400` | Re-check: grey 400 on dark may read as active. Needs contrast between 1.5 and 3:1. |
-| Selection, scrollbar | `#c5cacf` / `#f1f2f3` literals in `styles.scss` | Tokenize; scrollbar track = card step, thumb = border step. |
-| Alpha overlays | `rgba(role, .08/.4)` in buttons, action bar | Re-check each; alpha on dark surface shifts hue. |
-| Toggle flash | n/a | Set theme before first paint (attribute on `<html>` in `index.html`) to avoid a white flash on reload. Disable transitions during the switch. |
-| Charts, TS colors (`AvailabilityStatus`, `QueryResultMapper`) | hex in TS | Out of scope (decision), list as known gap. |
+| Level                                                         | Light now                                                       | Dark plan                                                                                                                                     |
+| ------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Borders                                                       | 1px `neutral 300`                                               | Keep 1px, `#3a434d`. Borders replace shadows (VS Code, guides). Cards without border get one in dark.                                         |
+| Shadows                                                       | `rgba(0,0,0,.1)` in `--shadow-*` (7 variables in `styles.scss`) | Barely visible on dark. Raise alpha to .4-.5, and rely on surface step plus border for depth.                                                 |
+| Elevation steps                                               | page / card                                                     | page < card < hover < raised (menu, tooltip, dialog = one step lighter).                                                                      |
+| Images, logo                                                  | dark-blue logo                                                  | Logo loses contrast on dark (Dark Reader trial). Needs a light variant or a light backing. Other raster images: slight dim or border.         |
+| Icons                                                         | accent / grey fills                                             | Use accent text variable (300). Check SVG `fill` set inline.                                                                                  |
+| Focus ring                                                    | accent 800/900, 2px                                             | `accent 200` `#bbc8dd`, 2px, 3:1 minimum. Keep on `:focus-visible`.                                                                           |
+| Form controls                                                 | white fill, grey border                                         | Own fill (`hover` step), own border; autofill override so Chrome's white or yellow fill does not show. `color-scheme: dark` for native parts. |
+| Disabled state                                                | `neutral 400`                                                   | Re-check: grey 400 on dark may read as active. Needs contrast between 1.5 and 3:1.                                                            |
+| Selection, scrollbar                                          | `#c5cacf` / `#f1f2f3` literals in `styles.scss`                 | Tokenize; scrollbar track = card step, thumb = border step.                                                                                   |
+| Alpha overlays                                                | `rgba(role, .08/.4)` in buttons, action bar                     | Re-check each; alpha on dark surface shifts hue.                                                                                              |
+| Toggle flash                                                  | n/a                                                             | Set theme before first paint (attribute on `<html>` in `index.html`) to avoid a white flash on reload. Disable transitions during the switch. |
+| Charts, TS colors (`AvailabilityStatus`, `QueryResultMapper`) | hex in TS                                                       | Out of scope (decision), list as known gap.                                                                                                   |
 
 ## Hex inside `styles-next` to tokenize for dark
 
@@ -237,6 +250,7 @@ Conclusion: Dark Reader is a usable preview and a regression baseline. It cannot
 Main work: `src/styles-next/**` (themes, mixins, base, material overrides, `styles.scss`, this plan).
 
 Outside edits are allowed when dark mode needs them (decided 2026-10-22, own branch, Shah reverts later). Rules:
+
 - Every outside edit goes into `## Outside edits` at the bottom: file, what changed, why, iteration. Written in the same commit as the edit.
 - Outside edits are the exception: first try a fix inside `styles-next`. Typical cases: `src/index.html` (pre-paint script, loader), the header toggle component, 52 component files for the accent split (blocker 1), the toggle Cypress spec, a light logo variant.
 - Keep outside commits separate from `styles-next` commits where practical, so Shah can revert them with one `git revert`.
@@ -250,15 +264,16 @@ Blocker 1 decision: do the clean split (`--color-accent-text` / `--color-accent-
 
 One working tree, one dev server, one branch: parallel writers collide. So subagents mostly read, and the main loop alone commits.
 
-| Job | Agent | When | Writes? |
-|---|---|---|---|
-| Classify the 52 `--color-accent` files: text/icon, fill, border, or mixed (per usage line) | `caveman:cavecrew-investigator` x 3-4, split by folder | Iteration 2, before the rename | No. Returns a table the main loop uses |
-| Accent rename in the classified files | `caveman:cavecrew-builder` or `general-purpose`, **disjoint file sets** per agent | Iteration 2 | Yes, only its own files. Main loop reviews the diff, runs M1, commits |
-| Independent verifier: runs M1-M9, compares to the log, says pass/fail per gate | `general-purpose`, fresh context, no knowledge of my edits | End of every iteration | No. Reports numbers only |
-| Screenshot reviewer: light vs dark pair per page, lists visual defects against the Best practice list and the map | `general-purpose` | Iterations 1, 5, 10 before Shah's review | No |
-| Code review of the iteration diff (only dark-mode scope, outside edits flagged) | `caveman:cavecrew-reviewer` | Before each commit | No |
+| Job                                                                                                               | Agent                                                                             | When                                     | Writes?                                                               |
+| ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------- | --------------------------------------------------------------------- |
+| Classify the 52 `--color-accent` files: text/icon, fill, border, or mixed (per usage line)                        | `caveman:cavecrew-investigator` x 3-4, split by folder                            | Iteration 2, before the rename           | No. Returns a table the main loop uses                                |
+| Accent rename in the classified files                                                                             | `caveman:cavecrew-builder` or `general-purpose`, **disjoint file sets** per agent | Iteration 2                              | Yes, only its own files. Main loop reviews the diff, runs M1, commits |
+| Independent verifier: runs M1-M9, compares to the log, says pass/fail per gate                                    | `general-purpose`, fresh context, no knowledge of my edits                        | End of every iteration                   | No. Reports numbers only                                              |
+| Screenshot reviewer: light vs dark pair per page, lists visual defects against the Best practice list and the map | `general-purpose`                                                                 | Iterations 1, 5, 10 before Shah's review | No                                                                    |
+| Code review of the iteration diff (only dark-mode scope, outside edits flagged)                                   | `caveman:cavecrew-reviewer`                                                       | Before each commit                       | No                                                                    |
 
 Rules:
+
 - Max 4 agents at once. Never two writers on the same file.
 - Subagents do not commit, do not touch git state, do not edit the plan or the logs; the main loop writes the Metrics log and Outside edits rows from their reports.
 - A subagent report is evidence, not a verdict: the main loop re-checks one number from each verifier report before trusting it.
@@ -269,17 +284,17 @@ Rules:
 
 Baseline taken in iteration 0, one row per iteration appended to `## Metrics log` at the bottom of this file. Numbers, not impressions.
 
-| # | Metric | How | Gate |
-|---|---|---|---|
-| M1 | Light CSS diff | build before/after, `diff` of compiled light rules | **Hard**: 0 changed lines except intended new variables |
-| M2 | Build + lint | `npm run build`, `npm run lint` | **Hard**: pass |
-| M3 | Cypress, light | full suite | **Hard**: same pass count as baseline |
-| M4 | Cypress, dark preset | full suite with `data-theme=dark` | Pass count never drops vs previous iteration; 100% at iteration 10 |
-| M5 | Contrast violations, dark | contrast walker over the page list | Count never rises vs previous iteration; **0** text under 4.5 and 0 UI under 3.0 at iteration 10 |
-| M6 | Lighthouse a11y, dark vs light | `lighthouse_audit` per page | Dark `color-contrast` failures <= light, score >= light |
-| M7 | Leftover hex in `styles-next` | `grep -rEc '#[0-9a-fA-F]{3,8}\b\|rgba?\(' src/styles-next` minus the allowed list | Falls or stays per iteration; 0 outside the theme folders and the out-of-scope list at iteration 10 |
-| M8 | Compiled CSS size | `styles.css` bytes | <= baseline +60% |
-| M9 | Pages screenshotted | page list x 2 themes | 100% of pages touched by this iteration |
+| #   | Metric                         | How                                                                               | Gate                                                                                                |
+| --- | ------------------------------ | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| M1  | Light CSS diff                 | build before/after, `diff` of compiled light rules                                | **Hard**: 0 changed lines except intended new variables                                             |
+| M2  | Build + lint                   | `npm run build`, `npm run lint`                                                   | **Hard**: pass                                                                                      |
+| M3  | Cypress, light                 | full suite                                                                        | **Hard**: same pass count as baseline                                                               |
+| M4  | Cypress, dark preset           | full suite with `data-theme=dark`                                                 | Pass count never drops vs previous iteration; 100% at iteration 10                                  |
+| M5  | Contrast violations, dark      | contrast walker over the page list                                                | Count never rises vs previous iteration; **0** text under 4.5 and 0 UI under 3.0 at iteration 10    |
+| M6  | Lighthouse a11y, dark vs light | `lighthouse_audit` per page                                                       | Dark `color-contrast` failures <= light, score >= light                                             |
+| M7  | Leftover hex in `styles-next`  | `grep -rEc '#[0-9a-fA-F]{3,8}\b\|rgba?\(' src/styles-next` minus the allowed list | Falls or stays per iteration; 0 outside the theme folders and the out-of-scope list at iteration 10 |
+| M8  | Compiled CSS size              | `styles.css` bytes                                                                | <= baseline +60%                                                                                    |
+| M9  | Pages screenshotted            | page list x 2 themes                                                              | 100% of pages touched by this iteration                                                             |
 
 Rules the loop follows on itself:
 
@@ -319,15 +334,15 @@ Dev server `npm start` (:4200), backend on :8090, Keycloak on :8080, login `test
 
 ## Metrics log
 
-| Iter | M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8 | Notes |
-|---|---|---|---|---|---|---|---|---|---|
-| 0 (baseline) | n/a | n/a | not run | not run | n/a | not run | n/a | 99744 B (gzip 14219) | `sass` standalone on `styles.scss`, light only |
-| 1 | pass (0 removed lines, only sourcemap comment differs) | lint of changed files pass, dev-server compile pass, full `npm run build` not run | not run | not run | not run | not run | not run | 182575 B (+83%), gzip 23931 (+68%) | Over the +60% gate. Cause: themed mixins compiled twice (+55 KB) and 14 Material color mixins. Proposal: gate on gzip <= +100%. Jest does not start here (`esbuild` Buffer invariant), so `num-data-cy.registry.spec.ts` was not run; `theme-toggle` is in both template and `FIXED_HOOKS`. |
-| 2 | pass (only the renamed uses and the new `--color-accent-text/-line` vars; `on-fill` white is identical in light) | lint pass via hook | not run | not run | cohort-definition only: 9 of 27 text nodes bad (walker `scratchpad/walker.js`) | not run | not run | not measured | Split done as text/line/fill: `--color-accent` stays the fill (no rename of the ~60 fill uses, no effect), `-text` (dark 300) for `color`, `-line` (dark 400) for border/outline/inset ring. 48 outside files renamed mechanically; `playground.component.ts` untouched (your dirty file), `src/styles/` (old, unused) reverted. `on-fill` key in the foreground map replaces `neutral 0` as text on a fill. |
-| 3 | pass (light diff = iteration 2 lines + links, tabs, cancel, chips now `var(--color-accent-strong/-text)`, same hex) | lint pass via hook | not run | not run | cohort-definition: 2 of 27 bad (green button white text 2.26, iteration 4) | not run | not run | not measured | Header, footer, side menu, logo (`filter: brightness(1.4)` in dark, no new svg), links, tabs. Dark palette keys: 50-200 are remapped tints, so lighter text shades live in theme keys (`accent-on-tint-shade`, `accent-strong-shade`, `accent-deep-shade` = `A100` in dark). Mixins read `map-get($theme, dark)` for one-off literals (footer border, header shadow, logo). |
-| 4-6 | pass (light CSS diff = only intended variable swaps, same hex) | lint pass via hook | partial run, 57 passed, 0 failed, stopped by me for design changes | not run yet | walker over 10 pages and the criterion editor: 0 text violations (after fixes) | not run | not run | 184740 B, gzip 24302 | Buttons (green/red black text on fill), 46 component SCSS files to variables, Material surfaces from our map, scrollbars, shadows, autofill, tooltip, placeholder. Shah feedback: greys now VS Code Dark Modern, green softened (`#66ad78` fill, `#8fc29d` text), +0.01em letter-spacing on body/small roles in dark, page-header intro text `accent 300`. |
-| 7 | pass (only variable swaps) | lint pass via hook | not run to the end, runs were stopped four times for design changes | not run | 0 text violations on every swept page | not run | not run | not measured | Shah feedback round: chrome `#232323` vs content `#1b1b1b` (small step), grey-blue accent tints, softer borders (dividers `#363636`, control border `#6a6a6a`, accent line 500, button rings 55%), green fill `#5a9a6b` with `#8fc29d` text, type roles and Material levels x 1.125 in dark (side menu stays 1.0 so labels do not wrap) plus `-webkit-text-stroke: 0.2px` as weight stand-in, intro text neutral. |
-| 8 | pass | lint pass via hook | 57 passed, 0 failed (stopped, partial) | never completed | 0 violations on all swept pages | not run | not run | 184 KB, 24 KB gzip | Final look of session 1 (see Where we stand). |
+| Iter         | M1                                                                                                                  | M2                                                                                | M3                                                                  | M4              | M5                                                                             | M6      | M7      | M8                                 | Notes                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ------------ | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------- | --------------- | ------------------------------------------------------------------------------ | ------- | ------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0 (baseline) | n/a                                                                                                                 | n/a                                                                               | not run                                                             | not run         | n/a                                                                            | not run | n/a     | 99744 B (gzip 14219)               | `sass` standalone on `styles.scss`, light only                                                                                                                                                                                                                                                                                                                                                                    |
+| 1            | pass (0 removed lines, only sourcemap comment differs)                                                              | lint of changed files pass, dev-server compile pass, full `npm run build` not run | not run                                                             | not run         | not run                                                                        | not run | not run | 182575 B (+83%), gzip 23931 (+68%) | Over the +60% gate. Cause: themed mixins compiled twice (+55 KB) and 14 Material color mixins. Proposal: gate on gzip <= +100%. Jest does not start here (`esbuild` Buffer invariant), so `num-data-cy.registry.spec.ts` was not run; `theme-toggle` is in both template and `FIXED_HOOKS`.                                                                                                                       |
+| 2            | pass (only the renamed uses and the new `--color-accent-text/-line` vars; `on-fill` white is identical in light)    | lint pass via hook                                                                | not run                                                             | not run         | cohort-definition only: 9 of 27 text nodes bad (walker `scratchpad/walker.js`) | not run | not run | not measured                       | Split done as text/line/fill: `--color-accent` stays the fill (no rename of the ~60 fill uses, no effect), `-text` (dark 300) for `color`, `-line` (dark 400) for border/outline/inset ring. 48 outside files renamed mechanically; `playground.component.ts` untouched (your dirty file), `src/styles/` (old, unused) reverted. `on-fill` key in the foreground map replaces `neutral 0` as text on a fill.      |
+| 3            | pass (light diff = iteration 2 lines + links, tabs, cancel, chips now `var(--color-accent-strong/-text)`, same hex) | lint pass via hook                                                                | not run                                                             | not run         | cohort-definition: 2 of 27 bad (green button white text 2.26, iteration 4)     | not run | not run | not measured                       | Header, footer, side menu, logo (`filter: brightness(1.4)` in dark, no new svg), links, tabs. Dark palette keys: 50-200 are remapped tints, so lighter text shades live in theme keys (`accent-on-tint-shade`, `accent-strong-shade`, `accent-deep-shade` = `A100` in dark). Mixins read `map-get($theme, dark)` for one-off literals (footer border, header shadow, logo).                                       |
+| 4-6          | pass (light CSS diff = only intended variable swaps, same hex)                                                      | lint pass via hook                                                                | partial run, 57 passed, 0 failed, stopped by me for design changes  | not run yet     | walker over 10 pages and the criterion editor: 0 text violations (after fixes) | not run | not run | 184740 B, gzip 24302               | Buttons (green/red black text on fill), 46 component SCSS files to variables, Material surfaces from our map, scrollbars, shadows, autofill, tooltip, placeholder. Shah feedback: greys now VS Code Dark Modern, green softened (`#66ad78` fill, `#8fc29d` text), +0.01em letter-spacing on body/small roles in dark, page-header intro text `accent 300`.                                                        |
+| 7            | pass (only variable swaps)                                                                                          | lint pass via hook                                                                | not run to the end, runs were stopped four times for design changes | not run         | 0 text violations on every swept page                                          | not run | not run | not measured                       | Shah feedback round: chrome `#232323` vs content `#1b1b1b` (small step), grey-blue accent tints, softer borders (dividers `#363636`, control border `#6a6a6a`, accent line 500, button rings 55%), green fill `#5a9a6b` with `#8fc29d` text, type roles and Material levels x 1.125 in dark (side menu stays 1.0 so labels do not wrap) plus `-webkit-text-stroke: 0.2px` as weight stand-in, intro text neutral. |
+| 8            | pass                                                                                                                | lint pass via hook                                                                | 57 passed, 0 failed (stopped, partial)                              | never completed | 0 violations on all swept pages                                                | not run | not run | 184 KB, 24 KB gzip                 | Final look of session 1 (see Where we stand).                                                                                                                                                                                                                                                                                                                                                                     |
 
 ## Known gaps (out of scope, found while looping)
 
@@ -338,11 +353,11 @@ Dev server `npm start` (:4200), backend on :8090, Keycloak on :8080, login `test
 
 ## Outside edits (revert list)
 
-| Iter | File | What | Why |
-|---|---|---|---|
-| 1 | `src/index.html` | inline script sets `data-theme` from localStorage before paint; dark colors for the error screen | no white flash on reload |
-| 1 | `src/app/layout/components/theme-toggle/theme-toggle.component.ts` (new) | header toggle button, stores `theme` in localStorage | switch |
-| 1 | `src/app/layout/components/header/header.component.{ts,html}` | imports and places `<num-theme-toggle>` | switch |
-| 1 | `cypress/e2e/Theme/theme-toggle.feature`, `cypress/support/step_definitions/theme.cy.ts` (new), `cypress/support/dataCy.ts` | toggle spec, `theme-toggle` hook | test the toggle (not run yet) |
-| 2 | 48 component files (`*.scss`, a few `.html`/`.ts` inline styles) | `color`/`text-decoration`/`fill` -> `var(--color-accent-text)`, `border`/`outline`/`box-shadow` -> `var(--color-accent-line)` | blocker 1, light value identical; revert with `git revert` of the iteration 2 commit |
-| 1 | `cypress/scripts/lint-features.mjs`, `cypress/TESTING.md` | `theme` added to cross-cutting components | feature lint accepts `@component:theme` |
+| Iter | File                                                                                                                        | What                                                                                                                          | Why                                                                                  |
+| ---- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 1    | `src/index.html`                                                                                                            | inline script sets `data-theme` from localStorage before paint; dark colors for the error screen                              | no white flash on reload                                                             |
+| 1    | `src/app/layout/components/theme-toggle/theme-toggle.component.ts` (new)                                                    | header toggle button, stores `theme` in localStorage                                                                          | switch                                                                               |
+| 1    | `src/app/layout/components/header/header.component.{ts,html}`                                                               | imports and places `<num-theme-toggle>`                                                                                       | switch                                                                               |
+| 1    | `cypress/e2e/Theme/theme-toggle.feature`, `cypress/support/step_definitions/theme.cy.ts` (new), `cypress/support/dataCy.ts` | toggle spec, `theme-toggle` hook                                                                                              | test the toggle (not run yet)                                                        |
+| 2    | 48 component files (`*.scss`, a few `.html`/`.ts` inline styles)                                                            | `color`/`text-decoration`/`fill` -> `var(--color-accent-text)`, `border`/`outline`/`box-shadow` -> `var(--color-accent-line)` | blocker 1, light value identical; revert with `git revert` of the iteration 2 commit |
+| 1    | `cypress/scripts/lint-features.mjs`, `cypress/TESTING.md`                                                                   | `theme` added to cross-cutting components                                                                                     | feature lint accepts `@component:theme`                                              |

@@ -359,6 +359,21 @@ $spacing-scale: (
   * {
     scrollbar-color: var(--border-color) var(--color-surface);
   }
+  // Search hits: tint 50 is 1.1:1 on the content in dark, so the hit vanished. Tint 100 plus the accent text tone.
+  mark {
+    background-color: var(--color-accent-bg-strong);
+    color: var(--color-accent-text);
+  }
+  // Selected text: the browser's bright blue glares on dark; the grey-blue border tint, like VS Code's editor selection.
+  ::selection {
+    background-color: var(--color-accent-border);
+    color: var(--color-text-primary);
+  }
+  // Tooltips are 12px in light (hard-coded, !important): same x 1.125 as the type roles
+  .mat-mdc-tooltip .mdc-tooltip__surface {
+    font-size: 13.5px !important;
+    line-height: 19px !important;
+  }
   // Chrome paints autofilled fields light yellow or white: keep our surface and text
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
