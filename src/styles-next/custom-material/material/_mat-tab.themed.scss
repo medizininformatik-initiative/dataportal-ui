@@ -4,14 +4,14 @@
 @mixin mat-tab_themed($theme) {
   .mat-mdc-tab-group,
   .mat-mdc-tab-nav-bar {
-    --mat-tab-header-active-label-text-color: #{role-color($theme, accent, 600)};
-    --mat-tab-header-active-focus-label-text-color: #{role-color($theme, accent, 600)};
-    --mat-tab-header-active-hover-label-text-color: #{role-color($theme, accent, 600)};
-    --mat-tab-header-active-ripple-color: #{role-color($theme, accent, 600)};
-    --mat-tab-header-inactive-ripple-color: #{role-color($theme, accent, 600)};
-    --mdc-tab-indicator-active-indicator-color: #{role-color($theme, accent, 600)};
-    --mat-tab-header-active-focus-indicator-color: #{role-color($theme, accent, 600)};
-    --mat-tab-header-active-hover-indicator-color: #{role-color($theme, accent, 600)};
+    --mat-tab-header-active-label-text-color: var(--color-accent-strong);
+    --mat-tab-header-active-focus-label-text-color: var(--color-accent-strong);
+    --mat-tab-header-active-hover-label-text-color: var(--color-accent-strong);
+    --mat-tab-header-active-ripple-color: var(--color-accent-strong);
+    --mat-tab-header-inactive-ripple-color: var(--color-accent-strong);
+    --mdc-tab-indicator-active-indicator-color: var(--color-accent-strong);
+    --mat-tab-header-active-focus-indicator-color: var(--color-accent-strong);
+    --mat-tab-header-active-hover-indicator-color: var(--color-accent-strong);
     --mat-tab-header-inactive-label-text-color: #{foreground-color($theme, text)};
     --mat-tab-header-inactive-focus-label-text-color: #{foreground-color($theme, text)};
     --mat-tab-header-inactive-hover-label-text-color: #{foreground-color($theme, text)};

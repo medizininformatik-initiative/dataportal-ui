@@ -7,7 +7,7 @@
     font-weight: var(--font-text-link-weight);
     font-size: var(--font-text-link-size);
     line-height: var(--font-text-link-line);
-    color: role-color($theme, accent, 600);
+    color: var(--color-accent-strong);
     text-decoration: none;
 
     &:hover {
@@ -21,7 +21,7 @@
     }
 
     &:visited {
-      color: role-color($theme, accent, 600);
+      color: var(--color-accent-strong);
     }
   }
 }

@@ -14,7 +14,7 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 24px;
-      color: mat.m2-get-color-from-palette($accent, 500);
+      color: var(--color-accent-text);
       background: transparent;
       border: 1px solid role-color($theme, accent, 200);
       border-radius: 4px;
@@ -38,7 +38,7 @@
 
       &.count-badge {
         background-color: role-color($theme, accent, 100);
-        color: role-color($theme, accent, 600); // text on a filled tint: 600 (5.6:1 on accent 100)
+        color: var(--color-accent-strong); // text on a filled tint: 600 (5.6:1 on accent 100)
         font-weight: bold;
         padding: 0 8px;
         min-width: auto;
@@ -86,7 +86,7 @@
     }
 
     .block-triangle {
-      color: mat.m2-get-color-from-palette($accent, 500);
+      color: var(--color-accent-text);
       border-left: 12px solid;
       border-top: 12px solid transparent;
       border-bottom: 12px solid transparent;

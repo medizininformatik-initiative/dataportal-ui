@@ -4,11 +4,11 @@
     height: 40px;
     border: 1px solid role-color($theme, accent, 200);
     background: role-color($theme, neutral, 50);
-    color: role-color($theme, accent, 600);
+    color: var(--color-accent-strong);
 
     &:hover:not(.disabled) {
       background: role-color($theme, neutral, 100);
-      color: role-color($theme, accent, 500);
+      color: var(--color-accent-text);
       box-shadow: rgba(role-color($theme, accent, 600), 0.13) 0 4px 16px;
     }
 

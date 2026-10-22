@@ -2,6 +2,8 @@
   // Shades for text and line use of accent. A theme without the keys uses 500 (light).
   $accent-text-shade: map-get($theme, accent-text-shade) or 500;
   $accent-line-shade: map-get($theme, accent-line-shade) or 500;
+  $accent-strong-shade: map-get($theme, accent-strong-shade) or 600; // hover and link text (dark: A100)
+  $accent-on-tint-shade: map-get($theme, accent-on-tint-shade) or 900; // text and focus ring on an accent tint (light 900, dark 200)
   // ── Primary palette exports ────────────────────────────────────────────────
   // Used by: feasibility-query search component
   --num-color--primary: #{role-color($theme, neutral, 500)};
@@ -31,7 +33,7 @@
   --color-accent-bg-strong: #{role-color($theme, accent, 100)};
   --color-accent-border-hover: #{role-color($theme, accent, 300)}; // hover of a 200 border
   --color-accent-border: #{role-color($theme, accent, 200)};
-  --color-accent-strong: #{role-color($theme, accent, 600)};
+  --color-accent-strong: #{role-color($theme, accent, $accent-strong-shade)};
 
   // ── Status colours ─────────────────────────────────────────────────────────
   // Used by: searchbar (validation error colour)
@@ -58,7 +60,7 @@
   --num-color--grey-hover: #{role-color($theme, neutral, 100)};
 
   // Keyboard focus ring / dark accent. Used by: search-filter
-  --num-color--accent-900: #{role-color($theme, accent, 900)};
+  --num-color--accent-900: #{role-color($theme, accent, $accent-on-tint-shade)};
 
   // Error text, contrast 6.0 on white, 5.4 on accent tint (WCAG 1.4.3). Literals: no role (danger ramp is pure red).
   // On white / near-white. Used by: searchbar

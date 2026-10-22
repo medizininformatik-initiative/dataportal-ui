@@ -11,7 +11,7 @@
       color: mat.m2-get-contrast-color-from-palette($primary, 500);
 
       fa-icon {
-        color: mat.m2-get-color-from-palette($accent, 500);
+        color: var(--color-accent-text);
       }
     }
   }

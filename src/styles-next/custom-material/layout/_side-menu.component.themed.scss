@@ -1,6 +1,7 @@
 // No literal colours, sizes or fonts in here: everything comes from the theme
 // palettes/typography ($theme) or the global tokens in styles.scss (:root).
 @mixin side-menu-component_themed($theme) {
+  $accent-on-tint-shade: map-get($theme, accent-on-tint-shade) or 900; // see color-variables
   num-side-menu {
     // Menu-local tokens, derived from the global spacing scale
     --side-menu-line-x: calc(
@@ -18,12 +19,12 @@
     --side-menu-bg-hover: #{role-color($theme, neutral, 200)};
     --side-menu-bg-active: var(--color-accent-bg);
     --side-menu-text: var(--color-text-section);
-    --side-menu-text-active: #{role-color($theme, accent, 900)};
+    --side-menu-text-active: #{role-color($theme, accent, $accent-on-tint-shade)};
     --side-menu-icon: #{role-color($theme, neutral, 900)};
     --side-menu-icon-active: var(--color-accent-text);
     --side-menu-line: var(--border-color);
     --side-menu-line-hover: #{role-color($theme, neutral, 700)};
-    --side-menu-focus-ring: #{role-color($theme, accent, 900)};
+    --side-menu-focus-ring: #{role-color($theme, accent, $accent-on-tint-shade)};
 
     display: flex;
     flex-direction: column;
