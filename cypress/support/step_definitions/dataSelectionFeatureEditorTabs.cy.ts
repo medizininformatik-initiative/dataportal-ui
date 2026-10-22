@@ -1,6 +1,7 @@
 import { dataCy, dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { t } from '../i18n'
+import { numCheckbox } from '../component-objects/NumCheckbox'
 
 const SELECTED_FIELDS_BOX = '.selected-fields-box'
 const HEADER_COL = '.header-col'
@@ -66,9 +67,7 @@ export class DataSelectionFeatureEditorTabs {
    * Assert required option of field enabled or disabled.
    * */
   public requiredShouldBe(field: string, state: string) {
-    this.panelRow(field)
-      .find(dataCy('checkbox'))
-      .should('have.attr', 'aria-checked', String(state === 'enabled'))
+    numCheckbox.shouldBe(this.panelRow(field).find(dataCy('checkbox')), state === 'enabled')
   }
 
   /**
@@ -93,11 +92,14 @@ export class DataSelectionFeatureEditorTabs {
    * Assert field unticked in fields tree.
    * */
   public fieldShouldNotBeTicked(field: string) {
-    cy.get(`num-tree ${dataCyOf(field, '.divider')}`)
-      .first()
-      .find(dataCy('checkbox'))
-      .first()
-      .should('have.attr', 'aria-checked', 'false')
+    numCheckbox.shouldBe(
+      cy
+        .get(`num-tree ${dataCyOf(field, '.divider')}`)
+        .first()
+        .find(dataCy('checkbox'))
+        .first(),
+      false
+    )
   }
 
   /**

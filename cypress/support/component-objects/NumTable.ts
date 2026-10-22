@@ -73,7 +73,7 @@ export class NumTable {
 
   /**
    * Assert on rows currently rendered: table is infinite-scrolled, so "all" = every loaded row.
-   * Use retrying `.should(callback)` on `aria-checked`: row checkboxes update moment after
+   * Use retrying `.should(callback)` on native `checked`: row checkboxes update moment after
    * header one, asserting right after click sees header ticked, rows still unticked.
    * */
   public shouldHaveAllRowsChecked() {
@@ -88,13 +88,13 @@ export class NumTable {
   }
 
   /**
-   * Assert all rendered rows have `aria-checked` state.
+   * Assert all rendered rows have native `checked` state.
    * */
   private shouldHaveRowsCheckedState(expected: 'true' | 'false') {
     cy.get(`${NUM_TABLE_TBODY_TR} ${dataCy('checkbox')}`).should(($boxes) => {
       expect($boxes.length, 'number of row checkboxes').to.be.greaterThan(0)
       $boxes.each((_, box) => {
-        expect(box.getAttribute('aria-checked'), 'aria-checked').to.eq(expected)
+        expect((box as HTMLInputElement).checked, 'checked').to.eq(expected === 'true')
       })
     })
   }

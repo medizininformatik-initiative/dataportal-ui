@@ -44,7 +44,7 @@ function tabLabel(name: string): string {
  * criterion editor `mat-tab-group`. Inner tabs are Material `mat-tab`s with translated labels
  * (en.json `EDITOR.CONTENT.TAB_LABEL.*`): match by text, not retrofitted `data-cy`. Search
  * rows match exact code cell: code is only thing test author knows ahead (display texts are
- * German, can change). Checked state read from shared checkbox `aria-checked`.
+ * German, can change). Checked state read from native checkbox state.
  * */
 export class NumConceptFilter {
   /**
@@ -153,18 +153,14 @@ export class NumConceptFilter {
    * Assert result row of code within system checked or unchecked.
    * */
   public resultInSystemShouldBeChecked(code: string, system: string, checked: boolean) {
-    this.resultRowInSystem(code, system)
-      .find(dataCy('checkbox'))
-      .should('have.attr', 'aria-checked', String(checked))
+    numCheckbox.shouldBe(this.resultRowInSystem(code, system).find(dataCy('checkbox')), checked)
   }
 
   /**
    * Assert result row of code checked or unchecked.
    * */
   public resultShouldBeChecked(code: string, checked: boolean) {
-    this.resultRow(code)
-      .find(dataCy('checkbox'))
-      .should('have.attr', 'aria-checked', String(checked))
+    numCheckbox.shouldBe(this.resultRow(code).find(dataCy('checkbox')), checked)
   }
 
   /**

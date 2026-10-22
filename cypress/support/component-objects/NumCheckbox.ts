@@ -1,8 +1,8 @@
 import { dataCy } from '../dataCy'
 /**
- * Query and interaction helper for `num-checkbox` shared component: `<span role="checkbox">`
- * with click handler, never real `<input>`. `cy.check()` / `input[type="checkbox"]` cannot
- * work. Wraps real clickable element via `data-cy="checkbox"` (see checkbox.component.html,
+ * Query and interaction helper for `num-checkbox` shared component: native
+ * `<input type="checkbox">`, state in `checked` property, no `aria-checked`. Assert through
+ * `shouldBe`. Wraps element via `data-cy="checkbox"` (see checkbox.component.html,
  * cypress/CLAUDE.md registry).
  * */
 export class NumCheckbox {
@@ -14,6 +14,13 @@ export class NumCheckbox {
    * */
   public toggle() {
     cy.get(dataCy('checkbox')).click()
+  }
+
+  /**
+   * Assert checkbox found by `box` is checked or unchecked. Retries like any `.should`.
+   * */
+  public shouldBe(box: Cypress.Chainable<JQuery<HTMLElement>>, checked: boolean) {
+    box.should(checked ? 'be.checked' : 'not.be.checked')
   }
 }
 

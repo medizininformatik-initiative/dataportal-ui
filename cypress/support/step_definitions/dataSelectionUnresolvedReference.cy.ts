@@ -4,6 +4,7 @@ import { searchInstance } from './search.cy'
 import { tableInstance } from './table.cy'
 import de from '../../../src/assets/i18n/de.json'
 import { t } from '../i18n'
+import { numCheckbox } from '../component-objects/NumCheckbox'
 
 const NUM_PROFILE_REFERENCE_TILE = 'num-profile-reference-tile'
 const WARNING_MESSAGE = '.warning-message'
@@ -117,12 +118,12 @@ export class DataSelectionUnresolvedReference {
   public unlinkFromFeature(feature: string) {
     const checkbox = () =>
       cy.contains(NUM_SELECTABLE_REFERENCE_TILE, feature).find(dataCy('checkbox'))
-    checkbox().should('have.attr', 'aria-checked', 'true')
+    numCheckbox.shouldBe(checkbox(), true)
     checkbox().click()
     /**
      * Click re-renders tile: read state from fresh lookup, not chained.
      * */
-    checkbox().should('have.attr', 'aria-checked', 'false')
+    numCheckbox.shouldBe(checkbox(), false)
   }
 
   /**
@@ -136,7 +137,7 @@ export class DataSelectionUnresolvedReference {
    * Assert required option of reference enabled or disabled.
    * */
   public requiredShouldBe(field: string, name: string, state: string) {
-    this.required(field, name).should('have.attr', 'aria-checked', String(state === 'enabled'))
+    numCheckbox.shouldBe(this.required(field, name), state === 'enabled')
   }
 
   /**
