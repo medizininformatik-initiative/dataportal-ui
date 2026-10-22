@@ -296,9 +296,9 @@ running Feasibility, not after.
 ## A concept filter chip shows the concept's display text, not its code
 
 On the criterium box, a selected concept renders as a `.chip-container` with the concept's
-**display** text (for `Cause of death` -> `J13`: `Pneumonie durch Streptococcus pneumoniae`)
-under a block carrying the filter's name (`ICD-10-WHO`). The text is the ontology's original, so
-it is German in the English UI when no English translation exists. A scenario asserting a chip
+**display** text (for `Cause of death` -> `J13`: `Pneumonia caused by Streptococcus pneumoniae`)
+under a block carrying the filter's name (`ICD-10-WHO`). The text follows the UI language
+(English translation in this ontology load; German original only when `display.en` is empty). A scenario asserting a chip
 therefore needs the display text in its `Examples` (`firstChip` / `secondChip`), kept in step
 with the code column. See `attribute-concept-select.feature` and the step
 `the criterium {string} shows a filter chip for {string}` in `criterionEditor.cy.ts`.
@@ -356,3 +356,72 @@ basically/actually/simply/very/please: write terse, article-free sentences ("Ope
 added last."). A description cannot start with a quote character, so move the quoted text later.
 `npm run cypress:lint` loads the local rule via `--rulesdir`; an editor ESLint plugin shows it only if
 `eslint.options.rulePaths` points at `cypress/eslint-rules`.
+
+## Shared `num-checkbox` is a native `<input type="checkbox">`: assert `checked`, not `aria-checked`
+
+State lives in the `checked` property, there is no `aria-checked` attribute. Assert through
+`numCheckbox.shouldBe(chain, checked)` (`support/component-objects/NumCheckbox.ts`), never
+`have.attr 'aria-checked'` and never a hand-written `be.checked` in a step file. Symptom of the old
+assertion: `expected '<input.checkbox>' to have attribute 'aria-checked'`.
+
+## Test data holds the text the suite's language renders, not the German original
+
+The suite runs in `en` and the ontology load has `display.en` filled for most entries, so a German
+`original` in test data fails with "Expected to find content". Before writing or fixing a display text:
+query ES (`display.original` match, read `display.en`), or read it from the screenshot of the failure.
+Texts fixed this way: `BIOMAT raise`, `18-oxidase deficiency`, `Pneumonia caused by ...` (chips), the
+bulk criterium `Diabetes mellitus, type 1`. A reload with another ontology image can flip any of them.
+`display.en` of the ICD concepts differs per code system (`caused by` in `icd-10`, `due to` in some
+`icd-10-gm` entries): check the system the attribute really uses.
+
+## A bulk search names its one criterium after the first code typed
+
+`I add the bulk search result as one criterium` adds a criterium displayed as the first code's
+display (codes `E10, E11, E66` give `Diabetes mellitus, type 1`, not the display of `E66`). The
+feature header comment says so; fix test data, not the app, when this fails.
+
+## The backend caps saved queries per user: a full list answers 403 on save
+
+`GET /.settings` -> `maxSavedQueriesPerUser: 10`. Every run of `cohort-result` and `saved-queries`
+saves queries and none of them cleans up, so after a few runs `POST /api/v6/query/data` returns 403
+and the UI shows the `GENERIC_ERROR / [object Object]` dialog over the page. Visible effects: click
+"covered by `.error-display-overlay`", saved-query tile not found. `cypress.config.ts`
+`before:run` (`clearSavedQueries`) deletes all queries of the test user at the start of every
+`cypress run`; in `cypress open` delete them by hand (`DELETE /api/v6/query/data/<id>`).
+
+## Reference modal: a click right after the tab opens loses the result
+
+~150ms after a reference tab opens (feature editor -> References -> "Part of"), the app re-creates
+the whole tab group (`@for` tracks by identity, console NG0956). `ReferenceFieldTabComponent` owns the
+modal subscription and unsubscribes in `ngOnDestroy`, so a modal opened inside that window closes
+with the right URL, makes no HTTP call and adds nothing (toast "Successfully added" is the older
+"add to selection" one). `DataSelectionSearch.openReferenceModal` waits 1s for that reason; no DOM
+or network signal marks the end (checked with a `MutationObserver` and `cy.intercept('**')`).
+A real person does not hit it. A fix in the app: do not recreate the tab group on profile re-emit.
+
+## Cypress 16 and run flags
+
+- `Cypress.env()` is removed: use `cy.env([...])` (sensitive) or `Cypress.expose()` (plain). Debug
+  state shared between steps goes in a module-level variable.
+- Run without the known-defect scenarios: `npm run cypress:run -- --expose tags='not @pending'`
+  (`--env tags` does nothing). A full run is ~14 min, 161 tests.
+- `Cypress.config` timeouts: default 4s retry. A failure "never found it" after an async action
+  is a race until a longer `{ timeout }` proves otherwise (here it did not).
+
+## Debugging recipe that found the two hard causes
+
+1. Read the failure screenshot first (`cypress/screenshots`): an overlay (error dialog) or a stale
+   toast explains most "covered"/"not found" errors.
+2. Reproduce the flow by hand in Chrome DevTools MCP with `ng.getComponent(el)` to read signals; if
+   it works by hand and fails in Cypress, it is timing.
+3. In the step, log `cy.intercept('**', req => ...)` requests and element `isConnected` into a
+   module array and `cy.writeFile` it; no request after an action means the subscription died.
+4. Remove all of it again; `git diff` must show only the fix.
+
+## Route changes animate: old and new page exist together for a moment
+
+After a navigation, the outgoing page stays in the DOM until its route animation ends, so
+`cy.get('num-action-bar')` can match two bars. An assertion that something does **not** exist inside
+the bar then fails on the old page's content (`action-bar.feature`, "query editor hides upload": the
+old bar's `input.file-input`, seen in 1 of 3 full runs). Assert `should('have.length', 1)` on the
+component first; Cypress retries until the outgoing page is gone. Positive checks are not affected.
