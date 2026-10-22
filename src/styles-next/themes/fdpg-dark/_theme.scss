@@ -27,9 +27,10 @@ $num-portal-webapp-theme-fdpg-dark-material: map.deep-merge(
     color: (
       background: (
         background: map.get($fdpg-dark-background, background),
-        card: map.get($fdpg-dark-background, card),
-        dialog: map.get($fdpg-dark-background, dialog),
-        app-bar: map.get($fdpg-dark-background, card),
+        // Material card (menu, select panel, details drawer, stepper) is a raised surface: chrome tone, not our flat card
+        card: map.get($fdpg-dark-background, chrome),
+        dialog: map.get($fdpg-dark-background, chrome),
+        app-bar: map.get($fdpg-dark-background, chrome),
       ),
       foreground: (
         text: map.get($fdpg-dark-foreground, text),

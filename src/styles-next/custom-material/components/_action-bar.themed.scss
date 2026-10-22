@@ -14,6 +14,11 @@
           rgba(role-color($theme, secondary, 500), 0.1)
         ),
         role-color($theme, neutral, 0);
+      // Dark: grey bar one step above the content, no green wash. The green stays on the buttons, so they are what the eye finds.
+      @if map-get($theme, dark) {
+        background: role-color($theme, neutral, 100);
+        border: 1px solid var(--border-color);
+      }
       box-sizing: border-box;
       overflow-x: auto;
       overflow-y: hidden;

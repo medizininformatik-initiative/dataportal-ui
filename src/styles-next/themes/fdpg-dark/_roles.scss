@@ -9,15 +9,14 @@
 $_dark-neutral: map.merge(
   $num-grey-palette,
   (
-    0: #1f1f1f,
-    // card, dialog (VS editor)
-    50: #181818,
-    // page (VS sidebar, status bar)
-    100: #272727,
-    // hover, track
-    200: #2b2b2b,
-    // VS border
-    300: #3f3f3f,
+    0: #181818,
+    // card and main content, the darkest surface (header and side menu are lighter, see background.chrome)
+    50: #1c1c1c,
+    // page
+    100: #2c2c2c,
+    // hover, track, action bar
+    200: #313131,
+    300: #424242,
     // divider, border
     400: #5a5a5a,
     // disabled

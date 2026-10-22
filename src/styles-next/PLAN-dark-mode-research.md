@@ -30,7 +30,7 @@
 
 ## Map: light job → dark value (draft)
 
-**Superseded 2026-10-22 (Shah, VS Code screenshot):** greys are now neutral Dark Modern tones. Page `#181818`, card `#1f1f1f`, hover `#272727`, border `#3f3f3f`, text `#cccccc`, secondary `#9d9d9d`, section `#b0b0b0`, mid greys 400-900 neutral (`_roles.scss` in `themes/fdpg-dark/`). The table below keeps the first blue-grey draft for the accent, status and shadow rows; grey rows are historical.
+**Superseded twice 2026-10-22 (Shah, VS Code screenshot, then "chrome lighter, content darker"):** greys are neutral. Content and card `#181818`, page `#1c1c1c`, chrome (header, side menu, footer, Material popups) `#262626`, hover and action bar `#2c2c2c`, border `#424242`, text `#cccccc`, secondary `#9d9d9d`, section `#b0b0b0`, mid greys 400-900 neutral (`_roles.scss` in `themes/fdpg-dark/`). The table below keeps the first blue-grey draft for the accent, status and shadow rows; grey rows are historical.
 
 | Job | Light | Dark | Contrast (page / card) |
 |---|---|---|---|
