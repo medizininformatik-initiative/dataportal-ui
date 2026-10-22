@@ -42,6 +42,14 @@ Shah: "improve from all data plus own estimates, stick to styles-next, be creati
 
 Not done (outside `styles-next`, add to the next session or Shah decides): light literals that break dark in component SCSS: `profile-reference-chip` error state (`#ffe5e5` fill, `#c62828`), `validation-modal` (`#2e7d32`, `#b71c1c` text, about 2-3:1 on dark), `error-log-modal` (`#fff3cd`), `error-log-item` (`#e9ecef`, `#495057`, `#667eea`), `info-tile` danger, `save-dataquery-modal` `#c5cacf`, `dashboard` `#555e6a`, `snackbar`. Fix: move to `--color-*` variables, or add status tint variables (`--color-danger-bg`, `--color-success-text`) to `_color-variables` first, which stays inside `styles-next`.
 
+## Session 3 (2026-10-22, fresh look with screenshots, plan not followed)
+
+New file `custom-material/components/_dark-overrides.themed.scss`: dark-only rules for components whose SCSS still holds light literals (host tag + class beats the encapsulated rule), plus the stepper. Delete a block when its component reads a variable. Dark `danger 50` / `warning 50` remapped to dark tints in `fdpg-dark/_roles.scss`. Light CSS: no change.
+
+Found by screenshot, fixed: current step was invisible (both circles grey, both titles highlighted, stepper on a card-tone strip); empty-state text lines overlapped (24px on a 20px line height, light too, fixed in dark only); availability track invisible; saved-query rows ran together; neon snackbar with white text (now a chrome toast with a colored edge); pink, light yellow and light grey status fills (chip warning, info tile, error log, global `code` from `::ng-deep`); `#c5cacf` placeholder in the save dialog brighter than the text. Walker: 0 violations on cohort definition and data-selection overview.
+
+Seen, left for Shah: eight solid blue "laden" buttons per saved-queries page read as a wall in dark (outline or text button in rows?); page title box looks like a chip on search pages; the same light empty-state line-height bug.
+
 ## Insights (keep)
 
 1. **`dark-ansi` is not a palette.** Claude Code's theme here is `dark-ansi`, it uses the terminal's own ANSI colors. Shah's VS Code theme is Dark+, so the text that reads well from afar is the VS Code terminal: foreground `#cccccc`, background `#181818` to `#1e1e1e`, monospace. Colors alone do not copy that: Titillium Web is narrow with a low x-height, the table cells and the 10-12 px labels (`Unbekannt`, badges) stay small, so they read worse from distance than terminal text. The levers that remain: size (hard-coded px in component SCSS are not scaled), weight, contrast `#bebebe` (about 9.7:1 on content). Tension to decide with Shah: "softer" (lower brightness) and "readable from afar" (higher contrast) pull in opposite directions.

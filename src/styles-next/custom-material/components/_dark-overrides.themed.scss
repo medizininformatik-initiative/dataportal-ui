@@ -1,0 +1,128 @@
+// Dark only: components whose own SCSS (outside styles-next) still holds light literals, plus the Material stepper.
+// Selectors start at the component host tag, so (0,2,1)+ beats the encapsulated `.x[_ngcontent]` (0,2,0).
+// Delete a block once its component reads a theme variable instead of the literal.
+@mixin dark-overrides_themed($theme) {
+  @if map-get($theme, dark) {
+    $danger-text: role-color($theme, danger, 300); // 7:1 on the content
+    $danger-tint: role-color($theme, danger, 50);
+    $success-text: role-color($theme, secondary, 400);
+
+    // Stepper (query page): Material paints its strip with the card tone and both step circles in near-identical greys,
+    // so the current step was not visible. Strip transparent like light; current step = accent fill, the other is muted.
+    .mat-stepper-horizontal {
+      background: transparent;
+    }
+    .mat-step-header {
+      .mat-step-icon {
+        background-color: role-color($theme, neutral, 100);
+        color: foreground-color($theme, secondary-text);
+        box-shadow: inset 0 0 0 1px var(--num-color--control-border);
+      }
+      .mat-step-icon-selected {
+        background-color: var(--color-accent);
+        color: foreground-color($theme, on-fill);
+        box-shadow: none;
+      }
+      // The title highlight belongs to the current step only; the other step title is plain, secondary text
+      .mat-step-label:not(.mat-step-label-selected) .header-title {
+        background: none;
+        box-shadow: none;
+        color: foreground-color($theme, secondary-text);
+      }
+    }
+
+    // Empty state: 24px text inherits the body's 20px line height, two lines overlap (light has the same bug)
+    num-placeholder-box .placeholder-content {
+      line-height: 1.35;
+    }
+
+    // Availability bar: the track is black at 10%, invisible on dark
+    num-availability-status-bar .avail-track {
+      background: var(--border-color);
+    }
+
+    // Saved queries: black-alpha row border and hover vanish, rows ran together
+    num-saved-query-tile .saved-query-tile {
+      border-bottom-color: var(--border-color);
+      &:hover {
+        background: var(--num-color--grey-hover);
+      }
+    }
+
+    // Snackbar: full neon green or red with white text glares (2.3:1). Toast like VS Code: chrome panel, colored edge.
+    num-snackbar {
+      .snackbar {
+        background: surface-color($theme, chrome);
+        border: 1px solid var(--border-color-field);
+        box-shadow: var(--shadow-menu);
+      }
+      .info-snackbar {
+        border-left: 4px solid role-color($theme, secondary, 500);
+      }
+      .error-snackbar {
+        border-left: 4px solid $danger-text;
+      }
+      .message-display {
+        color: var(--color-text-primary);
+        text-shadow: none;
+      }
+    }
+
+    // Status text and tints (light literals #c62828 / #b71c1c / #2e7d32 / pink fills)
+    num-profile-reference-chip .link-info.warning-badge {
+      background-color: $danger-tint;
+      color: $danger-text;
+      border-color: rgba($danger-text, 0.4);
+    }
+    num-validation-modal .nav-card__status--valid {
+      color: $success-text;
+    }
+    num-validation-modal .nav-card__status--invalid {
+      color: $danger-text;
+    }
+    num-info-tile .info-item.info-item-red {
+      background-color: $danger-tint;
+      border-left-color: $danger-text;
+    }
+    num-info-tile .info-value code {
+      background: var(--num-color--grey-hover);
+    }
+
+    // Error log: light yellow summary, light grey code chips. error-log-item styles `code` through ::ng-deep (global).
+    num-error-log-modal .error-summary {
+      background: role-color($theme, warning, 50);
+      border-left-color: role-color($theme, warning, 500);
+    }
+    num-error-log-item .error-item {
+      border-left-color: role-color($theme, secondary, 500);
+    }
+    num-error-log-item .error-extra details summary {
+      color: var(--color-accent-text);
+    }
+    code {
+      background: var(--num-color--grey-hover);
+      color: var(--color-text-primary);
+    }
+    num-error-log-header .error-log-header {
+      background: linear-gradient(
+        135deg,
+        var(--color-accent) 0%,
+        role-color($theme, secondary, 600) 100%
+      );
+    }
+
+    // Save dialog: #c5cacf placeholder and close icon are brighter than the text on dark
+    num-save-dataquery-modal {
+      .field-input::placeholder {
+        color: var(--color-text-placeholder);
+      }
+      .close-btn {
+        color: var(--color-text-secondary);
+        &:hover {
+          color: var(--color-text-primary);
+          background: var(--num-color--grey-hover);
+        }
+      }
+    }
+  }
+}

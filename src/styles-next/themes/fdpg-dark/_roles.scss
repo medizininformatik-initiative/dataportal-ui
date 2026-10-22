@@ -57,10 +57,24 @@ $_dark-secondary: map.merge(
   )
 );
 
+// Status tints: the light 50s are pastel fills that glow on dark. Dark tint keeps the hue at L ~14%; text on it is 300 / 500.
+$_dark-danger: map.merge(
+  $num-red-palette,
+  (
+    50: #2d1d1e,
+  )
+);
+$_dark-warning: map.merge(
+  $num-yellow-palette,
+  (
+    50: #2b2617,
+  )
+);
+
 $fdpg-dark-roles: (
   accent: $_dark-accent,
   secondary: $_dark-secondary,
   neutral: $_dark-neutral,
-  danger: $num-red-palette,
-  warning: $num-yellow-palette,
+  danger: $_dark-danger,
+  warning: $_dark-warning,
 );
