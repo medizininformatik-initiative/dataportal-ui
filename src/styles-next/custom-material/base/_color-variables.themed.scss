@@ -69,7 +69,7 @@
 
   // Error text, contrast 6.0 on white, 5.4 on accent tint (WCAG 1.4.3). Literals: no role (danger ramp is pure red).
   // On white / near-white. Used by: searchbar
-  --num-color--error-on-white: #c4122f;
+  --num-color--error-on-white: #{if(map-get($theme, dark), role-color($theme, danger, 300), #c4122f)};
   // On tinted / grey surfaces (also fine on white). Used by: missing-filter
-  --num-color--error-on-tint: #b30519;
+  --num-color--error-on-tint: #{if(map-get($theme, dark), role-color($theme, danger, 300), #b30519)};
 }

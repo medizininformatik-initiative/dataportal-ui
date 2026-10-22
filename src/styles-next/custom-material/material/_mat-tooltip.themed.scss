@@ -12,8 +12,8 @@
   max-width: 240px !important;
 
   /* Surface */
-  background-color: #ffffff !important;
-  border: 1px solid #c3c7cd !important;
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--border-color-field) !important;
   box-shadow: var(--shadow-menu) !important;
 
   /* Typography: inherits Titillium Web from .mat-typography */
@@ -21,5 +21,5 @@
   font-weight: 400 !important;
   font-size: 12px !important;
   line-height: 17px !important;
-  color: #5f6266 !important;
+  color: var(--color-text-section) !important;
 }

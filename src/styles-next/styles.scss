@@ -331,3 +331,37 @@ $spacing-scale: (
 .theme-switching *::after {
   transition: none !important;
 }
+
+// Dark scrollbars, shadows and form autofill. Shadows are near invisible on dark: stronger alpha, and surface steps plus borders carry depth.
+[data-theme='dark'] {
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--num-color--control-border);
+  }
+  * {
+    scrollbar-color: var(--border-color) var(--color-surface);
+  }
+  // Chrome paints autofilled fields light yellow or white: keep our surface and text
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-text-primary);
+    box-shadow: 0 0 0 100px var(--color-surface) inset;
+    caret-color: var(--color-text-primary);
+  }
+}
+
+:root[data-theme='dark'] {
+  --shadow-control: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-card: rgba(0, 0, 0, 0.4) 0px 4px 6px -1px, rgba(0, 0, 0, 0.3) 0px 2px 4px -1px;
+  --shadow-card-hover: rgba(0, 0, 0, 0.5) 0px 8px 16px -2px, rgba(0, 0, 0, 0.4) 0px 4px 8px -2px;
+  --shadow-card-active: rgba(0, 0, 0, 0.4) 0px -3px 6px -1px, rgba(0, 0, 0, 0.3) 0px 2px 4px -1px;
+  --shadow-panel: -4px 0 20px rgba(0, 0, 0, 0.5);
+  --shadow-menu: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 4px 10px rgba(0, 0, 0, 0.5);
+}

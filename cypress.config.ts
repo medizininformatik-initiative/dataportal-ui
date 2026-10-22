@@ -36,6 +36,8 @@ export default defineConfig({
     // UI language the suite runs in: 'en' (default) or 'de'. Override per run with
     // `npx cypress run --expose language=de`. See cypress/support/i18n.ts.
     language: 'en',
+    // Theme the suite runs in: 'light' (default) or 'dark'. `--expose theme=dark` stores the choice before the app starts.
+    theme: 'light',
     // Non-sensitive - safe for synchronous Cypress.expose() access, including
     // as cy.origin()'s plain string URL argument.
     homeUrl: 'http://localhost:4200/data-query/cohort-definition',
