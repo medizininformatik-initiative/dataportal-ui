@@ -8,7 +8,7 @@
 @import './foreground';
 @import './background';
 
-$num-portal-webapp-theme-fdpg-dark-material: mat.m2-define-dark-theme(
+$_dark-mat-base: mat.m2-define-dark-theme(
   (
     color: (
       primary: $num-portal-webapp-primary-fdpg,
@@ -17,6 +17,27 @@ $num-portal-webapp-theme-fdpg-dark-material: mat.m2-define-dark-theme(
     ),
     typography: $num-typography,
     density: 0,
+  )
+);
+
+// Material's own dark greys (#424242 card) replaced by our surfaces and text colors (same keys as M2).
+$num-portal-webapp-theme-fdpg-dark-material: map.deep-merge(
+  $_dark-mat-base,
+  (
+    color: (
+      background: (
+        background: map.get($fdpg-dark-background, background),
+        card: map.get($fdpg-dark-background, card),
+        dialog: map.get($fdpg-dark-background, dialog),
+        app-bar: map.get($fdpg-dark-background, card),
+      ),
+      foreground: (
+        text: map.get($fdpg-dark-foreground, text),
+        secondary-text: map.get($fdpg-dark-foreground, secondary-text),
+        divider: map.get($fdpg-dark-foreground, divider),
+        dividers: map.get($fdpg-dark-foreground, divider),
+      ),
+    ),
   )
 );
 

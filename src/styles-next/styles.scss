@@ -43,6 +43,10 @@
 // Dark: same mixins, dark theme map. data-theme is set on <html> (index.html script, header toggle).
 [data-theme='dark'] .FDPGTheme {
   color-scheme: dark;
+  color: var(
+    --color-text-primary
+  ); // inherited by text without its own color (Material light app-background sets black)
+  background-color: var(--color-page);
   // Only the Material components the app imports (all-component-colors is +80 KB). Add one here when a new one is used.
   $_m: $num-portal-webapp-theme-fdpg-dark-material;
   @include mat.core-color($_m);
