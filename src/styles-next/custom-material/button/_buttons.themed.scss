@@ -22,7 +22,13 @@
     119px,
     4px,
     $outline: true,
-    $focus: role-color($theme, secondary, 700)
+    $focus: role-color($theme, secondary, 700),
+    $text:
+      if(
+        map-get($theme, dark),
+        role-color($theme, secondary, 400),
+        role-color($theme, secondary, 500)
+      )
   );
   @include button-color(
     $theme,

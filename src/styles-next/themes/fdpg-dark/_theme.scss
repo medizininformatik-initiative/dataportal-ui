@@ -3,6 +3,9 @@
 // Compiled a second time under [data-theme=dark] in styles.scss.
 @use '@angular/material' as mat;
 @use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
 
 @import './roles';
 @import './foreground';
@@ -42,14 +45,33 @@ $num-portal-webapp-theme-fdpg-dark-material: map.deep-merge(
   )
 );
 
-// Light text on dark spreads (irradiation) and reads heavier and tighter. Titillium ships only 400/600/700, so the weight
-// cannot drop: body and small text get +0.01em letter-spacing instead (PLAN-dark-mode-research.md, "Beyond color").
+// Dark text reads thin and small on the dark surface (Shah, 2026-10-22): sizes and line heights x 1.125 (one eighth).
+// Titillium ships only 400/600/700, so weight is thickened in styles.scss with a thin text stroke instead.
+$_dark-type-scale: 1.125;
+
+@function _scale-px($v, $scale: $_dark-type-scale) {
+  @return math.div(math.round($v * $scale * 2), 2); // nearest half px
+}
+
 $_dark-type-roles: ();
 @each $name, $role in $fdpg-light-type-roles {
-  @if map.get($role, size) <= 16px {
-    $role: map.set($role, letter-spacing, 0.01em);
-  }
+  // the side menu has a fixed width: it keeps its size (the stroke still adds weight), so long labels do not wrap
+  $scale: if(string.index($name, 'side-menu'), 1, $_dark-type-scale);
+  $role: map.set($role, size, _scale-px(map.get($role, size), $scale));
+  $role: map.set($role, line, _scale-px(map.get($role, line), $scale));
   $_dark-type-roles: map.set($_dark-type-roles, $name, $role);
+}
+
+// Material text levels (body, caption, button, ...): same scale
+$_dark-typography: ();
+@each $key, $level in $num-typography {
+  @if meta.type-of($level) == 'map' {
+    $level: map.set($level, font-size, _scale-px(map.get($level, font-size)));
+    @if map.get($level, line-height) {
+      $level: map.set($level, line-height, _scale-px(map.get($level, line-height)));
+    }
+  }
+  $_dark-typography: map.set($_dark-typography, $key, $level);
 }
 
 $num-portal-webapp-theme-fdpg-dark: map.merge(
@@ -59,9 +81,9 @@ $num-portal-webapp-theme-fdpg-dark: map.merge(
     accent-line-shade: 500,
     accent-on-tint-shade: A100,
     accent-strong-shade: A100,
-    accent-deep-shade: 300,
     dark: true,
     type-roles: $_dark-type-roles,
+    num-typography: $_dark-typography,
     roles: $fdpg-dark-roles,
     foreground: $fdpg-dark-foreground,
     background: $fdpg-dark-background,

@@ -45,6 +45,8 @@
 body.FDPGTheme {
   [data-theme='dark'] & {
     color: var(--color-text-primary);
+    // Weight stand-in: Titillium has no 450. A 0.2px stroke in the text color thickens glyphs by about one eighth.
+    -webkit-text-stroke: 0.2px;
   }
 }
 
@@ -361,6 +363,10 @@ $spacing-scale: (
 }
 
 :root[data-theme='dark'] {
+  --font-size-md: 15.75px;
+  --font-size-sm: 13.5px;
+  --line-height-md: 21px;
+  --line-height-sm: 18px;
   --shadow-control: 0 1px 2px rgba(0, 0, 0, 0.5);
   --shadow-card: rgba(0, 0, 0, 0.4) 0px 4px 6px -1px, rgba(0, 0, 0, 0.3) 0px 2px 4px -1px;
   --shadow-card-hover: rgba(0, 0, 0, 0.5) 0px 8px 16px -2px, rgba(0, 0, 0, 0.4) 0px 4px 8px -2px;
