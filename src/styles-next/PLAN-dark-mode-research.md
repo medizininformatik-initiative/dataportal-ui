@@ -277,7 +277,7 @@ Open from session 5:
 
 **From session 5 (do these first):**
 
-1. Commit sessions 4 and 5 together: the `src/styles-next/**` files from `LC_ALL=C git status --short src/styles-next` (17 modified) plus the four new `dark-mode-tools/*` files. Never `prototype-bulk-chips.html`, `angular.json`, `ReferenceCriteriaListEntry.ts`, `playground.component.ts`. Add by explicit path, no attribution line.
+1. **DONE 2026-10-23 (commit after 398910aa, 24 files).** Commit sessions 4 and 5 together: the `src/styles-next/**` files from `LC_ALL=C git status --short src/styles-next` (17 modified) plus the four new `dark-mode-tools/*` files. Never `prototype-bulk-chips.html`, `angular.json`, `ReferenceCriteriaListEntry.ts`, `playground.component.ts`. Add by explicit path, no attribution line.
 2. Disabled button: still Shah's open call (design rule 7). Current = drained hue `oklch(from <500> 0.42 0.04 h)`. If he rejects it, the untried candidates are listed in rule 7; compare them in one stacked screenshot (inject + `ffmpeg vstack`), not one by one.
 3. Screens not looked at since the session-5 lift (`#272727`) and the red/yellow ladder: dialogs (save, download, error log, validation, about), datepicker, user menu, snackbars, criterion modal tabs, bulk search results, result page, a warning chip and an info tile (status tints `#39292a` / `#373223`). Walker + `offramp-scanner.js` (`format: script`) + screenshot each.
 4. Line weights (rule 11) on the pages not measured yet: outline buttons (2px ring), chips, table borders, dialog borders. Measure with the stem table; a plain line in dark is 1px.
