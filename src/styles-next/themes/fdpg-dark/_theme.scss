@@ -11,12 +11,13 @@
 @import './foreground';
 @import './background';
 
+// Palettes from the dark roles: the light ones leaked #49689c (accent) and #eeb70c (form field errors) into dark
 $_dark-mat-base: mat.m2-define-dark-theme(
   (
     color: (
-      primary: $num-portal-webapp-primary-fdpg,
-      accent: $num-portal-webapp-accent-fdpg,
-      warn: $num-portal-webapp-warn,
+      primary: mat.m2-define-palette($_dark-neutral),
+      accent: mat.m2-define-palette($_dark-accent),
+      warn: mat.m2-define-palette($_dark-warning),
     ),
     typography: $num-typography,
     density: 0,

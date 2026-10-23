@@ -14,6 +14,8 @@
     $focus: role-color($theme, accent, 700),
     $text: var(--color-accent-text)
   );
+  // Dark: same steps as blue (fdpg-dark/_roles.scss ladder): white text on the fill, text color 300
+  $dark: map-get($theme, dark);
   @include button-color(
     $theme,
     'green',
@@ -23,20 +25,18 @@
     4px,
     $outline: true,
     $focus: role-color($theme, secondary, 700),
-    $text:
-      if(
-        map-get($theme, dark),
-        role-color($theme, secondary, 400),
-        role-color($theme, secondary, 500)
-      )
+    $text: role-color($theme, secondary, if($dark, 300, 500)),
+    $on: if($dark, foreground-color($theme, on-fill), null)
   );
   @include button-color(
     $theme,
     'red',
     role-color($theme, danger, 500),
-    role-color($theme, danger, 300),
+    role-color($theme, danger, if($dark, 600, 300)),
     119px,
-    15px
+    15px,
+    $focus: role-color($theme, danger, if($dark, 700, 300)),
+    $on: if($dark, foreground-color($theme, on-fill), null)
   );
   @include button-cancel($theme);
 }

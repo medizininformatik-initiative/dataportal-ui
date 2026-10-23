@@ -1,4 +1,37 @@
-# Dark mode plan (2026-10-22)
+# Dark mode plan (2026-10-22 and 2026-10-23)
+
+## Design rules learned (read first, apply to every dark change)
+
+Found in session 4 when Shah's blue and green buttons "suddenly looked right". Numbers are APCA Lc (`dark-mode-tools/apca-contrast.mjs`) on the action bar `#2b2b2b`.
+
+| Button                                                          | Fill vs bar | Label vs fill |
+| --------------------------------------------------------------- | ----------- | ------------- |
+| old green `#6a9955`, black                                      | 37          | 43            |
+| old blue `#49689c`, white                                       | 20          | 83            |
+| new green `#33843e`, white                                      | 26          | 78            |
+| blue `#1476b8`, white (session 4)                               | 24          | 79            |
+| blue `#2971a7`, white (session 5, calmer, on content `#272727`) | 23          | 81            |
+| green `#33843e`, white (kept, on content `#272727`)             | 26          | 77            |
+
+1. **A button has two contrasts: fill vs surface (edge) and label vs fill.** In dark, the label carries the contrast (Lc about 80), the fill only stands out moderately (Lc about 25). The old green failed both: loudest patch on the page (37) with a weak label (43).
+2. **Keep one polarity.** The dark page is light-on-dark; black text on a light fill is a light-mode island the eye has to re-adapt to. Labels on fills are white in dark.
+3. **Colors of the same rank get the same weight.** Blue and green share one OKLCH ladder (same lightness and chroma, only hue differs), so their edge and label contrasts match (24 / 26, 79 / 78). Mismatch (20 vs 37 before) makes one color fight the other.
+4. **Clean color, moderate lightness.** Low chroma at mid lightness looks dirty next to neutral grey (old blue C 0.09, violet hue 260); high lightness plus high chroma looks neon (old light green L 0.74, C 0.17). Target: C about 0.13 at L about 0.55 for fills.
+5. **Surfaces stay neutral.** Tints behind boxes, hovers and the active nav are neutral greys; color sits on fills, text, links and focus only (bluish tints read as a tinted page).
+6. **Colored text sits below neutral text (session 5).** At equal OKLCH lightness a colored text looks brighter than grey (Helmholtz-Kohlrausch effect: chroma adds perceived brightness), and light-on-dark text blooms anyway (irradiation). Blue 300 `#92bde2` (L 0.78, C 0.07) next to body `#bebebe` (L 0.80, C 0) therefore read as "shiny". Now 300 = L 0.75, C 0.05 (`#94b2cc`, green `#9ab79b`), Lc 57. If body text gets brighter (Open, below), move 300 up with it and keep the gap (about -0.05 L).
+7. **Disabled = the same hue, chroma drained (session 5, still Shah's open call).** Enabled green `#33843e` with white label is approved, keep it. Disabled: solid `oklch(from <500> 0.42 0.04 h)` fill, `oklch(from <500> 0.72 0.03 h)` label, no ring, all variants (relative color syntax: Chrome 119+, Firefox 128+). The action bar is the same green as a 12% wash over the content (light: 10% over white); exception to rule 5, the bar is Shah's brand surface. Tried and rejected by Shah, in order: (a) no fill + faded 1px ring and label; (b) soft white lift `rgba(255, 255, 255, 0.14)` + lifted green label; (c) solid soft white `#d6d6d6` (brightest patch on the bar); (d) dark cut-out + green ring on the green bar, the light theme's twin; (e) `rgba(<500>, 0.28)` fill + green 300 label. Shown next to the current pick, not yet judged: whole button at `opacity: 0.4` (VS Code), neutral grey `#3a3d3a` + `#8f988f`, transparent + 1px dashed green outline. Before session 5: fill darker than the bar, invisible ring, read as a hole. Replaces insight 23 ("disabled = grey").
+8. **Glare comes from the background, not from the text (session 5, Shah's diagnosis).** Shah: fonts and borders looked "shiny", the main content background was "not sufficient". Content `#1b1b1b` (L 0.22) was so dark that every light text and line stood out with full irradiation, while the mid-tone fills (L 0.55) sat calmly at Lc about 25. That is why the blue and green buttons looked right and the text did not: the buttons already had a moderate step to their surround, the text had the maximum one. Lifting all surfaces by 12 (`#1b1b1b` -> `#272727`, chrome `#2f2f2f`) dims text and lines (body Lc 66 -> 64, WCAG 9.3 -> 8.0) and leaves the fills at Lc 25-26. Also dropped `-webkit-text-stroke: 0.15px` (it sharpened and thickened every glyph; insight from session 4). Lifted greys need their 3:1 partners re-checked: control border `#6a6a6a` -> `#7a7a7a`, secondary text `#9a9a9a` -> `#a2a2a2`.
+9. **Text outranks lines (session 5, Shah: "borders too loud, text not loud enough, see the side menu").** A line drawn in a text tone competes with the text next to it. Lines take fill tones (500), text takes the light tones. Done: side menu active rail blue 300 -> 500; header gradient line ended in green 300 (`--num-color--primary-green` is the text tone in dark), now green 500; text `#bebebe` -> `#cccccc` (Lc 72, VS Code text), secondary `#a2a2a2` -> `#b0b0b0`, section and side menu `#a0a0a0` -> `#b8b8b8` (Lc 59 on the chrome). The APCA text question from session 4 is answered by this.
+10. **Blue needs less chroma than green for the same weight.** The Helmholtz-Kohlrausch boost is strongest for blue, so the shared ladder (rule 3) made the blue button louder than the green one (Shah: "Antragsportal could be calmer"). Blue 500 / 600 / 700 now C 0.11 / 0.10 / 0.09 at L 0.53 / 0.49 / 0.445 (`#2971a7`, `#266595`, `#215882`), white label Lc 81. Green unchanged (approved by Shah). Rule 3 becomes: same L, chroma tuned by eye per hue.
+11. **Loudness = thickness x contrast; compare lines with text stems (session 5, Shah's clue: typography).** Titillium Web stem widths, measured by canvas ink coverage of an `l`: 400 at 14 / 16 / 18 / 20px = 1.05 / 1.2 / 1.35 / 1.5px; 600 = 1.52 / 1.74 / 1.96 / 2.18px; 700 = 1.97 / 2.26 / 2.54 / 2.82px. Body and menu text is mostly 400 at 14-16px, so the letters are about 1px thick: a 2px line is twice as heavy as the text beside it, whatever its color. Weight index (stem or line width x APCA Lc): body 1.2 x 72 = 86, menu text 1.05 x 59 = 62, hint 1.05 x 56 = 59; drop frame was 2 x 23 = 46, now 1 x 23 = 23. Rule: a plain line is 1px in dark and its index stays at or below half of the text next to it; a 2px line is emphasis only and sits next to 600-weight text (active nav rail, current title underline). Done: side menu rails, logo divider, editor drop frames and slot 2px -> 1px (dark only). Not changed: outline button rings (2px, next to 600 labels), focus rings (must stay visible), ghost ring in the drag animation. Typography levers still open: thin 400 stems are why the 0.15px stroke once felt needed (+0.3px stem) and why lines compete so easily; candidates are 600 for 14px labels that sit next to lines (side menu children), or the dark size scale x1.125 for the side menu (now x1.0). Try one at a time with a screenshot.
+
+Open, to work on with these rules (status after session 5):
+
+- **Text**: done (rule 9: `#cccccc` / `#b0b0b0` / `#b8b8b8`, stroke removed). Still open: type scale x1.125 vs 1.0 and the 10-12px labels (rule 11).
+- **Red and yellow**: done (ladder, session 5). Not yet seen on screen: warning chip, info tile, error log, validation modal.
+- **Outline buttons**: ring is 55% of 500 at 2px; check its edge contrast and weight (rule 11) now that blue 500 is calmer and darker.
+- **Chips, badges, step circles, toggles**: measure edge and label contrast the same way and align them with the buttons.
+- **Disabled button**: still Shah's open call (rule 7).
 
 ## Decisions (grill-me session)
 
@@ -16,7 +49,11 @@
 
 ## Where we stand (end of session 1, 2026-10-22)
 
-Section index for the next session: **Where we stand**, **Session 2**, **Session 3**, **Insights (keep)** (10-17 are new in sessions 2-3), **Issues in sessions 2 and 3**, **Improvements gained in sessions 2 and 3**, **Issues in session 1**, **Improvements gained in session 1**, **Insights (keep)**, **Next session (start here)**, then **Test setup** (tools) and **Outside edits (revert list)** at the bottom.
+**Session 5 (latest, 2026-10-22 evening and 2026-10-23, uncommitted, sessions 4 and 5 not committed):** read design rules 6-11 at the top, then **Session 5**, **Insights (keep)** 28-36, **Issues in session 5**, **Improvements gained in session 5**, and **Next session (start here)** (rewritten at the end of session 5). Dev server note: a broken intermediate SCSS left the server on stale CSS with the webpack overlay until a later save; compile with `npx sass` first when editing theme maps by script.
+
+**Session 4:** read **Session 4** first (three rounds: neutral tints, VS Code blue, one OKLCH ladder for blue and green), then **Insights (keep)** 18-26, **Issues in session 4**, and **Next session (start here)**, which was rewritten in session 4.
+
+Section index for the next session: **Design rules** (top), **Where we stand**, **Session 2** to **Session 5**, **Insights (keep)** (10-17 new in sessions 2-3, 18-27 in session 4, 28-36 in session 5), **Issues in session 1 / sessions 2 and 3 / session 4 / session 5**, **Improvements gained in session 1 / sessions 2 and 3 / session 4 / session 5**, **Next session (start here)**, then **Test setup** (tools) and **Outside edits (revert list)** at the bottom.
 
 Branch `feat/dark-mode`, 18 commits on top of `5e5227bd` (`git log --oneline 5e5227bd..HEAD`), nothing pushed. Dev server `npm start` (:4200) must be running; login `testuser` / `testpassword`.
 
@@ -25,7 +62,7 @@ Branch `feat/dark-mode`, 18 commits on top of `5e5227bd` (`git log --oneline 5e5
 - Theme `themes/fdpg-dark/` (roles, foreground, background, theme) built on `fdpg-light`, compiled a second time under `[data-theme=dark] .FDPGTheme`. Header toggle (`num-theme-toggle`), `theme` key in localStorage, pre-paint script in `index.html`, toggle Cypress spec, `--expose theme=dark` for the whole suite.
 - Accent split: `--color-accent` (fill), `--color-accent-text`, `--color-accent-line`, plus `--color-accent-strong`; `on-fill` and `on-bright-fill` foreground keys; surface keys `card`, `dialog`, `chrome`; variables `--color-surface`, `--color-page`, `--border-color-field`, `--color-text-table-header`. 46 component SCSS files moved from literal white / black / grey to these variables.
 - Material: 14 component color mixins from our own background and foreground map (no `all-component-colors`, that is +80 KB), placeholder fix.
-- Look (after Shah's feedback rounds): neutral greys like VS Code Dark Modern; content `#1b1b1b` is the darkest, chrome (header, side menu, footer, popups) `#232323`; grey-blue accent tints; soft borders (divider `#363636`, control `#6a6a6a`); green is VS Code's comment green `#6a9955` as button fill, `#86ad6f` as text, action bar grey; text `#bebebe` / `#9a9a9a` / `#a0a0a0`; sizes and Material levels x 1.125 (side menu x 1.0), `-webkit-text-stroke: 0.15px` as weight stand-in; page title `#9ca8bf` on a slate highlight (`accent 100` fill, 2px underline in the accent line tone; the left bar was dropped as a side-tab tell).
+- Look (after Shah's feedback rounds): neutral greys like VS Code Dark Modern; content `#1b1b1b` is the darkest, chrome (header, side menu, footer, popups) `#232323`; grey-blue accent tints; soft borders (divider `#363636`, control `#6a6a6a`); green is VS Code's comment green `#6a9955` as button fill, `#86ad6f` as text, action bar grey; text `#bebebe` / `#9a9a9a` / `#a0a0a0`; sizes and Material levels x 1.125 (side menu x 1.0), `-webkit-text-stroke: 0.15px` as weight stand-in (removed in session 5); page title `#9ca8bf` on a slate highlight (`accent 100` fill, 2px underline in the accent line tone; the left bar was dropped as a side-tab tell).
 
 **Numbers:** contrast walker (`dark-mode-tools/contrast-walker.js`) 0 violations on cohort definition, feasibility search, bulk search, editor, data-selection search and editor, data-query data-selection, saved queries, criterion editor. Light CSS: only intended variable swaps (hex identical). CSS size 184 KB / 24 KB gzip against 100 KB / 14 KB (+68% gzip; gate was +60%, proposal: gzip <= +100%). Cypress: Shah decided on 2026-10-22 not to run it in session 1. Partial light runs that were stopped by me for design changes: 57 passed, 0 failed (latest partial: 29 passed, 0 failed). M3 and M4 are still open: see Next session.
 
@@ -50,6 +87,69 @@ Found by screenshot, fixed: current step was invisible (both circles grey, both 
 
 Seen, left for Shah: eight solid blue "laden" buttons per saved-queries page read as a wall in dark (outline or text button in rows?); page title box looks like a chip on search pages; the same light empty-state line-height bug.
 
+## Session 4 (2026-10-22, "still disturbing, can't say how")
+
+Shah named two causes mid-session: content looks bluish, `type="green"` buttons far too green. Fixed (light CSS identical, all diff lines under `[data-theme="dark"]`):
+
+- Dark accent tints 50/75/100/200 neutral (`#212121`, `#262626`, `#2c2c2c`, `#3a3a3a`) instead of grey-blue. Boxes (`.num-card`, criterion box), page-title chip, active nav item, accent borders no longer tint the content. Blue stays on fills, links, focus.
+- Green button in dark is tonal: fill secondary 50 `#2a3526`, hover 100, focus 200, text 300 `#b6d1a8` (Lc 68), inset 1px edge from 500 at 55%. New `button-color` params `$on` (text on fill) and `$edge` (ring color).
+- Disabled buttons in dark are grey (ring neutral 300, text neutral 500), all variants. Color now marks only what is clickable; before, a disabled green icon button looked like an enabled one.
+
+Round 2 (Shah: green invisible, blue neon, header selects without border, "Antragsportal" letters tight; reference = VS Code status bar `#1476b8` on `#1e1e1e`):
+
+- Tonal green dropped. Dark green fill `#2f7a3a` / hover `#296b33` / focus `#235c2c` (secondary 50-200), white text Lc 81. Same weight as the blue fill (Lc 24 vs 27 against the content).
+- Dark blue fills 500/600/700 = `#1476b8` / `#106aa6` / `#0e5a8c` (VS Code), white text Lc 79. Accent text 300 `#90b9d5`, same hue 204 as the fill, replaces lavender-ish `#98accd` (hue 217).
+- Header selects: dark border `--border-color-field` (the divider tone was 1.15:1 on the chrome).
+- Button labels in dark: no text stroke, `letter-spacing: 0.02em`.
+- Left: `OPTIONAL` chip still `#49689c` (color not from the palette).
+
+Insight: "tonal" (dark tint fill + light text) reads as disabled next to grey disabled buttons; a primary action in dark needs a solid mid-tone fill. Match fill weights across colors by APCA Lc against the surface, not by hue.
+
+Round 3 (Shah: blue and green better; borders, hovers and the rest should use the same blue, one hue palette):
+
+- Why `#1476b8` works and `#49689c` did not (OKLCH): old C 0.09 at hue 260 (violet) is a greyed blue, it reads as dirty grey next to neutral greys; new C 0.13 at hue 245 (azure) is clearly a color, at L 0.55 (mid-dark) it does not glow. Neon = high L and high C together (old green `#9bb823`: L 0.74, C 0.17).
+- One OKLCH ladder for blue (H 245) and green (H 146), same L and C per step: 300 text `#92bde2` / `#9bc49d`, 400 `#609fd2` / `#6fa973`, 500 fill `#1476b8` / `#33843e`, 600 hover, 700 focus. Table in `fdpg-dark/_roles.scss`. Both fills Lc 27 against the content, white text Lc 79 / 77. Tints 50-200 shared and neutral (`$_dark-tints`).
+- Green button now uses 500/600/700 like blue (the 50-200 workaround and the `$edge` param are gone); outline and badge text green 300; checkbox tick white (light: same `#fff`).
+- Off-ramp leftovers fixed: page title `#9ca8bf` -> blue 300; filter chip `OPTIONAL` block read Material's light palette (`m2-get-color-from-palette`), and its arrow used the text tone, now both accent 500.
+- Scanner `dark-mode-tools/offramp-scanner.js` (every visible chromatic color not on the ramps): 0 on data-selection overview and criterion search.
+
+Measured, not changed (Shah decides):
+
+- **APCA** (WCAG 3 draft, perceptual) vs WCAG 2: text `#bebebe` on `#1b1b1b` is 9.3:1 (passes) but **Lc 66**, below the Lc 75 body-text minimum; secondary `#9a9a9a` Lc 46, intro/section `#a0a0a0` Lc 49, page title Lc 53. Light text is Lc 106, VS Code dark Lc 74. WCAG 2 overrates light-on-dark contrast, so "passes" hid dim text. Candidates: text `#d6d6d6` (Lc 80), secondary `#b0b0b0` (Lc 58), section `#b4b4b4` (Lc 60).
+- **Text stroke works against dark.** Light text on dark already looks bolder (irradiation); the 0.15px stroke adds weight and smears glyph edges. Guides lower weight in dark (350 vs 400, or a negative GRAD axis). Candidate: drop the stroke once text is brighter; the stroke was compensating for dim text.
+- **Type scale x 1.125** changes layout between themes (wraps, row heights). Candidate: back to 1.0 after the two points above.
+
+Tool: `apca-w3` + `colorparsley` (npm), 10-line script in the scratchpad; worth committing next to `contrast-walker.js` if APCA becomes a gate.
+
+## Session 5 (2026-10-22 evening to 2026-10-23, disabled buttons, shiny blue text, loud lines, feature editor)
+
+Shah: disabled green looks wrong ("disabled is the inverse of enabled"), blue text too shiny. All diff lines dark-only (sass compile diff vs HEAD: the only light line is the known same-hex chip arrow from session 4).
+
+- `button-color`: dark disabled = drained hue (`oklch(from ...)`), no ring. All variants. Action bar in dark: green 500 wash at 12% over neutral 0 (was grey neutral 100), border kept. Design rule 7 (eight variants tried, all recorded there).
+- Surfaces lifted by 12 (neutral 0-300, tints 50-200, chrome), stroke removed, control border and secondary text raised to keep 3:1 / 4.5:1. Design rule 8. Walker 0 violations on the editor and cohort definition pages.
+- Tooling: the dev server kept serving the last good CSS after a broken intermediate SCSS (and showed the webpack error overlay) until a later save. Workaround that is also faster for variants: compile with `npx sass --load-path=. --load-path=node_modules src/styles-next/styles.scss out.css`, wrap it in an `evaluate_script` file that disables `link[href*=styles]`, removes `#webpack-dev-server-client-overlay` and injects a `<style>`; screenshot; crop and stack with `ffmpeg hstack/vstack`. Relative `url()` in the injected CSS do not resolve (flag icon missing), ignore that in variants.
+- Round after that: text up, lines down, blue calmer (design rules 9 and 10). Walker 0 on cohort definition, light CSS unchanged. Shah reported missing header select borders; they render here (`#7a7a7a`, 3.1:1 on the chrome), likely his tab held the CSS from the broken build. Re-check on his screen.
+- Free round after Shah's screenshot (header selects confirmed present on his screen):
+  - Side menu typography, four variants side by side (current, child labels 600, 17px, body tone): 600 erased the parent/child hierarchy, 17px wrapped "Gespeicherte Datendefinitionen", body tone `#cccccc` at 400 won. `--side-menu-text` = text primary in dark.
+  - Red and yellow on the ladder (rule 3 / 10): red H 25 300 `#e19891` (error text 6.5:1, was neon `#ff8383`), 500 `#b2403d` fill with white 5.7:1 (was `#ff4545`), 600 / 700 hover and focus (the red button now uses them in dark; light keeps 300). Yellow H 85 300 `#e2bf76`, 500 `#d4a73e` (dark yellow turns olive, so it stays light). Status tints 50 lifted +12 with the surfaces.
+  - **Leak found: the dark Material theme was built from the light palettes** (`fdpg-dark/_theme.scss`): 27 tokens in light blue `#49689c` and 41 in light yellow `#eeb70c` (form field error outlines and labels, caret, tab indicator, select option checkmark). Now `m2-define-palette($_dark-neutral / $_dark-accent / $_dark-warning)`. Expansion panel chevron read `m2-get-color-from-palette($accent)`: now `role-color` (dark 300). Left: `num-divider-color--a/--w` classes (0 uses in templates).
+  - Saved queries: the wall of eight solid blue "laden" buttons (open since session 3) is now, in dark only, a quiet row action (1px ring 500, blue 300 label) that turns solid on row hover, keyboard focus and its own hover. One solid fill per view at a time.
+  - Checks: walker 0 on editor, cohort definition, criterion search, saved queries; light CSS unchanged; CSS 189 KB / 25.3 KB gzip.
+- Done later in session 5: status tints lifted (`#39292a`, `#373223`); section text `#b8b8b8`, body `#cccccc` (rule 9). Next: a status tint has not been seen on screen yet (chip warning, info tile, error log), screenshot one. The action bar's own `.num-button.disabled` rule loses to `button-color` in dark (0,2,1 vs 0,3,0); its session-4 dark tweak was reverted. Prototype by injecting a `<style>` with `!important` in `evaluate_script`, crop the bar with `ffmpeg -vf crop`, stack variants with `vstack`: faster than recompiling per variant.
+- Ladder step 300 (text) L 0.78 / C 0.07 -> L 0.75 / C 0.05: blue `#94b2cc`, green `#9ab79b`. `oklch-ramp.mjs` updated. Design rule 6. Covers breadcrumb, nav, page title, "Kriterium hierher ziehen", outline labels.
+- Editor empty-list sketch (`num-display-criteria`, `_dark-overrides`): drop slot was white 60% (brightest patch on the page), now `--color-accent-bg`; white glow under the cursor is now a dark shadow.
+
+- Line weights (rule 11): side menu rails, logo divider, editor drop frames and slot 1px in dark; active rail and title underline stay 2px.
+- Feature editor (`query-editor/feature`, Shah: "cannot see what is going on, cannot see what needs to be done"), all in `_dark-overrides`: field descriptions were the CSS keyword `grey` (`#808080`, Lc 33) in italic, now secondary text, upright; 10px descriptions in "Als erforderlich setzen" now 13px; filter tabs like VS Code (inactive = secondary text at full opacity instead of blue at 50%, active = primary text on the content with a 2px blue top line); the lighter frame around the darker tab panel flattened; field titles 600 over 400 descriptions (selector needs the extra class `.node-display-container`, the component rule ties otherwise). Walker 0, light unchanged.
+- Tools added to `dark-mode-tools/`: `inject-css.sh` (compile styles-next and inject into the open page, bypasses the dev server), `open-editor.js` (reopens the feature editor after a reload), `stem-widths.js` (font stem widths). Scratchpad-only helpers (not kept): `lift.py` (shift all dark surface greys by N, from saved originals), crop helper for `ffmpeg`.
+
+Open from session 5:
+
+- Disabled button (rule 7), still Shah's call.
+- Not yet seen: warning chip, info tile, error log, validation modal (status tints), dialogs, datepicker, user menu, snackbars, bulk search results, result page, criterion and reference editors (they share `num-filter-tabs` and `num-tree`, so the feature-editor fixes should carry over, screenshot to confirm).
+- On the feature editor: titles in the "Als erforderlich setzen" list are still 400; the blue "-" expand toggles sit at 50% opacity.
+- Never run in session 5: Cypress (M3, M4), `npm run build` (M2), Lighthouse (M6), hex count (M7).
+
 ## Insights (keep)
 
 1. **`dark-ansi` is not a palette.** Claude Code's theme here is `dark-ansi`, it uses the terminal's own ANSI colors. Shah's VS Code theme is Dark+, so the text that reads well from afar is the VS Code terminal: foreground `#cccccc`, background `#181818` to `#1e1e1e`, monospace. Colors alone do not copy that: Titillium Web is narrow with a low x-height, the table cells and the 10-12 px labels (`Unbekannt`, badges) stay small, so they read worse from distance than terminal text. The levers that remain: size (hard-coded px in component SCSS are not scaled), weight, contrast `#bebebe` (about 9.7:1 on content). Tension to decide with Shah: "softer" (lower brightness) and "readable from afar" (higher contrast) pull in opposite directions.
@@ -69,6 +169,25 @@ Seen, left for Shah: eight solid blue "laden" buttons per saved-queries page rea
 15. **A shared component can carry a page-level look.** The title highlight lives on `.header-title`, and `num-header` is reused inside the stepper labels, so both step titles got the box. Before styling a shared class, grep where its component is used.
 16. **Status tints need a dark ramp too.** The light 50s (`#ffebeb`, `#fefaec`) glow on dark. Remapping only the 50 key in `fdpg-dark/_roles.scss` (hue kept, L ~14%) is enough: text on it uses 300 (red) or 500 (yellow).
 17. **Toasts in dark: panel plus colored edge, not a colored fill.** A full green or red fill is the brightest thing on the screen; VS Code and GitHub use the chrome panel with a status edge or icon.
+18. **Shah cannot always name the problem; a reference image can.** "Disturbing, can't say how" turned into three concrete complaints only after he saw changes (bluish content, loud green), and the fix direction came from a cropped VS Code status bar. Ask for, or offer, a reference screenshot early; sample it with `ffmpeg -vf crop=1:1:X:Y -f rawvideo -pix_fmt rgb24 - | od -An -tx1`.
+19. **"Bluish" was not the background.** The content was neutral `#1b1b1b`; the cast came from grey-blue tints on boxes, chips and the active nav, and from violet-leaning text (`#98accd`, `#9ca8bf`, hue 217-260). Low-chroma blue next to neutral grey reads as a tinted surface. Measure the background before changing it.
+20. **Judge colors in OKLCH, not HSL.** HSL said old blue S 36% / L 45% and new blue S 80% / L 40%, which looks like "much louder". OKLCH shows the truth: same lightness (0.52 vs 0.55), chroma 0.09 vs 0.13, hue 260 vs 245. Dirty = low chroma at mid lightness; neon = high lightness and high chroma together (old green L 0.74 C 0.17).
+21. **Two colors weigh the same when they share OKLCH L and C.** Blue and green ramps are one ladder with two hues; APCA against the content then matches step by step (fill Lc 27 / 28). Adding a status color later: same ladder, new hue (`dark-mode-tools/oklch-ramp.mjs`).
+22. **A tonal fill (dark tint + light text) reads as disabled** once disabled buttons are grey. The primary action in dark needs a solid mid-tone fill with white text (VS Code, GitHub).
+23. **Disabled = grey in dark, all variants.** Color then marks only what can be clicked; a disabled green ring looked like a resting enabled button. **Superseded in session 5** by design rule 7: a faded inverse (1px ring 45%, label 60%) keeps the color identity without looking enabled; grey disabled on a darker fill read as a hole.
+24. **A white alpha is the dark twin of insight 11.** `rgba(255, 255, 255, 0.6)` (editor drop slot) is invisible in light and the brightest patch in dark. Grep `rgba(255, 255, 255` in component SCSS too.
+25. **WCAG 2 overrates light-on-dark contrast.** `#bebebe` on `#1b1b1b` passes at 9.3:1, but APCA gives Lc 66, below the Lc 75 body-text minimum (light theme: Lc 106). The contrast walker (WCAG 2) cannot see "foggy" text; `dark-mode-tools/apca-contrast.mjs` can.
+26. **Material palette lookups bypass the dark roles.** `mat.m2-get-color-from-palette($accent, 500)` reads the shared light Material palette, so the dark ramp never reaches it (filter chip block). Use `role-color`. Grep `m2-get-color-from-palette` when a color refuses to change.
+27. **A dark-only rule must not depend on a value that differs between themes.** The chip arrow used `--color-accent-text` (light 500 = block, dark 300 = paler than the block). Same hex in light hid the mismatch.
+28. **Colored text must sit below grey text of the same lightness.** Chroma adds perceived brightness (Helmholtz-Kohlrausch), strongest for blue, so equal OKLCH L reads as louder for the colored one. Blue text and blue fills both needed less chroma than green (design rules 6 and 10). Equal numbers do not mean equal weight; look at the screen.
+29. **Glare is set by the background step, not by the text color.** A near-black content (`#1b1b1b`) makes every light text and line shine at full irradiation. Lifting all surfaces by 12 calmed text and lines at once; mid-tone fills did not change (design rule 8). When something looks "shiny" or "foggy", change the surface before the foreground.
+30. **Visual weight = thickness x contrast.** Compare line widths with font stem widths (`dark-mode-tools/stem-widths.js`): 400 at 14-16px is about 1.0-1.2px thick, so a 2px border outweighs the text beside it. Plain lines 1px in dark, 2px only as emphasis next to 600 text (design rule 11).
+31. **A line drawn in a text tone competes with the text.** Rails, gradients and underlines take fill tones (500), text takes the light tones (design rule 9). One variable can carry two jobs: `--num-color--primary-green` is the pale text tone in dark, the header line used it as a line color and ended almost white.
+32. **Material palettes in the dark theme must come from the dark roles.** `m2-define-dark-theme` was fed the light palettes: 27 tokens in light blue and 41 in light yellow leaked into dark (form field errors, caret, tab indicator, select checkmarks). The contrast walker cannot see them because they only show in states (error, focus, selected). Grep the compiled CSS for light palette hex after the first `[data-theme='dark']` line.
+33. **Equal specificity: the later stylesheet wins.** A component rule `.node-display-container > span` (0,3,1 after encapsulation) tied with `num-tree .data-display` and won by load order. Add one class instead of `!important`.
+34. **A solid fill repeated down a list is a wall.** Eight solid blue row buttons were the loudest thing on the saved-queries page; one solid fill per view (on hover or focus) keeps the action findable and lets the content lead.
+35. **The dev server is not a safe prototyping loop.** A broken intermediate SCSS left it on stale CSS with the webpack overlay, and each save reloads the page and drops state (editor pages). Compile with `npx sass` first, try variants with `dark-mode-tools/inject-css.sh` + stacked `ffmpeg` crops of several variants in one image; ask Shah about rows, not single options.
+36. **Shah's feedback is a rating of the whole picture, not of one value.** The disabled button was rejected five times while the cause (background step, line weight, text tone) sat elsewhere. After two rejections of the same element, measure the surroundings (text, line, surface) instead of trying a sixth variant. Shah also does not want `★ Insight` blocks in chat (profile): insights go into this plan.
 
 ## Issues in session 1 (what went wrong, so it does not repeat)
 
@@ -94,6 +213,24 @@ Seen, left for Shah: eight solid blue "laden" buttons per saved-queries page rea
 | 3   | Prettier broke a table row in this plan (`ss -ltnp \| grep 4300`)                     | An unescaped `\|` inside a code span splits the table cell | Escape `\|` inside Markdown tables                                                              |
 | 4   | Session 2 ran without a browser, so it missed the stepper, the empty state and toasts | "Don't test" was read as "don't look"                      | A screenshot is not a test run: take light and dark screenshots of the touched pages every time |
 
+## Issues in session 4
+
+| #   | Issue                                                                             | Cause                                                                       | Fix / rule                                                                                                       |
+| --- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 1   | Tonal green shipped, Shah: "green not visible"                                    | I read "off the charts" as "remove the fill" instead of "lower its weight"  | Change one variable at a time: weight (L, C) first, structure (fill vs tonal) only if weight fails               |
+| 2   | Injected CSS variants did not reach `.num-card`                                   | Some mixins compile `role-color` to hex, not `var()`                        | Prototype in the palette (`fdpg-dark/_roles.scss`), not by overriding variables                                  |
+| 3   | Wait loop on `styles.css` hash timed out                                          | The dev server serves styles under another name or the hash check was wrong | Reload with `ignoreCache` and wait 3-5 s in `evaluate_script` instead                                            |
+| 4   | Prettier split a trailing `// comment` after `box-shadow` into one value per line | Prettier SCSS formats a value followed by a comment that way                | Put comments on their own line above the declaration                                                             |
+| 5   | `NODE_PATH` did not make a script find packages                                   | ESM `import` ignores `NODE_PATH`; resolution starts at the script file      | Copy the script next to a temp `node_modules` (header of each `dark-mode-tools/*.mjs`)                           |
+| 6   | Temporary edit of `_theme.scss` (type scale 1.0) for a screenshot                 | Testing a variant needs a recompile                                         | Reverted by `sed` right after; `git status` was clean before. Prefer a scratch copy plus `npx sass` for variants |
+
+## Improvements gained in session 4
+
+- **Perceptual tools instead of WCAG 2 only:** APCA for text and fill weight, OKLCH for hue, chroma and lightness; both scripted in `dark-mode-tools/`.
+- **One color system for dark:** blue and green from one ladder (`fdpg-dark/_roles.scss` table), shared neutral tints, both buttons on 500/600/700 with white text. Less special-casing: the tonal workaround and the `$edge` parameter were removed again.
+- **Off-ramp scanner** (`dark-mode-tools/offramp-scanner.js`) finds every colored pixel source not on the ramp; 0 on two pages.
+- **Light protected by a scripted check:** `git archive HEAD src/styles-next` into the scratchpad, `npx sass` both, `prettier --parser css`, `diff`; every changed line must sit after the first `[data-theme="dark"]` line (about 2310), or be the same hex (checked for the chip arrow).
+
 ## Improvements gained in sessions 2 and 3
 
 - **Fewer hex in mixins:** placeholder and page title moved to foreground keys; shadows on buttons and the action bar read `var(--shadow-card)`, so dark's stronger alpha reaches them.
@@ -113,7 +250,44 @@ Seen, left for Shah: eight solid blue "laden" buttons per saved-queries page rea
 - **Reproducible tooling committed:** contrast walker, `run-cypress-both.sh`, `--expose theme=dark` for the whole suite, a toggle spec.
 - **Research turned into rules:** best-practice list, VS Code reference and the Dark Reader trial are now implemented, and each Shah correction is recorded with its value (grey set, green `#6a9955` from his reference image, type scale 1.125, stroke 0.15px).
 
+## Issues in session 5
+
+| #   | Issue                                                                             | Cause                                                                                          | Fix / rule                                                                                          |
+| --- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| 1   | Disabled button rejected five times in a row                                      | Cause was the background step and line weights, not the button                                 | Insight 36: after two rejections, measure the surroundings                                          |
+| 2   | Dev server stayed on stale CSS, then the page showed the webpack error overlay    | My surface-lift script dropped the `#` of non-grey values, SCSS failed, server kept old output | Compile with `npx sass` before trusting the browser; `inject-css.sh` for variants                   |
+| 3   | The overlay hid the page behind a "screenshot" of my variants twice               | Overlay iframe `#webpack-dev-server-client-overlay` stays after a failed build                 | The inject script removes it                                                                        |
+| 4   | Row titles stayed 400 after setting 600                                           | Component rule tied on specificity and loaded later                                            | Insight 33: one more class                                                                          |
+| 5   | The feature editor state vanished after each save                                 | Dev-server reload                                                                              | `open-editor.js`                                                                                    |
+| 6   | `/clear` typed in a message did nothing                                           | It was sent as a prompt, not as a command                                                      | Type `/clear` as its own entry                                                                      |
+| 7   | A control border and secondary text fell below 3:1 / 4.5:1 after the surface lift | Lifted surfaces shrink the contrast of every grey on them                                      | Re-run the walker after every surface change; raised `#6a6a6a` -> `#7a7a7a`, `#9a9a9a` -> `#a2a2a2` |
+
+## Improvements gained in session 5
+
+- **One surface step fixed three complaints** (shiny text, loud borders, "too much contrast between blue and dark"): content `#272727`, chrome `#2f2f2f`, text `#cccccc`; stroke removed (design rule 8).
+- **Typography became a measured lever:** stem widths per weight and size, weight index = thickness x Lc (rule 11, `stem-widths.js`).
+- **Four colors on one ladder with per-hue chroma:** blue, green, red, yellow (design rules 3, 6, 10; ramps in `fdpg-dark/_roles.scss`).
+- **68 light-theme leaks removed from the dark Material theme** by building it from the dark roles (insight 32).
+- **Feature editor readable** (descriptions, tabs, titles) and **saved queries without a wall of fills.**
+- **Faster variant loop:** `inject-css.sh` + stacked crops (insight 35).
+
 ## Next session (start here)
+
+**Feature editor (query-editor/feature), done at the end of session 5** (Shah: "cannot see what is going on, cannot see what needs to be done"), all in `_dark-overrides`: field descriptions were the CSS keyword `grey` (#808080, Lc 33) and italic, now secondary text, upright; 10px descriptions in "Als erforderlich setzen" now 13px; filter tabs like VS Code (inactive = secondary text at full opacity instead of blue at 50%, active = primary text on the content with a 2px blue top line); the lighter frame around the darker tab panel is flattened; field titles 600 over 400 descriptions (rule 11). Walker 0, light unchanged. Reach the page with `scratchpad/open-editor.js` logic: data-selection overview, gear (`button[aria-haspopup=menu]`), "Konfigurieren"; the dev server reload drops the editor state after every save. Left: titles in the "Als erforderlich setzen" list are still 400; the blue "−" expand toggles at 50% opacity; criterion and reference editors share `num-filter-tabs` and `num-tree`, screenshot them.
+
+**From session 5 (do these first):**
+
+1. Commit sessions 4 and 5 together: the `src/styles-next/**` files from `LC_ALL=C git status --short src/styles-next` (17 modified) plus the four new `dark-mode-tools/*` files. Never `prototype-bulk-chips.html`, `angular.json`, `ReferenceCriteriaListEntry.ts`, `playground.component.ts`. Add by explicit path, no attribution line.
+2. Disabled button: still Shah's open call (design rule 7). Current = drained hue `oklch(from <500> 0.42 0.04 h)`. If he rejects it, the untried candidates are listed in rule 7; compare them in one stacked screenshot (inject + `ffmpeg vstack`), not one by one.
+3. Screens not looked at since the session-5 lift (`#272727`) and the red/yellow ladder: dialogs (save, download, error log, validation, about), datepicker, user menu, snackbars, criterion modal tabs, bulk search results, result page, a warning chip and an info tile (status tints `#39292a` / `#373223`). Walker + `offramp-scanner.js` (`format: script`) + screenshot each.
+4. Line weights (rule 11) on the pages not measured yet: outline buttons (2px ring), chips, table borders, dialog borders. Measure with the stem table; a plain line in dark is 1px.
+5. Typography (rule 11, open): type scale x1.125 in dark vs 1.0 (layout differs between themes); the 10-12px labels (`Unbekannt`, badges, availability) at 400 have stems under 1px. One change at a time, screenshot, Shah judges.
+6. Logo: `filter: brightness(1.4)` predates `#2971a7` and the lifted chrome `#2f2f2f`; check.
+7. Unused leaks: `num-divider-color--a/--w` read Material palettes (0 uses); delete or move to `role-color` when touching that file.
+8. Never run in session 5, still open from sessions 1-4: full Cypress light and dark (`run-cypress-both.sh`, M3 and M4), `npm run build` (M2), Lighthouse a11y dark vs light (M6), leftover hex count (M7), CSS size gate decision (M8, now 189 KB / 25.3 KB gzip). Run them after the commit and before any new design change, and do not touch `src/` during a run.
+9. Ask Shah for a reference: his VS Code and Vim dark themes are the taste anchor (surfaces `#1f1f1f` to `#2b2b2b`, text `#cccccc`, selection blue, 1px lines, no glow). A cropped screenshot of his editor sampled with `ffmpeg` (insight 18) gives exact values for what is still unclear (tab bar, list hover, scrollbar).
+
+**Older items (sessions 1-3):**
 
 1. Start dev server and run both suites to the end, without touching `src/`: run `src/styles-next/dark-mode-tools/run-cypress-both.sh`, or the commands are `npm run cypress:run -- --expose tags='not @pending'` (light, M3) and `npm run cypress:run -- --expose tags='not @pending and not @component:theme',theme=dark` (dark, M4). Compare with the 2026-10-21 baseline in `cypress/E2E-FAILURES-2026-10-21.md`. Fix invisible or unclickable elements the dark run finds.
 2. Shah's review of the screenshot sweep (iteration 5 pause was skipped, he reviewed live): confirm chrome vs content step (`#232323` / `#1b1b1b`), text tone (`#bebebe`), green, title grey-blue `#9ca8bf`, size x 1.125, stroke 0.15px. Open decision: lift the 10-12 px hard-coded labels (`Unbekannt`, badges, availability bar) and the table cell tone for distance reading.
@@ -358,6 +532,10 @@ What the metrics cannot judge: hierarchy, mood, whether it looks good. Shah revi
 ## Test setup
 
 Tools (committed): `src/styles-next/dark-mode-tools/contrast-walker.js` (paste into `evaluate_script`: lists text under 4.5:1 and light surfaces in dark, per page), `src/styles-next/dark-mode-tools/run-cypress-both.sh` (M3 + M4).
+
+Session 4 tools (in `dark-mode-tools/`, not committed yet): `offramp-scanner.js` (`evaluate_script` with `sourcePath`; colors not on the ramp), `apca-contrast.mjs` (`'#text:#bg:label'` pairs, prints APCA Lc and WCAG ratio), `oklch-inspect.mjs` (hex to OKLCH and HSL), `oklch-ramp.mjs` (builds the shared ladder for any hue, with Lc checks). The `.mjs` files need three npm packages outside the repo, see their first line.
+
+Outside tools found in research, not installed: [Ignite UI Theming MCP](https://mcpservers.org/servers/igniteui/igniteui-theming) (Angular Sass light/dark themes), [a11y-feedback-mcp](https://glama.ai/mcp/servers/mo0fqyv1a5) (contrast pair fixes), [axecap](https://glama.ai/mcp/servers/ICJIA/axecap-mcp) (axe-core audits), [Radix custom palettes](https://www.radix-ui.com/colors/docs/overview/custom-palettes), [Leonardo](https://leonardocolor.io/) (contrast-target ramps), [sass-apca](https://npmjs.com/package/sass-apca). The Impeccable detector reads static CSS only and does not see the dark theme.
 
 Dev server `npm start` (:4200), backend on :8090, Keycloak on :8080, login `testuser` (password from Cypress config). Dark Reader snippet: load the script tag, then `DarkReader.enable({ brightness: 100, contrast: 90, sepia: 0 })`.
 

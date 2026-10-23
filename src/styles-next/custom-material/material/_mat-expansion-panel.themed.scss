@@ -3,7 +3,8 @@
   $accent: map-get($theme, accent);
 
   .mat-expansion-indicator::after {
-    color: mat.m2-get-color-from-palette($accent);
+    // role-color, not the Material palette (that one is the light blue in both themes); dark: icon = text tone 300
+    color: role-color($theme, accent, if(map-get($theme, dark), 300, 500));
     padding: 5px !important;
     margin-top: -10px;
     border-width: 0 3.5px 3.5px 0 !important;

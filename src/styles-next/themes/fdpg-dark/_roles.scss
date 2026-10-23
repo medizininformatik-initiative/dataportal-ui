@@ -9,65 +9,102 @@
 $_dark-neutral: map.merge(
   $num-grey-palette,
   (
-    0: #1b1b1b,
-    // card and main content, the darkest surface; header and side menu are only a small step lighter (background.chrome)
-    50: #1e1e1e,
+    0: #272727,
+    // card and main content, the darkest surface (session 5: lifted from #1b1b1b, a darker content made text and lines glare); header and side menu are only a small step lighter (background.chrome)
+    50: #2a2a2a,
     // page
-    100: #2b2b2b,
+    100: #373737,
     // hover, track, action bar
-    200: #303030,
-    300: #363636,
+    200: #3c3c3c,
+    300: #424242,
     // divider, border
     400: #5a5a5a,
     // disabled
     500: #8c8c8c,
     600: #969696,
-    700: #6a6a6a,
-    // control border, 4.8:1 on card
+    700: #7a7a7a,
+    // control border, 3:1 on the content and the chrome (#272727 / #2f2f2f)
     800: #a0a0a0,
     900: #9d9d9d,
     // icons (VS inactive text)
   )
 );
 
-// Accent tints on dark: grey-blue (S 15-25%), not the navy of the light ramp's dark end. Fills and text keep the light ramp.
+// Accent tints on dark: neutral greys (Shah 2026-10-22: grey-blue tints made the content look bluish).
+// Blue and green share one OKLCH ladder (same lightness and chroma per step, only the hue differs: blue 245, green 146),
+// so both colors weigh the same on the grey. Anchor: VS Code status-bar blue #1476b8 (Shah's reference), L 0.55 C 0.13.
+//   step  OKLCH L / C    job                         APCA Lc on #1b1b1b (before the session-5 lift)   white on it
+//   300   0.75 / 0.05    text, links, icons           57                   -
+// 300 sits below the neutral text (#bebebe, L 0.80): colored text looks brighter than grey of the same lightness
+// (Helmholtz-Kohlrausch), so at L 0.78 / C 0.07 the blue text glowed. Lower L and C compensate.
+//   400   0.68 / 0.10    strong icons, lines          46                   -
+//   500   0.55 / 0.13    fill (white text), lines     27                   79
+//   600   0.50 / 0.12    hover fill                   21                   84
+//   700   0.45 / 0.11    focus fill                   16                   90
+// Blue 500-700 (session 5): C 0.11 / 0.10 / 0.09 instead of 0.13 / 0.12 / 0.11 (#2971a7 / #266595 / #215882). At equal
+// L and C blue still looked louder than green (Helmholtz-Kohlrausch is strongest for blue), so blue gets less chroma.
+// Tints 50-200 are neutral greys (Shah 2026-10-22: grey-blue tints made the content look bluish).
+$_dark-tints: (
+  50: #2d2d2d,
+  // resting tint on the content, one step above the content
+  75: #323232,
+  // hover of a large 50 surface
+  100: #383838,
+  // emphasized fill, active nav item
+  200: #464646,
+  // border
+);
+
 $_dark-accent: map.merge(
   $num-blue-palette,
-  (
-    50: #1f2430,
-    // resting tint on the content
-    75: #252b38,
-    // hover of a large 50 surface
-    100: #2b3342,
-    // emphasized fill, active nav item
-    200: #3b465c,
-    // border
+  map.merge(
+    $_dark-tints,
+    (
+      300: #94b2cc,
+      400: #609fd2,
+      500: #2971a7,
+      600: #266595,
+      700: #215882,
+    )
   )
 );
 
-// Green: the light ramp is neon (#9bb823) and hurts on dark. Base is VS Code's comment green #6a9955 (sampled from Shah's reference image).
-// 500 = fill, black text on it 6.6:1. Text and icons on grey use 400 (5.7:1 on the action bar).
 $_dark-secondary: map.merge(
   $num-green-palette,
-  (
-    400: #86ad6f,
-    500: #6a9955,
-    600: #5d8a4a,
-    700: #517a40,
+  map.merge(
+    $_dark-tints,
+    (
+      300: #9ab79b,
+      400: #6fa973,
+      500: #33843e,
+      600: #2b7535,
+      700: #23652d,
+    )
   )
 );
 
-// Status tints: the light 50s are pastel fills that glow on dark. Dark tint keeps the hue at L ~14%; text on it is 300 / 500.
+// Status tints: the light 50s are pastel fills that glow on dark. Dark tint keeps the hue one step above the content
+// (lifted +12 with the surfaces in session 5); text on it is 300 / 500.
+// Red and yellow on the ladder too (session 5; the light ramps were neon on dark, #ff8383 L 0.75 C 0.15, #ff4545 C 0.22):
+//   red H 25:    300 0.75/0.09 #e19891 error text 6.5:1 · 400 0.66/0.13 · 500 0.53/0.15 #b2403d fill, white 5.7:1 · 600 hover · 700 focus
+//   yellow H 85: 300 0.82/0.10 #e2bf76 · 500 0.75/0.13 #d4a73e warn text and edges, 6.7:1 (yellow stays light: dark yellow is olive)
 $_dark-danger: map.merge(
   $num-red-palette,
   (
-    50: #2d1d1e,
+    50: #39292a,
+    300: #e19891,
+    400: #d67069,
+    500: #b2403d,
+    600: #a13835,
+    700: #90302e,
   )
 );
 $_dark-warning: map.merge(
   $num-yellow-palette,
   (
-    50: #2b2617,
+    50: #373223,
+    300: #e2bf76,
+    500: #d4a73e,
   )
 );
 

@@ -5,7 +5,7 @@
   @if map-get($theme, dark) {
     $danger-text: role-color($theme, danger, 300); // 7:1 on the content
     $danger-tint: role-color($theme, danger, 50);
-    $success-text: role-color($theme, secondary, 400);
+    $success-text: role-color($theme, secondary, 300);
 
     // Stepper (query page): Material paints its strip with the card tone and both step circles in near-identical greys,
     // so the current step was not visible. Strip transparent like light; current step = accent fill, the other is muted.
@@ -47,6 +47,20 @@
       &:hover {
         background: var(--num-color--grey-hover);
       }
+    }
+    // One solid blue per row made a wall of eight fills (the loudest thing on the page). Rest: quiet row action
+    // (1px ring, blue label); the row under the pointer or the focused button gets the solid fill.
+    // The button's own hover (button-color, !important) already turns it solid.
+    num-saved-query-tile .num-button.blue:not(.disabled) {
+      background: transparent;
+      color: var(--color-accent-text);
+      box-shadow: inset 0 0 0 1px role-color($theme, accent, 500);
+    }
+    num-saved-query-tile .saved-query-tile:hover .num-button.blue:not(.disabled),
+    num-saved-query-tile .num-button.blue.cdk-keyboard-focused {
+      background: role-color($theme, accent, 500);
+      color: foreground-color($theme, on-fill);
+      box-shadow: none;
     }
 
     // Snackbar: full neon green or red with white text glares (2.3:1). Toast like VS Code: chrome panel, colored edge.
@@ -109,6 +123,62 @@
         var(--color-accent) 0%,
         role-color($theme, secondary, 600) 100%
       );
+    }
+
+    // Editor empty list sketch: white 60% drop slot glowed as the brightest patch; white glow around the cursor
+    // Lines 1px (the 2px frames outweighed the 400-weight hint text next to them, stem 1.2px); same background order as
+    // the component, so the marching animation keeps working
+    num-display-criteria {
+      .no-selected-criteria {
+        background-size: 16px 1px, 16px 1px, 1px 16px, 1px 16px, auto;
+      }
+      .slot {
+        background: var(--color-accent-bg);
+        border-width: 1px;
+      }
+      .cursor {
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.9));
+      }
+    }
+
+    // Feature / criterion editor (query-editor). Shah: "cannot see what is going on".
+    // Field descriptions were the CSS keyword grey (#808080, Lc 33): secondary text, no italic (italic thins 13px strokes).
+    num-tree .field-description {
+      color: var(--color-text-secondary);
+      font-style: normal;
+    }
+    // Row head by weight, not by color: 600 (stem 1.5px) over the 400 description (1.0px).
+    // Extra class: the component's `.node-display-container > span` ties at (0,3,1) and loads later.
+    num-tree .node-display-container .data-display {
+      font-weight: 600;
+    }
+    // "Als erforderlich setzen" list: 10px descriptions have strokes under 1px; 13px like the tree
+    num-edit-fields .field-description {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+    // Tabs like VS Code editor tabs: inactive = secondary text at full opacity (the 50% opacity made blue mush),
+    // active = primary text on the content surface with a 2px blue top line; hover brightens
+    num-filter-tabs {
+      .tab {
+        opacity: 1;
+        color: var(--color-text-secondary);
+        background: transparent;
+        &:hover {
+          color: var(--color-text-primary);
+        }
+      }
+      .tab.active {
+        color: var(--color-text-primary);
+        background: var(--color-surface);
+        box-shadow: inset 0 2px 0 role-color($theme, accent, 500);
+      }
+    }
+    // One frame instead of a lighter frame around a darker panel: the frame takes the content tone
+    num-query-editor .background {
+      background-color: transparent;
+      box-shadow: none;
+      padding-inline: 0;
     }
 
     // Save dialog: #c5cacf placeholder and close icon are brighter than the text on dark

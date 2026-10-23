@@ -9,18 +9,28 @@ $raised-shadow: var(--shadow-card); // dark sets a stronger alpha
   $gap,
   $outline: false,
   $focus: $hover,
-  $text: $color
-    // text of outline and disabled state: blue passes accent-text, a fill color can be too dark on dark
+  $text: $color,
+  // text of outline and disabled state: blue passes accent-text, a fill color can be too dark on dark
+  $on: null // text on the fill; null = on-fill / on-bright-fill
 ) {
   // Green and red fills are bright: dark theme sets on-bright-fill (black, 8:1). Light has no key and keeps white.
   $white: foreground-color($theme, on-fill);
-  @if $name != 'blue' and foreground-color($theme, on-bright-fill) {
+  @if $on {
+    $white: $on;
+  } @else if $name != 'blue' and foreground-color($theme, on-bright-fill) {
     $white: foreground-color($theme, on-bright-fill);
   }
   $disabled-bg: role-color($theme, neutral, 50);
   // Dark: soft rings (55% of the fill color, still above 3:1), VS Code has no hard outlines
   $ring: if(map-get($theme, dark), rgba($color, 0.55), $color);
   $disabled-ring: 0px 0px 1px 1px $ring;
+  // Dark: disabled is the same hue with the chroma drained (a switched-off button): solid, no ring, muted label
+  $disabled-text: $text;
+  @if map-get($theme, dark) {
+    $disabled-bg: oklch(from #{$color} 0.42 0.04 h);
+    $disabled-ring: none;
+    $disabled-text: oklch(from #{$color} 0.72 0.03 h);
+  }
 
   .num-button.#{$name} {
     min-width: $min-width !important;
@@ -28,6 +38,10 @@ $raised-shadow: var(--shadow-card); // dark sets a stronger alpha
     background-color: $color;
     color: $white;
     display: flex;
+    // Dark: a little air between letters
+    @if map-get($theme, dark) {
+      letter-spacing: 0.02em;
+    }
     gap: $gap;
 
     &:hover:not(.disabled) {
@@ -42,7 +56,7 @@ $raised-shadow: var(--shadow-card); // dark sets a stronger alpha
 
     &.disabled {
       background-color: $disabled-bg;
-      color: $text;
+      color: $disabled-text;
       box-shadow: $disabled-ring;
       cursor: unset;
     }

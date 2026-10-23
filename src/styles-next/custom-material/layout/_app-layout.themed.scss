@@ -7,6 +7,10 @@
     height: 100%;
     flex-shrink: 0;
     border-right: 2px solid role-color($theme, neutral, 100);
+    // Dark: a plain divider is never thicker than the thinnest text stem (400 at 14px = 1.05px)
+    @if map-get($theme, dark) {
+      border-right-width: 1px;
+    }
   }
 
   // ── App shell: one grid for header, side nav and main ─────────────────────

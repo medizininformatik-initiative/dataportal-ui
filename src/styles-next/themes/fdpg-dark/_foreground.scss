@@ -2,13 +2,16 @@
 @use 'sass:map';
 
 $fdpg-dark-foreground: (
-  text: #bebebe,
-  secondary-text: #9a9a9a,
-  section-text: #a0a0a0,
+  text: #cccccc,
+  // session 5: Lc 72 on #272727 (VS Code text); text must outrank the lines
+  secondary-text: #b0b0b0,
+  // Lc 56 on the content, 5.5:1 on neutral 100 (#373737, step circle)
+  section-text: #b8b8b8,
+  // side menu labels, section titles: Lc 59 on the chrome
   placeholder: #8f8f8f,
   // 7:1 on the content
-  page-title: #9ca8bf,
-  // grey-blue (S ~20%), 7:1 on the content; dark only
+  page-title: map.get($_dark-accent, 300),
+  // blue text step of the shared ladder (Lc 55 on #272727); dark only
   on-fill: #ffffff,
   on-bright-fill: #000000,
   // green and red button fills

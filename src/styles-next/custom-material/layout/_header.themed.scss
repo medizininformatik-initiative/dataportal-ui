@@ -43,10 +43,15 @@
         right: calc(var(--page-gutter) + var(--scrollbar-width));
         bottom: 0;
         height: 1px;
+        // Dark: primary-green is the pale text tone (300), the line ended almost white; use the fill tone like light
         background: linear-gradient(
           90deg,
           var(--num-color--primary-blue),
-          var(--num-color--primary-green)
+          if(
+            map-get($theme, dark),
+            role-color($theme, secondary, 500),
+            var(--num-color--primary-green)
+          )
         );
       }
     }
@@ -126,7 +131,8 @@
     // Language and user-menu selects: outline so they read as controls (not floating text).
     // !important on background: the user-menu stylesheet sets `background: transparent !important`.
     .header-select .mat-mdc-text-field-wrapper {
-      border: 1px solid var(--border-color);
+      // dark: the divider tone vanishes on the chrome, use the control border like other inputs
+      border: 1px solid if(map-get($theme, dark), var(--border-color-field), var(--border-color));
       border-radius: var(--border-radius-card);
       background: #{surface-color($theme, card)} !important;
       transition: border-color 0.2s ease, background 0.2s ease;

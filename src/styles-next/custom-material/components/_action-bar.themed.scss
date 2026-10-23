@@ -8,15 +8,11 @@
       padding: 0 16px;
       height: 80px;
       border-radius: 5px;
-      // 10% green tint on white, as a background (not an overlay), so buttons can stay white
-      background: linear-gradient(
-          rgba(role-color($theme, secondary, 500), 0.1),
-          rgba(role-color($theme, secondary, 500), 0.1)
-        ),
-        role-color($theme, neutral, 0);
-      // Dark: grey bar one step above the content, no green wash. The green stays on the buttons, so they are what the eye finds.
+      // 10% green tint on white, as a background (not an overlay), so buttons can stay white.
+      // Dark: 12% wash over the content (Shah, session 5); disabled buttons are the same green at 28% (button-color).
+      $wash: rgba(role-color($theme, secondary, 500), if(map-get($theme, dark), 0.12, 0.1));
+      background: linear-gradient($wash, $wash), role-color($theme, neutral, 0);
       @if map-get($theme, dark) {
-        background: role-color($theme, neutral, 100);
         border: 1px solid var(--border-color);
       }
       box-sizing: border-box;

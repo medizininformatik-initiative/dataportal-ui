@@ -22,7 +22,12 @@
         var(--color-accent-bg-strong),
         var(--color-accent-bg)
       )}; // dark: 100, the chrome is lighter than tint 50
-    --side-menu-text: var(--color-text-section);
+    // Dark: body tone; the thin 400 labels next to the rails need full text strength (weight 600 lost the hierarchy, 17px wrapped)
+    --side-menu-text: #{if(
+        map-get($theme, dark),
+        var(--color-text-primary),
+        var(--color-text-section)
+      )};
     --side-menu-text-active: #{role-color($theme, accent, $accent-on-tint-shade)};
     --side-menu-icon: #{role-color($theme, neutral, 900)};
     --side-menu-icon-active: var(--color-accent-text);
@@ -176,6 +181,9 @@
         width: var(--spacing-2);
         background: var(--side-menu-line);
         pointer-events: none;
+        @if map-get($theme, dark) {
+          width: 1px;
+        }
       }
 
       // rail segment sits above the pill and darkens with it
@@ -196,8 +204,17 @@
           background: var(--side-menu-bg-active);
         }
 
+        // Dark: the rail is a line, so it takes the fill tone (500), not the bright text tone; text outranks lines.
+        // It stays 2px: emphasis, next to the 600-weight active label (stem 1.5-1.7px).
         &::after {
-          background: var(--side-menu-icon-active);
+          background: if(
+            map-get($theme, dark),
+            role-color($theme, accent, 500),
+            var(--side-menu-icon-active)
+          );
+          @if map-get($theme, dark) {
+            width: var(--spacing-2);
+          }
         }
 
         &:focus-visible::after {
@@ -225,6 +242,10 @@
         width: var(--spacing-2);
         background: var(--side-menu-line);
         pointer-events: none;
+        // Dark: 1px, thinner than the menu text stems (1.05px at 400 / 14px); 2px outweighed the labels
+        @if map-get($theme, dark) {
+          width: 1px;
+        }
       }
     }
 

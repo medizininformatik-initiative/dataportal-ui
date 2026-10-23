@@ -45,8 +45,6 @@
 body.FDPGTheme {
   [data-theme='dark'] & {
     color: var(--color-text-primary);
-    // Weight stand-in: Titillium has no 450. A 0.15px stroke in the text color thickens glyphs by about one eighth.
-    -webkit-text-stroke: 0.15px;
   }
 }
 
