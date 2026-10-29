@@ -36,6 +36,15 @@ jobs:
       - name: Start Docker Compose
         run: docker compose -f cypress/docker/docker-compose.yml -f cypress/docker/docker-compose.ci.yml up -d
 
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
+        with:
+          # Disable running of tests within install job
+          runTests: false
+
+      - name: Start dev server
+        run: nohup npm start > ng-serve.log 2>&1 &
+
       - name: Check backend health with curl (wait until ready)
         id: backend-health
         run: |
@@ -79,24 +88,6 @@ jobs:
       - name: Create Test User in Keycloak
         run: .github/scripts/create-keycloak-user.sh
       
-
-      - name: Cypress install
-        uses: cypress-io/github-action@v6
-        with:
-          # Disable running of tests within install job
-          runTests: false
-          build: npm run build -- --configuration=deploy
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          if-no-files-found: error
-          path: dist/num-portal-webapp
-
-
-      - name: Start dev server
-        run: nohup npm start > ng-serve.log 2>&1 &
 
       - name: Wait for dev server
         run: .github/scripts/wait-for-url.sh http://localhost:4200 || { cat ng-serve.log; exit 1; }
