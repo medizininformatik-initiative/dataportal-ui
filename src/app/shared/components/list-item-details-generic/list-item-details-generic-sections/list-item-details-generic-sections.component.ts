@@ -2,7 +2,7 @@ import { Component, computed, inject, input, output, signal } from '@angular/cor
 import { DisplayTranslationPipe } from '../../../pipes/DisplayTranslationPipe'
 import { ListItemDetailsRelativeData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsRelative'
 import { MatTooltip } from '@angular/material/tooltip'
-import { MenuComponent } from '../../shared-components.module'
+import { MenuComponent } from '../../menu/menu.component'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
 import { SearchbarComponent } from '../../search/searchbar.component'
 import { TranslateService, TranslateModule } from '@ngx-translate/core'
