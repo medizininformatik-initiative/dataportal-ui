@@ -8,7 +8,7 @@ Feature: Bulk search - criterium with several termcodes
     Given I am logged in as a user
     And I am on the "{{pages.feasibilityBulkSearch}}" page
     And I set the language to English
-    When I enter the bulk search codes "{{bulk.codes}}"
+    When I enter the bulk search codes "{{bulk.codes3}}"
     And I select the bulk search terminology "{{bulk.terminology}}"
     And I select the bulk search context "{{bulk.context}}"
     And I run the bulk search
