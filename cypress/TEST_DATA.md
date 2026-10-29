@@ -12,7 +12,7 @@ explains why each one was picked.
 
 | Criterium (exact `display.en`, verified non-empty — see `CLAUDE.md`) | Context | Termcode (for code-search) | Used for | Used in |
 |---|---|---|---|---|
-| `Age` | `Laboruntersuchung` | LOINC `30525-0` | General add→drag→run flows (Time Restriction tab only — see below) | `SavedQueries/saved-queries.feature` (load scenario), `CohorttResult/cohort-result.feature` |
+| `Age` | `Laboruntersuchung` | LOINC `30525-0` | General add→drag→run flows (Time Restriction tab only — see below) | `SavedQueries/saved-queries.feature` (load scenario), `CohortResult/cohort-result.feature` |
 | `Current chronological age` | `Patient` | SNOMED `424144002` | Numeric value + unit comparator filter (`No filter` → `greater`, value `5`, unit `a`). Operator offers exactly: No filter, equal, less than, greater than, between (eq, lt, gt, quantity-range; no ge/le/ne). Units: `a`, `mo`. Verified in the running app | `CohortEdit/CriterionEdit/ValueFilter/QuantityComparator/`, `.../QuantityRange/` |
 | `Pneumonia` | `Diagnose` | | Time-restriction filter (before/on); general add→drag→run flows | `cohort-edit.feature` ("Applying a time-restriction filter..." and "Adding a criterium to the Inclusion list..."), `cohort-exclusion.feature`, `DataQueryCohort/data-query-cohort.feature` |
 | `Appendectomy` | `MII Onkologie Therapie` (and several other Onkologie sub-contexts — 50 total matches) | | Time-restriction filter (after, second row for context variety); general flows | `cohort-edit.feature`, `saved-queries.feature` (delete scenario) |

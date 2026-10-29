@@ -18,7 +18,7 @@ Feature: Cohort Search
 
     Examples: Search Criteria
       | criterium                 | button1                         | button2                              |
-      | {{labAge.criterium}}      | {{labels.addToCohortSelection}} | {{cohortSearch.showCohortSelection}} |
+      | {{pneumonia.criterium}}   | {{labels.addToCohortSelection}} | {{cohortSearch.showCohortSelection}} |
       | {{cohortSearch.diabetes}} | {{labels.addToCohortSelection}} | {{cohortSearch.showCohortSelection}} |
 
   # Searched by termcode: a name search for "Age" is outranked by unrelated "...age..."

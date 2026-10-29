@@ -1,5 +1,6 @@
 import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
+import { resolve } from '../testData'
 
 /**
  * Upload CRTDL fixture through upload input.
@@ -17,7 +18,9 @@ export class UploadFile {
      * Definition, renders uploaded criterium once processing finishes (checked against
      * fixtures/Single_Inclusion_Criteria_With_Patient.json content).
      * */
-    cy.contains('18-Oxydase-Mangel', { timeout: 15000 }).should('be.visible')
+    cy.contains(resolve('{{files.singleInclusionCriterium}}'), { timeout: 15000 }).should(
+      'be.visible'
+    )
   }
 }
 

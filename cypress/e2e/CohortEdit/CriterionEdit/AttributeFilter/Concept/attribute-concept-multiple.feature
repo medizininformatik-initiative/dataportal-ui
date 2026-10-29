@@ -96,12 +96,14 @@ Feature: Attribute filter (concept) - criterium with several concept filters
     And I have selected the concepts in the filter "<filter>":
       | <concept> |
     When I click on the button "{{labels.close}}"
-    And I am on the "{{pages.feasibilitySearch}}" page
-    And I set the language to the configured language
+    And I navigate to the "{{languageSwitch.kohortenselektion}}" page
     And I add the criterium "<otherCriterium>" via code "<otherCode>" to the editor
     And I open the editor of the added criterium
     And I open the editor tab "<filter>"
     Then the filter "<filter>" has no selected concepts
+    When I click on the button "{{labels.close}}"
+    Then I should see 1 criteria named "<criterium>" in the editor
+    And I should see 1 criteria named "<otherCriterium>" in the editor
 
     Examples:
       | criterium               | criteriumCode      | filter                | concept                 | otherCriterium               | otherCode               |

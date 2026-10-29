@@ -17,10 +17,11 @@ const TAB = '.tab'
  * */
 export class CriterionEditor {
   /**
-   * Open menu of added criterium, click Edit.
+   * Open menu of criterium added last, click Edit. Added criteria are appended: last menu
+   * trigger fits one or several criteria in editor.
    * */
   public openEditorOfAddedCriterium() {
-    numMenu.open()
+    numMenu.openLast()
     numMenu.clickItem(t('SHARED_COMPONENTS.MENU.EDIT') as never)
   }
 

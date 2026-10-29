@@ -169,7 +169,7 @@ dialog. The saved cohort can later be found under "Saved data definitions".
 *Covered by:* `DataQueryCohort/cohort-definition-empty.feature`,
 `CohortSearch/cohort-search.feature`, `BulkSearch/bulk-search.feature`,
 `CohortEdit/cohort-edit.feature`, `CohortEdit/cohort-exclusion.feature`,
-`CohortEdit/criterium-actions.feature`, `CohorttResult/cohort-result.feature`
+`CohortEdit/criterium-actions.feature`, `CohortResult/cohort-result.feature`
 
 ---
 

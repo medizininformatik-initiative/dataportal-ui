@@ -20,6 +20,13 @@ export class NumMenu {
   }
 
   /**
+   * Click last menu trigger of page: newest entry when several lists carry one.
+   * */
+  public openLast() {
+    cy.get(dataCy('openMenu')).last().click()
+  }
+
+  /**
    * Assert menu offers item.
    * */
   public shouldOfferItem(menuItemLabel: MenuItemValue) {

@@ -20,7 +20,7 @@ marked **(new)** have no matching definition yet — see
 |---|---|---|
 | Login | `login/login.feature` | 1 |
 | Cohort search | `CohortSearch/cohort-search.feature` | 2 |
-| Cohort edit / exclusion / result | `CohortEdit/*`, `CohorttResult/*` | 5 |
+| Cohort edit / exclusion / result | `CohortEdit/*`, `CohortResult/*` | 5 |
 | Criterion filters (attribute concept, value concept, no filter) | `Criterion/**` | 29 |
 | Data query cohort (upload, advance) | `DataQueryCohort/*` | 2 |
 | Data selection search | `DataSelectionSearch/*` | 2 |

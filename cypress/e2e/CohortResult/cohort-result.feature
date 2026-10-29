@@ -7,7 +7,7 @@ Feature: Cohort Result
     And I set the language to English
 
   @component:feasibility-result @behavior:save
-  Scenario Outline: Adding a criterium through to saving the resulting cohort
+  Scenario Outline: A criterium is saved as a cohort, its feasibility result is shown and the saved cohort is deleted
     When I add the criterium "<criterium>" via code "<code>" to the editor
     Then I should see the criterium "<criterium>" in the editor
     When I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
@@ -19,9 +19,11 @@ Feature: Cohort Result
     Then I should see the dialog closing
     When I click on the button "{{labels.feasibility}}"
     Then I am on the "{{pages.feasibilityResult}}" page
-    And I see the spinner is visible
     Then I see the result
+    When I navigate to the "{{pages.savedQueries}}" page
+    And I delete the saved query "<title>"
+    Then I should not see the saved query "<title>" in the list
 
     Examples:
-      | criterium            | code            | title                | comment              |
-      | {{labAge.criterium}} | {{labAge.code}} | {{cohortResult.bla}} | {{cohortResult.bla}} |
+      | criterium            | code            | title                  | comment                  |
+      | {{labAge.criterium}} | {{labAge.code}} | {{cohortResult.title}} | {{cohortResult.comment}} |

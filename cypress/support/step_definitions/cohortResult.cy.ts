@@ -5,7 +5,7 @@ import { numModal } from '../component-objects/NumModal'
 
 /**
  * Steps for feasibility result and save-cohort dialog. Moved from
- * `cypress/e2e/CohorttResult/cohort-result.ts`: save-dialog steps are shared with
+ * `cypress/e2e/CohortResult/cohort-result.ts`: save-dialog steps are shared with
  * saved-queries.feature. Cucumber auto-loads step file only for same-basename feature or under
  * `support/step_definitions/` (see cypress/CLAUDE.md), so shared steps live here.
  * */

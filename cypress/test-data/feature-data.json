@@ -7,6 +7,7 @@
   },
   "attributeConceptSameCodeDifferentSystem": {
     "alphaID": "Alpha-ID",
+    "icd10gm": "ICD-10-GM",
     "i26": "I26",
     "diagnosis": "Diagnosis"
   },
@@ -39,15 +40,15 @@
     "diabetes": "Diabetes"
   },
   "cohortResult": {
-    "bla": "Bla"
+    "title": "Cohort result test",
+    "comment": "Saved by the cohort result scenario"
   },
   "cohortDefinitionEmpty": {
     "newCohort": "New Cohort",
     "feasibilityQuery": "Feasibility Query"
   },
   "dataSelectionSearch": {
-    "note": "Note",
-    "photo": "photo"
+    "note": "Note"
   },
   "languageSwitch": {
     "merkmalselektion": "Merkmalselektion",

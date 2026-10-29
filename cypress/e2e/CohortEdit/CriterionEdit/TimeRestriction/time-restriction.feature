@@ -9,13 +9,13 @@ Feature: Criterion editor - time restriction
   Scenario Outline: Applying a time restriction to a criterium
     Given I add the criterium "<criterium>" via code "<code>" to the editor
     When I open the menu
-    When I click on the menu item "{{labels.configure}}"
+    And I click on the menu item "{{labels.configure}}"
     Then I am on the "{{pages.queryEditorCriteria}}" page
     When I set the time restriction to <comparator> with date "<date>"
     Then the time restriction date is "<date>"
     When I click on the button "{{labels.close}}"
     Then I am on the "{{pages.feasibilityEditor}}" page
-    Then I see the criterium "<criterium>" with filter chip "<date>" in the block "<block>"
+    And I see the criterium "<criterium>" with filter chip "<date>" in the block "<block>"
     When I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
     Then the button "{{labels.feasibility}}" should be enabled
     When I click on the button "{{labels.feasibility}}"
@@ -42,13 +42,13 @@ Feature: Criterion editor - time restriction
   Scenario Outline: Applying a time restriction with comparator between
     Given I add the criterium "<criterium>" via code "<code>" to the editor
     When I open the menu
-    When I click on the menu item "{{labels.configure}}"
+    And I click on the menu item "{{labels.configure}}"
     Then I am on the "{{pages.queryEditorCriteria}}" page
     When I set the time restriction to between "<after>" and "<before>"
     Then the time restriction dates are "<after>" and "<before>"
     When I click on the button "{{labels.close}}"
     Then I am on the "{{pages.feasibilityEditor}}" page
-    Then I see the criterium "<criterium>" with filter chip "<chip>" in the block "<block>"
+    And I see the criterium "<criterium>" with filter chip "<chip>" in the block "<block>"
 
     Examples:
       | criterium               | code               | after                         | before                        | chip                                 | block   |

@@ -18,6 +18,9 @@ Feature: Saved Queries
     Then I should see the saved query "<title>" in the list
     When I load the saved query "<title>"
     Then I should see "<criterium>" in the cohort definition editor
+    When I navigate to the "{{pages.savedQueries}}" page
+    And I delete the saved query "<title>"
+    Then I should not see the saved query "<title>" in the list
 
     Examples:
       | criterium            | code            | title                      | comment                      |

@@ -19,11 +19,11 @@ Feature: Data Selection Search
     And I should see a data selection box labeled "<feature>"
     When I click the edit button on the data selection box "<feature>"
     And I click on the menu item "{{labels.configure}}"
-    Then I am on the "{{pages.dataSelectionEditor}}" page
+    Then I should arrive on the "{{pages.queryEditorProfile}}" page
 
     Examples: Selection Criteria
-      | feature                   | button1                   | button2                  | field                         |
-      | {{dataSelection.feature}} | {{labels.addToSelection}} | {{labels.showSelection}} | {{dataSelectionSearch.photo}} |
+      | feature                   | button1                   | button2                  |
+      | {{dataSelection.feature}} | {{labels.addToSelection}} | {{labels.showSelection}} |
 
 
   # NOTE (rewritten against the current UI):
@@ -35,10 +35,7 @@ Feature: Data Selection Search
   #   concept, change both columns in Examples; they must belong together.
   # - The editor action bar has no "Save" button any more (edits apply live), so the two
   #   "Save" clicks were removed.
-  # - NOT COVERED: the time restriction. Setting "<filterType> <date>" in the profile editor
-  #   does not show up in the "Applied filters" header chips (header read: "Code Filter /
-  #   Metformin", nothing else), also not after switching tabs. Whether that is intended or
-  #   a bug needs a product decision; the steps were removed instead of left failing.
+  # - NOT COVERED here: the time restriction, see data-selection-time-restriction.feature.
   @component:data-selection-feature-editor @behavior:edit-filter
   Scenario Outline: User edits the feature "<feature>" and applies filters
     Given I type "<feature>" in the search input field

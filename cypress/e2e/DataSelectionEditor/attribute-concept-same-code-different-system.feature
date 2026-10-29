@@ -11,7 +11,7 @@
 # The search table shows the system as its display name in its own cell, so a row is picked by
 # code AND that name. The selected-concepts list shows only display and code, never the system,
 # so it is asserted by entry count.
-@area:feasibility-query
+@area:data-selection
 Feature: Concept filter - same code in different code systems
 
   Background:
@@ -19,7 +19,7 @@ Feature: Concept filter - same code in different code systems
     And I am on the "{{pages.dataSelectionSearch}}" page
     And I set the language to English
 
-  @component:criterion-editor @behavior:select @filter:attribute-filter @type:concept
+  @component:data-selection-feature-editor @behavior:select @filter:attribute-filter @type:concept
   Scenario Outline: Selecting a code does not select the same code from another system
     Given I type "<profile>" in the search input field
     And I select the checkbox in the row containing "<profile>"
@@ -35,10 +35,10 @@ Feature: Concept filter - same code in different code systems
     And the concept "<code>" with system "<secondSystem>" is not checked in the search results
 
     Examples:
-      | profile                                               | tab                         | code                                            | firstSystem          | secondSystem                                        |
-      | {{attributeConceptSameCodeDifferentSystem.diagnosis}} | {{dataSelection.filterTab}} | {{attributeConceptSameCodeDifferentSystem.i26}} | {{bulk.terminology}} | {{attributeConceptSameCodeDifferentSystem.alphaID}} |
+      | profile                                               | tab                         | code                                            | firstSystem                                         | secondSystem                                        |
+      | {{attributeConceptSameCodeDifferentSystem.diagnosis}} | {{dataSelection.filterTab}} | {{attributeConceptSameCodeDifferentSystem.i26}} | {{attributeConceptSameCodeDifferentSystem.icd10gm}} | {{attributeConceptSameCodeDifferentSystem.alphaID}} |
 
-  @component:criterion-editor @behavior:select @behavior:remove @filter:attribute-filter @type:concept
+  @component:data-selection-feature-editor @behavior:select @behavior:remove @filter:attribute-filter @type:concept
   Scenario Outline: The same code in two systems keeps both entries until each is removed
     Given I type "<profile>" in the search input field
     And I select the checkbox in the row containing "<profile>"
@@ -55,5 +55,5 @@ Feature: Concept filter - same code in different code systems
     Then the selected concepts list has 1 entry
 
     Examples:
-      | profile                                               | tab                         | code                                            | firstSystem          | secondSystem                                        |
-      | {{attributeConceptSameCodeDifferentSystem.diagnosis}} | {{dataSelection.filterTab}} | {{attributeConceptSameCodeDifferentSystem.i26}} | {{bulk.terminology}} | {{attributeConceptSameCodeDifferentSystem.alphaID}} |
+      | profile                                               | tab                         | code                                            | firstSystem                                         | secondSystem                                        |
+      | {{attributeConceptSameCodeDifferentSystem.diagnosis}} | {{dataSelection.filterTab}} | {{attributeConceptSameCodeDifferentSystem.i26}} | {{attributeConceptSameCodeDifferentSystem.icd10gm}} | {{attributeConceptSameCodeDifferentSystem.alphaID}} |
