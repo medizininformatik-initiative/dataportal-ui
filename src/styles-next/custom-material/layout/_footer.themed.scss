@@ -8,7 +8,7 @@
     .num-footer {
       background: surface-color($theme, chrome);
       color: mat.m2-get-contrast-color-from-palette($primary, 200);
-      border-top: 1px
+      border-top: #{if(map-get($theme, dark), 3px, 1px)}
         #{if(map-get($theme, dark), foreground-color($theme, divider), rgba(0, 0, 0, 0.2))}
         solid;
     }

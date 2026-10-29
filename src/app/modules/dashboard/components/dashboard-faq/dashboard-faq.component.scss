@@ -27,7 +27,7 @@
 
 mat-expansion-panel {
   margin-bottom: var(--spacing-8);
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--color-line-12);
   border-radius: var(--border-radius-sm) !important;
   box-shadow: none !important;
 }

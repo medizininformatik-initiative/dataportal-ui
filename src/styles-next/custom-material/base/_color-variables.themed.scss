@@ -1,4 +1,5 @@
 @mixin color-variables_themed($theme) {
+  $dark: map-get($theme, dark);
   // Shades for text and line use of accent. A theme without the keys uses 500 (light).
   $accent-text-shade: map-get($theme, accent-text-shade) or 500;
   $accent-line-shade: map-get($theme, accent-line-shade) or 500;
@@ -26,6 +27,8 @@
   // Split by job (dark mode): --color-accent is the fill, -text is text and icons, -line is border, outline, ring.
   // Light: all three are accent 500. Dark: fill stays 500, text moves to 300, line to 400 (PLAN-dark-mode-research.md).
   --color-accent: #{role-color($theme, accent, 500)};
+  // Text and icons on a solid fill (button, header band, tooltip). Light white, dark the soft white (Primer fgColor.default).
+  --color-on-fill: #{foreground-color($theme, on-fill)};
   --color-accent-text: #{role-color($theme, accent, $accent-text-shade)};
   --color-accent-line: #{role-color($theme, accent, $accent-line-shade)};
   // Tint scale (rules in palettes/_blue.palette.scss): 50 resting fill, 100 emphasized fill, 200 line.
@@ -72,6 +75,62 @@
 
   // Keyboard focus ring / dark accent. Used by: search-filter
   --num-color--accent-900: #{role-color($theme, accent, $accent-on-tint-shade)};
+
+  // ── Component literals moved into the theme (light value = the literal that was in the component; dark chosen per role) ──
+  // Faint black washes (named by light alpha): row/tile fills, hairline borders. Dark: white washes, like Primer's neutral.muted.
+  --color-fill-02: #{if($dark, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.02))};
+  --color-fill-03: #{if($dark, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.03))};
+  --color-fill-04: #{if($dark, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.04))};
+  --color-fill-10: #{if($dark, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1))};
+  --color-fill-12: #{if($dark, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.12))};
+  --color-line-07: #{if($dark, foreground-color($theme, divider), rgba(0, 0, 0, 0.07))};
+  --color-line-12: #{if($dark, foreground-color($theme, divider), rgba(0, 0, 0, 0.12))};
+  // Used by: bulk-search (scrollbar track), profile-search-results (drawer), about-modal (footer)
+  --color-scrollbar-track: #{if($dark, role-color($theme, neutral, 100), #f1f1f1)};
+  --color-drawer-divider: #{if($dark, foreground-color($theme, divider), #e0e0e0)};
+  --color-modal-footer-divider: #{if($dark, foreground-color($theme, divider), #e9ecef)};
+  // Used by: patient-count (digit box, digit), consent-switches (frame, fill)
+  --color-digit-bg: #{if($dark, role-color($theme, neutral, 100), rgba(241, 242, 243, 0.5))};
+  --color-digit-text: #{if($dark, foreground-color($theme, secondary-text), rgba(106, 116, 131))};
+  --color-consent-border: #{if($dark, foreground-color($theme, divider), rgba(241, 242, 243, 1))};
+  --color-consent-bg: #{if($dark, rgba(255, 255, 255, 0.04), rgba(241, 242, 243, 0.1))};
+  // Used by: concept-bulk-search (input border, placeholder, hover border)
+  --color-textarea-border: #{if($dark, role-color($theme, neutral, 700), #9ca1a8)};
+  --color-textarea-placeholder: #{if($dark, foreground-color($theme, placeholder), #9aa7c3)};
+  --color-textarea-border-hover: #{if($dark, foreground-color($theme, secondary-text), #8da4cf)};
+  // Used by: dashboard (hover of the blue button inside grey link boxes), between-filter (date warning, today ring)
+  --color-grey-button-hover: #{if($dark, role-color($theme, neutral, 700), #555e6a)};
+  --color-date-warning: #{if($dark, role-color($theme, danger, 300), #e05050)};
+  --color-calendar-today-ring: #{if($dark, foreground-color($theme, secondary-text), #00000061)};
+
+  // Status colors of single components (light = the literal that was there). Used by: profile-reference-chip (error state),
+  // validation-modal, info-tile (red item), error-log (summary, item, header), save-dataquery-modal
+  --color-danger-chip-bg: #{if($dark, role-color($theme, danger, 50), #ffe5e5)};
+  --color-danger-chip-text: #{if($dark, role-color($theme, danger, 300), #c62828)};
+  --color-danger-chip-border: #{if($dark, rgba(role-color($theme, danger, 300), 0.4), #f5bcbc)};
+  --color-danger-text-strong: #{if($dark, role-color($theme, danger, 300), #b71c1c)};
+  --color-success-text-strong: #{if($dark, role-color($theme, secondary, 300), #2e7d32)};
+  --color-info-danger-bg: #{if($dark, role-color($theme, danger, 50), rgba(220, 53, 69, 0.08))};
+  --color-info-danger-line: #{if($dark, role-color($theme, danger, 300), #dc3545)};
+  --color-warning-bg: #{if($dark, role-color($theme, warning, 50), #fff3cd)};
+  --color-warning-line: #{if($dark, role-color($theme, warning, 500), #ffc107)};
+  --color-log-line: #{if($dark, role-color($theme, secondary, 500), #9bb823)};
+  --color-log-gradient-end: #{if($dark, role-color($theme, secondary, 600), #9bb823)};
+  --color-log-chip-bg: #{if($dark, role-color($theme, neutral, 100), #e9ecef)};
+  --color-log-chip-text: #{if($dark, foreground-color($theme, text), #495057)};
+  --color-log-link: #{if($dark, role-color($theme, accent, $accent-text-shade), #667eea)};
+  --color-modal-close: #{if($dark, foreground-color($theme, secondary-text), #c5cacf)};
+  --color-modal-placeholder: #{if($dark, foreground-color($theme, placeholder), #c5cacf)};
+  --color-modal-close-hover-bg: #{if(
+      $dark,
+      role-color($theme, neutral, 100),
+      rgba(197, 202, 207, 0.15)
+    )};
+
+  // Used by: display-criteria (drop slot fill, glow around the drag cursor), tree (field description)
+  --color-drop-slot-bg: #{if($dark, role-color($theme, accent, 50), rgba(255, 255, 255, 0.6))};
+  --color-cursor-glow: #{if($dark, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0.9))};
+  --color-hint-grey: #{if($dark, foreground-color($theme, secondary-text), grey)};
 
   // Error text, contrast 6.0 on white, 5.4 on accent tint (WCAG 1.4.3). Literals: no role (danger ramp is pure red).
   // On white / near-white. Used by: searchbar

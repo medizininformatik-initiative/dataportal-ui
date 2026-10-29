@@ -9,7 +9,12 @@
     height: var(--size-checkbox);
     box-sizing: border-box;
     background-color: role-color($theme, neutral, 0);
-    border: var(--border-width-control) solid var(--num-color--control-border);
+    // Dark: the unchecked box outline takes the text tone (Shah 2026-10-23)
+    border: var(--border-width-control) solid #{if(
+        map-get($theme, dark),
+        foreground-color($theme, text),
+        var(--num-color--control-border)
+      )};
     border-radius: var(--border-radius-sm);
     transition: background-color var(--transition-control), border-color var(--transition-control),
       box-shadow var(--transition-control);

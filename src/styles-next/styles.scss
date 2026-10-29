@@ -341,6 +341,10 @@ $spacing-scale: (
 [data-theme='dark'] .FDPGTheme {
   --mat-select-placeholder-text-color: var(--color-text-placeholder);
   --mat-select-disabled-text-color: var(--color-text-placeholder);
+  --border-width-control: 2px; // Shah 2026-10-23: borders 3px in dark
+  .mat-badge-content {
+    border-width: 3px !important;
+  }
 }
 
 // Dark scrollbars, shadows and form autofill. Shadows are near invisible on dark: stronger alpha, and surface steps plus borders carry depth.

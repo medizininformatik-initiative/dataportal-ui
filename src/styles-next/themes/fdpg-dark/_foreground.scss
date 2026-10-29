@@ -4,7 +4,7 @@
 $fdpg-dark-foreground: (
   text: #cccccc,
   // session 5: Lc 72 on #272727 (VS Code text); text must outrank the lines
-  secondary-text: #b0b0b0,
+  secondary-text: #9198a1,
   // Lc 56 on the content, 5.5:1 on neutral 100 (#373737, step circle)
   section-text: #b8b8b8,
   // side menu labels, section titles: Lc 59 on the chrome
@@ -12,7 +12,9 @@ $fdpg-dark-foreground: (
   // 7:1 on the content
   page-title: map.get($_dark-accent, 300),
   // blue text step of the shared ladder (Lc 55 on #272727); dark only
-  on-fill: #ffffff,
+  on-fill: #f0f6fc,
+  // focus ring and active tab line (GitHub blue); light has no key and keeps accent 500
+  focus: #4493f8,
   on-bright-fill: #000000,
   // green and red button fills
   divider: map.get($_dark-neutral, 300),

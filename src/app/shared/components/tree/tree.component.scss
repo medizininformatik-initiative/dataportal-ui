@@ -50,7 +50,7 @@ span:hover {
 .icon-container {
   cursor: pointer;
   background-color: var(--color-accent);
-  color: white;
+  color: var(--color-on-fill);
   height: 18px;
 
   &:has(.icon-collapsed) {
@@ -67,7 +67,7 @@ span:hover {
 /* Custom checkbox styling moved to global theme: _checkbox.themed.scss */
 
 .field-description {
-  color: grey;
+  color: var(--color-hint-grey);
   font-size: 13px;
   font-style: italic;
 }

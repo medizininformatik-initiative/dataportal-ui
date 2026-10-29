@@ -3,13 +3,13 @@
   height: 40px;
   font-size: 24px;
   margin: 0 var(--spacing-8);
-  background-color: rgba(241, 242, 243, 0.5);
+  background-color: var(--color-digit-bg);
   border-radius: var(--border-radius-sm);
   text-align: center;
 }
 
 .digit {
-  color: rgba(106, 116, 131);
+  color: var(--color-digit-text);
   font-weight: 700;
   font-size: 24px;
   width: 100%;

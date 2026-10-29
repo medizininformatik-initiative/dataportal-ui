@@ -9,8 +9,8 @@
 .error-summary {
   margin: var(--spacing-8) 0;
   padding: var(--spacing-16);
-  background: #fff3cd;
-  border-left: 4px solid #ffc107;
+  background: var(--color-warning-bg);
+  border-left: 4px solid var(--color-warning-line);
   border-radius: 5px;
 }
 

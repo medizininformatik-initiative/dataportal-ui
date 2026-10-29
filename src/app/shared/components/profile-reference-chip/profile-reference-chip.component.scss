@@ -14,8 +14,8 @@
   }
 
   &.warning-badge {
-    background-color: #ffe5e5;
-    color: #c62828;
-    border: 1px solid #f5bcbc;
+    background-color: var(--color-danger-chip-bg);
+    color: var(--color-danger-chip-text);
+    border: 1px solid var(--color-danger-chip-border);
   }
 }

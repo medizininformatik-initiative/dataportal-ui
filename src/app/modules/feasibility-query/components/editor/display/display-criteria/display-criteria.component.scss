@@ -67,7 +67,7 @@
 .slot {
   right: 0;
   border: 2px dashed var(--color-accent-line);
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--color-drop-slot-bg);
 }
 
 .ghost {
@@ -106,7 +106,7 @@
   top: 50px;
   width: 22px;
   color: var(--color-text-primary);
-  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.9));
+  filter: drop-shadow(0 1px 1px var(--color-cursor-glow));
 }
 
 .text {

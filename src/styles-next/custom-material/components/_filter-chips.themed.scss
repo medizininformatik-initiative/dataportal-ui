@@ -16,7 +16,12 @@
       line-height: 24px;
       color: var(--color-accent-text);
       background: transparent;
-      border: 1px solid role-color($theme, accent, 200);
+      border: #{if(map-get($theme, dark), 2px, 1px)} solid role-color($theme, accent, 200);
+      // Dark, like Primer's accent.muted: the main blue washed into the content (15%), border the same blue at 40%
+      @if map-get($theme, dark) {
+        background: mix(role-color($theme, accent, 500), surface-color($theme, card), 15%);
+        border-color: mix(role-color($theme, accent, 500), surface-color($theme, card), 40%);
+      }
       border-radius: 4px;
       margin-bottom: 4px;
       cursor: pointer;
@@ -39,6 +44,9 @@
       &.count-badge {
         background-color: role-color($theme, accent, 100);
         color: var(--color-accent-strong); // text on a filled tint: 600 (5.6:1 on accent 100)
+        @if map-get($theme, dark) {
+          background-color: mix(role-color($theme, accent, 500), surface-color($theme, card), 35%);
+        }
         font-weight: bold;
         padding: 0 8px;
         min-width: auto;
@@ -53,7 +61,7 @@
       padding: 0 8px;
       height: 24px;
       border-radius: 4px 0 0 4px;
-      border: 1px solid role-color($theme, accent, 500);
+      border: #{if(map-get($theme, dark), 2px, 1px)} solid role-color($theme, accent, 500);
       background: role-color($theme, accent, 500);
       font-style: normal;
       font-weight: 700;

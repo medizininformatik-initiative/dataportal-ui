@@ -9,8 +9,8 @@
   align-items: center;
 
   &.info-item-red {
-    background-color: rgba(220, 53, 69, 0.08);
-    border-left-color: #dc3545;
+    background-color: var(--color-info-danger-bg);
+    border-left-color: var(--color-info-danger-line);
   }
 }
 
@@ -28,7 +28,7 @@
   font-size: var(--font-size-sm);
 
   code {
-    background: rgba(0, 0, 0, 0.04);
+    background: var(--color-fill-04);
     padding: 1px var(--spacing-6);
     border-radius: 3px;
     font-size: var(--font-size-sm);

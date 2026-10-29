@@ -133,7 +133,7 @@
     cursor: pointer;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.12);
+      background: var(--color-fill-12);
     }
   }
 
@@ -149,7 +149,7 @@
   font-size: 16px;
   line-height: 24px;
   box-shadow: var(--shadow-card);
-  color: white;
+  color: var(--color-on-fill);
   font-family: inherit;
   font-size: 16px;
   cursor: pointer;
@@ -160,7 +160,7 @@
   border: none;
 
   &:hover:not(:disabled) {
-    color: white !important;
+    color: var(--color-on-fill) !important;
     box-shadow: var(--shadow-card);
     background: var(--num-color--accent-600);
   }

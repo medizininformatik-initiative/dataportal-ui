@@ -65,7 +65,7 @@
   background-color: var(--color-text-secondary);
 
   &:hover:not(.disabled) {
-    background: #555e6a !important;
+    background: var(--color-grey-button-hover) !important;
   }
 }
 /* stylelint-enable selector-pseudo-element-no-unknown */

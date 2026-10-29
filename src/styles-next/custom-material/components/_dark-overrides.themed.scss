@@ -7,6 +7,20 @@
     $danger-tint: role-color($theme, danger, 50);
     $success-text: role-color($theme, secondary, 300);
 
+    // Criterion boxes (data selection, feasibility): the accent tints are neutral greys in dark, so the boxes read grey.
+    // Shah 2026-10-23: the main blue (500) mixed into the content tone (solid, not translucent: the page behind showed through), stronger on hover and in the drop slot.
+    num-criteria-box .container {
+      background-color: mix(role-color($theme, accent, 500), surface-color($theme, card), 35%);
+      border-color: mix(role-color($theme, accent, 500), surface-color($theme, card), 80%);
+      &:hover {
+        background-color: mix(role-color($theme, accent, 500), surface-color($theme, card), 45%);
+        border-color: role-color($theme, accent, 500);
+      }
+      &.cdk-drag-placeholder {
+        background-color: mix(role-color($theme, accent, 500), surface-color($theme, card), 55%);
+      }
+    }
+
     // Stepper (query page): Material paints its strip with the card tone and both step circles in near-identical greys,
     // so the current step was not visible. Strip transparent like light; current step = accent fill, the other is muted.
     .mat-stepper-horizontal {
@@ -16,7 +30,7 @@
       .mat-step-icon {
         background-color: role-color($theme, neutral, 100);
         color: foreground-color($theme, secondary-text);
-        box-shadow: inset 0 0 0 1px var(--num-color--control-border);
+        box-shadow: inset 0 0 0 3px var(--num-color--control-border);
       }
       .mat-step-icon-selected {
         background-color: var(--color-accent);
@@ -54,7 +68,7 @@
     num-saved-query-tile .num-button.blue:not(.disabled) {
       background: transparent;
       color: var(--color-accent-text);
-      box-shadow: inset 0 0 0 1px role-color($theme, accent, 500);
+      box-shadow: inset 0 0 0 3px role-color($theme, accent, 500);
     }
     num-saved-query-tile .saved-query-tile:hover .num-button.blue:not(.disabled),
     num-saved-query-tile .num-button.blue.cdk-keyboard-focused {
@@ -67,7 +81,7 @@
     num-snackbar {
       .snackbar {
         background: surface-color($theme, chrome);
-        border: 1px solid var(--border-color-field);
+        border: 3px solid var(--border-color-field);
         box-shadow: var(--shadow-menu);
       }
       .info-snackbar {
@@ -82,49 +96,14 @@
       }
     }
 
-    // Status text and tints (light literals #c62828 / #b71c1c / #2e7d32 / pink fills)
-    num-profile-reference-chip .link-info.warning-badge {
-      background-color: $danger-tint;
-      color: $danger-text;
-      border-color: rgba($danger-text, 0.4);
-    }
-    num-validation-modal .nav-card__status--valid {
-      color: $success-text;
-    }
-    num-validation-modal .nav-card__status--invalid {
-      color: $danger-text;
-    }
-    num-info-tile .info-item.info-item-red {
-      background-color: $danger-tint;
-      border-left-color: $danger-text;
-    }
     num-info-tile .info-value code {
       background: var(--num-color--grey-hover);
     }
 
-    // Error log: light yellow summary, light grey code chips. error-log-item styles `code` through ::ng-deep (global).
-    num-error-log-modal .error-summary {
-      background: role-color($theme, warning, 50);
-      border-left-color: role-color($theme, warning, 500);
-    }
-    num-error-log-item .error-item {
-      border-left-color: role-color($theme, secondary, 500);
-    }
-    num-error-log-item .error-extra details summary {
-      color: var(--color-accent-text);
-    }
     code {
       background: var(--num-color--grey-hover);
       color: var(--color-text-primary);
     }
-    num-error-log-header .error-log-header {
-      background: linear-gradient(
-        135deg,
-        var(--color-accent) 0%,
-        role-color($theme, secondary, 600) 100%
-      );
-    }
-
     // Editor empty list sketch: white 60% drop slot glowed as the brightest patch; white glow around the cursor
     // Lines 1px (the 2px frames outweighed the 400-weight hint text next to them, stem 1.2px); same background order as
     // the component, so the marching animation keeps working
@@ -133,18 +112,13 @@
         background-size: 16px 1px, 16px 1px, 1px 16px, 1px 16px, auto;
       }
       .slot {
-        background: var(--color-accent-bg);
-        border-width: 1px;
-      }
-      .cursor {
-        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.9));
+        border-width: 3px;
       }
     }
 
     // Feature / criterion editor (query-editor). Shah: "cannot see what is going on".
     // Field descriptions were the CSS keyword grey (#808080, Lc 33): secondary text, no italic (italic thins 13px strokes).
     num-tree .field-description {
-      color: var(--color-text-secondary);
       font-style: normal;
     }
     // Row head by weight, not by color: 600 (stem 1.5px) over the 400 description (1.0px).
@@ -159,19 +133,74 @@
     }
     // Tabs like VS Code editor tabs: inactive = secondary text at full opacity (the 50% opacity made blue mush),
     // active = primary text on the content surface with a 2px blue top line; hover brightens
+    // Editor like GitHub's comment composer (Shah 2026-10-23): one framed card; the tab strip is a lighter band (chrome tone)
+    // over a darker panel, the active tab is the panel's tone and merges into it (blue top line), inactive tabs are muted text.
+    // Separation comes from the tone step band vs panel plus one frame line, not from boxes around every tab.
+    $edit-frame: var(--color-text-secondary);
     num-filter-tabs {
+      .container {
+        border: 2px solid var(--border-color-field);
+        border-radius: var(--border-radius-card);
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      .tabs-container {
+        background: surface-color($theme, chrome);
+        border-bottom: 2px solid var(--border-color-field);
+        margin-bottom: 0;
+        border-radius: 0;
+      }
       .tab {
         opacity: 1;
         color: var(--color-text-secondary);
         background: transparent;
+        border-radius: 0;
         &:hover {
           color: var(--color-text-primary);
+          background: var(--num-color--grey-hover);
         }
       }
       .tab.active {
         color: var(--color-text-primary);
         background: var(--color-surface);
-        box-shadow: inset 0 2px 0 role-color($theme, accent, 500);
+        box-shadow: inset 0 2px 0 foreground-color($theme, focus);
+        margin-bottom: -2px; // covers the band's bottom line: the tab and the panel are one surface
+        height: 44px;
+      }
+      .tab-content {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+    // Criterion / profile header: same frame; fill is the main blue washed into the content, like GitHub's blue-tinted first comment
+    num-criterion-header,
+    num-profile-header {
+      .selection-box {
+        border: 2px solid $edit-frame;
+        border-radius: var(--border-radius-card);
+        background: mix(role-color($theme, accent, 500), surface-color($theme, card), 15%);
+        padding: var(--spacing-12) 0;
+        box-sizing: border-box;
+      }
+      // Hierarchy (GitHub: bold title over muted meta): the name is 600 at 16px, the meta line 12px instead of 0.9em (about 11.7px)
+      .criterion-display {
+        border-right: 2px solid var(--border-color-field);
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+      }
+      .information-display {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+      }
+    }
+    // Inputs inside the editor panel: a 2px field border (blue on focus, like GitHub's focus ring) so edit spots show
+    num-filter-tabs .tab-content .mat-mdc-form-field-flex {
+      border-width: 2px;
+      &:focus-within {
+        border-color: foreground-color($theme, focus);
       }
     }
     // One frame instead of a lighter frame around a darker panel: the frame takes the content tone
@@ -179,20 +208,6 @@
       background-color: transparent;
       box-shadow: none;
       padding-inline: 0;
-    }
-
-    // Save dialog: #c5cacf placeholder and close icon are brighter than the text on dark
-    num-save-dataquery-modal {
-      .field-input::placeholder {
-        color: var(--color-text-placeholder);
-      }
-      .close-btn {
-        color: var(--color-text-secondary);
-        &:hover {
-          color: var(--color-text-primary);
-          background: var(--num-color--grey-hover);
-        }
-      }
     }
   }
 }

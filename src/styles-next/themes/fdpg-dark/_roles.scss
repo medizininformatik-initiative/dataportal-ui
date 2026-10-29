@@ -9,9 +9,9 @@
 $_dark-neutral: map.merge(
   $num-grey-palette,
   (
-    0: #272727,
+    0: #222222,
     // card and main content, the darkest surface (session 5: lifted from #1b1b1b, a darker content made text and lines glare); header and side menu are only a small step lighter (background.chrome)
-    50: #2a2a2a,
+    50: #252525,
     // page
     100: #373737,
     // hover, track, action bar

@@ -4,7 +4,7 @@
   gap: 0.5rem;
   padding: var(--spacing-16) var(--spacing-24);
   background: linear-gradient(135deg, var(--color-accent) 0%, var(--num-color--primary-green) 100%);
-  color: white;
+  color: var(--color-on-fill);
   font-size: 1.25rem;
   border-radius: 4px;
 
@@ -44,5 +44,5 @@
   justify-content: flex-end;
   padding: var(--spacing-16) var(--spacing-24);
   background: var(--color-surface);
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid var(--color-modal-footer-divider);
 }

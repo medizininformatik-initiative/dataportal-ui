@@ -132,7 +132,7 @@
     // !important on background: the user-menu stylesheet sets `background: transparent !important`.
     .header-select .mat-mdc-text-field-wrapper {
       // dark: the divider tone vanishes on the chrome, use the control border like other inputs
-      border: 1px solid if(map-get($theme, dark), var(--border-color-field), var(--border-color));
+      border: #{if(map-get($theme, dark), 3px, 1px)} solid if(map-get($theme, dark), var(--border-color-field), var(--border-color));
       border-radius: var(--border-radius-card);
       background: #{surface-color($theme, card)} !important;
       transition: border-color 0.2s ease, background 0.2s ease;

@@ -54,7 +54,7 @@
   font-weight: 400;
   padding: 0.65rem 0.9rem;
 
-  border: 1px solid #9ca1a8;
+  border: 1px solid var(--color-textarea-border);
   border-radius: 8px;
   resize: none;
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
@@ -63,12 +63,12 @@
 }
 
 .input-field-area::placeholder {
-  color: #9aa7c3;
+  color: var(--color-textarea-placeholder);
   opacity: 1;
 }
 
 .input-field-area:hover {
-  border-color: #8da4cf;
+  border-color: var(--color-textarea-border-hover);
 }
 
 .input-field-area:focus {

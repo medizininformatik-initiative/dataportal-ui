@@ -42,7 +42,7 @@
   align-items: center;
   padding: 16px var(--spacing-20);
   border-bottom: 1px solid var(--border-color);
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: var(--color-fill-02);
 }
 
 .error-title {
@@ -109,7 +109,7 @@
   gap: 0.5rem;
   padding: var(--spacing-12) var(--spacing-16);
   border-top: 1px solid var(--border-color);
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: var(--color-fill-02);
 }
 
 .action-button {
@@ -122,7 +122,7 @@
 }
 
 .error-display-body::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.03);
+  background: var(--color-fill-03);
   border-radius: 4px;
 }
 

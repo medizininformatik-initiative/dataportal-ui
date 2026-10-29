@@ -2,7 +2,7 @@
   .num-button.cancel {
     font-weight: 400;
     height: 40px;
-    border: 1px solid role-color($theme, accent, 200);
+    border: #{if(map-get($theme, dark), 3px, 1px)} solid role-color($theme, accent, 200);
     background: role-color($theme, neutral, 50);
     color: var(--color-accent-strong);
 

@@ -15,7 +15,7 @@
     }
 
     &:not(.no-focus):focus-visible {
-      outline: 2px solid role-color($theme, accent, 500);
+      outline: 2px solid #{foreground-color($theme, focus) or role-color($theme, accent, 500)};
       outline-offset: 2px;
       border-radius: 2px;
     }

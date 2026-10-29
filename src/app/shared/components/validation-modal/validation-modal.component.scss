@@ -64,11 +64,11 @@
     line-height: 1;
 
     &--valid {
-      color: #2e7d32;
+      color: var(--color-success-text-strong);
     }
 
     &--invalid {
-      color: #b71c1c;
+      color: var(--color-danger-text-strong);
     }
 
     fa-icon {

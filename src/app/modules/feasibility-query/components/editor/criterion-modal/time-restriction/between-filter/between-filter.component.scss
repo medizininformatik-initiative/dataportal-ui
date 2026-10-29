@@ -9,7 +9,7 @@
 .date-warning {
   width: 100%;
   font-size: var(--font-size-sm);
-  color: #e05050;
+  color: var(--color-date-warning);
   margin-top: var(--spacing-2);
 }
 .mat-expansion-panel-header {
@@ -26,11 +26,11 @@
   .mat-calendar-body-today:not(.mat-calendar-body-selected):not(
     .mat-calendar-body-comparison-identical
   ) {
-  border-color: #00000061;
+  border-color: var(--color-calendar-today-ring);
 }
 ::ng-deep .mat-calendar-body-selected {
   background-color: var(--num-color--accent-600) !important;
-  color: white;
+  color: var(--color-on-fill);
 }
 ::ng-deep
   .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover

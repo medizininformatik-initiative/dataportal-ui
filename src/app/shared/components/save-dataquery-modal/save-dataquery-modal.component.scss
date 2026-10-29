@@ -22,12 +22,12 @@
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  color: #c5cacf;
+  color: var(--color-modal-close);
   transition: color 0.2s ease, background 0.2s ease;
 
   &:hover {
     color: var(--color-text-secondary);
-    background: rgba(197, 202, 207, 0.15);
+    background: var(--color-modal-close-hover-bg);
   }
 
   fa-icon {
@@ -58,7 +58,7 @@
   transition: border-color 0.2s ease;
 
   &::placeholder {
-    color: #c5cacf;
+    color: var(--color-modal-placeholder);
   }
 
   &:focus {

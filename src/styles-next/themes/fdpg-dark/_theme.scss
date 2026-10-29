@@ -50,6 +50,11 @@ $num-portal-webapp-theme-fdpg-dark-material: map.deep-merge(
 // Titillium ships only 400/600/700, so weight is thickened in styles.scss with a thin text stroke instead.
 $_dark-type-scale: 1.125;
 
+// Weight +200 (Shah, 2026-10-23): 400 -> 600, 600 -> 700. Only 400/600/700 ship, so 700 is the cap.
+@function _dark-weight($w) {
+  @return math.min($w + 200, 700);
+}
+
 @function _scale-px($v, $scale: $_dark-type-scale) {
   @return math.div(math.round($v * $scale * 2), 2); // nearest half px
 }
@@ -60,6 +65,7 @@ $_dark-type-roles: ();
   $scale: if(string.index($name, 'side-menu'), 1, $_dark-type-scale);
   $role: map.set($role, size, _scale-px(map.get($role, size), $scale));
   $role: map.set($role, line, _scale-px(map.get($role, line), $scale));
+  $role: map.set($role, weight, _dark-weight(map.get($role, weight)));
   $_dark-type-roles: map.set($_dark-type-roles, $name, $role);
 }
 
@@ -68,6 +74,9 @@ $_dark-typography: ();
 @each $key, $level in $num-typography {
   @if meta.type-of($level) == 'map' {
     $level: map.set($level, font-size, _scale-px(map.get($level, font-size)));
+    @if map.get($level, font-weight) {
+      $level: map.set($level, font-weight, _dark-weight(map.get($level, font-weight)));
+    }
     @if map.get($level, line-height) {
       $level: map.set($level, line-height, _scale-px(map.get($level, line-height)));
     }

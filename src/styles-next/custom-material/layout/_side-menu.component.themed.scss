@@ -33,7 +33,8 @@
     --side-menu-icon-active: var(--color-accent-text);
     --side-menu-line: var(--border-color);
     --side-menu-line-hover: #{role-color($theme, neutral, 700)};
-    --side-menu-focus-ring: #{role-color($theme, accent, $accent-on-tint-shade)};
+    --side-menu-focus-ring: #{foreground-color($theme, focus) or
+      role-color($theme, accent, $accent-on-tint-shade)};
 
     display: flex;
     flex-direction: column;
@@ -178,12 +179,9 @@
         left: var(--side-menu-line-x);
         top: 0;
         bottom: 0;
-        width: var(--spacing-2);
+        width: #{if(map-get($theme, dark), 3px, var(--spacing-2))};
         background: var(--side-menu-line);
         pointer-events: none;
-        @if map-get($theme, dark) {
-          width: 1px;
-        }
       }
 
       // rail segment sits above the pill and darkens with it
@@ -213,7 +211,7 @@
             var(--side-menu-icon-active)
           );
           @if map-get($theme, dark) {
-            width: var(--spacing-2);
+            width: #{if(map-get($theme, dark), 3px, var(--spacing-2))};
           }
         }
 
@@ -239,13 +237,9 @@
         top: 0;
         bottom: 0;
         left: var(--side-menu-line-x);
-        width: var(--spacing-2);
+        width: #{if(map-get($theme, dark), 3px, var(--spacing-2))};
         background: var(--side-menu-line);
         pointer-events: none;
-        // Dark: 1px, thinner than the menu text stems (1.05px at 400 / 14px); 2px outweighed the labels
-        @if map-get($theme, dark) {
-          width: 1px;
-        }
       }
     }
 

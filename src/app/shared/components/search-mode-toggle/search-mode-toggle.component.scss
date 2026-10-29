@@ -56,7 +56,7 @@
 
 .mode-toggle__option--active {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-on-fill);
   box-shadow: var(--shadow-card-hover);
 }
 

@@ -28,6 +28,13 @@ $raised-shadow: var(--shadow-card); // dark sets a stronger alpha
   $disabled-text: $text;
   @if map-get($theme, dark) {
     $disabled-bg: oklch(from #{$color} 0.42 0.04 h);
+    @if $name == 'green' {
+      $disabled-bg: #105823; // GitHub dark --button-primary-bgColor-disabled
+    }
+    @if $name == 'blue' {
+      // same step as green enabled -> disabled (#33843e -> #105823): L x 0.742, C x 0.83, hue kept; 1.8:1 against the enabled fill
+      $disabled-bg: oklch(from #{$color} calc(l * 0.742) calc(c * 0.83) h);
+    }
     $disabled-ring: none;
     $disabled-text: oklch(from #{$color} 0.72 0.03 h);
   }

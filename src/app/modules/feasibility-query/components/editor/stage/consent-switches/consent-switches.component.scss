@@ -16,10 +16,10 @@
 }
 
 .consent-container {
-  border: 2px solid rgba(241, 242, 243, 1);
+  border: 2px solid var(--color-consent-border);
   border-radius: var(--border-radius-card);
   padding: 1em;
-  background-color: rgba(241, 242, 243, 0.1);
+  background-color: var(--color-consent-bg);
 }
 
 .text-blue {
