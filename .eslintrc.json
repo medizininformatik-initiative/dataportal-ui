@@ -21,7 +21,7 @@
               "ArrowFunctionExpression": false,
               "FunctionExpression": false
             },
-            "enableFixer": true
+            "enableFixer": false
           }
         ],
         "jsdoc/require-description": "warn",
@@ -77,6 +77,8 @@
         "import/order": ["warn", { "alphabetize": { "order": "asc", "caseInsensitive": true } }],
         "curly": ["error", "all"],
         "brace-style": ["error", "1tbs", { "allowSingleLine": false }],
+        "no-extra-semi": "off",
+        "@typescript-eslint/no-extra-semi": "off",
         "@typescript-eslint/member-delimiter-style": [
           "error",
           {
@@ -85,8 +87,8 @@
               "requireLast": false
             },
             "singleline": {
-              "delimiter": "comma",
-              "requireLast": true
+              "delimiter": "semi",
+              "requireLast": false
             }
           }
         ],
