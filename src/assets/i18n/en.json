@@ -787,6 +787,7 @@
     "2000005": "Linked group is missing for an attribute of type reference.",
     "2000006": "Linked group was not found in CRTDL.",
     "2000007": "The end date must be after the start date.",
+    "2000008": "Filter name was not found in the ontology profile of the attribute group.",
     "00001": "JSON could not be processed."
   }
 }

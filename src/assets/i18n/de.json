@@ -777,6 +777,7 @@
     "2000005": "Verknüpfte Gruppe fehlt für Attribut vom Typ Referenz.",
     "2000006": "Verknüpfte Gruppe wurde in CRTDL nicht gefunden.",
     "2000007": "Das Enddatum muss nach dem Startdatum liegen.",
+    "2000008": "Filtername wurde im Ontologieprofil der Attributgruppe nicht gefunden.",
     "00001": "JSON konnte nicht verarbeitet werden."
   }
 }
