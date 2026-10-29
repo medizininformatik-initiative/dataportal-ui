@@ -30,8 +30,8 @@ export class TableComponent {
   public readonly loadMore = output<void>()
 
   public unselectCheckbox(ids: string[]): void {
-    ids.forEach((id) => {
-      const foundRow = this.tableData().body?.rows?.find((row) => row.id === id)
+    ids.forEach((id: string) => {
+      const foundRow = this.tableData().body?.rows?.find((row: TableRowData) => row.id === id)
       if (foundRow) {
         const checkboxCell = foundRow.cells.find((c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT)
         if (checkboxCell) {

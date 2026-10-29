@@ -30,7 +30,7 @@ export class FeasibilityQueryProviderHub {
    * @param {Criterion[]} criterions Array of Criterion objects
    */
   public addCriteriaToStage(criterions: Criterion[]): void {
-    const ids = criterions.map((criterion) => criterion.getId())
+    const ids = criterions.map((criterion: Criterion) => criterion.getId())
     this.stageProviderService.addMany(ids)
   }
 

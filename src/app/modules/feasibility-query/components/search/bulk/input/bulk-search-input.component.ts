@@ -48,7 +48,7 @@ export class BulkSearchInputComponent {
 
         if (this.filterMap().size === 0) {
           const map = new Map<string, string[]>()
-          filters.forEach((f) => map.set(f.filterType, f.selectedValues))
+          filters.forEach((f: SearchFilterData) => map.set(f.filterType, f.selectedValues))
           this.filterMap.set(map)
         }
 
@@ -64,7 +64,7 @@ export class BulkSearchInputComponent {
 
   public setElasticSearchFilter(newFilter: SearchFilterData): void {
     const selectedValues = Array.isArray(newFilter.selectedValues) ? newFilter.selectedValues : [newFilter.selectedValues as string]
-    this.filterMap.update((map) => {
+    this.filterMap.update((map: Map<string, string[]>) => {
       const updated = new Map(map)
       updated.set(newFilter.filterType, selectedValues)
       return updated

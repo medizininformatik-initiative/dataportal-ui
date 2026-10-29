@@ -83,7 +83,7 @@ export class StagedProfileService implements OnDestroy {
       let profiles: DataSelectionProfile[] = []
       this.profileProviderService
         .getAll()
-        .subscribe((profiles_) => {
+        .subscribe((profiles_: DataSelectionProfile[]) => {
           profiles = profiles_
         })
         .unsubscribe()
@@ -91,14 +91,14 @@ export class StagedProfileService implements OnDestroy {
       const newLabel = this.parseTrailingNumber(label)
 
       const sameProfiles = profiles.filter(
-        (existingProfile) =>
+        (existingProfile: DataSelectionProfile) =>
           existingProfile.getId() !== profile.getId() && existingProfile.getLabel().getTexts().includes(newLabel.text.replace(/\s+$/, ''))
       )
 
       const wanted = newLabel.number ?? 0
-      const taken = sameProfiles.some((existing) => existing.getLabelNumber() === wanted)
+      const taken = sameProfiles.some((existing: DataSelectionProfile) => existing.getLabelNumber() === wanted)
       // first profile is 0 (no suffix), first duplicate is (1)
-      profile.setLabelNumber(taken ? Math.max(...sameProfiles.map((p) => p.getLabelNumber())) + 1 : wanted)
+      profile.setLabelNumber(taken ? Math.max(...sameProfiles.map((p: DataSelectionProfile) => p.getLabelNumber())) + 1 : wanted)
       profile.setLabel(newLabel.text)
       this.buildProfile()
     }
@@ -148,8 +148,8 @@ export class StagedProfileService implements OnDestroy {
   private getProfilesFromProviderAndSetInDataSelection(linkedProfileIds: string[]): Observable<void[]> {
     return this.profileProviderService.getAll().pipe(
       map((profileArray: Array<DataSelectionProfile>) =>
-        linkedProfileIds.map((id) => {
-          const profile = profileArray.find((p) => p.getId() === id)
+        linkedProfileIds.map((id: string) => {
+          const profile = profileArray.find((p: DataSelectionProfile) => p.getId() === id)
           if (profile) {
             return this.setProfileInDataSelectionProvider(profile)
           }
@@ -166,8 +166,8 @@ export class StagedProfileService implements OnDestroy {
    */
   private getReferencedProfileIds(selectedReferenceFields: SelectedReferenceField[]): string[] {
     const linkedProfileIds = selectedReferenceFields
-      .map((selectedReferenceField) => selectedReferenceField.getLinkedProfileIds())
-      .reduce((acc, ids) => acc.concat(ids), [])
+      .map((selectedReferenceField: SelectedReferenceField) => selectedReferenceField.getLinkedProfileIds())
+      .reduce((acc: string[], ids: string[]) => acc.concat(ids), [])
     return linkedProfileIds
   }
 

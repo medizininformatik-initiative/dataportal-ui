@@ -35,8 +35,11 @@ export function getColumnWidthPercent(cells: Array<Pick<TableCellUnion, 'type'>>
     return fixedWidth
   }
 
-  const totalFixedWidth = cells.reduce((sum, cell) => sum + (FIXED_WIDTH_PERCENT[cell.type] ?? 0), 0)
-  const totalFlexibleWeight = cells.reduce((sum, cell) => sum + (FLEXIBLE_COLUMN_WEIGHT[cell.type] ?? 0), 0)
+  const totalFixedWidth = cells.reduce((sum: number, cell: Pick<TableCellUnion, 'type'>) => sum + (FIXED_WIDTH_PERCENT[cell.type] ?? 0), 0)
+  const totalFlexibleWeight = cells.reduce(
+    (sum: number, cell: Pick<TableCellUnion, 'type'>) => sum + (FLEXIBLE_COLUMN_WEIGHT[cell.type] ?? 0),
+    0
+  )
   const weight = FLEXIBLE_COLUMN_WEIGHT[cellType] ?? 0
 
   return ((100 - totalFixedWidth) * weight) / totalFlexibleWeight

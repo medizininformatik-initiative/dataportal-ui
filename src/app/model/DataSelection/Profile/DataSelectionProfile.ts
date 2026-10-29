@@ -3,6 +3,7 @@ import { Display } from './Display'
 import { ProfileFields } from './Fields/ProfileFields'
 import { AbstractProfileFilter } from './Filter/AbstractProfileFilter'
 import { ProfileReference } from './Reference/ProfileReference'
+import { Translation } from './Translation'
 
 export class DataSelectionProfile {
   private readonly id: string
@@ -41,7 +42,7 @@ export class DataSelectionProfile {
   public setLabel(label: string): void {
     const newLabel = CloneDisplayData.deepCopyDisplayData(this.getLabel())
     newLabel.setOriginal(label)
-    newLabel.getTranslations().forEach((translation) => {
+    newLabel.getTranslations().forEach((translation: Translation) => {
       translation.setValue(label)
     })
     this.label = newLabel
@@ -91,7 +92,7 @@ export class DataSelectionProfile {
   }
 
   public setFilter(filter: AbstractProfileFilter): void {
-    const index = this.filters.findIndex((f) => f.getName() === filter.getName())
+    const index = this.filters.findIndex((f: AbstractProfileFilter) => f.getName() === filter.getName())
     if (index !== -1) {
       this.filters[index] = filter
     } else {

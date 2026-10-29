@@ -52,7 +52,7 @@ export class TableBodyComponent {
 
   public onCheckboxSelect(row: TableRowData): void {
     const checkboxCell = row.cells.find(
-      (c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOX || c.type === TableCellKind.CHECKBOXTEXT
+      (c: TableCellUnion): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOX || c.type === TableCellKind.CHECKBOXTEXT
     )
     if (checkboxCell) {
       checkboxCell.isSelected = !checkboxCell.isSelected

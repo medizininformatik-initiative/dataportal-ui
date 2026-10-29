@@ -19,12 +19,12 @@ export class BasicFieldTranslatorService {
   /*TODO: Snackbar message is just a temporary solution. Will be obsolete with Backend validation*/
   public buildSelectedBasicFields(attributes: AttributesData[], profileFields: ProfileFields): SelectedBasicField[] {
     return this.filterNonReferenceAttributes(attributes)
-      .map((attribute) => this.mapAttributeToSelectedBasicField(attribute, profileFields))
-      .filter((element) => element !== undefined)
+      .map((attribute: AttributesData) => this.mapAttributeToSelectedBasicField(attribute, profileFields))
+      .filter((element: SelectedBasicField) => element !== undefined)
   }
 
   private filterNonReferenceAttributes(attributes: AttributesData[]): AttributesData[] {
-    return attributes.filter((attribute) => !attribute.linkedGroups || attribute.linkedGroups.length === 0)
+    return attributes.filter((attribute: AttributesData) => !attribute.linkedGroups || attribute.linkedGroups.length === 0)
   }
 
   private mapAttributeToSelectedBasicField(attribute: AttributesData, profileFields: ProfileFields): SelectedBasicField | undefined {

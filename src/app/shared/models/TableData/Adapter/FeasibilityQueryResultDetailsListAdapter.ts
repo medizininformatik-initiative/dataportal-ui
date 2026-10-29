@@ -18,7 +18,7 @@ export class FeasibilityQueryResultDetailsListAdapter extends AbstractTableAdapt
   }
 
   protected buildRows(listEntries: FeasibilityQueryResultDetailstListEntry[]): TableRowData[] {
-    return listEntries?.map((entry, index) => this.buildRow(entry, index))
+    return listEntries?.map((entry: FeasibilityQueryResultDetailstListEntry, index: number) => this.buildRow(entry, index))
   }
 
   private buildRow(entry: FeasibilityQueryResultDetailstListEntry, index: number): TableRowData {

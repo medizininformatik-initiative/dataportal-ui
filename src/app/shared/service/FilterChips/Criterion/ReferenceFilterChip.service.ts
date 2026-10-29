@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core'
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
 import { FilterChipBuilder } from 'src/app/shared/models/FilterChips/FilterChipBuilder'
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
@@ -22,7 +23,7 @@ export class ReferenceFilterChipService {
    */
   public generateReferenceChips(criterion: AbstractCriterion): FilterChipData[] {
     const chips: FilterChipData[] = []
-    criterion.getAttributeFilters().forEach((filter) => {
+    criterion.getAttributeFilters().forEach((filter: AttributeFilter) => {
       if (!filter.isReferenceSet()) {
         return
       }
@@ -31,7 +32,7 @@ export class ReferenceFilterChipService {
         return
       }
       const builder = new FilterChipBuilder(filter.getDisplay())
-      selectedReferenceIds.forEach((id) => {
+      selectedReferenceIds.forEach((id: string) => {
         try {
           const ref = this.referenceCriterionProvider.getOne(id)
           builder.addData(ref.getId(), ref.getDisplay())

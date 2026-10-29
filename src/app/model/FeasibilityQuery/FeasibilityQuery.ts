@@ -104,7 +104,7 @@ export class FeasibilityQuery {
    * @param {string[][]} inclusionCriteria - The new inclusion criteria of the query.
    */
   public setInclusionCriteria(inclusionCriteria: string[][]): void {
-    this.inclusionCriteria = inclusionCriteria.filter((group) => group.length > 0)
+    this.inclusionCriteria = inclusionCriteria.filter((group: string[]) => group.length > 0)
   }
 
   /**
@@ -122,7 +122,7 @@ export class FeasibilityQuery {
    * @param {string[][]} exclusionCriteria - The new exclusion criteria of the query.
    */
   public setExclusionCriteria(exclusionCriteria: string[][]): void {
-    this.exclusionCriteria = exclusionCriteria.filter((group) => group.length > 0)
+    this.exclusionCriteria = exclusionCriteria.filter((group: string[]) => group.length > 0)
   }
 
   public getResultIds(): string[] {
@@ -142,9 +142,9 @@ export class FeasibilityQuery {
 
     copy.version = this.version
 
-    copy.setInclusionCriteria(this.inclusionCriteria.map((group) => [...group]))
+    copy.setInclusionCriteria(this.inclusionCriteria.map((group: string[]) => [...group]))
 
-    copy.setExclusionCriteria(this.exclusionCriteria.map((group) => [...group]))
+    copy.setExclusionCriteria(this.exclusionCriteria.map((group: string[]) => [...group]))
 
     return copy
   }

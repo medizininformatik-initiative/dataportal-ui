@@ -5,7 +5,7 @@ import { SearchFilterData, SearchFilterValueData } from './SearchFilterData'
 
 export class ProfileSearchFilterAdapter {
   public static convertToFilterValues(filters: ProfileSearchFilter[]): SearchFilterData[] {
-    return filters.map((filter) => {
+    return filters.map((filter: ProfileSearchFilter) => {
       const searchFilterValues: SearchFilterValueData[] = filter
         .getValues()
         .map((filterValue: ProfileSearchFilterValue) => this.createSearchFilterValue(filterValue))

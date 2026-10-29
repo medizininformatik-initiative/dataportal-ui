@@ -34,7 +34,7 @@ export class ConceptFilterTranslatorService {
    * @returns {Concept[]}
    */
   private translateSelectedConcepts(terminologyCodes: TerminologyCodeData[]): Concept[] {
-    return terminologyCodes.map((terminologyCode) => this.translateSingleConcept(terminologyCode))
+    return terminologyCodes.map((terminologyCode: TerminologyCodeData) => this.translateSingleConcept(terminologyCode))
   }
 
   /**

@@ -20,7 +20,7 @@ export class QuantityFilterChipService {
   public generateQuantityChipsFromAttributeFilters(attributeFilters: AttributeFilter[]): FilterChipData[] {
     const chips = attributeFilters.map((attributeFilter: AttributeFilter) => this.createQuantityChips(attributeFilter))
 
-    return chips.filter((chip) => chip !== undefined)
+    return chips.filter((chip: FilterChipData) => chip !== undefined)
   }
 
   /**
@@ -32,7 +32,7 @@ export class QuantityFilterChipService {
   public generateQuantityChipsFromValueFilters(valueFilters: ValueFilter[]): FilterChipData[] {
     const chips = valueFilters.map((valueFilter: ValueFilter) => this.createQuantityChips(valueFilter))
 
-    return chips.filter((chip) => chip !== undefined)
+    return chips.filter((chip: FilterChipData) => chip !== undefined)
   }
 
   /**

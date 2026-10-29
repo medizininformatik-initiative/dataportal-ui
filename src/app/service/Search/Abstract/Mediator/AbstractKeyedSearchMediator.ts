@@ -49,7 +49,7 @@ export abstract class AbstractKeyedSearchMediator<
     }
     return this.searchEngine
       .search(searchText, page, dataSetUrl)
-      .pipe(tap((result) => this.resultProvider.setSearchResults(dataSetUrl, result)))
+      .pipe(tap((result: T) => this.resultProvider.setSearchResults(dataSetUrl, result)))
   }
 
   /**
@@ -68,6 +68,6 @@ export abstract class AbstractKeyedSearchMediator<
     }
     return this.searchEngine
       .search(searchText, page, dataSetUrl)
-      .pipe(tap((result) => this.resultProvider.updateSearchResults(dataSetUrl, result)))
+      .pipe(tap((result: T) => this.resultProvider.updateSearchResults(dataSetUrl, result)))
   }
 }

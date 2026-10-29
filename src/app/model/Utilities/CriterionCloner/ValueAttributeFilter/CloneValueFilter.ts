@@ -7,7 +7,7 @@ import { CloneReferenceFilter } from './ReferenceFilter/CloneReferenceFilter'
 
 export class CloneValueFilter {
   public static deepCopyValueFilters(valueFilters: ValueFilter[]): ValueFilter[] {
-    return valueFilters.map((valueFilter) => this.deepCopyValueFilter(valueFilter))
+    return valueFilters.map((valueFilter: ValueFilter) => this.deepCopyValueFilter(valueFilter))
   }
 
   /**

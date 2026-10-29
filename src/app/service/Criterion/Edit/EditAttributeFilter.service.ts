@@ -29,7 +29,9 @@ export class EditAttributeFilterService {
   public buildFromConcept(criterion: Criterion, conceptFilter: ConceptFilter, attributeFilter: AttributeFilter): AttributeFilter[] {
     const filters = [...criterion.getAttributeFilters()]
     const updated = this.buildAttributeFilter(attributeFilter, FilterTypes.CONCEPT, conceptFilter, undefined)
-    const index = filters.findIndex((existing) => attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode())
+    const index = filters.findIndex(
+      (existing: AttributeFilter) => attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
+    )
     if (index !== -1) {
       filters[index] = updated
     } else {
@@ -49,7 +51,9 @@ export class EditAttributeFilterService {
   public buildFromReference(criterion: Criterion, referenceFilter: ReferenceFilter, attributeFilter: AttributeFilter): AttributeFilter[] {
     const filters = [...criterion.getAttributeFilters()]
     const updated = this.buildAttributeFilter(attributeFilter, FilterTypes.REFERENCE, undefined, undefined, referenceFilter)
-    const index = filters.findIndex((existing) => attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode())
+    const index = filters.findIndex(
+      (existing: AttributeFilter) => attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
+    )
     if (index !== -1) {
       filters[index] = updated
     } else {
@@ -73,7 +77,9 @@ export class EditAttributeFilterService {
   ): AttributeFilter[] {
     const filters = [...criterion.getAttributeFilters()]
     const updated = this.buildAttributeFilter(attributeFilter, FilterTypes.QUANTITY, undefined, quantityFilter)
-    const index = filters.findIndex((existing) => attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode())
+    const index = filters.findIndex(
+      (existing: AttributeFilter) => attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
+    )
     if (index !== -1) {
       filters[index] = updated
     } else {

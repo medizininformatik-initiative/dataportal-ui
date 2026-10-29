@@ -20,7 +20,7 @@ export class CriteriaBulkFoundListEntryAdapter extends AbstractTableAdapter<Crit
   }
 
   protected buildRows(listEntries: CriteriaBulkEntry[]): TableRowData[] {
-    return listEntries.map((entry) => this.buildRow(entry))
+    return listEntries.map((entry: CriteriaBulkEntry) => this.buildRow(entry))
   }
 
   private buildRow(entry: CriteriaBulkEntry): TableRowData {

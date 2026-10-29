@@ -49,7 +49,7 @@ export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFi
    */
   public getSelectedValuesOfType(type: ElasticSearchFilterTypes): string[] {
     const filters = this.criteriaSearchFiltersSubject.getValue()
-    const filter = filters.find((f) => f.getName() === type)
+    const filter = filters.find((f: CriteriaSearchFilter) => f.getName() === type)
     return filter ? filter.getSelectedValues() : []
   }
 
@@ -60,14 +60,16 @@ export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFi
   public filtersNotSet(): Observable<boolean> {
     return this.criteriaSearchFiltersSubject
       .asObservable()
-      .pipe(map((filters) => filters.every((filter) => filter.getSelectedValues().length === 0)))
+      .pipe(
+        map((filters: CriteriaSearchFilter[]) => filters.every((filter: CriteriaSearchFilter) => filter.getSelectedValues().length === 0))
+      )
   }
 
   /**
    * Resets all selected values for all filters.
    */
   public resetSelectedValues(): void {
-    const updatedFilters = this.criteriaSearchFiltersSubject.getValue().map((filter) => {
+    const updatedFilters = this.criteriaSearchFiltersSubject.getValue().map((filter: CriteriaSearchFilter) => {
       filter.setSelectedValues([])
       return filter
     })
@@ -91,7 +93,7 @@ export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFi
    */
   public updateCriteriaSearchFilter(updatedFilter: CriteriaSearchFilter): void {
     const filters = this.criteriaSearchFiltersSubject.getValue()
-    const index = filters.findIndex((filter) => filter.getName() === updatedFilter.getName())
+    const index = filters.findIndex((filter: CriteriaSearchFilter) => filter.getName() === updatedFilter.getName())
 
     if (index !== -1) {
       filters[index] = updatedFilter
@@ -107,7 +109,7 @@ export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFi
    */
   public updateFilterSelectedValues(filterType: ElasticSearchFilterTypes, selectedValues: string[]): void {
     const filters = this.criteriaSearchFiltersSubject.getValue()
-    const filter = filters.find((f) => f.getName() === (filterType.toLocaleLowerCase() as ElasticSearchFilterTypes))
+    const filter = filters.find((f: CriteriaSearchFilter) => f.getName() === (filterType.toLocaleLowerCase() as ElasticSearchFilterTypes))
     if (filter) {
       filter.setSelectedValues(selectedValues)
       this.criteriaSearchFiltersSubject.next([...filters])

@@ -65,7 +65,7 @@ export class ReferenceFilterTranslatorService {
     return new ReferenceFilter(
       uuidv4(),
       referencedCriteriaSet,
-      referenceCriteria.map((r) => r.getId())
+      referenceCriteria.map((r: ReferenceCriterion) => r.getId())
     )
   }
 
@@ -76,7 +76,7 @@ export class ReferenceFilterTranslatorService {
    * @returns {ReferenceCriterion[]}
    */
   private createReferenceCriteria(parentId: string, criteria: ReferenceCriteriaData[]): ReferenceCriterion[] {
-    return criteria.map((referenceCriterion) => this.createSingleReferenceCriterion(parentId, referenceCriterion))
+    return criteria.map((referenceCriterion: ReferenceCriteriaData) => this.createSingleReferenceCriterion(parentId, referenceCriterion))
   }
 
   /**
@@ -93,7 +93,7 @@ export class ReferenceFilterTranslatorService {
     const uiProfileData = this.uiProfileProviderService.getOne(uiProfile?.uiProfileId ?? '')
     const attributeFilterForRefrence: AttributeFilter[] = []
     if (uiProfileData.attributeDefinitions.length > 0) {
-      uiProfileData.attributeDefinitions.forEach((attributeDefinitionData) => {
+      uiProfileData.attributeDefinitions.forEach((attributeDefinitionData: AttributeDefinitionData) => {
         const testConcept = this.findAttributeFilterInProfile(referenceCriterion.attributeFilters, attributeDefinitionData.attributeCode)
         if (testConcept) {
           const builder = this.applyFilter(testConcept, attributeDefinitionData)

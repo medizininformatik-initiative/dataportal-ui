@@ -23,7 +23,7 @@ export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<Refe
   }
 
   protected buildRows(listEntries: ReferenceCriteriaListEntry[]): TableRowData[] {
-    return listEntries.map((listEntry) => this.buildRow(listEntry))
+    return listEntries.map((listEntry: ReferenceCriteriaListEntry) => this.buildRow(listEntry))
   }
 
   private buildRow(listEntry: ReferenceCriteriaListEntry): TableRowData {

@@ -20,7 +20,7 @@ export class AllowedUnitsComponent {
   public readonly selectedUnitDisplay = computed(() => this.selectedUnit()?.getDisplay() ?? '')
 
   public onSelectionChange(selectedValue: string) {
-    const unit = this.allowedUnits().find((u) => u.getDisplay() === selectedValue)
+    const unit = this.allowedUnits().find((u: QuantityUnit) => u.getDisplay() === selectedValue)
     if (unit) {
       this.selectedUnit.set(unit)
       this.selectionChange.emit(CloneQuantityUnit.deepCopyQuantityUnit(unit))

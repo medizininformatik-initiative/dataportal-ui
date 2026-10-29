@@ -47,7 +47,7 @@ export abstract class AbstractSimpleSearchMediator<
    * @returns {Observable<T>} An Observable that emits the search results
    */
   public searchAndSetProvider(searchText: string, page: number = 0): Observable<T> {
-    return this.searchEngine.search(searchText, page).pipe(tap((result) => this.resultProvider.setSearchResults(result)))
+    return this.searchEngine.search(searchText, page).pipe(tap((result: T) => this.resultProvider.setSearchResults(result)))
   }
 
   /**
@@ -58,6 +58,6 @@ export abstract class AbstractSimpleSearchMediator<
    * @returns {Observable<T>} An Observable that emits the updated search results
    */
   public searchAndUpdateProvider(searchText: string, page: number): Observable<T> {
-    return this.searchEngine.search(searchText, page).pipe(tap((result) => this.resultProvider.updateSearchResults(result)))
+    return this.searchEngine.search(searchText, page).pipe(tap((result: T) => this.resultProvider.updateSearchResults(result)))
   }
 }

@@ -57,17 +57,17 @@ export class FeasibilityQueryProviderService {
    */
   public getFeasibilityQueryByID(id: string): Observable<FeasibilityQuery> {
     return this.feasibilityQueryMapSubject.pipe(
-      filter((feasibilityQueryMap) => feasibilityQueryMap.has(id)),
-      map((feasibilityQueryMap) => feasibilityQueryMap.get(id))
+      filter((feasibilityQueryMap: Map<string, FeasibilityQuery>) => feasibilityQueryMap.has(id)),
+      map((feasibilityQueryMap: Map<string, FeasibilityQuery>) => feasibilityQueryMap.get(id))
     )
   }
 
   public getActiveFeasibilityQuery(): Observable<FeasibilityQuery> {
     return this.activeFeasibilityQuery.getActiveFeasibilityQueryIdObservable().pipe(
-      switchMap((id) =>
+      switchMap((id: string) =>
         this.feasibilityQueryMapSubject.pipe(
-          filter((map) => map.has(id)),
-          map((map) => map.get(id))
+          filter((map: Map<string, FeasibilityQuery>) => map.has(id)),
+          map((map: Map<string, FeasibilityQuery>) => map.get(id))
         )
       )
     )
@@ -149,13 +149,13 @@ export class FeasibilityQueryProviderService {
    * @returns {string[][]} - The updated array of criteria arrays.
    */
   private deleteCriterion(inexclusion: string[][], criterionID: string): string[][] {
-    inexclusion.forEach((idArray) => {
+    inexclusion.forEach((idArray: string[]) => {
       const index = idArray.indexOf(criterionID)
       if (index > -1) {
         idArray.splice(index, 1)
       }
     })
-    inexclusion = inexclusion.filter((item) => item.length > 0)
+    inexclusion = inexclusion.filter((item: string[]) => item.length > 0)
     return inexclusion
   }
 

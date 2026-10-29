@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core'
 import { map, Observable } from 'rxjs'
 import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData'
+import { ResultListData } from 'src/app/model/Interface/Search/ResultListData'
 import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
 import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
@@ -42,7 +43,9 @@ export class SearchEngine<C extends AbstractListEntry, T extends AbstractResultL
    * @returns {Observable<T>} An Observable that emits the mapped search results
    */
   public fetchAndMapSearchResults<L extends ListEntryData>(url: string, mapper: AbstractResultMapper<C, T>): Observable<T> {
-    return this.terminologyApiService.getSearchResults<L>(url).pipe(map((response) => mapper.mapResponseToResultList(response)))
+    return this.terminologyApiService
+      .getSearchResults<L>(url)
+      .pipe(map((response: ResultListData<L>) => mapper.mapResponseToResultList(response)))
   }
 
   /**

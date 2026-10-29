@@ -19,7 +19,7 @@ export class CriterionValidationTableAdapter extends AbstractTableAdapter<Criter
   }
 
   protected buildRows(entries: CriterionValidationEntry[]): TableRowData[] {
-    return entries.map((entry) => ({
+    return entries.map((entry: CriterionValidationEntry) => ({
       id: uuidv4(),
       isClickable: false,
       originalEntry: entry,

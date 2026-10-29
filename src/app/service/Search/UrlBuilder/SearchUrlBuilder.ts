@@ -106,7 +106,7 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
 
   public buildUrl(): string {
     const queryParamsArray: string[] = []
-    this.queryParams.forEach((value, key) => {
+    this.queryParams.forEach((value: string, key: string) => {
       queryParamsArray.push(`${key}=${value}`)
     })
     const queryParamsString = queryParamsArray.join('&')

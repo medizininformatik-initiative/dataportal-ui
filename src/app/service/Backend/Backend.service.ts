@@ -70,7 +70,7 @@ export class BackendService {
     const chunks = [[]]
     let i = 0
     let length = 0
-    array.forEach((url) => {
+    array.forEach((url: string) => {
       if (length + url.length > maxUrlLength) {
         i++
         chunks.push([])

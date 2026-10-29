@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
 import { TimeRestrictionNotSet } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
@@ -39,7 +40,7 @@ export class ApplyTimeRestrictionComponent {
   })
 
   public readonly allCriteriaFiltered = computed(() =>
-    this.allCriteria().filter((criterion) => criterion.getTimeRestriction() !== undefined)
+    this.allCriteria().filter((criterion: Criterion) => criterion.getTimeRestriction() !== undefined)
   )
   public readonly criteriaCount = computed(() => this.allCriteriaFiltered().length)
   public readonly isExpanded = signal(false)
@@ -90,7 +91,7 @@ export class ApplyTimeRestrictionComponent {
     if (!restriction) {
       return
     }
-    this.allCriteriaFiltered().forEach((criterion) => {
+    this.allCriteriaFiltered().forEach((criterion: Criterion) => {
       criterion.setTimeRestriction(restriction)
       const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(criterion)
       this.criterionProviderService.setOne(clonedCriterion)

@@ -1,6 +1,8 @@
 import { afterNextRender, Component, computed, ElementRef, inject, Injector, input, QueryList, signal, ViewChildren } from '@angular/core'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
 import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { SearchbarComponent } from 'src/app/shared/components/search/searchbar.component'
@@ -43,7 +45,7 @@ export class DisplayProfilesComponent {
     if (!term) {
       return this.profiles()
     }
-    return this.profiles().filter((profile) => {
+    return this.profiles().filter((profile: DataSelectionProfile) => {
       const nameMatch = profile.getDisplay().translate(lang).toLowerCase().includes(term)
       if (nameMatch) {
         return true
@@ -51,7 +53,7 @@ export class DisplayProfilesComponent {
       return profile
         .getProfileFields()
         .getSelectedBasicFields()
-        .some((f) => f.getDisplay().translate(lang).toLowerCase().includes(term))
+        .some((f: SelectedBasicField) => f.getDisplay().translate(lang).toLowerCase().includes(term))
     })
   })
 
@@ -66,8 +68,8 @@ export class DisplayProfilesComponent {
       const fields = profile
         .getProfileFields()
         .getSelectedBasicFields()
-        .filter((f) => f.getDisplay().translate(lang).toLowerCase().includes(term))
-        .map((f) => f.getDisplay().translate(lang))
+        .filter((f: SelectedBasicField) => f.getDisplay().translate(lang).toLowerCase().includes(term))
+        .map((f: SelectedBasicField) => f.getDisplay().translate(lang))
       if (fields.length) {
         map.set(profile.getId(), fields)
       }
@@ -85,7 +87,7 @@ export class DisplayProfilesComponent {
       const fieldMatch = profile
         .getProfileFields()
         .getSelectedBasicFields()
-        .some((f) => f.getDisplay().translate(lang).toLowerCase().includes(term))
+        .some((f: SelectedBasicField) => f.getDisplay().translate(lang).toLowerCase().includes(term))
       if (nameMatch) {
         byName++
       } else if (fieldMatch) {
@@ -105,14 +107,14 @@ export class DisplayProfilesComponent {
   private flipAndReorder(direction: 'up' | 'down', profileId: string): void {
     const profiles = this.profiles()
     const visibleProfiles = this.filteredProfiles()
-    const idx = profiles.findIndex((p) => p.getId() === profileId)
+    const idx = profiles.findIndex((p: DataSelectionProfile) => p.getId() === profileId)
     if (direction === 'up' ? idx <= 1 : idx < 0 || idx >= profiles.length - 1) {
       return
     }
 
     // Capture old top positions using visible (filtered) profiles since boxRefs reflects them
     const oldTops = new Map<string, number>()
-    this.boxRefs.forEach((ref, i) => {
+    this.boxRefs.forEach((ref: ElementRef<HTMLElement>, i: number) => {
       if (i < visibleProfiles.length) {
         oldTops.set(visibleProfiles[i].getId(), ref.nativeElement.getBoundingClientRect().top)
       }
@@ -131,7 +133,7 @@ export class DisplayProfilesComponent {
     afterNextRender(
       () => {
         const newVisibleProfiles = this.filteredProfiles()
-        this.boxRefs.forEach((ref, i) => {
+        this.boxRefs.forEach((ref: ElementRef<HTMLElement>, i: number) => {
           if (i >= newVisibleProfiles.length) {
             return
           }

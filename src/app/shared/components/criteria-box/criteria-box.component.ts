@@ -84,7 +84,7 @@ export class CriteriaBoxComponent implements OnInit {
     return attributeFilter
       .getReference()
       .getSelectedReferenceIds()
-      .reduce((acc, id) => {
+      .reduce((acc: ReferenceCriterion[], id: string) => {
         try {
           acc.push(this.referenceCriterionProvider.getOne(id))
         } catch {

@@ -4,7 +4,7 @@ import { TreeNode } from '../TreeNodeInterface'
 export class FieldsTreeAdapter {
   public static fromTree(trees: BasicField[]): TreeNode[] {
     const result = []
-    trees.forEach((tree) => {
+    trees.forEach((tree: BasicField) => {
       result.push(FieldsTreeAdapter.toTreeNode(tree))
     })
     return result

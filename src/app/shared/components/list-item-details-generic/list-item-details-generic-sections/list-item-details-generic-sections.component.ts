@@ -29,7 +29,7 @@ export class ListItemDetailsGenericSectionsComponent {
     if (!term) {
       return this.listItemDetails()
     }
-    return this.listItemDetails().filter((item) => item.display.translate(lang).toLowerCase().includes(term))
+    return this.listItemDetails().filter((item: ListItemDetailsRelativeData) => item.display.translate(lang).toLowerCase().includes(term))
   })
 
   constructor() {}

@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy, inject } from '@angular/core'
 import { Subscription } from 'rxjs'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { StructuredQueryCriterion } from 'src/app/model/StructuredQuery/Criterion/StructuredQueryCriterion'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode'
@@ -114,7 +115,7 @@ export class ConsentService implements OnDestroy {
     this.activeFeasibilityQuerySusbscription?.unsubscribe()
     this.activeFeasibilityQuerySusbscription = this.feasibilityQueryProviderService
       .getActiveFeasibilityQuery()
-      .subscribe((feasibilityQuery) => {
+      .subscribe((feasibilityQuery: FeasibilityQuery) => {
         feasibilityQuery.setConsent(this.consent)
       })
   }
@@ -175,7 +176,7 @@ export class ConsentService implements OnDestroy {
         const value = this.lookupTable[key]
 
         if (value.code === provisionsCode) {
-          const [distributedAnalysis, euGdpr, insuranceData, contact] = key.split(':').map((v) => v === 'true')
+          const [distributedAnalysis, euGdpr, insuranceData, contact] = key.split(':').map((v: string) => v === 'true')
           return { distributedAnalysis, euGdpr, insuranceData, contact }
         }
       }

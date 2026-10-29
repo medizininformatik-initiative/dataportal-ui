@@ -56,7 +56,7 @@ export class CRTDL2UIModelService {
     this.feasibilityQueryService.clearFeasibilityQuery()
     return this.structuredQuery2FeasibilityQueryService.translate(cohortDefinition).pipe(
       take(1),
-      tap((feasibilityQuery) => {
+      tap((feasibilityQuery: FeasibilityQuery) => {
         this.setFeasibilityQueryProvider(feasibilityQuery)
       })
     )
@@ -79,7 +79,7 @@ export class CRTDL2UIModelService {
     this.resetDataSelection()
     return this.dataExtraction2UiDataSelectionService.translate(dataExtraction).pipe(
       take(1),
-      map((dataSelection) => {
+      map((dataSelection: DataSelection) => {
         this.setDataSelectionProvider(dataSelection)
         return dataSelection
       })

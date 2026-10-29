@@ -23,7 +23,7 @@ export class TerminologySystemDictionary {
   }
 
   private createDictionary(entries: CodeSystemEntry[]): Record<string, Display> {
-    return entries.reduce((acc, entry) => {
+    return entries.reduce((acc: Record<string, Display>, entry: CodeSystemEntry) => {
       const key = entry.url
       acc[key] = Display.fromJson(entry.display)
       return acc

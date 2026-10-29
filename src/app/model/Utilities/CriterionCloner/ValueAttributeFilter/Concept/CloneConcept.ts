@@ -7,6 +7,6 @@ export class CloneConcept {
   }
 
   public static deepCopyConcepts(concepts: Concept[]): Concept[] {
-    return concepts.map((concept) => this.deepCopyConcept(concept))
+    return concepts.map((concept: Concept) => this.deepCopyConcept(concept))
   }
 }

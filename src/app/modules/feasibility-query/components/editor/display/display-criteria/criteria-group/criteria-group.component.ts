@@ -23,5 +23,7 @@ export class CriteriaGroupComponent {
 
   private readonly allCriteria = toSignal(this.criterionProvider.getAll(), { requireSync: true })
 
-  public readonly criteria = computed<Criterion[]>(() => this.criterionIds().map((id) => this.allCriteria().find((c) => c.getId() === id)))
+  public readonly criteria = computed<Criterion[]>(() =>
+    this.criterionIds().map((id: string) => this.allCriteria().find((c: Criterion) => c.getId() === id))
+  )
 }

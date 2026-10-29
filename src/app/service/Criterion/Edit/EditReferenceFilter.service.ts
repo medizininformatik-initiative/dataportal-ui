@@ -27,28 +27,31 @@ export class EditReferenceFilterService {
    */
   public updateReferenceFilter(ids: string[], criterionId: string, attributeFilter: AttributeFilter): Observable<ReferenceFilter> {
     return this.buildReferenceCriterionService.buildReferenceCriteriaFromHashes(ids, criterionId).pipe(
-      tap((referenceCriteria) => {
+      tap((referenceCriteria: ReferenceCriterion[]) => {
         this.updateProvider(referenceCriteria)
       }),
-      map((referenceCriteria) => this.addSelectedReferences(referenceCriteria, attributeFilter))
+      map((referenceCriteria: ReferenceCriterion[]) => this.addSelectedReferences(referenceCriteria, attributeFilter))
     )
   }
 
   private updateProvider(references: ReferenceCriterion[]): void {
-    references.forEach((reference) => this.referenceCriterionProvider.setOne(reference))
+    references.forEach((reference: ReferenceCriterion) => this.referenceCriterionProvider.setOne(reference))
   }
 
   public updateSelectedReferences(updatedReferences: ReferenceCriterion[], attributeFilter: AttributeFilter): ReferenceFilter {
     return this.buildReferenceFilter(
       attributeFilter.getReference(),
-      updatedReferences.map((ref) => ref.getId())
+      updatedReferences.map((ref: ReferenceCriterion) => ref.getId())
     )
   }
 
   private addSelectedReferences(references: ReferenceCriterion[], attributeFilter: AttributeFilter): ReferenceFilter {
     const reference = attributeFilter.getReference()
 
-    return this.buildReferenceFilter(reference, [...reference.getSelectedReferenceIds(), ...references.map((ref) => ref.getId())])
+    return this.buildReferenceFilter(reference, [
+      ...reference.getSelectedReferenceIds(),
+      ...references.map((ref: ReferenceCriterion) => ref.getId()),
+    ])
   }
 
   private buildReferenceFilter(referenceFilter: ReferenceFilter, selectedReferenceIds: string[]): ReferenceFilter {

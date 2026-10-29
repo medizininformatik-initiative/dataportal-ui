@@ -1,5 +1,5 @@
 import { Component, inject, model, OnInit, output } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, UrlSegment } from '@angular/router'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -22,7 +22,7 @@ export class SearchModeToggleComponent implements OnInit {
   constructor() {}
 
   public ngOnInit() {
-    this.activatedRoute.url.subscribe((urlSegments) => {
+    this.activatedRoute.url.subscribe((urlSegments: UrlSegment[]) => {
       const lastSegment = urlSegments[urlSegments.length - 1].path
       if (lastSegment === 'bulk-search') {
         this.selectedMode.set('bulk-search')

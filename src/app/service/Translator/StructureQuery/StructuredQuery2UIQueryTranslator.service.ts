@@ -62,7 +62,7 @@ export class StructuredQuery2UIQueryTranslatorService {
           .filter((id: string | undefined): id is string => id !== undefined)
       )
     })
-    return translatedCriteria.filter((array) => array.length > 0)
+    return translatedCriteria.filter((array: string[]) => array.length > 0)
   }
 
   private setConsent(terminologyCode: TerminologyCode): void {

@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter'
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
 import { TimeRestrictionNotSet } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
@@ -46,7 +47,9 @@ export class ApplyTimeRestrictionComponent {
   })
 
   public readonly allProfileFiltered = computed(() =>
-    this.allProfile().filter((profile) => profile.getFilters().some((filter) => filter.getUiType() === DataSelectionUIType.TIMERESTRICTION))
+    this.allProfile().filter((profile) =>
+      profile.getFilters().some((filter: AbstractProfileFilter) => filter.getUiType() === DataSelectionUIType.TIMERESTRICTION)
+    )
   )
   public readonly profileCount = computed(() => this.allProfileFiltered().length)
   public readonly isExpanded = signal(false)
@@ -98,7 +101,9 @@ export class ApplyTimeRestrictionComponent {
       return
     }
     this.allProfileFiltered().forEach((profile) => {
-      const timeRestrictionFilter = profile.getFilters().filter((filter) => filter.getUiType() === DataSelectionUIType.TIMERESTRICTION)
+      const timeRestrictionFilter = profile
+        .getFilters()
+        .filter((filter: AbstractProfileFilter) => filter.getUiType() === DataSelectionUIType.TIMERESTRICTION)
       if (timeRestrictionFilter.length > 0) {
         const profileDateFilter = new ProfileTimeRestrictionFilter(
           timeRestrictionFilter[0].getName(),

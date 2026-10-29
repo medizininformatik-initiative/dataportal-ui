@@ -71,7 +71,7 @@ export class ValidationModalComponent {
   public readonly dsValidCount = computed(
     () =>
       this.dataDefinitionValidationStatus().dataSelectionValidationState.profileValidationStates.filter(
-        (validatedProfile) => validatedProfile.isValid
+        (validatedProfile: ProfileValidationState) => validatedProfile.isValid
       ).length
   )
   public readonly dsTotalCount = computed(() => this.dataDefinitionValidationStatus().dataSelectionValidationState.profileCount)
@@ -91,7 +91,7 @@ export class ValidationModalComponent {
 
   public readonly dsTableData = computed<TableData>(() => {
     const validatedProfiles = this.dataDefinitionValidationStatus().dataSelectionValidationState.profileValidationStates
-    const entries = validatedProfiles.map((profileState) => this.buildProfileValidationEntry(profileState))
+    const entries = validatedProfiles.map((profileState: ProfileValidationState) => this.buildProfileValidationEntry(profileState))
     return this.profileValidationTableAdapter.adapt(entries)
   })
 

@@ -20,7 +20,7 @@ export class DropGroupDirective implements OnInit {
   public feasibilityQuery: FeasibilityQuery
 
   public ngOnInit() {
-    this.feasibilityQueryProviderService.getActiveFeasibilityQuery().subscribe((feasibilityQuery) => {
+    this.feasibilityQueryProviderService.getActiveFeasibilityQuery().subscribe((feasibilityQuery: FeasibilityQuery) => {
       this.feasibilityQuery = feasibilityQuery
     })
   }
@@ -103,7 +103,7 @@ export class DropGroupDirective implements OnInit {
   // ─── Pure logic — untouched ──────────────────────────────────────────────────
 
   private deleteCriterion(inexclusion: string[][], criterionID: string): string[][] {
-    inexclusion.every((idArray) => {
+    inexclusion.every((idArray: string[]) => {
       const index = idArray.indexOf(criterionID)
       if (index > -1) {
         idArray.splice(index, 1)
@@ -111,7 +111,7 @@ export class DropGroupDirective implements OnInit {
       }
       return true
     })
-    return inexclusion.filter((item) => item.length > 0)
+    return inexclusion.filter((item: string[]) => item.length > 0)
   }
 
   private moveCriterion(criterionID: string, previousIndex: number, currentIndex: number): void {
@@ -153,8 +153,8 @@ export class DropGroupDirective implements OnInit {
   private getPosition(criteria: string[][], currentIndex: number): [number, number] {
     let position: [number, number] = [0, 0]
     let count = 0
-    criteria.forEach((outer, outerIndex) => {
-      outer.forEach((_, innerIndex) => {
+    criteria.forEach((outer: string[], outerIndex: number) => {
+      outer.forEach((_: string, innerIndex: number) => {
         if (count === currentIndex) {
           position = [outerIndex, innerIndex]
         }

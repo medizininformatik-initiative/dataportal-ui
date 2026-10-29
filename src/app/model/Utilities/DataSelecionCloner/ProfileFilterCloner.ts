@@ -14,7 +14,7 @@ export class ProfileFilterCloner {
     if (!filters || filters.length === 0) {
       return []
     }
-    return filters.map((filter) => this.deepCopyProfileFilter(filter))
+    return filters.map((filter: AbstractProfileFilter) => this.deepCopyProfileFilter(filter))
   }
 
   public static deepCopyProfileFilter(filter: AbstractProfileFilter) {

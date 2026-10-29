@@ -3,6 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop'
 import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper'
 import { TranslateModule } from '@ngx-translate/core'
 import { map } from 'rxjs'
+import { QueryResult } from 'src/app/model/Result/QueryResult'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
 import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
@@ -37,7 +38,9 @@ export class CohortDefinitionComponent {
   public readonly isFeasibilityExistent = computed(() => this.feasibilityQueryValidation.validationState().isValid)
 
   public readonly totalNumberOfPatients = toSignal(
-    this.resultProviderService.getResultOfActiveFeasibilityQuery().pipe(map((result) => result?.getTotalNumberOfPatients() ?? 0)),
+    this.resultProviderService
+      .getResultOfActiveFeasibilityQuery()
+      .pipe(map((result: QueryResult) => result?.getTotalNumberOfPatients() ?? 0)),
     { initialValue: 0 }
   )
 

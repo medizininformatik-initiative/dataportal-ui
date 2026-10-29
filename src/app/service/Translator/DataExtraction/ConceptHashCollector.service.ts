@@ -19,7 +19,7 @@ export class ConceptHashCollectorService {
 
   public collectConceptHashes(dataExtraction: DataExtractionData): string[] {
     const hashes: string[] = []
-    dataExtraction.attributeGroups.forEach((group) => {
+    dataExtraction.attributeGroups.forEach((group: AttributeGroupsData) => {
       this.collectGroupHashes(group, hashes)
     })
     return hashes
@@ -27,7 +27,7 @@ export class ConceptHashCollectorService {
 
   private collectGroupHashes(group: AttributeGroupsData, hashes: string[]): void {
     if (group.filter) {
-      group.filter.forEach((filter) => {
+      group.filter.forEach((filter: FilterData) => {
         this.collectFilterHashes(filter, hashes)
       })
     }
@@ -35,7 +35,7 @@ export class ConceptHashCollectorService {
 
   private collectFilterHashes(filter: FilterData, hashes: string[]): void {
     if (filter.type === 'token' && TypeGuard.isFilterData(filter)) {
-      filter.codes.forEach((code) => {
+      filter.codes.forEach((code: TerminologyCodeData) => {
         hashes.push(this.createConceptHash(code))
       })
     }

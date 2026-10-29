@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
 import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
@@ -32,10 +33,10 @@ export class CriterionMenuFunctionsService {
   public duplicateCriterion(id: string): void {
     const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(this.criterionProviderService.getOne(id), false)
 
-    clonedCriterion.getReferenceAttributeFilters().forEach((attributeFilter) => {
+    clonedCriterion.getReferenceAttributeFilters().forEach((attributeFilter: AttributeFilter) => {
       if (attributeFilter.isReferenceSet()) {
         const referenceFilter = attributeFilter.getReference()
-        const newIds = referenceFilter.getSelectedReferenceIds().map((refId) => {
+        const newIds = referenceFilter.getSelectedReferenceIds().map((refId: string) => {
           const originalRef = this.referenceCriterionProviderService.getOne(refId)
           if (!originalRef) {
             return refId

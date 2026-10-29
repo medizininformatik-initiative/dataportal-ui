@@ -31,8 +31,8 @@ export class ReferenceFieldTranslatorService {
     idMap: { oldId: string; newId: string }[]
   ): SelectedReferenceField[] {
     const result = this.filterReferenceAttributes(attributes)
-      .map((attribute) => this.mapAttributeToSelectedReferenceField(attribute, profileFields, idMap))
-      .filter((element) => element !== undefined)
+      .map((attribute: AttributesData) => this.mapAttributeToSelectedReferenceField(attribute, profileFields, idMap))
+      .filter((element: SelectedReferenceField) => element !== undefined)
 
     this.clearUnmatchedRecommendedFlags(profileFields, result)
 
@@ -40,7 +40,7 @@ export class ReferenceFieldTranslatorService {
   }
 
   private filterReferenceAttributes(attributes: AttributesData[]): AttributesData[] {
-    return attributes.filter((attribute) => attribute.linkedGroups && attribute.linkedGroups.length > 0)
+    return attributes.filter((attribute: AttributesData) => attribute.linkedGroups && attribute.linkedGroups.length > 0)
   }
 
   /**
@@ -65,7 +65,7 @@ export class ReferenceFieldTranslatorService {
   }
 
   private clearUnmatchedRecommendedFlags(profileFields: ProfileFields, result: SelectedReferenceField[]): void {
-    profileFields.getReferenceFields().forEach((refField) => {
+    profileFields.getReferenceFields().forEach((refField: ReferenceField) => {
       if (refField.getRecommended() && !this.isFieldInResult(refField, result)) {
         refField.setRecommended(false)
       }
@@ -73,11 +73,11 @@ export class ReferenceFieldTranslatorService {
   }
 
   private isFieldInResult(refField: ReferenceField, result: SelectedReferenceField[]): boolean {
-    return result.some((res) => res.getSelectedField().getElementId() === refField.getElementId())
+    return result.some((res: SelectedReferenceField) => res.getSelectedField().getElementId() === refField.getElementId())
   }
 
   private findReferenceField(referenceFields: ReferenceField[], attributeRef: string): ReferenceField {
-    return referenceFields.find((field) => field.getElementId() === attributeRef)
+    return referenceFields.find((field: ReferenceField) => field.getElementId() === attributeRef)
   }
 
   /**
@@ -105,6 +105,8 @@ export class ReferenceFieldTranslatorService {
    * @returns {string[]}
    */
   private resolveLinkedProfileIds(linkedGroups: string[], idMap: { oldId: string; newId: string }[]): string[] {
-    return linkedGroups.map((linkedGroup) => idMap.find((id) => id.oldId === linkedGroup)?.newId).filter((id) => id !== undefined)
+    return linkedGroups
+      .map((linkedGroup: string) => idMap.find((id) => id.oldId === linkedGroup)?.newId)
+      .filter((id: string) => id !== undefined)
   }
 }

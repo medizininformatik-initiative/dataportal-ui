@@ -13,10 +13,10 @@ export class SelectedProfileFieldsService {
   private readonly fieldIds = new Set<string>()
 
   public updateSelectionStatus(basicFields: BasicField[], selectedFields: SelectedBasicField[]): void {
-    const selectedElementIds = new Set(selectedFields.map((field) => field.getElementId()))
+    const selectedElementIds = new Set(selectedFields.map((field: SelectedBasicField) => field.getElementId()))
 
     const traverseAndUpdate = (fields: BasicField[]): void => {
-      fields.forEach((field) => {
+      fields.forEach((field: BasicField) => {
         if (selectedElementIds.has(field.getElementId())) {
           field.setIsSelected(true)
         } else {
@@ -38,7 +38,7 @@ export class SelectedProfileFieldsService {
   }
 
   private deepCopyBasicFields(fields: BasicField[]): BasicField[] {
-    return fields.map((field) => BasicFieldCloner.deepCopyBasicField(field))
+    return fields.map((field: BasicField) => BasicFieldCloner.deepCopyBasicField(field))
   }
 
   public getDeepCopyBasicFields(): Observable<BasicField[]> {
@@ -55,7 +55,7 @@ export class SelectedProfileFieldsService {
   }
 
   private setSelectedChildrenFields(fields: BasicField[]): void {
-    fields.forEach((field) => {
+    fields.forEach((field: BasicField) => {
       this.fieldIds.add(field.getElementId())
       this.setSelectedChildrenFields(field.getChildren())
     })
@@ -72,7 +72,9 @@ export class SelectedProfileFieldsService {
 
   public removeFromSelection(field: BasicField): void {
     const currentSelection = this.selectedFields.getValue()
-    const updatedSelection = currentSelection.filter((f) => f.getSelectedField().getElementId() !== field.getElementId())
+    const updatedSelection = currentSelection.filter(
+      (f: SelectedBasicField) => f.getSelectedField().getElementId() !== field.getElementId()
+    )
     this.selectedFields.next(updatedSelection)
     this.fieldIds.delete(field.getElementId())
     this.updateDeepCopyField(field, false) // Mark as unselected
@@ -89,7 +91,7 @@ export class SelectedProfileFieldsService {
   }
 
   public updateNodeInDeepCopy(fields: BasicField[], updatedField: BasicField, isSelected: boolean): BasicField[] {
-    return fields.map((field) => {
+    return fields.map((field: BasicField) => {
       if (field.getElementId() === updatedField.getElementId()) {
         field.setIsSelected(isSelected)
         return field
@@ -118,7 +120,7 @@ export class SelectedProfileFieldsService {
   }
 
   private clearSelectionInDeepCopy(fields: BasicField[]): BasicField[] {
-    return fields.map((field) => {
+    return fields.map((field: BasicField) => {
       field.setIsSelected(false)
       if (field.getChildren()) {
         field.setChildren(this.clearSelectionInDeepCopy(field.getChildren()))

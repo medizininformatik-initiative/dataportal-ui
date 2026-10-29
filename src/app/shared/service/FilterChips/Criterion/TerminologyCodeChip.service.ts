@@ -24,7 +24,7 @@ export class TerminologyCodeChipService {
       type: 'SHARED_COMPONENTS.CHIPS.TERMINOLOGY_CODE',
       typeExpanded: false,
       twoLineDisplay: false,
-      data: termcodeFilters.map((termcodeFilter) => this.createChipData(termcodeFilter)),
+      data: termcodeFilters.map((termcodeFilter: TerminologyCode) => this.createChipData(termcodeFilter)),
     }
     return chip
   }

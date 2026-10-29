@@ -44,7 +44,7 @@ export class ProfileFieldBuilderService {
    * @returns {BasicField[]} Array of BasicField instances.
    */
   private mapBasicFields(nodes: BasicFieldData[], selectedBasicFields: SelectedBasicField[]): BasicField[] {
-    return nodes.map((node) => this.mapBasicField(node, selectedBasicFields))
+    return nodes.map((node: BasicFieldData) => this.mapBasicField(node, selectedBasicFields))
   }
 
   /**
@@ -54,7 +54,7 @@ export class ProfileFieldBuilderService {
    * @returns {BasicField} A BasicField instance.
    */
   private mapBasicField(node: BasicFieldData, selectedBasicFields: SelectedBasicField[]): BasicField {
-    const children = node.children ? node.children.map((child) => this.mapBasicField(child, selectedBasicFields)) : []
+    const children = node.children ? node.children.map((child: BasicFieldData) => this.mapBasicField(child, selectedBasicFields)) : []
     const display = Display.fromJson(node?.display)
     const description = Display.fromJson(node?.description)
     const isSelected = node.required || node.recommended
@@ -73,6 +73,6 @@ export class ProfileFieldBuilderService {
    * @returns {ReferenceField[]} Array of ReferenceField instances.
    */
   private mapReferenceFields(referenceFields: ReferenceFieldData[]): ReferenceField[] {
-    return referenceFields.map((field) => ReferenceField.fromJson(field))
+    return referenceFields.map((field: ReferenceFieldData) => ReferenceField.fromJson(field))
   }
 }

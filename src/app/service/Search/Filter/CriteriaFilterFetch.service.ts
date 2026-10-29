@@ -32,7 +32,7 @@ export class CriteriaFilterFetchService {
    */
   public fetchAndUpdateFilters(searchText: string, targetFilter: string): void {
     const url = this.buildUrl(searchText, targetFilter?.toLocaleLowerCase())
-    this.searchFilterService.fetchFilters(url).subscribe((fetchedFilters) => {
+    this.searchFilterService.fetchFilters(url).subscribe((fetchedFilters: CriteriaSearchFilter[]) => {
       this.mergeFiltersIntoProvider(fetchedFilters)
     })
   }
@@ -45,11 +45,11 @@ export class CriteriaFilterFetchService {
       builder.withTargetFilter(targetFilter)
     }
 
-    const filtersToApply = targetFilter ? currentFilters.filter((f) => f.getName() !== targetFilter) : currentFilters
+    const filtersToApply = targetFilter ? currentFilters.filter((f: CriteriaSearchFilter) => f.getName() !== targetFilter) : currentFilters
 
     filtersToApply
-      .filter((f) => f.getSelectedValues().length > 0)
-      .forEach((f) => {
+      .filter((f: CriteriaSearchFilter) => f.getSelectedValues().length > 0)
+      .forEach((f: CriteriaSearchFilter) => {
         const values = f.getSelectedValues().join(', ')
         const name = f.getName()
         if (name === ElasticSearchFilterTypes.CONTEXT) {
@@ -70,8 +70,8 @@ export class CriteriaFilterFetchService {
    */
   private mergeFiltersIntoProvider(fetchedFilters: CriteriaSearchFilter[]): void {
     const currentFilters = this.filterProvider.getCriteriaSearchFiltersValue()
-    fetchedFilters.forEach((fetchedFilter) => {
-      const existing = currentFilters.find((f) => f.getName() === fetchedFilter.getName())
+    fetchedFilters.forEach((fetchedFilter: CriteriaSearchFilter) => {
+      const existing = currentFilters.find((f: CriteriaSearchFilter) => f.getName() === fetchedFilter.getName())
       if (existing) {
         existing.setValues(fetchedFilter.getValues())
       }

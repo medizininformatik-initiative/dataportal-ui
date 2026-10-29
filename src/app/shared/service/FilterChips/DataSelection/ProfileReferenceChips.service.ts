@@ -39,7 +39,7 @@ export class ProfileReferenceChipsService {
   private getLinkedProfileDisplays(selectedReferenceField: SelectedReferenceField): { display: Display; number: number }[] {
     return selectedReferenceField
       .getLinkedProfileIds()
-      .map((id) => ({
+      .map((id: string) => ({
         display: this.profileProviderService.getOne(id).getLabel(),
         number: this.profileProviderService.getOne(id).getLabelNumber(),
       }))

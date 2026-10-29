@@ -58,7 +58,9 @@ export class ProfileFields {
   }
 
   public getRequiredOrRecommendedReferences(): ReferenceField[] {
-    return this.referenceFields.filter((referenceField) => referenceField.getIsRequired() || referenceField.getRecommended())
+    return this.referenceFields.filter(
+      (referenceField: ReferenceField) => referenceField.getIsRequired() || referenceField.getRecommended()
+    )
   }
 
   /**
@@ -70,12 +72,14 @@ export class ProfileFields {
     const requiredOrRecommendedFields = this.getRequiredOrRecommendedReferences()
 
     return requiredOrRecommendedFields.filter(
-      (referenceField) =>
-        !this.selectedReferenceFields.some((selectedField) => selectedField.getElementId() === referenceField.getElementId())
+      (referenceField: ReferenceField) =>
+        !this.selectedReferenceFields.some(
+          (selectedField: SelectedReferenceField) => selectedField.getElementId() === referenceField.getElementId()
+        )
     )
   }
 
   public getUnlinkedSelectedFields(): SelectedReferenceField[] {
-    return this.selectedReferenceFields.filter((selectedField) => selectedField.getLinkedProfileIds().length === 0)
+    return this.selectedReferenceFields.filter((selectedField: SelectedReferenceField) => selectedField.getLinkedProfileIds().length === 0)
   }
 }

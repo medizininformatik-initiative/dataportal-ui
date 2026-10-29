@@ -17,7 +17,7 @@ export class TerminologyCodeTranslator {
       return []
     }
 
-    return termCodes.map((termCode) => this.mapToTranslatedCode(termCode))
+    return termCodes.map((termCode: TerminologyCode) => this.mapToTranslatedCode(termCode))
   }
 
   /**

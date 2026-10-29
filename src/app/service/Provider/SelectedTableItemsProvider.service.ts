@@ -35,7 +35,7 @@ export class SelectedTableItemsProvider<C extends AbstractListEntry> extends Abs
   }
 
   public getIds(): string[] {
-    return this.items.map((e) => this.selectId(e))
+    return this.items.map((e: C) => this.selectId(e))
   }
 
   public select(item: C): void {

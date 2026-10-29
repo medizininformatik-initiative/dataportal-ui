@@ -18,6 +18,6 @@ export class CriteriaResulByIdMapperStrategy implements MappingStrategy<Criteria
   }
 
   public mapResponseToEntries(results: CriteriaListEntryData[]): CriteriaListEntry[] {
-    return results.map((entry) => CriteriaListEntry.fromJson(entry))
+    return results.map((entry: CriteriaListEntryData) => CriteriaListEntry.fromJson(entry))
   }
 }

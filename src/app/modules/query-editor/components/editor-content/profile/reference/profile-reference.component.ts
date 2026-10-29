@@ -37,7 +37,7 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
     if (this.activeFieldTabId() === undefined) {
       return 1
     } else {
-      const index = this.referenceFields().findIndex((ref) => ref.getElementId() === this.activeFieldTabId())
+      const index = this.referenceFields().findIndex((ref: ReferenceField) => ref.getElementId() === this.activeFieldTabId())
       return index >= 0 ? index + 1 : 1
     }
   })
@@ -65,7 +65,9 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
   }
 
   private findSelectedField(referencedField: ReferenceField): number | undefined {
-    return this.selectedReferenceFields().findIndex((field) => field.getElementId() === referencedField.getElementId())
+    return this.selectedReferenceFields().findIndex(
+      (field: SelectedReferenceField) => field.getElementId() === referencedField.getElementId()
+    )
   }
 
   private emitUpdatedFields(): void {

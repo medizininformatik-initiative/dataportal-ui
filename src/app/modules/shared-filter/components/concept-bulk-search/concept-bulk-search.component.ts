@@ -88,7 +88,7 @@ export class ConceptBulkSearchComponent {
 
     this.searchSubscription = this.bulkSearchService
       .search(this.bulkSearchTermInput, this.selectedValueSet() ?? '')
-      .subscribe((resultList) => {
+      .subscribe((resultList: CodeableConceptBulkResultList) => {
         this.updateTableData(resultList)
         this.updateSelectedConcepts(resultList.getFound())
       })
@@ -104,7 +104,7 @@ export class ConceptBulkSearchComponent {
   }
 
   private updateSelectedConcepts(found: CodeableConceptBulkEntry[]): void {
-    const concepts = found.map((entry) => new Concept(entry.getDisplay(), entry.getTermCode()))
+    const concepts = found.map((entry: CodeableConceptBulkEntry) => new Concept(entry.getDisplay(), entry.getTermCode()))
 
     const updated = this.conceptSelectionService.addConceptsToSelection(concepts, this.selectedConcepts())
 

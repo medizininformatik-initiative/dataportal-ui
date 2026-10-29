@@ -101,7 +101,7 @@ export class CreateBulkCriterionService {
 
   private applyFilters(builder: CriterionBuilder, uiProfile: UiProfileData) {
     builder.withAttributeFilters(this.createAttributeFilter(uiProfile))
-    builder.withValueFilters([this.createValueFilter(uiProfile)].filter((filter) => filter !== undefined))
+    builder.withValueFilters([this.createValueFilter(uiProfile)].filter((filter: ValueFilter) => filter !== undefined))
     builder.withTimeRestriction(this.createTimeRestriction(uiProfile))
   }
 

@@ -4,8 +4,11 @@ import { catchError, concatMap, map, tap } from 'rxjs/operators'
 import { AppConfigService } from './config/AppConfig.service'
 import { DataportalConfigService } from './config/DataportalConfig.service'
 import { AppConfigData } from './config/model/AppConfig/AppConfigData'
+import { DataportalConfigData } from './config/model/DataPortalConfig/DataportalConfigData'
 import { OAuthInitService } from './core/auth/OAuthInit.service'
 import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile'
+import { ActuatorData } from './model/Interface/ActuatorInfoData/ActuatorData'
+import { BuildInformationData } from './model/Interface/ActuatorInfoData/BuildInformationData'
 import { UiProfileData } from './model/Interface/UiProfileData'
 import { ActuatorInformationService } from './service/Actuator/ActuatorInformation.service'
 import { ActuatorApiService } from './service/Backend/Api/ActuatorApi.service'
@@ -51,7 +54,7 @@ export class CoreInitService {
       concatMap(() => this.getUiProfilesData()),
       concatMap(() => this.loadActuatorInformation()),
       concatMap(() => this.initTerminologySystems()),
-      concatMap(() => this.initPatientProfile().pipe(map((patientProfileResult) => ({ patientProfileResult })))),
+      concatMap(() => this.initPatientProfile().pipe(map((patientProfileResult: DataSelectionProfile) => ({ patientProfileResult })))),
       concatMap(({ patientProfileResult }) => this.initializeProviders(patientProfileResult)),
       tap(() => console.log('CoreInitService complete')),
       catchError((err) => {
@@ -67,7 +70,7 @@ export class CoreInitService {
    */
   private loadAppConfig(): Observable<AppConfigData> {
     return this.appConfigService.loadAppConfig().pipe(
-      tap((config) => console.log('AppConfig loaded:', !!config)),
+      tap((config: AppConfigData) => console.log('AppConfig loaded:', !!config)),
       catchError((err) => {
         console.error('Config load failed:', err)
         return throwError(() => err)
@@ -81,7 +84,7 @@ export class CoreInitService {
    */
   private loadDataportalSettings(): Observable<void> {
     return this.dataportalConfigService.loadDataportalConfig().pipe(
-      tap((config) => console.log('Dataportal settings loaded:', !!config)),
+      tap((config: DataportalConfigData) => console.log('Dataportal settings loaded:', !!config)),
       map(() => undefined),
       catchError((err) => {
         console.error('Dataportal settings load failed:', err)
@@ -96,7 +99,7 @@ export class CoreInitService {
    */
   private initOAuth(): Observable<boolean> {
     return this.oauthInitService.initOAuth().pipe(
-      tap((result) => console.log('OAuth initialized:', result)),
+      tap((result: boolean) => console.log('OAuth initialized:', result)),
       catchError((err) => {
         console.error('OAuth init failed:', err)
         return throwError(() => err)
@@ -109,7 +112,7 @@ export class CoreInitService {
    * @returns {Observable<boolean>}
    */
   private initUserProfile(): Observable<boolean> {
-    return this.userProfileService.initializeProfile().pipe(tap((result) => console.log('UserProfile initialized:', result)))
+    return this.userProfileService.initializeProfile().pipe(tap((result: boolean) => console.log('UserProfile initialized:', result)))
   }
 
   /**
@@ -118,7 +121,7 @@ export class CoreInitService {
    */
   private checkBackendHealth(): Observable<boolean> {
     return this.actuatorApiService.getActuatorHealth().pipe(
-      map((result) => (typeof result === 'boolean' ? result : true)),
+      map((result: BuildInformationData) => (typeof result === 'boolean' ? result : true)),
       tap(() => console.log('Backend is up')),
       catchError((err) => {
         console.error('Backend health check failed:', err)
@@ -144,7 +147,7 @@ export class CoreInitService {
 
   private loadActuatorInformation(): Observable<boolean> {
     return this.actuatorInformationService.getActuatorInfo().pipe(
-      tap((info) => console.log('Actuator information loaded:', !!info)),
+      tap((info: ActuatorData) => console.log('Actuator information loaded:', !!info)),
       map(() => true),
       catchError((err) => {
         console.error('Failed to load Actuator information:', err)
@@ -159,8 +162,10 @@ export class CoreInitService {
    */
   private initTerminologySystems(): Observable<boolean> {
     return this.terminologySystemProvider.initializeTerminologySystems().pipe(
-      tap((result) => console.log('TerminologySystems initialized:', result === true)),
-      concatMap((result) => (result === true ? of(result) : throwError(() => new Error('TerminologySystems initialization failed')))),
+      tap((result: boolean) => console.log('TerminologySystems initialized:', result === true)),
+      concatMap((result: boolean) =>
+        result === true ? of(result) : throwError(() => new Error('TerminologySystems initialization failed'))
+      ),
       catchError((err) => {
         console.error('TerminologySystems init failed:', err)
         return throwError(() => err)
@@ -175,8 +180,8 @@ export class CoreInitService {
    */
   private initializeProviders(patientProfileResult: DataSelectionProfile): Observable<boolean> {
     return this.providersInitService.initializeProviders(patientProfileResult).pipe(
-      tap((result) => console.log('Providers initialized:', result === true)),
-      concatMap((result) => (result === true ? of(result) : throwError(() => new Error('Providers initialization failed')))),
+      tap((result: boolean) => console.log('Providers initialized:', result === true)),
+      concatMap((result: boolean) => (result === true ? of(result) : throwError(() => new Error('Providers initialization failed')))),
       catchError((err) => {
         console.error('Providers init failed:', err)
         return throwError(() => err)
@@ -190,8 +195,10 @@ export class CoreInitService {
    */
   private initPatientProfile(): Observable<DataSelectionProfile> {
     return this.dataSelectionMainProfileInitializerService.initializePatientProfile().pipe(
-      tap((result) => console.log('PatientProfile initialized:', !!result)),
-      concatMap((result) => (result ? of(result) : throwError(() => new Error('PatientProfile initialization failed')))),
+      tap((result: DataSelectionProfile) => console.log('PatientProfile initialized:', !!result)),
+      concatMap((result: DataSelectionProfile) =>
+        result ? of(result) : throwError(() => new Error('PatientProfile initialization failed'))
+      ),
       catchError((err) => {
         console.error('PatientProfile init failed:', err)
         return throwError(() => err)

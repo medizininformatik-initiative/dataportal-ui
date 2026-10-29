@@ -54,7 +54,7 @@ export class AttributeFilterTranslatorService {
     structuredQueryAttributeFilters: AttributeFilterData[],
     parentId: string
   ): AttributeFilter[] {
-    return attributeDefinitionData.map((attributeFilter) =>
+    return attributeDefinitionData.map((attributeFilter: AttributeDefinitionData) =>
       this.translateAttributeFilter(attributeFilter, structuredQueryAttributeFilters, parentId)
     )
     //.filter((filter: AttributeFilter): filter is AttributeFilter => !!filter);

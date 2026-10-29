@@ -7,7 +7,7 @@ export class BasicFieldCloner {
       return []
     }
 
-    return fields.map((field) => BasicFieldCloner.deepCopyBasicField(field))
+    return fields.map((field: BasicField) => BasicFieldCloner.deepCopyBasicField(field))
   }
 
   public static deepCopyBasicField(basicField: BasicField) {

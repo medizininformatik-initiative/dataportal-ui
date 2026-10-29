@@ -298,7 +298,7 @@ export abstract class AbstractCriterion {
    * @returns {AttributeFilter[]} Array of AttributeFilter containing instances of the specified type.
    */
   protected getAttributeFiltersByType(type: FilterTypes): AttributeFilter[] {
-    return this.getAttributeFilters().filter((f) => f.getFilterType() === type)
+    return this.getAttributeFilters().filter((f: AttributeFilter) => f.getFilterType() === type)
   }
 
   /**
@@ -307,6 +307,6 @@ export abstract class AbstractCriterion {
    * @returns {ValueFilter[]} Array of ValueFilter containing instances of the specified type.
    */
   protected getValueFiltersByType(type: FilterTypes): ValueFilter[] {
-    return this.getValueFilters().filter((f) => f.getFilterType() === type)
+    return this.getValueFilters().filter((f: ValueFilter) => f.getFilterType() === type)
   }
 }

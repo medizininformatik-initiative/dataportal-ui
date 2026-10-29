@@ -23,7 +23,7 @@ export class RemoveReferenceService {
       .pipe(
         take(1),
         map((dataSelection) => {
-          dataSelection.getProfiles().map((profile) => {
+          dataSelection.getProfiles().map((profile: DataSelectionProfile) => {
             const updatedProfile = this.removeReferenceFromProfile(profile, profileIdToBeDeleted)
             this.dataSelectionProviderService.setActiveProfile(updatedProfile, 'SET')
           })
@@ -41,7 +41,7 @@ export class RemoveReferenceService {
 
     for (let i = selectedReferenceFields.length - 1; i >= 0; i--) {
       const field = selectedReferenceFields[i]
-      const linkedProfileIds = field.getLinkedProfileIds().filter((id) => id !== profileIdToBeDeleted)
+      const linkedProfileIds = field.getLinkedProfileIds().filter((id: string) => id !== profileIdToBeDeleted)
       field.setLinkedProfileIds(linkedProfileIds)
 
       // Remove the field if no linked profiles remain

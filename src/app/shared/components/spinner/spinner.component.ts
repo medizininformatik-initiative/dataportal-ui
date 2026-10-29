@@ -16,7 +16,7 @@ export class SpinnerComponent implements OnInit {
   public startCountdown(): void {
     const interval = setInterval(() => {
       if (this.countdown() > 0) {
-        this.countdown.update((v) => v - 1)
+        this.countdown.update((v: number) => v - 1)
       } else {
         clearInterval(interval)
         this.countdown.set(0)

@@ -68,22 +68,22 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   private getProfileReferenceChips(selectedReferenceFields: SelectedReferenceField[]): FilterChipData[] {
-    const groupedByElementId = selectedReferenceFields.reduce((acc, ref) => {
+    const groupedByElementId = selectedReferenceFields.reduce((acc: ProfileReferenceGroup, ref: SelectedReferenceField) => {
       const key = ref.getElementId()
       if (!acc[key]) {
         acc[key] = []
       }
       const linkedProfiles = ref
         .getLinkedProfileIds()
-        .map((id) => this.profileProviderService.getOne(id))
-        .filter((profile) => !!profile?.getDisplay())
-        .map((profile) => ({ display: profile.getDisplay(), number: profile.getLabelNumber() }))
+        .map((id: string) => this.profileProviderService.getOne(id))
+        .filter((profile: DataSelectionProfile) => !!profile?.getDisplay())
+        .map((profile: DataSelectionProfile) => ({ display: profile.getDisplay(), number: profile.getLabelNumber() }))
 
       acc[key].push(...linkedProfiles)
       return acc
     }, {} as ProfileReferenceGroup)
 
     const groups: ProfileReferenceGroup[] = Object.entries(groupedByElementId).map(([elementId, profiles]) => ({ elementId, profiles }))
-    return groups.map((group) => FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(group))
+    return groups.map((group: ProfileReferenceGroup) => FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(group))
   }
 }

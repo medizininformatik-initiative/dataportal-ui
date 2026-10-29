@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core'
 import { FileSaverService } from 'ngx-filesaver'
+import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL'
 import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRTDL.service'
 import { AbstractDownloadService } from './AbstractDownload.service'
 
@@ -29,7 +30,7 @@ export class DownloadCRTDLService extends AbstractDownloadService {
   public download(filename?: string): void {
     this.createCRTDLService
       .createCRTDL()
-      .subscribe((crtdl) => {
+      .subscribe((crtdl: CRTDL) => {
         const finalFilename = super.createFilename(filename, 'CRDTL')
         const blob = super.createTextBlob(JSON.stringify(crtdl))
         this.fileSaverService.save(blob, `${finalFilename}.json`)

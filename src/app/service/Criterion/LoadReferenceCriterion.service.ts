@@ -24,10 +24,10 @@ export class LoadReferenceCriterionService {
    * @returns {Observable<ReferenceCriterion[]>}
    */
   public loadReferenceCriteria(hashes: string[], parentId: string): Observable<ReferenceCriterion[]> {
-    const validHashes = hashes.filter((hash): hash is string => !!hash)
+    const validHashes = hashes.filter((hash: string): hash is string => !!hash)
     return this.terminologyApiService.getCriteriaProfileData(validHashes).pipe(
       map((data: CriteriaProfileData[]) =>
-        data.map((d) => {
+        data.map((d: CriteriaProfileData) => {
           const builder = this.criterionBuilderHelperService.setBuilderWithCriteriaProfileData(d)
           builder.withParentId(parentId)
           return builder.buildReferenceCriterion()

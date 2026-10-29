@@ -18,6 +18,6 @@ export class CloneTerminologyCode {
   }
 
   public static deepCopyTerminologyCodes(terminologyCodes: TerminologyCode[]): TerminologyCode[] {
-    return terminologyCodes.map((terminologyCode) => this.deepCopyTerminologyCode(terminologyCode))
+    return terminologyCodes.map((terminologyCode: TerminologyCode) => this.deepCopyTerminologyCode(terminologyCode))
   }
 }

@@ -66,9 +66,11 @@ export class CollectCRTDLHashesService {
     this.collectConceptHashesFromAttributeFilters(structuredQueryCriterion)
     this.collectConceptHashesFromValueFilter(structuredQueryCriterion)
 
-    const referenceAttributeFilter = structuredQueryCriterion.attributeFilters?.find((attributeFilterData) => attributeFilterData.criteria)
+    const referenceAttributeFilter = structuredQueryCriterion.attributeFilters?.find(
+      (attributeFilterData: AttributeFilterData) => attributeFilterData.criteria
+    )
     if (referenceAttributeFilter) {
-      referenceAttributeFilter?.criteria.forEach((referenceCriterion) => {
+      referenceAttributeFilter?.criteria.forEach((referenceCriterion: ReferenceCriteriaData) => {
         this.collectConceptHashesFromReferenceCriterionFromAttributeFilters(referenceCriterion)
         this.collectConceptHashesFromReferenceCriterionFromValueFilters(referenceCriterion)
       })

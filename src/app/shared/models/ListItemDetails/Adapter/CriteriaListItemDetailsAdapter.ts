@@ -10,7 +10,7 @@ export class CriteriaListItemDetailsAdapter extends AbstractListItemDetailsAdapt
    * @returns {ListItemDetailsRelativeData[]}
    */
   protected adaptRelatives(relatives: CriteriaEntryRelative[]): ListItemDetailsRelativeData[] {
-    return relatives.map((relative) => this.adaptRelative(relative))
+    return relatives.map((relative: CriteriaEntryRelative) => this.adaptRelative(relative))
   }
 
   /**

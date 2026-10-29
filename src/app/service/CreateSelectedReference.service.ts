@@ -19,7 +19,9 @@ export class CreateSelectedReferenceService {
     possibleReferences: PossibleProfileReferenceData[],
     referenceField: ReferenceField
   ): SelectedReferenceField {
-    const linkedProfileIds = possibleReferences.filter((reference) => reference.isSelected).map((filteredReference) => filteredReference.id)
+    const linkedProfileIds = possibleReferences
+      .filter((reference: PossibleProfileReferenceData) => reference.isSelected)
+      .map((filteredReference: PossibleProfileReferenceData) => filteredReference.id)
 
     return this.createSelectedReferenceFieldInstances(referenceField, linkedProfileIds)
   }

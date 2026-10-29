@@ -6,7 +6,7 @@ export class ReferencedProfileCloner {
     if (!referencedProfiles || referencedProfiles.length === 0) {
       return []
     }
-    return referencedProfiles.map((profile) => ReferencedProfileCloner.deepCopyReferencedProfile(profile))
+    return referencedProfiles.map((profile: ReferencedProfile) => ReferencedProfileCloner.deepCopyReferencedProfile(profile))
   }
 
   public static deepCopyReferencedProfile(referencedProfile: ReferencedProfile): ReferencedProfile {

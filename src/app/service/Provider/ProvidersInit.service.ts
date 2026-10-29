@@ -30,6 +30,10 @@ export class ProvidersInitService {
     this.dataSelectionMainProfileProviderService.setPatientProfile(patientProfileResult)
     return this.dataSelectionProvider
       .initDataSelection(patientProfileResult)
-      .pipe(switchMap((dsResult) => this.feasibilityQueryProvider.loadInitialQuery().pipe(map((fqResult) => dsResult && fqResult))))
+      .pipe(
+        switchMap((dsResult: boolean) =>
+          this.feasibilityQueryProvider.loadInitialQuery().pipe(map((fqResult: boolean) => dsResult && fqResult))
+        )
+      )
   }
 }

@@ -30,7 +30,7 @@ export class ProfileValidationTableAdapter extends AbstractTableAdapter<ProfileV
    * @returns {TableRowData[]}
    */
   protected buildRows(entries: ProfileValidationEntry[]): TableRowData[] {
-    return entries.map((entry) => ({
+    return entries.map((entry: ProfileValidationEntry) => ({
       id: uuidv4(),
       isClickable: false,
       originalEntry: entry,

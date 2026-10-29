@@ -35,14 +35,14 @@ export class TermcodeComponent implements OnInit {
   }
 
   private createBulkEntries(): void {
-    this.bulkEntries = this.termCodes().map((termCode) => {
+    this.bulkEntries = this.termCodes().map((termCode: TerminologyCode) => {
       const hash = this.hashService.createCriterionHash(this.context(), termCode)
       return this.selectedBulkCriteriaService.getFoundById(hash)
     })
   }
 
   public removeTermCode(termCodeToRemove: TerminologyCode): void {
-    this.termCodes.update((codes) =>
+    this.termCodes.update((codes: TerminologyCode[]) =>
       codes.filter(
         (termCode: TerminologyCode) =>
           !(termCode.getCode() === termCodeToRemove.getCode() && termCode.getSystem() === termCodeToRemove.getSystem())

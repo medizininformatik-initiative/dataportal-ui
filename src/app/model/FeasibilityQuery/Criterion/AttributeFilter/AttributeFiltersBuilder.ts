@@ -128,7 +128,7 @@ export class AttributeFiltersBuilder {
     return new ReferenceFilter(
       id,
       allowedReferenceUri,
-      selectedReference.map((r) => r.getId())
+      selectedReference.map((r: ReferenceCriterion) => r.getId())
     )
   }
 }

@@ -36,7 +36,7 @@ export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapte
   }
 
   private adaptFields(fields: ProfileEntryDetailsField[]): ListItemDetailsRelativeData[] {
-    return fields.map((field) => {
+    return fields.map((field: ProfileEntryDetailsField) => {
       return {
         display: field.getDisplay(),
         id: uuidv4(),
@@ -51,7 +51,7 @@ export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapte
    * @returns {ListItemDetailsRelativeData[]} The adapted list item details relative data.
    */
   protected adaptRelatives(relatives: ProfileEntryRelative[]): ListItemDetailsRelativeData[] {
-    return relatives.map((relative) => this.adaptRelative(relative))
+    return relatives.map((relative: ProfileEntryRelative) => this.adaptRelative(relative))
   }
 
   /**

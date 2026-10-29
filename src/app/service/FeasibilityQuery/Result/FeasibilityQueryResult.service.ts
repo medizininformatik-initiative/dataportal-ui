@@ -39,7 +39,7 @@ export class FeasibilityQueryResultService {
     this.obfuscatedResultRateLimitService.refreshRateLimit()
 
     return this.activeFeasibilityQuery().pipe(
-      switchMap((feasibilityQuery) => {
+      switchMap((feasibilityQuery: FeasibilityQuery) => {
         const result = this.pollingManagerService.getPollingResult(feasibilityQuery)
         return this.setProvider(result)
       })

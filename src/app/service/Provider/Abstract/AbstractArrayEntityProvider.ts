@@ -54,7 +54,7 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
     if (!id) {
       throw new Error('ID must be provided to get an entity.')
     }
-    const entity = this.items.find((e) => this.selectId(e) === id)
+    const entity = this.items.find((e: T) => this.selectId(e) === id)
     if (!entity) {
       throw new Error(`Entity with id ${id} not found.`)
     }
@@ -107,7 +107,7 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    */
   public setOne(entity: T): void {
     const id = this.selectId(entity)
-    const index = this.items.findIndex((item) => this.selectId(item) === id)
+    const index = this.items.findIndex((item: T) => this.selectId(item) === id)
 
     if (index >= 0) {
       this.items[index] = entity
@@ -151,7 +151,7 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
   public removeOne(id: string): void {
     const originalLength = this.items.length
 
-    this.items = this.items.filter((e) => this.selectId(e) !== id)
+    this.items = this.items.filter((e: T) => this.selectId(e) !== id)
 
     if (this.items.length !== originalLength) {
       this.emit()
@@ -169,7 +169,7 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
     const idSet = new Set(ids)
     const originalLength = this.items.length
 
-    this.items = this.items.filter((e) => !idSet.has(this.selectId(e)))
+    this.items = this.items.filter((e: T) => !idSet.has(this.selectId(e)))
 
     if (this.items.length !== originalLength) {
       this.emit()
@@ -204,6 +204,6 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * @returns {boolean}
    */
   private hasSameId(id: string): boolean {
-    return this.items.some((item) => this.selectId(item) === id)
+    return this.items.some((item: T) => this.selectId(item) === id)
   }
 }

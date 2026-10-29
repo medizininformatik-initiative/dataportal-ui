@@ -5,6 +5,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'
 import { finalize, map } from 'rxjs'
 import { Subscription } from 'rxjs'
+import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 import { LoadDataSelectionProfilesService } from 'src/app/service/DataSelection/LoadDataSelectionProfiles.service'
 import { SelectedProfileService } from 'src/app/service/DataSelection/Selection/SelectedProfileEntry.service'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
@@ -41,7 +42,7 @@ export class ProfileSearchActionBarComponent {
   public readonly canNavigateToDataSelection = computed(() => this.dataSelectionProfileCount() > 0 && !this.isLoadingSelectedProfiles())
 
   public loadSelectedProfiles(): void {
-    const urls = this.selectedProfiles().map((profile) => profile.getUrl())
+    const urls = this.selectedProfiles().map((profile: ProfileListEntry) => profile.getUrl())
     this.isLoadingSelectedProfiles.set(true)
     this.subscription = this.loadDataSelectionProfilesService
       .loadProfiles(urls)

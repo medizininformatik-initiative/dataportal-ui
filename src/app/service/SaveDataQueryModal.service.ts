@@ -26,7 +26,7 @@ export class SaveDataQueryModalService {
     })
     return dialogRef.afterClosed().pipe(
       filter((data: SaveDataModal) => !!data),
-      switchMap((data) => this.dataQueryStorage.saveDataQuery(data)),
+      switchMap((data: SaveDataModal) => this.dataQueryStorage.saveDataQuery(data)),
       tap(() => this.snackbarService.displayInfoMessage('SNACKBAR.SUCCESS.SAVED_DATAQUERY'))
     )
   }

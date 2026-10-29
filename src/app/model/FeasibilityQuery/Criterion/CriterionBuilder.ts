@@ -65,7 +65,8 @@ export class CriterionBuilder {
   public withAttributeFilter(attributeFilter: AttributeFilter): CriterionBuilder {
     if (this.attributeFilters.length > 0) {
       const index = this.attributeFilters.findIndex(
-        (existingAttributeFilter) => attributeFilter.getAttributeCode()?.getCode() === existingAttributeFilter.getAttributeCode()?.getCode()
+        (existingAttributeFilter: AttributeFilter) =>
+          attributeFilter.getAttributeCode()?.getCode() === existingAttributeFilter.getAttributeCode()?.getCode()
       )
       if (index !== -1) {
         this.attributeFilters[index] = attributeFilter

@@ -27,19 +27,19 @@ export class ErrorDisplayComponent implements OnInit {
   constructor() {}
 
   public ngOnInit() {
-    this.errorDisplayService.visibility$.subscribe((isVisible) => {
+    this.errorDisplayService.visibility$.subscribe((isVisible: boolean) => {
       this.isVisible = isVisible
     })
 
-    this.errorDisplayService.errorData$.subscribe((errorData) => {
+    this.errorDisplayService.errorData$.subscribe((errorData: DataportalErrorPayloadType) => {
       this.errorData = errorData
     })
 
-    this.errorDisplayService.errorUrl$.subscribe((url) => {
+    this.errorDisplayService.errorUrl$.subscribe((url: string) => {
       this.errorUrl = url
     })
 
-    this.errorDisplayService.errorType$.subscribe((type) => {
+    this.errorDisplayService.errorType$.subscribe((type: string) => {
       this.errorType = type
     })
   }

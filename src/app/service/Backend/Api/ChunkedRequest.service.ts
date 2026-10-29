@@ -19,10 +19,10 @@ export class ChunkedRequestService {
 
   public getChunkedRequest(ids: string[], path: string): Observable<Array<any>> {
     const chunks = this.backendService.chunkArrayForStrings(ids, this.chunkSize)
-    const observables = chunks.map((chunk) => {
+    const observables = chunks.map((chunk: string[]) => {
       const commaSeparatedIds = chunk.join(',')
       return this.http.get<Array<any>>(this.backendService.createUrl(path + commaSeparatedIds))
     })
-    return forkJoin(observables).pipe(map((results) => [].concat(...results)))
+    return forkJoin(observables).pipe(map((results: any[][]) => [].concat(...results)))
   }
 }

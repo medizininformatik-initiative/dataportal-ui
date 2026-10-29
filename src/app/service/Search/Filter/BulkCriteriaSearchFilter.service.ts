@@ -48,7 +48,8 @@ export class BulkCriteriaSearchFilterService {
    */
   private keepContextAndTerminologyFilters(filters: CriteriaSearchFilter[]): CriteriaSearchFilter[] {
     return filters.filter(
-      (filter) => filter.getName() === ElasticSearchFilterTypes.CONTEXT || filter.getName() === ElasticSearchFilterTypes.TERMINOLOGY
+      (filter: CriteriaSearchFilter) =>
+        filter.getName() === ElasticSearchFilterTypes.CONTEXT || filter.getName() === ElasticSearchFilterTypes.TERMINOLOGY
     )
   }
 
@@ -58,7 +59,7 @@ export class BulkCriteriaSearchFilterService {
    * @returns {CriteriaSearchFilter[]} Array of filters with patient values removed
    */
   private removePatientFromFilterValues(filters: CriteriaSearchFilter[]): CriteriaSearchFilter[] {
-    return filters.map((filter) => {
+    return filters.map((filter: CriteriaSearchFilter) => {
       const updatedValues = filter.getValues().filter((value) => value.getLabel() !== 'Patient')
       filter.setValues(updatedValues)
       return filter
@@ -71,6 +72,6 @@ export class BulkCriteriaSearchFilterService {
    * @returns {SearchFilterData[]} Array of SearchFilter objects for UI consumption
    */
   private convertFiltersToUiModels(filters: CriteriaSearchFilter[]): SearchFilterData[] {
-    return filters.map((filter) => CriteriaSearchFilterAdapter.convertToFilterValues(filter))
+    return filters.map((filter: CriteriaSearchFilter) => CriteriaSearchFilterAdapter.convertToFilterValues(filter))
   }
 }

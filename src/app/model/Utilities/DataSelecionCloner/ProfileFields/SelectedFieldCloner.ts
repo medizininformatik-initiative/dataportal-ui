@@ -6,7 +6,7 @@ export class SelectedBasicFieldCloner {
     if (!selectedFields || selectedFields.length === 0) {
       return []
     }
-    return selectedFields.map((selectedField) => SelectedBasicFieldCloner.deepCopySelectedBasicField(selectedField))
+    return selectedFields.map((selectedField: SelectedBasicField) => SelectedBasicFieldCloner.deepCopySelectedBasicField(selectedField))
   }
 
   /**

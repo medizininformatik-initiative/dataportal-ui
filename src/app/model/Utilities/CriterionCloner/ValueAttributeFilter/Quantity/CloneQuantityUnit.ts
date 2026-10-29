@@ -19,6 +19,6 @@ export class CloneQuantityUnit {
    * @param {QuantityUnit[]} quantityUnits
    */
   public static deepCopyQuantityUnits(quantityUnits: QuantityUnit[]): QuantityUnit[] {
-    return quantityUnits.map((quantityUnit) => this.deepCopyQuantityUnit(quantityUnit))
+    return quantityUnits.map((quantityUnit: QuantityUnit) => this.deepCopyQuantityUnit(quantityUnit))
   }
 }

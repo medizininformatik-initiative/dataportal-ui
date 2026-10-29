@@ -54,7 +54,7 @@ export class SideMenuComponent {
   }
 
   public toggleMenu(): void {
-    this.isSideMenuExpanded.update((expanded) => !expanded)
+    this.isSideMenuExpanded.update((expanded: boolean) => !expanded)
     this.toggleSideMenu.emit(this.isSideMenuExpanded())
   }
 }

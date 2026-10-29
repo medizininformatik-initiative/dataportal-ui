@@ -21,7 +21,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   /**
    * Pre-compiled regular expressions for URL matching.
    */
-  private readonly excludedUrlsRegEx = this.excludedUrls.map((url) => new RegExp('^' + url, 'i'))
+  private readonly excludedUrlsRegEx = this.excludedUrls.map((url: string) => new RegExp('^' + url, 'i'))
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -35,7 +35,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
    * @returns {Observable<HttpEvent<any>>} Observable of HTTP events from the modified or original request
    */
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const shouldExclude = this.excludedUrlsRegEx.some((regex) => regex.test(req.url))
+    const shouldExclude = this.excludedUrlsRegEx.some((regex: RegExp) => regex.test(req.url))
     if (shouldExclude) {
       return next.handle(req)
     }

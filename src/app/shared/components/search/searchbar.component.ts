@@ -22,7 +22,7 @@ export class SearchbarComponent {
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
   constructor() {
-    this.inputSubject.pipe(debounceTime(this.debounceTime), takeUntilDestroyed()).subscribe((value) => {
+    this.inputSubject.pipe(debounceTime(this.debounceTime), takeUntilDestroyed()).subscribe((value: string) => {
       this.currentText.set(value)
       this.activeSearchTermService.setActiveSearchTerm(value)
       if (value.length >= this.minLength() || value.length === 0) {

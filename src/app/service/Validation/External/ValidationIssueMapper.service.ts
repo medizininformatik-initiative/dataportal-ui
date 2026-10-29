@@ -77,7 +77,7 @@ export class ValidationIssueMapperService {
     return path
       .replace(PATH_PREFIX, '')
       .split('/')
-      .map((segment) => (NUMERIC_SEGMENT.test(segment) ? `[${segment}]` : segment))
+      .map((segment: string) => (NUMERIC_SEGMENT.test(segment) ? `[${segment}]` : segment))
       .join('.')
       .replace(/\.\[/g, '[')
   }

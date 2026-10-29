@@ -3,6 +3,7 @@ import { computed } from '@angular/core'
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 import { map } from 'rxjs'
+import { ProfileSearchFilter } from 'src/app/model/Search/Filter/ProfileSearchFilter'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import { ProfileFilterFetchService } from 'src/app/service/Search/Filter/ProfileFilterFetch.service'
 import { ProfileSearchFilterProviderService } from 'src/app/service/Search/Filter/ProfileSearchFilterProvider.service'
@@ -50,10 +51,10 @@ export class ProfileSearchBarComponent {
       .getProfileSearchFilters()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        map((filters) => ProfileSearchFilterAdapter.convertToFilterValues(filters)),
+        map((filters: ProfileSearchFilter[]) => ProfileSearchFilterAdapter.convertToFilterValues(filters)),
         // TODO: temp exclusion of category filter to be included once categories filled in ontology
         map((filters: SearchFilterData[]) =>
-          filters.filter((f) => f.filterType.toLowerCase() !== ElasticSearchFilterTypes.CATEGORY.toLowerCase())
+          filters.filter((f: SearchFilterData) => f.filterType.toLowerCase() !== ElasticSearchFilterTypes.CATEGORY.toLowerCase())
         ),
         map((filters: SearchFilterData[]) => {
           const order: Record<string, number> = {
@@ -62,10 +63,13 @@ export class ProfileSearchBarComponent {
             [ElasticSearchFilterTypes.RESOURCE_TYPE.toLowerCase()]: 2,
           }
 
-          return [...filters].sort((a, b) => (order[a.filterType.toLowerCase()] ?? 99) - (order[b.filterType.toLowerCase()] ?? 99))
+          return [...filters].sort(
+            (a: SearchFilterData, b: SearchFilterData) =>
+              (order[a.filterType.toLowerCase()] ?? 99) - (order[b.filterType.toLowerCase()] ?? 99)
+          )
         })
       )
-      .subscribe((filters) => {
+      .subscribe((filters: SearchFilterData[]) => {
         this.searchFilters.set(filters)
       })
   }

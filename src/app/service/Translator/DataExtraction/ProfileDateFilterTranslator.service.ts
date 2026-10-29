@@ -3,6 +3,7 @@ import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSe
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter'
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter'
 import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData'
+import { FilterData } from 'src/app/model/Interface/FilterData'
 import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType'
 import { TypeGuard } from '../../TypeGuard/TypeGuard'
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service'
@@ -21,14 +22,16 @@ export class ProfileDateFilterTranslatorService {
   public createDateFilters(externProfile: AttributeGroupsData, profile: DataSelectionProfile): ProfileTimeRestrictionFilter[] {
     return (profile.getFilters() ?? [])
       .filter((filterData: AbstractProfileFilter) => filterData.getType() === DataSelectionFilterType.DATE)
-      .map((filterData) => this.createProfileTimeRestrictionFilter(filterData as ProfileTimeRestrictionFilter, externProfile))
+      .map((filterData: AbstractProfileFilter) =>
+        this.createProfileTimeRestrictionFilter(filterData as ProfileTimeRestrictionFilter, externProfile)
+      )
   }
 
   private createProfileTimeRestrictionFilter(
     filterData: ProfileTimeRestrictionFilter,
     externProfile: AttributeGroupsData
   ): ProfileTimeRestrictionFilter {
-    const foundFilter = externProfile.filter.find((externFilter) => externFilter.name === filterData.getName())
+    const foundFilter = externProfile.filter.find((externFilter: FilterData) => externFilter.name === filterData.getName())
     if (foundFilter && TypeGuard.isFilterData(foundFilter)) {
       const timeRestriction = this.uITimeRestrictionFactoryService.createTimeRestrictionForDataSelection(foundFilter)
       return new ProfileTimeRestrictionFilter(foundFilter.name, foundFilter.type, timeRestriction)

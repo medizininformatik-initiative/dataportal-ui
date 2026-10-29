@@ -15,7 +15,7 @@ export class ProfileFilterFetchService {
 
   public fetchAndUpdateFilters(searchText: string, targetFilter: string): void {
     const url = this.buildUrl(searchText, targetFilter)
-    this.profileSearchFilterService.fetchFilter(url).subscribe((fetchedFilters) => {
+    this.profileSearchFilterService.fetchFilter(url).subscribe((fetchedFilters: ProfileSearchFilter[]) => {
       this.mergeFiltersIntoProvider(fetchedFilters)
     })
   }
@@ -29,12 +29,12 @@ export class ProfileFilterFetchService {
     }
 
     const filtersToApply = targetFilter
-      ? currentFilters.filter((f) => f.getName().toLowerCase() !== targetFilter.toLowerCase())
+      ? currentFilters.filter((f: ProfileSearchFilter) => f.getName().toLowerCase() !== targetFilter.toLowerCase())
       : currentFilters
 
     filtersToApply
-      .filter((f) => f.getSelectedValues().length > 0)
-      .forEach((f) => {
+      .filter((f: ProfileSearchFilter) => f.getSelectedValues().length > 0)
+      .forEach((f: ProfileSearchFilter) => {
         const values = f.getSelectedValues().join(',')
         const name = f.getName()
 
@@ -53,8 +53,8 @@ export class ProfileFilterFetchService {
   private mergeFiltersIntoProvider(fetchedFilters: ProfileSearchFilter[]): void {
     const currentFilters = this.profileSearchFilterProviderService.getProfileSearchFiltersValue()
 
-    fetchedFilters.forEach((fetchedFilter) => {
-      const existing = currentFilters.find((f) => f.getName() === fetchedFilter.getName())
+    fetchedFilters.forEach((fetchedFilter: ProfileSearchFilter) => {
+      const existing = currentFilters.find((f: ProfileSearchFilter) => f.getName() === fetchedFilter.getName())
       if (existing) {
         fetchedFilter.setSelectedValues(existing.getSelectedValues())
         existing.setSelectedValues(fetchedFilter.getSelectedValues())

@@ -1,5 +1,7 @@
 import { inject, Injectable } from '@angular/core'
 import { filter, switchMap, take, tap } from 'rxjs'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { ProfileEntryDetails } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryDetails'
 import { LoadDataSelectionProfilesService } from 'src/app/service/DataSelection/LoadDataSelectionProfiles.service'
 import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
@@ -23,7 +25,7 @@ export class ProfileListItemDetailsMenuItemsFunctionsService {
       .loadDetails(id)
       .pipe(
         take(1),
-        switchMap((details) => this.profileSearchService.search(details.getDisplay().getOriginal()))
+        switchMap((details: ProfileEntryDetails) => this.profileSearchService.search(details.getDisplay().getOriginal()))
       )
       .subscribe()
   }
@@ -37,13 +39,13 @@ export class ProfileListItemDetailsMenuItemsFunctionsService {
       .loadDetails(id)
       .pipe(
         take(1),
-        switchMap((details) =>
+        switchMap((details: ProfileEntryDetails) =>
           this.loadDataSelectionProfilesService.loadProfiles([
             'https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/dauer-extrakorporaler-gasaustausch',
           ])
         ),
-        filter((profiles) => profiles.length > 0),
-        tap((profiles) => this.dataSelectionProvider.setActiveProfile(profiles[0], 'ADD')),
+        filter((profiles: DataSelectionProfile[]) => profiles.length > 0),
+        tap((profiles: DataSelectionProfile[]) => this.dataSelectionProvider.setActiveProfile(profiles[0], 'ADD')),
         take(1)
       )
       .subscribe(() => this.snackbarMessageService.displayAddedToDataSelection())

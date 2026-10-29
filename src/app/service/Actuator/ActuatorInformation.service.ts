@@ -25,7 +25,7 @@ export class ActuatorInformationService {
     if (this.actuatorInfo$.value) {
       return this.actuatorInfo$.asObservable()
     }
-    return this.actuator.getActuatorInfo().pipe(tap((data) => this.actuatorInfo$.next(data)))
+    return this.actuator.getActuatorInfo().pipe(tap((data: ActuatorData) => this.actuatorInfo$.next(data)))
   }
 
   /**

@@ -25,7 +25,7 @@ export abstract class AbstractTableAdapter<T extends AbstractListEntry> implemen
    */
   protected validateColumnCount(header: TableHeaderData, rows: TableRowData[]): void {
     const headerCount = header.headers.length
-    rows.forEach((row, index) => {
+    rows.forEach((row: TableRowData, index: number) => {
       if (row.cells.length !== headerCount) {
         throw new Error(`Row ${index} has ${row.cells.length} cell(s) but expected ${headerCount} to match the number of headers.`)
       }

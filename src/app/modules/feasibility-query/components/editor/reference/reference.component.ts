@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { map, Observable } from 'rxjs'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList'
 import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service'
 import { CriteriaSetSearchService } from 'src/app/service/Search/SearchTypes/CriteriaSet/CriteriaSetSearch.service'
 import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
@@ -75,7 +76,7 @@ export class ReferenceComponent implements OnInit {
   public ngOnInit() {
     this.searchText$ = this.activeSearchTermService.getActiveSearchTerm()
     this.tableData$ = this.criteriaSetSearchService.getSearchResults([this.referenceFilterUri()]).pipe(
-      map((results) => {
+      map((results: ReferenceCriteriaResultList) => {
         const items = results?.getResults() ?? []
         return items.length > 0 ? new ReferenceCriteriaListEntryAdapter().adapt(items) : null
       })

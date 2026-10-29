@@ -4,6 +4,7 @@ import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filte
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData'
+import { FilterData } from 'src/app/model/Interface/FilterData'
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { DataSelectionFilterType } from 'src/app/model/Utilities/DataSelectionFilterType'
@@ -28,13 +29,13 @@ export class ProfileTokenFilterTranslatorService {
   public createTokenFilters(externProfile: AttributeGroupsData, profile: DataSelectionProfile): ProfileTokenFilter[] {
     return (profile.getFilters() ?? [])
       .filter((filterData: AbstractProfileFilter) => filterData.getType() === DataSelectionFilterType.TOKEN)
-      .map((filterData) => this.createProfileTokenFilter(filterData as ProfileTokenFilter, externProfile))
+      .map((filterData: AbstractProfileFilter) => this.createProfileTokenFilter(filterData as ProfileTokenFilter, externProfile))
   }
 
   private createProfileTokenFilter(filterData: ProfileTokenFilter, externProfile: AttributeGroupsData): ProfileTokenFilter {
-    const foundFilter = externProfile.filter.find((externFilter) => externFilter.name === filterData.getName())
+    const foundFilter = externProfile.filter.find((externFilter: FilterData) => externFilter.name === filterData.getName())
     if (foundFilter && TypeGuard.isFilterData(foundFilter)) {
-      const concepts = foundFilter.codes.map((code) => this.createConcept(code))
+      const concepts = foundFilter.codes.map((code: TerminologyCodeData) => this.createConcept(code))
       return new ProfileTokenFilter(uuidv4(), foundFilter.name, foundFilter.type, filterData.getValueSetUrls(), concepts)
     } else {
       return filterData

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core'
 import { Title } from '@angular/platform-browser'
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { ActivatedRoute, Data, NavigationEnd, Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { filter, map, merge, switchMap } from 'rxjs'
 
@@ -30,8 +30,8 @@ export class TabTitleService {
           }
           return route.snapshot.data
         }),
-        filter((data) => !!data?.title),
-        switchMap((data) => this.translate.get(data.title))
+        filter((data: Data) => !!data?.title),
+        switchMap((data: Data) => this.translate.get(data.title))
       )
       .subscribe((translatedTitle) => {
         this.titleService.setTitle(translatedTitle)

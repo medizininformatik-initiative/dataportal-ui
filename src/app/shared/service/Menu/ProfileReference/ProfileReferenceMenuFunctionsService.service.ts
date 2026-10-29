@@ -1,4 +1,6 @@
 import { inject, Injectable } from '@angular/core'
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
@@ -26,7 +28,7 @@ export class ProfileReferenceMenuFunctionsService {
 
     const referenceFields = profile.getProfileFields().getReferenceFields()
 
-    const foundField = referenceFields.find((field) => field.getElementId() === elementId)
+    const foundField = referenceFields.find((field: ReferenceField) => field.getElementId() === elementId)
 
     if (foundField) {
       foundField.setRecommended(false)
@@ -34,7 +36,7 @@ export class ProfileReferenceMenuFunctionsService {
 
     const selectedReferences = profile.getProfileFields().getSelectedReferenceFields()
 
-    const index = selectedReferences.findIndex((field) => field.getElementId() === elementId)
+    const index = selectedReferences.findIndex((field: SelectedReferenceField) => field.getElementId() === elementId)
 
     if (index !== -1) {
       selectedReferences.splice(index, 1)

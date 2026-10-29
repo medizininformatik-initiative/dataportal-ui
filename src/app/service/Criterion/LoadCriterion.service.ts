@@ -24,7 +24,7 @@ export class LoadCriterionService {
    * @returns {Observable<Criterion[]>}
    */
   public loadCriteria(hashes: string[]): Observable<Criterion[]> {
-    const validHashes = hashes.filter((hash): hash is string => !!hash)
+    const validHashes = hashes.filter((hash: string): hash is string => !!hash)
     return this.terminologyApiService
       .getCriteriaProfileData(validHashes)
       .pipe(map((data: CriteriaProfileData[]) => this.buildCriteriaFromProfileData(data)))
@@ -36,6 +36,8 @@ export class LoadCriterionService {
    * @returns {Criterion[]}
    */
   private buildCriteriaFromProfileData(criteriaProfileDatas: CriteriaProfileData[]): Criterion[] {
-    return criteriaProfileDatas.map((data) => this.criterionBuilderHelperService.setBuilderWithCriteriaProfileData(data).buildCriterion())
+    return criteriaProfileDatas.map((data: CriteriaProfileData) =>
+      this.criterionBuilderHelperService.setBuilderWithCriteriaProfileData(data).buildCriterion()
+    )
   }
 }

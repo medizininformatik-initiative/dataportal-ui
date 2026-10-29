@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core'
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router'
+import { ActivatedRoute, Data, NavigationEnd, Router, RouterOutlet } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
 import { filter, map, mergeMap } from 'rxjs'
 import { routeAnimations } from 'src/app/route-animations'
@@ -33,9 +33,9 @@ export class AppLayoutComponent implements OnInit {
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         map(() => this.activatedRoute.firstChild),
-        mergeMap((route) => route.data)
+        mergeMap((route: ActivatedRoute) => route.data)
       )
-      .subscribe((data) => {
+      .subscribe((data: Data) => {
         this.showSideNav = data.hideSideNav ?? true
       })
   }

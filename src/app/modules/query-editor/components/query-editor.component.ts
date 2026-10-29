@@ -78,17 +78,19 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   private getDataSelectionProfileFromProvider(id: string): void {
     this.dataSelectionProfile$ = this.profileProviderService
       .getAll()
-      .pipe(map((profiles) => profiles.find((profile) => profile.getId() === id)))
+      .pipe(map((profiles: DataSelectionProfile[]) => profiles.find((profile: DataSelectionProfile) => profile.getId() === id)))
   }
 
   private getCriterionFromProvider(id: string): void {
-    this.criterion$ = this.criterionProviderService.getAll().pipe(map((criteria) => criteria.find((criterion) => criterion.getId() === id)))
+    this.criterion$ = this.criterionProviderService
+      .getAll()
+      .pipe(map((criteria: Criterion[]) => criteria.find((criterion: Criterion) => criterion.getId() === id)))
   }
 
   private getReferenceCriterionFromProvider(id: string): void {
     this.referenceCriterion$ = this.referenceCriterionProviderService
       .getAll()
-      .pipe(map((criteria) => criteria.find((criterion) => criterion.getId() === id)))
+      .pipe(map((criteria: ReferenceCriterion[]) => criteria.find((criterion: ReferenceCriterion) => criterion.getId() === id)))
   }
 
   public onCancel(): void {

@@ -2,6 +2,7 @@ import { Component, OnInit, inject, input, output } from '@angular/core'
 import { MatTooltip } from '@angular/material/tooltip'
 import { CriteriaEntryRelative } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryRelative'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
 import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
 import { CriteriaListItemDetailsMenuService } from 'src/app/shared/service/Menu/ListItemDetails/Criteria/CriteriaListItemDetailsMenu.service'
@@ -38,7 +39,7 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   }
 
   public getSelectedRelative(item: CriteriaEntryRelative) {
-    this.criteriaByIdSearchService.search(item.getContextualizedTermcodeHash()).subscribe((resultList) => {
+    this.criteriaByIdSearchService.search(item.getContextualizedTermcodeHash()).subscribe((resultList: CriteriaResultList) => {
       this.selectedRelative.emit(resultList.getResults()[0])
     })
   }

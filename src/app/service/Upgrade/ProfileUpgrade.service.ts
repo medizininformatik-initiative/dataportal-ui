@@ -39,6 +39,6 @@ export class ProfileUpgradeService {
   }
 
   private mapUpgrades(upgradeData: AnnotationsData[]): ProfileUpgrade[] {
-    return upgradeData.map((annotation) => this.upgradeMapper.mapToUpgrade(annotation))
+    return upgradeData.map((annotation: AnnotationsData) => this.upgradeMapper.mapToUpgrade(annotation))
   }
 }

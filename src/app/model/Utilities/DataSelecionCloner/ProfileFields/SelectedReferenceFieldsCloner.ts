@@ -6,7 +6,9 @@ export class SelectedReferenceFieldsCloner {
     if (!selectedReferenceFields || selectedReferenceFields.length === 0) {
       return []
     }
-    return selectedReferenceFields.map((field) => SelectedReferenceFieldsCloner.deepCopySelectedReferenceField(field))
+    return selectedReferenceFields.map((field: SelectedReferenceField) =>
+      SelectedReferenceFieldsCloner.deepCopySelectedReferenceField(field)
+    )
   }
 
   public static deepCopySelectedReferenceField(selectedReferenceField: SelectedReferenceField): SelectedReferenceField {

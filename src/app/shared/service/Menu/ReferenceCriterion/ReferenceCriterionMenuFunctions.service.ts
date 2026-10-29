@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service'
@@ -21,12 +22,12 @@ export class ReferenceCriterionMenuFunctionsService {
     this.criterionProviderService
       .getOne(parentID)
       .getReferenceAttributeFilters()
-      .forEach((attributeFilter) => {
+      .forEach((attributeFilter: AttributeFilter) => {
         if (attributeFilter.isReferenceSet()) {
           const updatedIds = attributeFilter
             .getReference()
             .getSelectedReferenceIds()
-            .filter((refId) => refId !== id)
+            .filter((refId: string) => refId !== id)
           attributeFilter.getReference().setSelectedReferenceIds(updatedIds)
         }
       })

@@ -2,6 +2,7 @@ import { AsyncPipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject, input, output } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { filter, map, Observable, Subscription, switchMap, take, tap } from 'rxjs'
+import { ReferencedProfile } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferencedProfile'
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
@@ -49,7 +50,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.referencedProfileUrls = this.referenceField()
       .getReferencedProfiles()
-      .map((profile) => profile.getUrl())
+      .map((profile: ReferencedProfile) => profile.getUrl())
     this.elementId = this.referenceField().getElementId()
     this.loadPossibleReferences()
   }
@@ -60,8 +61,8 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
 
   private loadPossibleReferences(): void {
     this.possibleReferences$ = this.possibleReferencesService.getReferencesMap().pipe(
-      filter((innerMap) => innerMap.has(this.profileId())),
-      map((innerMap) => innerMap.get(this.profileId()).get(this.elementId))
+      filter((innerMap: Map<string, Map<string, PossibleProfileReferenceData[]>>) => innerMap.has(this.profileId())),
+      map((innerMap: Map<string, Map<string, PossibleProfileReferenceData[]>>) => innerMap.get(this.profileId()).get(this.elementId))
     )
   }
 
@@ -71,7 +72,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
       .openProfileReferenceModal(this.referencedProfileUrls, this.profileId())
       .pipe(
         take(1),
-        filter((urls) => urls.length > 0),
+        filter((urls: string[]) => urls.length > 0),
         switchMap((urls: string[]) => this.possibleReferencesService.loadAndMapProfiles(urls, this.elementId, this.profileId()))
       )
       .subscribe((possibleProfileReferenceData: PossibleProfileReferenceData[]) => this.onReferencesConfirmed(possibleProfileReferenceData))
@@ -90,11 +91,11 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
       .getReferencesMap()
       .pipe(
         take(1),
-        filter((innerMap) => innerMap.has(this.profileId())),
-        map((innerMap) => innerMap.get(this.profileId()).get(this.elementId)),
-        tap((possibleReferences) => {
+        filter((innerMap: Map<string, Map<string, PossibleProfileReferenceData[]>>) => innerMap.has(this.profileId())),
+        map((innerMap: Map<string, Map<string, PossibleProfileReferenceData[]>>) => innerMap.get(this.profileId()).get(this.elementId)),
+        tap((possibleReferences: PossibleProfileReferenceData[]) => {
           if (possibleReferences) {
-            const foundPossibleRefrence = possibleReferences.find((ref) => ref.id === test.id)
+            const foundPossibleRefrence = possibleReferences.find((ref: PossibleProfileReferenceData) => ref.id === test.id)
             if (foundPossibleRefrence) {
               foundPossibleRefrence.isSelected = !foundPossibleRefrence.isSelected
             } else {
@@ -103,7 +104,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
           }
         })
       )
-      .subscribe((possibleReferences) => {
+      .subscribe((possibleReferences: PossibleProfileReferenceData[]) => {
         this.possibleReferencesService.setReferencesMapElement(this.profileId(), this.elementId, possibleReferences)
         this.onReferencesConfirmed(possibleReferences)
       })

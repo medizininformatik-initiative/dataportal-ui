@@ -2,6 +2,9 @@ import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, map, Observable, take, tap } from 'rxjs'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
+import { ReferencedProfile } from '../model/DataSelection/Profile/Fields/RefrenceFields/ReferencedProfile'
+import { ReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
+import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { DisplayTranslationPipe } from '../shared/pipes/DisplayTranslationPipe'
 import { LoadDataSelectionProfilesService } from './DataSelection/LoadDataSelectionProfiles.service'
 import { ElementIdMapService } from './ElementIdMap.service'
@@ -48,17 +51,17 @@ export class PossibleReferencesService {
   public rebuildPossibleReferences(parentProfile: DataSelectionProfile): Observable<void> {
     return this.dataSelectionProviderService.getActiveProfiles().pipe(
       take(1),
-      map((dataSelectionProfiles) => {
+      map((dataSelectionProfiles: DataSelectionProfile[]) => {
         const baseMap = new Map<string, Map<string, PossibleProfileReferenceData[]>>(this.possibleReferencesMapSubject.value)
-        dataSelectionProfiles.forEach((profile) => {
+        dataSelectionProfiles.forEach((profile: DataSelectionProfile) => {
           const id = profile.getId()
           const referencedFields = parentProfile.getProfileFields().getReferenceFields()
           const existingElementMap = baseMap.get(id) ?? new Map<string, PossibleProfileReferenceData[]>()
           const newElementMap = new Map<string, PossibleProfileReferenceData[]>()
 
-          existingElementMap.forEach((_oldRefs, elementId) => {
-            const fieldDef = referencedFields.find((f) => f.getElementId() === elementId)
-            const urls = fieldDef?.getReferencedProfiles().map((referencedProfile) => referencedProfile.getUrl()) ?? []
+          existingElementMap.forEach((_oldRefs: PossibleProfileReferenceData[], elementId: string) => {
+            const fieldDef = referencedFields.find((f: ReferenceField) => f.getElementId() === elementId)
+            const urls = fieldDef?.getReferencedProfiles().map((referencedProfile: ReferencedProfile) => referencedProfile.getUrl()) ?? []
             const linkedIds = this.getLinkedProfileIds(parentProfile, elementId)
             const existing = this.getExistingProfilesByUrls(urls, id, dataSelectionProfiles)
             newElementMap.set(elementId, this.mapProfilesWithSelectionState(existing, linkedIds))
@@ -67,7 +70,7 @@ export class PossibleReferencesService {
         })
         return baseMap
       }),
-      tap((updatedMap) => this.possibleReferencesMapSubject.next(updatedMap)),
+      tap((updatedMap: Map<string, Map<string, PossibleProfileReferenceData[]>>) => this.possibleReferencesMapSubject.next(updatedMap)),
       map(() => void 0)
     )
   }
@@ -84,7 +87,7 @@ export class PossibleReferencesService {
     const matchedField = parentProfile
       .getProfileFields()
       .getSelectedReferenceFields()
-      ?.find((field) => field.getElementId() === elementId)
+      ?.find((field: SelectedReferenceField) => field.getElementId() === elementId)
     return matchedField?.getLinkedProfileIds() ?? []
   }
 
@@ -96,7 +99,9 @@ export class PossibleReferencesService {
    * @returns {DataSelectionProfile[]} A list of matching profiles.
    */
   private getExistingProfilesByUrls(urls: string[], profileId: string, profileMap: DataSelectionProfile[]): DataSelectionProfile[] {
-    return profileMap.filter((profile) => urls.includes(profile.getUrl())).filter((profile) => profile.getId() !== profileId)
+    return profileMap
+      .filter((profile: DataSelectionProfile) => urls.includes(profile.getUrl()))
+      .filter((profile: DataSelectionProfile) => profile.getId() !== profileId)
   }
 
   /**
@@ -107,7 +112,7 @@ export class PossibleReferencesService {
    * @param {string[]} linkedIds
    */
   private mapProfilesWithSelectionState(profiles: DataSelectionProfile[], linkedIds: string[]): PossibleProfileReferenceData[] {
-    return profiles.map((profile) => {
+    return profiles.map((profile: DataSelectionProfile) => {
       const isSelected = linkedIds.length > 0 && linkedIds.includes(profile.getId())
       return this.mapProfileToReference(profile, isSelected)
     })
@@ -137,7 +142,7 @@ export class PossibleReferencesService {
    * @param {DataSelectionProfile[]} profiles
    */
   private mapProfilesToReferences(profiles: DataSelectionProfile[]): PossibleProfileReferenceData[] {
-    return profiles.map((profile) => this.mapProfileToReference(profile, true))
+    return profiles.map((profile: DataSelectionProfile) => this.mapProfileToReference(profile, true))
   }
 
   public loadAndMapProfiles(urls: string[], elementId: string, parentProfileId: string): Observable<PossibleProfileReferenceData[]> {

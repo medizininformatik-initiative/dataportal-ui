@@ -6,7 +6,7 @@ import { ProfileFilterCloner } from './ProfileFilterCloner'
 
 export class DataSelectionProfileCloner {
   public static deepCopyProfiles(profiles: DataSelectionProfile[]): DataSelectionProfile[] {
-    return profiles.map((profile) => this.deepCopyProfile(profile))
+    return profiles.map((profile: DataSelectionProfile) => this.deepCopyProfile(profile))
   }
   /**
    * Clones a DataSelectionProfile object.

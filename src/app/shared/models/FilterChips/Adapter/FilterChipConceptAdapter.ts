@@ -43,7 +43,7 @@ export class FilterChipConceptAdapter {
    */
   private static buildFilterChips(selectedConcepts: Concept[], type: Display | string): void {
     const builder = new FilterChipBuilder(type)
-    selectedConcepts.forEach((concept) => {
+    selectedConcepts.forEach((concept: Concept) => {
       this.createFilterChip(concept, builder)
     })
     this.conceptFilterChips.push(builder.buildFilterChip())

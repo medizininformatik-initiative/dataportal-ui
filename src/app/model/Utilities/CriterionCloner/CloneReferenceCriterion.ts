@@ -13,7 +13,9 @@ export class CloneAbstractCriterion {
     abstractCriterions: AbstractCriterion[],
     preserveReferenceFilterIds = true
   ): AbstractCriterion[] {
-    return abstractCriterions.map((abstractCriterion) => this.deepCopyAbstractCriterion(abstractCriterion, preserveReferenceFilterIds))
+    return abstractCriterions.map((abstractCriterion: AbstractCriterion) =>
+      this.deepCopyAbstractCriterion(abstractCriterion, preserveReferenceFilterIds)
+    )
   }
 
   public static deepCopyAbstractCriterion(abstractCriterion: AbstractCriterion, preserveReferenceFilterIds = true): AbstractCriterion {

@@ -4,6 +4,7 @@ import { SavedDataQueryData } from 'src/app/model/Interface/SavedDataQueryData'
 import { SavedDataQueryListItemData } from 'src/app/model/Interface/SavedDataQueryListItemData'
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery'
 import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQueryListItem'
+import { UiCRTDL } from 'src/app/model/UiCRTDL'
 import { InterfaceSavedQueryTile } from 'src/app/shared/models/SavedQueryTile/InterfaceSavedQueryTile'
 import { SavedFeasibilityQueryAdapter } from 'src/app/shared/models/SavedQueryTile/SavedFeasibilityQueryAdapter'
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
@@ -25,13 +26,13 @@ export class ReadDataQueryService {
   constructor() {}
 
   public readSavedQueries(): Observable<InterfaceSavedQueryTile[]> {
-    return this.dataQueryApiService.getDataQuery().pipe(map((queries) => this.processQueries(queries)))
+    return this.dataQueryApiService.getDataQuery().pipe(map((queries: SavedDataQueryListItemData[]) => this.processQueries(queries)))
   }
 
   private processQueries(queries: SavedDataQueryListItemData[]): InterfaceSavedQueryTile[] {
     try {
       this.assertQueries(queries)
-      return queries.map((query) => this.adaptQuery(query))
+      return queries.map((query: SavedDataQueryListItemData) => this.adaptQuery(query))
     } catch (error) {
       console.error(error)
       throw error
@@ -39,7 +40,7 @@ export class ReadDataQueryService {
   }
 
   private assertQueries(queries: SavedDataQueryListItemData[]): void {
-    queries.every((query) => TypeAssertion.assertSavedDataQueryListItemData(query))
+    queries.every((query: SavedDataQueryListItemData) => TypeAssertion.assertSavedDataQueryListItemData(query))
   }
 
   private adaptQuery(query: any): InterfaceSavedQueryTile {
@@ -60,7 +61,9 @@ export class ReadDataQueryService {
       }),
       concatMap((data: any) => {
         if (TypeGuard.isCRTDLData(data.content)) {
-          return this.crtdlProcessingPipelineService.process(data.content).pipe(map((crtdl) => SavedDataQuery.fromJson(data, crtdl)))
+          return this.crtdlProcessingPipelineService
+            .process(data.content)
+            .pipe(map((crtdl: UiCRTDL) => SavedDataQuery.fromJson(data, crtdl)))
         }
       })
     )

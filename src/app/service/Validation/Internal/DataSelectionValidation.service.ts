@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, Signal } from '@angular/core'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { map } from 'rxjs'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionMainProfileProviderService } from '../../DataSelectionMainProfileProvider.service'
 import { DataSelectionProviderService } from '../../Provider/DataSelectionProvider.service'
 import { ProfileValidationService, ProfileValidationState } from './ProfileValidationService.service'
@@ -42,7 +43,7 @@ export class DataSelectionValidationService {
     }
 
     const profiles = dataSelection.getProfiles()
-    const containsMainProfile = profiles.some((p) => p.getUrl() === this.patientProfile()?.getUrl())
+    const containsMainProfile = profiles.some((p: DataSelectionProfile) => p.getUrl() === this.patientProfile()?.getUrl())
     if (!containsMainProfile) {
       return INITIAL_STATE
     }
@@ -50,7 +51,7 @@ export class DataSelectionValidationService {
     const profileValidationStates = this.profileValidationService.validateMany(profiles)
     return {
       profileCount: profileValidationStates.length,
-      isValid: profileValidationStates.every((s) => s.isValid),
+      isValid: profileValidationStates.every((s: ProfileValidationState) => s.isValid),
       profileValidationStates,
     }
   })

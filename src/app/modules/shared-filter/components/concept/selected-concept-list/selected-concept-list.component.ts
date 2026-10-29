@@ -26,7 +26,7 @@ export class SelectedConceptListComponent implements OnInit {
   public ngOnInit(): void {}
 
   public get listItems(): SelectedListItem[] {
-    return this.selectedConcepts().map((c) => ({
+    return this.selectedConcepts().map((c: Concept) => ({
       display: c.getDisplay(),
       code: c.getTerminologyCode().getCode(),
     }))

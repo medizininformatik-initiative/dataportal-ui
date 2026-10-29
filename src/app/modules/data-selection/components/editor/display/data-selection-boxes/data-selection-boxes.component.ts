@@ -4,6 +4,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
@@ -61,7 +62,9 @@ export class DataSelectionBoxesComponent {
 
   public readonly isMainProfile = computed(() => this.appSettingsProvider.getDsePatientProfileUrl() === this.profile()?.getUrl())
 
-  private readonly profileIndex = computed(() => this.activeProfiles().findIndex((p) => p.getId() === this.profile()?.getId()))
+  private readonly profileIndex = computed(() =>
+    this.activeProfiles().findIndex((p: DataSelectionProfile) => p.getId() === this.profile()?.getId())
+  )
 
   public readonly canMoveUp = computed(() => !this.isMainProfile() && this.profileIndex() > 1)
 
@@ -75,12 +78,12 @@ export class DataSelectionBoxesComponent {
     if (!dataSelection) {
       return false
     }
-    return dataSelection.getProfiles().some((selectionProfile) =>
+    return dataSelection.getProfiles().some((selectionProfile: DataSelectionProfile) =>
       selectionProfile
         .getProfileFields()
         .getSelectedReferenceFields()
-        .some((selectedReferenceField) => {
-          return selectedReferenceField.getLinkedProfileIds().some((linkedProfileId) => profile.getId() === linkedProfileId)
+        .some((selectedReferenceField: SelectedReferenceField) => {
+          return selectedReferenceField.getLinkedProfileIds().some((linkedProfileId: string) => profile.getId() === linkedProfileId)
         })
     )
   })

@@ -30,14 +30,19 @@ export class SearchFilterBarComponent {
 
   public readonly searchFilters = toSignal(
     this.filterProvider.getCriteriaSearchFilters().pipe(
-      map((filters: CriteriaSearchFilter[]) => filters.map((f) => CriteriaSearchFilterAdapter.convertToFilterValues(f))),
+      map((filters: CriteriaSearchFilter[]) =>
+        filters.map((f: CriteriaSearchFilter) => CriteriaSearchFilterAdapter.convertToFilterValues(f))
+      ),
       map((filters: SearchFilterData[]) => {
         const order: Record<string, number> = {
           [ElasticSearchFilterTypes.KDS_MODULE]: 0,
           [ElasticSearchFilterTypes.CONTEXT]: 1,
           [ElasticSearchFilterTypes.TERMINOLOGY]: 2,
         }
-        return [...filters].sort((a, b) => (order[a.filterType.toLowerCase()] ?? 99) - (order[b.filterType.toLowerCase()] ?? 99))
+        return [...filters].sort(
+          (a: SearchFilterData, b: SearchFilterData) =>
+            (order[a.filterType.toLowerCase()] ?? 99) - (order[b.filterType.toLowerCase()] ?? 99)
+        )
       })
     ),
     { initialValue: [] as SearchFilterData[] }

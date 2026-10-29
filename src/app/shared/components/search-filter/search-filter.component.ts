@@ -66,7 +66,7 @@ export class SearchFilterComponent {
       return filter.data
     }
     const query = this.searchText.toLowerCase()
-    return filter.data.filter((item) => this.getSearchSource(item).toLowerCase().includes(query))
+    return filter.data.filter((item: SearchFilterValueData) => this.getSearchSource(item).toLowerCase().includes(query))
   }
 
   public translatedLabel: { translatedSystem: string; count: number; url: string }[] = []
@@ -75,7 +75,7 @@ export class SearchFilterComponent {
   public onSelectionChange(selectedValues: string[] | string): void {
     const normalizedValues = Array.isArray(selectedValues) ? selectedValues : [selectedValues]
 
-    this.filter.update((currentFilter) => {
+    this.filter.update((currentFilter: SearchFilterData) => {
       if (!currentFilter) {
         return currentFilter
       }
@@ -89,7 +89,7 @@ export class SearchFilterComponent {
 
   public getCleanValue(value: string | string[]): string {
     if (Array.isArray(value)) {
-      return value.map((v) => v.replace(/\s*\(\d+\)$/, '')).join(', ')
+      return value.map((v: string) => v.replace(/\s*\(\d+\)$/, '')).join(', ')
     }
     return value?.replace(/\s*\(\d+\)$/, '') || ''
   }

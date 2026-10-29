@@ -23,14 +23,14 @@ export class SelectedReferenceListComponent implements OnInit, OnChanges {
   public ngOnChanges(): void {}
 
   public get listItems(): SelectedListItem[] {
-    return this.selectedReferences().map((ref) => ({
+    return this.selectedReferences().map((ref: ReferenceCriterion) => ({
       display: ref.getDisplay(),
       code: ref.getTermCodes()[0].getCode(),
     }))
   }
 
   public removeAtIndex(index: number): void {
-    const updatedReferences = this.selectedReferences().filter((_, i) => i !== index)
+    const updatedReferences = this.selectedReferences().filter((_: ReferenceCriterion, i: number) => i !== index)
     this.changedSelectedReferences.emit(updatedReferences)
   }
 }

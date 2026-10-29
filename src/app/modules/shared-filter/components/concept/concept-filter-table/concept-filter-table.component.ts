@@ -40,12 +40,12 @@ export class ConceptFilterTableComponent {
 
   public readonly adaptedData = toSignal<TableData | undefined>(
     toObservable(this.valueSetUrl).pipe(
-      filter((urls) => urls !== undefined),
-      switchMap((urls) =>
+      filter((urls: string[]) => urls !== undefined),
+      switchMap((urls: string[]) =>
         this.conceptSearchService.getSearchResults(urls).pipe(
           filter((results) => results !== null),
           map((results) => {
-            results.getResults().forEach((entry) => {
+            results.getResults().forEach((entry: CodeableConceptResultListEntry) => {
               entry.setIsSelected(this.conceptSelectionService.isConceptSelected(entry.getConcept(), this.preSelectedConcepts()))
             })
             return new CodeableConceptListEntryAdapter().adapt(results.getResults())
@@ -65,7 +65,7 @@ export class ConceptFilterTableComponent {
   }
 
   private updateCheckboxSelection(): void {
-    this.adaptedData()?.body.rows.forEach((row) => {
+    this.adaptedData()?.body.rows.forEach((row: TableRowData) => {
       const listEntry = row.originalEntry as CodeableConceptResultListEntry
       const concept = listEntry.getConcept()
       const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT)

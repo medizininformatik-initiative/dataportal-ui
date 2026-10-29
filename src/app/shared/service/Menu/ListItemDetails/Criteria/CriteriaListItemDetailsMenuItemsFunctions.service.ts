@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core'
 import { map, switchMap, take } from 'rxjs'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { CriteriaEntryDetails } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryDetails'
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
 import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCriterionService'
 import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
@@ -32,7 +33,7 @@ export class CriteriaListItemDetailsMenuItemsFunctionsService {
     this.criteriaEntryDetailsService
       .loadDetails(id)
       .pipe(take(1))
-      .subscribe((test) => {
+      .subscribe((test: CriteriaEntryDetails) => {
         this.criteriaEntryDetailsProviderService.setCriteriaEntryDetails(test)
       })
   }

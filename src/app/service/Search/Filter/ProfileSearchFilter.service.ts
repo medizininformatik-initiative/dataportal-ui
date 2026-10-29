@@ -18,7 +18,7 @@ export class ProfileSearchFilterService {
 
   private mapFilters(filter: SearchFilterData | SearchFilterData[]): ProfileSearchFilter[] {
     if (Array.isArray(filter)) {
-      return filter.map((item) => ProfileSearchFilter.fromJson(item))
+      return filter.map((item: SearchFilterData) => ProfileSearchFilter.fromJson(item))
     }
 
     return [ProfileSearchFilter.fromJson(filter)]

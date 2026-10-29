@@ -26,7 +26,7 @@ export class ProfileReferenceAdapter {
   public static normalizeRefrenceUrl(url: string): string {
     const lastPart = url.split('/').pop()
     const words = lastPart.split('-')
-    const capitalizedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    const capitalizedWords = words.map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
     const result = capitalizedWords.join(' ')
     return result
   }

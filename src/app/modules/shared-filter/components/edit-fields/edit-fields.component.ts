@@ -80,7 +80,7 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   }
 
   public setSelectedChildrenFields() {
-    this.localSelectedBasicFields.forEach((field) => {
+    this.localSelectedBasicFields.forEach((field: SelectedBasicField) => {
       this.selectedDataSelectionProfileFieldsService.addToSelection(field)
     })
   }
@@ -103,7 +103,9 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   }
 
   private getIndexInSelectedFields(elementId: string): number {
-    return this.localSelectedBasicFields.findIndex((selectedField) => selectedField.getSelectedField().getElementId() === elementId)
+    return this.localSelectedBasicFields.findIndex(
+      (selectedField: SelectedBasicField) => selectedField.getSelectedField().getElementId() === elementId
+    )
   }
 
   public setFieldAsRequired(selectedField: SelectedBasicField) {

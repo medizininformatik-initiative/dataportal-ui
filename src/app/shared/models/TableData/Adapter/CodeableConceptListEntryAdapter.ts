@@ -21,7 +21,7 @@ export class CodeableConceptListEntryAdapter extends AbstractTableAdapter<Codeab
   }
 
   protected buildRows(listEntries: CodeableConceptResultListEntry[]): TableRowData[] {
-    return listEntries.map((entry) => this.buildRow(entry))
+    return listEntries.map((entry: CodeableConceptResultListEntry) => this.buildRow(entry))
   }
 
   private buildRow(entry: CodeableConceptResultListEntry): TableRowData {

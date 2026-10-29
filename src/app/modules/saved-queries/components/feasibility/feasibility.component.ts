@@ -75,7 +75,7 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
           feasibilityQuery.setResultIds([queryResult.getId()])
           return queryResult
         }),
-        tap((queryResult) => {
+        tap((queryResult: QueryResult) => {
           this.resultProviderService.setOne(queryResult)
         })
       )

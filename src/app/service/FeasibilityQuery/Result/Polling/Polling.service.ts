@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core'
 import { map, Observable, switchMap } from 'rxjs'
+import { CCDLCohortDefinition } from 'src/app/model/CohortDefinition/CCDLCohortDefinition'
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { FeasibilityQueryApiService } from '../../../Backend/Api/FeasibilityQueryApi.service'
 import { FeasibilityQueryResultApiService } from '../../../Backend/Api/FeasibilityQueryResultApi.service'
@@ -34,7 +35,7 @@ export class PollingService {
 
   public getFeasibilityIdFromPollingUrl(): Observable<string> {
     return this.translator.getActive().pipe(
-      switchMap((cohortDefinition) => this.feasibilityQueryApiService.postStructuredQuery(cohortDefinition)),
+      switchMap((cohortDefinition: CCDLCohortDefinition) => this.feasibilityQueryApiService.postStructuredQuery(cohortDefinition)),
       map((result) => {
         const pollingUrl = result.headers.get('location')
         return pollingUrl.substring(pollingUrl.lastIndexOf('/') + 1)

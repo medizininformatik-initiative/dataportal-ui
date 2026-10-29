@@ -22,7 +22,7 @@ export class CodeableConceptBulkFoundEntryAdapter extends AbstractTableAdapter<C
   }
 
   protected buildRows(listEntries: CodeableConceptBulkEntry[]): TableRowData[] {
-    return listEntries.map((entry) => this.buildRow(entry))
+    return listEntries.map((entry: CodeableConceptBulkEntry) => this.buildRow(entry))
   }
 
   private buildRow(entry: CodeableConceptBulkEntry): TableRowData {

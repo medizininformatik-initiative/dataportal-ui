@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { concatMap, filter, map, Observable, of, switchMap, take, tap } from 'rxjs'
+import { UpgradeData } from '../core/model/Upgrade/UpgradeData'
 import { ErrorLogModalComponent } from '../layout/components/error-log/error-log-modal.component'
 import { CRTDLData } from '../model/Interface/CRTDLData'
 import { UiCRTDL } from '../model/UiCRTDL'
@@ -33,9 +34,9 @@ export class CrtdlProcessingPipelineService {
    */
   public process(crtdl: CRTDLData): Observable<UiCRTDL> {
     return this.validationService.validate(crtdl, false).pipe(
-      concatMap((isValid) => (isValid ? of(crtdl) : this.upgradeAndRevalidate(crtdl))),
-      filter((result) => result !== false), // Filter out failed upgrade/validation attempts
-      concatMap((validCrtdl) => this.translatorService.createCRTDLFromJson(validCrtdl as CRTDLData)),
+      concatMap((isValid: boolean) => (isValid ? of(crtdl) : this.upgradeAndRevalidate(crtdl))),
+      filter((result: boolean | CRTDLData) => result !== false), // Filter out failed upgrade/validation attempts
+      concatMap((validCrtdl: true | CRTDLData) => this.translatorService.createCRTDLFromJson(validCrtdl as CRTDLData)),
       take(1)
     )
   }
@@ -47,11 +48,11 @@ export class CrtdlProcessingPipelineService {
    */
   private upgradeAndRevalidate(crtdl: CRTDLData): Observable<CRTDLData | boolean> {
     return this.profileUpgradeService.upgrade(crtdl).pipe(
-      filter((upgradeResult) => upgradeResult !== false),
-      switchMap((upgraded) => {
+      filter((upgradeResult: boolean | UpgradeData) => upgradeResult !== false),
+      switchMap((upgraded: true | UpgradeData) => {
         if (TypeGuard.isUpgradeData(upgraded)) {
           return this.validationService.validate(upgraded.crtdl).pipe(
-            filter((isValid) => isValid),
+            filter((isValid: boolean) => isValid),
             map(() => upgraded.crtdl)
           )
         } else {

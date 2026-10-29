@@ -97,7 +97,7 @@ export class UserProfileService {
     }
 
     const userRoles = profile.info.realm_access.roles
-    return roles.some((role) => userRoles.includes(role))
+    return roles.some((role: string) => userRoles.includes(role))
   }
 
   /**

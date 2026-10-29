@@ -28,7 +28,7 @@ export class FeasibilityQueryValidationService {
    * @returns {FeasibilityQueryValidationState} The validation state of the active feasibility query.
    */
   private readonly activeFeasibilityQuery = toSignal<FeasibilityQuery | null>(
-    this.feasibilityQueryService.getActiveFeasibilityQuery().pipe(map((query) => query ?? null)),
+    this.feasibilityQueryService.getActiveFeasibilityQuery().pipe(map((query: FeasibilityQuery) => query ?? null)),
     { initialValue: null, equal: () => false }
   )
 
@@ -69,7 +69,7 @@ export class FeasibilityQueryValidationService {
    * @returns {string[]} An array of criterion IDs.
    */
   private flattenCriteria(feasibilityQuery: FeasibilityQuery): string[] {
-    const flatten = (groups: string[][]): string[] => groups.reduce<string[]>((acc, group) => [...acc, ...group], [])
+    const flatten = (groups: string[][]): string[] => groups.reduce<string[]>((acc: string[], group: string[]) => [...acc, ...group], [])
     return [...flatten(feasibilityQuery.getInclusionCriteria()), ...flatten(feasibilityQuery.getExclusionCriteria())]
   }
 }

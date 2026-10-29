@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
 
 export enum ProfileStateType {
   BasicFieldsSetButReferenceNotSet,
@@ -27,7 +28,7 @@ export class ProfileValidationService {
    * @returns {ProfileValidationState[]}
    */
   public validateMany(profiles: DataSelectionProfile[]): ProfileValidationState[] {
-    return profiles.map((profile) => this.validate(profile))
+    return profiles.map((profile: DataSelectionProfile) => this.validate(profile))
   }
 
   /**
@@ -82,6 +83,6 @@ export class ProfileValidationService {
     return profile
       .getProfileFields()
       .getUnlinkedRequiredOrRecommendedReferences()
-      .map((field) => field.getElementId())[0]
+      .map((field: ReferenceField) => field.getElementId())[0]
   }
 }

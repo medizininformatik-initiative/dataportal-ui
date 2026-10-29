@@ -30,17 +30,17 @@ export class DataSelectionProviderService {
   }
 
   public getDataSelection(id: string): Observable<DataSelection> {
-    return this.selectionMapSubject.pipe(map((selections) => selections.get(id)))
+    return this.selectionMapSubject.pipe(map((selections: Map<string, DataSelection>) => selections.get(id)))
   }
 
   public getActiveDataSelection(): Observable<DataSelection> {
     return this.activeDataSelection
       .getActiveDataSelectionIdObservable()
-      .pipe(switchMap((id) => this.selectionMapSubject.pipe(map((selections) => selections.get(id)))))
+      .pipe(switchMap((id: string) => this.selectionMapSubject.pipe(map((selections: Map<string, DataSelection>) => selections.get(id)))))
   }
 
   public getActiveProfiles(): Observable<DataSelectionProfile[]> {
-    return this.getActiveDataSelection().pipe(map((ds) => ds.getProfiles()))
+    return this.getActiveDataSelection().pipe(map((ds: DataSelection) => ds.getProfiles()))
   }
 
   public setActiveProfiles(profiles: DataSelectionProfile[]): void {
@@ -101,7 +101,7 @@ export class DataSelectionProviderService {
   }
 
   private upsertProfile(profiles: DataSelectionProfile[], profile: DataSelectionProfile): void {
-    const index = profiles.findIndex((existing) => existing.getId() === profile.getId())
+    const index = profiles.findIndex((existing: DataSelectionProfile) => existing.getId() === profile.getId())
     if (index !== -1) {
       profiles[index] = profile
     } else {
@@ -132,15 +132,15 @@ export class DataSelectionProviderService {
   private resolveDuplicateLabel(profiles: DataSelectionProfile[], profile: DataSelectionProfile): DataSelectionProfile {
     const texts = profile.getLabel().getTexts()
     const sameProfiles = profiles.filter(
-      (existingProfile) =>
+      (existingProfile: DataSelectionProfile) =>
         existingProfile.getId() !== profile.getId() &&
         existingProfile
           .getLabel()
           .getTexts()
-          .some((text) => texts.includes(text))
+          .some((text: string) => texts.includes(text))
     )
     if (sameProfiles.length > 0) {
-      sameProfiles.sort((a, b) => b.getLabelNumber() - a.getLabelNumber())
+      sameProfiles.sort((a: DataSelectionProfile, b: DataSelectionProfile) => b.getLabelNumber() - a.getLabelNumber())
       const newLabelNumber = sameProfiles[0].getLabelNumber() + 1
       profile.setLabelNumber(newLabelNumber)
     }

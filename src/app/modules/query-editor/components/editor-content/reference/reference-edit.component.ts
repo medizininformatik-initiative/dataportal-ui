@@ -161,7 +161,7 @@ export class ReferenceEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private setConceptAttributeFilterTemplate(templates: any[]): void {
-    this.conceptAttributeFilter().forEach((filter, index) => {
+    this.conceptAttributeFilter().forEach((filter: AttributeFilter, index: number) => {
       const display = filter.getDisplay()
       templates.push({
         template: this.conceptAttributeFiltersTemplate(),

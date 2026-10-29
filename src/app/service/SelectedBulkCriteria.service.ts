@@ -29,7 +29,7 @@ export class SelectedBulkCriteriaProvider extends AbstractArrayEntityProvider<Cr
    */
   public setSearchResults(entries: CriteriaBulkEntry[]): void {
     this.searchResultsSubject.next(entries)
-    entries.forEach((entry) => this.foundEntriesMap.set(entry.getId(), entry))
+    entries.forEach((entry: CriteriaBulkEntry) => this.foundEntriesMap.set(entry.getId(), entry))
   }
 
   /**
@@ -61,7 +61,7 @@ export class SelectedBulkCriteriaProvider extends AbstractArrayEntityProvider<Cr
   }
 
   public toggle(entry: CriteriaBulkEntry): void {
-    if (this.items.some((e) => this.selectId(e) === entry.getId())) {
+    if (this.items.some((e: CriteriaBulkEntry) => this.selectId(e) === entry.getId())) {
       this.removeOne(entry.getId())
     } else {
       this.addOne(entry)
@@ -69,7 +69,7 @@ export class SelectedBulkCriteriaProvider extends AbstractArrayEntityProvider<Cr
   }
 
   public deselect(entries: CriteriaBulkEntry[]): void {
-    this.removeMany(entries.map((e) => e.getId()))
+    this.removeMany(entries.map((e: CriteriaBulkEntry) => e.getId()))
   }
 
   public clear(): void {

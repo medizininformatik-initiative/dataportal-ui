@@ -33,7 +33,7 @@ export class LoadDataSelectionProfilesService {
 
     return this.dataSelectionApiService.getDataSelectionProfileData(validUrls).pipe(
       map((data: DataSelectionProfileData[]) => this.profileInstanceBuilder.buildProfileInstances(data, markAsReference)),
-      tap((profiles) => this.setProfilesInProvider(profiles))
+      tap((profiles: DataSelectionProfile[]) => this.setProfilesInProvider(profiles))
     )
   }
 
@@ -51,7 +51,7 @@ export class LoadDataSelectionProfilesService {
    * @param {DaDataSelectionProfile[]} profiles
    */
   private setProfilesInProvider(profiles: DataSelectionProfile[]): void {
-    profiles.forEach((profile) => {
+    profiles.forEach((profile: DataSelectionProfile) => {
       this.dataSelectionProvider.setActiveProfile(profile, 'SET')
     })
   }

@@ -183,7 +183,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
   }
 
   private setConceptAttributeFilterTemplate(templates: any[]): void {
-    this.conceptAttributeFilter().forEach((filter, index) => {
+    this.conceptAttributeFilter().forEach((filter: AttributeFilter, index: number) => {
       templates.push({
         template: this.conceptAttributeFiltersTemplate(),
         display: filter.getDisplay(),
@@ -229,7 +229,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
     return attributeFilter
       .getReference()
       .getSelectedReferenceIds()
-      .reduce((acc, id) => {
+      .reduce((acc: ReferenceCriterion[], id: string) => {
         try {
           acc.push(this.referenceCriterionProvider.getOne(id))
         } catch {

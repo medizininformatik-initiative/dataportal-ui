@@ -23,7 +23,7 @@ export class ProfileSearchFilterProviderService {
 
   public updateFilterSelectedValues(filterType: string, selectedValues: string[]): void {
     const normalizedFilterType = filterType.toLowerCase()
-    const updatedFilters = this.profileSearchFiltersSubject.getValue().map((filter) => {
+    const updatedFilters = this.profileSearchFiltersSubject.getValue().map((filter: ProfileSearchFilter) => {
       if (filter.getName().toLowerCase() !== normalizedFilterType) {
         return filter
       }
@@ -36,7 +36,7 @@ export class ProfileSearchFilterProviderService {
   }
 
   public resetSelectedValues(): void {
-    const updatedFilters = this.profileSearchFiltersSubject.getValue().map((filter) => {
+    const updatedFilters = this.profileSearchFiltersSubject.getValue().map((filter: ProfileSearchFilter) => {
       filter.setSelectedValues([])
       return filter
     })
@@ -47,7 +47,9 @@ export class ProfileSearchFilterProviderService {
   public filtersNotSet(): Observable<boolean> {
     return this.profileSearchFiltersSubject
       .asObservable()
-      .pipe(map((filters) => filters.every((filter) => filter.getSelectedValues().length === 0)))
+      .pipe(
+        map((filters: ProfileSearchFilter[]) => filters.every((filter: ProfileSearchFilter) => filter.getSelectedValues().length === 0))
+      )
   }
 
   public getSelectedModules(): Observable<string[]> {
@@ -64,8 +66,8 @@ export class ProfileSearchFilterProviderService {
 
   private getSelectedValuesOfType(filterType: string): Observable<string[]> {
     return this.profileSearchFiltersSubject.asObservable().pipe(
-      map((filters) => {
-        const filter = filters.find((item) => item.getName().toLowerCase() === filterType.toLowerCase())
+      map((filters: ProfileSearchFilter[]) => {
+        const filter = filters.find((item: ProfileSearchFilter) => item.getName().toLowerCase() === filterType.toLowerCase())
         return filter?.getSelectedValues() ?? []
       })
     )

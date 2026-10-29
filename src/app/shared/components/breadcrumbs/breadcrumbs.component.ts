@@ -1,7 +1,7 @@
 import { NgClass } from '@angular/common'
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { MatTooltip } from '@angular/material/tooltip'
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { ActivatedRoute, NavigationEnd, Router, UrlSegment } from '@angular/router'
 import { filter, Subscription } from 'rxjs'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
@@ -105,7 +105,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
       return breadcrumbs
     }
     for (const child of children) {
-      const routeURL: string = child.snapshot.url.map((segment) => segment.path).join('/')
+      const routeURL: string = child.snapshot.url.map((segment: UrlSegment) => segment.path).join('/')
       if (routeURL !== '') {
         url += `/${routeURL}`
         const label = child.snapshot.data.breadcrumb

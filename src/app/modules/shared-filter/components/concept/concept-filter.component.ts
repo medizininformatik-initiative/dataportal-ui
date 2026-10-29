@@ -39,7 +39,9 @@ export class ConceptFilterComponent {
 
   public readonly searchResults = toSignal<CodeableConceptResultList | null>(
     toObservable(this.activeUrls).pipe(
-      switchMap((urls) => this.conceptSearchService.getSearchResults(urls).pipe(filter((results) => results != null)))
+      switchMap((urls: string[]) =>
+        this.conceptSearchService.getSearchResults(urls).pipe(filter((results: CodeableConceptResultList) => results != null))
+      )
     ),
     { initialValue: null }
   )

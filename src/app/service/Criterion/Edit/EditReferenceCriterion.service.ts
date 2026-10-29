@@ -71,7 +71,7 @@ export class EditReferenceCriterionService {
 
   public addReferenceCriteria(id: string, attributeFilter: AttributeFilter): Observable<ReferenceFilter> {
     return this.referenceFilterService.updateReferenceFilter([id], this.getReferenceCriterion().getId(), attributeFilter).pipe(
-      tap((updatedReferenceFilter) => this.applyReferenceFilter(attributeFilter, updatedReferenceFilter)),
+      tap((updatedReferenceFilter: ReferenceFilter) => this.applyReferenceFilter(attributeFilter, updatedReferenceFilter)),
       tap(() => this.emit())
     )
   }

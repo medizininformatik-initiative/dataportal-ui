@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { map, Subscription } from 'rxjs'
 import { CriteriaEntryDetails } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryDetails'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
 import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service'
 import { CriteriaEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/CriteriaEntryDetails.service'
 import { CriteriaSearchService } from 'src/app/service/Search/SearchTypes/Criteria/CriteriaSearch.service'
@@ -50,9 +51,12 @@ export class SearchResultsComponent implements OnDestroy {
   private readonly criterionListItemDetailsMenuService = inject(CriteriaListItemDetailsMenuService)
   public readonly drawer = viewChild<MatDrawer>('drawer')
 
-  private readonly searchResultEntries = toSignal(this.criteriaSearchService.getSearchResults().pipe(map((r) => r?.getResults() ?? [])), {
-    initialValue: [] as CriteriaListEntry[],
-  })
+  private readonly searchResultEntries = toSignal(
+    this.criteriaSearchService.getSearchResults().pipe(map((r: CriteriaResultList) => r?.getResults() ?? [])),
+    {
+      initialValue: [] as CriteriaListEntry[],
+    }
+  )
 
   private readonly selectedItems = toSignal(this.selectedTableItemsService.getItems(), {
     initialValue: [] as CriteriaListEntry[],
@@ -67,10 +71,10 @@ export class SearchResultsComponent implements OnDestroy {
   public readonly adaptedData = computed<TableData>(() => {
     const data = new CriteriaListEntryAdapter().adapt(this.searchResultEntries())
     const selected = this.selectedItems()
-    data?.body.rows.forEach((row) => {
+    data?.body.rows.forEach((row: TableRowData) => {
       const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT)
       if (checkboxCell) {
-        checkboxCell.isSelected = selected.some((item) => item.getId() === row.id)
+        checkboxCell.isSelected = selected.some((item: CriteriaListEntry) => item.getId() === row.id)
       }
     })
     return data
@@ -111,16 +115,18 @@ export class SearchResultsComponent implements OnDestroy {
   public setClickedRow(row: TableRowData): void {
     this.listItemDetailsSubscription?.unsubscribe()
     const entry = row.originalEntry as CriteriaListEntry
-    this.listItemDetailsSubscription = this.criteriaEntryDetailsService.loadDetails(entry.getId()).subscribe((details) => {
-      this.adaptedDetailsData.set(new CriteriaListItemDetailsAdapter().adapt(details))
-    })
+    this.listItemDetailsSubscription = this.criteriaEntryDetailsService
+      .loadDetails(entry.getId())
+      .subscribe((details: CriteriaEntryDetails) => {
+        this.adaptedDetailsData.set(new CriteriaListItemDetailsAdapter().adapt(details))
+      })
     this.selectedEntryId === entry.getId() ? this.drawer().toggle() : this.drawer().open()
     this.selectedEntryId = entry.getId()
   }
 
   public getSelectedRelative(item: ListItemDetailsRelativeData): void {
     this.listItemDetailsSubscription?.unsubscribe()
-    this.listItemDetailsSubscription = this.criteriaEntryDetailsService.loadDetails(item.id).subscribe((details) => {
+    this.listItemDetailsSubscription = this.criteriaEntryDetailsService.loadDetails(item.id).subscribe((details: CriteriaEntryDetails) => {
       this.adaptedDetailsData.set(new CriteriaListItemDetailsAdapter().adapt(details))
       this.openSidenav()
     })

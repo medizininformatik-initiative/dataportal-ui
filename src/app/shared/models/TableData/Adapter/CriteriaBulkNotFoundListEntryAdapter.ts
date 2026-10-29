@@ -13,7 +13,7 @@ export class CriteriaBulkNotFoundListEntryAdapter extends AbstractTableAdapter<C
   }
 
   protected buildRows(listEntries: CriteriaBulkEntryNotFound[]): TableRowData[] {
-    return listEntries.map((entry) => this.buildRow(entry))
+    return listEntries.map((entry: CriteriaBulkEntryNotFound) => this.buildRow(entry))
   }
 
   private buildRow(entry: CriteriaBulkEntryNotFound): TableRowData {

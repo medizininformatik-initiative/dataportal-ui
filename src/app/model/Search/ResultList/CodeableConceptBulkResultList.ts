@@ -1,4 +1,5 @@
 import { CodeableConceptBulkSearchResponse } from '../../Interface/CodeableConceptBulkSearchResponse'
+import { ConceptData } from '../../Interface/ConceptData'
 import { CodeableConceptBulkEntry } from '../ListEntries/CodeableConceptBulkEntry'
 import { CriteriaBulkEntryNotFound } from '../ListEntries/CriteriaBulkEntryNotFound'
 
@@ -28,8 +29,8 @@ export class CodeableConceptBulkResultList {
   }
 
   public static fromJson(json: CodeableConceptBulkSearchResponse): CodeableConceptBulkResultList {
-    const foundEntries = json.found.map((entryJson) => CodeableConceptBulkEntry.fromJson(entryJson))
-    const notFoundEntries = json.notFound.map((termCode) => new CriteriaBulkEntryNotFound(termCode, termCode))
+    const foundEntries = json.found.map((entryJson: ConceptData) => CodeableConceptBulkEntry.fromJson(entryJson))
+    const notFoundEntries = json.notFound.map((termCode: string) => new CriteriaBulkEntryNotFound(termCode, termCode))
     return new CodeableConceptBulkResultList(foundEntries, notFoundEntries)
   }
 }

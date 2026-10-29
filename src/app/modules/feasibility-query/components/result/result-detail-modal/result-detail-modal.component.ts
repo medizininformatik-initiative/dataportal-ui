@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
 import { map, Subscription } from 'rxjs'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { BackendService } from 'src/app/service/Backend/Backend.service'
 import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
@@ -49,7 +50,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
     this.providerSubscription = this.feasibilityQueryProviderService
       .getActiveFeasibilityQuery()
       .pipe(
-        map((feasibilityQuery) => {
+        map((feasibilityQuery: FeasibilityQuery) => {
           const resultIdsArray = feasibilityQuery.getResultIds()
           const latestResultId = resultIdsArray[resultIdsArray.length - 1]
           const latestResult = this.resultProviderService.getOne(latestResultId)
@@ -58,7 +59,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
           } else {
             this.resultServiceSubscription = this.feasibilityQueryResultService
               .getDetailedObfuscatedResult(latestResultId)
-              .subscribe((result) => {
+              .subscribe((result: QueryResult) => {
                 this.setActiveResultIdAndAdaptedData(result)
               })
           }

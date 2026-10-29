@@ -65,7 +65,7 @@ export abstract class AbstractKeyedSearchResultProvider<
    */
   public getSearchResults(dataSetUrls: string[]): Observable<T | null> {
     const key = this.generateKey(dataSetUrls)
-    return this.searchResultSubject.asObservable().pipe(map((resultsMap) => resultsMap.get(key) ?? null))
+    return this.searchResultSubject.asObservable().pipe(map((resultsMap: Map<string, T>) => resultsMap.get(key) ?? null))
   }
 
   /**

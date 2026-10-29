@@ -23,7 +23,7 @@ export class SelectedProfileService {
   public setSelectedProfiles(profiles: ProfileListEntry[]): void {
     this._selectedProfiles.set(profiles)
     this.profileIds.clear()
-    profiles.forEach((profile) => this.profileIds.add(profile.getId()))
+    profiles.forEach((profile: ProfileListEntry) => this.profileIds.add(profile.getId()))
   }
 
   /**
@@ -34,7 +34,7 @@ export class SelectedProfileService {
     if (this.profileIds.has(profile.getId())) {
       return
     }
-    this._selectedProfiles.update((current) => [...current, profile])
+    this._selectedProfiles.update((current: ProfileListEntry[]) => [...current, profile])
     this.profileIds.add(profile.getId())
   }
 
@@ -51,7 +51,7 @@ export class SelectedProfileService {
    * @param {ProfileListEntry} profile
    */
   public removeFromSelection(profile: ProfileListEntry): void {
-    this._selectedProfiles.update((current) => current.filter((p) => p.getId() !== profile.getId()))
+    this._selectedProfiles.update((current: ProfileListEntry[]) => current.filter((p: ProfileListEntry) => p.getId() !== profile.getId()))
     this.profileIds.delete(profile.getId())
   }
 

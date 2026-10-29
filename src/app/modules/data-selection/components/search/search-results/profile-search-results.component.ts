@@ -5,7 +5,9 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
 import { map, tap } from 'rxjs'
+import { ProfileEntryDetails } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryDetails'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
+import { ProfileResultList } from 'src/app/model/Search/ResultList/ProfileResultList'
 import { SelectedProfileService } from 'src/app/service/DataSelection/Selection/SelectedProfileEntry.service'
 import { ProfileEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/ProfileEntryDetails.service'
 import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
@@ -53,19 +55,22 @@ export class ProfileSearchResultsComponent {
     initialValue: '',
   })
 
-  private readonly searchResultEntries = toSignal(this.profileSearchService.getSearchResults().pipe(map((r) => r?.getResults() ?? [])), {
-    initialValue: [] as ProfileListEntry[],
-  })
+  private readonly searchResultEntries = toSignal(
+    this.profileSearchService.getSearchResults().pipe(map((r: ProfileResultList) => r?.getResults() ?? [])),
+    {
+      initialValue: [] as ProfileListEntry[],
+    }
+  )
 
   private readonly selectedProfiles = this.selectedProfileService.getSelectedProfiles()
 
   public readonly adaptedData = computed<TableData>(() => {
     const data = new ProfileEntryAdapter().adapt(this.searchResultEntries())
     const selected = this.selectedProfiles()
-    data?.body.rows.forEach((row) => {
+    data?.body.rows.forEach((row: TableRowData) => {
       const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT)
       if (checkboxCell) {
-        checkboxCell.isSelected = selected.some((p) => p.getUrl() === (row.originalEntry as ProfileListEntry).getUrl())
+        checkboxCell.isSelected = selected.some((p: ProfileListEntry) => p.getUrl() === (row.originalEntry as ProfileListEntry).getUrl())
       }
     })
     return data
@@ -95,12 +100,12 @@ export class ProfileSearchResultsComponent {
   private isProfileSelected(entryUrl: string): boolean {
     return this.selectedProfileService
       .getSelectedProfiles()()
-      .some((profile) => profile.getUrl() === entryUrl)
+      .some((profile: ProfileListEntry) => profile.getUrl() === entryUrl)
   }
 
   public loadEntry(row: TableRowData): void {
     const entry = row.originalEntry as ProfileListEntry
-    this.profileEntryDetailsService.loadDetails(entry.getId()).subscribe((details) => {
+    this.profileEntryDetailsService.loadDetails(entry.getId()).subscribe((details: ProfileEntryDetails) => {
       this.adaptedDetailsData.set(new ProfileListItemDetailsAdapter().adapt(details))
     })
     this.selectedEntryId === entry.getId() ? this.drawer().toggle() : this.drawer().open()
@@ -117,16 +122,16 @@ export class ProfileSearchResultsComponent {
   }
   public selectAll(areAllSelected: boolean): void {
     if (areAllSelected) {
-      this.profileSearchEngineService.search(this.activeSearchTerm(), 0, 10000).subscribe((result) => {
-        result.getResults().forEach((entry) => {
+      this.profileSearchEngineService.search(this.activeSearchTerm(), 0, 10000).subscribe((result: ProfileResultList) => {
+        result.getResults().forEach((entry: ProfileListEntry) => {
           if (!this.isProfileSelected(entry.getUrl())) {
             this.selectedProfileService.addToSelection(entry)
           }
         })
       })
     } else {
-      this.profileSearchEngineService.search(this.activeSearchTerm(), 0, 10000).subscribe((result) => {
-        result.getResults().forEach((entry) => {
+      this.profileSearchEngineService.search(this.activeSearchTerm(), 0, 10000).subscribe((result: ProfileResultList) => {
+        result.getResults().forEach((entry: ProfileListEntry) => {
           if (this.isProfileSelected(entry.getUrl())) {
             this.selectedProfileService.removeFromSelection(entry)
           }

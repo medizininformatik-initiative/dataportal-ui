@@ -28,7 +28,7 @@ export class FilterChipsComponent {
 
   constructor() {
     effect(() => {
-      this.filterChips().forEach((chip) => {
+      this.filterChips().forEach((chip: FilterChipData) => {
         chip.twoLineDisplay = chip.typeExpanded ? this.getTrimmedLength(chip.type) > this.twoLineCharLimit : false
       })
     })
@@ -50,7 +50,7 @@ export class FilterChipsComponent {
   public getOverflowTooltip(chips: FilterChipPropertyData[]): string {
     return chips
       .slice(this.maxVisible())
-      .map((chip) => this.translation.transform(chip.text))
+      .map((chip: FilterChipPropertyData) => this.translation.transform(chip.text))
       .join(' • ')
   }
 

@@ -19,7 +19,7 @@ export class DataSelectionFiltersFilterChips {
   constructor() {}
 
   public generateFilterChipsForDataSelectionFilters(filters: AbstractProfileFilter[]): FilterChipData[] {
-    return filters.reduce<FilterChipData[]>((filterChips, filter) => {
+    return filters.reduce<FilterChipData[]>((filterChips: FilterChipData[], filter: AbstractProfileFilter) => {
       filterChips.push(...this.getChipsForFilter(filter))
       return filterChips
     }, [])

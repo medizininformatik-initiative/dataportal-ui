@@ -68,7 +68,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.activeFeasibilityQuerySusbscription?.unsubscribe()
     this.activeFeasibilityQuerySusbscription = this.queryProviderService
       .getActiveFeasibilityQuery()
-      .pipe(filter((feasibilityQuery) => feasibilityQuery.getInclusionCriteria().length > 0))
+      .pipe(filter((feasibilityQuery: FeasibilityQuery) => feasibilityQuery.getInclusionCriteria().length > 0))
       .subscribe({
         next: () => this.doSend(),
         error: (err) => console.error('Error fetching feasibility query', err),

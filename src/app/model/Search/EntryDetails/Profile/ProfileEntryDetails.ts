@@ -1,4 +1,5 @@
 import { ProfileEntryDetailsData } from 'src/app/model/Interface/ListEntryDetailsData/ProfileEntryDetailsData'
+import { ProfileRelativeData } from 'src/app/model/Interface/ListEntryDetailsData/ProfileRelativeData'
 import { Display } from '../../../DataSelection/Profile/Display'
 import { AbstractDetails } from '../AbstractDetails'
 import { ProfileEntryDetailsField } from './ProfileEntryDetailsField'
@@ -49,8 +50,8 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
       Display.fromJson(json.display),
       Display.fromJson(json.description),
       json.fields.map((field) => ProfileEntryDetailsField.fromJson(field)),
-      json.parents.map((parent) => ProfileEntryRelative.fromJson(parent)),
-      json.children.map((child) => ProfileEntryRelative.fromJson(child)),
+      json.parents.map((parent: ProfileRelativeData) => ProfileEntryRelative.fromJson(parent)),
+      json.children.map((child: ProfileRelativeData) => ProfileEntryRelative.fromJson(child)),
       json.selectable,
       json.url
     )

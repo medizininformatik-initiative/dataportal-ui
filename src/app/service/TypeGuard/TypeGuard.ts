@@ -1,5 +1,6 @@
 import { Type } from '@angular/core'
 import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData'
+import { AnnotationsData } from 'src/app/core/model/Upgrade/AnnotationsData'
 import { ProfileFilterUpgradeData } from 'src/app/core/model/Upgrade/Filter/ProfileFilterUpgradeData'
 import { CriteriaSetValidationIssueData } from 'src/app/core/model/Validation/CriteriaSetValidationIssueData'
 import { DataExtractionValidationIssueData } from 'src/app/core/model/Validation/DataExtractionValidationIssueData'
@@ -503,7 +504,7 @@ export class TypeGuard {
    * @returns {boolean} boolean
    */
   public static isExclusionCriteria(val: unknown): boolean {
-    return TypeGuard.isOptionalArray(val, (criteria) => TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData))
+    return TypeGuard.isOptionalArray(val, (criteria: unknown) => TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData))
   }
 
   /**
@@ -517,7 +518,7 @@ export class TypeGuard {
    * @returns {boolean} boolean
    */
   public static isInclusionCriteria(val: unknown): boolean {
-    return TypeGuard.isArray(val, (criteria) => TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData))
+    return TypeGuard.isArray(val, (criteria: unknown) => TypeGuard.isArray(criteria, TypeGuard.isStructuredQueryCriterionData))
   }
 
   /**
@@ -952,7 +953,7 @@ export class TypeGuard {
       TypeGuard.isCRTDLData(u.crtdl) &&
       Array.isArray(u.annotations) &&
       u.annotations.every(
-        (a) =>
+        (a: AnnotationsData) =>
           (TypeGuard.isProfileUpgradeData(a.details) ||
             TypeGuard.isProfileFieldUpgradeData(a.details) ||
             TypeGuard.isProfileFilterUpgradeData(a.details)) &&

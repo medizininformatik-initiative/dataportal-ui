@@ -8,7 +8,9 @@ import { CloneReferenceFilter } from './ReferenceFilter/CloneReferenceFilter'
 
 export class CloneAttributeFilter {
   public static deepCopyAttributeFilters(attributeFilters: AttributeFilter[], preserveReferenceFilterIds = false): AttributeFilter[] {
-    return attributeFilters.map((attributeFilter) => this.deepCopyAttributeFilter(attributeFilter, preserveReferenceFilterIds))
+    return attributeFilters.map((attributeFilter: AttributeFilter) =>
+      this.deepCopyAttributeFilter(attributeFilter, preserveReferenceFilterIds)
+    )
   }
 
   /**

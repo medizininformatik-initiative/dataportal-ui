@@ -24,7 +24,7 @@ export class SelectedConceptFilterProviderService {
 
   public isConceptSelected(terminologyCode: TerminologyCode): boolean {
     return this.selectedConceptsSignal().some(
-      (tc) =>
+      (tc: Concept) =>
         tc.getTerminologyCode().getCode() === terminologyCode.getCode() &&
         tc.getTerminologyCode().getSystem() === terminologyCode.getSystem()
     )
@@ -33,7 +33,7 @@ export class SelectedConceptFilterProviderService {
   public addConcept(concept: Concept): void {
     const current = this.selectedConceptsSignal()
     console.log(current)
-    if (!current.some((tc) => this.isSameConcept(tc, concept))) {
+    if (!current.some((tc: Concept) => this.isSameConcept(tc, concept))) {
       this.selectedConceptsSignal.set([...current, concept])
     } else {
       this.removeConcept(concept)
@@ -42,21 +42,21 @@ export class SelectedConceptFilterProviderService {
 
   public addConcepts(concepts: Concept[]): void {
     const current = this.selectedConceptsSignal()
-    const newConcepts = concepts.filter((concept) => !current.some((tc) => this.isSameConcept(tc, concept)))
+    const newConcepts = concepts.filter((concept: Concept) => !current.some((tc: Concept) => this.isSameConcept(tc, concept)))
     if (newConcepts.length > 0) {
       this.selectedConceptsSignal.set([...current, ...newConcepts])
     }
   }
 
   public removeConcept(concept: Concept): void {
-    const updated = this.selectedConceptsSignal().filter((tc) => !this.isSameConcept(tc, concept))
+    const updated = this.selectedConceptsSignal().filter((tc: Concept) => !this.isSameConcept(tc, concept))
     if (updated.length !== this.selectedConceptsSignal().length) {
       this.selectedConceptsSignal.set(updated)
     }
   }
 
   public findConcept(concept: Concept): Concept | undefined {
-    return this.selectedConceptsSignal().find((tc) => this.isSameConcept(tc, concept))
+    return this.selectedConceptsSignal().find((tc: Concept) => this.isSameConcept(tc, concept))
   }
 
   public clearSelectedConceptFilter(): void {

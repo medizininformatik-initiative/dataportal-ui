@@ -33,7 +33,7 @@ export class ProfileTokenFilter extends AbstractProfileFilter {
   public setSelectedToken(selectedToken: Concept): Concept[] {
     if (this.selectedTokens.length > 0) {
       const index = this.selectedTokens.findIndex(
-        (preSelectedToken) => preSelectedToken.getTerminologyCode().getCode() === selectedToken.getTerminologyCode().getCode()
+        (preSelectedToken: Concept) => preSelectedToken.getTerminologyCode().getCode() === selectedToken.getTerminologyCode().getCode()
       )
       if (index !== -1) {
         this.selectedTokens[index] = selectedToken

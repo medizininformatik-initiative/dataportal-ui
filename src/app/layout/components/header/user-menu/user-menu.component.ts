@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { Subscription, tap } from 'rxjs'
+import { ValidationReport } from 'src/app/model/Validation/ValidationReport'
 import { UserProfileService } from 'src/app/service/User/UserProfile.service'
 import { ErrorLogProviderService } from 'src/app/service/Validation/External/ErrorLogProvider.service'
 import { IUserProfile } from '../../../../shared/models/user/user-profile.interface'
@@ -63,7 +64,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     this.validationResultSubscription$ = this.errorLogProvider
       .getValidationResult$()
       .pipe(
-        tap((report) => {
+        tap((report: ValidationReport) => {
           if (this.hasErrorsToDisplay()) {
             this.matDialog.open(ErrorLogModalComponent, { data: report })
           }

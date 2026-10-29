@@ -20,7 +20,7 @@ export class ConceptSelectionHelperService {
   }
 
   public isConceptSelected(concept: Concept, selectedConcepts: Concept[]): boolean {
-    return selectedConcepts.some((existing) => this.isSameConcept(existing, concept))
+    return selectedConcepts.some((existing: Concept) => this.isSameConcept(existing, concept))
   }
 
   public isSameConcept(concept1: Concept, concept2: Concept): boolean {
@@ -42,7 +42,7 @@ export class ConceptSelectionHelperService {
 
   public addConceptsToSelection(concepts: Concept[], selectedConcepts: Concept[]): Concept[] {
     const newConceptsArray = [...selectedConcepts]
-    concepts.forEach((concept) => {
+    concepts.forEach((concept: Concept) => {
       if (!this.isConceptSelected(concept, selectedConcepts)) {
         newConceptsArray.push(concept)
       }
@@ -55,10 +55,10 @@ export class ConceptSelectionHelperService {
   }
 
   private removeConceptFromSelection(concept: Concept, selectedConcepts: Concept[]): Concept[] {
-    return selectedConcepts.filter((existing) => !this.isSameConcept(existing, concept))
+    return selectedConcepts.filter((existing: Concept) => !this.isSameConcept(existing, concept))
   }
 
   private createFilterValues(valueSetUrls: string[]): CriteriaSearchFilterValue[] {
-    return valueSetUrls.map((url, index) => new CriteriaSearchFilterValue(index, url))
+    return valueSetUrls.map((url: string, index: number) => new CriteriaSearchFilterValue(index, url))
   }
 }

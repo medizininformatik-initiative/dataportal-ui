@@ -17,6 +17,6 @@ export class NumPillExpandableDirective {
   }
 
   @HostListener('click') public toggleExpand() {
-    this.expanded.update((v) => !v)
+    this.expanded.update((v: boolean) => !v)
   }
 }

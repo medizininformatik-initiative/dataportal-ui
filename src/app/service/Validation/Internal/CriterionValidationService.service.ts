@@ -26,7 +26,7 @@ export class CriterionValidationService {
    */
   public validateMany(criterionIds: string[]): CriterionValidationState[] {
     this.criteria() // Ensure criteria are loaded
-    return criterionIds.map((id) => {
+    return criterionIds.map((id: string) => {
       const criterion = this.criterionProvider.getOne(id)
       return criterion ? this.validate(criterion) : { criterionId: id, isValid: false, missingFilters: [] }
     })
@@ -68,7 +68,7 @@ export class CriterionValidationService {
    */
   private collectMissingFilters(filters: AbstractAttributeFilters[]): AbstractAttributeFilters[] {
     return filters.filter(
-      (filter) =>
+      (filter: AbstractAttributeFilters) =>
         !filter.getOptional() &&
         (filter.getConcept()?.getSelectedConcepts().length === 0 ||
           this.filterTypeService.isQuantityNotSet(filter.getQuantity()?.getType()))

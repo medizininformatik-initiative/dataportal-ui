@@ -6,6 +6,7 @@ import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/Profil
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference'
 import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData'
 import { AttributesData } from 'src/app/model/Interface/AttributesData'
+import { ConceptData } from 'src/app/model/Interface/ConceptData'
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData'
 import { ProfileFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFieldsCloner'
 import { v4 as uuidv4 } from 'uuid'
@@ -54,7 +55,7 @@ export class DataExtraction2UiDataSelectionService {
 
   private loadConcepts(profiles: DataSelectionProfile[], hashes: string[]): Observable<DataSelectionProfile[]> {
     return this.codeableConceptApiService.getCodeableConceptsByIds(hashes).pipe(
-      tap((concepts) => this.conceptTranslationCacheService.setMany(concepts)),
+      tap((concepts: ConceptData[]) => this.conceptTranslationCacheService.setMany(concepts)),
       map(() => profiles)
     )
   }
@@ -114,7 +115,7 @@ export class DataExtraction2UiDataSelectionService {
 
   private findExternalProfileFromIdMap(profile: DataSelectionProfile, dataExtraction: DataExtractionData): AttributeGroupsData | undefined {
     const idTupel = this.idMap.find((id) => id.newId === profile.getId())
-    return dataExtraction.attributeGroups.find((externProfile) => externProfile.id === idTupel.oldId)
+    return dataExtraction.attributeGroups.find((externProfile: AttributeGroupsData) => externProfile.id === idTupel.oldId)
   }
 
   /**
@@ -135,7 +136,7 @@ export class DataExtraction2UiDataSelectionService {
   }
 
   private getGroupReferences(dataExtraction: DataExtractionData): string[] {
-    return dataExtraction.attributeGroups.map((attributeGroup) => attributeGroup.groupReference)
+    return dataExtraction.attributeGroups.map((attributeGroup: AttributeGroupsData) => attributeGroup.groupReference)
   }
 
   /**
@@ -149,9 +150,9 @@ export class DataExtraction2UiDataSelectionService {
   ): void {
     const remainingExternProfiles = [...externProfiles]
     this.idMap = []
-    dataSelectionProfiles.forEach((profile) => {
+    dataSelectionProfiles.forEach((profile: DataSelectionProfile) => {
       const url = profile.getUrl()
-      const index = remainingExternProfiles.findIndex((extern) => extern.groupReference === url)
+      const index = remainingExternProfiles.findIndex((extern: AttributeGroupsData) => extern.groupReference === url)
 
       if (index !== -1) {
         const matchedExtern = remainingExternProfiles.splice(index, 1)[0]

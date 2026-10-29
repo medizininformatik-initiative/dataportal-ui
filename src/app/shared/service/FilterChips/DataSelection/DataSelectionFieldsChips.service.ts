@@ -32,7 +32,7 @@ export class DataSelectionFieldsChipsService {
   private squashFilterChips(filterChips: FilterChipData[]): FilterChipData[] {
     const squashedChipsMap = new Map<Display | FilterTypes | TimeRestrictionType | string, FilterChipData>()
 
-    filterChips.forEach((chip) => {
+    filterChips.forEach((chip: FilterChipData) => {
       if (!squashedChipsMap.has(chip.type)) {
         squashedChipsMap.set(chip.type, {
           type: chip.type,

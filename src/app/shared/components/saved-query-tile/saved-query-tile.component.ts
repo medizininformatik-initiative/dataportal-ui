@@ -54,7 +54,7 @@ export class SavedQueryTileComponent implements OnInit {
   }
 
   public onDelete(id: string) {
-    this.confirmDeleteService.confirmDelete().subscribe((result) => {
+    this.confirmDeleteService.confirmDelete().subscribe((result: boolean) => {
       if (result) {
         this.deleteQuery.emit(id)
       }

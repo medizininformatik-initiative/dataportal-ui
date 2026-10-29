@@ -23,7 +23,9 @@ export class Display {
 
   /** original + every translation value, trailing whitespace removed */
   public getTexts(): string[] {
-    return [this.original, ...this.translations.map((t) => t.getValue())].filter((text) => !!text).map((text) => text.replace(/\s+$/, ''))
+    return [this.original, ...this.translations.map((t: Translation) => t.getValue())]
+      .filter((text: string) => !!text)
+      .map((text: string) => text.replace(/\s+$/, ''))
   }
 
   public getOriginals(): string[] {
@@ -40,14 +42,14 @@ export class Display {
    * @returns {string} The translated text or the original text if no translation is found.
    */
   public translate(language: string): string {
-    const translation = this.translations.find((t) => t.getLanguage().split('-')[0] === language)
+    const translation = this.translations.find((t: Translation) => t.getLanguage().split('-')[0] === language)
 
     // CASE 1: If `originals` exists, we assume it's a list of values
     if (this.originals && this.originals.length > 0) {
       const base = this.originals
 
       if (translation && translation.getValues()?.length > 0) {
-        const merged = base.map((orig, index) => {
+        const merged = base.map((orig: string, index: number) => {
           const translated = translation.getValues()[index]
           return translated !== null && translated !== undefined ? translated : orig
         })

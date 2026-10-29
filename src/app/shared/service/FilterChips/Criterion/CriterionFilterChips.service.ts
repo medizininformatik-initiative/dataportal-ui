@@ -38,7 +38,7 @@ export class CriterionFilterChipService {
     if (includeReferenceChips) {
       allChips.push(...this.referenceFilterChipService.generateReferenceChips(criterion))
     }
-    const filteredChips = allChips.filter((chip) => chip !== undefined)
+    const filteredChips = allChips.filter((chip: FilterChipData) => chip !== undefined)
     this.filterChipsSubject.next(filteredChips)
     return this.filterChipsSubject.asObservable()
   }

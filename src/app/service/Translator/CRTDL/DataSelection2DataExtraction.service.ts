@@ -7,10 +7,13 @@ import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction'
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields'
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter'
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter'
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType'
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service'
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service'
@@ -28,7 +31,7 @@ export class DataSelection2DataExtraction {
   constructor() {}
 
   public translateToDataExtraction(dataSelection: DataSelection): DataExtraction {
-    const attribuetGroups = dataSelection.getProfiles().map((profile) => this.translateAttributeGroups(profile))
+    const attribuetGroups = dataSelection.getProfiles().map((profile: DataSelectionProfile) => this.translateAttributeGroups(profile))
     return attribuetGroups.length > 0 ? new DataExtraction(attribuetGroups) : undefined
   }
 
@@ -58,10 +61,11 @@ export class DataSelection2DataExtraction {
     const selectedReferenceFields = profileFields.getSelectedReferenceFields()
 
     const basicFieldAttributes = selectedBasicFields.map(
-      (selectedBasicField) => new Attributes(selectedBasicField.getElementId(), selectedBasicField.getMustHave(), undefined)
+      (selectedBasicField: SelectedBasicField) =>
+        new Attributes(selectedBasicField.getElementId(), selectedBasicField.getMustHave(), undefined)
     )
     const referenceFieldAttributes = selectedReferenceFields.map(
-      (selectedReferenceField) =>
+      (selectedReferenceField: SelectedReferenceField) =>
         new Attributes(
           selectedReferenceField.getElementId(),
           selectedReferenceField.getMustHave(),
@@ -75,7 +79,7 @@ export class DataSelection2DataExtraction {
   private translateFilters(filters: AbstractProfileFilter[]): AbstractAttributeGroupFilter[] | undefined {
     const abstractProfileFilters: AbstractAttributeGroupFilter[] = []
 
-    filters.forEach((filter) => {
+    filters.forEach((filter: AbstractProfileFilter) => {
       const translatedFilter = this.getTranslatedFilter(filter)
       if (translatedFilter) {
         abstractProfileFilters.push(translatedFilter)
@@ -106,7 +110,9 @@ export class DataSelection2DataExtraction {
   private translateTokenFilter(profileTokenFilter: ProfileTokenFilter): TokenFilter | undefined {
     const selectedTokens = profileTokenFilter.getSelectedTokens()
     if (selectedTokens.length > 0) {
-      const terminologyCodes = this.terminologyCodeTranslator.translateTermCodes(selectedTokens.map((token) => token.getTerminologyCode()))
+      const terminologyCodes = this.terminologyCodeTranslator.translateTermCodes(
+        selectedTokens.map((token: Concept) => token.getTerminologyCode())
+      )
       return new TokenFilter(profileTokenFilter.getName(), profileTokenFilter.getType(), terminologyCodes)
     } else {
       return undefined

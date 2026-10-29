@@ -28,6 +28,6 @@ export class CriteriaStageComponent {
 
   public readonly criteriaArray = computed(() => {
     this.allCriteria()
-    return this.stageUIDs().map((uid) => this.criterionProviderService.getOne(uid))
+    return this.stageUIDs().map((uid: string) => this.criterionProviderService.getOne(uid))
   })
 }

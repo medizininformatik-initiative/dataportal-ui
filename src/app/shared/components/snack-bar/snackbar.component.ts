@@ -22,15 +22,15 @@ export class SnackbarComponent implements OnInit {
   constructor() {}
 
   public ngOnInit() {
-    this.snackbarService.visibility$.subscribe((isVisible) => {
+    this.snackbarService.visibility$.subscribe((isVisible: boolean) => {
       this.isVisible = isVisible
     })
 
-    this.snackbarService.message$.subscribe((message) => {
+    this.snackbarService.message$.subscribe((message: string) => {
       this.message = message
     })
 
-    this.snackbarService.color$.subscribe((color) => {
+    this.snackbarService.color$.subscribe((color: string) => {
       this.color = color
     })
   }

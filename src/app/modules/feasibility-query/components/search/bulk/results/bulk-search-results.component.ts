@@ -42,9 +42,9 @@ export class BulkSearchResultsComponent {
       return null
     }
     const selected = this.selectedEntries()
-    const selectedIds = new Set(selected.map((item) => item.getId()))
+    const selectedIds = new Set(selected.map((item: CriteriaBulkEntry) => item.getId()))
     const tableData = new CriteriaBulkFoundListEntryAdapter().adapt(result.getFound())
-    tableData.body?.rows?.forEach((row) => {
+    tableData.body?.rows?.forEach((row: TableRowData) => {
       const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT)
       if (checkboxCell) {
         const entryId = (row.originalEntry as CriteriaBulkEntry).getId()

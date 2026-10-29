@@ -21,7 +21,7 @@ export class ConceptFilterChipService {
   public generateConceptChipsFromAttributeFilters(attributeFilters: AttributeFilter[]): FilterChipData[] {
     const chips: FilterChipData[] = []
 
-    attributeFilters.forEach((attributeFilter) => {
+    attributeFilters.forEach((attributeFilter: AttributeFilter) => {
       chips.push(...this.generateConceptChipsFromAttributeFilter(attributeFilter))
     })
 
@@ -37,7 +37,7 @@ export class ConceptFilterChipService {
   public generateConceptChipsFromValueFilters(valueFilters: ValueFilter[]): FilterChipData[] {
     const chips: FilterChipData[] = []
 
-    valueFilters.forEach((valueFilter) => {
+    valueFilters.forEach((valueFilter: ValueFilter) => {
       chips.push(...this.generateConceptChipsFromValueFilter(valueFilter))
     })
 

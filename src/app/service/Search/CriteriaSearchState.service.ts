@@ -50,7 +50,7 @@ export class CriteriaSearchStateService {
    */
   private searchTermChanges(): Observable<boolean> {
     return this.getActiveSearchTerm().pipe(
-      distinctUntilChanged((prev, curr) => prev === curr),
+      distinctUntilChanged((prev: string, curr: string) => prev === curr),
       map(() => true)
     )
   }
@@ -62,15 +62,15 @@ export class CriteriaSearchStateService {
   private filterChanges(): Observable<boolean> {
     return this.filterProvider.getCriteriaSearchFilters().pipe(
       filter((filters: CriteriaSearchFilter[]) => filters.length > 0),
-      map((filters) =>
+      map((filters: CriteriaSearchFilter[]) =>
         JSON.stringify(
-          filters.map((f) => ({
+          filters.map((f: CriteriaSearchFilter) => ({
             name: f.getName(),
             selected: [...f.getSelectedValues()],
           }))
         )
       ),
-      distinctUntilChanged((prev, curr) => prev === curr),
+      distinctUntilChanged((prev: string, curr: string) => prev === curr),
       map(() => true)
     )
   }
