@@ -1,43 +1,115 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
+      "plugins": ["import", "jsdoc"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
-        ],
+        "project": ["tsconfig.json", "cypress/tsconfig.json"],
         "createDefaultProgram": true
       },
-      "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@angular-eslint/recommended"
-      ],
+      "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended-type-checked", "plugin:@angular-eslint/recommended"],
       "rules": {
         "jsdoc/newline-after-description": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-"@typescript-eslint/no-unused-vars": "warn",
-"@angular-eslint/no-empty-lifecycle-method": "off",
-
+        "jsdoc/require-jsdoc": [
+          "warn",
+          {
+            "require": {
+              "FunctionDeclaration": true,
+              "MethodDefinition": true,
+              "ArrowFunctionExpression": false,
+              "FunctionExpression": false
+            },
+            "enableFixer": true
+          }
+        ],
+        "jsdoc/require-description": "warn",
+        "jsdoc/require-param": "warn",
+        "jsdoc/require-param-type": "warn",
+        "jsdoc/require-param-description": "off",
+        "jsdoc/require-returns": "warn",
+        "jsdoc/require-returns-type": "warn",
+        "jsdoc/require-returns-description": "off",
+        "jsdoc/check-param-names": "warn",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-unsafe-call": "warn",
+        "@typescript-eslint/no-unsafe-member-access": "warn",
+        "@typescript-eslint/no-unsafe-assignment": "warn",
+        "@typescript-eslint/no-unsafe-argument": "warn",
+        "@typescript-eslint/no-unsafe-return": "warn",
+        "@typescript-eslint/unbound-method": "warn",
+        "@typescript-eslint/no-floating-promises": "warn",
+        "@typescript-eslint/no-unsafe-enum-comparison": "warn",
+        "@typescript-eslint/no-unnecessary-type-assertion": "warn",
+        "@typescript-eslint/require-await": "warn",
+        "@typescript-eslint/no-misused-promises": "warn",
+        "@typescript-eslint/no-redundant-type-constituents": "warn",
+        "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/await-thenable": "warn",
+        "@typescript-eslint/switch-exhaustiveness-check": "warn",
+        "@typescript-eslint/prefer-readonly": "warn",
+        "@typescript-eslint/consistent-type-assertions": ["warn", { "assertionStyle": "as", "objectLiteralTypeAssertions": "never" }],
+        "@typescript-eslint/no-shadow": "warn",
+        "eqeqeq": ["warn", "always"],
+        "no-console": "warn",
+        "no-eval": "warn",
+        "no-param-reassign": "warn",
+        "complexity": ["warn", 15],
+        "max-lines-per-function": ["warn", { "max": 18, "skipBlankLines": true, "skipComments": true }],
+        "max-depth": ["warn", 3],
+        "max-params": ["warn", 3],
+        "no-restricted-imports": [
+          "warn",
+          {
+            "paths": [{ "name": "lodash", "message": "Use lodash-es." }],
+            "patterns": [{ "group": ["../../../*"], "message": "Use an absolute src/app/... import." }]
+          }
+        ],
+        "@angular-eslint/prefer-standalone": "warn",
+        "@angular-eslint/prefer-on-push-component-change-detection": "warn",
+        "@angular-eslint/no-input-rename": "warn",
+        "@angular-eslint/use-lifecycle-interface": "warn",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@angular-eslint/no-empty-lifecycle-method": "off",
         "max-len": "off",
         "semi": 0,
-        "@typescript-eslint/member-delimiter-style": ["error", {
-          "multiline": {
-            "delimiter": "none",    // 'none' or 'semi' or 'comma'
-            "requireLast": true
-          },
-          "singleline": {
-            "delimiter": "semi",    // 'semi' or 'comma'
-            "requireLast": false
+        "import/order": ["warn", { "alphabetize": { "order": "asc", "caseInsensitive": true } }],
+        "curly": ["error", "all"],
+        "brace-style": ["error", "1tbs", { "allowSingleLine": false }],
+        "@typescript-eslint/member-delimiter-style": [
+          "error",
+          {
+            "multiline": {
+              "delimiter": "none",
+              "requireLast": false
+            },
+            "singleline": {
+              "delimiter": "comma",
+              "requireLast": true
+            }
           }
-        }],
+        ],
+        "@typescript-eslint/prefer-function-type": "error",
+        "@typescript-eslint/typedef": ["warn", { "arrowParameter": true }],
+        "no-restricted-syntax": [
+          "warn",
+          {
+            "selector": "Property > CallExpression, ArrayExpression > CallExpression",
+            "message": "Assign the call result to a const first, then pass the const into the object or array."
+          },
+          {
+            "selector": "MethodDefinition[value.returnType.typeAnnotation.type='TSBooleanKeyword'][key.name!=/^(is|has|can)[A-Z]/], FunctionDeclaration[returnType.typeAnnotation.type='TSBooleanKeyword'][id.name!=/^(is|has|can)[A-Z]/]",
+            "message": "Functions returning boolean must start with is/has/can."
+          }
+        ],
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "explicit",
+            "overrides": { "constructors": "no-public" }
+          }
+        ],
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -55,15 +127,27 @@
           }
         ],
         "@typescript-eslint/naming-convention": [
-          "error",
+          "warn",
+          { "selector": "default", "format": ["camelCase"] },
+          { "selector": "variable", "format": ["camelCase", "UPPER_CASE", "PascalCase"] },
+          { "selector": "parameter", "format": ["camelCase"], "leadingUnderscore": "allow" },
+          { "selector": "classProperty", "format": ["camelCase", "UPPER_CASE", "PascalCase"] },
+          { "selector": "import", "format": ["camelCase", "PascalCase"] },
           {
-            "selector": "default",
-            "format": null
+            "selector": ["classProperty", "classMethod", "accessor", "parameterProperty"],
+            "modifiers": ["private"],
+            "format": ["camelCase", "UPPER_CASE"],
+            "leadingUnderscore": "forbid"
           },
           {
-            "selector": "classProperty",
-            "format": null
-          }
+            "selector": ["classProperty", "classMethod", "accessor", "parameterProperty"],
+            "modifiers": ["protected"],
+            "format": ["camelCase", "UPPER_CASE", "PascalCase"],
+            "leadingUnderscore": "forbid"
+          },
+          { "selector": "enumMember", "format": ["UPPER_CASE", "PascalCase"] },
+          { "selector": "typeLike", "format": ["PascalCase"] },
+          { "selector": ["objectLiteralProperty", "typeProperty", "objectLiteralMethod"], "format": null }
         ],
         "@typescript-eslint/triple-slash-reference": [
           "off",
@@ -74,20 +158,52 @@
           }
         ],
         "@typescript-eslint/member-ordering": [
-          "off", {
-            "default": [ "constructor",  "public-decorated-field"]
+          "off",
+          {
+            "default": ["constructor", "public-decorated-field"]
           }
         ]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
+      "files": ["*.spec.ts"],
+      "parserOptions": { "project": ["tsconfig.spec.json"] },
+      "rules": {
+        "no-restricted-globals": [
+          "warn",
+          { "name": "fit", "message": "Remove the focused test." },
+          { "name": "fdescribe", "message": "Remove the focused test." }
+        ],
+        "max-lines-per-function": "off",
+        "max-depth": "off",
+        "max-params": "off",
+        "complexity": "off"
+      }
+    },
+    {
+      "files": ["*.component.ts", "*.directive.ts", "*.pipe.ts"],
+      "rules": {
+        "jsdoc/require-jsdoc": "off",
+        "jsdoc/require-description": "off",
+        "jsdoc/require-param": "off",
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns": "off",
+        "jsdoc/require-returns-type": "off",
+        "jsdoc/check-param-names": "off"
+      }
+    },
+    {
+      "files": ["*.html"],
       "extends": [
-        "plugin:@angular-eslint/template/recommended"
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:@angular-eslint/template/accessibility",
+        "plugin:prettier/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "@angular-eslint/template/click-events-have-key-events": "warn",
+        "@angular-eslint/template/interactive-supports-focus": "warn",
+        "@angular-eslint/template/alt-text": "warn"
+      }
     }
   ]
 }

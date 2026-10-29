@@ -23,7 +23,9 @@ export class DisplayCriteriaComponent {
 
   readonly criteriaGroups = computed<string[][]>(() => {
     const query = this.activeQuery()
-    if (!query) return []
+    if (!query) {
+      return []
+    }
     return this.groupType() === 'Inclusion'
       ? query.getInclusionCriteria()
       : query.getExclusionCriteria()

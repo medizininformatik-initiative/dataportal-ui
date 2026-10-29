@@ -23,9 +23,7 @@ export class Display {
 
   /** original + every translation value, trailing whitespace removed */
   public getTexts(): string[] {
-    return [this.original, ...this.translations.map((t) => t.getValue())]
-      .filter((text) => !!text)
-      .map((text) => text.replace(/\s+$/, ''))
+    return [this.original, ...this.translations.map((t) => t.getValue())].filter((text) => !!text).map((text) => text.replace(/\s+$/, ''))
   }
 
   public getOriginals(): string[] {
@@ -71,9 +69,7 @@ export class Display {
   }
 
   public static fromJson(json: DisplayData): Display {
-    const translations = (json.translations || []).map((translation: TranslationData) =>
-      Translation.fromJson(translation)
-    )
+    const translations = (json.translations || []).map((translation: TranslationData) => Translation.fromJson(translation))
     return new Display(translations, json.original, [])
   }
 }

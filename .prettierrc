@@ -1,7 +1,7 @@
 {
   "bracketSpacing": true,
   "htmlWhitespaceSensitivity": "ignore",
-  "printWidth": 100,
+  "printWidth": 140,
   "semi": false,
   "singleQuote": true,
   "tabWidth": 2,

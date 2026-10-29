@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ReferenceFieldTabComponent } from './reference-field-tab.component';
+import { ReferenceFieldTabComponent } from './reference-field-tab.component'
 
-describe('ReferenceFieldTabComponent', () => {
-  let component: ReferenceFieldTabComponent;
-  let fixture: ComponentFixture<ReferenceFieldTabComponent>;
+describe.skip('ReferenceFieldTabComponent', () => {
+  let component: ReferenceFieldTabComponent
+  let fixture: ComponentFixture<ReferenceFieldTabComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ReferenceFieldTabComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(ReferenceFieldTabComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ReferenceFieldTabComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

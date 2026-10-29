@@ -10,8 +10,7 @@
     {{ filterChip.type | displayTranslation }}
   </div>
   <div class="block-triangle" [ngClass]="{ twoLine: filterChip.twoLineDisplay }"></div>
-  } @for (chip of filterChip.data; track chip; let i = $index) { @if (showAll() || i < maxVisible())
-  {
+  } @for (chip of filterChip.data; track chip; let i = $index) { @if (showAll() || i < maxVisible()) {
   <div
     [numDataCy]="chip.text | displayTranslation"
     class="chip-container margin-left-1"
@@ -20,10 +19,7 @@
     [innerHTML]="buildChipText(chip) | highlight : searchTerm()"
   ></div>
   } } @if (!showAll() && filterChip.data.length > maxVisible()) {
-  <div
-    class="chip-container margin-left-1 count-badge"
-    [matTooltip]="getOverflowTooltip(filterChip.data)"
-  >
+  <div class="chip-container margin-left-1 count-badge" [matTooltip]="getOverflowTooltip(filterChip.data)">
     +{{ filterChip.data.length - maxVisible() }}
   </div>
   }

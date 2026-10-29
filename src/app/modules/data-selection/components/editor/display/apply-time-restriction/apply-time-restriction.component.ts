@@ -59,9 +59,13 @@ export class ApplyTimeRestrictionComponent {
   readonly singleDateRestriction = signal<AbstractTimeRestriction | null>(null)
 
   readonly isApplyEnabled = computed(() => {
-    if (this.profileCount() === 0) return false
+    if (this.profileCount() === 0) {
+      return false
+    }
     const type = this.selectedType()
-    if (type === TimeRestrictionType.NONE) return true
+    if (type === TimeRestrictionType.NONE) {
+      return true
+    }
     if (type === TimeRestrictionType.BETWEEN) {
       const f = this.betweenFilter()
       return !!(f.getAfterDate() && f.getBeforeDate())
@@ -71,7 +75,9 @@ export class ApplyTimeRestrictionComponent {
 
   public toggle(): void {
     this.isExpanded.set(!this.isExpanded())
-    if (!this.isExpanded()) this.reset()
+    if (!this.isExpanded()) {
+      this.reset()
+    }
   }
 
   public onTypeChange(type: TimeRestrictionType): void {
@@ -92,7 +98,9 @@ export class ApplyTimeRestrictionComponent {
 
   public apply(): void {
     const restriction = this.buildRestriction()
-    if (!restriction) return
+    if (!restriction) {
+      return
+    }
     this.allProfileFiltered().forEach((profile) => {
       const timeRestrictionFilter = profile
         .getFilters()
@@ -119,8 +127,12 @@ export class ApplyTimeRestrictionComponent {
   }
 
   private buildRestriction(): AbstractTimeRestriction | null {
-    if (this.selectedType() === TimeRestrictionType.NONE) return new TimeRestrictionNotSet()
-    if (this.selectedType() === TimeRestrictionType.BETWEEN) return this.betweenFilter()
+    if (this.selectedType() === TimeRestrictionType.NONE) {
+      return new TimeRestrictionNotSet()
+    }
+    if (this.selectedType() === TimeRestrictionType.BETWEEN) {
+      return this.betweenFilter()
+    }
     return this.singleDateRestriction()
   }
 

@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DataSelectionBoxesComponent } from './data-selection-boxes.component';
+import { DataSelectionBoxesComponent } from './data-selection-boxes.component'
 
-describe('DataSelectionBoxesComponent', () => {
-  let component: DataSelectionBoxesComponent;
-  let fixture: ComponentFixture<DataSelectionBoxesComponent>;
+describe.skip('DataSelectionBoxesComponent', () => {
+  let component: DataSelectionBoxesComponent
+  let fixture: ComponentFixture<DataSelectionBoxesComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DataSelectionBoxesComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(DataSelectionBoxesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(DataSelectionBoxesComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

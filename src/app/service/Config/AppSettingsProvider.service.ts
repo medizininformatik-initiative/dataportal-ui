@@ -121,18 +121,14 @@ export class AppSettingsProviderService implements AppSettingGetter {
    * Gets the polling interval configuration
    */
   public getSummaryPollingInterval(): number {
-    const duration = iso8601.parse(
-      this.getDataPortalConfigByKey('readResultSummaryPollingInterval')
-    )
-    return iso8601.toSeconds(duration)
+    return this.getDurationSeconds('readResultSummaryPollingInterval')
   }
 
   /**
    * Gets the polling time configuration in milliseconds and parsed according to iso8601
    */
   public getPollingTimeUi(): number {
-    const duration = iso8601.parse(this.getDataPortalConfigByKey('passthroughPollingTimeUi'))
-    return iso8601.toSeconds(duration)
+    return this.getDurationSeconds('passthroughPollingTimeUi')
   }
 
   /**
@@ -161,10 +157,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
    * @returns number
    */
   public getResultDetailedObfuscatedInterval(): number {
-    const duration = iso8601.parse(
-      this.getDataPortalConfigByKey('readResultDetailedObfuscatedInterval')
-    )
-    return iso8601.toSeconds(duration)
+    return this.getDurationSeconds('readResultDetailedObfuscatedInterval')
   }
 
   /**
@@ -172,10 +165,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
    * @returns
    */
   public getResultDetailedObfuscatedAmount(): number {
-    const duration = iso8601.parse(
-      this.getDataPortalConfigByKey('readResultDetailedObfuscatedAmount')
-    )
-    return iso8601.toSeconds(duration)
+    return this.getDurationSeconds('readResultDetailedObfuscatedAmount')
   }
 
   /**
@@ -183,10 +173,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
    * @returns
    */
   public getResultDetailedObfuscatedPollingInterval(): number {
-    const duration = iso8601.parse(
-      this.getDataPortalConfigByKey('readResultDetailedObfuscatedPollingInterval')
-    )
-    return iso8601.toSeconds(duration)
+    return this.getDurationSeconds('readResultDetailedObfuscatedPollingInterval')
   }
 
   /**
@@ -194,10 +181,11 @@ export class AppSettingsProviderService implements AppSettingGetter {
    * @returns
    */
   public getResultSummaryPollingInterval(): number {
-    const duration = iso8601.parse(
-      this.getDataPortalConfigByKey('readResultSummaryPollingInterval')
-    )
-    return iso8601.toSeconds(duration)
+    return this.getDurationSeconds('readResultSummaryPollingInterval')
+  }
+
+  private getDurationSeconds(key: DataportalConfigKey): number {
+    return iso8601.toSeconds(iso8601.parse(this.getDataPortalConfigByKey(key) as string))
   }
 
   public getMaxSavedQueriesPerUser(): number {
@@ -205,7 +193,6 @@ export class AppSettingsProviderService implements AppSettingGetter {
   }
 
   public getQueryResultExpiry(): number {
-    const duration = iso8601.parse(this.getDataPortalConfigByKey('queryResultExpiry'))
-    return iso8601.toSeconds(duration)
+    return this.getDurationSeconds('queryResultExpiry')
   }
 }

@@ -26,7 +26,9 @@ export class ListItemDetailsGenericSectionsComponent {
   readonly filteredItems = computed(() => {
     const term = this.searchText().toLowerCase()
     const lang = this.translateService.currentLang
-    if (!term) return this.listItemDetails()
+    if (!term) {
+      return this.listItemDetails()
+    }
     return this.listItemDetails().filter((item) =>
       item.display.translate(lang).toLowerCase().includes(term)
     )

@@ -42,7 +42,9 @@ export class BulkSearchInputComponent {
     const initEffect = effect(
       () => {
         const filters = this.searchFilters()
-        if (filters.length === 0) return
+        if (filters.length === 0) {
+          return
+        }
 
         if (this.filterMap().size === 0) {
           const map = new Map<string, string[]>()

@@ -92,16 +92,13 @@ export class StagedProfileService implements OnDestroy {
 
       const sameProfiles = profiles.filter(
         (existingProfile) =>
-          existingProfile.getId() !== profile.getId() &&
-          existingProfile.getLabel().getTexts().includes(newLabel.text.replace(/\s+$/, ''))
+          existingProfile.getId() !== profile.getId() && existingProfile.getLabel().getTexts().includes(newLabel.text.replace(/\s+$/, ''))
       )
 
       const wanted = newLabel.number ?? 0
       const taken = sameProfiles.some((existing) => existing.getLabelNumber() === wanted)
       // first profile is 0 (no suffix), first duplicate is (1)
-      profile.setLabelNumber(
-        taken ? Math.max(...sameProfiles.map((p) => p.getLabelNumber())) + 1 : wanted
-      )
+      profile.setLabelNumber(taken ? Math.max(...sameProfiles.map((p) => p.getLabelNumber())) + 1 : wanted)
       profile.setLabel(newLabel.text)
       this.buildProfile()
     }
@@ -147,9 +144,7 @@ export class StagedProfileService implements OnDestroy {
    * @returns Observable of void array for completion tracking
    * @private
    */
-  private getProfilesFromProviderAndSetInDataSelection(
-    linkedProfileIds: string[]
-  ): Observable<void[]> {
+  private getProfilesFromProviderAndSetInDataSelection(linkedProfileIds: string[]): Observable<void[]> {
     return this.profileProviderService.getAll().pipe(
       map((profileArray: Array<DataSelectionProfile>) =>
         linkedProfileIds.map((id) => {

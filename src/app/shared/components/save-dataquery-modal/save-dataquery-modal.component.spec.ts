@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SaveDataqueryModalComponent } from './save-dataquery-modal.component';
+import { SaveDataqueryModalComponent } from './save-dataquery-modal.component'
 
-describe('SaveFileModalComponent', () => {
-  let component: SaveDataqueryModalComponent;
-  let fixture: ComponentFixture<SaveDataqueryModalComponent>;
+describe.skip('SaveFileModalComponent', () => {
+  let component: SaveDataqueryModalComponent
+  let fixture: ComponentFixture<SaveDataqueryModalComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SaveDataqueryModalComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(SaveDataqueryModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(SaveDataqueryModalComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

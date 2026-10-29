@@ -293,6 +293,8 @@
     "FEAS-10004": "Patient number too low for detailed results.",
     "FEAS-10005": "The number of responding locations is too small; detailed results will not be displayed.",
     "FEAS-10006": "You have saved too many cohorts. Please delete some cohort selections before saving more.",
+    "INVALID_CRITERIA": "Required filter not set or unknown criterion: {{ids}}",
+    "NO_INCLUSION_CRITERIA": "The query has no inclusion criteria.",
     "VAL-20001": "The combination of context and term code(s) was not found."
   },
   "FAQ": {

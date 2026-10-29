@@ -40,7 +40,7 @@ export class FeasibilityQueryValidationService {
    */
   readonly validationState = computed<FeasibilityQueryValidationState>(() => {
     const feasibilityQuery = this.activeFeasibilityQuery()
-    return feasibilityQuery ? this.buildValidationState(feasibilityQuery) : INITIAL_STATE
+    return feasibilityQuery ? this.validate(feasibilityQuery) : INITIAL_STATE
   })
 
   /**
@@ -54,19 +54,17 @@ export class FeasibilityQueryValidationService {
    * @param {FeasibilityQuery} feasibilityQuery - The feasibility query to validate.
    * @returns {FeasibilityQueryValidationState} The validation state of the feasibility query.
    */
-  private buildValidationState(
-    feasibilityQuery: FeasibilityQuery
-  ): FeasibilityQueryValidationState {
+  public validate(feasibilityQuery: FeasibilityQuery): FeasibilityQueryValidationState {
     const allCriterionIds = this.flattenCriteria(feasibilityQuery)
     const criterionValidationStates = this.criterionValidationService.validateMany(allCriterionIds)
-    const inclusionCriteriaCount = feasibilityQuery.getInclusionCriteria().length
+    const hasInclusionCriteria = feasibilityQuery.getInclusionCriteria().length > 0
     return {
-      hasInclusionCriteria: inclusionCriteriaCount > 0,
+      hasInclusionCriteria,
       criterionCount: allCriterionIds.length,
       criterionValidationStates,
       isValid:
         criterionValidationStates.every((state: CriterionValidationState) => state.isValid) &&
-        inclusionCriteriaCount > 0,
+        hasInclusionCriteria,
     }
   }
 

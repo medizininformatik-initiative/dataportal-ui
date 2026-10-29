@@ -1,4 +1,3 @@
-import { AnnotatedCRTDLData } from '../../model/Interface/AnnotatedCRTDLData'
 import { AttributeCode } from '../../model/Interface/AttributeCode'
 import { AttributeDefinitionData } from '../../model/Interface/AttributeDefinitionData'
 import { AttributeFilterBaseData } from '../../model/Interface/AttributeFilterBaseData'
@@ -710,20 +709,6 @@ export class TypeGuard {
       TypeGuard.isString(attributeCode.code) &&
       TypeGuard.isString(attributeCode.system) &&
       TypeGuard.isString(attributeCode.display)
-    )
-  }
-
-  /**
-   * Checks if the object is an instance of AnnotatedCRTDLData.
-   * @param obj
-   * @returns boolean
-   */
-  public static isAnnotatedCRTDLData(obj: unknown): obj is AnnotatedCRTDLData {
-    const annotatedCRTDLData = obj as AnnotatedCRTDLData
-    return (
-      TypeGuard.isObject(annotatedCRTDLData) &&
-      TypeGuard.isDataExtractionData(annotatedCRTDLData.dataExtraction) &&
-      TypeGuard.isStructuredQueryData(annotatedCRTDLData.cohortDefinition)
     )
   }
 

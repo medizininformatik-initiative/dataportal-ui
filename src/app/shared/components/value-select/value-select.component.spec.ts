@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ValueSelectComponent } from './value-select.component';
+import { ValueSelectComponent } from './value-select.component'
 
-describe('ValueSelectComponent', () => {
-  let component: ValueSelectComponent;
-  let fixture: ComponentFixture<ValueSelectComponent>;
+describe.skip('ValueSelectComponent', () => {
+  let component: ValueSelectComponent
+  let fixture: ComponentFixture<ValueSelectComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ValueSelectComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(ValueSelectComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ValueSelectComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

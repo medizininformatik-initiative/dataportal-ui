@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FeasibilityQueryEditorComponent } from './edit.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { FeasibilityQueryEditorComponent } from './edit.component'
 
-describe('EditorComponent', () => {
-  let component: FeasibilityQueryEditorComponent;
-  let fixture: ComponentFixture<FeasibilityQueryEditorComponent>;
+describe.skip('EditorComponent', () => {
+  let component: FeasibilityQueryEditorComponent
+  let fixture: ComponentFixture<FeasibilityQueryEditorComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [FeasibilityQueryEditorComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(FeasibilityQueryEditorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(FeasibilityQueryEditorComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

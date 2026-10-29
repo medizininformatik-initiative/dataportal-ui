@@ -1,0 +1,64 @@
+{
+  "description": "Queries as the UI holds them (criterion ids per group). Outer array = AND, inner array = OR for inclusion; outer = OR, inner = AND for exclusion. CCDL schema: every group holds at least one criterion (minItems 1). FeasibilityQuery drops empty groups when they are set, so an empty group never reaches validation or the translator.",
+  "valid": [
+    {
+      "case": "one inclusion group, no exclusion",
+      "inclusionCriteria": [["a"]],
+      "exclusionCriteria": [],
+      "output": "exclusionCriteria key is left out"
+    },
+    {
+      "case": "several inclusion groups and one exclusion group",
+      "inclusionCriteria": [["a", "b"], ["c"]],
+      "exclusionCriteria": [["d"]],
+      "output": "both keys present"
+    },
+    {
+      "case": "several exclusion groups",
+      "inclusionCriteria": [["a"]],
+      "exclusionCriteria": [["d", "e"], ["f"]],
+      "output": "both keys present"
+    }
+  ],
+  "droppedWhenSet": [
+    {
+      "case": "an empty inclusion group next to a filled one",
+      "set": { "inclusionCriteria": [["a"], []], "exclusionCriteria": [] },
+      "stored": { "inclusionCriteria": [["a"]], "exclusionCriteria": [] },
+      "result": "valid"
+    },
+    {
+      "case": "an empty exclusion group",
+      "set": { "inclusionCriteria": [["a"]], "exclusionCriteria": [[]] },
+      "stored": { "inclusionCriteria": [["a"]], "exclusionCriteria": [] },
+      "result": "valid, exclusionCriteria key is left out"
+    }
+  ],
+  "invalid": [
+    {
+      "case": "no groups at all",
+      "inclusionCriteria": [],
+      "exclusionCriteria": [],
+      "error": "NO_INCLUSION_CRITERIA"
+    },
+    {
+      "case": "only an exclusion group",
+      "inclusionCriteria": [],
+      "exclusionCriteria": [["d"]],
+      "error": "NO_INCLUSION_CRITERIA"
+    },
+    {
+      "case": "the only inclusion group is empty (stored as no groups)",
+      "set": { "inclusionCriteria": [[]], "exclusionCriteria": [] },
+      "stored": { "inclusionCriteria": [], "exclusionCriteria": [] },
+      "error": "NO_INCLUSION_CRITERIA"
+    },
+    {
+      "case": "criterion 'a' has an unset required filter",
+      "inclusionCriteria": [["a"]],
+      "exclusionCriteria": [],
+      "error": "INVALID_CRITERIA",
+      "criterionIds": ["a"]
+    }
+  ]
+}

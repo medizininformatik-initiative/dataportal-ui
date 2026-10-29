@@ -1,7 +1,7 @@
 import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
-import { caseNamed } from '../crtdl/cases'
-import { differences } from '../crtdl/roundtrip'
+import { caseNamed } from '../../../test-support/crtdl/cases'
+import { differences } from '../../../test-support/crtdl/roundtrip'
 
 /**
  * Upload to download roundtrip. What counts as same: `crtdl/roundtrip.ts`.
@@ -34,10 +34,7 @@ export class CrtdlRoundtrip {
 
 export const crtdlRoundtrip = new CrtdlRoundtrip()
 
-defineStep('I upload the generated data definition {string}', (name: string) =>
-  crtdlRoundtrip.uploadGenerated(name)
-)
-defineStep(
-  'the downloaded file {string} matches the generated data definition {string}',
-  (file: string, name: string) => crtdlRoundtrip.downloadedShouldMatchGenerated(file, name)
+defineStep('I upload the generated data definition {string}', (name: string) => crtdlRoundtrip.uploadGenerated(name))
+defineStep('the downloaded file {string} matches the generated data definition {string}', (file: string, name: string) =>
+  crtdlRoundtrip.downloadedShouldMatchGenerated(file, name)
 )

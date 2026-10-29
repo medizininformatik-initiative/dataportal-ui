@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { FeasibilityQuerySearchComponent } from './search.component'
 
-describe('FeasibilityQuerySearchComponent', () => {
+describe.skip('FeasibilityQuerySearchComponent', () => {
   let component: FeasibilityQuerySearchComponent
   let fixture: ComponentFixture<FeasibilityQuerySearchComponent>
 

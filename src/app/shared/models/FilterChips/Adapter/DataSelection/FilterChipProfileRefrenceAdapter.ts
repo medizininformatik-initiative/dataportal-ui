@@ -7,9 +7,7 @@ export class FilterChipProfileRefrenceAdapter {
    * @param profileReferenceGroup
    * @returns
    */
-  public static adaptToProfileReferenceChipData(
-    profileReferenceGroup: ProfileReferenceGroup
-  ): ProfileReferenceChipData {
+  public static adaptToProfileReferenceChipData(profileReferenceGroup: ProfileReferenceGroup): ProfileReferenceChipData {
     const builder = new FilterChipBuilder(profileReferenceGroup.elementId)
     profileReferenceGroup.profiles.forEach((profileDisplay) => {
       builder.addData('4', profileDisplay.display, false, profileDisplay.number)
