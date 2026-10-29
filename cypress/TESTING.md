@@ -115,19 +115,21 @@ To ensure a clean test environment, the following folders are automatically clea
 
 This behavior is implemented in the [Cypress configuration](../cypress.config.ts) using the `before:run` hook. It guarantees that test artifacts from previous runs don’t interfere with current results.
 
-### Skipping `@pending` scenarios
+### `@pending` scenarios are skipped by default
 
-Scenarios and features tagged `@pending` are blocked on missing data or a product decision
-(for example `attribute-concept-same-code-different-system.feature`). A plain `npx cypress run`
-**still runs them, and they fail**. Exclude them with:
+Scenarios and features tagged `@pending` are blocked on missing data or a product decision (they
+document known defects and fail). `cypress.config.ts` sets `expose.tags` to `not @pending`, so a
+plain `npx cypress run`, `npm run cypress:run` and the CI run skip them. A skipped scenario is
+left out of the run, it is not counted. To run them on purpose:
 
 ```console
-npx cypress run --expose tags='not @pending'
+npm run cypress:run -- --expose tags='@pending'
 ```
 
 Use `--expose`, not `--env`: this project is on Cypress 16, where the preprocessor reads the
 `tags` option from the exposed config values. `--env tags=...` and `--env TAGS=...` are silently
-ignored. A skipped scenario shows up as 0 passing in a few milliseconds instead of failing.
+ignored. A `--expose tags=...` replaces the default, so add `and not @pending` to a tag filter
+that should still skip them.
 
 ### Run by tag (quick)
 
