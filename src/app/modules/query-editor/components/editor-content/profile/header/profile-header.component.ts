@@ -3,7 +3,6 @@ import { Component, computed, inject, input, OnInit, output } from '@angular/cor
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter'
@@ -86,8 +85,9 @@ export class ProfileHeaderComponent implements OnInit {
       }
       const linkedProfiles = ref
         .getLinkedProfileIds()
-        .map((id) => this.profileProviderService.getOne(id).getDisplay())
-        .filter((profileDisplay): profileDisplay is Display => !!profileDisplay)
+        .map((id) => this.profileProviderService.getOne(id))
+        .filter((profile) => !!profile?.getDisplay())
+        .map((profile) => ({ display: profile.getDisplay(), number: profile.getLabelNumber() }))
 
       acc[key].push(...linkedProfiles)
       return acc
