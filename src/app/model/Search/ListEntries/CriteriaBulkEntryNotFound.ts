@@ -1,14 +1,14 @@
-import { AbstractListEntry } from './AbstractListEntry';
+import { AbstractListEntry } from './AbstractListEntry'
 
 export class CriteriaBulkEntryNotFound extends AbstractListEntry {
-  private readonly termCode: string;
+  private readonly termCode: string
 
   constructor(id: string, termCode: string) {
-    super(id);
-    this.termCode = termCode;
+    super(id)
+    this.termCode = termCode
   }
 
   public getTermCode(): string {
-    return this.termCode;
+    return this.termCode
   }
 }

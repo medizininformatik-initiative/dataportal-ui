@@ -1,13 +1,13 @@
-import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField';
-import { CloneDisplayData } from '../../DisplayData/CloneDisplayData';
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField'
+import { CloneDisplayData } from '../../DisplayData/CloneDisplayData'
 
 export class BasicFieldCloner {
   public static deepCopyBasicFields(fields: BasicField[]): BasicField[] {
     if (!fields || fields.length === 0) {
-      return [];
+      return []
     }
 
-    return fields.map((field) => BasicFieldCloner.deepCopyBasicField(field));
+    return fields.map((field) => BasicFieldCloner.deepCopyBasicField(field))
   }
 
   public static deepCopyBasicField(basicField: BasicField) {
@@ -20,6 +20,6 @@ export class BasicFieldCloner {
       basicField.getIsSelected(),
       basicField.getIsRequired(),
       basicField.getType()
-    );
+    )
   }
 }

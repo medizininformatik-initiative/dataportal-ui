@@ -1,5 +1,5 @@
-import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
-import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList';
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
+import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList'
 
 /**
  * @abstract
@@ -10,25 +10,22 @@ import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResu
  * @template C - Type extending AbstractListEntry representing individual search result entries
  * @template T - Type extending AbstractResultList representing the complete search result list
  */
-export abstract class AbstractResultMapper<
-  C extends AbstractListEntry,
-  T extends AbstractResultList<C>
-> {
+export abstract class AbstractResultMapper<C extends AbstractListEntry, T extends AbstractResultList<C>> {
   /**
    * @abstract
    * Maps a raw API response to a structured result list.
    *
-   * @param response - The raw response from the search API
-   * @returns A typed result list containing the mapped search results
+   * @param {any} response - The raw response from the search API
+   * @returns {T} A typed result list containing the mapped search results
    */
-  abstract mapResponseToResultList(response: any): T;
+  public abstract mapResponseToResultList(response: any): T
 
   /**
    * @abstract
    * Maps an array of raw result objects to typed list entries.
    *
-   * @param results - Array of raw result objects from the API response
-   * @returns Array of typed list entries
+   * @param {any[]} results - Array of raw result objects from the API response
+   * @returns {C[]} Array of typed list entries
    */
-  abstract mapResponseToEntries(results: any[]): C[];
+  public abstract mapResponseToEntries(results: any[]): C[]
 }

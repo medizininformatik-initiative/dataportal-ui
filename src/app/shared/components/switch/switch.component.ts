@@ -1,5 +1,5 @@
-import { Component, OnInit, model, output } from '@angular/core'
 import { NgClass } from '@angular/common'
+import { Component, OnInit, model, output } from '@angular/core'
 
 @Component({
   selector: 'num-switch',
@@ -9,13 +9,13 @@ import { NgClass } from '@angular/common'
   imports: [NgClass],
 })
 export class SwitchComponent implements OnInit {
-  readonly isChecked = model(true)
+  public readonly isChecked = model(true)
 
-  readonly toggled = output<boolean>()
+  public readonly toggled = output<boolean>()
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
   public toggleSwitch(event: Event): void {
     const input = event.target as HTMLInputElement

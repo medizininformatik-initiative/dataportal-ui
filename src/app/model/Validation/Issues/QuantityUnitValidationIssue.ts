@@ -1,23 +1,23 @@
-import { QuantityUnitValidationIssueData } from 'src/app/core/model/Validation/QuantityUnitValidationIssueData';
+import { QuantityUnitValidationIssueData } from 'src/app/core/model/Validation/QuantityUnitValidationIssueData'
 
 export class QuantityUnitValidationIssue {
-  private readonly selected: string;
-  private readonly allowed: string[];
+  private readonly selected: string
+  private readonly allowed: string[]
 
   constructor(selected: string, allowed: string[]) {
-    this.selected = selected;
-    this.allowed = allowed;
+    this.selected = selected
+    this.allowed = allowed
   }
 
   public getSelected(): string {
-    return this.selected;
+    return this.selected
   }
 
   public getAllowed(): string[] {
-    return this.allowed;
+    return this.allowed
   }
 
   public static fromJson(json: QuantityUnitValidationIssueData): QuantityUnitValidationIssue {
-    return new QuantityUnitValidationIssue(json.selected, json.allowed);
+    return new QuantityUnitValidationIssue(json.selected, json.allowed)
   }
 }

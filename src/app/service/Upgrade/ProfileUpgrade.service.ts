@@ -1,24 +1,24 @@
 // crtdl-upgrade-pipeline.service.ts
 
 import { Injectable, inject } from '@angular/core'
-import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
-import { UpgradeApiService } from '../Backend/Api/UpgradeApi.service'
-import { ProfileUpgradeMapperService } from './ProfileUpgradeMapper.service'
-import { ErrorLogProviderService } from '../Validation/External/ErrorLogProvider.service'
 import { catchError, filter, map, Observable, of, tap, throwError } from 'rxjs'
-import { AnnotationsData } from 'src/app/core/model/Upgrade/AnnotationsData'
-import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade'
-import { UpgradeData } from 'src/app/core/model/Upgrade/UpgradeData'
 import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData'
+import { AnnotationsData } from 'src/app/core/model/Upgrade/AnnotationsData'
+import { UpgradeData } from 'src/app/core/model/Upgrade/UpgradeData'
+import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
+import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade'
+import { UpgradeApiService } from '../Backend/Api/UpgradeApi.service'
 import { CRTDLValidationService } from '../Validation/External/CRTDLValidation.service'
+import { ErrorLogProviderService } from '../Validation/External/ErrorLogProvider.service'
+import { ProfileUpgradeMapperService } from './ProfileUpgradeMapper.service'
 
 // Handles: remote upgrade call + mapping + error log
 @Injectable({ providedIn: 'root' })
 export class ProfileUpgradeService {
-  private upgradeApiService = inject(UpgradeApiService)
-  private upgradeMapper = inject(ProfileUpgradeMapperService)
-  private errorLogProvider = inject(ErrorLogProviderService)
-  private cRTDLValidationService = inject(CRTDLValidationService)
+  private readonly upgradeApiService = inject(UpgradeApiService)
+  private readonly upgradeMapper = inject(ProfileUpgradeMapperService)
+  private readonly errorLogProvider = inject(ErrorLogProviderService)
+  private readonly cRTDLValidationService = inject(CRTDLValidationService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -34,9 +34,7 @@ export class ProfileUpgradeService {
         this.errorLogProvider.setProfileUpgrade(profileUpgrades)
       }),
       map((response) => response.body),
-      catchError((error: DataportalErrorData) =>
-        this.cRTDLValidationService.handleValidationError(error)
-      )
+      catchError((error: DataportalErrorData) => this.cRTDLValidationService.handleValidationError(error))
     )
   }
 

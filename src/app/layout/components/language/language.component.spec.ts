@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { LanguageComponent } from './language.component'
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { MaterialModule } from '../../material/material.module'
-import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
+import { LanguageComponent } from './language.component'
 
 describe.skip('LanguageComponent', () => {
   let component: LanguageComponent

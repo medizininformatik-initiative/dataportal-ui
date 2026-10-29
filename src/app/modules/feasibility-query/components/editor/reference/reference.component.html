@@ -1,10 +1,4 @@
-<mat-tab-group
-  animationDuration="0ms"
-  class="container"
-  disableRipple="true"
-  mat-stretch-tabs="false"
-  [selectedIndex]="1"
->
+<mat-tab-group animationDuration="0ms" class="container" disableRipple="true" mat-stretch-tabs="false" [selectedIndex]="1">
   <mat-tab>
     <ng-template mat-tab-label>
       <fa-icon icon="info" class="information-icon"></fa-icon>
@@ -42,10 +36,7 @@
   </mat-tab>
   <mat-tab
     class="height-100"
-    [label]="
-      'EDITOR.CONTENT.TAB_LABEL.SELECTED_REFERENCES'
-        | translate : { count: selectedReferenceCriterion().length }
-    "
+    [label]="'EDITOR.CONTENT.TAB_LABEL.SELECTED_REFERENCES' | translate : { count: selectedReferenceCriterion().length }"
     [disabled]="selectedReferenceCriterion().length === 0"
   >
     @if (selectedReferenceCriterion().length > 0) {

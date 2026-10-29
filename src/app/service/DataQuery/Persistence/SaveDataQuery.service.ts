@@ -1,20 +1,20 @@
-import { CreateCRTDLService } from '../../Translator/CRTDL/CreateCRTDL.service'
-import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL'
-import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
 import { Injectable, inject } from '@angular/core'
 import { map, Observable, switchMap, take } from 'rxjs'
+import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL'
 import { QueryResult } from 'src/app/model/Result/QueryResult'
-import { ResultProviderService } from '../../Provider/ResultProvider.service'
-import { SaveDataModal } from '../../../shared/models/SaveDataModal/SaveDataModal'
 import { SavedUsageStats } from 'src/app/model/Types/SavedUsageStats'
+import { SaveDataModal } from '../../../shared/models/SaveDataModal/SaveDataModal'
+import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
+import { ResultProviderService } from '../../Provider/ResultProvider.service'
+import { CreateCRTDLService } from '../../Translator/CRTDL/CreateCRTDL.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SavedDataQueryService {
-  private createCRTDLService = inject(CreateCRTDLService)
-  private resultProvider = inject(ResultProviderService)
-  private dataQueryApiService = inject(DataQueryApiService)
+  private readonly createCRTDLService = inject(CreateCRTDLService)
+  private readonly resultProvider = inject(ResultProviderService)
+  private readonly dataQueryApiService = inject(DataQueryApiService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -40,6 +40,12 @@ export class SavedDataQueryService {
     )
   }
 
+  /**
+   * Creates the crtdl json.
+   *
+   * @param {CRTDL} crtdl
+   * @returns {{ display: string; version: string; cohortDefinition: CCDLCohortDefinition; dataExtraction: DataExtraction; }}
+   */
   private createCrtdlJson(crtdl: CRTDL) {
     return {
       display: crtdl.getDisplay(),

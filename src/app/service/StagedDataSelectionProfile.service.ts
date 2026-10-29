@@ -1,14 +1,14 @@
+import { Injectable, OnDestroy, inject } from '@angular/core'
+import { initial } from 'lodash'
 import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
-import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
-import { Injectable, OnDestroy, inject } from '@angular/core'
-import { ProfileProviderService } from './Provider/ProfileProvider.service'
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { ProfileTimeRestrictionFilter } from '../model/DataSelection/Profile/Filter/ProfileDateFilter'
 import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter'
-import { initial } from 'lodash'
+import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
+import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
+import { ProfileProviderService } from './Provider/ProfileProvider.service'
 
 /**
  * Service for managing staged profile changes before committing to data selection.
@@ -18,17 +18,17 @@ import { initial } from 'lodash'
   providedIn: 'root',
 })
 export class StagedProfileService implements OnDestroy {
-  private dataSelectionProviderService = inject(DataSelectionProviderService)
-  private profileProviderService = inject(ProfileProviderService)
+  private readonly dataSelectionProviderService = inject(DataSelectionProviderService)
+  private readonly profileProviderService = inject(ProfileProviderService)
 
   private stagedProfile: DataSelectionProfile
-  private subscription: Subscription
+  private readonly subscription: Subscription
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
   constructor() {}
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscription?.unsubscribe()
   }
 
@@ -37,7 +37,7 @@ export class StagedProfileService implements OnDestroy {
   }
   /**
    * Updates the selected basic fields in the staged profile.
-   * @param selectedBasicFields - The selected basic fields to set
+   * @param {SelectedBasicField[]} selectedBasicFields - The selected basic fields to set
    * @returns
    */
   public updateSelectedBasicFields(selectedBasicFields: SelectedBasicField[]): void {
@@ -50,7 +50,7 @@ export class StagedProfileService implements OnDestroy {
 
   /**
    * Updates the selected reference fields in the staged profile.
-   * @param selectedReferenceFields - The selected reference fields to set
+   * @param {SelectedReferenceField[]} selectedReferenceFields - The selected reference fields to set
    * @returns
    */
   public updateSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {
@@ -72,7 +72,7 @@ export class StagedProfileService implements OnDestroy {
 
   /**
    * Updates the label of the staged profile.
-   * @param label - The new label text
+   * @param {string} label - The new label text
    * @returns
    */
   public updateLabel(label: string): void {
@@ -105,11 +105,12 @@ export class StagedProfileService implements OnDestroy {
   }
 
   /**
+   * Extracts the trailing number of the given text.
    * @todo lib needs to bee updated to newer version (es2019)
-   * @param text
-   * @returns
+   * @param {string} text
+   * @returns {{ text: string; number: number; }}
    */
-  parseTrailingNumber(text: string) {
+  public parseTrailingNumber(text: string) {
     const match = text.match(/^(.*) \((\d+)\)$/)
 
     if (!match) {
@@ -126,7 +127,7 @@ export class StagedProfileService implements OnDestroy {
   }
   /**
    * Sets linked profiles in the data selection provider.
-   * @returns Observable of void array for completion tracking
+   * @returns {Observable<void[]>} Observable of void array for completion tracking
    * @private
    */
   private setLinkedProfillesInDataSelectionProvdier(): Observable<void[]> {
@@ -140,8 +141,8 @@ export class StagedProfileService implements OnDestroy {
 
   /**
    * Gets profiles from the provider and sets them in data selection.
-   * @param linkedProfileIds - Array of profile IDs to retrieve
-   * @returns Observable of void array for completion tracking
+   * @param {string[]} linkedProfileIds - Array of profile IDs to retrieve
+   * @returns {Observable<void[]>} Observable of void array for completion tracking
    * @private
    */
   private getProfilesFromProviderAndSetInDataSelection(linkedProfileIds: string[]): Observable<void[]> {
@@ -159,8 +160,8 @@ export class StagedProfileService implements OnDestroy {
 
   /**
    * Extracts referenced profile IDs from selected reference fields.
-   * @param selectedReferenceFields - Selected reference fields
-   * @returns Array of referenced profile IDs
+   * @param {SelectedReferenceField[]} selectedReferenceFields - Selected reference fields
+   * @returns {string[]} Array of referenced profile IDs
    * @private
    */
   private getReferencedProfileIds(selectedReferenceFields: SelectedReferenceField[]): string[] {
@@ -172,7 +173,7 @@ export class StagedProfileService implements OnDestroy {
 
   /**
    * Builds and saves the staged profile to providers and data selection.
-   * @returns Observable of void array for completion tracking
+   * @returns {Observable<void[]>} Observable of void array for completion tracking
    */
   public buildProfile(): Observable<void[]> {
     const profile = this.stagedProfile
@@ -183,7 +184,7 @@ export class StagedProfileService implements OnDestroy {
 
   /**
    * Sets a profile in the active data selection.
-   * @param profile - The profile to set
+   * @param {DataSelectionProfile} profile - The profile to set
    * @returns
    * @private
    */

@@ -1,10 +1,10 @@
+import { Injectable, inject } from '@angular/core'
 import { AboutInfoData } from 'src/app/model/Interface/AboutInfo/AboutInfoData'
+import { BackendInfoData } from 'src/app/model/Interface/AboutInfo/BakcendInfoData'
+import { UiInfoData } from 'src/app/model/Interface/AboutInfo/UiInfoData'
+import { GitInformationData } from 'src/app/model/Interface/ActuatorInfoData/GitData/GitInformationData'
 import { ActuatorInformationService } from '../Actuator/ActuatorInformation.service'
 import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service'
-import { BackendInfoData } from 'src/app/model/Interface/AboutInfo/BakcendInfoData'
-import { GitInformationData } from 'src/app/model/Interface/ActuatorInfoData/GitData/GitInformationData'
-import { Injectable, inject } from '@angular/core'
-import { UiInfoData } from 'src/app/model/Interface/AboutInfo/UiInfoData'
 
 /**
  * Service responsible for building the about information data structure.
@@ -24,14 +24,12 @@ export class AboutInfoBuilderService {
 
   /**
    * Creates a complete AboutInfo object from all available data sources.
-   * @returns The complete about information data structure
+   * @returns {AboutInfoData} The complete about information data structure
    */
   public buildAboutInfo(): AboutInfoData {
     const actuatorInfo = this.actuatorInformationService.getActuatorInfoValue()
     if (!actuatorInfo) {
-      throw new Error(
-        'Actuator information is not available. Ensure it is loaded before building about info.'
-      )
+      throw new Error('Actuator information is not available. Ensure it is loaded before building about info.')
     }
     return {
       timestamp: new Date().toISOString(),
@@ -45,7 +43,7 @@ export class AboutInfoBuilderService {
 
   /**
    * Builds the UI information object from app settings.
-   * @returns The UI information data
+   * @returns {UiInfoData} The UI information data
    * @private
    */
   private buildUiInfo(): UiInfoData {
@@ -58,8 +56,8 @@ export class AboutInfoBuilderService {
 
   /**
    * Builds the backend information object from Git data.
-   * @param gitInformation - The Git information data from the actuator
-   * @returns The backend information data
+   * @param {GitInformationData} gitInformation - The Git information data from the actuator
+   * @returns {BackendInfoData} The backend information data
    * @private
    */
   private buildBackendInfo(gitInformation: GitInformationData): BackendInfoData {
@@ -75,8 +73,9 @@ export class AboutInfoBuilderService {
   /**
    * Formats the backend build time as a localized string.
    * @param - The Git information data containing build time
-   * @returns The formatted build time string, or empty string if not available
+   * @returns {string} The formatted build time string, or empty string if not available
    * @private
+   * @param {GitInformationData} gitInformation
    */
   private buildBackendBuildTime(gitInformation: GitInformationData): string {
     return gitInformation?.build?.time ? new Date(gitInformation.build.time).toLocaleString() : ''

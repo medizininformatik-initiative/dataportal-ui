@@ -1,8 +1,8 @@
-import { CloneDisplayData } from '../DisplayData/CloneDisplayData'
 import { DataSelectionProfile } from '../../DataSelection/Profile/DataSelectionProfile'
+import { ProfileReference } from '../../DataSelection/Profile/Reference/ProfileReference'
+import { CloneDisplayData } from '../DisplayData/CloneDisplayData'
 import { ProfileFieldsCloner } from './ProfileFieldsCloner'
 import { ProfileFilterCloner } from './ProfileFilterCloner'
-import { ProfileReference } from '../../DataSelection/Profile/Reference/ProfileReference'
 
 export class DataSelectionProfileCloner {
   public static deepCopyProfiles(profiles: DataSelectionProfile[]): DataSelectionProfile[] {
@@ -10,13 +10,11 @@ export class DataSelectionProfileCloner {
   }
   /**
    * Clones a DataSelectionProfile object.
-   * @param profile The DataSelectionProfile to clone.
-   * @returns A deep copy of the DataSelectionProfile.
+   * @param {DataSelectionProfile} profile The DataSelectionProfile to clone.
+   * @returns {DataSelectionProfile} A deep copy of the DataSelectionProfile.
+   * @param {string} profileId
    */
-  public static deepCopyProfile(
-    profile: DataSelectionProfile,
-    profileId?: string
-  ): DataSelectionProfile {
+  public static deepCopyProfile(profile: DataSelectionProfile, profileId?: string): DataSelectionProfile {
     const clonedFields = ProfileFieldsCloner.deepCopyProfileFields(profile.getProfileFields())
     const clonedFilters = ProfileFilterCloner.deepCopyFilters(profile.getFilters())
     const clonedDisplay = CloneDisplayData.deepCopyDisplayData(profile.getDisplay())

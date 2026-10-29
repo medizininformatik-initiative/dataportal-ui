@@ -8,10 +8,10 @@ import { FilterProvider } from './Filter/SearchFilterProvider.service'
   providedIn: 'root',
 })
 export class CriteriaSearchStateService {
-  private filterProvider = inject(FilterProvider)
+  private readonly filterProvider = inject(FilterProvider)
 
-  private searchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('')
-  private searchFilterSubject: Subject<CriteriaSearchFilter> = new Subject<CriteriaSearchFilter>()
+  private readonly searchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('')
+  private readonly searchFilterSubject: Subject<CriteriaSearchFilter> = new Subject<CriteriaSearchFilter>()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -36,17 +36,17 @@ export class CriteriaSearchStateService {
   /**
    * If the the current search term or the search filters change, this method will reset the pagination and clear the results.
    * It listens to changes in the search term and search filters, and emits true when either changes.
+   * @returns {Observable<boolean>}
    */
   public searchChanged(): Observable<boolean> {
     const termChanges$ = this.searchTermChanges()
     const filterChanges$ = this.filterChanges()
-    return combineLatest([termChanges$, filterChanges$]).pipe(
-      map(([termChanged, filterChanged]) => termChanged || filterChanged)
-    )
+    return combineLatest([termChanges$, filterChanges$]).pipe(map(([termChanged, filterChanged]) => termChanged || filterChanged))
   }
 
   /**
    * Emits true when the active search term changes.
+   * @returns {Observable<boolean>}
    */
   private searchTermChanges(): Observable<boolean> {
     return this.getActiveSearchTerm().pipe(
@@ -57,6 +57,7 @@ export class CriteriaSearchStateService {
 
   /**
    * Emits true when the search filters change.
+   * @returns {Observable<boolean>}
    */
   private filterChanges(): Observable<boolean> {
     return this.filterProvider.getCriteriaSearchFilters().pipe(

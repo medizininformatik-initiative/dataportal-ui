@@ -1,7 +1,7 @@
-import { AbstractStructuredQueryFilters } from '../../Abstract/AbstractStructuredQueryFilters';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { StructuredQueryCriterion } from '../../StructuredQueryCriterion';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { AbstractStructuredQueryFilters } from '../../Abstract/AbstractStructuredQueryFilters'
+import { StructuredQueryCriterion } from '../../StructuredQueryCriterion'
 
 /**
  * Class for reference filters in a structured query.
@@ -10,9 +10,9 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
  * specific to reference filters.
  */
 export class ReferenceFilter extends AbstractStructuredQueryFilters {
-  private criteria: StructuredQueryCriterion[];
-  protected type: FilterTypes = FilterTypes.REFERENCE;
-  private attributeCode: TerminologyCode;
+  private criteria: StructuredQueryCriterion[]
+  protected type: FilterTypes = FilterTypes.REFERENCE
+  private attributeCode: TerminologyCode
 
   /**
    * Constructor to initialize the ReferenceFilter with attribute code and criteria.
@@ -21,9 +21,9 @@ export class ReferenceFilter extends AbstractStructuredQueryFilters {
    * @param criteria - The criteria for the filter.
    */
   constructor(attributeCode: TerminologyCode, criteria: StructuredQueryCriterion[]) {
-    super();
-    this.criteria = criteria;
-    this.attributeCode = attributeCode;
+    super()
+    this.criteria = criteria
+    this.attributeCode = attributeCode
   }
 
   /**
@@ -32,7 +32,7 @@ export class ReferenceFilter extends AbstractStructuredQueryFilters {
    * @returns The criteria value.
    */
   public getCriteria(): StructuredQueryCriterion[] {
-    return this.criteria;
+    return this.criteria
   }
 
   /**
@@ -41,7 +41,7 @@ export class ReferenceFilter extends AbstractStructuredQueryFilters {
    * @param criteria - The new criteria value to set.
    */
   public setCriteria(criteria: StructuredQueryCriterion[]): void {
-    this.criteria = criteria;
+    this.criteria = criteria
   }
 
   /**
@@ -50,7 +50,7 @@ export class ReferenceFilter extends AbstractStructuredQueryFilters {
    * @returns The type value.
    */
   public getType(): FilterTypes {
-    return this.type;
+    return this.type
   }
 
   /**
@@ -59,7 +59,7 @@ export class ReferenceFilter extends AbstractStructuredQueryFilters {
    * @returns The attributeCode value.
    */
   public getAttributeCode(): TerminologyCode {
-    return this.attributeCode;
+    return this.attributeCode
   }
 
   /**
@@ -68,13 +68,16 @@ export class ReferenceFilter extends AbstractStructuredQueryFilters {
    * @param attributeCode - The new attributeCode value to set.
    */
   public setAttributeCode(attributeCode: TerminologyCode): void {
-    this.attributeCode = attributeCode;
+    this.attributeCode = attributeCode
   }
 
-  public static createFilter(
-    attributeCode: TerminologyCode,
-    structuredQueryCriterion: StructuredQueryCriterion[]
-  ): ReferenceFilter {
-    return new ReferenceFilter(attributeCode, structuredQueryCriterion);
+  /**
+   * Creates a filter from the given values.
+   *
+   * @param attributeCode
+   * @param structuredQueryCriterion
+   */
+  public static createFilter(attributeCode: TerminologyCode, structuredQueryCriterion: StructuredQueryCriterion[]): ReferenceFilter {
+    return new ReferenceFilter(attributeCode, structuredQueryCriterion)
   }
 }

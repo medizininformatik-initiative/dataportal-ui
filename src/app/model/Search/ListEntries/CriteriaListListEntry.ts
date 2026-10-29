@@ -1,30 +1,20 @@
-import { AbstractListEntry } from './AbstractListEntry';
-import { AvailabilityStatusType } from '../../Availability/AvailabilityStatusType';
-import { CriteriaListEntryData } from '../../Interface/Search/CriteriaListListEntryData';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
-import { Availability } from '../../Availability/Availability';
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { Availability } from '../../Availability/Availability'
+import { AvailabilityStatusType } from '../../Availability/AvailabilityStatusType'
+import { CriteriaListEntryData } from '../../Interface/Search/CriteriaListListEntryData'
+import { AbstractListEntry } from './AbstractListEntry'
 
 /**
  * Represents a criteria list item, extending AbstractSearchResult.
  */
 export class CriteriaListEntry extends AbstractListEntry {
-  private readonly selectable: boolean;
-  private readonly availability: number;
-  private readonly terminology: string;
-  private readonly termcode: string;
-  private readonly kdsModule: string;
-  private readonly context: string;
-  private readonly display: Display;
-  /**
-   *
-   * @param availability
-   * @param selectable
-   * @param terminology
-   * @param termcode
-   * @param kdsModule
-   * @param display
-   * @param id
-   */
+  private readonly selectable: boolean
+  private readonly availability: number
+  private readonly terminology: string
+  private readonly termcode: string
+  private readonly kdsModule: string
+  private readonly context: string
+  private readonly display: Display
   constructor(
     availability: number,
     selectable: boolean,
@@ -35,76 +25,77 @@ export class CriteriaListEntry extends AbstractListEntry {
     id: string,
     context: string
   ) {
-    super(id);
-    this.availability = availability;
-    this.terminology = terminology;
-    this.termcode = termcode;
-    this.kdsModule = kdsModule;
-    this.selectable = selectable;
-    this.display = display;
-    this.context = context;
+    super(id)
+    this.availability = availability
+    this.terminology = terminology
+    this.termcode = termcode
+    this.kdsModule = kdsModule
+    this.selectable = selectable
+    this.display = display
+    this.context = context
   }
 
   /**
+   * Returns the selectable.
    *
-   * @returns if the Item is selectable
+   * @returns {boolean} if the Item is selectable
    */
   public getSelectable() {
-    return this.selectable;
+    return this.selectable
   }
 
   /**
    * Gets the availability of the searchterm.
    *
-   * @returns The availability as a number.
+   * @returns {number} The availability as a number.
    */
   public getAvailability(): number {
-    return this.availability;
+    return this.availability
   }
 
   public getAvailabilityStatus(): AvailabilityStatusType {
-    return new Availability(this.availability).getStatus();
+    return new Availability(this.availability).getStatus()
   }
 
   /**
    * Gets the terminology of the searchterm.
    *
-   * @returns The terminology as a string.
+   * @returns {string} The terminology as a string.
    */
   public getTerminology(): string {
-    return this.terminology;
+    return this.terminology
   }
 
   /**
    * Gets the term code of the searchterm.
    *
-   * @returns The term code as a string.
+   * @returns {string} The term code as a string.
    */
   public getTermcode(): string {
-    return this.termcode;
+    return this.termcode
   }
 
   /**
    * Gets the KDS module.
    *
-   * @returns The KDS module as a string.
+   * @returns {string} The KDS module as a string.
    */
   public getKdsModule(): string {
-    return this.kdsModule;
+    return this.kdsModule
   }
 
   public getDisplay(): Display {
-    return this.display;
+    return this.display
   }
 
   public getContext(): string {
-    return this.context;
+    return this.context
   }
 
   /**
    * Creates a new instance of CriteriaListEntry from JSON.
-   * @param json The JSON object to convert.
-   * @returns A new instance of CriteriaListEntry.
+   * @param {CriteriaListEntryData} json The JSON object to convert.
+   * @returns {CriteriaListEntry} A new instance of CriteriaListEntry.
    */
   public static fromJson(json: CriteriaListEntryData): CriteriaListEntry {
     return new CriteriaListEntry(
@@ -116,6 +107,6 @@ export class CriteriaListEntry extends AbstractListEntry {
       Display.fromJson(json.display),
       json.id,
       json.context
-    );
+    )
   }
 }

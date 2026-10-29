@@ -1,8 +1,8 @@
 import { Component, input } from '@angular/core'
-import { DisplayCellData } from 'src/app/shared/models/TableData/Cells/Data/DisplayCellData'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatTooltip } from '@angular/material/tooltip'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { DisplayCellData } from 'src/app/shared/models/TableData/Cells/Data/DisplayCellData'
 import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe'
 
 @Component({
@@ -13,5 +13,5 @@ import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe
   imports: [FontAwesomeModule, MatTooltip, TranslateModule, DisplayTranslationPipe],
 })
 export class DisplayCellComponent {
-  readonly cell = input<DisplayCellData>()
+  public readonly cell = input<DisplayCellData>()
 }

@@ -1,10 +1,10 @@
-import { AbstractTableAdapter } from './AbstractTableAdapter'
-import { DisplayCellData } from '../Cells/Data/DisplayCellData'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
+import { DisplayCellData } from '../Cells/Data/DisplayCellData'
 import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellContext } from '../Cells/TableCellContext'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
+import { AbstractTableAdapter } from './AbstractTableAdapter'
 
 export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> {
   constructor() {
@@ -56,11 +56,7 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
       isSelected: false,
       isDisabled: entry.getSelectable(),
     }
-    return TableCellBuilder.withCheckboxText(
-      entry.getDisplay(),
-      checkboxoptions,
-      TableCellContext.FEATURE
-    )
+    return TableCellBuilder.withCheckboxText(entry.getDisplay(), checkboxoptions, TableCellContext.FEATURE)
   }
 
   private availabilityCell(entry: ProfileListEntry): any {

@@ -1,18 +1,18 @@
+import { Injectable, inject } from '@angular/core'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { SearchFilterData } from 'src/app/model/Interface/Search/Filter/SearchFilterData'
+import { SearchFilterValueData } from 'src/app/model/Interface/Search/Filter/SearchFilterValueData'
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
 import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import { Injectable, inject } from '@angular/core'
-import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs'
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service'
-import { SearchFilterData } from 'src/app/model/Interface/Search/Filter/SearchFilterData'
-import { SearchFilterValueData } from 'src/app/model/Interface/Search/Filter/SearchFilterValueData'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriteriaSearchFilterService {
-  private terminologyApiService = inject(TerminologyApiService)
+  private readonly terminologyApiService = inject(TerminologyApiService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -21,7 +21,8 @@ export class CriteriaSearchFilterService {
 
   /**
    * Fetches available filters from the backend and updates the filters subject.
-   * @returns An Observable emitting the current list of filters.
+   * @returns {Observable<Array<CriteriaSearchFilter>>} An Observable emitting the current list of filters.
+   * @param {string} url
    */
   public fetchFilters(url: string): Observable<Array<CriteriaSearchFilter>> {
     return this.terminologyApiService
@@ -37,8 +38,8 @@ export class CriteriaSearchFilterService {
 
   /**
    * Creates a CriteriaSearchFilter from CriteriaSearchFilterData.
-   * @param filter
-   * @returns
+   * @param {SearchFilterData} filter
+   * @returns {CriteriaSearchFilter}
    */
   private createSearchTermFilter(filter: SearchFilterData): CriteriaSearchFilter {
     const searchTermValues = this.buildSearchTermValues(filter.values)
@@ -48,13 +49,11 @@ export class CriteriaSearchFilterService {
 
   /**
    * Maps SearchFilterData to CriteriaSearchFilterValue.
-   * @param values
-   * @returns
+   * @param {SearchFilterValueData[]} values
+   * @returns {CriteriaSearchFilterValue[]}
    */
   private buildSearchTermValues(values: SearchFilterValueData[]): CriteriaSearchFilterValue[] {
-    return values.map(
-      (value: SearchFilterValueData) => new CriteriaSearchFilterValue(value.count, value.label)
-    )
+    return values.map((value: SearchFilterValueData) => new CriteriaSearchFilterValue(value.count, value.label))
   }
 
   private setFilterType(name: string): ElasticSearchFilterTypes {

@@ -1,6 +1,6 @@
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import { ProfileSearchFilter } from 'src/app/model/Search/Filter/ProfileSearchFilter'
 import { ProfileSearchFilterValue } from 'src/app/model/Search/Filter/ProfileSearchFilterValue'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import { SearchFilterData, SearchFilterValueData } from './SearchFilterData'
 
 export class ProfileSearchFilterAdapter {
@@ -18,9 +18,7 @@ export class ProfileSearchFilterAdapter {
     })
   }
 
-  private static createSearchFilterValue(
-    filterValue: ProfileSearchFilterValue
-  ): SearchFilterValueData {
+  private static createSearchFilterValue(filterValue: ProfileSearchFilterValue): SearchFilterValueData {
     const count = filterValue.getCount()
     const display = filterValue.getDisplay()
     const label = filterValue.getLabel() ?? display?.getOriginal()

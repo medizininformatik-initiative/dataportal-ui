@@ -1,5 +1,5 @@
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { FilterTypes } from '../../../Utilities/FilterTypes';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { FilterTypes } from '../../../Utilities/FilterTypes'
 
 /**
  * Abstract base class for structured query filters.
@@ -7,7 +7,7 @@ import { FilterTypes } from '../../../Utilities/FilterTypes';
  * @abstract
  */
 export abstract class AbstractStructuredQueryFilters {
-  protected abstract type: FilterTypes;
+  protected abstract type: FilterTypes
 
   /**
    * Constructor to initialize the AbstractStructuredQueryFilters with attribute code and type.
@@ -20,18 +20,18 @@ export abstract class AbstractStructuredQueryFilters {
   /**
    * Gets the type value.
    *
-   * @returns The type value.
+   * @returns {FilterTypes} The type value.
    */
   public getType(): FilterTypes {
-    return this.type;
+    return this.type
   }
 
   /**
    * Sets the type value.
    *
-   * @param type - The new type value to set.
+   * @param {FilterTypes} type - The new type value to set.
    */
   public setType(type: FilterTypes): void {
-    this.type = type;
+    this.type = type
   }
 }

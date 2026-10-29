@@ -1,14 +1,8 @@
-<num-modal-window
-  (saveButtonSelected)="saveProfileReferences()"
-  (cancelButtonSelected)="closeDialog()"
->
+<num-modal-window (saveButtonSelected)="saveProfileReferences()" (cancelButtonSelected)="closeDialog()">
   <div class="container">
     @for (tree of urlTree; track tree) {
     <div>
-      <num-tree
-        [treeData]="tree"
-        (selectedCheckbox)="setSelectedReferenceFields($event)"
-      ></num-tree>
+      <num-tree [treeData]="tree" (selectedCheckbox)="setSelectedReferenceFields($event)"></num-tree>
     </div>
     }
   </div>

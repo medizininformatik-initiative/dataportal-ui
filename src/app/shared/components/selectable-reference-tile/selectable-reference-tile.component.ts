@@ -1,8 +1,8 @@
 import { Component, OnInit, input, output } from '@angular/core'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
-import { CheckboxComponent } from '../checkbox/checkbox.component'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { CheckboxComponent } from '../checkbox/checkbox.component'
 
 @Component({
   selector: 'num-selectable-reference-tile',
@@ -12,17 +12,17 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
   imports: [CheckboxComponent, DisplayTranslationPipe],
 })
 export class SelectableReferenceTileComponent implements OnInit {
-  readonly possibleReference = input<PossibleProfileReferenceData>(undefined)
+  public readonly possibleReference = input<PossibleProfileReferenceData>(undefined)
 
-  readonly selectedProfile = output<PossibleProfileReferenceData>()
+  public readonly selectedProfile = output<PossibleProfileReferenceData>()
 
-  display: string
+  public display: string
 
-  label: string
+  public label: string
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.display = this.possibleReference().display.getOriginal()
     this.label = this.possibleReference().label
   }

@@ -1,1 +1,1 @@
-export type ValidDataQuery = Readonly<{ feasibilityQuery: boolean; dataSelection: boolean }>;
+export type ValidDataQuery = Readonly<{ feasibilityQuery: boolean; dataSelection: boolean }>

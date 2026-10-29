@@ -10,13 +10,13 @@ import { SelectableReferenceTileComponent } from '../../../../../../../shared/co
   imports: [SelectableReferenceTileComponent],
 })
 export class PossibleReferencesComponent implements OnInit {
-  readonly posssibleReference = input<PossibleProfileReferenceData>(undefined)
+  public readonly posssibleReference = input<PossibleProfileReferenceData>(undefined)
 
-  readonly selectedProfileId = output<PossibleProfileReferenceData>()
+  public readonly selectedProfileId = output<PossibleProfileReferenceData>()
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
   public selectedReference(profile: PossibleProfileReferenceData): void {
     this.selectedProfileId.emit(profile)

@@ -1,5 +1,5 @@
-import { PathSegments } from 'src/app/app-paths'
 import { Routes } from '@angular/router'
+import { PathSegments } from 'src/app/app-paths'
 import { CriteriaSearchDataResolverService } from 'src/app/service/Resolver/CriteriaSearchDataResolver.service'
 import { CriteriaSearchFilterResolverService } from 'src/app/service/Resolver/CriteriaSearchFilterResolver.service'
 
@@ -15,8 +15,7 @@ export const FEASIBILITY_QUERY_ROUTES: Routes = [
   },
   {
     path: PathSegments.editor,
-    loadComponent: () =>
-      import('./components/editor/edit.component').then((m) => m.EditFeasibilityQueryComponent),
+    loadComponent: () => import('./components/editor/edit.component').then((m) => m.EditFeasibilityQueryComponent),
     data: {
       animation: 'Feasibility_Editor',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.EDITOR',
@@ -25,8 +24,7 @@ export const FEASIBILITY_QUERY_ROUTES: Routes = [
   },
   {
     path: PathSegments.result,
-    loadComponent: () =>
-      import('./components/result/result.component').then((m) => m.ResultComponent),
+    loadComponent: () => import('./components/result/result.component').then((m) => m.ResultComponent),
     data: {
       animation: 'Feasibility_Result',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.RESULT',
@@ -35,8 +33,7 @@ export const FEASIBILITY_QUERY_ROUTES: Routes = [
   },
   {
     path: PathSegments.search,
-    loadComponent: () =>
-      import('./components/search/search.component').then((m) => m.FeasibilityQuerySearchComponent),
+    loadComponent: () => import('./components/search/search.component').then((m) => m.FeasibilityQuerySearchComponent),
     resolve: {
       preLoadCriteriaData: CriteriaSearchDataResolverService,
       preLoadCriteriaFilter: CriteriaSearchFilterResolverService,
@@ -49,10 +46,7 @@ export const FEASIBILITY_QUERY_ROUTES: Routes = [
   },
   {
     path: PathSegments.bulkSearch,
-    loadComponent: () =>
-      import('./components/search/bulk/bulk-search.component').then(
-        (m) => m.FeasibilityQueryBulkSearchComponent
-      ),
+    loadComponent: () => import('./components/search/bulk/bulk-search.component').then((m) => m.FeasibilityQueryBulkSearchComponent),
     resolve: {
       preLoadCriteriaFilter: CriteriaSearchFilterResolverService,
     },

@@ -1,21 +1,21 @@
-import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
-import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
-import { StageProviderService } from '../../../../service/Provider/StageProvider.service'
 import { NavigationHelperService } from '../../../../service/NavigationHelper.service'
+import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service'
+import { StageProviderService } from '../../../../service/Provider/StageProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionMenuFunctionsService {
-  private criterionProviderService = inject(CriterionProviderService)
-  private referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
-  private stageProviderService = inject(StageProviderService)
-  private queryProviderService = inject(FeasibilityQueryProviderService)
-  private navigationHelperService = inject(NavigationHelperService)
+  private readonly criterionProviderService = inject(CriterionProviderService)
+  private readonly referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
+  private readonly stageProviderService = inject(StageProviderService)
+  private readonly queryProviderService = inject(FeasibilityQueryProviderService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -30,10 +30,7 @@ export class CriterionMenuFunctionsService {
   }
 
   public duplicateCriterion(id: string): void {
-    const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(
-      this.criterionProviderService.getOne(id),
-      false
-    )
+    const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(this.criterionProviderService.getOne(id), false)
 
     clonedCriterion.getReferenceAttributeFilters().forEach((attributeFilter) => {
       if (attributeFilter.isReferenceSet()) {
@@ -43,10 +40,7 @@ export class CriterionMenuFunctionsService {
           if (!originalRef) {
             return refId
           }
-          const clonedRef = CloneAbstractCriterion.deepCopyAbstractCriterion(
-            originalRef,
-            false
-          ) as ReferenceCriterion
+          const clonedRef = CloneAbstractCriterion.deepCopyAbstractCriterion(originalRef, false) as ReferenceCriterion
           clonedRef.setParentId(clonedCriterion.getId())
           this.referenceCriterionProviderService.setOne(clonedRef)
           return clonedRef.getId()

@@ -1,11 +1,11 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core'
-import { DisplayTranslationPipe } from '../../../pipes/DisplayTranslationPipe'
-import { ListItemDetailsRelativeData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsRelative'
 import { MatTooltip } from '@angular/material/tooltip'
-import { MenuComponent } from '../../menu/menu.component'
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
-import { SearchbarComponent } from '../../search/searchbar.component'
 import { TranslateService, TranslateModule } from '@ngx-translate/core'
+import { ListItemDetailsRelativeData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsRelative'
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
+import { DisplayTranslationPipe } from '../../../pipes/DisplayTranslationPipe'
+import { MenuComponent } from '../../menu/menu.component'
+import { SearchbarComponent } from '../../search/searchbar.component'
 @Component({
   selector: 'num-list-item-details-generic-sections',
   templateUrl: './list-item-details-generic-sections.component.html',
@@ -14,24 +14,22 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core'
   imports: [MatTooltip, DisplayTranslationPipe, MenuComponent, SearchbarComponent, TranslateModule],
 })
 export class ListItemDetailsGenericSectionsComponent {
-  private translateService = inject(TranslateService)
+  private readonly translateService = inject(TranslateService)
 
-  readonly listItemDetails = input.required<ListItemDetailsRelativeData[]>()
-  readonly menuItems = input<MenuItemInterface[]>([])
-  readonly selectedRelative = output<ListItemDetailsRelativeData>()
-  readonly showSearch = input(false)
+  public readonly listItemDetails = input.required<ListItemDetailsRelativeData[]>()
+  public readonly menuItems = input<MenuItemInterface[]>([])
+  public readonly selectedRelative = output<ListItemDetailsRelativeData>()
+  public readonly showSearch = input(false)
 
-  readonly searchText = signal('')
+  public readonly searchText = signal('')
 
-  readonly filteredItems = computed(() => {
+  public readonly filteredItems = computed(() => {
     const term = this.searchText().toLowerCase()
     const lang = this.translateService.currentLang
     if (!term) {
       return this.listItemDetails()
     }
-    return this.listItemDetails().filter((item) =>
-      item.display.translate(lang).toLowerCase().includes(term)
-    )
+    return this.listItemDetails().filter((item) => item.display.translate(lang).toLowerCase().includes(term))
   })
 
   constructor() {}

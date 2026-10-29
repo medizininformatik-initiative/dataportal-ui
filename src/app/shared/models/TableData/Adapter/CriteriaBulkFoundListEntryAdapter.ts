@@ -1,12 +1,12 @@
-import { AbstractTableAdapter } from './AbstractTableAdapter'
 import { CriteriaBulkEntry } from 'src/app/model/Search/ListEntries/CriteriaBulkEntry'
-import { TableCellBuilder } from '../Cells/TableCellBuilder'
-import { TableHeaderData } from '../TableHeaderData'
-import { TableRowData } from '../TableRowData'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { v4 as uuidv4 } from 'uuid'
+import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellContext } from '../Cells/TableCellContext'
 import { TableCellUnion } from '../Cells/TableCellUnion'
+import { TableHeaderData } from '../TableHeaderData'
+import { TableRowData } from '../TableRowData'
+import { AbstractTableAdapter } from './AbstractTableAdapter'
 
 export class CriteriaBulkFoundListEntryAdapter extends AbstractTableAdapter<CriteriaBulkEntry> {
   protected buildHeaders(): TableHeaderData {
@@ -33,11 +33,7 @@ export class CriteriaBulkFoundListEntryAdapter extends AbstractTableAdapter<Crit
   }
 
   private buildCells(entry: CriteriaBulkEntry): TableCellUnion[] {
-    return TableCellBuilder.row(
-      this.displayCell(entry),
-      this.terminologyCell(entry),
-      this.termCodeCell(entry)
-    )
+    return TableCellBuilder.row(this.displayCell(entry), this.terminologyCell(entry), this.termCodeCell(entry))
   }
 
   private displayCell(entry: CriteriaBulkEntry) {

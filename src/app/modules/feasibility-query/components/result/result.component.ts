@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
+import { TranslateModule } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
+import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
-import { SimpleResultComponent } from './simple-result/simple-result.component'
 import { DisplayFeasibilityQueryComponent } from '../editor/display/display.component'
 import { ResultActionBarComponent } from './action-bar/result-action-bar.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { SimpleResultComponent } from './simple-result/simple-result.component'
 @Component({
   selector: 'num-feasibility-query-result',
   templateUrl: './result.component.html',
@@ -22,18 +22,18 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ResultComponent implements OnInit, OnDestroy {
-  private feasibilityQueryResultService = inject(FeasibilityQueryResultService)
+  private readonly feasibilityQueryResultService = inject(FeasibilityQueryResultService)
 
-  resultLoaded = false
-  hasQueryResult: Observable<boolean>
+  public resultLoaded = false
+  public hasQueryResult: Observable<boolean>
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
   constructor() {}
 
-  ngOnInit() {}
+  public ngOnInit() {}
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.feasibilityQueryResultService.stopPolling()
   }
 

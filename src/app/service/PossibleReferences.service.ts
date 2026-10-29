@@ -1,27 +1,27 @@
+import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, map, Observable, take, tap } from 'rxjs'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
-import { ElementIdMapService } from './ElementIdMap.service'
-import { Injectable, inject } from '@angular/core'
-import { LoadDataSelectionProfilesService } from './DataSelection/LoadDataSelectionProfiles.service'
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
-import { ProfileProviderService } from './Provider/ProfileProvider.service'
 import { DisplayTranslationPipe } from '../shared/pipes/DisplayTranslationPipe'
+import { LoadDataSelectionProfilesService } from './DataSelection/LoadDataSelectionProfiles.service'
+import { ElementIdMapService } from './ElementIdMap.service'
+import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
+import { ProfileProviderService } from './Provider/ProfileProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class PossibleReferencesService {
-  private loadDataSelectionProfilesService = inject(LoadDataSelectionProfilesService)
-  private dataSelectionProviderService = inject(DataSelectionProviderService)
-  private elementIdMapService = inject(ElementIdMapService)
-  private profileProviderService = inject(ProfileProviderService)
-  private translation = inject(DisplayTranslationPipe)
+  private readonly loadDataSelectionProfilesService = inject(LoadDataSelectionProfilesService)
+  private readonly dataSelectionProviderService = inject(DataSelectionProviderService)
+  private readonly elementIdMapService = inject(ElementIdMapService)
+  private readonly profileProviderService = inject(ProfileProviderService)
+  private readonly translation = inject(DisplayTranslationPipe)
 
   /**
    * id vom profile --> elementId --> PossibleProfileReferenceData Array
    */
-  private possibleReferencesMapSubject = new BehaviorSubject<Map<string, Map<string, PossibleProfileReferenceData[]>>>(new Map())
+  private readonly possibleReferencesMapSubject = new BehaviorSubject<Map<string, Map<string, PossibleProfileReferenceData[]>>>(new Map())
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -39,7 +39,7 @@ export class PossibleReferencesService {
 
   /**
    * Updates the staged reference profile URLs map.
-   * @param updatedMap - The updated map to set.
+   * @param {Map<string, Map<string, PossibleProfileReferenceData[]>>} updatedMap - The updated map to set.
    */
   public updateReferencesMap(updatedMap: Map<string, Map<string, PossibleProfileReferenceData[]>>): void {
     this.possibleReferencesMapSubject.next(new Map(updatedMap))
@@ -74,7 +74,7 @@ export class PossibleReferencesService {
 
   /**
    * Public getter for the possibleReferencesMap$ observable.
-   * @returns An observable of the possible references map.
+   * @returns {Observable<Map<string, Map<string, PossibleProfileReferenceData[]>>>} An observable of the possible references map.
    */
   public getReferencesMap(): Observable<Map<string, Map<string, PossibleProfileReferenceData[]>>> {
     return this.possibleReferencesMapSubject.asObservable()
@@ -90,10 +90,10 @@ export class PossibleReferencesService {
 
   /**
    * Retrieves existing profiles by matching URLs and excluding the current profile.
-   * @param urls - The list of URLs to match.
-   * @param profileId - The ID of the current profile to exclude.
-   * @param profileMap - A map of profile IDs to profiles.
-   * @returns A list of matching profiles.
+   * @param {string[]} urls - The list of URLs to match.
+   * @param {string} profileId - The ID of the current profile to exclude.
+   * @param {DataSelectionProfile[]} profileMap - A map of profile IDs to profiles.
+   * @returns {DataSelectionProfile[]} A list of matching profiles.
    */
   private getExistingProfilesByUrls(urls: string[], profileId: string, profileMap: DataSelectionProfile[]): DataSelectionProfile[] {
     return profileMap.filter((profile) => urls.includes(profile.getUrl())).filter((profile) => profile.getId() !== profileId)
@@ -102,8 +102,9 @@ export class PossibleReferencesService {
   /**
    * Second use-case for exiting profiles
    * Maps profiles to possible reference data objects.
-   * @param profiles - The profiles to map.
-   * @returns A list of possible profile references.
+   * @param {DataSelectionProfile[]} profiles - The profiles to map.
+   * @returns {PossibleProfileReferenceData[]} A list of possible profile references.
+   * @param {string[]} linkedIds
    */
   private mapProfilesWithSelectionState(profiles: DataSelectionProfile[], linkedIds: string[]): PossibleProfileReferenceData[] {
     return profiles.map((profile) => {
@@ -114,8 +115,9 @@ export class PossibleReferencesService {
 
   /**
    * Maps a profile to a possible reference data object.
-   * @param profile - The profile to map.
-   * @returns A `PossibleProfileReferenceData` object.
+   * @param {DataSelectionProfile} profile - The profile to map.
+   * @returns {PossibleProfileReferenceData} A `PossibleProfileReferenceData` object.
+   * @param {boolean} isSelected
    */
   private mapProfileToReference(profile: DataSelectionProfile, isSelected: boolean): PossibleProfileReferenceData {
     return {
@@ -131,7 +133,8 @@ export class PossibleReferencesService {
    * First use-case for newly selected profiles
    * Maps URLs to possible reference data objects.
    * @param urls - The URLs to map.
-   * @returns A list of possible profile references.
+   * @returns {PossibleProfileReferenceData[]} A list of possible profile references.
+   * @param {DataSelectionProfile[]} profiles
    */
   private mapProfilesToReferences(profiles: DataSelectionProfile[]): PossibleProfileReferenceData[] {
     return profiles.map((profile) => this.mapProfileToReference(profile, true))
@@ -166,9 +169,9 @@ export class PossibleReferencesService {
 
   /**
    * Sets a specific element in the possibleReferencesMap.
-   * @param profileId - The ID of the profile.
-   * @param elementId - The ID of the element.
-   * @param possibleReferences - The array of possible profile reference data to set.
+   * @param {string} profileId - The ID of the profile.
+   * @param {string} elementId - The ID of the element.
+   * @param {PossibleProfileReferenceData[]} possibleReferences - The array of possible profile reference data to set.
    */
   public setReferencesMapElement(profileId: string, elementId: string, possibleReferences: PossibleProfileReferenceData[]): void {
     this.updateNestedMap(profileId, elementId, possibleReferences)

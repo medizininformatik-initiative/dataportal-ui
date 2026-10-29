@@ -1,7 +1,7 @@
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { Component, effect, inject, input, model, output, untracked } from '@angular/core'
-import { TimeRestrictionFactoryService } from 'src/app/service/Factory/TimeRestrictionFactory.service'
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
+import { TimeRestrictionFactoryService } from 'src/app/service/Factory/TimeRestrictionFactory.service'
 import { DatePickerComponent } from '../../../../../../../shared/components/date-picker/date-picker.component'
 
 @Component({
@@ -12,13 +12,13 @@ import { DatePickerComponent } from '../../../../../../../shared/components/date
   imports: [DatePickerComponent],
 })
 export class BeforeFilterComponent {
-  private timeRestrictionFactoryService = inject(TimeRestrictionFactoryService)
+  private readonly timeRestrictionFactoryService = inject(TimeRestrictionFactoryService)
 
-  readonly timeRestrictionType = input<TimeRestrictionType>()
+  public readonly timeRestrictionType = input<TimeRestrictionType>()
 
-  readonly selectedDate = model('')
+  public readonly selectedDate = model('')
 
-  readonly timeRestrictionInstanceChanged = output<AbstractTimeRestriction>()
+  public readonly timeRestrictionInstanceChanged = output<AbstractTimeRestriction>()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -39,10 +39,7 @@ export class BeforeFilterComponent {
     const date = this.selectedDate()
     const type = this.timeRestrictionType()
     if (date) {
-      const timeRestrictionFilter = this.timeRestrictionFactoryService.createTimeRestrictionFilter(
-        type,
-        date
-      )
+      const timeRestrictionFilter = this.timeRestrictionFactoryService.createTimeRestrictionFilter(type, date)
       this.timeRestrictionInstanceChanged.emit(timeRestrictionFilter)
     }
   }

@@ -1,5 +1,5 @@
-import { AbstractRelative } from './AbstractRelative'
 import { Display } from '../../DataSelection/Profile/Display'
+import { AbstractRelative } from './AbstractRelative'
 
 export abstract class AbstractDetails<T extends AbstractRelative> {
   private readonly display: Display

@@ -3,9 +3,9 @@ import { TranslationData } from '../../Interface/TranslationData'
 import { Translation } from './Translation'
 
 export class Display {
-  private originals: string[]
+  private readonly originals: string[]
   private original: string
-  private translations: Translation[]
+  private readonly translations: Translation[]
 
   constructor(translations: Translation[], original?: string, originals: string[] = []) {
     this.original = original
@@ -36,8 +36,8 @@ export class Display {
 
   /**
    * Translates the original text to the specified language.
-   * @param language The target language for translation.
-   * @returns The translated text or the original text if no translation is found.
+   * @param {string} language The target language for translation.
+   * @returns {string} The translated text or the original text if no translation is found.
    */
   public translate(language: string): string {
     const translation = this.translations.find((t) => t.getLanguage().split('-')[0] === language)

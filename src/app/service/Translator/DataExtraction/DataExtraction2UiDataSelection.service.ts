@@ -1,34 +1,34 @@
-import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData'
-import { AttributesData } from 'src/app/model/Interface/AttributesData'
-import { BasicFieldTranslatorService } from './BasicFieldTranslator.service'
-import { ConceptHashCollectorService } from './ConceptHashCollector.service'
-import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData'
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { Injectable, inject } from '@angular/core'
 import { map, Observable, switchMap, tap } from 'rxjs'
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields'
-import { ProfileFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFieldsCloner'
-import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service'
 import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference'
-import { ReferenceFieldTranslatorService } from './ReferenceFieldTranslator.service'
-import { TypeGuard } from '../../TypeGuard/TypeGuard'
+import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData'
+import { AttributesData } from 'src/app/model/Interface/AttributesData'
+import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData'
+import { ProfileFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFieldsCloner'
 import { v4 as uuidv4 } from 'uuid'
-import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service'
 import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service'
 import { LoadDataSelectionProfilesService } from '../../DataSelection/LoadDataSelectionProfiles.service'
+import { TypeGuard } from '../../TypeGuard/TypeGuard'
+import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service'
+import { BasicFieldTranslatorService } from './BasicFieldTranslator.service'
+import { ConceptHashCollectorService } from './ConceptHashCollector.service'
+import { ProfileFilterTranslatorService } from './ProfileFilterTranslator.service'
+import { ReferenceFieldTranslatorService } from './ReferenceFieldTranslator.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataExtraction2UiDataSelectionService {
-  private createDataSelection = inject(LoadDataSelectionProfilesService)
-  private profileFilterTranslatorService = inject(ProfileFilterTranslatorService)
-  private basicFieldTranslator = inject(BasicFieldTranslatorService)
-  private referenceFieldTranslator = inject(ReferenceFieldTranslatorService)
-  private conceptHashCollector = inject(ConceptHashCollectorService)
-  private conceptTranslationCacheService = inject(ConceptTranslationCacheService)
-  private codeableConceptApiService = inject(CodeableConceptApiService)
+  private readonly createDataSelection = inject(LoadDataSelectionProfilesService)
+  private readonly profileFilterTranslatorService = inject(ProfileFilterTranslatorService)
+  private readonly basicFieldTranslator = inject(BasicFieldTranslatorService)
+  private readonly referenceFieldTranslator = inject(ReferenceFieldTranslatorService)
+  private readonly conceptHashCollector = inject(ConceptHashCollectorService)
+  private readonly conceptTranslationCacheService = inject(ConceptTranslationCacheService)
+  private readonly codeableConceptApiService = inject(CodeableConceptApiService)
 
   private idMap: { oldId: string; newId: string }[] = []
 
@@ -38,8 +38,8 @@ export class DataExtraction2UiDataSelectionService {
 
   /**
    * Translates the given DataExtractionData into a DataSelection by fetching the necessary profile data and applying the relevant information from the DataExtractionData to the fetched profiles.
-   * @param dataExtraction
-   * @returns An Observable that emits the translated DataSelection.
+   * @param {DataExtractionData} dataExtraction
+   * @returns {Observable<DataSelection>} An Observable that emits the translated DataSelection.
    */
   public translate(dataExtraction: DataExtractionData): Observable<DataSelection> {
     const hashes = this.conceptHashCollector.collectConceptHashes(dataExtraction)
@@ -52,10 +52,7 @@ export class DataExtraction2UiDataSelectionService {
     }
   }
 
-  private loadConcepts(
-    profiles: DataSelectionProfile[],
-    hashes: string[]
-  ): Observable<DataSelectionProfile[]> {
+  private loadConcepts(profiles: DataSelectionProfile[], hashes: string[]): Observable<DataSelectionProfile[]> {
     return this.codeableConceptApiService.getCodeableConceptsByIds(hashes).pipe(
       tap((concepts) => this.conceptTranslationCacheService.setMany(concepts)),
       map(() => profiles)
@@ -64,31 +61,19 @@ export class DataExtraction2UiDataSelectionService {
 
   /**
    * Builds a DataSelection from the given profiles and DataExtractionData.
-   * @param profiles
-   * @param dataExtraction
-   * @returns
+   * @param {DataSelectionProfile[]} profiles
+   * @param {DataExtractionData} dataExtraction
+   * @returns {DataSelection}
    */
-  private buildDataSelection(
-    profiles: DataSelectionProfile[],
-    dataExtraction: DataExtractionData
-  ): DataSelection {
+  private buildDataSelection(profiles: DataSelectionProfile[], dataExtraction: DataExtractionData): DataSelection {
     this.replaceExternalIdsWithFetchedProfileIds(profiles, dataExtraction.attributeGroups)
 
-    profiles.forEach((profile: DataSelectionProfile) =>
-      this.applyExternalProfile(profile, dataExtraction)
-    )
+    profiles.forEach((profile: DataSelectionProfile) => this.applyExternalProfile(profile, dataExtraction))
 
     return new DataSelection(profiles, uuidv4())
   }
 
-  /**
-   * @param profile
-   * @param dataExtraction
-   */
-  private applyExternalProfile(
-    profile: DataSelectionProfile,
-    dataExtraction: DataExtractionData
-  ): void {
+  private applyExternalProfile(profile: DataSelectionProfile, dataExtraction: DataExtractionData): void {
     const externProfile = this.findExternalProfileFromIdMap(profile, dataExtraction)
     this.applyLabel(profile, externProfile)
     this.applyProfileFields(profile, externProfile)
@@ -96,10 +81,6 @@ export class DataExtraction2UiDataSelectionService {
     this.applyReference(profile, externProfile)
   }
 
-  /**
-   * @param profile
-   * @param externProfile
-   */
   private applyLabel(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
     if (externProfile.name) {
       const newLabel = this.parseTrailingNumber(externProfile.name)
@@ -111,81 +92,40 @@ export class DataExtraction2UiDataSelectionService {
     }
   }
 
-  /**
-   * @param profile
-   * @param externProfile
-   */
-  private applyProfileFields(
-    profile: DataSelectionProfile,
-    externProfile: AttributeGroupsData
-  ): void {
+  private applyProfileFields(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
     if (externProfile.attributes?.length > 0) {
-      const updatedFields = this.setProfileFields(
-        externProfile.attributes,
-        profile.getProfileFields()
-      )
+      const updatedFields = this.setProfileFields(externProfile.attributes, profile.getProfileFields())
       profile.setProfileFields(updatedFields)
     } else {
       profile.getProfileFields().setSelectedBasicFields([])
     }
   }
 
-  /**
-   * @param profile
-   * @param externProfile
-   */
   private applyFilters(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
     if (TypeGuard.isFilterDataArray(externProfile.filter)) {
-      const profileFilter = this.profileFilterTranslatorService.createProfileFilters(
-        externProfile,
-        profile
-      )
+      const profileFilter = this.profileFilterTranslatorService.createProfileFilters(externProfile, profile)
       profile.setFilters(profileFilter)
     }
   }
 
-  /**
-   * @param profile
-   * @param externProfile
-   */
   private applyReference(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
     profile.setReference(new ProfileReference(true, externProfile.includeReferenceOnly ?? false))
   }
 
-  /**
-   * @param profile
-   * @param dataExtraction
-   * @returns
-   */
-  private findExternalProfileFromIdMap(
-    profile: DataSelectionProfile,
-    dataExtraction: DataExtractionData
-  ): AttributeGroupsData | undefined {
+  private findExternalProfileFromIdMap(profile: DataSelectionProfile, dataExtraction: DataExtractionData): AttributeGroupsData | undefined {
     const idTupel = this.idMap.find((id) => id.newId === profile.getId())
-    return dataExtraction.attributeGroups.find(
-      (externProfile) => externProfile.id === idTupel.oldId
-    )
+    return dataExtraction.attributeGroups.find((externProfile) => externProfile.id === idTupel.oldId)
   }
 
   /**
    * Sets the profile fields of the given ProfileFields based on the provided attributes and returns a new instance of ProfileFields with the updated fields.
-   * @param attributes
-   * @param profileFields
-   * @returns
+   * @param {AttributesData[]} attributes
+   * @param {ProfileFields} profileFields
+   * @returns {ProfileFields}
    */
-  private setProfileFields(
-    attributes: AttributesData[],
-    profileFields: ProfileFields
-  ): ProfileFields {
-    const selectedReferenceFields = this.referenceFieldTranslator.buildSelectedReferenceFields(
-      attributes,
-      profileFields,
-      this.idMap
-    )
-    const selectedBasicFields = this.basicFieldTranslator.buildSelectedBasicFields(
-      attributes,
-      profileFields
-    )
+  private setProfileFields(attributes: AttributesData[], profileFields: ProfileFields): ProfileFields {
+    const selectedReferenceFields = this.referenceFieldTranslator.buildSelectedReferenceFields(attributes, profileFields, this.idMap)
+    const selectedBasicFields = this.basicFieldTranslator.buildSelectedBasicFields(attributes, profileFields)
 
     profileFields.setSelectedReferenceFields([])
     profileFields.setSelectedBasicFields(selectedBasicFields)
@@ -200,8 +140,8 @@ export class DataExtraction2UiDataSelectionService {
 
   /**
    * Replaces the old IDs in the idMap with the new IDs from the fetched profiles based on matching URLs between the DataSelectionProfiles and the AttributeGroupsData from the DataExtractionData. This allows for correct mapping of profile data to the corresponding profiles when applying the external profile data.
-   * @param dataSelectionProfiles
-   * @param externProfiles
+   * @param {DataSelectionProfile[]} dataSelectionProfiles
+   * @param {AttributeGroupsData[]} externProfiles
    */
   private replaceExternalIdsWithFetchedProfileIds(
     dataSelectionProfiles: DataSelectionProfile[],
@@ -220,7 +160,13 @@ export class DataExtraction2UiDataSelectionService {
     })
   }
 
-  parseTrailingNumber(text) {
+  /**
+   * Extracts the trailing number of the given text.
+   *
+   * @param {any} text
+   * @returns {{ text: any; number: number; }}
+   */
+  public parseTrailingNumber(text) {
     const match = text.match(/^(.*) \((\d+)\)$/)
 
     if (!match) {

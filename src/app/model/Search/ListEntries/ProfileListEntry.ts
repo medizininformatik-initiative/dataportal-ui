@@ -1,8 +1,8 @@
-import { AbstractListEntry } from './AbstractListEntry'
 import { Availability } from '../../Availability/Availability'
 import { AvailabilityStatusType } from '../../Availability/AvailabilityStatusType'
 import { Display } from '../../DataSelection/Profile/Display'
 import { ProfileListEntryData } from '../../Interface/Search/ProfileListEntryData'
+import { AbstractListEntry } from './AbstractListEntry'
 
 export class ProfileListEntry extends AbstractListEntry {
   private readonly display: Display

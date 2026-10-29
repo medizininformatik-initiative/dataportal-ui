@@ -1,8 +1,7 @@
+import { Routes } from '@angular/router'
 import { BasePaths } from './app-paths'
 import { CriteriaSearchDataResolverService } from './service/Resolver/CriteriaSearchDataResolver.service'
 import { CriteriaSearchFilterResolverService } from './service/Resolver/CriteriaSearchFilterResolver.service'
-
-import { Routes } from '@angular/router'
 
 export const routes: Routes = [
   {
@@ -31,10 +30,7 @@ export const routes: Routes = [
       title: 'TAB_TITLE.QUERY_EDITOR',
       animation: 'QueryEditorPage',
     },
-    loadChildren: () =>
-      import('./modules/query-editor/query-editor.routing.module').then(
-        (m) => m.QUERY_EDITOR_ROUTES
-      ),
+    loadChildren: () => import('./modules/query-editor/query-editor.routing.module').then((m) => m.QUERY_EDITOR_ROUTES),
   },
   {
     path: BasePaths.dataQuery,
@@ -45,8 +41,7 @@ export const routes: Routes = [
       animation: 'HomePage',
       title: 'TAB_TITLE.DATA_QUERY.INDEX',
     },
-    loadChildren: () =>
-      import('./modules/data-query/data-query-routing.module').then((m) => m.DATA_QUERY_ROUTES),
+    loadChildren: () => import('./modules/data-query/data-query-routing.module').then((m) => m.DATA_QUERY_ROUTES),
   },
   {
     path: BasePaths.feasibilityQuery,
@@ -57,10 +52,7 @@ export const routes: Routes = [
       animation: 'FeasibilityQueryPage',
       title: 'TAB_TITLE.FEASIBILITY_QUERY.INDEX',
     },
-    loadChildren: () =>
-      import('./modules/feasibility-query/feasibility-query-routing.module').then(
-        (m) => m.FEASIBILITY_QUERY_ROUTES
-      ),
+    loadChildren: () => import('./modules/feasibility-query/feasibility-query-routing.module').then((m) => m.FEASIBILITY_QUERY_ROUTES),
   },
   {
     path: BasePaths.dataSelection,
@@ -71,10 +63,7 @@ export const routes: Routes = [
       animation: 'DataSelectionPage',
       title: 'TAB_TITLE.DATA_SELECTION.INDEX',
     },
-    loadChildren: () =>
-      import('./modules/data-selection/data-selection-routing.module').then(
-        (m) => m.DATA_SELECTION_ROUTES
-      ),
+    loadChildren: () => import('./modules/data-selection/data-selection-routing.module').then((m) => m.DATA_SELECTION_ROUTES),
   },
   {
     path: 'saved-queries',
@@ -85,17 +74,11 @@ export const routes: Routes = [
       animation: 'SavedQueriesPage',
       title: 'TAB_TITLE.SAVED_QUERIES',
     },
-    loadChildren: () =>
-      import('./modules/saved-queries/saved-queries-routing.module').then(
-        (m) => m.SAVED_QUERIES_ROUTES
-      ),
+    loadChildren: () => import('./modules/saved-queries/saved-queries-routing.module').then((m) => m.SAVED_QUERIES_ROUTES),
   },
   {
     path: 'data-protection',
-    loadComponent: () =>
-      import('./site/data-protection/data-protection.component').then(
-        (m) => m.DataProtectionComponent
-      ),
+    loadComponent: () => import('./site/data-protection/data-protection.component').then((m) => m.DataProtectionComponent),
     data: {
       breadcrumb: 'BREADCRUMB.DATA_PROTECTION',
       animation: 'DataProtectionPage',

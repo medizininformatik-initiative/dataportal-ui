@@ -1,19 +1,19 @@
+import { inject, Injectable } from '@angular/core'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
-import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { HashService } from '../../Hash.service'
-import { inject, Injectable } from '@angular/core'
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { v4 as uuidv4 } from 'uuid'
+import { HashService } from '../../Hash.service'
+import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConceptFilterTranslatorService {
-  private conceptTranslationCache = inject(ConceptTranslationCacheService)
-  private hashService = inject(HashService)
+  private readonly conceptTranslationCache = inject(ConceptTranslationCacheService)
+  private readonly hashService = inject(HashService)
 
   constructor() {}
 
@@ -23,10 +23,7 @@ export class ConceptFilterTranslatorService {
    * @param {TerminologyCodeData[]} selectedConceptData
    * @returns {ConceptFilter}
    */
-  public translate(
-    allowedConceptUri: string[],
-    selectedConceptData: TerminologyCodeData[]
-  ): ConceptFilter {
+  public translate(allowedConceptUri: string[], selectedConceptData: TerminologyCodeData[]): ConceptFilter {
     const selectedConcepts = this.translateSelectedConcepts(selectedConceptData)
     return new ConceptFilter(uuidv4(), allowedConceptUri, selectedConcepts)
   }

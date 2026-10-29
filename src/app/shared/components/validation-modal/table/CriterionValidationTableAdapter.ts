@@ -1,10 +1,10 @@
 import { AbstractTableAdapter } from 'src/app/shared/models/TableData/Adapter/AbstractTableAdapter'
-import { CriterionValidationEntry } from './CriterionValidationEntry'
 import { TableHeaderData } from 'src/app/shared/models/TableData/TableHeaderData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { v4 as uuidv4 } from 'uuid'
 import { TableCellBuilder } from '../../../models/TableData/Cells/TableCellBuilder'
 import { TableCellContext } from '../../../models/TableData/Cells/TableCellContext'
+import { CriterionValidationEntry } from './CriterionValidationEntry'
 export class CriterionValidationTableAdapter extends AbstractTableAdapter<CriterionValidationEntry> {
   private readonly ICON_NAME: string = 'pencil-alt'
   protected buildHeaders(): TableHeaderData {
@@ -26,13 +26,9 @@ export class CriterionValidationTableAdapter extends AbstractTableAdapter<Criter
       cells: [
         TableCellBuilder.withDisplay(entry.getDisplay()),
         TableCellBuilder.withText(
-          entry.isValid()
-            ? 'SHARED_COMPONENTS.TABLE.CRITERION_VALIDATION.VALID'
-            : 'SHARED_COMPONENTS.TABLE.CRITERION_VALIDATION.INVALID'
+          entry.isValid() ? 'SHARED_COMPONENTS.TABLE.CRITERION_VALIDATION.VALID' : 'SHARED_COMPONENTS.TABLE.CRITERION_VALIDATION.INVALID'
         ),
-        TableCellBuilder.withText(
-          entry.isValid() ? '–' : 'SHARED_COMPONENTS.TABLE.CRITERION_VALIDATION.MISSING_FILTER'
-        ),
+        TableCellBuilder.withText(entry.isValid() ? '–' : 'SHARED_COMPONENTS.TABLE.CRITERION_VALIDATION.MISSING_FILTER'),
         TableCellBuilder.withIcon(this.ICON_NAME, TableCellContext.CRITERIA),
       ],
     }))

@@ -8,11 +8,7 @@
   <mat-select
     hideSingleSelectionIndicator
     panelClass="language-panel"
-    [placeholder]="
-      translate.currentLang === 'de'
-        ? ('LANGUAGE.GERMAN' | translate)
-        : ('LANGUAGE.ENGLISH' | translate)
-    "
+    [placeholder]="translate.currentLang === 'de' ? ('LANGUAGE.GERMAN' | translate) : ('LANGUAGE.ENGLISH' | translate)"
     (selectionChange)="changeLanguage($event.value)"
   >
     <mat-option value="de" numDataCy="language-option-de">

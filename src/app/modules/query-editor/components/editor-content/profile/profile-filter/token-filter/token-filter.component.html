@@ -23,8 +23,7 @@
       [valueSetUrl]="tokenFilter().getValueSetUrls()"
       [preSelectedConcepts]="tokenFilter().getSelectedTokens()"
       (changedSelectedConcepts)="updateSelectedConcepts($event)"
-    >
-    </num-concept-filter>
+    ></num-concept-filter>
   </mat-tab>
   } @if (tokenFilter()) {
   <mat-tab label="{{ 'EDITOR.CONTENT.TAB_LABEL.BULK' | translate }}">
@@ -37,10 +36,7 @@
   </mat-tab>
   }
   <mat-tab
-    [label]="
-      'EDITOR.CONTENT.TAB_LABEL.SELECTED_CONCEPTS'
-        | translate : { count: selectedConcepts().length }
-    "
+    [label]="'EDITOR.CONTENT.TAB_LABEL.SELECTED_CONCEPTS' | translate : { count: selectedConcepts().length }"
     [disabled]="selectedConcepts().length === 0"
   >
     <num-selected-concept-list

@@ -1,15 +1,15 @@
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter'
 import { Injectable, inject } from '@angular/core'
-import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter'
 import { ProfileReferenceChipData, ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileReferenceChipsService {
-  private profileProviderService = inject(ProfileProviderService)
+  private readonly profileProviderService = inject(ProfileProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -30,6 +30,12 @@ export class ProfileReferenceChipsService {
     return referenceGroup
   }
 
+  /**
+   * Returns the linked profile displays.
+   *
+   * @param {SelectedReferenceField} selectedReferenceField
+   * @returns {{ display: Display; number: number }[]}
+   */
   private getLinkedProfileDisplays(selectedReferenceField: SelectedReferenceField): { display: Display; number: number }[] {
     return selectedReferenceField
       .getLinkedProfileIds()

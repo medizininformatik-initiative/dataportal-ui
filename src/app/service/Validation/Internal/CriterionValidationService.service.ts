@@ -1,9 +1,9 @@
-import { AbstractAttributeFilters } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters'
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
-import { FilterTypesService } from 'src/app/service/FilterTypes.service'
 import { inject, Injectable } from '@angular/core'
 import { toSignal } from '@angular/core/rxjs-interop'
+import { AbstractAttributeFilters } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { FilterTypesService } from 'src/app/service/FilterTypes.service'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 
 export interface CriterionValidationState {
   criterionId: string
@@ -21,16 +21,14 @@ export class CriterionValidationService {
   })
   /**
    * Validates multiple criteria by their IDs.
-   * @param criterionIds - An array of criterion IDs to validate.
-   * @returns An array of CriterionValidationState objects representing the validation results.
+   * @param {string[]} criterionIds - An array of criterion IDs to validate.
+   * @returns {CriterionValidationState[]} An array of CriterionValidationState objects representing the validation results.
    */
   public validateMany(criterionIds: string[]): CriterionValidationState[] {
     this.criteria() // Ensure criteria are loaded
     return criterionIds.map((id) => {
       const criterion = this.criterionProvider.getOne(id)
-      return criterion
-        ? this.validate(criterion)
-        : { criterionId: id, isValid: false, missingFilters: [] }
+      return criterion ? this.validate(criterion) : { criterionId: id, isValid: false, missingFilters: [] }
     })
   }
 

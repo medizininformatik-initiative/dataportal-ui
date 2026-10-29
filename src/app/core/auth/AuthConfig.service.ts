@@ -1,7 +1,7 @@
+import { Injectable, inject } from '@angular/core'
+import { AuthConfig } from 'angular-oauth2-oidc'
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { AssetsPath } from '../assets/AssetsPath'
-import { AuthConfig } from 'angular-oauth2-oidc'
-import { Injectable, inject } from '@angular/core'
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class AuthConfigService {
 
   /**
    * Builds the OAuth authentication configuration
-   * @returns Complete AuthConfig object for OAuth service
+   * @returns {AuthConfig} Complete AuthConfig object for OAuth service
    */
   public buildAuthConfig(): AuthConfig {
     const baseUrl = this.appSettingsProvider.getAuthBaseUrl()
@@ -26,9 +26,7 @@ export class AuthConfigService {
     const silentRefreshUri = this.buildSilentRefreshUri()
     const issuer = this.getIssuerUrl(baseUrl, realm)
     if (!baseUrl || !realm || !clientId) {
-      throw new Error(
-        'Missing required authentication configuration. Check baseUrl, realm, and clientId.'
-      )
+      throw new Error('Missing required authentication configuration. Check baseUrl, realm, and clientId.')
     }
 
     return {
@@ -51,6 +49,7 @@ export class AuthConfigService {
 
   /**
    * Builds the redirect URI for OAuth callback
+   * @returns {string}
    */
   private buildRedirectUri(): string {
     return `${window.location.origin}/home`
@@ -58,6 +57,7 @@ export class AuthConfigService {
 
   /**
    * Builds the silent refresh URI for token renewal
+   * @returns {string}
    */
   private buildSilentRefreshUri(): string {
     return `${window.location.origin}` + '/' + AssetsPath.SILENT_REFRESH_URL
@@ -65,6 +65,9 @@ export class AuthConfigService {
 
   /**
    * Gets the issuer URL for the current configuration
+   * @param {string} baseUrl
+   * @param {string} realm
+   * @returns {string}
    */
   public getIssuerUrl(baseUrl: string, realm: string): string {
     return `${baseUrl}/realms/${realm}`

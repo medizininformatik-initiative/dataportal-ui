@@ -10,13 +10,13 @@ import { Directive, HostBinding, HostListener, model } from '@angular/core'
   standalone: true,
 })
 export class NumPillExpandableDirective {
-  readonly expanded = model(false)
+  public readonly expanded = model(false)
 
-  @HostBinding('class.expanded') get isExpanded() {
+  @HostBinding('class.expanded') public get isExpanded() {
     return this.expanded()
   }
 
-  @HostListener('click') toggleExpand() {
+  @HostListener('click') public toggleExpand() {
     this.expanded.update((v) => !v)
   }
 }

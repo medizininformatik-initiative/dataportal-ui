@@ -1,5 +1,5 @@
-import { QuantityTypeData } from './QuantityTypeData';
-import { QuantityUnitData } from '../Unit';
+import { QuantityUnitData } from '../Unit'
+import { QuantityTypeData } from './QuantityTypeData'
 
 export interface QuantityRangeFilterData {
   type: QuantityTypeData

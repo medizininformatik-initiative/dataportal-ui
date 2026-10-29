@@ -24,7 +24,7 @@ export class Availability {
   /**
    * Gets the availability status based on the value.
    * @default 'unknown' if the value does not match any predefined thresholds.
-   * @returns The availability status.
+   * @returns {AvailabilityStatusType} The availability status.
    */
   public getStatus(): AvailabilityStatusType {
     return Availability.MAP[this.value] ?? 'UNKNOWN'

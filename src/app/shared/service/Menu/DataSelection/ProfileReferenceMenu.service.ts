@@ -6,12 +6,13 @@ import { ProfileReferenceMenuFunctionsService } from '../ProfileReference/Profil
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileReferenceMenuService extends AbstractMenuItemsService<
-  [string, (Record<string, unknown> | undefined)?]
-> {
-  private menuServiceDataSelectionFunctions = inject(ProfileReferenceMenuFunctionsService)
+export class ProfileReferenceMenuService extends AbstractMenuItemsService<[string, (Record<string, unknown> | undefined)?]> {
+  private readonly menuServiceDataSelectionFunctions = inject(ProfileReferenceMenuFunctionsService)
 
   /**
+   * Returns the menu items for this context.
+   * @param id
+   * @param args
    * @returns Array of Menu functions for a dataselection profile box
    */
   public override getMenuItems(id: string, args?: Record<string, unknown>): MenuItemInterface[] {
@@ -20,15 +21,13 @@ export class ProfileReferenceMenuService extends AbstractMenuItemsService<
         disabled: false,
         icon: 'pencil-alt',
         label: 'EDIT',
-        action: (id: string, args?: Record<string, unknown>) =>
-          this.menuServiceDataSelectionFunctions.navigate(id, args),
+        action: (id: string, args?: Record<string, unknown>) => this.menuServiceDataSelectionFunctions.navigate(id, args),
       },
       {
         disabled: false,
         icon: 'trash',
         label: 'DELETE',
-        action: (url: string) =>
-          this.menuServiceDataSelectionFunctions.delete(url, args?.elementId as string),
+        action: (url: string) => this.menuServiceDataSelectionFunctions.delete(url, args?.elementId as string),
       },
     ]
   }

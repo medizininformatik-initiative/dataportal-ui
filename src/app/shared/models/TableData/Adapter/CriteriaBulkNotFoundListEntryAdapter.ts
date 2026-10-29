@@ -1,11 +1,11 @@
-import { AbstractTableAdapter } from './AbstractTableAdapter'
 import { CriteriaBulkEntryNotFound } from 'src/app/model/Search/ListEntries/CriteriaBulkEntryNotFound'
-import { TableCellBuilder } from '../Cells/TableCellBuilder'
-import { TableHeaderData } from '../TableHeaderData'
-import { TableRowData } from '../TableRowData'
 import { v4 as uuidv4 } from 'uuid'
 import { TextCellData } from '../Cells/Data/TextCellData'
+import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellUnion } from '../Cells/TableCellUnion'
+import { TableHeaderData } from '../TableHeaderData'
+import { TableRowData } from '../TableRowData'
+import { AbstractTableAdapter } from './AbstractTableAdapter'
 
 export class CriteriaBulkNotFoundListEntryAdapter extends AbstractTableAdapter<CriteriaBulkEntryNotFound> {
   protected buildHeaders(): TableHeaderData {

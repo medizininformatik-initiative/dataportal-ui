@@ -1,18 +1,18 @@
+import { Injectable, inject } from '@angular/core'
+import { map, Observable, switchMap } from 'rxjs'
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { FeasibilityQueryApiService } from '../../../Backend/Api/FeasibilityQueryApi.service'
 import { FeasibilityQueryResultApiService } from '../../../Backend/Api/FeasibilityQueryResultApi.service'
-import { Injectable, inject } from '@angular/core'
-import { map, Observable, switchMap } from 'rxjs'
 import { ToCohortDefinitionService } from '../../../Translator/StructureQuery/ToCohortDefinition.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class PollingService {
-  private feasibilityQueryResultApiService = inject(FeasibilityQueryResultApiService)
-  private appSettingsProviderService = inject(AppSettingsProviderService)
-  private feasibilityQueryApiService = inject(FeasibilityQueryApiService)
-  private translator = inject(ToCohortDefinitionService)
+  private readonly feasibilityQueryResultApiService = inject(FeasibilityQueryResultApiService)
+  private readonly appSettingsProviderService = inject(AppSettingsProviderService)
+  private readonly feasibilityQueryApiService = inject(FeasibilityQueryApiService)
+  private readonly translator = inject(ToCohortDefinitionService)
 
   private readonly POLLING_INTERVALL_MILLISECONDS = this.appSettingsProviderService.getResultSummaryPollingInterval()
   private readonly POLLING_MAXL_MILLISECONDS = this.appSettingsProviderService.getPollingTimeUi()
@@ -25,7 +25,8 @@ export class PollingService {
   /**
    * Retrieves a summary of the query result.
    *
-   * @param resultId The ID of the feasibility query result.
+   * @param {string} resultId The ID of the feasibility query result.
+   * @returns {Observable<any>}
    */
   public requestSummaryResult(resultId: string): Observable<any> {
     return this.feasibilityQueryResultApiService.getSummaryResult(resultId)
@@ -43,7 +44,7 @@ export class PollingService {
 
   /**
    * If the polling intervall exceeds the max polling time, it returns the max polling time.
-   * @returns The polling interval in milliseconds
+   * @returns {number} The polling interval in milliseconds
    */
   public getPollingInterval(): number {
     const pollingIntervall =
@@ -54,8 +55,9 @@ export class PollingService {
   }
 
   /**
+   * Returns the polling time.
    *
-   * @returns The polling time
+   * @returns {number} The polling time
    */
   public getPollingTime(): number {
     return this.POLLING_MAXL_MILLISECONDS * 1000

@@ -1,10 +1,10 @@
-import { AbstractKeyedSearchEngineService } from '../../../Abstract/Engine/AbstractKeyedSearchEngine.service'
-import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
+import { Injectable, inject } from '@angular/core'
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
+import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
+import { AbstractKeyedSearchEngineService } from '../../../Abstract/Engine/AbstractKeyedSearchEngine.service'
+import { SearchEngine } from '../../../SearchEngine'
 import { CodeableConceptResultMapperStrategy } from '../Mapper/CodeableConceptResultMapperStrategy'
 import { CodeableConceptSearchUrlStrategy } from '../Url/CodeableConceptSearchUrlStrategy'
-import { Injectable, inject } from '@angular/core'
-import { SearchEngine } from '../../../SearchEngine'
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +19,7 @@ export class CodeableConceptSearchEngineService extends AbstractKeyedSearchEngin
   constructor(...args: unknown[])
 
   constructor() {
-    const searchEngine =
-      inject<SearchEngine<CodeableConceptResultListEntry, CodeableConceptResultList>>(SearchEngine)
+    const searchEngine = inject<SearchEngine<CodeableConceptResultListEntry, CodeableConceptResultList>>(SearchEngine)
 
     super(searchEngine)
     this.searchEngine = searchEngine

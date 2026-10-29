@@ -1,7 +1,7 @@
-import { Component, input, Input, OnInit } from '@angular/core'
 import { JsonPipe } from '@angular/common'
-import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade'
+import { Component, input, Input, OnInit } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
+import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade'
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue'
 
 @Component({
@@ -12,13 +12,13 @@ import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue'
   imports: [JsonPipe, TranslateModule],
 })
 export class ErrorLogItemComponent implements OnInit {
-  error = input<ValidationIssue>()
+  public error = input<ValidationIssue>()
 
-  profileUpgrade = input<ProfileUpgrade>()
+  public profileUpgrade = input<ProfileUpgrade>()
 
-  code = ''
+  public code = ''
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const validationCode = this.error()?.getCode()
     this.code = validationCode?.replace(/\D+/g, '') || ''
   }

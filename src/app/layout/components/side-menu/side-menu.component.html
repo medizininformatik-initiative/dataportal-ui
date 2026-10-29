@@ -24,12 +24,7 @@
   }
 
   <div class="num-logo-row">
-    <button
-      type="button"
-      [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate"
-      mat-icon-button
-      (click)="toggleMenu()"
-    >
+    <button type="button" [attr.aria-label]="'APPLAYOUT.TOGGLE.LABEL' | translate" mat-icon-button (click)="toggleMenu()">
       @if (isSideMenuExpanded()) {
       <fa-icon size="1x" icon="angle-double-left"></fa-icon>
       } @if (isCollapsed()) {

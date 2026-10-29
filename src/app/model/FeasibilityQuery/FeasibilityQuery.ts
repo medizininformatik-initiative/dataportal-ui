@@ -25,7 +25,7 @@
  * Represents a query with display name, consent, inclusion criteria, and exclusion criteria.
  */
 export class FeasibilityQuery {
-  private id: string
+  private readonly id: string
   private resultIDs: string[] = []
   private consent = false
   private display: string
@@ -36,10 +36,10 @@ export class FeasibilityQuery {
   /**
    * Constructor to initialize the Query with display and consent.
    *
-   * @param id - The id of the query.
-   * @param display - The display name of the query.
-   * @param consent - The consent status of the query.
-   * @param resultIDs
+   * @param {string} id - The id of the query.
+   * @param {string} display - The display name of the query.
+   * @param {boolean} consent - The consent status of the query.
+   * @param {string[]} resultIDs
    */
   constructor(id: string, display: string = 'Ausgewählte Merkmale', consent: boolean = false, resultIDs: string[] = []) {
     this.id = id
@@ -50,16 +50,13 @@ export class FeasibilityQuery {
     this.resultIDs = resultIDs
   }
 
-  /**
-   *
-   */
   public getId(): string {
     return this.id
   }
   /**
    * Gets the consent name of the query.
    *
-   * @returns The consent name of the query.
+   * @returns {boolean} The consent name of the query.
    */
   public getConsent(): boolean {
     return this.consent
@@ -68,7 +65,7 @@ export class FeasibilityQuery {
   /**
    * Sets the consent name of the query.
    *
-   * @param consent - The new consent name of the query.
+   * @param {boolean} consent - The new consent name of the query.
    */
   public setConsent(consent: boolean): void {
     this.consent = consent
@@ -77,7 +74,7 @@ export class FeasibilityQuery {
   /**
    * Gets the display name of the query.
    *
-   * @returns The display name of the query.
+   * @returns {string} The display name of the query.
    */
   public getDisplay(): string {
     return this.display
@@ -86,7 +83,7 @@ export class FeasibilityQuery {
   /**
    * Sets the display name of the query.
    *
-   * @param display - The new display name of the query.
+   * @param {string} display - The new display name of the query.
    */
   public setDisplay(display: string): void {
     this.display = display
@@ -95,7 +92,7 @@ export class FeasibilityQuery {
   /**
    * Gets the inclusion criteria of the query.
    *
-   * @returns The inclusion criteria of the query.
+   * @returns {string[][]} The inclusion criteria of the query.
    */
   public getInclusionCriteria(): string[][] {
     return this.inclusionCriteria
@@ -104,7 +101,7 @@ export class FeasibilityQuery {
   /**
    * Sets the inclusion criteria of the query.
    *
-   * @param inclusionCriteria - The new inclusion criteria of the query.
+   * @param {string[][]} inclusionCriteria - The new inclusion criteria of the query.
    */
   public setInclusionCriteria(inclusionCriteria: string[][]): void {
     this.inclusionCriteria = inclusionCriteria.filter((group) => group.length > 0)
@@ -113,7 +110,7 @@ export class FeasibilityQuery {
   /**
    * Gets the exclusion criteria of the query.
    *
-   * @returns The exclusion criteria of the query.
+   * @returns {string[][]} The exclusion criteria of the query.
    */
   public getExclusionCriteria(): string[][] {
     return this.exclusionCriteria
@@ -122,38 +119,24 @@ export class FeasibilityQuery {
   /**
    * Sets the exclusion criteria of the query.
    *
-   * @param exclusionCriteria - The new exclusion criteria of the query.
+   * @param {string[][]} exclusionCriteria - The new exclusion criteria of the query.
    */
   public setExclusionCriteria(exclusionCriteria: string[][]): void {
     this.exclusionCriteria = exclusionCriteria.filter((group) => group.length > 0)
   }
 
-  /**
-   *
-   */
   public getResultIds(): string[] {
     return this.resultIDs
   }
 
-  /**
-   *
-   * @param resultIds
-   */
   public setResultIds(resultIds: string[]): void {
     this.resultIDs = resultIds
   }
 
-  /**
-   *
-   * @param resultId
-   */
   public addResultId(resultId: string): void {
     this.resultIDs.push(resultId)
   }
 
-  /**
-   *
-   */
   public clone(): FeasibilityQuery {
     const copy = new FeasibilityQuery(this.id, this.display, this.consent, [...this.resultIDs])
 

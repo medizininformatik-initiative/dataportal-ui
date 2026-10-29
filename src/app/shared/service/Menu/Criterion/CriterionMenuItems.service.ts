@@ -7,10 +7,11 @@ import { CriterionMenuFunctionsService } from './CriterionMenuFunctions.service'
   providedIn: 'root',
 })
 export class CriterionMenuItemsService extends AbstractMenuItemsService {
-  private menuServiceCriterionFunctions = inject(CriterionMenuFunctionsService)
+  private readonly menuServiceCriterionFunctions = inject(CriterionMenuFunctionsService)
 
   /**
-   * @returns Array of Menu functions for a criterion box
+   * Returns the menu items for this context.
+   * @returns {MenuItemInterface[]} Array of Menu functions for a criterion box
    */
   public getMenuItems(): MenuItemInterface[] {
     return [

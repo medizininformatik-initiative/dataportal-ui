@@ -5,15 +5,15 @@ import { BehaviorSubject } from 'rxjs'
 export class HeaderDescriptionToggleService {
   private readonly STORAGE_KEY = 'header-description-visible'
 
-  private visible = new BehaviorSubject<boolean>(localStorage.getItem(this.STORAGE_KEY) === 'true')
+  private readonly visible = new BehaviorSubject<boolean>(localStorage.getItem(this.STORAGE_KEY) === 'true')
 
-  readonly visible$ = this.visible.asObservable()
+  public readonly visible$ = this.visible.asObservable()
 
-  get isVisible(): boolean {
+  public get isVisible(): boolean {
     return this.visible.value
   }
 
-  toggle() {
+  public toggle() {
     const next = !this.visible.value
     this.visible.next(next)
     localStorage.setItem(this.STORAGE_KEY, String(next))

@@ -1,38 +1,31 @@
-import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service'
 import { inject, Injectable } from '@angular/core'
+import { toSignal } from '@angular/core/rxjs-interop'
 import { Observable } from 'rxjs'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 import { ProfileResultList } from 'src/app/model/Search/ResultList/ProfileResultList'
-import { ProfileResultMapperStrategy } from '../Mapper/ProfileResultMapperStrategy.service'
-import { ProfileSearchUrlStrategy } from '../Url/ProfileSearchUrlStrategy'
+import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service'
+import { ProfileSearchFilterProviderService } from '../../../Filter/ProfileSearchFilterProvider.service'
 import { SearchEngine } from '../../../SearchEngine'
 import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder'
-import { ProfileSearchFilterProviderService } from '../../../Filter/ProfileSearchFilterProvider.service'
-import { toSignal } from '@angular/core/rxjs-interop'
+import { ProfileResultMapperStrategy } from '../Mapper/ProfileResultMapperStrategy.service'
+import { ProfileSearchUrlStrategy } from '../Url/ProfileSearchUrlStrategy'
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<
-  ProfileListEntry,
-  ProfileResultList
-> {
+export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<ProfileListEntry, ProfileResultList> {
   protected searchEngine: SearchEngine<ProfileListEntry, ProfileResultList>
-  private searchResultProcessorService =
-    inject<SearchEngine<ProfileListEntry, ProfileResultList>>(SearchEngine)
-  private profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
-  private readonly selectedModules = toSignal(
-    this.profileSearchFilterProviderService.getSelectedModules(),
-    { initialValue: [] as string[] }
-  )
-  private readonly selectedCategories = toSignal(
-    this.profileSearchFilterProviderService.getSelectedCategories(),
-    { initialValue: [] as string[] }
-  )
-  private readonly selectedResourceTypes = toSignal(
-    this.profileSearchFilterProviderService.getSelectedResourceTypes(),
-    { initialValue: [] as string[] }
-  )
+  private readonly searchResultProcessorService = inject<SearchEngine<ProfileListEntry, ProfileResultList>>(SearchEngine)
+  private readonly profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
+  private readonly selectedModules = toSignal(this.profileSearchFilterProviderService.getSelectedModules(), {
+    initialValue: [] as string[],
+  })
+  private readonly selectedCategories = toSignal(this.profileSearchFilterProviderService.getSelectedCategories(), {
+    initialValue: [] as string[],
+  })
+  private readonly selectedResourceTypes = toSignal(this.profileSearchFilterProviderService.getSelectedResourceTypes(), {
+    initialValue: [] as string[],
+  })
   constructor() {
     const searchEngine = inject<SearchEngine<ProfileListEntry, ProfileResultList>>(SearchEngine)
 
@@ -50,21 +43,12 @@ export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<
     return this.searchResultProcessorService.fetchAndMapSearchResults(url, resultMapper)
   }
 
-  protected createUrl(
-    searchText: string,
-    page: number = 0,
-    pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
-  ): string {
+  protected createUrl(searchText: string, page: number = 0, pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE): string {
     const modules = this.selectedModules().join(',')
     const categories = this.selectedCategories().join(',')
     const resourceTypes = this.selectedResourceTypes().join(',')
 
-    return new ProfileSearchUrlStrategy(
-      searchText,
-      modules,
-      categories,
-      resourceTypes
-    ).getSearchUrl(page, pageSize)
+    return new ProfileSearchUrlStrategy(searchText, modules, categories, resourceTypes).getSearchUrl(page, pageSize)
   }
 
   protected getMapping(): ProfileResultMapperStrategy {

@@ -1,21 +1,18 @@
-import { AbstractSimpleSearch } from '../../Abstract/AbstractSimpleSearch'
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
-import { CriteriaSearchPaginationService } from './Pagination/CriteriaSearchPagination.service'
-import { CriteriaSearchResultProviderService } from './Result/CriteriaSearchResultProvider.service'
-import { CriteriaSearchStateService } from '../../CriteriaSearchState.service'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
+import { AbstractSimpleSearch } from '../../Abstract/AbstractSimpleSearch'
+import { CriteriaSearchStateService } from '../../CriteriaSearchState.service'
+import { CriteriaSearchPaginationService } from './Pagination/CriteriaSearchPagination.service'
+import { CriteriaSearchResultProviderService } from './Result/CriteriaSearchResultProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class CriteriaSearchService extends AbstractSimpleSearch<
-  CriteriaListEntry,
-  CriteriaResultList
-> {
-  private paginator = inject(CriteriaSearchPaginationService)
-  private criteriaSearchStateService = inject(CriteriaSearchStateService)
+export class CriteriaSearchService extends AbstractSimpleSearch<CriteriaListEntry, CriteriaResultList> {
+  private readonly paginator = inject(CriteriaSearchPaginationService)
+  private readonly criteriaSearchStateService = inject(CriteriaSearchStateService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -36,16 +33,13 @@ export class CriteriaSearchService extends AbstractSimpleSearch<
     return this.paginator.searchFirstPage(searchTerm)
   }
 
-  /**
-   * @param {string} searchTerm
-   * @returns {Observable<CriteriaResultList>}
-   */
   public loadNextPage(searchTerm: string): Observable<CriteriaResultList> {
     this.setSearchTerm(searchTerm)
     return this.paginator.loadNextPage(searchTerm)
   }
 
   /**
+   * Returns the search results.
    *
    * @returns {Observable<CriteriaResultList>
    */

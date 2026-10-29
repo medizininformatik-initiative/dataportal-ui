@@ -2,8 +2,8 @@
  * Represents a quantity unit with a code and display name.
  */
 export class QuantityUnit {
-  private code: string;
-  private display: string;
+  private code: string
+  private display: string
 
   /**
    * Constructor to initialize the QuantityUnit with code and display.
@@ -12,8 +12,8 @@ export class QuantityUnit {
    * @param display - The display name of the quantity unit.
    */
   constructor(code: string, display: string) {
-    this.code = code;
-    this.display = display;
+    this.code = code
+    this.display = display
   }
 
   /**
@@ -21,8 +21,8 @@ export class QuantityUnit {
    *
    * @returns The code of the quantity unit.
    */
-  getCode(): string {
-    return this.code;
+  public getCode(): string {
+    return this.code
   }
 
   /**
@@ -30,8 +30,8 @@ export class QuantityUnit {
    *
    * @param code - The new code of the quantity unit.
    */
-  setCode(code: string): void {
-    this.code = code;
+  public setCode(code: string): void {
+    this.code = code
   }
 
   /**
@@ -39,8 +39,8 @@ export class QuantityUnit {
    *
    * @returns The display name of the quantity unit.
    */
-  getDisplay(): string {
-    return this.display;
+  public getDisplay(): string {
+    return this.display
   }
 
   /**
@@ -48,7 +48,7 @@ export class QuantityUnit {
    *
    * @param display - The new display name of the quantity unit.
    */
-  setDisplay(display: string): void {
-    this.display = display;
+  public setDisplay(display: string): void {
+    this.display = display
   }
 }

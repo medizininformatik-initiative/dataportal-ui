@@ -1,56 +1,49 @@
-import { AbstractCriterion } from '../../FeasibilityQuery/Criterion/AbstractCriterion'
-import { CloneAttributeFilter } from './ValueAttributeFilter/CloneAttributeFilter'
-import { CloneTerminologyCode } from './TerminologyCode/CloneTerminologyCode'
-import { CloneTimeRestriction } from './TimeRestriction/CloneTimeRestriction'
-import { CloneValueFilter } from './ValueAttributeFilter/CloneValueFilter'
-import { CriterionBuilder } from '../../FeasibilityQuery/Criterion/CriterionBuilder'
-import { TerminologyCode } from '../../Terminology/TerminologyCode'
 import { v4 as uuidv4 } from 'uuid'
 import { Display } from '../../DataSelection/Profile/Display'
+import { AbstractCriterion } from '../../FeasibilityQuery/Criterion/AbstractCriterion'
+import { CriterionBuilder } from '../../FeasibilityQuery/Criterion/CriterionBuilder'
+import { TerminologyCode } from '../../Terminology/TerminologyCode'
+import { CloneTerminologyCode } from './TerminologyCode/CloneTerminologyCode'
+import { CloneTimeRestriction } from './TimeRestriction/CloneTimeRestriction'
+import { CloneAttributeFilter } from './ValueAttributeFilter/CloneAttributeFilter'
+import { CloneValueFilter } from './ValueAttributeFilter/CloneValueFilter'
 
 export class CloneAbstractCriterion {
-  static deepCopyAbstractCriterions(
+  public static deepCopyAbstractCriterions(
     abstractCriterions: AbstractCriterion[],
     preserveReferenceFilterIds = true
   ): AbstractCriterion[] {
-    return abstractCriterions.map((abstractCriterion) =>
-      this.deepCopyAbstractCriterion(abstractCriterion, preserveReferenceFilterIds)
-    )
+    return abstractCriterions.map((abstractCriterion) => this.deepCopyAbstractCriterion(abstractCriterion, preserveReferenceFilterIds))
   }
 
-  static deepCopyAbstractCriterion(
-    abstractCriterion: AbstractCriterion,
-    preserveReferenceFilterIds = true
-  ): AbstractCriterion {
+  public static deepCopyAbstractCriterion(abstractCriterion: AbstractCriterion, preserveReferenceFilterIds = true): AbstractCriterion {
     let clonedTimeRestriction
     const clonedAttributeFilters = CloneAttributeFilter.deepCopyAttributeFilters(
       abstractCriterion.getAttributeFilters(),
       preserveReferenceFilterIds
     )
-    const clonedValueFilters = CloneValueFilter.deepCopyValueFilters(
-      abstractCriterion.getValueFilters()
-    )
+    const clonedValueFilters = CloneValueFilter.deepCopyValueFilters(abstractCriterion.getValueFilters())
     if (abstractCriterion.getTimeRestriction()) {
-      clonedTimeRestriction = CloneTimeRestriction.deepCopyTimeRestriction(
-        abstractCriterion.getTimeRestriction()
-      )
+      clonedTimeRestriction = CloneTimeRestriction.deepCopyTimeRestriction(abstractCriterion.getTimeRestriction())
     }
 
-    const mandatoryFields = this.createMandatoryFields(
-      abstractCriterion,
-      preserveReferenceFilterIds
-    )
+    const mandatoryFields = this.createMandatoryFields(abstractCriterion, preserveReferenceFilterIds)
     const criterionBuilder: CriterionBuilder = new CriterionBuilder(mandatoryFields)
     criterionBuilder
       .withAttributeFilters(clonedAttributeFilters)
       .withTimeRestriction(clonedTimeRestriction)
       .withValueFilters(clonedValueFilters)
 
-    return abstractCriterion.getisReference()
-      ? criterionBuilder.buildReferenceCriterion()
-      : criterionBuilder.buildCriterion()
+    return abstractCriterion.getisReference() ? criterionBuilder.buildReferenceCriterion() : criterionBuilder.buildCriterion()
   }
 
+  /**
+   * Creates the mandatory fields.
+   *
+   * @param {AbstractCriterion} abstractCriterion
+   * @param {boolean} preserveId
+   * @returns {{ isReference: boolean context: TerminologyCode criterionHash: string display: Display isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }}
+   */
   private static createMandatoryFields(
     abstractCriterion: AbstractCriterion,
     preserveId = false
@@ -64,9 +57,7 @@ export class CloneAbstractCriterion {
     termCodes: Array<TerminologyCode>
   } {
     const context = CloneTerminologyCode.deepCopyTerminologyCode(abstractCriterion.getContext())
-    const termCodes = CloneTerminologyCode.deepCopyTerminologyCodes(
-      abstractCriterion.getTermCodes()
-    )
+    const termCodes = CloneTerminologyCode.deepCopyTerminologyCodes(abstractCriterion.getTermCodes())
     const display = abstractCriterion.getDisplay()
     const criterionHash = abstractCriterion.getCriterionHash()
 

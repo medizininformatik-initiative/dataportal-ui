@@ -1,8 +1,8 @@
-import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { Component, inject } from '@angular/core'
 import { MatTooltip } from '@angular/material/tooltip'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 
 @Component({
   selector: 'num-header-portal-link',
@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [MatTooltip, FontAwesomeModule, TranslateModule],
 })
 export class PortalLinkComponent {
-  private appSettingsProviderService = inject(AppSettingsProviderService)
+  private readonly appSettingsProviderService = inject(AppSettingsProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

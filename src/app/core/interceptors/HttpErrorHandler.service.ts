@@ -1,15 +1,15 @@
-import { DataportalErrorHandlerService } from '../DataportalErrorHandlerService'
 import { HttpErrorResponse, HttpRequest, HttpStatusCode } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { IS_FEASIBILITY_REQUEST, IS_VALIDATION } from 'src/app/service/Backend/HttpContextToken'
 import { Observable, throwError } from 'rxjs'
+import { IS_FEASIBILITY_REQUEST, IS_VALIDATION } from 'src/app/service/Backend/HttpContextToken'
 import { TypeGuard } from 'src/app/service/TypeGuard/TypeGuard'
+import { DataportalErrorHandlerService } from '../DataportalErrorHandlerService'
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpErrorHandlerService {
-  private dataportalErrorHandler = inject(DataportalErrorHandlerService)
+  private readonly dataportalErrorHandler = inject(DataportalErrorHandlerService)
 
   private static readonly DEFAULT_RETRY_AFTER_HEADER = 'Retry-After'
 
@@ -20,9 +20,9 @@ export class HttpErrorHandlerService {
 
   /**
    * Handles HTTP errors and throws appropriate DataportalErrorObjects
-   * @param error - The HTTP error response
-   * @param request - The HTTP request that resulted in the error
-   * @returns Observable that throws an error
+   * @param {HttpErrorResponse} error - The HTTP error response
+   * @param {HttpRequest<any>} request - The HTTP request that resulted in the error
+   * @returns {Observable<never>} Observable that throws an error
    */
   public handleError(error: HttpErrorResponse, request: HttpRequest<any>): Observable<never> {
     const { status, error: errorPayload } = error
@@ -48,9 +48,10 @@ export class HttpErrorHandlerService {
 
   /**
    * Handles BadRequest (400) errors
-   * @param errorPayload - The error payload
+   * @param {any} errorPayload - The error payload
    * @param requestUrl - The URL of the failed request
-   * @returns Observable that throws an error
+   * @returns {Observable<never>} Observable that throws an error
+   * @param {HttpRequest<any>} request
    */
   private handleBadRequest(errorPayload: any, request: HttpRequest<any>): Observable<never> {
     const isValidationEndpoint = request.context.get(IS_VALIDATION)
@@ -62,32 +63,24 @@ export class HttpErrorHandlerService {
 
   /**
    * Handles TooManyRequests (429) errors
-   * @param error - The HTTP error response
-   * @param errorPayload - The error payload
-   * @param request - The HTTP request that resulted in the error
-   * @returns Observable that throws an error
+   * @param {HttpErrorResponse} error - The HTTP error response
+   * @param {any} errorPayload - The error payload
+   * @param {HttpRequest<any>} request - The HTTP request that resulted in the error
+   * @returns {Observable<never>} Observable that throws an error
    */
-  private handleTooManyRequests(
-    error: HttpErrorResponse,
-    errorPayload: any,
-    request: HttpRequest<any>
-  ): Observable<never> {
+  private handleTooManyRequests(error: HttpErrorResponse, errorPayload: any, request: HttpRequest<any>): Observable<never> {
     const isFeasibilityEndpoint = request.context.get(IS_FEASIBILITY_REQUEST)
     if (TypeGuard.isFeasibilityPayload(errorPayload) && isFeasibilityEndpoint) {
       const retryAfterSeconds = this.extractRetryAfterSeconds(error)
-      return this.dataportalErrorHandler.throwFeasibilityErrorObject(
-        errorPayload.issues,
-        request.url,
-        retryAfterSeconds
-      )
+      return this.dataportalErrorHandler.throwFeasibilityErrorObject(errorPayload.issues, request.url, retryAfterSeconds)
     }
     return throwError(() => error)
   }
 
   /**
    * Extracts retry-after seconds from HTTP headers
-   * @param error - The HTTP error response
-   * @returns The number of seconds to wait before retrying, or undefined
+   * @param {HttpErrorResponse} error - The HTTP error response
+   * @returns {number | undefined} The number of seconds to wait before retrying, or undefined
    */
   private extractRetryAfterSeconds(error: HttpErrorResponse): number | undefined {
     const retryAfterHeader = error.headers.get(HttpErrorHandlerService.DEFAULT_RETRY_AFTER_HEADER)
@@ -96,7 +89,7 @@ export class HttpErrorHandlerService {
 
   /**
    * Handles InternalServerError (500) errors
-   * @returns Observable that throws a generic error
+   * @returns {Observable<never>} Observable that throws a generic error
    */
   private handleInternalServerError(): Observable<never> {
     return this.dataportalErrorHandler.throwInternalServerErrorObject()

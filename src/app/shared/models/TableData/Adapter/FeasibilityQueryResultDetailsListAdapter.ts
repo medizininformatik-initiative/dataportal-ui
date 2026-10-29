@@ -1,11 +1,11 @@
-import { AbstractTableAdapter } from './AbstractTableAdapter'
+import { v4 as uuidv4 } from 'uuid'
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../model/Search/ListEntries/FeasibilityQueryResultDetailstListEntry'
+import { TextCellData } from '../Cells/Data/TextCellData'
 import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellUnion } from '../Cells/TableCellUnion'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
-import { TextCellData } from '../Cells/Data/TextCellData'
-import { v4 as uuidv4 } from 'uuid'
+import { AbstractTableAdapter } from './AbstractTableAdapter'
 
 export class FeasibilityQueryResultDetailsListAdapter extends AbstractTableAdapter<FeasibilityQueryResultDetailstListEntry> {
   protected buildHeaders(): TableHeaderData {
@@ -30,14 +30,8 @@ export class FeasibilityQueryResultDetailsListAdapter extends AbstractTableAdapt
     }
   }
 
-  private buildCells(
-    entry: FeasibilityQueryResultDetailstListEntry,
-    index: number
-  ): TableCellUnion[] {
-    return TableCellBuilder.row(
-      this.textCell(index),
-      this.patientCountCell(entry.getNumberOfPatients())
-    )
+  private buildCells(entry: FeasibilityQueryResultDetailstListEntry, index: number): TableCellUnion[] {
+    return TableCellBuilder.row(this.textCell(index), this.patientCountCell(entry.getNumberOfPatients()))
   }
 
   private textCell(index: number): TextCellData {

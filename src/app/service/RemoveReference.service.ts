@@ -1,16 +1,16 @@
 import { Injectable, inject } from '@angular/core'
-import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
-import { ProfileProviderService } from './Provider/ProfileProvider.service'
 import { map, take } from 'rxjs'
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
+import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
+import { ProfileProviderService } from './Provider/ProfileProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class RemoveReferenceService {
-  private dataSelectionProviderService = inject(DataSelectionProviderService)
-  private profileProviderService = inject(ProfileProviderService)
+  private readonly dataSelectionProviderService = inject(DataSelectionProviderService)
+  private readonly profileProviderService = inject(ProfileProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -32,24 +32,16 @@ export class RemoveReferenceService {
         })
       )
       .subscribe((dataSelection) =>
-        this.dataSelectionProviderService.removeProfileFromDataSelection(
-          dataSelection.getId(),
-          profileIdToBeDeleted
-        )
+        this.dataSelectionProviderService.removeProfileFromDataSelection(dataSelection.getId(), profileIdToBeDeleted)
       )
   }
 
-  public removeReferenceFromProfile(
-    profile: DataSelectionProfile,
-    profileIdToBeDeleted: string
-  ): DataSelectionProfile {
+  public removeReferenceFromProfile(profile: DataSelectionProfile, profileIdToBeDeleted: string): DataSelectionProfile {
     const selectedReferenceFields = profile.getProfileFields().getSelectedReferenceFields()
 
     for (let i = selectedReferenceFields.length - 1; i >= 0; i--) {
       const field = selectedReferenceFields[i]
-      const linkedProfileIds = field
-        .getLinkedProfileIds()
-        .filter((id) => id !== profileIdToBeDeleted)
+      const linkedProfileIds = field.getLinkedProfileIds().filter((id) => id !== profileIdToBeDeleted)
       field.setLinkedProfileIds(linkedProfileIds)
 
       // Remove the field if no linked profiles remain

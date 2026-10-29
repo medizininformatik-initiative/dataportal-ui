@@ -5,8 +5,7 @@
     <num-quantity-comparision-select
       [existingOption]="quantityFilter().getComparator()"
       (selectedOption)="setSelectedQuantityFilterOption($event)"
-    >
-    </num-quantity-comparision-select>
+    ></num-quantity-comparision-select>
     <!-- Quantity Range-->
     @if (isBetweenFilter()) {
     <num-quantity-range
@@ -14,8 +13,7 @@
       [maxValue]="quantityRangeFilter()?.getMaxValue()"
       [quantityFilterUnit]="selectedQuantityFilterUnit()"
       (quantityRangeInstance)="quantityFilter.set($event)"
-    >
-    </num-quantity-range>
+    ></num-quantity-range>
     }
     <!-- Quantity Comparator-->
     @if (isComparatorFilter()) {
@@ -24,8 +22,7 @@
       [quantityFilterUnit]="selectedQuantityFilterUnit()"
       [quantityComparatorType]="selectedQuantityFilterComparator()"
       (quantityComparatorInstance)="quantityFilter.set($event)"
-    >
-    </num-quantity-comparator>
+    ></num-quantity-comparator>
     }
     <!-- Quantity Units-->
     @if (!isQuantityNotSet()) {
@@ -33,8 +30,7 @@
       [selectedUnit]="quantityFilter().getSelectedUnit() ?? quantityFilter().getAllowedUnits()[0]"
       [allowedUnits]="quantityFilter().getAllowedUnits()"
       (selectionChange)="setSelectQuantityFilterUnit($event)"
-    >
-    </num-allowed-units>
+    ></num-allowed-units>
     }
   </div>
 </div>

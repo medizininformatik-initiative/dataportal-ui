@@ -1,27 +1,17 @@
-import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult'
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { Injectable, inject } from '@angular/core'
-import { PollingService } from './Polling.service'
+import { Observable, Subject, switchMap, takeUntil, interval, timer, endWith, mergeMap, map } from 'rxjs'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
+import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult'
 import { QueryResult } from 'src/app/model/Result/QueryResult'
 import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service'
-import {
-  Observable,
-  Subject,
-  switchMap,
-  takeUntil,
-  interval,
-  timer,
-  endWith,
-  mergeMap,
-  map,
-} from 'rxjs'
+import { PollingService } from './Polling.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class PollingManagerService {
-  private pollingService = inject(PollingService)
-  private queryResultMapperService = inject(QueryResultMapperService)
+  private readonly pollingService = inject(PollingService)
+  private readonly queryResultMapperService = inject(QueryResultMapperService)
 
   private stopPolling$ = new Subject<void>()
 
@@ -32,22 +22,20 @@ export class PollingManagerService {
 
   /**
    * Initiates polling for the feasibility query.
+   * @param {FeasibilityQuery} feasibilityQuery
+   * @returns {Observable<QueryResult | ErrorQueryResult>}
    */
-  public getPollingResult(
-    feasibilityQuery: FeasibilityQuery
-  ): Observable<QueryResult | ErrorQueryResult> {
-    return this.pollingService
-      .getFeasibilityIdFromPollingUrl()
-      .pipe(switchMap((resultId) => this.startPolling(feasibilityQuery, resultId)))
+  public getPollingResult(feasibilityQuery: FeasibilityQuery): Observable<QueryResult | ErrorQueryResult> {
+    return this.pollingService.getFeasibilityIdFromPollingUrl().pipe(switchMap((resultId) => this.startPolling(feasibilityQuery, resultId)))
   }
 
   /**
    * Starts polling for the given feasibility query result ID.
+   * @param {FeasibilityQuery} feasibilityQuery
+   * @param {string} resultId
+   * @returns {Observable<QueryResult | ErrorQueryResult>}
    */
-  private startPolling(
-    feasibilityQuery: FeasibilityQuery,
-    resultId: string
-  ): Observable<QueryResult | ErrorQueryResult> {
+  private startPolling(feasibilityQuery: FeasibilityQuery, resultId: string): Observable<QueryResult | ErrorQueryResult> {
     feasibilityQuery.addResultId(resultId)
     this.resetStopSignal()
     return this.pollingProcess(resultId, feasibilityQuery.getId())
@@ -55,11 +43,11 @@ export class PollingManagerService {
 
   /**
    * Handles the polling process and error handling.
+   * @param {string} resultId
+   * @param {string} feasibilityQueryId
+   * @returns {Observable<QueryResult | ErrorQueryResult | null>}
    */
-  private pollingProcess(
-    resultId: string,
-    feasibilityQueryId: string
-  ): Observable<QueryResult | ErrorQueryResult | null> {
+  private pollingProcess(resultId: string, feasibilityQueryId: string): Observable<QueryResult | ErrorQueryResult | null> {
     let lastValidResult: QueryResult | null = null
     let lastError: ErrorQueryResult | null = null
 
@@ -69,17 +57,10 @@ export class PollingManagerService {
         this.requestPollingResult(resultId).pipe(
           map((result) => {
             if (result?.issues) {
-              lastError = this.queryResultMapperService.createErrorQueryResult(
-                result.issues,
-                feasibilityQueryId
-              )
+              lastError = this.queryResultMapperService.createErrorQueryResult(result.issues, feasibilityQueryId)
               return lastError
             } else {
-              lastValidResult = this.queryResultMapperService.createQueryResult(
-                false,
-                result,
-                feasibilityQueryId
-              )
+              lastValidResult = this.queryResultMapperService.createQueryResult(false, result, feasibilityQueryId)
               lastError = null
               return lastValidResult
             }
@@ -93,6 +74,8 @@ export class PollingManagerService {
 
   /**
    * Requests polling results and handles errors.
+   * @param {string} resultId
+   * @returns {Observable<any>}
    */
   private requestPollingResult(resultId: string): Observable<any> {
     return this.pollingService.requestSummaryResult(resultId)

@@ -15,15 +15,13 @@ import { BoolLogicSwitchComponent } from '../../bool-logic-switch/bool-logic-swi
 export class CriteriaGroupComponent {
   private readonly criterionProvider = inject(CriterionProviderService)
 
-  readonly criterionIds = input.required<string[]>()
-  readonly isEditable = input<boolean>()
-  readonly innerLabel = input<'AND' | 'OR'>('OR')
+  public readonly criterionIds = input.required<string[]>()
+  public readonly isEditable = input<boolean>()
+  public readonly innerLabel = input<'AND' | 'OR'>('OR')
 
-  readonly splitAt = output<number>()
+  public readonly splitAt = output<number>()
 
   private readonly allCriteria = toSignal(this.criterionProvider.getAll(), { requireSync: true })
 
-  readonly criteria = computed<Criterion[]>(() =>
-    this.criterionIds().map((id) => this.allCriteria().find((c) => c.getId() === id)!)
-  )
+  public readonly criteria = computed<Criterion[]>(() => this.criterionIds().map((id) => this.allCriteria().find((c) => c.getId() === id)))
 }

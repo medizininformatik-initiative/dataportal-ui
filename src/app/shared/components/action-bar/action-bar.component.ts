@@ -1,14 +1,14 @@
 import { Component, computed, effect, inject, input } from '@angular/core'
-import { DataDefinitionValidationService } from 'src/app/service/Validation/Internal/DataDefinitionValidation.service'
-import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { MatTooltip } from '@angular/material/tooltip'
-import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
-import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service'
 import { UploadService } from 'src/app/service/Upload/Upload.service'
+import { DataDefinitionValidationService } from 'src/app/service/Validation/Internal/DataDefinitionValidation.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
+import { DownloadCRTDLComponent } from '../download-crtdl/download-crtdl.component'
 import { ValidationModalComponent } from '../validation-modal/validation-modal.component'
 
 @Component({
@@ -19,24 +19,22 @@ import { ValidationModalComponent } from '../validation-modal/validation-modal.c
   imports: [MatTooltip, FontAwesomeModule, TranslateModule, NumDataCyDirective],
 })
 export class ActionBarComponent {
-  private dialog = inject(MatDialog)
-  private saveDataQueryModalService = inject(SaveDataQueryModalService)
-  private uploadService = inject(UploadService)
-  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
+  private readonly dialog = inject(MatDialog)
+  private readonly saveDataQueryModalService = inject(SaveDataQueryModalService)
+  private readonly uploadService = inject(UploadService)
+  private readonly feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
   private readonly dataDefinitionValidationService = inject(DataDefinitionValidationService)
   private readonly matDialog = inject(MatDialog)
 
-  readonly showUpload = input(true)
-  readonly showDownload = input(true)
-  readonly showSave = input(true)
+  public readonly showUpload = input(true)
+  public readonly showDownload = input(true)
+  public readonly showSave = input(true)
 
-  readonly downloadAllowed = computed(() => {
+  public readonly downloadAllowed = computed(() => {
     return this.feasibilityQueryValidationService.validationState().isValid && this.showDownload()
   })
 
-  readonly isDataDefinitionValid = computed(() =>
-    this.dataDefinitionValidationService.isDataDefinitionValid()
-  )
+  public readonly isDataDefinitionValid = computed(() => this.dataDefinitionValidationService.isDataDefinitionValid())
 
   constructor() {}
 

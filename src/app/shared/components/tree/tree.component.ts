@@ -1,38 +1,31 @@
-import { AfterViewInit, Component, OnInit, input, output } from '@angular/core'
-import { TreeNode } from '../../models/TreeNode/TreeNodeInterface'
 import { NgTemplateOutlet } from '@angular/common'
-import { CheckboxComponent } from '../checkbox/checkbox.component'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { AfterViewInit, Component, OnInit, input, output } from '@angular/core'
 import { MatTooltip } from '@angular/material/tooltip'
-import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
+import { TreeNode } from '../../models/TreeNode/TreeNodeInterface'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { CheckboxComponent } from '../checkbox/checkbox.component'
 
 @Component({
   selector: 'num-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
   standalone: true,
-  imports: [
-    NgTemplateOutlet,
-    CheckboxComponent,
-    FontAwesomeModule,
-    MatTooltip,
-    DisplayTranslationPipe,
-    NumDataCyDirective,
-  ],
+  imports: [NgTemplateOutlet, CheckboxComponent, FontAwesomeModule, MatTooltip, DisplayTranslationPipe, NumDataCyDirective],
 })
 export class TreeComponent implements OnInit {
-  readonly treeData = input<TreeNode>(undefined)
+  public readonly treeData = input<TreeNode>(undefined)
 
-  readonly selectedCheckbox = output<TreeNode>()
+  public readonly selectedCheckbox = output<TreeNode>()
 
-  expandedNodes: Set<any> = new Set()
+  public expandedNodes: Set<any> = new Set()
 
-  showFullDescription = false
+  public showFullDescription = false
 
   constructor() {}
 
-  ngOnInit() {}
+  public ngOnInit() {}
 
   public toggleExpand(node: any) {
     if (this.expandedNodes.has(node)) {

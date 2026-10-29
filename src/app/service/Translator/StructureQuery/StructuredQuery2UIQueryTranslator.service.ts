@@ -1,29 +1,29 @@
-import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service'
-import { CollectCRTDLHashesService } from './HashCollector/CollectCRTDLHashes.service'
-import { ConceptData } from 'src/app/model/Interface/ConceptData'
-import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service'
-import { ConsentService } from '../../Consent/Consent.service'
-import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
-import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service'
-import { CriterionProviderService } from '../../Provider/CriterionProvider.service'
-import { CriterionTranslatorService } from './CriterionTranslator.service'
 import { Injectable, inject } from '@angular/core'
 import { map, Observable, switchMap, tap } from 'rxjs'
+import { ConceptData } from 'src/app/model/Interface/ConceptData'
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
 import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData'
-import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { CodeableConceptApiService } from '../../Backend/Api/CodeableConceptApi.service'
+import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service'
+import { ConsentService } from '../../Consent/Consent.service'
+import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service'
+import { CriterionProviderService } from '../../Provider/CriterionProvider.service'
+import { ConceptTranslationCacheService } from '../ConceptTranslationCache.service'
+import { CriterionTranslatorService } from './CriterionTranslator.service'
+import { CollectCRTDLHashesService } from './HashCollector/CollectCRTDLHashes.service'
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2UIQueryTranslatorService {
-  private terminologyApiService = inject(TerminologyApiService)
-  private codeableConceptApiService = inject(CodeableConceptApiService)
-  private conceptTranslationCache = inject(ConceptTranslationCacheService)
-  private consentService = inject(ConsentService)
-  private collectCRTDLHashesService = inject(CollectCRTDLHashesService)
-  private criteriaProfileProviderService = inject(CriteriaProfileProviderService)
-  private criterionTranslatorService = inject(CriterionTranslatorService)
-  private criterionProviderService = inject(CriterionProviderService)
+  private readonly terminologyApiService = inject(TerminologyApiService)
+  private readonly codeableConceptApiService = inject(CodeableConceptApiService)
+  private readonly conceptTranslationCache = inject(ConceptTranslationCacheService)
+  private readonly consentService = inject(ConsentService)
+  private readonly collectCRTDLHashesService = inject(CollectCRTDLHashesService)
+  private readonly criteriaProfileProviderService = inject(CriteriaProfileProviderService)
+  private readonly criterionTranslatorService = inject(CriterionTranslatorService)
+  private readonly criterionProviderService = inject(CriterionProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -67,12 +67,7 @@ export class StructuredQuery2UIQueryTranslatorService {
 
   private setConsent(terminologyCode: TerminologyCode): void {
     const flags = this.consentService.getBooleanFlags(terminologyCode.getCode())
-    this.consentService.setProvisionCode(
-      flags.distributedAnalysis,
-      flags.euGdpr,
-      flags.insuranceData,
-      flags.contact
-    )
+    this.consentService.setProvisionCode(flags.distributedAnalysis, flags.euGdpr, flags.insuranceData, flags.contact)
     this.consentService.setConsent(true)
   }
 

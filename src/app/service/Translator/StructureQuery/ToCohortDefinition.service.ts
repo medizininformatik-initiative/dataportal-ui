@@ -62,10 +62,10 @@ const omitReferenceFilters = (filters: CCDLAttributeFilter[]): Exclude<CCDLAttri
   providedIn: 'root',
 })
 export class ToCohortDefinitionService {
-  private criterionProvider = inject(CriterionProviderService)
-  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
-  private validation = inject(FeasibilityQueryValidationService)
-  private feasibilityQueryProvider = inject(FeasibilityQueryProviderService)
+  private readonly criterionProvider = inject(CriterionProviderService)
+  private readonly referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private readonly validation = inject(FeasibilityQueryValidationService)
+  private readonly feasibilityQueryProvider = inject(FeasibilityQueryProviderService)
 
   /**
    * Translates the active query once; an error means a bug, because buttons are disabled while it is invalid.

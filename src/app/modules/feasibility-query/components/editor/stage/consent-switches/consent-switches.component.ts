@@ -1,13 +1,13 @@
+import { NgClass } from '@angular/common'
 import { Component, OnInit, inject } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { AnalysisType } from 'src/app/model/Utilities/Consent/AnalysisType'
 import { ContactOption } from 'src/app/model/Utilities/Consent/ContactOption'
 import { GdprCompliance } from 'src/app/model/Utilities/Consent/GdprCompliance'
 import { InsuranceData } from 'src/app/model/Utilities/Consent/InsuranceData'
 import { ConsentService } from 'src/app/service/Consent/Consent.service'
-import { SwitchComponent } from '../../../../../../shared/components/switch/switch.component'
 import { SectionNameComponent } from '../../../../../../shared/components/section-name/section-name.component'
-import { NgClass } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { SwitchComponent } from '../../../../../../shared/components/switch/switch.component'
 
 @Component({
   selector: 'num-consent-switches',
@@ -17,46 +17,45 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [SwitchComponent, SectionNameComponent, NgClass, TranslateModule],
 })
 export class ConsentSwitchesComponent implements OnInit {
-  private consentService = inject(ConsentService)
+  private readonly consentService = inject(ConsentService)
 
-  analysisType = AnalysisType
+  public analysisType = AnalysisType
 
-  contactOption = ContactOption
+  public contactOption = ContactOption
 
-  gdprCompliance = GdprCompliance
+  public gdprCompliance = GdprCompliance
 
-  insuranceData = InsuranceData
+  public insuranceData = InsuranceData
 
-  distributedAnalysis = false
-  euGdpr = true
-  insuranceDataBoolean = false
-  contact = false
+  public distributedAnalysis = false
+  public euGdpr = true
+  public insuranceDataBoolean = false
+  public contact = false
 
-  provisionCode: string
+  public provisionCode: string
 
-  consent = true
+  public consent = true
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getProvisionCode()
     this.consent = this.consentService.getConsent()
-    ;[this.distributedAnalysis, this.euGdpr, this.insuranceDataBoolean, this.contact] =
-      this.consentService
-        .getConsentLookUpTableKey()
-        .split(':')
-        .map((v) => v === 'true')
+    ;[this.distributedAnalysis, this.euGdpr, this.insuranceDataBoolean, this.contact] = this.consentService
+      .getConsentLookUpTableKey()
+      .split(':')
+      .map((v) => v === 'true')
   }
 
-  toggleConsent() {
+  public toggleConsent() {
     this.consent = !this.consent
     this.consentService.setConsent(this.consent)
   }
 
-  onToggleChange(toggleKey: string): void {
+  public onToggleChange(toggleKey: string): void {
     switch (toggleKey) {
       case 'analysisType':
         this.distributedAnalysis = !this.distributedAnalysis // Toggle the value
@@ -71,12 +70,7 @@ export class ConsentSwitchesComponent implements OnInit {
         this.contact = !this.contact // Toggle the value
         break
     }
-    this.consentService.setProvisionCode(
-      this.distributedAnalysis,
-      this.euGdpr,
-      this.insuranceDataBoolean,
-      this.contact
-    )
+    this.consentService.setProvisionCode(this.distributedAnalysis, this.euGdpr, this.insuranceDataBoolean, this.contact)
     this.getProvisionCode()
   }
 

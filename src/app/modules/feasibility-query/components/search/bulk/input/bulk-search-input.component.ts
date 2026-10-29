@@ -1,13 +1,13 @@
-import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service'
-import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service'
 import { Component, computed, effect, inject, output, signal, untracked } from '@angular/core'
-import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
+import { toSignal } from '@angular/core/rxjs-interop'
 import { FormsModule } from '@angular/forms'
 import { MatTooltip } from '@angular/material/tooltip'
-import { SearchFilterComponent } from '../../../../../../shared/components/search-filter/search-filter.component'
-import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { BulkCriteriaSearchFilterService } from 'src/app/service/Search/Filter/BulkCriteriaSearchFilter.service'
+import { FilterProvider } from 'src/app/service/Search/Filter/SearchFilterProvider.service'
+import { BulkCriteriaSearchProvider } from 'src/app/service/Search/SearchTypes/BulkCriteria/BulkCriteriaSearchTextProvider.service'
 import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
+import { SearchFilterComponent } from '../../../../../../shared/components/search-filter/search-filter.component'
 
 @Component({
   selector: 'num-bulk-search-input',
@@ -21,22 +21,22 @@ export class BulkSearchInputComponent {
   private readonly bulkCriteriaSearchFilterService = inject(BulkCriteriaSearchFilterService)
   private readonly searchFilterProvider = inject(FilterProvider)
 
-  readonly searchText = signal(this.bulkCriteriaSearchProvider.getSearchText() ?? '')
+  public readonly searchText = signal(this.bulkCriteriaSearchProvider.getSearchText() ?? '')
 
-  readonly searchFilters = toSignal(this.bulkCriteriaSearchFilterService.getFilter(), {
+  public readonly searchFilters = toSignal(this.bulkCriteriaSearchFilterService.getFilter(), {
     initialValue: [] as SearchFilterData[],
   })
 
-  readonly filterMap = signal<Map<string, string[]>>(new Map())
+  public readonly filterMap = signal<Map<string, string[]>>(new Map())
 
-  readonly filterAreSet = computed(() => {
+  public readonly filterAreSet = computed(() => {
     const map = this.filterMap()
     return map.size > 0 && Array.from(map).every(([, v]) => v.length > 0)
   })
 
-  readonly canSubmit = computed(() => this.filterAreSet() && this.searchText().length > 0)
+  public readonly canSubmit = computed(() => this.filterAreSet() && this.searchText().length > 0)
 
-  readonly searchTextOutput = output<string>()
+  public readonly searchTextOutput = output<string>()
 
   constructor() {
     const initEffect = effect(
@@ -48,7 +48,7 @@ export class BulkSearchInputComponent {
 
         if (this.filterMap().size === 0) {
           const map = new Map<string, string[]>()
-          filters.forEach((f) => map.set(f.filterType, f.selectedValues as string[]))
+          filters.forEach((f) => map.set(f.filterType, f.selectedValues))
           this.filterMap.set(map)
         }
 
@@ -62,10 +62,8 @@ export class BulkSearchInputComponent {
     )
   }
 
-  setElasticSearchFilter(newFilter: SearchFilterData): void {
-    const selectedValues = Array.isArray(newFilter.selectedValues)
-      ? (newFilter.selectedValues as string[])
-      : [newFilter.selectedValues as string]
+  public setElasticSearchFilter(newFilter: SearchFilterData): void {
+    const selectedValues = Array.isArray(newFilter.selectedValues) ? newFilter.selectedValues : [newFilter.selectedValues as string]
     this.filterMap.update((map) => {
       const updated = new Map(map)
       updated.set(newFilter.filterType, selectedValues)

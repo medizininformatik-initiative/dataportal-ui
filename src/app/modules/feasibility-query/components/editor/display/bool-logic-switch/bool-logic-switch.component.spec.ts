@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { BoolLogicSwitchComponent } from './bool-logic-switch.component'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { MaterialModule } from 'src/app/layout/material/material.module'
+import { BoolLogicSwitchComponent } from './bool-logic-switch.component'
 
 describe.skip('BoolLogicSwitchComponent', () => {
   let component: BoolLogicSwitchComponent

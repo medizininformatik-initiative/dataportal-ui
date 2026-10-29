@@ -1,11 +1,11 @@
-import { AbstractProfileFilter } from './Filter/AbstractProfileFilter'
 import { CloneDisplayData } from '../../Utilities/DisplayData/CloneDisplayData'
 import { Display } from './Display'
 import { ProfileFields } from './Fields/ProfileFields'
+import { AbstractProfileFilter } from './Filter/AbstractProfileFilter'
 import { ProfileReference } from './Reference/ProfileReference'
 
 export class DataSelectionProfile {
-  private id: string
+  private readonly id: string
   private display: Display
   private profileFields: ProfileFields
   private filters: AbstractProfileFilter[] = []

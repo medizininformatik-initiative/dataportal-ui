@@ -1,16 +1,16 @@
+import { UpperCasePipe } from '@angular/common'
 import { Component, computed, input, model, output } from '@angular/core'
-import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
-import { MatFormField } from '@angular/material/form-field'
 import { MatOptgroup, MatOption } from '@angular/material/core'
+import { MatFormField } from '@angular/material/form-field'
 import { MatSelect, MatSelectTrigger } from '@angular/material/select'
 import { MatTooltip } from '@angular/material/tooltip'
-import { SearchFilterData } from '../../models/SearchFilter/SearchFilterData'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
-import { UpperCasePipe } from '@angular/common'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { SearchFilterData } from '../../models/SearchFilter/SearchFilterData'
 import { SearchFilterValueData } from '../../models/SearchFilter/SearchFilterData'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 
 @Component({
   selector: 'num-search-filter',
@@ -32,20 +32,20 @@ import { SearchFilterValueData } from '../../models/SearchFilter/SearchFilterDat
   ],
 })
 export class SearchFilterComponent {
-  isOpenData = {
+  public isOpenData = {
     isOpen: false,
     targetFilter: '',
   }
-  readonly filter = model<SearchFilterData | undefined>(undefined)
+  public readonly filter = model<SearchFilterData | undefined>(undefined)
 
-  readonly multiSelect = input(true)
+  public readonly multiSelect = input(true)
 
-  readonly isOpen = output<{
+  public readonly isOpen = output<{
     isOpen: boolean
     targetFilter: string
   }>()
 
-  readonly selectedValues = computed<string[] | string>(() => {
+  public readonly selectedValues = computed<string[] | string>(() => {
     const filter = this.filter()
     if (!filter) {
       return this.multiSelect() ? [] : ''
@@ -54,9 +54,9 @@ export class SearchFilterComponent {
     return this.multiSelect() ? filter.selectedValues : filter.selectedValues[0] ?? ''
   })
 
-  searchText = ''
+  public searchText = ''
 
-  get filteredData() {
+  public get filteredData() {
     const filter = this.filter()
     if (!filter) {
       return []
@@ -69,7 +69,7 @@ export class SearchFilterComponent {
     return filter.data.filter((item) => this.getSearchSource(item).toLowerCase().includes(query))
   }
 
-  translatedLabel: { translatedSystem: string; count: number; url: string }[] = []
+  public translatedLabel: { translatedSystem: string; count: number; url: string }[] = []
   constructor() {}
 
   public onSelectionChange(selectedValues: string[] | string): void {

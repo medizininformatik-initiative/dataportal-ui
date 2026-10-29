@@ -1,19 +1,19 @@
-import { CRTDLData } from '../../model/Interface/CRTDLData'
-import { DataSelection } from '../../model/DataSelection/DataSelection'
-import { DataSelection2DataExtraction } from '../Translator/CRTDL/DataSelection2DataExtraction.service'
-import { DataSelectionMainProfileProviderService } from '../DataSelectionMainProfileProvider.service'
 import { Injectable, inject } from '@angular/core'
+import { DataSelection } from '../../model/DataSelection/DataSelection'
+import { CRTDLData } from '../../model/Interface/CRTDLData'
+import { DataSelectionMainProfileProviderService } from '../DataSelectionMainProfileProvider.service'
+import { DataSelection2DataExtraction } from '../Translator/CRTDL/DataSelection2DataExtraction.service'
 import { TypeGuard } from '../TypeGuard/TypeGuard'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CheckAndUpgradeCCDLService {
-  private dataSelection2DataExtraction = inject(DataSelection2DataExtraction)
-  private dataSelectionMainProfileProviderService = inject(DataSelectionMainProfileProviderService)
+  private readonly dataSelection2DataExtraction = inject(DataSelection2DataExtraction)
+  private readonly dataSelectionMainProfileProviderService = inject(DataSelectionMainProfileProviderService)
 
-  private version = 'http://json-schema.org/to-be-done/schema#'
-  private display = ''
+  private readonly version = 'http://json-schema.org/to-be-done/schema#'
+  private readonly display = ''
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -22,8 +22,8 @@ export class CheckAndUpgradeCCDLService {
 
   /**
    * Checks and upgrades CCDL data if necessary for saved data.
-   * @param data - The data to check and upgrade
-   * @returns The upgraded data if it was in the old format, otherwise returns the original data
+   * @param {any} data - The data to check and upgrade
+   * @returns {any} The upgraded data if it was in the old format, otherwise returns the original data
    */
   public checkAndUpgradeCCDLAsSavedData(data: any): any {
     if (TypeGuard.isStructuredQueryData(data)) {
@@ -34,8 +34,8 @@ export class CheckAndUpgradeCCDLService {
 
   /**
    * Checks and upgrades CCDL data if necessary.
-   * @param data - The data to check and upgrade
-   * @returns The upgraded data if it was in the old format, otherwise returns the original data
+   * @param {any} data - The data to check and upgrade
+   * @returns {CRTDLData} The upgraded data if it was in the old format, otherwise returns the original data
    */
   public checkAndUpgradeCCDL(data: any): CRTDLData {
     if (TypeGuard.isStructuredQueryData(data)) {
@@ -51,13 +51,11 @@ export class CheckAndUpgradeCCDLService {
 
   /**
    * Builds the default data extraction.
-   * @returns The default data extraction
+   * @returns {any} The default data extraction
    */
   private buildDefaultDataExtraction(): any {
     const patientProfile = this.dataSelectionMainProfileProviderService.getPatientProfileValue()
     const dse = new DataSelection([patientProfile], 'unknown')
-    return JSON.parse(
-      JSON.stringify(this.dataSelection2DataExtraction.translateToDataExtraction(dse))
-    )
+    return JSON.parse(JSON.stringify(this.dataSelection2DataExtraction.translateToDataExtraction(dse)))
   }
 }

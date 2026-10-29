@@ -7,9 +7,6 @@
     (changedConceptFilter)="updateConceptFilter($event)"
   ></num-concept>
   } @if (attributeFilter().getQuantity()) {
-  <num-quantity
-    (quantityFilterChange)="updateQuantityFilter($event)"
-    [quantityFilter]="attributeFilter().getQuantity()"
-  ></num-quantity>
+  <num-quantity (quantityFilterChange)="updateQuantityFilter($event)" [quantityFilter]="attributeFilter().getQuantity()"></num-quantity>
   }
 </div>

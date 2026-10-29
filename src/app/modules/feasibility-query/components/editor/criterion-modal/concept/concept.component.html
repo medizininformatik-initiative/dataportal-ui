@@ -25,8 +25,7 @@
       [preSelectedConcepts]="conceptFilter().getSelectedConcepts()"
       [valueSetUrl]="conceptFilter().getAllowedConceptUrls()"
       (changedSelectedConcepts)="emitConceptFilter($event)"
-    >
-    </num-concept-filter>
+    ></num-concept-filter>
     }
   </mat-tab>
   } @if (conceptFilter()) {
@@ -40,9 +39,7 @@
   </mat-tab>
   }
   <mat-tab
-    [label]="
-      'EDITOR.CONTENT.TAB_LABEL.SELECTED_CONCEPTS' | translate : { count: selectedConcepts.length }
-    "
+    [label]="'EDITOR.CONTENT.TAB_LABEL.SELECTED_CONCEPTS' | translate : { count: selectedConcepts.length }"
     [disabled]="selectedConcepts.length === 0"
   >
     <num-selected-concept-list

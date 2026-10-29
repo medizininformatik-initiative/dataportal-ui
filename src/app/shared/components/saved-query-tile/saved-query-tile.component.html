@@ -17,9 +17,7 @@
   <div class="tile-col tile-date">
     {{ ('SAVED_QUERIES.CREATED_AT' | translate) + ' ' + (savedQuery().date | date : 'dd.MM.yyyy') }}
   </div>
-  <div class="tile-col tile-patients">
-    {{ 'SAVED_QUERIES.PATIENTS' | translate }} {{ savedQuery().totalNumberOfPatients }}
-  </div>
+  <div class="tile-col tile-patients">{{ 'SAVED_QUERIES.PATIENTS' | translate }} {{ savedQuery().totalNumberOfPatients }}</div>
   <div class="tile-col tile-action">
     <num-button type="blue" (click)="onNavigate(savedQuery()?.id)">
       {{ 'SAVED_QUERIES.LOAD' | translate }}

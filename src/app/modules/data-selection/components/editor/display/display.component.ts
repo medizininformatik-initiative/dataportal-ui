@@ -1,11 +1,11 @@
 import { Component, input, OnInit } from '@angular/core'
-import { DisplayActionBarComponent } from '../action-bar/display-action-bar.component'
-import { DisplayProfilesComponent } from './display-profiles/display-profiles.component'
+import { TranslateModule } from '@ngx-translate/core'
 import { HeaderComponent } from '../../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../../shared/components/header-description/header-description.component'
 import { SectionNameComponent } from '../../../../../shared/components/section-name/section-name.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { DisplayActionBarComponent } from '../action-bar/display-action-bar.component'
 import { ApplyTimeRestrictionComponent } from './apply-time-restriction/apply-time-restriction.component'
+import { DisplayProfilesComponent } from './display-profiles/display-profiles.component'
 
 @Component({
   selector: 'num-display-data-selection',
@@ -23,9 +23,9 @@ import { ApplyTimeRestrictionComponent } from './apply-time-restriction/apply-ti
   ],
 })
 export class DisplayDataSelectionComponent implements OnInit {
-  readonly isEditable = input<boolean>(true)
+  public readonly isEditable = input<boolean>(true)
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 }

@@ -1,11 +1,6 @@
 <div class="container">
   <div class="stepper-container">
-    <mat-stepper
-      class="width-100"
-      (selectionChange)="navigateToDataQueryCohortDefinition()"
-      labelPosition="bottom"
-      [selectedIndex]="1"
-    >
+    <mat-stepper class="width-100" (selectionChange)="navigateToDataQueryCohortDefinition()" labelPosition="bottom" [selectedIndex]="1">
       <mat-step role="tab">
         <ng-template matStepLabel>
           <num-header>
@@ -24,9 +19,7 @@
   </div>
   <div>
     <num-header-description>
-      <span
-        [innerHTML]="'DATASELECTION.EDITOR.HEADER_INFO' | translate : { email: emailLink }"
-      ></span>
+      <span [innerHTML]="'DATASELECTION.EDITOR.HEADER_INFO' | translate : { email: emailLink }"></span>
     </num-header-description>
   </div>
   @if (isDataSelectionExistent() === false) {

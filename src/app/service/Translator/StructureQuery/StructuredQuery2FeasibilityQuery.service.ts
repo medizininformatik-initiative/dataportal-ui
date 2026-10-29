@@ -1,20 +1,18 @@
-import { ConsentService } from '../../Consent/Consent.service'
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
-import { forkJoin, map, Observable, of } from 'rxjs'
 import { Injectable, inject } from '@angular/core'
-import { StructuredQuery2UIQueryTranslatorService } from './StructuredQuery2UIQueryTranslator.service'
+import { forkJoin, map, Observable, of } from 'rxjs'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData'
-import { TypeGuard } from '../../TypeGuard/TypeGuard'
 import { v4 as uuidv4 } from 'uuid'
+import { ConsentService } from '../../Consent/Consent.service'
+import { TypeGuard } from '../../TypeGuard/TypeGuard'
+import { StructuredQuery2UIQueryTranslatorService } from './StructuredQuery2UIQueryTranslator.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class StructuredQuery2FeasibilityQueryService {
-  private structuredQuery2UIQueryTranslatorService = inject(
-    StructuredQuery2UIQueryTranslatorService
-  )
-  private consentService = inject(ConsentService)
+  private readonly structuredQuery2UIQueryTranslatorService = inject(StructuredQuery2UIQueryTranslatorService)
+  private readonly consentService = inject(ConsentService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -33,14 +31,10 @@ export class StructuredQuery2FeasibilityQueryService {
   }
 
   private getInclusionObservable(structuredQuery: StructuredQueryData): Observable<string[][]> {
-    return this.structuredQuery2UIQueryTranslatorService.translate(
-      structuredQuery.inclusionCriteria
-    )
+    return this.structuredQuery2UIQueryTranslatorService.translate(structuredQuery.inclusionCriteria)
   }
 
-  private getExclusionObservable(
-    structuredQuery: StructuredQueryData
-  ): Observable<string[][] | null> {
+  private getExclusionObservable(structuredQuery: StructuredQueryData): Observable<string[][] | null> {
     return this.hasValidExclusionCriteria(structuredQuery)
       ? this.structuredQuery2UIQueryTranslatorService.translate(structuredQuery.exclusionCriteria)
       : of(null)
@@ -66,9 +60,7 @@ export class StructuredQuery2FeasibilityQueryService {
   private hasValidExclusionCriteria(structuredQuery: StructuredQueryData): boolean {
     return (
       Array.isArray(structuredQuery.exclusionCriteria) &&
-      structuredQuery.exclusionCriteria.some(
-        (criteria) => Array.isArray(criteria) && criteria.length > 0
-      )
+      structuredQuery.exclusionCriteria.some((criteria) => Array.isArray(criteria) && criteria.length > 0)
     )
   }
 }

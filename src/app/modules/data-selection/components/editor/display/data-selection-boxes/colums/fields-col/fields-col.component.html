@@ -15,17 +15,11 @@
   } @else if (messageType() === 'red') {
   <num-missing-filter>
     <span
-      [matTooltip]="
-        'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS_TOOLTIP_TEXT'
-          | translate : { feature: profileLabel() | displayTranslation }
-      "
+      [matTooltip]="'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS_TOOLTIP_TEXT' | translate : { feature: profileLabel() | displayTranslation }"
       message
       (click)="navigate.emit()"
     >
-      {{
-        'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS'
-          | translate : { feature: profileLabel() | displayTranslation }
-      }}
+      {{ 'DATASELECTION.EDITOR.DISPLAY.NO_FIELDS' | translate : { feature: profileLabel() | displayTranslation } }}
     </span>
   </num-missing-filter>
   } @else {

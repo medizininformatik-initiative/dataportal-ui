@@ -1,20 +1,17 @@
-import { AbstractSearch } from '../../Abstract/AbstractSearch'
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
-import { CriteriaSearchResultProviderService } from '../Criteria/Result/CriteriaSearchResultProvider.service'
-import { CriteriaSearchSigleEntryEngineService } from './Engine/CriteriaSearchSingleEntryEngine.service'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
+import { AbstractSearch } from '../../Abstract/AbstractSearch'
+import { CriteriaSearchResultProviderService } from '../Criteria/Result/CriteriaSearchResultProvider.service'
+import { CriteriaSearchSigleEntryEngineService } from './Engine/CriteriaSearchSingleEntryEngine.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class CriteriaByIdSearchService extends AbstractSearch<
-  CriteriaListEntry,
-  CriteriaResultList
-> {
-  private criteriaSearchSingleEntryEngineService = inject(CriteriaSearchSigleEntryEngineService)
-  private resultProvider: CriteriaSearchResultProviderService
+export class CriteriaByIdSearchService extends AbstractSearch<CriteriaListEntry, CriteriaResultList> {
+  private readonly criteriaSearchSingleEntryEngineService = inject(CriteriaSearchSigleEntryEngineService)
+  private readonly resultProvider: CriteriaSearchResultProviderService
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

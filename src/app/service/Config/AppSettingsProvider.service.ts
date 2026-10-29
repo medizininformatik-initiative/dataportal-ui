@@ -1,12 +1,12 @@
+import { Injectable, inject } from '@angular/core'
 import * as iso8601 from 'iso8601-duration'
 import { AppConfigKey } from 'src/app/config/model/AppConfig/AppConfigKey'
-import { AppConfigProviderService } from 'src/app/core/settings/AppConfigProvider.service'
 import { AppConfigValue } from 'src/app/config/model/AppConfig/AppConfigValue'
-import { AppSettingGetter } from './AppSettingGetterType'
 import { DataportalConfigKey } from 'src/app/config/model/DataPortalConfig/DataportalConfigKey'
-import { DataportalConfigProviderService } from '../../core/settings/DataportalConfigProvider.service'
 import { DataportalConfigValue } from 'src/app/config/model/DataPortalConfig/DataportalConfigValue'
-import { Injectable, inject } from '@angular/core'
+import { AppConfigProviderService } from 'src/app/core/settings/AppConfigProvider.service'
+import { DataportalConfigProviderService } from '../../core/settings/DataportalConfigProvider.service'
+import { AppSettingGetter } from './AppSettingGetterType'
 
 @Injectable({
   providedIn: 'root',
@@ -22,19 +22,17 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets a specific setting by key using the settings provider
-   * @param key The setting key to retrieve
-   * @returns The setting value or undefined if not found
+   * @param {K} key The setting key to retrieve
+   * @returns {DataportalConfigValue<K> | undefined} The setting value or undefined if not found
    */
-  private getDataPortalConfigByKey<K extends DataportalConfigKey>(
-    key: K
-  ): DataportalConfigValue<K> | undefined {
+  private getDataPortalConfigByKey<K extends DataportalConfigKey>(key: K): DataportalConfigValue<K> | undefined {
     return this.settingsProvider.getSettingByKey(key)
   }
 
   /**
    * Gets a specific AppConfig setting by key
-   * @param key The AppConfig setting key to retrieve
-   * @returns The setting value or undefined if not found
+   * @param {K} key The AppConfig setting key to retrieve
+   * @returns {AppConfigValue<K> | undefined} The setting value or undefined if not found
    */
   private getAppConfigSettingByKey<K extends AppConfigKey>(key: K): AppConfigValue<K> | undefined {
     return this.appConfigProvider.getSettingByKey(key)
@@ -42,6 +40,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the base URL for the application
+   * @returns {string}
    */
   public getBaseUrl(): string {
     return this.getAppConfigSettingByKey('baseUrl') ?? ''
@@ -49,6 +48,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the authentication base URL
+   * @returns {string}
    */
   public getAuthBaseUrl(): string {
     return this.getAppConfigSettingByKey('authBaseUrl')
@@ -56,6 +56,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the authentication realm
+   * @returns {string}
    */
   public getAuthRealm(): string {
     return this.getAppConfigSettingByKey('authRealm')
@@ -63,6 +64,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the authentication client ID
+   * @returns {string}
    */
   public getAuthClientId(): string {
     return this.getAppConfigSettingByKey('authClientId')
@@ -70,6 +72,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the legal version
+   * @returns {string}
    */
   public getVersion(): string {
     return this.getAppConfigSettingByKey('version') ?? ''
@@ -77,6 +80,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the copyright year
+   * @returns {string}
    */
   public getCopyrightYear(): string {
     return this.getAppConfigSettingByKey('copyrightYear') ?? ''
@@ -84,6 +88,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the copyright owner
+   * @returns {string}
    */
   public getCopyrightOwner(): string {
     return this.getAppConfigSettingByKey('copyrightOwner') ?? ''
@@ -91,6 +96,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the legal contact email
+   * @returns {string}
    */
   public getEmail(): string {
     return this.getAppConfigSettingByKey('email') ?? ''
@@ -98,6 +104,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the proposal portal link URL
+   * @returns {string}
    */
   public getPortalLink(): string {
     return this.getDataPortalConfigByKey('passthroughPortalLink') ?? ''
@@ -105,6 +112,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the UI backend API URL
+   * @returns {string}
    */
   public getUiBackendApiPath(): string {
     return this.getDataPortalConfigByKey('uiBackendApiPath') ?? ''
@@ -112,6 +120,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the DSE patient profile URL
+   * @returns {string}
    */
   public getDsePatientProfileUrl(): string {
     return this.getDataPortalConfigByKey('passthroughDsePatientProfileUrl') ?? ''
@@ -119,6 +128,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the polling interval configuration
+   * @returns {number}
    */
   public getSummaryPollingInterval(): number {
     return this.getDurationSeconds('readResultSummaryPollingInterval')
@@ -126,6 +136,7 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the polling time configuration in milliseconds and parsed according to iso8601
+   * @returns {number}
    */
   public getPollingTimeUi(): number {
     return this.getDurationSeconds('passthroughPollingTimeUi')
@@ -133,12 +144,14 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the CCDL version
+   * @returns {string}
    */
   public getCcdlVersion(): string {
     return this.getDataPortalConfigByKey('passthroughCcdlVersion')
   }
 
   /** Gets the backend base URL
+   * @returns {string}
    */
   public getBackendBaseUrl(): string {
     return this.getAppConfigSettingByKey('backendBaseUrl') ?? ''
@@ -146,40 +159,29 @@ export class AppSettingsProviderService implements AppSettingGetter {
 
   /**
    * Gets the configured stylesheet or an empty string if not set
-   * @returns The configured stylesheet or an empty string if not set
+   * @returns {string | undefined} The configured stylesheet or an empty string if not set
    */
   public getStylesheet(): string | undefined {
     return this.getAppConfigSettingByKey('stylesheet')
   }
 
   /**
+   * Returns the result detailed obfuscated interval.
    *
-   * @returns number
+   * @returns {number} number
    */
   public getResultDetailedObfuscatedInterval(): number {
     return this.getDurationSeconds('readResultDetailedObfuscatedInterval')
   }
 
-  /**
-   *
-   * @returns
-   */
   public getResultDetailedObfuscatedAmount(): number {
     return this.getDurationSeconds('readResultDetailedObfuscatedAmount')
   }
 
-  /**
-   *
-   * @returns
-   */
   public getResultDetailedObfuscatedPollingInterval(): number {
     return this.getDurationSeconds('readResultDetailedObfuscatedPollingInterval')
   }
 
-  /**
-   *
-   * @returns
-   */
   public getResultSummaryPollingInterval(): number {
     return this.getDurationSeconds('readResultSummaryPollingInterval')
   }

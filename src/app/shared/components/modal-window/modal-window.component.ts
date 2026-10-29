@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core'
-import { ButtonComponent } from '../button/button.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '../button/button.component'
 
 @Component({
   selector: 'num-modal-window',
@@ -10,19 +10,19 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ButtonComponent, TranslateModule],
 })
 export class ModalWindowComponent {
-  readonly disabled = input(false)
+  public readonly disabled = input(false)
 
-  readonly displaySaveButtons = input(true)
+  public readonly displaySaveButtons = input(true)
 
-  readonly cancelButtonSelected = output()
+  public readonly cancelButtonSelected = output()
 
-  readonly saveButtonSelected = output()
+  public readonly saveButtonSelected = output()
 
   public save() {
     this.saveButtonSelected.emit()
   }
 
-  cancel() {
+  public cancel() {
     this.cancelButtonSelected.emit()
   }
 }

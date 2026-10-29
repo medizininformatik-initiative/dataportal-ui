@@ -1,27 +1,24 @@
-import { QuantityUnit } from '../../../../FeasibilityQuery/QuantityUnit';
+import { QuantityUnit } from '../../../../FeasibilityQuery/QuantityUnit'
 
 export class CloneQuantityUnit {
   /**
    * Creates a deep copy of a QuantityUnit instance.
    *
-   * @param quantityUnit - The QuantityUnit instance to deep copy.
-   * @returns A new QuantityUnit instance that is a deep copy of the given instance.
+   * @param {QuantityUnit} quantityUnit - The QuantityUnit instance to deep copy.
+   * @returns {QuantityUnit} A new QuantityUnit instance that is a deep copy of the given instance.
    */
-  static deepCopyQuantityUnit(quantityUnit: QuantityUnit): QuantityUnit {
-    return new QuantityUnit(
-      quantityUnit.getCode(),
-      quantityUnit.getDisplay(),
-      quantityUnit.getSystem()
-    );
+  public static deepCopyQuantityUnit(quantityUnit: QuantityUnit): QuantityUnit {
+    return new QuantityUnit(quantityUnit.getCode(), quantityUnit.getDisplay(), quantityUnit.getSystem())
   }
 
   /**
    * Creates a deep copy of a QuantityUnit instance.
    *
    * @param quantityUnit - The QuantityUnit instance to deep copy.
-   * @returns A new QuantityUnit instance that is a deep copy of the given instance.
+   * @returns {QuantityUnit[]} A new QuantityUnit instance that is a deep copy of the given instance.
+   * @param {QuantityUnit[]} quantityUnits
    */
-  static deepCopyQuantityUnits(quantityUnits: QuantityUnit[]): QuantityUnit[] {
-    return quantityUnits.map((quantityUnit) => this.deepCopyQuantityUnit(quantityUnit));
+  public static deepCopyQuantityUnits(quantityUnits: QuantityUnit[]): QuantityUnit[] {
+    return quantityUnits.map((quantityUnit) => this.deepCopyQuantityUnit(quantityUnit))
   }
 }

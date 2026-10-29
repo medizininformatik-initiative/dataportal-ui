@@ -24,9 +24,6 @@ export class ProfileEntryDetailsField {
   }
 
   public static fromJson(json: ProfileEntryDetailsFieldData): ProfileEntryDetailsField {
-    return new ProfileEntryDetailsField(
-      Display.fromJson(json.display),
-      Display.fromJson(json.description)
-    )
+    return new ProfileEntryDetailsField(Display.fromJson(json.display), Display.fromJson(json.description))
   }
 }

@@ -1,6 +1,6 @@
-import { AbstractDownloadService } from './AbstractDownload.service'
-import { AboutInfoBuilderService } from '../AboutInfo/AboutInfoBuilder.service'
 import { Injectable, inject } from '@angular/core'
+import { AboutInfoBuilderService } from '../AboutInfo/AboutInfoBuilder.service'
+import { AbstractDownloadService } from './AbstractDownload.service'
 
 /**
  * Service for downloading about information as a JSON file.
@@ -25,7 +25,7 @@ export class DownloadAboutInfoService extends AbstractDownloadService {
 
   /**
    * Downloads the about information as a JSON file.
-   * @param filename - Optional custom filename (without extension)
+   * @param {string} filename - Optional custom filename (without extension)
    */
   public download(filename?: string): void {
     const aboutInfo = this.aboutInfoBuilder.buildAboutInfo()
@@ -35,10 +35,6 @@ export class DownloadAboutInfoService extends AbstractDownloadService {
   }
 
   private fileName(filename?: string): string {
-    return this.createFilename(
-      filename,
-      DownloadAboutInfoService.FILE_PREFIX,
-      DownloadAboutInfoService.LOCALE_FORMAT
-    )
+    return this.createFilename(filename, DownloadAboutInfoService.FILE_PREFIX, DownloadAboutInfoService.LOCALE_FORMAT)
   }
 }

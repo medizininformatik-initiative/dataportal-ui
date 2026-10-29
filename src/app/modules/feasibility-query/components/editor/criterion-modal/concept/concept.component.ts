@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component, effect, input, output } from '@angular/core'
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
-import { ConceptBulkSearchComponent } from '../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
-import { ConceptFilterComponent } from '../../../../../shared-filter/components/concept/concept-filter.component'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs'
-import { SelectedConceptListComponent } from '../../../../../shared-filter/components/concept/selected-concept-list/selected-concept-list.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
 import { v4 as uuidv4 } from 'uuid'
+import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
+import { ConceptFilterComponent } from '../../../../../shared-filter/components/concept/concept-filter.component'
+import { SelectedConceptListComponent } from '../../../../../shared-filter/components/concept/selected-concept-list/selected-concept-list.component'
+import { ConceptBulkSearchComponent } from '../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
 
 @Component({
   selector: 'num-concept',
@@ -30,17 +30,17 @@ import { v4 as uuidv4 } from 'uuid'
   ],
 })
 export class ConceptComponent {
-  readonly conceptFilter = input.required<ConceptFilter>()
+  public readonly conceptFilter = input.required<ConceptFilter>()
 
-  readonly changedConceptFilter = output<ConceptFilter>()
+  public readonly changedConceptFilter = output<ConceptFilter>()
 
-  readonly display = input<Display>(undefined)
+  public readonly display = input<Display>(undefined)
 
-  expanded = false
+  public expanded = false
 
-  tabChanged = false
+  public tabChanged = false
 
-  selectedConcepts: Concept[] = []
+  public selectedConcepts: Concept[] = []
 
   constructor() {
     effect(() => {
@@ -49,11 +49,7 @@ export class ConceptComponent {
   }
 
   public emitConceptFilter(selectedConcepts: Concept[]) {
-    const newConceptFilter = new ConceptFilter(
-      uuidv4(),
-      this.conceptFilter().getAllowedConceptUrls(),
-      selectedConcepts
-    )
+    const newConceptFilter = new ConceptFilter(uuidv4(), this.conceptFilter().getAllowedConceptUrls(), selectedConcepts)
     this.changedConceptFilter.emit(newConceptFilter)
   }
 

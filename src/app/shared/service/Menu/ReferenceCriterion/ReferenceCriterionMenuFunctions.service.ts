@@ -1,19 +1,19 @@
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { inject, Injectable } from '@angular/core'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { ReferenceCriterionProviderService } from '../../../../service/Provider/ReferenceCriterionProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReferenceCriterionMenuFunctionsService {
-  private criterionProviderService = inject(CriterionProviderService)
-  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
-  private navigationHelperService = inject(NavigationHelperService)
+  private readonly criterionProviderService = inject(CriterionProviderService)
+  private readonly referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
 
   constructor() {}
 
-  deleteCriterion(id: string) {
+  public deleteCriterion(id: string) {
     const parentID = this.referenceCriterionProvider.getOne(id)?.getParentId()
     if (!parentID) {
       throw new Error(`ReferenceCriterion with id ${id} does not have a parent ID.`)

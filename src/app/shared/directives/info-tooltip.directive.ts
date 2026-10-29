@@ -19,13 +19,13 @@ import { InfoTooltipComponent } from '../components/info-tooltip/info-tooltip.co
   standalone: true,
 })
 export class InfoTooltipDirective implements OnInit, OnDestroy {
-  private el = inject<ElementRef<HTMLElement>>(ElementRef)
-  private appRef = inject(ApplicationRef)
-  private environmentInjector = inject(EnvironmentInjector)
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef)
+  private readonly appRef = inject(ApplicationRef)
+  private readonly environmentInjector = inject(EnvironmentInjector)
 
-  readonly infoTooltipTitle = input<string>(undefined)
-  readonly infoTooltipText = input<string>(undefined)
-  readonly infoTooltipPosition = input<'top' | 'bottom'>('top')
+  public readonly infoTooltipTitle = input<string>(undefined)
+  public readonly infoTooltipText = input<string>(undefined)
+  public readonly infoTooltipPosition = input<'top' | 'bottom'>('top')
 
   private cardRef: ReturnType<typeof createComponent<InfoTooltipComponent>> | null = null
 
@@ -34,14 +34,14 @@ export class InfoTooltipDirective implements OnInit, OnDestroy {
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const rendered = icon(faQuestionCircle)
     // Safe: rendered.html is a trusted, hardcoded FA SVG — not user input
     this.el.nativeElement.innerHTML = rendered.html.join('')
   }
 
   @HostListener('mouseenter')
-  show(): void {
+  public show(): void {
     const infoTooltipText = this.infoTooltipText()
     if (this.cardRef || !infoTooltipText) {
       return
@@ -68,7 +68,7 @@ export class InfoTooltipDirective implements OnInit, OnDestroy {
   }
 
   @HostListener('mouseleave')
-  hide(): void {
+  public hide(): void {
     if (!this.cardRef) {
       return
     }
@@ -77,7 +77,7 @@ export class InfoTooltipDirective implements OnInit, OnDestroy {
     this.cardRef = null
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.hide()
   }
 

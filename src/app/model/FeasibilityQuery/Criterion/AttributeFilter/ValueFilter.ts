@@ -1,9 +1,9 @@
-import { AbstractAttributeFilters } from './AbstractAttributeFilters';
-import { ConceptFilter } from './Concept/ConceptFilter';
-import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter';
-import { ReferenceFilter } from './Concept/ReferenceFilter';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { AbstractAttributeFilters } from './AbstractAttributeFilters'
+import { ConceptFilter } from './Concept/ConceptFilter'
+import { ReferenceFilter } from './Concept/ReferenceFilter'
+import { AbstractQuantityFilter } from './Quantity/AbstractQuantityFilter'
 
 /**
  * Class representing a ValueFilter.
@@ -12,10 +12,11 @@ export class ValueFilter extends AbstractAttributeFilters {
   /**
    * Creates an instance of ValueFilter.
    *
-   * @param display - The display name for the filter.
-   * @param concept - Optional concept filter.
-   * @param quantity - Optional quantity filter.
-   * @param optional - Whether the filter is optional or not. Default is false.
+   * @param {Display} display - The display name for the filter.
+   * @param {ConceptFilter} concept - Optional concept filter.
+   * @param {AbstractQuantityFilter} quantity - Optional quantity filter.
+   * @param {boolean} optional - Whether the filter is optional or not. Default is false.
+   * @param {FilterTypes} filter
    */
   constructor(
     display: Display,
@@ -24,6 +25,6 @@ export class ValueFilter extends AbstractAttributeFilters {
     quantity?: AbstractQuantityFilter,
     optional: boolean = false
   ) {
-    super(display, filter, concept, quantity, undefined, optional);
+    super(display, filter, concept, quantity, undefined, optional)
   }
 }

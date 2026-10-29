@@ -1,10 +1,10 @@
+import { Component, inject } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
+import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
-import { Component, inject } from '@angular/core'
-import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-cohort-definition-action-bar',
@@ -14,13 +14,12 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, TranslateModule],
 })
 export class CohortDefinitionActionBarComponent {
-  private routerHelperService = inject(NavigationHelperService)
-  private navigationHelperService = inject(NavigationHelperService)
-  private feasibilityQueryFactoryService = inject(FeasibilityQueryFactoryService)
-  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
+  private readonly routerHelperService = inject(NavigationHelperService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
+  private readonly feasibilityQueryFactoryService = inject(FeasibilityQueryFactoryService)
+  private readonly feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
 
-  readonly isFeasibilityQueryValid =
-    this.feasibilityQueryValidationService.validationState().isValid
+  public readonly isFeasibilityQueryValid = this.feasibilityQueryValidationService.validationState().isValid
 
   public sendQuery(): void {
     this.routerHelperService.navigateToFeasibilityQueryResult()

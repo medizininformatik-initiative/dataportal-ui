@@ -11,21 +11,21 @@ import { SearchbarComponent } from '../../../../../shared/components/search/sear
   imports: [SearchbarComponent],
 })
 export class SearchConceptComponent implements OnDestroy, OnInit {
-  private conceptFilterSearchService = inject(CodeableConceptSearchService)
+  private readonly conceptFilterSearchService = inject(CodeableConceptSearchService)
 
-  readonly valueSetUrl = input.required<string[]>()
+  public readonly valueSetUrl = input.required<string[]>()
 
-  readonly conceptFilterId = input<string>()
+  public readonly conceptFilterId = input<string>()
 
   private searchSubscription: Subscription | undefined
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.startSearch(' ')
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe()
     }
@@ -33,8 +33,6 @@ export class SearchConceptComponent implements OnDestroy, OnInit {
 
   public startSearch(searchtext: string): void {
     this.searchSubscription?.unsubscribe()
-    this.searchSubscription = this.conceptFilterSearchService
-      .search(searchtext, this.valueSetUrl())
-      .subscribe()
+    this.searchSubscription = this.conceptFilterSearchService.search(searchtext, this.valueSetUrl()).subscribe()
   }
 }

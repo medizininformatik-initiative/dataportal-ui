@@ -1,36 +1,29 @@
-import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
-import { ButtonComponent } from 'src/app/shared/components/button/button.component'
 import { Component, inject, OnInit } from '@angular/core'
-import { DashboardFaqComponent } from '../dashboard-faq/dashboard-faq.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { ButtonComponent } from 'src/app/shared/components/button/button.component'
 import { HeaderComponent } from 'src/app/shared/components/header/header.component'
 import { HeaderDescriptionComponent } from 'src/app/shared/components/header-description/header-description.component'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { TranslateModule } from '@ngx-translate/core'
 import { UploadService } from '../../../../service/Upload/Upload.service'
+import { DashboardFaqComponent } from '../dashboard-faq/dashboard-faq.component'
 
 @Component({
   selector: 'num-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [
-    TranslateModule,
-    HeaderComponent,
-    HeaderDescriptionComponent,
-    ButtonComponent,
-    DashboardFaqComponent,
-    FontAwesomeModule,
-  ],
+  imports: [TranslateModule, HeaderComponent, HeaderDescriptionComponent, ButtonComponent, DashboardFaqComponent, FontAwesomeModule],
 })
 export class DashboardComponent implements OnInit {
-  private appSettingsProviderService = inject(AppSettingsProviderService)
-  private navigationHelperService = inject(NavigationHelperService)
+  private readonly appSettingsProviderService = inject(AppSettingsProviderService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
 
-  private uploadService = inject(UploadService)
+  private readonly uploadService = inject(UploadService)
   public uploadDisabled: boolean = false
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
   constructor() {}
 

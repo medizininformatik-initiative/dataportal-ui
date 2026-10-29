@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core'
-import { TextCellData } from 'src/app/shared/models/TableData/Cells/Data/TextCellData'
 import { MatTooltip } from '@angular/material/tooltip'
+import { TextCellData } from 'src/app/shared/models/TableData/Cells/Data/TextCellData'
 import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe'
 
 @Component({
@@ -11,5 +11,5 @@ import { DisplayTranslationPipe } from '../../../../pipes/DisplayTranslationPipe
   imports: [MatTooltip, DisplayTranslationPipe],
 })
 export class TextCellComponent {
-  readonly cell = input<TextCellData>(undefined)
+  public readonly cell = input<TextCellData>(undefined)
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core'
-import { TranslateService, TranslateModule } from '@ngx-translate/core'
+import { MatOption } from '@angular/material/core'
 import { MatFormField, MatPrefix } from '@angular/material/form-field'
 import { MatSelect } from '@angular/material/select'
-import { MatOption } from '@angular/material/core'
+import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { NumDataCyDirective } from '../../../shared/directives/num-data-cy.directive'
 
 @Component({
@@ -13,9 +13,9 @@ import { NumDataCyDirective } from '../../../shared/directives/num-data-cy.direc
   imports: [MatFormField, MatPrefix, MatSelect, MatOption, TranslateModule, NumDataCyDirective],
 })
 export class LanguageComponent implements OnInit {
-  translate = inject(TranslateService)
+  public translate = inject(TranslateService)
 
-  languages: string[] = ['de', 'en']
+  public languages: string[] = ['de', 'en']
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -30,7 +30,7 @@ export class LanguageComponent implements OnInit {
     translate.use(this.languages.includes(browserLang) ? browserLang : 'de')
   }
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
   public changeLanguage(lang: string) {
     this.translate.use(lang)

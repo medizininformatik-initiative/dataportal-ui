@@ -1,15 +1,15 @@
-import { BehaviorSubject, map, Observable, shareReplay, switchMap } from 'rxjs'
-import { FeasibilityQueryResultApiService } from 'src/app/service/Backend/Api/FeasibilityQueryResultApi.service'
 import { Injectable, inject } from '@angular/core'
+import { BehaviorSubject, map, Observable, shareReplay, switchMap } from 'rxjs'
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit'
+import { FeasibilityQueryResultApiService } from 'src/app/service/Backend/Api/FeasibilityQueryResultApi.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ObfuscatedResultRateLimitService {
-  private feasibilityQueryResultApiService = inject(FeasibilityQueryResultApiService)
+  private readonly feasibilityQueryResultApiService = inject(FeasibilityQueryResultApiService)
 
-  private updateTrigger$ = new BehaviorSubject<void>(undefined)
+  private readonly updateTrigger$ = new BehaviorSubject<void>(undefined)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -19,11 +19,9 @@ export class ObfuscatedResultRateLimitService {
   /**
    * Fetches, caches, and provides the latest rate limit.
    */
-  private rateLimit$: Observable<QueryResultRateLimit> = this.updateTrigger$.pipe(
+  private readonly rateLimit$: Observable<QueryResultRateLimit> = this.updateTrigger$.pipe(
     switchMap(() =>
-      this.feasibilityQueryResultApiService
-        .getDetailedResultRateLimit()
-        .pipe(map((result) => this.createResultRateLimit(result)))
+      this.feasibilityQueryResultApiService.getDetailedResultRateLimit().pipe(map((result) => this.createResultRateLimit(result)))
     ),
     shareReplay(1)
   )
@@ -34,6 +32,7 @@ export class ObfuscatedResultRateLimitService {
 
   /**
    * Public getter to expose the latest rate limit.
+   * @returns {Observable<QueryResultRateLimit>}
    */
   public getRateLimit(): Observable<QueryResultRateLimit> {
     return this.rateLimit$

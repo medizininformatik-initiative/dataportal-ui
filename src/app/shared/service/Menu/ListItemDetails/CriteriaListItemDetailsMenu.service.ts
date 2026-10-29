@@ -7,13 +7,15 @@ import { CriteriaListItemDetailsMenuItemsFunctionsService } from './Criteria/Cri
   providedIn: 'root',
 })
 export class CriteriaListItemDetailsMenuService extends AbstractMenuItemsService<[boolean]> {
-  private listItemDetailsFunctionService = inject(CriteriaListItemDetailsMenuItemsFunctionsService)
+  private readonly listItemDetailsFunctionService = inject(CriteriaListItemDetailsMenuItemsFunctionsService)
 
   constructor() {
     super()
   }
 
   /**
+   * Returns the menu items for this context.
+   * @param selectable
    * @todo Labels need to be redefined for translation jsons
    * @returns Array of Menu functions for a criterion box
    */

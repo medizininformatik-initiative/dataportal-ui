@@ -1,6 +1,6 @@
-import { AbstractListEntry } from './AbstractListEntry'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { ReferenceCriteriaListEntryData } from '../../Interface/Search/ReferenceCriteriaListEntryData'
+import { AbstractListEntry } from './AbstractListEntry'
 
 export class ReferenceCriteriaListEntry extends AbstractListEntry {
   private readonly display: Display
@@ -8,10 +8,6 @@ export class ReferenceCriteriaListEntry extends AbstractListEntry {
   private readonly termcode: string
   private readonly terminology: string
 
-  /**
-   * @param terminology
-   * @param id
-   */
   constructor(display: Display, system: string, termcode: string, terminology: string, id: string) {
     super(id)
     this.display = display
@@ -38,17 +34,11 @@ export class ReferenceCriteriaListEntry extends AbstractListEntry {
 
   /**
    * Creates a new instance of ReferenceCriteriaListEntry from JSON.
-   * @param json The JSON object to convert.
-   * @returns A new instance of ReferenceCriteriaListEntry.
+   * @param {ReferenceCriteriaListEntryData} json The JSON object to convert.
+   * @returns {ReferenceCriteriaListEntry} A new instance of ReferenceCriteriaListEntry.
    */
   public static fromJson(json: ReferenceCriteriaListEntryData): ReferenceCriteriaListEntry {
     console.log(json)
-    return new ReferenceCriteriaListEntry(
-      Display.fromJson(json.display),
-      json.system,
-      json.termcode,
-      json.terminology,
-      json.id
-    )
+    return new ReferenceCriteriaListEntry(Display.fromJson(json.display), json.system, json.termcode, json.terminology, json.id)
   }
 }

@@ -1,31 +1,31 @@
-import { QueryResultLineData } from '../Interface/QueryResultLineData';
+import { QueryResultLineData } from '../Interface/QueryResultLineData'
 
 export class QueryResultLine {
-  private numberOfPatients: number;
-  private siteName: string;
+  private numberOfPatients: number
+  private siteName: string
 
   constructor(numberOfPatients: number, siteName: string) {
-    this.numberOfPatients = numberOfPatients;
-    this.siteName = siteName;
+    this.numberOfPatients = numberOfPatients
+    this.siteName = siteName
   }
 
   public getNumberOfPatients(): number {
-    return this.numberOfPatients;
+    return this.numberOfPatients
   }
 
   public setNumberOfPatients(value: number): void {
-    this.numberOfPatients = value;
+    this.numberOfPatients = value
   }
 
   public getSiteName(): string {
-    return this.siteName;
+    return this.siteName
   }
 
   public setSiteName(value: string): void {
-    this.siteName = value;
+    this.siteName = value
   }
 
   public static fromJson(json: QueryResultLineData): QueryResultLine {
-    return new QueryResultLine(json.numberOfPatients, json.siteName);
+    return new QueryResultLine(json.numberOfPatients, json.siteName)
   }
 }

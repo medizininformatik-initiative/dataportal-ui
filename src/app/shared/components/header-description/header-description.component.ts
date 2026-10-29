@@ -1,6 +1,6 @@
+import { AsyncPipe } from '@angular/common'
 import { Component, OnInit, inject } from '@angular/core'
 import { HeaderDescriptionToggleService } from '../header/header-description-toggle.service'
-import { AsyncPipe } from '@angular/common'
 
 @Component({
   selector: 'num-header-description',
@@ -10,7 +10,7 @@ import { AsyncPipe } from '@angular/common'
   imports: [AsyncPipe],
 })
 export class HeaderDescriptionComponent {
-  toggleService = inject(HeaderDescriptionToggleService)
+  public toggleService = inject(HeaderDescriptionToggleService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

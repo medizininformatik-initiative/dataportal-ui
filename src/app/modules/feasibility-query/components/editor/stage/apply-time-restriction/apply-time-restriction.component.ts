@@ -1,18 +1,18 @@
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
-import { BeforeFilterComponent } from '../../criterion-modal/time-restriction/before-filter/before-filter.component'
-import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
-import { BetweenFilterComponent } from '../../criterion-modal/time-restriction/between-filter/between-filter.component'
-import { ButtonComponent } from 'src/app/shared/components/shared-components.module'
 import { Component, computed, inject, signal } from '@angular/core'
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { toSignal } from '@angular/core/rxjs-interop'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
+import { TranslateModule } from '@ngx-translate/core'
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
+import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
 import { TimeRestrictionNotSet } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
-import { TimerestrictionTypeSelectorComponent } from '../../criterion-modal/time-restriction/timerestriction-type-selector/timerestriction-type-selector.component'
-import { toSignal } from '@angular/core/rxjs-interop'
-import { TranslateModule } from '@ngx-translate/core'
 import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
+import { ButtonComponent } from 'src/app/shared/components/shared-components.module'
+import { BeforeFilterComponent } from '../../criterion-modal/time-restriction/before-filter/before-filter.component'
+import { BetweenFilterComponent } from '../../criterion-modal/time-restriction/between-filter/between-filter.component'
+import { TimerestrictionTypeSelectorComponent } from '../../criterion-modal/time-restriction/timerestriction-type-selector/timerestriction-type-selector.component'
 
 @Component({
   selector: 'num-apply-time-restriction',
@@ -38,16 +38,16 @@ export class ApplyTimeRestrictionComponent {
     initialValue: [],
   })
 
-  readonly allCriteriaFiltered = computed(() =>
+  public readonly allCriteriaFiltered = computed(() =>
     this.allCriteria().filter((criterion) => criterion.getTimeRestriction() !== undefined)
   )
-  readonly criteriaCount = computed(() => this.allCriteriaFiltered().length)
-  readonly isExpanded = signal(false)
-  readonly selectedType = signal<TimeRestrictionType>(TimeRestrictionType.BETWEEN)
-  readonly betweenFilter = signal<BetweenFilter>(new BetweenFilter('', ''))
-  readonly singleDateRestriction = signal<AbstractTimeRestriction | null>(null)
+  public readonly criteriaCount = computed(() => this.allCriteriaFiltered().length)
+  public readonly isExpanded = signal(false)
+  public readonly selectedType = signal<TimeRestrictionType>(TimeRestrictionType.BETWEEN)
+  public readonly betweenFilter = signal<BetweenFilter>(new BetweenFilter('', ''))
+  public readonly singleDateRestriction = signal<AbstractTimeRestriction | null>(null)
 
-  readonly isApplyEnabled = computed(() => {
+  public readonly isApplyEnabled = computed(() => {
     if (this.criteriaCount() === 0) {
       return false
     }

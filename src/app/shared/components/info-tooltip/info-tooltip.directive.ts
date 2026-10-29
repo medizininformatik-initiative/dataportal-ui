@@ -15,12 +15,12 @@ import { InfoTooltipComponent } from './info-tooltip.component'
   selector: '[numInfoTooltip]',
 })
 export class InfoTooltipDirective implements OnDestroy {
-  private el = inject<ElementRef<HTMLElement>>(ElementRef)
-  private appRef = inject(ApplicationRef)
-  private environmentInjector = inject(EnvironmentInjector)
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef)
+  private readonly appRef = inject(ApplicationRef)
+  private readonly environmentInjector = inject(EnvironmentInjector)
 
-  readonly infoTooltipTitle = input<string>()
-  readonly infoTooltipText = input<string>()
+  public readonly infoTooltipTitle = input<string>()
+  public readonly infoTooltipText = input<string>()
 
   private cardRef: ReturnType<typeof createComponent<InfoTooltipComponent>> | null = null
 
@@ -30,7 +30,7 @@ export class InfoTooltipDirective implements OnDestroy {
   constructor() {}
 
   @HostListener('mouseenter')
-  show(): void {
+  public show(): void {
     if (this.cardRef || !this.infoTooltipText()) {
       return
     }
@@ -56,7 +56,7 @@ export class InfoTooltipDirective implements OnDestroy {
   }
 
   @HostListener('mouseleave')
-  hide(): void {
+  public hide(): void {
     if (!this.cardRef) {
       return
     }
@@ -65,7 +65,7 @@ export class InfoTooltipDirective implements OnDestroy {
     this.cardRef = null
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.hide()
   }
 

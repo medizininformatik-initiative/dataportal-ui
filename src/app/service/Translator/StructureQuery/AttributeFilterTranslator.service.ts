@@ -1,28 +1,28 @@
-import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData'
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
-import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData'
-import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service'
-import { AttributeFiltersBuilder } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFiltersBuilder'
-import { ConceptFilterTranslatorService } from './ConceptFilterTranslator.service'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { inject, Injectable } from '@angular/core'
-import { QuantityFilterTranslatorService } from './QuantityFilterTranslator.service'
-import { ReferenceFilterTranslatorService } from './ReferenceFilterTranslator.service'
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
+import { AttributeFiltersBuilder } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFiltersBuilder'
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
+import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData'
+import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData'
 import { TerminologyCodeBaseData } from 'src/app/model/Interface/TerminologyBaseData'
 import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition'
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 import { ValueFilterData } from 'src/app/model/Interface/ValueFilterData'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service'
+import { ConceptFilterTranslatorService } from './ConceptFilterTranslator.service'
+import { QuantityFilterTranslatorService } from './QuantityFilterTranslator.service'
+import { ReferenceFilterTranslatorService } from './ReferenceFilterTranslator.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AttributeFilterTranslatorService {
-  private quantityFilterTranslatorService = inject(QuantityFilterTranslatorService)
-  private conceptFilterTranslatorService = inject(ConceptFilterTranslatorService)
-  private referenceFilterTranslatorService = inject(ReferenceFilterTranslatorService)
-  private attributeFilterFactoryService = inject(AttributeFilterFactoryService)
+  private readonly quantityFilterTranslatorService = inject(QuantityFilterTranslatorService)
+  private readonly conceptFilterTranslatorService = inject(ConceptFilterTranslatorService)
+  private readonly referenceFilterTranslatorService = inject(ReferenceFilterTranslatorService)
+  private readonly attributeFilterFactoryService = inject(AttributeFilterFactoryService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -32,26 +32,22 @@ export class AttributeFilterTranslatorService {
   /**
    * Translates the value filters from the structured query format to the internal format.
    * @param uiProfile
-   * @param structuredQueryValueFilters
-   * @returns
+   * @param {ValueFilterData} structuredQueryValueFilters
+   * @returns {ValueFilter}
+   * @param {ValueDefinitionData} valueDefinitionData
    */
-  public translateValueFilters(
-    valueDefinitionData: ValueDefinitionData,
-    structuredQueryValueFilters: ValueFilterData
-  ): ValueFilter {
-    const attributeFilterBuilder = this.applyFilter(
-      structuredQueryValueFilters,
-      valueDefinitionData
-    )
+  public translateValueFilters(valueDefinitionData: ValueDefinitionData, structuredQueryValueFilters: ValueFilterData): ValueFilter {
+    const attributeFilterBuilder = this.applyFilter(structuredQueryValueFilters, valueDefinitionData)
     return attributeFilterBuilder.buildValueFilter()
   }
 
   /**
    * Translates a list of attribute filters from the structured query format to the internal format.
    * @param uiProfile
-   * @param structuredQueryAttributeFilters
-   * @param parentId
-   * @returns
+   * @param {AttributeFilterData[]} structuredQueryAttributeFilters
+   * @param {string} parentId
+   * @returns {AttributeFilter[]}
+   * @param {AttributeDefinitionData[]} attributeDefinitionData
    */
   public translateAttributeFilters(
     attributeDefinitionData: AttributeDefinitionData[],
@@ -67,39 +63,37 @@ export class AttributeFilterTranslatorService {
    * Translates a single attribute filter from the structured query format to the internal format.
    * @param uiProfile
    * @param attributeFilterData
-   * @param parentId
-   * @returns
+   * @param {string} parentId
+   * @returns {AttributeFilter}
+   * @param {AttributeDefinitionData} attributeFilter
+   * @param {AttributeFilterData[]} SQData
    */
   private translateAttributeFilter(
     attributeFilter: AttributeDefinitionData,
     SQData: AttributeFilterData[],
     parentId: string
   ): AttributeFilter {
-    const foundAttributeDefinition: AttributeFilterData | undefined =
-      this.findAttributeFilterInProfile(SQData ? SQData : [], attributeFilter.attributeCode)
+    const foundAttributeDefinition: AttributeFilterData | undefined = this.findAttributeFilterInProfile(
+      SQData ? SQData : [],
+      attributeFilter.attributeCode
+    )
 
     if (!foundAttributeDefinition) {
       return this.attributeFilterFactoryService.createAttributeFilter(attributeFilter)
     }
-    const attributeFilterBuilder = this.applyFilter(
-      foundAttributeDefinition,
-      attributeFilter,
-      parentId
-    )
+    const attributeFilterBuilder = this.applyFilter(foundAttributeDefinition, attributeFilter, parentId)
 
-    attributeFilterBuilder.withAttributeCode(
-      TerminologyCode.fromJson(foundAttributeDefinition.attributeCode)
-    )
+    attributeFilterBuilder.withAttributeCode(TerminologyCode.fromJson(foundAttributeDefinition.attributeCode))
     return attributeFilterBuilder.buildAttributeFilter()
   }
 
   /**
    * Applies the appropriate filter translation based on the filter type for Attribute Filters and Value Filters.
    * @param attributeFilterBuilder
-   * @param attributeFilterData
-   * @param parentId - The id of the parent criterion, used for reference filters.
-   * @param attributeDefinitionData
-   * @returns
+   * @param {AttributeFilterData | ValueFilterData} attributeFilterData
+   * @param {string} parentId - The id of the parent criterion, used for reference filters.
+   * @param {AttributeDefinitionData | ValueDefinitionData} attributeDefinitionData
+   * @returns {AttributeFiltersBuilder}
    */
   private applyFilter(
     attributeFilterData: AttributeFilterData | ValueFilterData,
@@ -116,33 +110,23 @@ export class AttributeFilterTranslatorService {
       return builder.withConceptFilter(conceptFilter)
     }
     if (type === FilterTypes.REFERENCE) {
-      const referencedCriteriaSet: string[] = (attributeDefinitionData as AttributeDefinitionData)
-        .referencedCriteriaSet
+      const referencedCriteriaSet: string[] = (attributeDefinitionData as AttributeDefinitionData).referencedCriteriaSet
       const attributeFilter = attributeFilterData as AttributeFilterData
-      const referenceFilter = this.referenceFilterTranslatorService.translate(
-        parentId,
-        attributeFilter.criteria,
-        referencedCriteriaSet
-      )
+      const referenceFilter = this.referenceFilterTranslatorService.translate(parentId, attributeFilter.criteria, referencedCriteriaSet)
       return builder.withReferenceFilter(referenceFilter)
     }
     if (type === FilterTypes.QUANTITY) {
-      const quantityFilter = this.quantityFilterTranslatorService.translate(
-        attributeDefinitionData,
-        attributeFilterData
-      )
+      const quantityFilter = this.quantityFilterTranslatorService.translate(attributeDefinitionData, attributeFilterData)
       return builder.withQuantityFilter(quantityFilter)
     }
   }
 
   /**
    * Creates an instance of the AttributeFiltersBuilder.
-   * @param attributeDefinition
-   * @returns
+   * @param {AttributeDefinitionData | ValueDefinitionData} attributeDefinition
+   * @returns {AttributeFiltersBuilder}
    */
-  private createBuilderInstance(
-    attributeDefinition: AttributeDefinitionData | ValueDefinitionData
-  ): AttributeFiltersBuilder {
+  private createBuilderInstance(attributeDefinition: AttributeDefinitionData | ValueDefinitionData): AttributeFiltersBuilder {
     return new AttributeFiltersBuilder(
       Display.fromJson(attributeDefinition.display),
       attributeDefinition.optional,
@@ -154,18 +138,14 @@ export class AttributeFilterTranslatorService {
    * Finds an attribute filter definition in the UI profile.
    * @param attributeDefinitions
    * @param attributeFilter
-   * @returns
+   * @returns {AttributeFilterData | undefined}
+   * @param {AttributeFilterData[]} sq
+   * @param {TerminologyCodeBaseData} attributeCode
    */
-  public findAttributeFilterInProfile(
-    sq: AttributeFilterData[],
-    attributeCode: TerminologyCodeBaseData
-  ): AttributeFilterData | undefined {
+  public findAttributeFilterInProfile(sq: AttributeFilterData[], attributeCode: TerminologyCodeBaseData): AttributeFilterData | undefined {
     return sq.find((attributeDefinition: AttributeFilterData) => {
       const attributeCodeData = attributeDefinition.attributeCode
-      return (
-        attributeCode.code === attributeCodeData.code &&
-        attributeCode.system === attributeCodeData.system
-      )
+      return attributeCode.code === attributeCodeData.code && attributeCode.system === attributeCodeData.system
     })
   }
 }

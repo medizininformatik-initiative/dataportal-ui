@@ -9,10 +9,7 @@
     [checked]="cell().isSelected"
     (checkedChange)="onCheckboxChange()"
   ></num-checkbox>
-  <div
-    class="name-column highlight text-overflow"
-    matTooltip="{{ cell().value | displayTranslation }}"
-  >
+  <div class="name-column highlight text-overflow" matTooltip="{{ cell().value | displayTranslation }}">
     {{ cell().value | displayTranslation }}
   </div>
 </div>

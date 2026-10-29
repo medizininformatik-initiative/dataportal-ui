@@ -1,13 +1,13 @@
-import { AbstractTableAdapter } from './AbstractTableAdapter'
 import { CodeableConceptResultListEntry } from 'src/app/model/Search/ListEntries/CodeableConceptResultListEntry'
-import { TableCellBuilder } from '../Cells/TableCellBuilder'
-import { TableHeaderData } from '../TableHeaderData'
-import { TableRowData } from '../TableRowData'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { v4 as uuidv4 } from 'uuid'
 import { TextCellData } from '../Cells/Data/TextCellData'
+import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellContext } from '../Cells/TableCellContext'
 import { TableCellUnion } from '../Cells/TableCellUnion'
+import { TableHeaderData } from '../TableHeaderData'
+import { TableRowData } from '../TableRowData'
+import { AbstractTableAdapter } from './AbstractTableAdapter'
 
 export class CodeableConceptListEntryAdapter extends AbstractTableAdapter<CodeableConceptResultListEntry> {
   protected buildHeaders(): TableHeaderData {
@@ -34,11 +34,7 @@ export class CodeableConceptListEntryAdapter extends AbstractTableAdapter<Codeab
   }
 
   private buildCells(entry: CodeableConceptResultListEntry): TableCellUnion[] {
-    return TableCellBuilder.row(
-      this.checkboxTextCell(entry),
-      this.terminologyCell(entry),
-      this.termCodeCell(entry)
-    )
+    return TableCellBuilder.row(this.checkboxTextCell(entry), this.terminologyCell(entry), this.termCodeCell(entry))
   }
 
   private checkboxTextCell(entry: CodeableConceptResultListEntry) {
@@ -48,12 +44,8 @@ export class CodeableConceptListEntryAdapter extends AbstractTableAdapter<Codeab
   }
 
   private terminologyCell(entry: CodeableConceptResultListEntry): TextCellData {
-    const terminologyName = TerminologySystemDictionary.getNameByUrl(
-      entry.getConcept().getTerminologyCode().getSystem()
-    )
-    return TableCellBuilder.withText(
-      terminologyName ?? entry.getConcept().getTerminologyCode().getSystem()
-    )
+    const terminologyName = TerminologySystemDictionary.getNameByUrl(entry.getConcept().getTerminologyCode().getSystem())
+    return TableCellBuilder.withText(terminologyName ?? entry.getConcept().getTerminologyCode().getSystem())
   }
 
   private termCodeCell(entry: CodeableConceptResultListEntry): TextCellData {

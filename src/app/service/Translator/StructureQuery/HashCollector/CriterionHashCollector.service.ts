@@ -1,18 +1,18 @@
+import { Injectable, inject } from '@angular/core'
 import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData'
 import { ContextData } from 'src/app/model/Interface/ContextData'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { HashService } from '../../../Hash.service'
-import { Injectable, inject } from '@angular/core'
 import { ReferenceCriteriaData } from 'src/app/model/Interface/ReferenceCriteriaData'
 import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData'
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { HashService } from '../../../Hash.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionHashCollectorService {
-  private hashService = inject(HashService)
+  private readonly hashService = inject(HashService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -21,12 +21,10 @@ export class CriterionHashCollectorService {
 
   /**
    * Collects criterion hash from the main criterion
-   * @param structuredQueryCriterion StructuredQueryCriterionData object
-   * @returns Criterion hash string
+   * @param {StructuredQueryCriterionData} structuredQueryCriterion StructuredQueryCriterionData object
+   * @returns {string} Criterion hash string
    */
-  public collectHashesFromCriterion(
-    structuredQueryCriterion: StructuredQueryCriterionData
-  ): string {
+  public collectHashesFromCriterion(structuredQueryCriterion: StructuredQueryCriterionData): string {
     const contextData = structuredQueryCriterion.context
     const termCodeData = structuredQueryCriterion.termCodes[0]
     return this.createCriterionHash(contextData, termCodeData)
@@ -34,8 +32,8 @@ export class CriterionHashCollectorService {
 
   /**
    * Collects criterion hashes from reference filters
-   * @param attributeFilterData Array of AttributeFilterData
-   * @returns Array of criterion hashes
+   * @param {AttributeFilterData[]} attributeFilterData Array of AttributeFilterData
+   * @returns {string[]} Array of criterion hashes
    */
   public collectHashesFromReferenceFilters(attributeFilterData: AttributeFilterData[]): string[] {
     const referenceFilter = attributeFilterData.find(
@@ -50,8 +48,8 @@ export class CriterionHashCollectorService {
 
   /**
    * Creates an array of reference criterion hashes from reference criteria data
-   * @param referenceCriteriaData
-   * @returns Array of reference criterion hashes
+   * @param {ReferenceCriteriaData[]} referenceCriteriaData
+   * @returns {string[]} Array of reference criterion hashes
    */
   private createReferenceCriterionHash(referenceCriteriaData: ReferenceCriteriaData[]): string[] {
     return referenceCriteriaData.map((reference: ReferenceCriteriaData) =>
@@ -61,9 +59,9 @@ export class CriterionHashCollectorService {
 
   /**
    * Creates a criterion hash from context and term code data
-   * @param contextData ContextData object
-   * @param termCodeData TerminologyCodeData object
-   * @returns Criterion hash string
+   * @param {ContextData} contextData ContextData object
+   * @param {TerminologyCodeData} termCodeData TerminologyCodeData object
+   * @returns {string} Criterion hash string
    */
   private createCriterionHash(contextData: ContextData, termCodeData: TerminologyCodeData): string {
     const context = TerminologyCode.fromJson(contextData)

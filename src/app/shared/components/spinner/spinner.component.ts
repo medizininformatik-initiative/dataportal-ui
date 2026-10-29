@@ -7,13 +7,13 @@ import { Component, OnInit, model } from '@angular/core'
   standalone: true,
 })
 export class SpinnerComponent implements OnInit {
-  readonly countdown = model<number>()
+  public readonly countdown = model<number>()
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.startCountdown()
   }
 
-  startCountdown(): void {
+  public startCountdown(): void {
     const interval = setInterval(() => {
       if (this.countdown() > 0) {
         this.countdown.update((v) => v - 1)

@@ -12,10 +12,7 @@
     <div class="width-30" [ngClass]="{ 'text-blue': !distributedAnalysis }">
       {{ 'FEASIBILITY.EDITOR.CONSENT.CENTRAL' | translate }}
     </div>
-    <num-switch
-      [isChecked]="distributedAnalysis"
-      (change)="onToggleChange('analysisType')"
-    ></num-switch>
+    <num-switch [isChecked]="distributedAnalysis" (change)="onToggleChange('analysisType')"></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': distributedAnalysis }">
       {{ 'FEASIBILITY.EDITOR.CONSENT.DISTRIBUTED' | translate }}
     </div>
@@ -35,10 +32,7 @@
     <div class="width-30" [ngClass]="{ 'text-blue': !insuranceDataBoolean }">
       {{ 'FEASIBILITY.EDITOR.CONSENT.WITHOUT_DATA' | translate }}
     </div>
-    <num-switch
-      [isChecked]="insuranceDataBoolean"
-      (change)="onToggleChange('insuranceData')"
-    ></num-switch>
+    <num-switch [isChecked]="insuranceDataBoolean" (change)="onToggleChange('insuranceData')"></num-switch>
     <div class="width-30" [ngClass]="{ 'text-blue': insuranceDataBoolean }">
       {{ 'FEASIBILITY.EDITOR.CONSENT.WITH_DATA' | translate }}
     </div>

@@ -1,26 +1,23 @@
-import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service'
 import { AsyncPipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject, input, OnInit, output } from '@angular/core'
-import { CriteriaSetSearchService } from 'src/app/service/Search/SearchTypes/CriteriaSet/CriteriaSetSearch.service'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { InformationSectionComponent } from '../../../../../shared/components/information-section/information-section.component'
-import { map, Observable } from 'rxjs'
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs'
-import { PlaceholderBoxComponent } from '../../../../../shared/components/placeholder-box/placeholder-box.component'
-import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
+import { map, Observable } from 'rxjs'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
-import { SearchbarComponent } from '../../../../../shared/components/search/searchbar.component'
-import { SelectedReferenceListComponent } from '../../../../shared-filter/components/selected-reference-list/selected-reference-list.component'
+import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm.service'
+import { CriteriaSetSearchService } from 'src/app/service/Search/SearchTypes/CriteriaSet/CriteriaSetSearch.service'
 import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
-import { TableComponent } from '../../../../../shared/components/table/table.component'
+import { DisplayTranslationPipe, SectionNameComponent } from 'src/app/shared/components/shared-components.module'
+import { ReferenceCriteriaListEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ReferenceCriteriaListEntryAdapter'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  DisplayTranslationPipe,
-  SectionNameComponent,
-} from 'src/app/shared/components/shared-components.module'
+import { InformationSectionComponent } from '../../../../../shared/components/information-section/information-section.component'
+import { PlaceholderBoxComponent } from '../../../../../shared/components/placeholder-box/placeholder-box.component'
+import { SearchbarComponent } from '../../../../../shared/components/search/searchbar.component'
+import { TableComponent } from '../../../../../shared/components/table/table.component'
+import { SelectedReferenceListComponent } from '../../../../shared-filter/components/selected-reference-list/selected-reference-list.component'
 
 interface selectedItem {
   id: string
@@ -51,40 +48,38 @@ interface selectedItem {
   ],
 })
 export class ReferenceComponent implements OnInit {
-  private activeSearchTermService = inject(ActiveSearchTermService)
-  private snackbarMessageService = inject(SnackbarMessageService)
-  private criteriaSetSearchService = inject(CriteriaSetSearchService)
+  private readonly activeSearchTermService = inject(ActiveSearchTermService)
+  private readonly snackbarMessageService = inject(SnackbarMessageService)
+  private readonly criteriaSetSearchService = inject(CriteriaSetSearchService)
 
-  readonly referenceFilterUri = input<string>(undefined)
+  public readonly referenceFilterUri = input<string>(undefined)
 
-  readonly display = input<Display>(undefined)
+  public readonly display = input<Display>(undefined)
 
-  readonly selectedReferenceCriterion = input<ReferenceCriterion[]>([])
+  public readonly selectedReferenceCriterion = input<ReferenceCriterion[]>([])
 
-  readonly selectedReferenceIds = output<string>()
+  public readonly selectedReferenceIds = output<string>()
 
-  readonly changedSelectedReferences = output<ReferenceCriterion[]>()
+  public readonly changedSelectedReferences = output<ReferenceCriterion[]>()
 
-  tableData$: Observable<TableData | null>
+  public tableData$: Observable<TableData | null>
 
-  arrayOfSelectedReferences: selectedItem[] = []
+  public arrayOfSelectedReferences: selectedItem[] = []
 
-  searchText$: Observable<string>
+  public searchText$: Observable<string>
 
-  searchtText = ''
+  public searchtText = ''
 
   constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.searchText$ = this.activeSearchTermService.getActiveSearchTerm()
-    this.tableData$ = this.criteriaSetSearchService
-      .getSearchResults([this.referenceFilterUri()])
-      .pipe(
-        map((results) => {
-          const items = results?.getResults() ?? []
-          return items.length > 0 ? new ReferenceCriteriaListEntryAdapter().adapt(items) : null
-        })
-      )
+    this.tableData$ = this.criteriaSetSearchService.getSearchResults([this.referenceFilterUri()]).pipe(
+      map((results) => {
+        const items = results?.getResults() ?? []
+        return items.length > 0 ? new ReferenceCriteriaListEntryAdapter().adapt(items) : null
+      })
+    )
     this.startElasticSearch('')
   }
 
@@ -105,9 +100,7 @@ export class ReferenceComponent implements OnInit {
   }
 
   public loadMoreCriteriaSetResults(): void {
-    this.criteriaSetSearchService
-      .loadNextPage(this.searchtText, [this.referenceFilterUri()])
-      .subscribe()
+    this.criteriaSetSearchService.loadNextPage(this.searchtText, [this.referenceFilterUri()]).subscribe()
   }
 
   public updateSelectedReferences(updatedReferences: ReferenceCriterion[]): void {

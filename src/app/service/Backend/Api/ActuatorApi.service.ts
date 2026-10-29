@@ -1,17 +1,17 @@
-import { ActuatorData } from 'src/app/model/Interface/ActuatorInfoData/ActuatorData'
-import { ActuatorPaths } from '../Paths/ActuatorPath'
-import { BackendService } from '../Backend.service'
-import { BuildInformationData } from 'src/app/model/Interface/ActuatorInfoData/BuildInformationData'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
+import { ActuatorData } from 'src/app/model/Interface/ActuatorInfoData/ActuatorData'
+import { BuildInformationData } from 'src/app/model/Interface/ActuatorInfoData/BuildInformationData'
+import { BackendService } from '../Backend.service'
+import { ActuatorPaths } from '../Paths/ActuatorPath'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ActuatorApiService {
-  private http = inject(HttpClient)
-  private backendService = inject(BackendService)
+  private readonly http = inject(HttpClient)
+  private readonly backendService = inject(BackendService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

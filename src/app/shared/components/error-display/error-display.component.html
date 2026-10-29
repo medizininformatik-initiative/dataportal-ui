@@ -7,7 +7,7 @@
     </div>
     <div class="error-display-body">
       @if (errorUrl) {
-      <num-info-tile label="Request URL" [value]="errorUrl" color="red"> </num-info-tile>
+      <num-info-tile label="Request URL" [value]="errorUrl" color="red"></num-info-tile>
       } @if (errorData && errorData.length > 0) {
       <div class="error-list">
         @for (error of errorData; track error; let i = $index) {

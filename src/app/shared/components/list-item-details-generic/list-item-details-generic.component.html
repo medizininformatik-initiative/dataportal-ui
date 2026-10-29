@@ -5,8 +5,7 @@
       {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.DETAILS' | translate }}
     </ng-template>
 
-    @let data = listItemDetails(); @if (data) { @let parents = data.parents ?? []; @let children =
-    data.children ?? [];
+    @let data = listItemDetails(); @if (data) { @let parents = data.parents ?? []; @let children = data.children ?? [];
 
     <div class="tab-content">
       <div class="original-item">
@@ -22,11 +21,7 @@
         <div class="detail-value num-text-body">
           @for (t of translations(); track t.getLanguage()) {
           <div class="translation-entry">
-            <span
-              class="fi"
-              style="font-size: 14px"
-              [ngClass]="'fi-' + (t.getLanguage() === 'en-US' ? 'gb' : 'de')"
-            ></span>
+            <span class="fi" style="font-size: 14px" [ngClass]="'fi-' + (t.getLanguage() === 'en-US' ? 'gb' : 'de')"></span>
             <span [matTooltip]="t.getValue() | displayTranslation" class="num-text-accent">
               {{ t.getValue() }}
             </span>

@@ -1,18 +1,18 @@
+import { CdkDrag } from '@angular/cdk/drag-drop'
+import { AsyncPipe } from '@angular/common'
 import { Component, OnInit, inject, input } from '@angular/core'
-import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
+import { MatTooltip } from '@angular/material/tooltip'
+import { Observable, of } from 'rxjs'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { TerminologySystemDictionary } from '../../../model/Utilities/TerminologySystemDictionary'
 import { FilterChipData } from '../../models/FilterChips/FilterChipData'
 import { MenuItemInterface } from '../../models/Menu/MenuItemInterface'
-import { Observable, of } from 'rxjs'
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
 import { ReferenceCriterionMenuItemsService } from '../../service/Menu/ReferenceCriterion/ReferenceCriterionMenuItems.service'
-import { TerminologySystemDictionary } from '../../../model/Utilities/TerminologySystemDictionary'
-import { CdkDrag } from '@angular/cdk/drag-drop'
-import { MatTooltip } from '@angular/material/tooltip'
 import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
 import { MenuComponent } from '../menu/menu.component'
-import { AsyncPipe } from '@angular/common'
-import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 
 @Component({
   selector: 'num-reference-criteria-box',
@@ -20,40 +20,31 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
   styleUrls: ['./reference-criteria-box.component.scss'],
   providers: [CriterionFilterChipService],
   standalone: true,
-  imports: [
-    CdkDrag,
-    MatTooltip,
-    FilterChipsComponent,
-    MenuComponent,
-    AsyncPipe,
-    DisplayTranslationPipe,
-  ],
+  imports: [CdkDrag, MatTooltip, FilterChipsComponent, MenuComponent, AsyncPipe, DisplayTranslationPipe],
 })
 export class ReferenceCriteriaBoxComponent implements OnInit {
-  private menuService = inject(ReferenceCriterionMenuItemsService)
-  private filterChipsService = inject(CriterionFilterChipService)
+  private readonly menuService = inject(ReferenceCriterionMenuItemsService)
+  private readonly filterChipsService = inject(CriterionFilterChipService)
 
-  readonly referenceCriterion = input<ReferenceCriterion>(undefined)
+  public readonly referenceCriterion = input<ReferenceCriterion>(undefined)
 
-  readonly criterionId = input<string>(undefined)
+  public readonly criterionId = input<string>(undefined)
 
-  menuItems: MenuItemInterface[] = []
+  public menuItems: MenuItemInterface[] = []
 
-  $filterChips: Observable<FilterChipData[]> = of([])
+  public $filterChips: Observable<FilterChipData[]> = of([])
 
-  translatedSystem: Display
+  public translatedSystem: Display
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getMenuItems()
     this.getFilterChips()
-    this.translatedSystem = TerminologySystemDictionary.getNameByUrl(
-      this.referenceCriterion().getTermCodes()[0].getSystem()
-    )
+    this.translatedSystem = TerminologySystemDictionary.getNameByUrl(this.referenceCriterion().getTermCodes()[0].getSystem())
   }
 
   private getMenuItems() {
@@ -61,8 +52,6 @@ export class ReferenceCriteriaBoxComponent implements OnInit {
   }
 
   private getFilterChips() {
-    this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(
-      this.referenceCriterion()
-    )
+    this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.referenceCriterion())
   }
 }

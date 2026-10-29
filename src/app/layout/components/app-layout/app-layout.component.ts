@@ -1,11 +1,11 @@
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router'
-import { routeAnimations } from 'src/app/route-animations'
 import { Component, OnInit, inject } from '@angular/core'
-import { filter, map, mergeMap } from 'rxjs'
-import { HeaderComponent } from '../header/header.component'
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
-import { SideMenuComponent } from '../side-menu/side-menu.component'
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
+import { filter, map, mergeMap } from 'rxjs'
+import { routeAnimations } from 'src/app/route-animations'
+import { HeaderComponent } from '../header/header.component'
+import { SideMenuComponent } from '../side-menu/side-menu.component'
 
 @Component({
   selector: 'num-app-layout',
@@ -13,30 +13,22 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./app-layout.component.scss'],
   animations: [routeAnimations],
   standalone: true,
-  imports: [
-    HeaderComponent,
-    MatSidenavContainer,
-    MatSidenav,
-    SideMenuComponent,
-    MatSidenavContent,
-    RouterOutlet,
-    TranslateModule,
-  ],
+  imports: [HeaderComponent, MatSidenavContainer, MatSidenav, SideMenuComponent, MatSidenavContent, RouterOutlet, TranslateModule],
 })
 export class AppLayoutComponent implements OnInit {
-  private activatedRoute = inject(ActivatedRoute)
-  private router = inject(Router)
+  private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly router = inject(Router)
 
-  isHandset: boolean
-  isSideMenuExpanded = true
-  showSideNav = true
+  public isHandset: boolean
+  public isSideMenuExpanded = true
+  public showSideNav = true
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -48,11 +40,11 @@ export class AppLayoutComponent implements OnInit {
       })
   }
 
-  prepareRoute(outlet: RouterOutlet) {
+  public prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
   }
 
-  toggleSideMenu(): void {
+  public toggleSideMenu(): void {
     this.isSideMenuExpanded = !this.isSideMenuExpanded
   }
 }

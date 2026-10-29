@@ -4,53 +4,53 @@
  * @abstract
  */
 export abstract class AbstractTimeRestriction {
-  private afterDate?: string;
-  private beforeDate?: string;
+  private afterDate?: string
+  private beforeDate?: string
 
   /**
    * Constructor to initialize the AbstractTimeRestriction with attribute code, type, afterDate, and beforeDate.
    *
-   * @param afterDate - The date that marks the start of the time restriction.
-   * @param [beforeDate] - The date that marks the end of the time restriction.
+   * @param {string} afterDate - The date that marks the start of the time restriction.
+   * @param {string} [beforeDate] - The date that marks the end of the time restriction.
    */
   constructor(afterDate?: string, beforeDate?: string) {
-    this.afterDate = afterDate;
-    this.beforeDate = beforeDate;
+    this.afterDate = afterDate
+    this.beforeDate = beforeDate
   }
 
   /**
    * Gets the afterDate value.
    *
-   * @returns The afterDate value.
+   * @returns {string} The afterDate value.
    */
   public getAfterDate(): string {
-    return this.afterDate;
+    return this.afterDate
   }
 
   /**
    * Sets the afterDate value.
    *
-   * @param afterDate - The new afterDate value to set.
+   * @param {string} afterDate - The new afterDate value to set.
    */
   public setAfterDate(afterDate: string): void {
-    this.afterDate = afterDate;
+    this.afterDate = afterDate
   }
 
   /**
    * Gets the beforeDate value.
    *
-   * @returns The beforeDate value.
+   * @returns {string | undefined} The beforeDate value.
    */
   public getBeforeDate(): string | undefined {
-    return this.beforeDate;
+    return this.beforeDate
   }
 
   /**
    * Sets the beforeDate value.
    *
-   * @param beforeDate - The new beforeDate value to set.
+   * @param {string} beforeDate - The new beforeDate value to set.
    */
   public setBeforeDate(beforeDate: string): void {
-    this.beforeDate = beforeDate;
+    this.beforeDate = beforeDate
   }
 }

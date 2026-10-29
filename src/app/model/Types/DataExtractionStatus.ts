@@ -1,1 +1,1 @@
-export type DataExtractionStatus = { exists: boolean; isValid: boolean };
+export type DataExtractionStatus = { exists: boolean; isValid: boolean }

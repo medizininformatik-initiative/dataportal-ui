@@ -1,10 +1,4 @@
-<mat-tab-group
-  class="height-100"
-  animationDuration="0ms"
-  disableRipple="true"
-  mat-stretch-tabs="false"
-  [selectedIndex]="1"
->
+<mat-tab-group class="height-100" animationDuration="0ms" disableRipple="true" mat-stretch-tabs="false" [selectedIndex]="1">
   <mat-tab label="{{ 'INFORMATION.FIELD.TITLE' | translate }}">
     <num-information-section>
       <span slot="title">{{ 'INFORMATION.FIELD.TITLE' | translate }}</span>
@@ -18,10 +12,7 @@
         <div class="field-box">
           @for (singleTree of tree; track singleTree) {
           <div>
-            <num-tree
-              [treeData]="singleTree"
-              (selectedCheckbox)="setSelectedFieldElement($event)"
-            ></num-tree>
+            <num-tree [treeData]="singleTree" (selectedCheckbox)="setSelectedFieldElement($event)"></num-tree>
           </div>
           }
         </div>
@@ -31,14 +22,10 @@
             {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED' | translate }}
           </num-section-name>
           <div class="selected-fields-box">
-            @for (selectedField of localSelectedBasicFields; track selectedField.getElementId(); let
-            index = $index) {
+            @for (selectedField of localSelectedBasicFields; track selectedField.getElementId(); let index = $index) {
             <div class="selected-filter-container">
               <div>
-                <num-checkbox
-                  [checked]="selectedField.getMustHave()"
-                  (checkedChange)="setFieldAsRequired(selectedField)"
-                ></num-checkbox>
+                <num-checkbox [checked]="selectedField.getMustHave()" (checkedChange)="setFieldAsRequired(selectedField)"></num-checkbox>
               </div>
               <div class="display-part">
                 <span
@@ -56,12 +43,7 @@
                 }
               </div>
               @if (!selectedField.getIsRequired()) {
-              <fa-icon
-                [icon]="'times'"
-                size="1x"
-                (click)="removeSelectedField(selectedField)"
-                class="delete-button"
-              ></fa-icon>
+              <fa-icon [icon]="'times'" size="1x" (click)="removeSelectedField(selectedField)" class="delete-button"></fa-icon>
               }
             </div>
             }

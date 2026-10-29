@@ -11,7 +11,7 @@ import { Observable } from 'rxjs'
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
   // lazy: OAuthService injects HttpClient, which injects HTTP_INTERCEPTORS (NG0200)
-  private injector = inject(Injector)
+  private readonly injector = inject(Injector)
 
   /**
    * List of URL patterns that should be excluded from token injection.
@@ -26,16 +26,13 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
-  /**
-   *
-   */
   constructor() {}
 
   /**
    * Intercepts HTTP requests and conditionally adds Authorization header with bearer token.
-   * @param req - The outgoing HTTP request to potentially modify
-   * @param next - The next handler in the interceptor chain
-   * @returns Observable of HTTP events from the modified or original request
+   * @param {HttpRequest<any>} req - The outgoing HTTP request to potentially modify
+   * @param {HttpHandler} next - The next handler in the interceptor chain
+   * @returns {Observable<HttpEvent<any>>} Observable of HTTP events from the modified or original request
    */
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const shouldExclude = this.excludedUrlsRegEx.some((regex) => regex.test(req.url))
@@ -49,8 +46,8 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
   /**
    * Creates a cloned request with Authorization header when token exists.
-   * @param req - The original HTTP request
-   * @returns Modified request with token or original request if no token available
+   * @param {HttpRequest<any>} req - The original HTTP request
+   * @returns {HttpRequest<any>} Modified request with token or original request if no token available
    */
   private attachTokenIfAvailable(req: HttpRequest<any>): HttpRequest<any> {
     const token = this.getValidToken()
@@ -66,13 +63,10 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
   /**
    * Retrieves a valid, non-empty access token from the OAuth service.
-   * @returns Access token string if valid, otherwise null
+   * @returns {OAuthService} Access token string if valid, otherwise null
    */
-  private oauthService = (): OAuthService => this.injector.get(OAuthService)
+  private readonly oauthService = (): OAuthService => this.injector.get(OAuthService)
 
-  /**
-   *
-   */
   private getValidToken(): string | null {
     const token = this.oauthService().getAccessToken()
 

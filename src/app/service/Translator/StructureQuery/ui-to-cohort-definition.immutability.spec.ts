@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, it } from '@jest/globals'
 import { TestBed } from '@angular/core/testing'
+import { beforeEach, describe, expect, it } from '@jest/globals'
 import { firstValueFrom } from 'rxjs'
-import { buildQuery, criterion, included } from './ui-to-cohort-definition.fixtures'
 import { ToCohortDefinitionService } from './ToCohortDefinition.service'
+import { buildQuery, criterion, included } from './ui-to-cohort-definition.fixtures'
 
 /** Own file: a failing run mutates the shared fixture constants, which must not leak into other specs. */
 describe('ToCohortDefinitionService does not share memory with the UI', () => {

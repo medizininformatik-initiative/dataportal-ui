@@ -1,19 +1,19 @@
-import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service'
+import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs'
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { Injectable, inject } from '@angular/core'
+import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service'
 import { v4 as uuidv4 } from 'uuid'
 import { ProfileProviderService } from './ProfileProvider.service'
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelectionProviderService {
-  private activeDataSelection = inject(ActiveDataSelectionService)
-  private profileProviderService = inject(ProfileProviderService)
+  private readonly activeDataSelection = inject(ActiveDataSelectionService)
+  private readonly profileProviderService = inject(ProfileProviderService)
 
-  private selectionMap: Map<string, DataSelection> = new Map()
-  private selectionMapSubject: BehaviorSubject<Map<string, DataSelection>> = new BehaviorSubject(new Map())
+  private readonly selectionMap: Map<string, DataSelection> = new Map()
+  private readonly selectionMapSubject: BehaviorSubject<Map<string, DataSelection>> = new BehaviorSubject(new Map())
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

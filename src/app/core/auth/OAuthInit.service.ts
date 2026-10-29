@@ -1,15 +1,15 @@
-import { AuthConfigService } from './AuthConfig.service'
-import { catchError, mapTo } from 'rxjs/operators'
-import { from, Observable, of, race, throwError, timer } from 'rxjs'
 import { Injectable, inject } from '@angular/core'
 import { OAuthService } from 'angular-oauth2-oidc'
+import { from, Observable, of, race, throwError, timer } from 'rxjs'
+import { catchError, mapTo } from 'rxjs/operators'
+import { AuthConfigService } from './AuthConfig.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class OAuthInitService {
-  private oauthService = inject(OAuthService)
-  private authConfigService = inject(AuthConfigService)
+  private readonly oauthService = inject(OAuthService)
+  private readonly authConfigService = inject(AuthConfigService)
 
   private readonly TERMINATION_TIMEOUT = 20_000
 
@@ -25,9 +25,7 @@ export class OAuthInitService {
     this.configureAuthConfig()
     const timeout$ = this.setTimeoOut()
     const login$ = this.startOAuthLogin()
-    return race([login$, timeout$]).pipe(
-      catchError((err) => throwError(() => new Error(err.message || this.ERROR_INIT_FAIL)))
-    )
+    return race([login$, timeout$]).pipe(catchError((err) => throwError(() => new Error(err.message || this.ERROR_INIT_FAIL))))
   }
 
   private startOAuthLogin(): Observable<boolean> {

@@ -1,19 +1,16 @@
-import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service'
+import { Injectable, inject } from '@angular/core'
 import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
 import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
-import { CriteriaResultMapperStrategy } from '../Mapping/CriteriaResultMapperStrategy'
-import { CriteriaSearchUrlStrategy } from '../Url/CriteriaSearchUrlStrategy'
-import { Injectable, inject } from '@angular/core'
+import { AbstractSimpleSearchEngine } from '../../../Abstract/Engine/AbstractSimpleSearchEngine.service'
 import { SearchEngine } from '../../../SearchEngine'
 import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder'
+import { CriteriaResultMapperStrategy } from '../Mapping/CriteriaResultMapperStrategy'
+import { CriteriaSearchUrlStrategy } from '../Url/CriteriaSearchUrlStrategy'
 
 @Injectable({
   providedIn: 'root',
 })
-export class CriteriaSearchEngineService extends AbstractSimpleSearchEngine<
-  CriteriaListEntry,
-  CriteriaResultList
-> {
+export class CriteriaSearchEngineService extends AbstractSimpleSearchEngine<CriteriaListEntry, CriteriaResultList> {
   protected searchEngine: SearchEngine<CriteriaListEntry, CriteriaResultList>
 
   /** Inserted by Angular inject() migration for backwards compatibility */
@@ -28,14 +25,12 @@ export class CriteriaSearchEngineService extends AbstractSimpleSearchEngine<
 
   /**
    * Creates the search URL for the given search text.
-   * @param searchText The text to search for.
-   * @returns The constructed search URL.
+   * @param {string} searchText The text to search for.
+   * @returns {string} The constructed search URL.
+   * @param {number} page
+   * @param {number} pageSize
    */
-  protected createUrl(
-    searchText: string,
-    page: number,
-    pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE
-  ): string {
+  protected createUrl(searchText: string, page: number, pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE): string {
     const urlStrategy = new CriteriaSearchUrlStrategy(
       searchText,
       this.searchEngine.getAvailabilityFilter(),

@@ -36,13 +36,7 @@
 
       <div class="linkBox linkBox--grey">
         <div class="queryBoxHeader">{{ 'DASHBOARD.UPLOAD_DATADEFINITION.HEADER' | translate }}</div>
-        <input
-          [attr.data-cy]="'upload-crtdl'"
-          type="file"
-          class="file-input"
-          (change)="upload($event)"
-          #fileUpload
-        />
+        <input [attr.data-cy]="'upload-crtdl'" type="file" class="file-input" (change)="upload($event)" #fileUpload />
         <num-button (click)="fileUpload.click()" type="blue">
           {{ 'DASHBOARD.UPLOAD_DATADEFINITION.BUTTON' | translate }}
         </num-button>

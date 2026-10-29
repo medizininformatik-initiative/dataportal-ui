@@ -1,8 +1,8 @@
-import { AbstractField } from '../AbstractField';
-import { Display } from '../../Display';
-import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes';
-import { ReferencedProfile } from './ReferencedProfile';
-import { ReferenceFieldData } from 'src/app/model/Interface/ReferenceFieldData';
+import { ReferenceFieldData } from 'src/app/model/Interface/ReferenceFieldData'
+import { ProfileFieldTypes } from 'src/app/model/Utilities/ProfileFieldTypes'
+import { Display } from '../../Display'
+import { AbstractField } from '../AbstractField'
+import { ReferencedProfile } from './ReferencedProfile'
 
 /**
  * Represents a field that references other profiles.
@@ -10,16 +10,16 @@ import { ReferenceFieldData } from 'src/app/model/Interface/ReferenceFieldData';
  */
 export class ReferenceField extends AbstractField {
   /** @type {ReferencedProfile[]} Array of profiles that  referenced */
-  private referencedProfiles: ReferencedProfile[] = [];
+  private referencedProfiles: ReferencedProfile[] = []
 
   /**
    * Creates a new ReferenceField instance.
-   * @param elementId - Unique identifier for the field element
-   * @param display - Display information for the field
-   * @param description - Description information for the field
-   * @param isRequired - Whether this field is required (default: false)
-   * @param recommended - Whether this field is recommended (default: false)
-   * @param referencedProfiles - Array of profiles that can be referenced (default: [])
+   * @param {string} elementId - Unique identifier for the field element
+   * @param {Display} display - Display information for the field
+   * @param {Display} description - Description information for the field
+   * @param {boolean} isRequired - Whether this field is required (default: false)
+   * @param {boolean} recommended - Whether this field is recommended (default: false)
+   * @param {ReferencedProfile[]} referencedProfiles - Array of profiles that can be referenced (default: [])
    */
   constructor(
     elementId: string,
@@ -29,34 +29,34 @@ export class ReferenceField extends AbstractField {
     recommended: boolean = false,
     referencedProfiles: ReferencedProfile[] = []
   ) {
-    super(elementId, display, description, isRequired, recommended, ProfileFieldTypes.reference);
-    this.referencedProfiles = referencedProfiles;
+    super(elementId, display, description, isRequired, recommended, ProfileFieldTypes.reference)
+    this.referencedProfiles = referencedProfiles
   }
 
   /**
    * Gets the array of profiles that can be referenced by this field.
-   * @returns Array of referenced profiles
+   * @returns {ReferencedProfile[]} Array of referenced profiles
    */
   public getReferencedProfiles(): ReferencedProfile[] {
-    return this.referencedProfiles;
+    return this.referencedProfiles
   }
 
   /**
    * Sets the array of profiles that can be referenced by this field.
-   * @param referencedProfiles - Array of referenced profiles to set
+   * @param {ReferencedProfile[]} referencedProfiles - Array of referenced profiles to set
    * @returns
    */
   public setReferencedProfiles(referencedProfiles: ReferencedProfile[]): void {
-    this.referencedProfiles = referencedProfiles;
+    this.referencedProfiles = referencedProfiles
   }
 
   /**
    * Checks if the reference field is either required or recommended.
-   * @param referenceField - The reference field to check
-   * @returns True if the field is required or recommended
+   * @param {ReferenceField} referenceField - The reference field to check
+   * @returns {boolean} True if the field is required or recommended
    */
   public isRequiredOrRecomended(referenceField: ReferenceField): boolean {
-    return referenceField.getIsRequired() || referenceField.getRecommended();
+    return referenceField.getIsRequired() || referenceField.getRecommended()
   }
 
   public static fromJson(data: ReferenceFieldData): ReferenceField {
@@ -67,6 +67,6 @@ export class ReferenceField extends AbstractField {
       data.required,
       data.recommended,
       data.referencedProfiles.map((profileData) => ReferencedProfile.fromJson(profileData))
-    );
+    )
   }
 }

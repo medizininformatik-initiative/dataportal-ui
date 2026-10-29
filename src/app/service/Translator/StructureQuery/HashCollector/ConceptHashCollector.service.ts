@@ -1,15 +1,15 @@
-import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { HashService } from '../../../Hash.service'
 import { Injectable, inject } from '@angular/core'
+import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData'
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData'
 import { ValueFilterData } from 'src/app/model/Interface/ValueFilterData'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { HashService } from '../../../Hash.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConceptHashCollectorService {
-  private hashService = inject(HashService)
+  private readonly hashService = inject(HashService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -18,21 +18,19 @@ export class ConceptHashCollectorService {
 
   /**
    * Collects concept hashes from attribute filters
-   * @param attributeFilterData Array of AttributeFilterData
-   * @returns Array of concept hashes
+   * @param {AttributeFilterData[]} attributeFilterData Array of AttributeFilterData
+   * @returns {string[]} Array of concept hashes
    */
   public collectFromAttributeFilters(attributeFilterData: AttributeFilterData[]): string[] {
     const conceptHashes: string[] = []
-    attributeFilterData.forEach((filter: AttributeFilterData) =>
-      conceptHashes.push(...this.getConceptHashesFromFilter(filter))
-    )
+    attributeFilterData.forEach((filter: AttributeFilterData) => conceptHashes.push(...this.getConceptHashesFromFilter(filter)))
     return conceptHashes
   }
 
   /**
    * Collects concept hashes from value filter
-   * @param valueFilterData ValueFilterData object
-   * @returns Array of concept hashes
+   * @param {ValueFilterData} valueFilterData ValueFilterData object
+   * @returns {string[]} Array of concept hashes
    */
   public collectFromValueFilter(valueFilterData: ValueFilterData): string[] {
     return this.getConceptHashesFromFilter(valueFilterData)
@@ -41,7 +39,8 @@ export class ConceptHashCollectorService {
   /**
    * Extracts concept hashes from a filter base data object
    * @param filterBaseData AttributeFilterBaseData or ValueFilterData
-   * @returns Array of concept hashes
+   * @returns {string[]} Array of concept hashes
+   * @param {AttributeFilterData | ValueFilterData} filterData
    */
   private getConceptHashesFromFilter(filterData: AttributeFilterData | ValueFilterData): string[] {
     if (filterData.type === FilterTypes.CONCEPT) {
@@ -53,15 +52,13 @@ export class ConceptHashCollectorService {
 
   /**
    * Maps terminology code data to concept hashes
-   * @param selectedConcepts Array of TerminologyCodeData
-   * @returns Array of concept hashes
+   * @param {TerminologyCodeData[]} selectedConcepts Array of TerminologyCodeData
+   * @returns {string[]} Array of concept hashes
    */
   private mapConceptHashes(selectedConcepts: TerminologyCodeData[]): string[] {
     if (!selectedConcepts || selectedConcepts.length === 0) {
       return []
     }
-    return selectedConcepts.map((termCodeData: TerminologyCodeData) =>
-      this.hashService.createConceptHash(termCodeData)
-    )
+    return selectedConcepts.map((termCodeData: TerminologyCodeData) => this.hashService.createConceptHash(termCodeData))
   }
 }

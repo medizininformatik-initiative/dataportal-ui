@@ -1,15 +1,15 @@
 import { Component } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { TranslateModule } from '@ngx-translate/core'
-import { MaterialModule } from '../../material/material.module'
+import { OAuthService, UserInfo } from 'angular-oauth2-oidc'
 import { ButtonComponent } from '../../../shared/components/button/button.component'
+import { IUserProfile } from '../../../shared/models/user/user-profile.interface'
+import { MaterialModule } from '../../material/material.module'
 import { LanguageComponent } from '../language/language.component'
 import { HeaderComponent } from './header.component'
-import { OAuthService, UserInfo } from 'angular-oauth2-oidc'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { IUserProfile } from '../../../shared/models/user/user-profile.interface'
 
 describe.skip('HeaderComponent', () => {
   let component: HeaderComponent
@@ -51,13 +51,7 @@ describe.skip('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      imports: [
-        MaterialModule,
-        FontAwesomeModule,
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-        FontAwesomeTestingModule,
-      ],
+      imports: [MaterialModule, FontAwesomeModule, TranslateModule.forRoot(), RouterTestingModule, FontAwesomeTestingModule],
       providers: [
         {
           provide: OAuthService,

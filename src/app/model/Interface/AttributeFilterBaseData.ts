@@ -1,6 +1,6 @@
-import { Comparator } from '../Utilities/Quantity/Comparator';
-import { QuantityUnitData } from './Unit';
-import { TerminologyCodeData } from './TerminologyCodeData';
+import { Comparator } from '../Utilities/Quantity/Comparator'
+import { TerminologyCodeData } from './TerminologyCodeData'
+import { QuantityUnitData } from './Unit'
 
 export interface AttributeFilterBaseData {
   selectedConcepts: TerminologyCodeData[]

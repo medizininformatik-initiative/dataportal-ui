@@ -10,13 +10,11 @@ import { HighlightPipe } from 'src/app/shared/pipes/HighlightPipe'
   imports: [DisplayTranslationPipe, HighlightPipe],
 })
 export class LabelColComponent {
-  readonly profile = input<DataSelectionProfile>()
-  readonly searchTerm = input<string | undefined>(undefined)
+  public readonly profile = input<DataSelectionProfile>()
+  public readonly searchTerm = input<string | undefined>(undefined)
 
-  readonly label = computed(() => this.profile()?.getLabel())
-  readonly display = computed(() => this.profile()?.getDisplay().getOriginal())
-  readonly labelNumber = computed(() =>
-    this.profile()?.getLabelNumber() > 0 ? '(' + this.profile()?.getLabelNumber() + ')' : ''
-  )
-  displayExpanded = false
+  public readonly label = computed(() => this.profile()?.getLabel())
+  public readonly display = computed(() => this.profile()?.getDisplay().getOriginal())
+  public readonly labelNumber = computed(() => (this.profile()?.getLabelNumber() > 0 ? '(' + this.profile()?.getLabelNumber() + ')' : ''))
+  public displayExpanded = false
 }

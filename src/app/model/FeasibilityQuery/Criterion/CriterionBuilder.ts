@@ -1,12 +1,12 @@
-import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction'
-import { AttributeFilter } from './AttributeFilter/AttributeFilter'
-import { Criterion } from './Criterion'
-import { CritGroupPosition } from '../CritGroupPosition'
-import { ReferenceCriterion } from './ReferenceCriterion'
-import { TerminologyCode } from '../../Terminology/TerminologyCode'
-import { TimeRestrictionNotSet } from './TimeRestriction/TimeRestrictionNotSet'
-import { ValueFilter } from './AttributeFilter/ValueFilter'
 import { Display } from '../../DataSelection/Profile/Display'
+import { TerminologyCode } from '../../Terminology/TerminologyCode'
+import { CritGroupPosition } from '../CritGroupPosition'
+import { AttributeFilter } from './AttributeFilter/AttributeFilter'
+import { ValueFilter } from './AttributeFilter/ValueFilter'
+import { Criterion } from './Criterion'
+import { ReferenceCriterion } from './ReferenceCriterion'
+import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction'
+import { TimeRestrictionNotSet } from './TimeRestriction/TimeRestrictionNotSet'
 
 /**
  * Builder class for constructing instances of AbstractCriterion and its subclasses.
@@ -26,6 +26,18 @@ export class CriterionBuilder {
   private id?: string
   private valueFilters?: Array<ValueFilter> = []
 
+  /**
+   * Creates a new CriterionBuilder.
+   *
+   * @param {{ isReference: boolean context: TerminologyCode criterionHash: string display: Display isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} mandatoryFields
+   * @param {{ isReference: boolean context: TerminologyCode criterionHash: string display: Display isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} mandatoryFields.isReference
+   * @param {{ isReference: boolean context: TerminologyCode criterionHash: string display: Display isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} mandatoryFields.context
+   * @param {{ isReference: boolean context: TerminologyCode criterionHash: string display: Display isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} mandatoryFields.criterionHash
+   * @param {{ isReference: boolean context: TerminologyCode criterionHash: string display: Display isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} mandatoryFields.display
+   * @param {{ isReference: boolean context: TerminologyCode criterionHash: string display: Display isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} mandatoryFields.isRequiredFilterSet
+   * @param {{ isReference: boolean context: TerminologyCode criterionHash: string display: Display isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} mandatoryFields.id
+   * @param {{ isReference: boolean context: TerminologyCode criterionHash: string display: Display isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} mandatoryFields.termCodes
+   */
   constructor(
     private readonly mandatoryFields: {
       isReference: boolean
@@ -45,17 +57,15 @@ export class CriterionBuilder {
     this.termCodes = mandatoryFields.termCodes
   }
 
-  withAttributeFilters(attributeFilters: Array<AttributeFilter>): CriterionBuilder {
+  public withAttributeFilters(attributeFilters: Array<AttributeFilter>): CriterionBuilder {
     this.attributeFilters = attributeFilters
     return this
   }
 
-  withAttributeFilter(attributeFilter: AttributeFilter): CriterionBuilder {
+  public withAttributeFilter(attributeFilter: AttributeFilter): CriterionBuilder {
     if (this.attributeFilters.length > 0) {
       const index = this.attributeFilters.findIndex(
-        (existingAttributeFilter) =>
-          attributeFilter.getAttributeCode()?.getCode() ===
-          existingAttributeFilter.getAttributeCode()?.getCode()
+        (existingAttributeFilter) => attributeFilter.getAttributeCode()?.getCode() === existingAttributeFilter.getAttributeCode()?.getCode()
       )
       if (index !== -1) {
         this.attributeFilters[index] = attributeFilter
@@ -68,47 +78,47 @@ export class CriterionBuilder {
     return this
   }
 
-  withContext(context: TerminologyCode): CriterionBuilder {
+  public withContext(context: TerminologyCode): CriterionBuilder {
     this.context = context
     return this
   }
 
-  withCriterionHash(criterionHash: string): CriterionBuilder {
+  public withCriterionHash(criterionHash: string): CriterionBuilder {
     this.criterionHash = criterionHash
     return this
   }
 
-  withDisplay(display: Display): CriterionBuilder {
+  public withDisplay(display: Display): CriterionBuilder {
     this.display = display
     return this
   }
 
-  withIsInvalid(isInvalid: boolean): CriterionBuilder {
+  public withIsInvalid(isInvalid: boolean): CriterionBuilder {
     this.isInvalid = isInvalid
     return this
   }
 
-  withPosition(position: CritGroupPosition): CriterionBuilder {
+  public withPosition(position: CritGroupPosition): CriterionBuilder {
     this.position = position
     return this
   }
 
-  withTermCodes(termCodes: Array<TerminologyCode>): CriterionBuilder {
+  public withTermCodes(termCodes: Array<TerminologyCode>): CriterionBuilder {
     this.termCodes = termCodes
     return this
   }
 
-  withTimeRestriction(timeRestriction: AbstractTimeRestriction): CriterionBuilder {
+  public withTimeRestriction(timeRestriction: AbstractTimeRestriction): CriterionBuilder {
     this.timeRestriction = timeRestriction
     return this
   }
 
-  withId(id: string): CriterionBuilder {
+  public withId(id: string): CriterionBuilder {
     this.id = id
     return this
   }
 
-  withValueFilters(valueFilters: ValueFilter[]): CriterionBuilder {
+  public withValueFilters(valueFilters: ValueFilter[]): CriterionBuilder {
     if (this.valueFilters.length === 0) {
       this.valueFilters.push(...valueFilters)
     } else {
@@ -118,17 +128,17 @@ export class CriterionBuilder {
     return this
   }
 
-  withRequiredFilter(withFilter: boolean): CriterionBuilder {
+  public withRequiredFilter(withFilter: boolean): CriterionBuilder {
     this.isRequiredFilterSet = withFilter
     return this
   }
 
-  withHasReference(hasReference: boolean): CriterionBuilder {
+  public withHasReference(hasReference: boolean): CriterionBuilder {
     this.hasReference = hasReference
     return this
   }
 
-  withParentId(id: string): CriterionBuilder {
+  public withParentId(id: string): CriterionBuilder {
     this.parentId = id
     return this
   }
@@ -136,9 +146,9 @@ export class CriterionBuilder {
   /**
    * Builds a Criterion instance using the current builder configuration.
    *
-   * @returns Criterion instance.
+   * @returns {Criterion} Criterion instance.
    */
-  buildCriterion(): Criterion {
+  public buildCriterion(): Criterion {
     return new Criterion(
       false,
       this.attributeFilters,
@@ -157,9 +167,9 @@ export class CriterionBuilder {
   /**
    * Builds a ReferenceCriterion instance using the current builder configuration.
    * @instance
-   * @returns
+   * @returns {ReferenceCriterion}
    */
-  buildReferenceCriterion(): ReferenceCriterion {
+  public buildReferenceCriterion(): ReferenceCriterion {
     return new ReferenceCriterion(
       this.parentId,
       true,
@@ -176,7 +186,7 @@ export class CriterionBuilder {
     )
   }
 
-  buildEmptyTimeRestriction() {
+  public buildEmptyTimeRestriction() {
     return new TimeRestrictionNotSet()
   }
 }

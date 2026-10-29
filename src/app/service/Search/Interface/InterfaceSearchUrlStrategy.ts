@@ -1,3 +1,3 @@
 export abstract class SearchUrlStrategy {
-  abstract getSearchUrl(page: number, pageSize: number): string;
+  public abstract getSearchUrl(page: number, pageSize: number): string
 }

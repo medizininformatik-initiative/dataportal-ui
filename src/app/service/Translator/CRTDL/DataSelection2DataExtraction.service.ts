@@ -1,26 +1,26 @@
-import { AbstractAttributeGroupFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/AbstractAttributeGroupFilter'
-import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter'
+import { Injectable, inject } from '@angular/core'
 import { AttributeGroup } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup'
+import { AbstractAttributeGroupFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/AbstractAttributeGroupFilter'
 import { Attributes } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Attributes/Attribute'
+import { DateFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/DateFilter'
+import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/TokenFilter '
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction'
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType'
-import { DateFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/DateFilter'
-import { Injectable, inject } from '@angular/core'
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields'
+import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter'
 import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter'
 import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
+import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType'
 import { TerminologyCodeTranslator } from '../Shared/TerminologyCodeTranslator.service'
 import { TimeRestrictionTranslationService } from '../Shared/TimeRestrictionTranslation.service'
-import { TokenFilter } from 'src/app/model/CRTDL/DataExtraction/AttributeGrooups/AttributeGroup/Filter/TokenFilter '
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelection2DataExtraction {
-  private timeRestrictionTranslation = inject(TimeRestrictionTranslationService)
-  private terminologyCodeTranslator = inject(TerminologyCodeTranslator)
+  private readonly timeRestrictionTranslation = inject(TimeRestrictionTranslationService)
+  private readonly terminologyCodeTranslator = inject(TerminologyCodeTranslator)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -28,9 +28,7 @@ export class DataSelection2DataExtraction {
   constructor() {}
 
   public translateToDataExtraction(dataSelection: DataSelection): DataExtraction {
-    const attribuetGroups = dataSelection
-      .getProfiles()
-      .map((profile) => this.translateAttributeGroups(profile))
+    const attribuetGroups = dataSelection.getProfiles().map((profile) => this.translateAttributeGroups(profile))
     return attribuetGroups.length > 0 ? new DataExtraction(attribuetGroups) : undefined
   }
 
@@ -49,21 +47,18 @@ export class DataSelection2DataExtraction {
   }
 
   /**
+   * Translates the selected fields.
    * @todo its all broken -- need to be fixed
    * @param selectedFields
-   * @returns
+   * @returns {Attributes[] | undefined}
+   * @param {ProfileFields} profileFields
    */
   private translateSelectedFields(profileFields: ProfileFields): Attributes[] | undefined {
     const selectedBasicFields = profileFields.getSelectedBasicFields()
     const selectedReferenceFields = profileFields.getSelectedReferenceFields()
 
     const basicFieldAttributes = selectedBasicFields.map(
-      (selectedBasicField) =>
-        new Attributes(
-          selectedBasicField.getElementId(),
-          selectedBasicField.getMustHave(),
-          undefined
-        )
+      (selectedBasicField) => new Attributes(selectedBasicField.getElementId(), selectedBasicField.getMustHave(), undefined)
     )
     const referenceFieldAttributes = selectedReferenceFields.map(
       (selectedReferenceField) =>
@@ -77,9 +72,7 @@ export class DataSelection2DataExtraction {
     return combinedAttributes.length > 0 ? combinedAttributes : undefined
   }
 
-  private translateFilters(
-    filters: AbstractProfileFilter[]
-  ): AbstractAttributeGroupFilter[] | undefined {
+  private translateFilters(filters: AbstractProfileFilter[]): AbstractAttributeGroupFilter[] | undefined {
     const abstractProfileFilters: AbstractAttributeGroupFilter[] = []
 
     filters.forEach((filter) => {
@@ -92,9 +85,7 @@ export class DataSelection2DataExtraction {
     return abstractProfileFilters.length > 0 ? abstractProfileFilters : undefined
   }
 
-  private getTranslatedFilter(
-    filter: AbstractProfileFilter
-  ): AbstractAttributeGroupFilter | undefined {
+  private getTranslatedFilter(filter: AbstractProfileFilter): AbstractAttributeGroupFilter | undefined {
     switch (filter.getUiType()) {
       case DataSelectionUIType.TIMERESTRICTION:
         return this.translateDateFilter(filter as ProfileTimeRestrictionFilter)
@@ -105,33 +96,18 @@ export class DataSelection2DataExtraction {
     }
   }
 
-  private translateDateFilter(
-    profileDateFilter: ProfileTimeRestrictionFilter
-  ): DateFilter | undefined {
-    const time = this.timeRestrictionTranslation.translateTimeRestrictionToStructuredQuery(
-      profileDateFilter.getTimeRestriction()
-    )
+  private translateDateFilter(profileDateFilter: ProfileTimeRestrictionFilter): DateFilter | undefined {
+    const time = this.timeRestrictionTranslation.translateTimeRestrictionToStructuredQuery(profileDateFilter.getTimeRestriction())
     return time
-      ? new DateFilter(
-          profileDateFilter.getName(),
-          profileDateFilter.getType(),
-          time.getAfterDate(),
-          time.getBeforeDate()
-        )
+      ? new DateFilter(profileDateFilter.getName(), profileDateFilter.getType(), time.getAfterDate(), time.getBeforeDate())
       : undefined
   }
 
   private translateTokenFilter(profileTokenFilter: ProfileTokenFilter): TokenFilter | undefined {
     const selectedTokens = profileTokenFilter.getSelectedTokens()
     if (selectedTokens.length > 0) {
-      const terminologyCodes = this.terminologyCodeTranslator.translateTermCodes(
-        selectedTokens.map((token) => token.getTerminologyCode())
-      )
-      return new TokenFilter(
-        profileTokenFilter.getName(),
-        profileTokenFilter.getType(),
-        terminologyCodes
-      )
+      const terminologyCodes = this.terminologyCodeTranslator.translateTermCodes(selectedTokens.map((token) => token.getTerminologyCode()))
+      return new TokenFilter(profileTokenFilter.getName(), profileTokenFilter.getType(), terminologyCodes)
     } else {
       return undefined
     }

@@ -1,5 +1,5 @@
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { inject, Injectable, Signal, signal } from '@angular/core'
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 
 @Injectable({
@@ -42,9 +42,7 @@ export class SelectedConceptFilterProviderService {
 
   public addConcepts(concepts: Concept[]): void {
     const current = this.selectedConceptsSignal()
-    const newConcepts = concepts.filter(
-      (concept) => !current.some((tc) => this.isSameConcept(tc, concept))
-    )
+    const newConcepts = concepts.filter((concept) => !current.some((tc) => this.isSameConcept(tc, concept)))
     if (newConcepts.length > 0) {
       this.selectedConceptsSignal.set([...current, ...newConcepts])
     }

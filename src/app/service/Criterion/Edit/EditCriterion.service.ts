@@ -1,30 +1,30 @@
+import { inject, Injectable } from '@angular/core'
+import { Observable, tap } from 'rxjs'
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion'
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
-import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
+import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { FeasibilityQueryValidationService } from '../../Validation/Internal/FeasibilityQueryValidationService.service'
 import { EditAttributeFilterService } from './EditAttributeFilter.service'
 import { EditReferenceFilterService } from './EditReferenceFilter.service'
 import { EditValueFilterService } from './EditValueFilter.service'
-import { FeasibilityQueryValidationService } from '../../Validation/Internal/FeasibilityQueryValidationService.service'
-import { inject, Injectable } from '@angular/core'
-import { Observable, tap } from 'rxjs'
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
-import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditCriterionService {
-  private criterionProvider = inject(CriterionProviderService)
-  private referenceFilterService = inject(EditReferenceFilterService)
-  private valueFilterService = inject(EditValueFilterService)
-  private attributeFilterService = inject(EditAttributeFilterService)
-  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
+  private readonly criterionProvider = inject(CriterionProviderService)
+  private readonly referenceFilterService = inject(EditReferenceFilterService)
+  private readonly valueFilterService = inject(EditValueFilterService)
+  private readonly attributeFilterService = inject(EditAttributeFilterService)
+  private readonly feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
 
   private workingCriterion: Criterion
 
@@ -46,27 +46,15 @@ export class EditCriterionService {
     return this.workingCriterion
   }
 
-  public updateConceptAttributeFilter(
-    concept: ConceptFilter,
-    attributeFilter: AttributeFilter
-  ): void {
+  public updateConceptAttributeFilter(concept: ConceptFilter, attributeFilter: AttributeFilter): void {
     const criterion = this.getCriterion()
-    this.applyAttributeFilters(
-      criterion,
-      this.attributeFilterService.buildFromConcept(criterion, concept, attributeFilter)
-    )
+    this.applyAttributeFilters(criterion, this.attributeFilterService.buildFromConcept(criterion, concept, attributeFilter))
     this.emit()
   }
 
-  public updateQuantityAttributeFilter(
-    quantityFilter: AbstractQuantityFilter,
-    attributeFilter: AttributeFilter
-  ): void {
+  public updateQuantityAttributeFilter(quantityFilter: AbstractQuantityFilter, attributeFilter: AttributeFilter): void {
     const criterion = this.getCriterion()
-    this.applyAttributeFilters(
-      criterion,
-      this.attributeFilterService.buildFromQuantity(criterion, quantityFilter, attributeFilter)
-    )
+    this.applyAttributeFilters(criterion, this.attributeFilterService.buildFromQuantity(criterion, quantityFilter, attributeFilter))
     this.emit()
   }
 
@@ -82,28 +70,15 @@ export class EditCriterionService {
     this.emit()
   }
 
-  public addReferenceCriteria(
-    id: string,
-    attributeFilter: AttributeFilter
-  ): Observable<ReferenceFilter> {
-    return this.referenceFilterService
-      .updateReferenceFilter([id], this.getCriterion().getId(), attributeFilter)
-      .pipe(
-        tap((updatedReferenceFilter) =>
-          this.applyReferenceFilter(attributeFilter, updatedReferenceFilter)
-        ),
-        tap(() => this.emit())
-      )
+  public addReferenceCriteria(id: string, attributeFilter: AttributeFilter): Observable<ReferenceFilter> {
+    return this.referenceFilterService.updateReferenceFilter([id], this.getCriterion().getId(), attributeFilter).pipe(
+      tap((updatedReferenceFilter) => this.applyReferenceFilter(attributeFilter, updatedReferenceFilter)),
+      tap(() => this.emit())
+    )
   }
 
-  public updateSelectedReferences(
-    attributeFilter: AttributeFilter,
-    updatedReferences: ReferenceCriterion[]
-  ): void {
-    const updatedReferenceFilter = this.referenceFilterService.updateSelectedReferences(
-      updatedReferences,
-      attributeFilter
-    )
+  public updateSelectedReferences(attributeFilter: AttributeFilter, updatedReferences: ReferenceCriterion[]): void {
+    const updatedReferenceFilter = this.referenceFilterService.updateSelectedReferences(updatedReferences, attributeFilter)
     this.applyReferenceFilter(attributeFilter, updatedReferenceFilter)
     this.emit()
   }
@@ -125,15 +100,9 @@ export class EditCriterionService {
     criterion.setIsRequiredFilterSet(this.attributeFilterService.isFilterRequired(criterion))
   }
 
-  private applyReferenceFilter(
-    attributeFilter: AttributeFilter,
-    referenceFilter: ReferenceFilter
-  ): void {
+  private applyReferenceFilter(attributeFilter: AttributeFilter, referenceFilter: ReferenceFilter): void {
     const criterion = this.getCriterion()
-    this.applyAttributeFilters(
-      criterion,
-      this.attributeFilterService.buildFromReference(criterion, referenceFilter, attributeFilter)
-    )
+    this.applyAttributeFilters(criterion, this.attributeFilterService.buildFromReference(criterion, referenceFilter, attributeFilter))
   }
 
   private emit(): void {

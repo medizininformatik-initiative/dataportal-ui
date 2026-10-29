@@ -1,6 +1,6 @@
+import { ElasticSearchFilterTypes } from '../../Utilities/ElasticSearchFilterTypes'
 import { AbstractSearchFilter } from './AbstractSearchFilter'
 import { CriteriaSearchFilterValue } from './CriteriaSearchFilterValue'
-import { ElasticSearchFilterTypes } from '../../Utilities/ElasticSearchFilterTypes'
 
 export class CriteriaSearchFilter extends AbstractSearchFilter<CriteriaSearchFilterValue> {
   protected declare name: ElasticSearchFilterTypes

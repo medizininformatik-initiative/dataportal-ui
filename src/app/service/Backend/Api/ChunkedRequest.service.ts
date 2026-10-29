@@ -1,14 +1,14 @@
-import { BackendService } from '../Backend.service'
-import { forkJoin, map, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
+import { forkJoin, map, Observable } from 'rxjs'
+import { BackendService } from '../Backend.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChunkedRequestService {
-  private backendService = inject(BackendService)
-  private http = inject(HttpClient)
+  private readonly backendService = inject(BackendService)
+  private readonly http = inject(HttpClient)
 
   private readonly chunkSize = 1900
 

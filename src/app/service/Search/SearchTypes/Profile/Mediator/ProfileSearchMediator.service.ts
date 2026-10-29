@@ -1,19 +1,16 @@
-import { AbstractSimpleSearchMediator } from '../../../Abstract/Mediator/AbstractSimpleSearchMediator'
 import { inject, Injectable } from '@angular/core'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 import { ProfileResultList } from 'src/app/model/Search/ResultList/ProfileResultList'
+import { AbstractSimpleSearchMediator } from '../../../Abstract/Mediator/AbstractSimpleSearchMediator'
 import { ProfileSearchEngineService } from '../Engine/ProfileSearchEngine.service'
 import { ProfileSearchResultProviderService } from '../Result/ProfileSearchResultProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileSearchMediatorService extends AbstractSimpleSearchMediator<
-  ProfileListEntry,
-  ProfileResultList
-> {
-  private profileSearchEngine: ProfileSearchEngineService
-  private profileSearchResultProviderService: ProfileSearchResultProviderService
+export class ProfileSearchMediatorService extends AbstractSimpleSearchMediator<ProfileListEntry, ProfileResultList> {
+  private readonly profileSearchEngine: ProfileSearchEngineService
+  private readonly profileSearchResultProviderService: ProfileSearchResultProviderService
 
   constructor(...args: unknown[])
 

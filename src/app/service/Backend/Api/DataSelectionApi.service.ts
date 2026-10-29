@@ -1,20 +1,20 @@
-import { BackendService } from '../Backend.service'
-import { ChunkedRequestService } from './ChunkedRequest.service'
-import { DataSelectionPaths } from '../Paths/DataSelectionPaths'
 import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
-import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData'
 import { Observable } from 'rxjs'
 import { ProfileEntryDetailsData } from 'src/app/model/Interface/ListEntryDetailsData/ProfileEntryDetailsData'
+import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData'
 import { ResultListData } from 'src/app/model/Interface/Search/ResultListData'
+import { BackendService } from '../Backend.service'
+import { DataSelectionPaths } from '../Paths/DataSelectionPaths'
+import { ChunkedRequestService } from './ChunkedRequest.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelectionApiService {
-  private http = inject(HttpClient)
-  private backendService = inject(BackendService)
-  private chunkedRequestService = inject(ChunkedRequestService)
+  private readonly http = inject(HttpClient)
+  private readonly backendService = inject(BackendService)
+  private readonly chunkedRequestService = inject(ChunkedRequestService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -30,9 +30,7 @@ export class DataSelectionApiService {
    * Returns an observable containing the search results for data selection profiles.
    * @returns {Observable<ResultListData<T>>}
    */
-  public getDataSelectionProfilSearchResults<T extends ListEntryData>(): Observable<
-    ResultListData<T>
-  > {
+  public getDataSelectionProfilSearchResults<T extends ListEntryData>(): Observable<ResultListData<T>> {
     const parsedUrl = this.backendService.createUrl(DataSelectionPaths.PROFILE_SEARCH_ENDPOINT)
     return this.http.get<ResultListData<T>>(parsedUrl)
   }

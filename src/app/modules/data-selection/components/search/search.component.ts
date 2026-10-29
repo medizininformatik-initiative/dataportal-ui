@@ -1,11 +1,11 @@
-import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { Component, inject, OnInit } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
+import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
 import { ProfileSearchActionBarComponent } from './action-bar/profile-search-action-bar.component'
 import { ProfileSearchBarComponent } from './search-bar/profile-search-bar.component'
 import { ProfileSearchResultsComponent } from './search-results/profile-search-results.component'
-import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-search-data-selection',
@@ -22,11 +22,11 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class SearchDataSelectionComponent implements OnInit {
-  private appSettingsProviderService = inject(AppSettingsProviderService)
+  private readonly appSettingsProviderService = inject(AppSettingsProviderService)
 
-  emailLink = ''
+  public emailLink = ''
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.emailLink = this.appSettingsProviderService.getEmail()
   }
 }

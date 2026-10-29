@@ -1,20 +1,20 @@
-import { concatMap, filter, map, Observable, of, switchMap, take, tap } from 'rxjs'
-import { CRTDL2UIModelService } from './Translator/CRTDL/CRTDL2UIModel.service'
-import { CRTDLData } from '../model/Interface/CRTDLData'
-import { CRTDLValidationService } from './Validation/External/CRTDLValidation.service'
-import { ErrorLogModalComponent } from '../layout/components/error-log/error-log-modal.component'
 import { Injectable, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { ProfileUpgradeService } from './Upgrade/ProfileUpgrade.service'
-import { TypeGuard } from './TypeGuard/TypeGuard'
+import { concatMap, filter, map, Observable, of, switchMap, take, tap } from 'rxjs'
+import { ErrorLogModalComponent } from '../layout/components/error-log/error-log-modal.component'
+import { CRTDLData } from '../model/Interface/CRTDLData'
 import { UiCRTDL } from '../model/UiCRTDL'
+import { CRTDL2UIModelService } from './Translator/CRTDL/CRTDL2UIModel.service'
+import { TypeGuard } from './TypeGuard/TypeGuard'
+import { ProfileUpgradeService } from './Upgrade/ProfileUpgrade.service'
+import { CRTDLValidationService } from './Validation/External/CRTDLValidation.service'
 
 @Injectable({ providedIn: 'root' })
 export class CrtdlProcessingPipelineService {
-  private validationService = inject(CRTDLValidationService)
-  private profileUpgradeService = inject(ProfileUpgradeService)
-  private translatorService = inject(CRTDL2UIModelService)
-  private matDialog = inject(MatDialog)
+  private readonly validationService = inject(CRTDLValidationService)
+  private readonly profileUpgradeService = inject(ProfileUpgradeService)
+  private readonly translatorService = inject(CRTDL2UIModelService)
+  private readonly matDialog = inject(MatDialog)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -28,24 +28,22 @@ export class CrtdlProcessingPipelineService {
    * @Todo needs to be discussed what to do if the cohort part fails as we that that from there on we can not upgrade anymore
    *  and also do not want to show the error log modal twice. Maybe we can pass some information to the modal to show different information or actions based on where the error came from.
    * @Todo discuss response of faled upgrade endpoint --> currently validation response
-   * @param crtdl
-   * @returns
+   * @param {CRTDLData} crtdl
+   * @returns {Observable<UiCRTDL>}
    */
   public process(crtdl: CRTDLData): Observable<UiCRTDL> {
     return this.validationService.validate(crtdl, false).pipe(
       concatMap((isValid) => (isValid ? of(crtdl) : this.upgradeAndRevalidate(crtdl))),
       filter((result) => result !== false), // Filter out failed upgrade/validation attempts
-      concatMap((validCrtdl) =>
-        this.translatorService.createCRTDLFromJson(validCrtdl as CRTDLData)
-      ),
+      concatMap((validCrtdl) => this.translatorService.createCRTDLFromJson(validCrtdl as CRTDLData)),
       take(1)
     )
   }
 
   /**
    * Attempts to upgrade the CRTDL and revalidate it.
-   * @param crtdl
-   * @returns
+   * @param {CRTDLData} crtdl
+   * @returns {Observable<CRTDLData | boolean>}
    */
   private upgradeAndRevalidate(crtdl: CRTDLData): Observable<CRTDLData | boolean> {
     return this.profileUpgradeService.upgrade(crtdl).pipe(

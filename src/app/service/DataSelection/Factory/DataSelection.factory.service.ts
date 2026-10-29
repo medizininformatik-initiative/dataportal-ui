@@ -1,10 +1,10 @@
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
-import { DataSelectionMainProfileInitializerService } from '../../DataSelectionMainProfileInitializerService'
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { map, Observable, take } from 'rxjs'
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { v4 as uuidv4 } from 'uuid'
+import { DataSelectionMainProfileInitializerService } from '../../DataSelectionMainProfileInitializerService'
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +14,8 @@ import { v4 as uuidv4 } from 'uuid'
  * Creates a new selection, sets the provider, and attaches the main profile.
  */
 export class DataSelectionFactoryService {
-  private dataSelectionProviderService = inject(DataSelectionProviderService)
-  private dataSelectionMainProfileInitializerService = inject(
-    DataSelectionMainProfileInitializerService
-  )
+  private readonly dataSelectionProviderService = inject(DataSelectionProviderService)
+  private readonly dataSelectionMainProfileInitializerService = inject(DataSelectionMainProfileInitializerService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

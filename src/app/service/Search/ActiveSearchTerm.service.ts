@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
+import { BehaviorSubject, Observable } from 'rxjs'
 
 /**
  * Service for managing the currently active search terms across the application.
@@ -14,47 +14,47 @@ export class ActiveSearchTermService {
    * Subject for tracking the general active search term.
    * @private
    */
-  private activeSearchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private readonly activeSearchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('')
 
   /**
    * Subject for tracking the criteria-specific active search term.
    * @private
    */
-  private activeCriteriaSearchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private readonly activeCriteriaSearchTermSubject: BehaviorSubject<string> = new BehaviorSubject<string>('')
 
   /**
    * Gets an observable stream of the currently active general search term.
    *
-   * @returns Observable that emits the currently active search term, defaults to empty string
+   * @returns {Observable<string>} Observable that emits the currently active search term, defaults to empty string
    */
   public getActiveSearchTerm(): Observable<string> {
-    return this.activeSearchTermSubject.asObservable();
+    return this.activeSearchTermSubject.asObservable()
   }
 
   /**
    * Sets the currently active general search term.
    *
-   * @param searchText - The search term to set as active
+   * @param {string} searchText - The search term to set as active
    */
   public setActiveSearchTerm(searchText: string): void {
-    this.activeSearchTermSubject.next(searchText);
+    this.activeSearchTermSubject.next(searchText)
   }
 
   /**
    * Gets an observable stream of the currently active criteria search term.
    *
-   * @returns Observable that emits the currently active criteria search term, defaults to empty string
+   * @returns {Observable<string>} Observable that emits the currently active criteria search term, defaults to empty string
    */
   public getActiveCriteriaSearchTerm(): Observable<string> {
-    return this.activeCriteriaSearchTermSubject.asObservable();
+    return this.activeCriteriaSearchTermSubject.asObservable()
   }
 
   /**
    * Sets the currently active criteria search term.
    *
-   * @param searchText - The criteria search term to set as active
+   * @param {string} searchText - The criteria search term to set as active
    */
   public setActiveCriteriaSearchTerm(searchText: string) {
-    this.activeCriteriaSearchTermSubject.next(searchText);
+    this.activeCriteriaSearchTermSubject.next(searchText)
   }
 }

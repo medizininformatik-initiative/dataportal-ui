@@ -10,8 +10,7 @@
         [minLength]="0"
         [searchText]="label"
         (searchTextChange)="setLabel($event)"
-      >
-      </num-searchbar>
+      ></num-searchbar>
       <div class="num-pill" numPillExpandable>
         {{ profile().getDisplay().getOriginal() }}
       </div>
@@ -19,9 +18,7 @@
   </div>
   <div class="header-col border-right-1">
     <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate
-      }}</span>
+      <span class="num-text-accent">{{ 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate }}</span>
     </div>
     <div class="header-col-chips">
       @if ($fieldsFilterChips() | async; as chips) { @if (chips.length > 0) {
@@ -33,9 +30,7 @@
   </div>
   <div class="header-col border-right-1">
     <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate
-      }}</span>
+      <span class="num-text-accent">{{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate }}</span>
     </div>
     <div class="header-col-chips">
       @if (filtersFilterChips$() | async; as chips) { @if (chips.length > 0) {
@@ -47,9 +42,7 @@
   </div>
   <div class="header-col">
     <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate
-      }}</span>
+      <span class="num-text-accent">{{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate }}</span>
     </div>
     <div class="header-col-chips">
       @if (profileReferenceChips()?.length > 0) {

@@ -1,9 +1,9 @@
-import { CriteriaSetSearchMediatorService } from '../Mediator/CriteriaSetSearchMediator.service'
 import { Injectable, inject } from '@angular/core'
-import { KeyedSearchPagination } from '../../../Abstract/Pagination/AbstractKeyedSearchPagination'
 import { Observable } from 'rxjs'
 import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry'
 import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList'
+import { KeyedSearchPagination } from '../../../Abstract/Pagination/AbstractKeyedSearchPagination'
+import { CriteriaSetSearchMediatorService } from '../Mediator/CriteriaSetSearchMediator.service'
 
 /**
  * Pagination service for criteria set searches with support for multiple criteria set filters.
@@ -14,10 +14,7 @@ import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/Ref
 @Injectable({
   providedIn: 'root',
 })
-export class CriteriaSetSearchPaginationService extends KeyedSearchPagination<
-  ReferenceCriteriaListEntry,
-  ReferenceCriteriaResultList
-> {
+export class CriteriaSetSearchPaginationService extends KeyedSearchPagination<ReferenceCriteriaListEntry, ReferenceCriteriaResultList> {
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
@@ -35,28 +32,22 @@ export class CriteriaSetSearchPaginationService extends KeyedSearchPagination<
   /**
    * Loads the next page of criteria set results for the specified criteria set URLs.
    *
-   * @param searchTerm - The search term to use for filtering results
-   * @param criteriaSetUrls - Array of criteria set URLs to search within
-   * @returns An Observable that emits the next page of criteria set search results
+   * @param {string} searchTerm - The search term to use for filtering results
+   * @param {string[]} criteriaSetUrls - Array of criteria set URLs to search within
+   * @returns {Observable<ReferenceCriteriaResultList>} An Observable that emits the next page of criteria set search results
    */
-  public loadNextPageOfCriteriaSetResults(
-    searchTerm: string,
-    criteriaSetUrls: string[]
-  ): Observable<ReferenceCriteriaResultList> {
+  public loadNextPageOfCriteriaSetResults(searchTerm: string, criteriaSetUrls: string[]): Observable<ReferenceCriteriaResultList> {
     return this.loadNextPage(searchTerm, criteriaSetUrls)
   }
 
   /**
    * Searches for the first page of criteria set results within the specified criteria sets.
    *
-   * @param searchTerm - The search term to use for filtering results
-   * @param criteriaSetUrls - Array of criteria set URLs to search within
-   * @returns An Observable that emits the first page of criteria set search results
+   * @param {string} searchTerm - The search term to use for filtering results
+   * @param {string[]} criteriaSetUrls - Array of criteria set URLs to search within
+   * @returns {Observable<ReferenceCriteriaResultList>} An Observable that emits the first page of criteria set search results
    */
-  public searchFirstPageOfCriteriaSet(
-    searchTerm: string,
-    criteriaSetUrls: string[]
-  ): Observable<ReferenceCriteriaResultList> {
+  public searchFirstPageOfCriteriaSet(searchTerm: string, criteriaSetUrls: string[]): Observable<ReferenceCriteriaResultList> {
     return this.searchFirstPage(searchTerm, criteriaSetUrls)
   }
 }

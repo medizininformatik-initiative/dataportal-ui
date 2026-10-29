@@ -1,14 +1,14 @@
-import { AboutInfoBuilderService } from '../../AboutInfo/AboutInfoBuilder.service'
-import { ErrorLogProviderService } from './ErrorLogProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { ValidationReportData } from 'src/app/model/Interface/Validation/ValidationReportData'
+import { AboutInfoBuilderService } from '../../AboutInfo/AboutInfoBuilder.service'
+import { ErrorLogProviderService } from './ErrorLogProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ValidationReportBuilderService {
   private readonly aboutInfoBuilder = inject(AboutInfoBuilderService)
-  private errorLogProviderService = inject(ErrorLogProviderService)
+  private readonly errorLogProviderService = inject(ErrorLogProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -17,6 +17,7 @@ export class ValidationReportBuilderService {
 
   /**
    * Builds a complete validation report data structure for download
+   * @returns {ValidationReportData}
    */
   public buildValidationReportData(): ValidationReportData {
     const issues = this.errorLogProviderService.getCurrentValidationResponseData()

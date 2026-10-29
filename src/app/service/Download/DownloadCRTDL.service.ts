@@ -1,7 +1,7 @@
-import { AbstractDownloadService } from './AbstractDownload.service'
-import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRTDL.service'
-import { FileSaverService } from 'ngx-filesaver'
 import { Injectable, inject } from '@angular/core'
+import { FileSaverService } from 'ngx-filesaver'
+import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRTDL.service'
+import { AbstractDownloadService } from './AbstractDownload.service'
 
 /**
  * Service for downloading CRTDL (Common Research Data Transfer Language) files.
@@ -11,8 +11,8 @@ import { Injectable, inject } from '@angular/core'
   providedIn: 'root',
 })
 export class DownloadCRTDLService extends AbstractDownloadService {
-  private createCRTDLService = inject(CreateCRTDLService)
-  private fileSaverService = inject(FileSaverService)
+  private readonly createCRTDLService = inject(CreateCRTDLService)
+  private readonly fileSaverService = inject(FileSaverService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -24,7 +24,7 @@ export class DownloadCRTDLService extends AbstractDownloadService {
   /**
    * Downloads the CRTDL as a JSON file.
    * Creates the CRTDL, formats it as JSON, and triggers a file download.
-   * @param filename - Optional custom filename (without extension)
+   * @param {string} filename - Optional custom filename (without extension)
    */
   public download(filename?: string): void {
     this.createCRTDLService

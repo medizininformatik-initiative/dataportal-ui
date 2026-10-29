@@ -1,12 +1,12 @@
 import { Component, OnInit, inject, input, output } from '@angular/core'
-import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service'
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
-import { CriteriaListItemDetailsMenuService } from 'src/app/shared/service/Menu/ListItemDetails/Criteria/CriteriaListItemDetailsMenu.service'
-import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
-import { CriteriaEntryRelative } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryRelative'
 import { MatTooltip } from '@angular/material/tooltip'
-import { MenuComponent } from '../../menu/menu.component'
+import { CriteriaEntryRelative } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryRelative'
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
+import { CriteriaByIdSearchService } from 'src/app/service/Search/SearchTypes/CriteriaById/CriteriaByIdSearch.service'
+import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
+import { CriteriaListItemDetailsMenuService } from 'src/app/shared/service/Menu/ListItemDetails/Criteria/CriteriaListItemDetailsMenu.service'
 import { DisplayTranslationPipe } from '../../../pipes/DisplayTranslationPipe'
+import { MenuComponent } from '../../menu/menu.component'
 
 @Component({
   selector: 'num-list-item-details-sections',
@@ -16,17 +16,17 @@ import { DisplayTranslationPipe } from '../../../pipes/DisplayTranslationPipe'
   imports: [MatTooltip, MenuComponent, DisplayTranslationPipe],
 })
 export class ListItemDetailsSectionsComponent implements OnInit {
-  private menuService = inject(CriteriaListItemDetailsMenuService)
-  private criteriaByIdSearchService = inject(CriteriaByIdSearchService)
+  private readonly menuService = inject(CriteriaListItemDetailsMenuService)
+  private readonly criteriaByIdSearchService = inject(CriteriaByIdSearchService)
 
-  readonly listItemDetails = input<CriteriaEntryRelative[]>()
+  public readonly listItemDetails = input<CriteriaEntryRelative[]>()
 
-  menuItemsTrue: MenuItemInterface[] = []
-  menuItemsFalse: MenuItemInterface[] = []
+  public menuItemsTrue: MenuItemInterface[] = []
+  public menuItemsFalse: MenuItemInterface[] = []
 
-  terminology = ''
+  public terminology = ''
 
-  readonly selectedRelative = output<CriteriaListEntry>()
+  public readonly selectedRelative = output<CriteriaListEntry>()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -38,11 +38,9 @@ export class ListItemDetailsSectionsComponent implements OnInit {
   }
 
   public getSelectedRelative(item: CriteriaEntryRelative) {
-    this.criteriaByIdSearchService
-      .search(item.getContextualizedTermcodeHash())
-      .subscribe((resultList) => {
-        this.selectedRelative.emit(resultList.getResults()[0])
-      })
+    this.criteriaByIdSearchService.search(item.getContextualizedTermcodeHash()).subscribe((resultList) => {
+      this.selectedRelative.emit(resultList.getResults()[0])
+    })
   }
 
   private getMenuItems() {

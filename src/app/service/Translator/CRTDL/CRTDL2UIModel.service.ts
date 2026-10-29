@@ -1,31 +1,31 @@
-import { combineLatest, map, Observable, of, take, tap } from 'rxjs'
-import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
-import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service'
-import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData'
-import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
-import { DataSelectionFactoryService } from '../../DataSelection/Factory/DataSelection.factory.service'
-import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
-import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { Injectable, inject } from '@angular/core'
-import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
-import { StructuredQuery2FeasibilityQueryService } from '../StructureQuery/StructuredQuery2FeasibilityQuery.service'
+import { combineLatest, map, Observable, of, take, tap } from 'rxjs'
+import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
+import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
+import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData'
 import { StructuredQueryData } from 'src/app/model/Interface/StructuredQueryData'
+import { UiCRTDL } from 'src/app/model/UiCRTDL'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { v4 as uuidv4 } from 'uuid'
+import { DataSelectionFactoryService } from '../../DataSelection/Factory/DataSelection.factory.service'
+import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { TypeAssertion } from '../../TypeGuard/TypeAssersations'
 import { TypeGuard } from '../../TypeGuard/TypeGuard'
-import { UiCRTDL } from 'src/app/model/UiCRTDL'
-import { v4 as uuidv4 } from 'uuid'
+import { DataExtraction2UiDataSelectionService } from '../DataExtraction/DataExtraction2UiDataSelection.service'
+import { StructuredQuery2FeasibilityQueryService } from '../StructureQuery/StructuredQuery2FeasibilityQuery.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CRTDL2UIModelService {
-  private dataExtraction2UiDataSelectionService = inject(DataExtraction2UiDataSelectionService)
-  private dataSelectionProvider = inject(DataSelectionProviderService)
-  private feasibilityQueryService = inject(FeasibilityQueryProviderService)
-  private structuredQuery2FeasibilityQueryService = inject(StructuredQuery2FeasibilityQueryService)
-  private profileProviderService = inject(ProfileProviderService)
-  private dataSelectionFactoryService = inject(DataSelectionFactoryService)
+  private readonly dataExtraction2UiDataSelectionService = inject(DataExtraction2UiDataSelectionService)
+  private readonly dataSelectionProvider = inject(DataSelectionProviderService)
+  private readonly feasibilityQueryService = inject(FeasibilityQueryProviderService)
+  private readonly structuredQuery2FeasibilityQueryService = inject(StructuredQuery2FeasibilityQueryService)
+  private readonly profileProviderService = inject(ProfileProviderService)
+  private readonly dataSelectionFactoryService = inject(DataSelectionFactoryService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -40,9 +40,7 @@ export class CRTDL2UIModelService {
     return this.combineFeasibilityAndDataExtraction(translatedCohort, translatedDataExtraction)
   }
 
-  private assertCohortAndTranslate(
-    cohortDefinition: StructuredQueryData
-  ): Observable<FeasibilityQuery> {
+  private assertCohortAndTranslate(cohortDefinition: StructuredQueryData): Observable<FeasibilityQuery> {
     if (cohortDefinition !== undefined) {
       try {
         TypeAssertion.assertStructuredQueryData(cohortDefinition)
@@ -54,9 +52,7 @@ export class CRTDL2UIModelService {
     return of(new FeasibilityQuery(uuidv4()))
   }
 
-  private translateStructuredQueryAndSetProvider(
-    cohortDefinition: StructuredQueryData
-  ): Observable<FeasibilityQuery> {
+  private translateStructuredQueryAndSetProvider(cohortDefinition: StructuredQueryData): Observable<FeasibilityQuery> {
     this.feasibilityQueryService.clearFeasibilityQuery()
     return this.structuredQuery2FeasibilityQueryService.translate(cohortDefinition).pipe(
       take(1),
@@ -66,9 +62,7 @@ export class CRTDL2UIModelService {
     )
   }
 
-  private assertDataExtractionAndTranslate(
-    dataExtraction: DataExtractionData
-  ): Observable<DataSelection> {
+  private assertDataExtractionAndTranslate(dataExtraction: DataExtractionData): Observable<DataSelection> {
     if (TypeGuard.isDataExtractionData(dataExtraction)) {
       try {
         TypeAssertion.assertDataExtractionData(dataExtraction)
@@ -81,9 +75,7 @@ export class CRTDL2UIModelService {
     return this.dataSelectionFactoryService.instantiate()
   }
 
-  private translateDataExtractionAndSetProvider(
-    dataExtraction: DataExtractionData
-  ): Observable<DataSelection> {
+  private translateDataExtractionAndSetProvider(dataExtraction: DataExtractionData): Observable<DataSelection> {
     this.resetDataSelection()
     return this.dataExtraction2UiDataSelectionService.translate(dataExtraction).pipe(
       take(1),
@@ -98,17 +90,11 @@ export class CRTDL2UIModelService {
     cohortDefinition: Observable<FeasibilityQuery>,
     dataExtraction: Observable<DataSelection>
   ): Observable<UiCRTDL> {
-    return combineLatest([cohortDefinition, dataExtraction]).pipe(
-      map(([cohort, data]) => new UiCRTDL(uuidv4(), cohort, data))
-    )
+    return combineLatest([cohortDefinition, dataExtraction]).pipe(map(([cohort, data]) => new UiCRTDL(uuidv4(), cohort, data)))
   }
 
   private setFeasibilityQueryProvider(feasibilityQuery: FeasibilityQuery): void {
-    this.feasibilityQueryService.setFeasibilityQueryById(
-      feasibilityQuery,
-      feasibilityQuery.getId(),
-      true
-    )
+    this.feasibilityQueryService.setFeasibilityQueryById(feasibilityQuery, feasibilityQuery.getId(), true)
   }
 
   private setDataSelectionProvider(dataSelection: DataSelection): void {

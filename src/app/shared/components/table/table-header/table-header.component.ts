@@ -1,9 +1,9 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, effect, input, output } from '@angular/core'
-import { TableData } from '../../../models/TableData/TableData'
-import { TranslateModule } from '@ngx-translate/core'
-import { CheckboxComponent } from '../../checkbox/checkbox.component'
 import { MatTooltip } from '@angular/material/tooltip'
+import { TranslateModule } from '@ngx-translate/core'
+import { TableData } from '../../../models/TableData/TableData'
+import { CheckboxComponent } from '../../checkbox/checkbox.component'
 import { getColumnWidthPercent } from '../table-column-width.util'
 
 @Component({
@@ -14,11 +14,11 @@ import { getColumnWidthPercent } from '../table-column-width.util'
   imports: [TranslateModule, CheckboxComponent, MatTooltip],
 })
 export class TableHeaderComponent {
-  readonly tableData = input<TableData>(undefined)
-  readonly selectAll = output<boolean>()
-  readonly triggerSelectAll = input<{ id: number; value: boolean }>()
+  public readonly tableData = input<TableData>(undefined)
+  public readonly selectAll = output<boolean>()
+  public readonly triggerSelectAll = input<{ id: number; value: boolean }>()
 
-  checkBoxAll: boolean = false
+  public checkBoxAll: boolean = false
 
   constructor() {
     effect(() => {

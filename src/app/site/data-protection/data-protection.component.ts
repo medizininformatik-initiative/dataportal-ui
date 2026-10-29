@@ -9,5 +9,5 @@ import { Component, OnInit } from '@angular/core'
 export class DataProtectionComponent implements OnInit {
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 }

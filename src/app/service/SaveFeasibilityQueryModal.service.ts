@@ -1,27 +1,33 @@
 import { Injectable, Query, inject } from '@angular/core'
+import { Observable, of, switchMap } from 'rxjs'
+import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery'
+import { QueryResult } from '../model/Result/QueryResult'
+import { SavedFeasibilityQueryResults } from '../model/Result/SavedFeasibilityQueryResults'
+import { FeasibilityQueryApiService } from './Backend/Api/FeasibilityQueryApi.service'
 import { ActiveFeasibilityQueryService } from './Provider/ActiveFeasibilityQuery.service'
 import { FeasibilityQueryProviderService } from './Provider/FeasibilityQueryProvider.service'
 import { ResultProviderService } from './Provider/ResultProvider.service'
-import { FeasibilityQueryApiService } from './Backend/Api/FeasibilityQueryApi.service'
-import { Observable, of, switchMap } from 'rxjs'
-import { FeasibilityQuery } from '../model/FeasibilityQuery/FeasibilityQuery'
-import { SavedFeasibilityQueryResults } from '../model/Result/SavedFeasibilityQueryResults'
-import { QueryResult } from '../model/Result/QueryResult'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SaveFeasibilityQueryModalService {
-  private activeFeasibilityQuery = inject(ActiveFeasibilityQueryService)
-  private feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
-  private resultProvider = inject(ResultProviderService)
-  private feasibilityQueryApiService = inject(FeasibilityQueryApiService)
+  private readonly activeFeasibilityQuery = inject(ActiveFeasibilityQueryService)
+  private readonly feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
+  private readonly resultProvider = inject(ResultProviderService)
+  private readonly feasibilityQueryApiService = inject(FeasibilityQueryApiService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
+  /**
+   * Saves the feasibility query.
+   *
+   * @param title
+   * @param comment
+   */
   public saveFeasibilityQuery(title: string, comment: string): Observable<void> {
     return this.activeFeasibilityQuery.getActiveFeasibilityQueryIdObservable().pipe(
       switchMap((id) => this.feasibilityQueryProviderService.getFeasibilityQueryByID(id)),
@@ -33,16 +39,15 @@ export class SaveFeasibilityQueryModalService {
     )
   }
 
-  private saveFeasibilityQueryResult(
-    title: string,
-    comment: string,
-    result: QueryResult
-  ): Observable<void> {
-    const savedQuery = new SavedFeasibilityQueryResults(
-      title,
-      comment,
-      result.getTotalNumberOfPatients()
-    )
+  /**
+   * Saves the feasibility query result.
+   *
+   * @param title
+   * @param comment
+   * @param result
+   */
+  private saveFeasibilityQueryResult(title: string, comment: string, result: QueryResult): Observable<void> {
+    const savedQuery = new SavedFeasibilityQueryResults(title, comment, result.getTotalNumberOfPatients())
     return this.feasibilityQueryApiService.postSavedFeasibilityQuery(savedQuery, result.getId())
   }
 }

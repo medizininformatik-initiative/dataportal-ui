@@ -1,13 +1,13 @@
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
-import { CriteriaSearchService } from '../Search/SearchTypes/Criteria/CriteriaSearch.service'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
+import { CriteriaSearchService } from '../Search/SearchTypes/Criteria/CriteriaSearch.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriteriaSearchDataResolverService {
-  private searchService = inject(CriteriaSearchService)
+  private readonly searchService = inject(CriteriaSearchService)
 
   constructor() {}
 

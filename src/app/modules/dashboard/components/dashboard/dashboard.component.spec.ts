@@ -1,11 +1,11 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { OAuthModule, OAuthService } from 'angular-oauth2-oidc'
-import { DashboardComponent } from './dashboard.component'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { IAppConfig } from 'src/app/config/model/AppConfig/AppConfigData'
 import { DirectivesModule } from 'src/app/shared/directives/directives.module'
 import { FeatureService } from '../../../../service/Feature.service'
+import { DashboardComponent } from './dashboard.component'
 
 describe.skip('DashboardComponent', () => {
   let component: DashboardComponent
@@ -26,12 +26,7 @@ describe.skip('DashboardComponent', () => {
 
   const testBedConfig = {
     declarations: [DashboardComponent],
-    imports: [
-      TranslateModule.forRoot(),
-      HttpClientTestingModule,
-      OAuthModule.forRoot(),
-      DirectivesModule,
-    ],
+    imports: [TranslateModule.forRoot(), HttpClientTestingModule, OAuthModule.forRoot(), DirectivesModule],
     providers: [
       {
         provide: OAuthService,
@@ -87,9 +82,7 @@ describe.skip('DashboardComponent', () => {
 
   it('should show text with name when logged in with roles', fakeAsync(() => {
     spyOn(authService, 'hasValidAccessToken').and.returnValue(true)
-    spyOn(authService, 'loadUserProfile').and.returnValue(
-      Promise.resolve({ name: 'Emmy', groups: ['CODEX_DEVELOPER', 'MATHEMATICIAN'] })
-    )
+    spyOn(authService, 'loadUserProfile').and.returnValue(Promise.resolve({ name: 'Emmy', groups: ['CODEX_DEVELOPER', 'MATHEMATICIAN'] }))
 
     TestBed.overrideProvider(OAuthService, { useValue: authService })
     TestBed.configureTestingModule(testBedConfig).compileComponents()

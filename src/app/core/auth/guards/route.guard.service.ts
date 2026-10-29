@@ -1,26 +1,26 @@
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router'
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { Injectable, inject } from '@angular/core'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { PathSegments } from 'src/app/app-paths'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
 
 @Injectable({ providedIn: 'root' })
 export class RouteGuard implements CanActivate {
-  private criterionProviderService = inject(CriterionProviderService)
-  private navigationHelperService = inject(NavigationHelperService)
-  private referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
-  private profileService = inject(ProfileProviderService)
-  private router = inject(Router)
+  private readonly criterionProviderService = inject(CriterionProviderService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
+  private readonly referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
+  private readonly profileService = inject(ProfileProviderService)
+  private readonly router = inject(Router)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+  public canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     const id = route.paramMap.get('id')
     const url = route.url[0]?.path
     if (url === PathSegments.feature) {

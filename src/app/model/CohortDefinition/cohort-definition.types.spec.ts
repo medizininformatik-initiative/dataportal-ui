@@ -1,9 +1,9 @@
 import { describe, expect, it } from '@jest/globals'
 import { CASES } from '../../../../test-support/crtdl/cases'
 import { cohortDefinitionErrors } from '../../../../test-support/schemas/cohortDefinitionSchema'
-import { CCDLComparator, CCDLValueFilter } from './CCDLFilters'
 import { CCDLCohortDefinition } from './CCDLCohortDefinition'
 import { CCDLCriterion } from './CCDLCriterion'
+import { CCDLComparator, CCDLValueFilter } from './CCDLFilters'
 import { CCDLTermCode } from './CCDLTermCode'
 import {
   attributeFilterCases,
@@ -61,21 +61,15 @@ describe('CCDLCohortDefinition types and the CCDL v1 schema agree', () => {
 })
 
 function testTimeRestrictions() {
-  it.each(timeRestrictionCases)('time restriction: %s', (_name, timeRestriction) =>
-    valid(cohort(criterion({ timeRestriction })))
-  )
+  it.each(timeRestrictionCases)('time restriction: %s', (_name, timeRestriction) => valid(cohort(criterion({ timeRestriction }))))
 }
 
 function testValueFilters() {
-  it.each([...valueFilterCases, ...comparatorCases])('value filter: %s', (_name, valueFilter) =>
-    valid(cohort(criterion({ valueFilter })))
-  )
+  it.each([...valueFilterCases, ...comparatorCases])('value filter: %s', (_name, valueFilter) => valid(cohort(criterion({ valueFilter }))))
 }
 
 function testAttributeFilters() {
-  it.each(attributeFilterCases)('attribute filter: %s', (_name, filter) =>
-    valid(cohort(criterion({ attributeFilters: [filter] })))
-  )
+  it.each(attributeFilterCases)('attribute filter: %s', (_name, filter) => valid(cohort(criterion({ attributeFilters: [filter] }))))
 }
 
 function testCohortStructures() {
@@ -83,9 +77,7 @@ function testCohortStructures() {
 }
 
 function testRoundtripCases() {
-  it.each(Object.entries(CASES))('Cypress roundtrip case: %s', (_name, crtdl) =>
-    valid(crtdl.cohortDefinition)
-  )
+  it.each(Object.entries(CASES))('Cypress roundtrip case: %s', (_name, crtdl) => valid(crtdl.cohortDefinition))
 }
 
 function testRejectedDocuments() {

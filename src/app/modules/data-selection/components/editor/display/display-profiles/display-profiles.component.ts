@@ -1,21 +1,10 @@
-import { DataSelectionBoxesComponent } from '../data-selection-boxes/data-selection-boxes.component'
+import { afterNextRender, Component, computed, ElementRef, inject, Injector, input, QueryList, signal, ViewChildren } from '@angular/core'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { SearchbarComponent } from 'src/app/shared/components/search/searchbar.component'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import {
-  afterNextRender,
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  Injector,
-  input,
-  QueryList,
-  signal,
-  ViewChildren,
-} from '@angular/core'
-import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
-import { toSignal } from '@angular/core/rxjs-interop'
+import { DataSelectionBoxesComponent } from '../data-selection-boxes/data-selection-boxes.component'
 
 @Component({
   selector: 'num-display-profiles',
@@ -25,23 +14,20 @@ import { toSignal } from '@angular/core/rxjs-interop'
   imports: [DataSelectionBoxesComponent, SearchbarComponent, TranslateModule],
 })
 export class DisplayProfilesComponent {
-  private profileProvider = inject(ProfileProviderService)
-  private translateService = inject(TranslateService)
+  private readonly profileProvider = inject(ProfileProviderService)
+  private readonly translateService = inject(TranslateService)
   private readonly dataSelectionProvider = inject(DataSelectionProviderService)
   private readonly injector = inject(Injector)
 
-  readonly isEditable = input<boolean | undefined>(undefined)
+  public readonly isEditable = input<boolean | undefined>(undefined)
 
-  @ViewChildren('profileBox') private boxRefs!: QueryList<ElementRef<HTMLElement>>
+  @ViewChildren('profileBox') private readonly boxRefs!: QueryList<ElementRef<HTMLElement>>
 
-  private readonly activeDataSelection = toSignal(
-    this.dataSelectionProvider.getActiveDataSelection(),
-    {
-      initialValue: null,
-    }
-  )
+  private readonly activeDataSelection = toSignal(this.dataSelectionProvider.getActiveDataSelection(), {
+    initialValue: null,
+  })
 
-  readonly profiles = computed(() => {
+  public readonly profiles = computed(() => {
     const dataSelection = this.activeDataSelection()
     if (!dataSelection?.getProfiles()) {
       return []
@@ -49,9 +35,9 @@ export class DisplayProfilesComponent {
     return dataSelection.getProfiles()
   })
 
-  readonly searchText = signal('')
+  public readonly searchText = signal('')
 
-  readonly filteredProfiles = computed(() => {
+  public readonly filteredProfiles = computed(() => {
     const term = this.searchText().toLowerCase()
     const lang = this.translateService.currentLang
     if (!term) {
@@ -69,7 +55,7 @@ export class DisplayProfilesComponent {
     })
   })
 
-  readonly matchedFields = computed(() => {
+  public readonly matchedFields = computed(() => {
     const term = this.searchText().toLowerCase()
     const lang = this.translateService.currentLang
     const map = new Map<string, string[]>()
@@ -89,7 +75,7 @@ export class DisplayProfilesComponent {
     return map
   })
 
-  readonly matchSummary = computed(() => {
+  public readonly matchSummary = computed(() => {
     const term = this.searchText().toLowerCase()
     const lang = this.translateService.currentLang
     let byName = 0
@@ -135,9 +121,9 @@ export class DisplayProfilesComponent {
     // Commit reorder
     const newOrder = [...profiles]
     if (direction === 'up') {
-      [newOrder[idx - 1], newOrder[idx]] = [newOrder[idx], newOrder[idx - 1]]
+      ;[newOrder[idx - 1], newOrder[idx]] = [newOrder[idx], newOrder[idx - 1]]
     } else {
-      [newOrder[idx], newOrder[idx + 1]] = [newOrder[idx + 1], newOrder[idx]]
+      ;[newOrder[idx], newOrder[idx + 1]] = [newOrder[idx + 1], newOrder[idx]]
     }
     this.dataSelectionProvider.reorderProfiles(newOrder)
 

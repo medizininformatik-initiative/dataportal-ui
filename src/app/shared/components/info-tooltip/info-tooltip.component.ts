@@ -7,6 +7,6 @@ import { Component, input } from '@angular/core'
   standalone: true,
 })
 export class InfoTooltipComponent {
-  readonly title = input<string>()
-  readonly text = input<string>()
+  public readonly title = input<string>()
+  public readonly text = input<string>()
 }

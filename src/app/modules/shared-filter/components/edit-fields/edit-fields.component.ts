@@ -1,19 +1,19 @@
-import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField'
 import { Component, OnDestroy, OnInit, inject, input, output } from '@angular/core'
-import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter'
-import { map, Subscription, take } from 'rxjs'
-import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
-import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedFieldCloner'
-import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/Selection/SelectedProfileFields.service'
-import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface'
 import { MatTabGroup, MatTab } from '@angular/material/tabs'
-import { InformationSectionComponent } from '../../../../shared/components/information-section/information-section.component'
-import { TreeComponent } from '../../../../shared/components/tree/tree.component'
-import { SectionNameComponent } from '../../../../shared/components/section-name/section-name.component'
-import { CheckboxComponent } from '../../../../shared/components/checkbox/checkbox.component'
 import { MatTooltip } from '@angular/material/tooltip'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { map, Subscription, take } from 'rxjs'
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField'
+import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
+import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedFieldCloner'
+import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/Selection/SelectedProfileFields.service'
+import { FieldsTreeAdapter } from 'src/app/shared/models/TreeNode/Adapter/FieldTreeAdapter'
+import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface'
+import { CheckboxComponent } from '../../../../shared/components/checkbox/checkbox.component'
+import { InformationSectionComponent } from '../../../../shared/components/information-section/information-section.component'
+import { SectionNameComponent } from '../../../../shared/components/section-name/section-name.component'
+import { TreeComponent } from '../../../../shared/components/tree/tree.component'
 import { DisplayTranslationPipe } from '../../../../shared/pipes/DisplayTranslationPipe'
 
 @Component({
@@ -36,16 +36,16 @@ import { DisplayTranslationPipe } from '../../../../shared/pipes/DisplayTranslat
   ],
 })
 export class EditFieldsComponent implements OnInit, OnDestroy {
-  private selectedDataSelectionProfileFieldsService = inject(SelectedProfileFieldsService)
+  private readonly selectedDataSelectionProfileFieldsService = inject(SelectedProfileFieldsService)
 
-  readonly fieldTree = input<BasicField[]>()
+  public readonly fieldTree = input<BasicField[]>()
 
-  readonly selectedBasicFields = input<SelectedBasicField[]>()
+  public readonly selectedBasicFields = input<SelectedBasicField[]>()
 
-  readonly updatedSelectedBasicFields = output<SelectedBasicField[]>()
+  public readonly updatedSelectedBasicFields = output<SelectedBasicField[]>()
 
-  tree: TreeNode[] = []
-  deepCopyFieldsSubscription: Subscription
+  public tree: TreeNode[] = []
+  public deepCopyFieldsSubscription: Subscription
   private localFieldTree: BasicField[] = []
   public localSelectedBasicFields: SelectedBasicField[] = []
 
@@ -53,14 +53,14 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   constructor(...args: unknown[])
   constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.localFieldTree = [...this.fieldTree()]
     this.localSelectedBasicFields = [...this.selectedBasicFields()]
     this.traversAndUpddateTree()
     this.buildTreeFromProfileFields()
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.deepCopyFieldsSubscription?.unsubscribe()
   }
 
@@ -86,10 +86,7 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   }
 
   public traversAndUpddateTree() {
-    this.selectedDataSelectionProfileFieldsService.updateSelectionStatus(
-      this.localFieldTree,
-      this.localSelectedBasicFields
-    )
+    this.selectedDataSelectionProfileFieldsService.updateSelectionStatus(this.localFieldTree, this.localSelectedBasicFields)
   }
 
   public setSelectedFieldElement(element) {
@@ -106,9 +103,7 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   }
 
   private getIndexInSelectedFields(elementId: string): number {
-    return this.localSelectedBasicFields.findIndex(
-      (selectedField) => selectedField.getSelectedField().getElementId() === elementId
-    )
+    return this.localSelectedBasicFields.findIndex((selectedField) => selectedField.getSelectedField().getElementId() === elementId)
   }
 
   public setFieldAsRequired(selectedField: SelectedBasicField) {
@@ -142,9 +137,7 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   }
 
   private emitUpdatedSelectedFields(): void {
-    const clonedSelectedFields = SelectedBasicFieldCloner.deepCopySelectedBasicFields(
-      this.localSelectedBasicFields
-    )
+    const clonedSelectedFields = SelectedBasicFieldCloner.deepCopySelectedBasicFields(this.localSelectedBasicFields)
     this.updatedSelectedBasicFields.emit(clonedSelectedFields)
     this.traversAndUpddateTree()
   }

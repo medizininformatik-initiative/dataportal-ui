@@ -1,22 +1,22 @@
-import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData'
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
-import { AttributeFilterFactoryService } from './AttributeFilterFactory.service'
-import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
-import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder'
-import { CriterionMetadataService } from './CriterionMetadata.service'
 import { Injectable, inject } from '@angular/core'
-import { UiProfileProviderService } from 'src/app/service/Provider/UiProfileProvider.service'
-import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
+import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder'
+import { AttributeDefinitionData } from 'src/app/model/Interface/AttributeDefinitionData'
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData'
+import { ValueDefinitionData } from 'src/app/model/Interface/ValueDefinition'
+import { UiProfileProviderService } from 'src/app/service/Provider/UiProfileProvider.service'
+import { AttributeFilterFactoryService } from './AttributeFilterFactory.service'
+import { CriterionMetadataService } from './CriterionMetadata.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionBuilderHelperService {
-  private criterionMetadataService = inject(CriterionMetadataService)
-  private uiProfileProviderService = inject(UiProfileProviderService)
-  private attributeFilterFactory = inject(AttributeFilterFactoryService)
+  private readonly criterionMetadataService = inject(CriterionMetadataService)
+  private readonly uiProfileProviderService = inject(UiProfileProviderService)
+  private readonly attributeFilterFactory = inject(AttributeFilterFactoryService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -41,9 +41,7 @@ export class CriterionBuilderHelperService {
 
   private setIsRequiredFilterSet(uiProfile: UiProfileData): boolean {
     if (uiProfile.attributeDefinitions.length > 0) {
-      return !uiProfile.attributeDefinitions.some(
-        (attributeDefinition: AttributeDefinitionData) => !attributeDefinition.optional
-      )
+      return !uiProfile.attributeDefinitions.some((attributeDefinition: AttributeDefinitionData) => !attributeDefinition.optional)
     } else if (uiProfile.valueDefinition) {
       return uiProfile.valueDefinition.optional
     } else {
@@ -54,13 +52,11 @@ export class CriterionBuilderHelperService {
   /**
    * Adds attribute filters to the criterion builder.
    *
-   * @param attributeDefinitions The attribute definitions to add as filters.
+   * @param {AttributeDefinitionData[]} attributeDefinitions The attribute definitions to add as filters.
    * @param criterionBuilder The criterion builder to which attribute filters will be added.
-   * @returns The modified CriterionBuilder.
+   * @returns {AttributeFilter[] | []} The modified CriterionBuilder.
    */
-  private addAttributeFilters(
-    attributeDefinitions: AttributeDefinitionData[]
-  ): AttributeFilter[] | [] {
+  private addAttributeFilters(attributeDefinitions: AttributeDefinitionData[]): AttributeFilter[] | [] {
     if (attributeDefinitions.length > 0) {
       return attributeDefinitions.map((attributeDefinition: AttributeDefinitionData) =>
         this.attributeFilterFactory.createAttributeFilter(attributeDefinition)
@@ -73,7 +69,8 @@ export class CriterionBuilderHelperService {
    *
    * @param valueDefinitions The value definitions to add as filters.
    * @param criterionBuilder The criterion builder to which value filters will be added.
-   * @returns The modified CriterionBuilder.
+   * @returns {ValueFilter[] | []} The modified CriterionBuilder.
+   * @param {ValueDefinitionData} valueDefinition
    */
   private addValueFilters(valueDefinition: ValueDefinitionData): ValueFilter[] | [] {
     if (valueDefinition) {

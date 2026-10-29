@@ -4,11 +4,7 @@
       @if (adaptedDetailsData(); as data) {
       <div class="details-wrapper">
         <div class="button-align-right">
-          <button
-            [matTooltip]="'DATASELECTION.SEARCH.CLOSE_DETAILS' | translate"
-            (click)="drawer.close()"
-            class="num-button cancel"
-          >
+          <button [matTooltip]="'DATASELECTION.SEARCH.CLOSE_DETAILS' | translate" (click)="drawer.close()" class="num-button cancel">
             {{ 'DATASELECTION.SEARCH.CLOSE_DETAILS' | translate }}
             <fa-icon class="close-icon" icon="times" [fixedWidth]="true"></fa-icon>
           </button>

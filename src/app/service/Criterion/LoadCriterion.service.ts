@@ -1,17 +1,17 @@
-import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion'
-import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
-import { CriterionBuilderHelperService } from './CriterionBuilderHelper.service'
 import { Injectable, inject } from '@angular/core'
 import { map, Observable } from 'rxjs'
-import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service'
+import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
+import { TerminologyApiService } from '../Backend/Api/TerminologyApi.service'
+import { CriterionBuilderHelperService } from './CriterionBuilderHelper.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoadCriterionService {
-  private terminologyApiService = inject(TerminologyApiService)
-  private criterionBuilderHelperService = inject(CriterionBuilderHelperService)
+  private readonly terminologyApiService = inject(TerminologyApiService)
+  private readonly criterionBuilderHelperService = inject(CriterionBuilderHelperService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -20,8 +20,8 @@ export class LoadCriterionService {
 
   /**
    * Loads criteria based on the provided hashes.
-   * @param hashes
-   * @returns
+   * @param {string[]} hashes
+   * @returns {Observable<Criterion[]>}
    */
   public loadCriteria(hashes: string[]): Observable<Criterion[]> {
     const validHashes = hashes.filter((hash): hash is string => !!hash)
@@ -32,12 +32,10 @@ export class LoadCriterionService {
 
   /**
    * Builds criteria from the provided profile data.
-   * @param criteriaProfileDatas
-   * @returns
+   * @param {CriteriaProfileData[]} criteriaProfileDatas
+   * @returns {Criterion[]}
    */
   private buildCriteriaFromProfileData(criteriaProfileDatas: CriteriaProfileData[]): Criterion[] {
-    return criteriaProfileDatas.map((data) =>
-      this.criterionBuilderHelperService.setBuilderWithCriteriaProfileData(data).buildCriterion()
-    )
+    return criteriaProfileDatas.map((data) => this.criterionBuilderHelperService.setBuilderWithCriteriaProfileData(data).buildCriterion())
   }
 }

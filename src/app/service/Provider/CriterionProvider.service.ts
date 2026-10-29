@@ -1,21 +1,21 @@
-import { AbstractArrayEntityProvider } from './Abstract/AbstractArrayEntityProvider';
-import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion';
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
+import { Criterion } from '../../model/FeasibilityQuery/Criterion/Criterion'
+import { AbstractArrayEntityProvider } from './Abstract/AbstractArrayEntityProvider'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionProviderService extends AbstractArrayEntityProvider<Criterion> {
   constructor() {
-    super();
+    super()
   }
 
   /**
    * Returns the unique identifier for a given Criterion.
-   * @param criterion
-   * @returns
+   * @param {Criterion} criterion
+   * @returns {string}
    */
   protected selectId(criterion: Criterion): string {
-    return criterion.getId();
+    return criterion.getId()
   }
 }

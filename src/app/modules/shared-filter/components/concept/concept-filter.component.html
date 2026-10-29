@@ -6,10 +6,7 @@
   ></num-searchbar>
 
   @if (valueSetUrl()?.length > 1) {
-  <num-search-filter
-    [filter]="searchFilter()"
-    (filterChange)="setValueSet($event)"
-  ></num-search-filter>
+  <num-search-filter [filter]="searchFilter()" (filterChange)="setValueSet($event)"></num-search-filter>
   } @if (searchResults()) {
   <num-concept-filter-table
     class="overflow"

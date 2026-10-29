@@ -11,17 +11,17 @@ export abstract class AbstractAttributeFilters {
   private quantity?: AbstractQuantityFilter
   private reference?: ReferenceFilter
   private optional = false
-  private filterType: FilterTypes
+  private readonly filterType: FilterTypes
 
   /**
    * Creates an instance of AbstractAttributeFilters.
    *
-   * @param display - The display name for the filter.
-   * @param filterType
-   * @param concept - Optional concept filter.
-   * @param quantity - Optional quantity filter.
-   * @param reference - Optional reference filter.
-   * @param optional - Whether the filter is optional or not. Default is false.
+   * @param {Display} display - The display name for the filter.
+   * @param {FilterTypes} filterType
+   * @param {ConceptFilter} concept - Optional concept filter.
+   * @param {AbstractQuantityFilter} quantity - Optional quantity filter.
+   * @param {ReferenceFilter} reference - Optional reference filter.
+   * @param {boolean} optional - Whether the filter is optional or not. Default is false.
    */
   constructor(
     display: Display,
@@ -42,7 +42,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Gets the display name of the filter.
    *
-   * @returns The display name.
+   * @returns {Display} The display name.
    */
   public getDisplay(): Display {
     return this.display
@@ -51,7 +51,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Sets the display name of the filter.
    *
-   * @param display - The new display name.
+   * @param {Display} display - The new display name.
    */
   public setDisplay(display: Display): void {
     this.display = display
@@ -60,7 +60,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Gets the concept filter if set, otherwise returns false.
    *
-   * @returns The concept filter or false if not set.
+   * @returns {ConceptFilter} The concept filter or false if not set.
    */
   public getConcept(): ConceptFilter {
     return this.concept
@@ -69,7 +69,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Sets the concept filter.
    *
-   * @param concept - The concept filter to set.
+   * @param {ConceptFilter} concept - The concept filter to set.
    */
   public setConcept(concept: ConceptFilter): void {
     this.concept = concept
@@ -78,7 +78,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Gets the quantity filter if set, otherwise returns false.
    *
-   * @returns The quantity filter or false if not set.
+   * @returns {AbstractQuantityFilter} The quantity filter or false if not set.
    */
   public getQuantity(): AbstractQuantityFilter {
     return this.quantity
@@ -87,7 +87,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Sets the quantity filter.
    *
-   * @param quantity - The quantity filter to set.
+   * @param {AbstractQuantityFilter} quantity - The quantity filter to set.
    */
   public setQuantity(quantity: AbstractQuantityFilter): void {
     this.quantity = quantity
@@ -96,7 +96,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Gets the reference filter if set, otherwise returns false.
    *
-   * @returns The reference filter or false if not set.
+   * @returns {ReferenceFilter} The reference filter or false if not set.
    */
   public getReference(): ReferenceFilter {
     return this.reference
@@ -105,7 +105,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Sets the reference filter.
    *
-   * @param reference - The reference filter to set.
+   * @param {ReferenceFilter} reference - The reference filter to set.
    */
   public setReference(reference: ReferenceFilter): void {
     this.reference = reference
@@ -114,7 +114,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Gets whether the filter is optional.
    *
-   * @returns True if the filter is optional, false otherwise.
+   * @returns {boolean} True if the filter is optional, false otherwise.
    */
   public getOptional(): boolean {
     return this.optional
@@ -123,7 +123,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Sets whether the filter is optional.
    *
-   * @param optional - True to make the filter optional, false otherwise.
+   * @param {boolean} optional - True to make the filter optional, false otherwise.
    */
   public setOptional(optional: boolean): void {
     this.optional = optional
@@ -132,7 +132,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Checks if the concept filter is set.
    *
-   * @returns True if the concept filter is set, false otherwise.
+   * @returns {boolean} True if the concept filter is set, false otherwise.
    */
   public isConceptSet(): boolean {
     return this.concept !== undefined
@@ -141,7 +141,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Checks if the quantity filter is set.
    *
-   * @returns True if the quantity filter is set, false otherwise.
+   * @returns {boolean} True if the quantity filter is set, false otherwise.
    */
   public isQuantitySet(): boolean {
     return this.quantity !== undefined
@@ -150,7 +150,7 @@ export abstract class AbstractAttributeFilters {
   /**
    * Checks if the reference filter is set.
    *
-   * @returns True if the reference filter is set, false otherwise.
+   * @returns {boolean} True if the reference filter is set, false otherwise.
    */
   public isReferenceSet(): boolean {
     return this.reference !== undefined
@@ -169,9 +169,6 @@ export abstract class AbstractAttributeFilters {
     return hasConcepts || hasReferences || hasQuantity
   }
 
-  /**
-   *
-   */
   public getFilterType(): FilterTypes {
     return this.filterType
   }

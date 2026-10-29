@@ -1,25 +1,25 @@
 import { TestBed } from '@angular/core/testing'
 import { firstValueFrom } from 'rxjs'
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
+import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
+import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
+import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder'
-import { CriterionProviderService } from '../../Provider/CriterionProvider.service'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
-import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
-import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service'
-import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
+import { CriterionProviderService } from '../../Provider/CriterionProvider.service'
+import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
+import { ReferenceCriterionProviderService } from '../../Provider/ReferenceCriterionProvider.service'
 import { ToCohortDefinitionService } from './ToCohortDefinition.service'
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 
 /**
  * Building blocks for `ui-to-cohort-definition.cases.ts`: the UI model on one side, the expected wire
@@ -108,6 +108,10 @@ let counter = 0
 /**
  * A pneumonia criterion, registered with the provider that the translator reads from.
  * @param {{ termCodes?: TerminologyCode[], timeRestriction?: AbstractTimeRestriction, valueFilters?: ValueFilter[], attributeFilters?: AttributeFilter[] }} options
+ * @param options.termCodes
+ * @param options.timeRestriction
+ * @param options.valueFilters
+ * @param options.attributeFilters
  * @returns {Criterion}
  */
 export function criterion(
@@ -198,6 +202,8 @@ export const concept = (...codes: TerminologyCode[]) =>
  * A filter on the criterion's own value, e.g. the age.
  * @param {FilterTypes} type
  * @param {{ concept?: ConceptFilter, quantity?: QuantityComparatorFilter | QuantityRangeFilter }} parts
+ * @param parts.concept
+ * @param parts.quantity
  * @returns {ValueFilter}
  */
 export const valueFilter = (
@@ -209,6 +215,9 @@ export const valueFilter = (
  * A filter on one attribute of the resource, e.g. the cause of death.
  * @param {FilterTypes} type
  * @param {{ concept?: ConceptFilter, quantity?: QuantityComparatorFilter | QuantityRangeFilter, reference?: ReferenceFilter }} parts
+ * @param parts.concept
+ * @param parts.quantity
+ * @param parts.reference
  * @returns {AttributeFilter}
  */
 export const attributeFilter = (

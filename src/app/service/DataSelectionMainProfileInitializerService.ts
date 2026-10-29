@@ -1,16 +1,16 @@
-import { AppSettingsProviderService } from './Config/AppSettingsProvider.service'
-import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile'
-import { filter, map } from 'rxjs/operators'
 import { Injectable, inject } from '@angular/core'
-import { LoadDataSelectionProfilesService } from './DataSelection/LoadDataSelectionProfiles.service'
 import { Observable } from 'rxjs'
+import { filter, map } from 'rxjs/operators'
+import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile'
+import { AppSettingsProviderService } from './Config/AppSettingsProvider.service'
+import { LoadDataSelectionProfilesService } from './DataSelection/LoadDataSelectionProfiles.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelectionMainProfileInitializerService {
-  private loadDataSelectionProfilesService = inject(LoadDataSelectionProfilesService)
-  private appSettingsProviderService = inject(AppSettingsProviderService)
+  private readonly loadDataSelectionProfilesService = inject(LoadDataSelectionProfilesService)
+  private readonly appSettingsProviderService = inject(AppSettingsProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -19,7 +19,7 @@ export class DataSelectionMainProfileInitializerService {
 
   /**
    * Initializes the patient profile by loading it from the backend using the URL specified in the app settings.
-   * @returns
+   * @returns {Observable<DataSelectionProfile>}
    */
   public initializePatientProfile(): Observable<DataSelectionProfile> {
     const mainProfileUrl = this.appSettingsProviderService.getDsePatientProfileUrl()

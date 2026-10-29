@@ -1,27 +1,27 @@
 import { Component, computed, inject, input, output, signal, viewChild } from '@angular/core'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
-import { ListItemDetailsData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsData'
-import { ListItemDetailsGenericComponent } from 'src/app/shared/components/list-item-details-generic/list-item-details-generic.component'
-import { map, tap } from 'rxjs'
+import { toSignal } from '@angular/core/rxjs-interop'
 import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav'
 import { MatTooltip } from '@angular/material/tooltip'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
+import { map, tap } from 'rxjs'
+import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
+import { SelectedProfileService } from 'src/app/service/DataSelection/Selection/SelectedProfileEntry.service'
+import { ProfileEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/ProfileEntryDetails.service'
+import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
+import { ListItemDetailsGenericComponent } from 'src/app/shared/components/list-item-details-generic/list-item-details-generic.component'
+import { TableComponent } from 'src/app/shared/components/table/table.component'
+import { ProfileListItemDetailsAdapter } from 'src/app/shared/models/ListItemDetails/Adapter/ProfileListItemDetailsAdapter'
+import { ListItemDetailsData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsData'
+import { ListItemDetailsRelativeData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsRelative'
 import { MenuItemInterface } from 'src/app/shared/models/Menu/MenuItemInterface'
 import { ProfileEntryAdapter } from 'src/app/shared/models/TableData/Adapter/ProfileEntryAdapter'
-import { ProfileEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/ProfileEntryDetails.service'
-import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
-import { ProfileListItemDetailsMenuService } from 'src/app/shared/service/Menu/ListItemDetails/Profile/ProfileListItemDetailsMenu.service'
-import { ProfileListItemDetailsAdapter } from 'src/app/shared/models/ListItemDetails/Adapter/ProfileListItemDetailsAdapter'
-import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
-import { SelectedProfileService } from 'src/app/service/DataSelection/Selection/SelectedProfileEntry.service'
-import { TableComponent } from 'src/app/shared/components/table/table.component'
+import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxTextCellData'
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
-import { toSignal } from '@angular/core/rxjs-interop'
-import { TranslateModule } from '@ngx-translate/core'
-import { TableCellKind } from '../../../../../shared/models/TableData/Cells/TableCellKind'
-import { ListItemDetailsRelativeData } from 'src/app/shared/models/ListItemDetails/ListItemDetailsRelative'
+import { ProfileListItemDetailsMenuService } from 'src/app/shared/service/Menu/ListItemDetails/Profile/ProfileListItemDetailsMenu.service'
 import { ProfileSearchEngineService } from '../../../../../service/Search/SearchTypes/Profile/Engine/ProfileSearchEngine.service'
+import { TableCellKind } from '../../../../../shared/models/TableData/Cells/TableCellKind'
 
 @Component({
   selector: 'num-profile-search-results',
@@ -40,12 +40,12 @@ import { ProfileSearchEngineService } from '../../../../../service/Search/Search
   ],
 })
 export class ProfileSearchResultsComponent {
-  private profileSearchEngineService = inject(ProfileSearchEngineService)
-  private profileSearchService = inject(ProfileSearchService)
-  private profileEntryDetailsService = inject(ProfileEntryDetailsService)
-  private selectedProfileService = inject(SelectedProfileService)
-  private profileListItemDetailsMenuService = inject(ProfileListItemDetailsMenuService)
-  readonly drawer = viewChild<MatDrawer>('drawer')
+  private readonly profileSearchEngineService = inject(ProfileSearchEngineService)
+  private readonly profileSearchService = inject(ProfileSearchService)
+  private readonly profileEntryDetailsService = inject(ProfileEntryDetailsService)
+  private readonly selectedProfileService = inject(SelectedProfileService)
+  private readonly profileListItemDetailsMenuService = inject(ProfileListItemDetailsMenuService)
+  public readonly drawer = viewChild<MatDrawer>('drawer')
 
   private selectedEntryId: string = ''
 
@@ -53,32 +53,27 @@ export class ProfileSearchResultsComponent {
     initialValue: '',
   })
 
-  private readonly searchResultEntries = toSignal(
-    this.profileSearchService.getSearchResults().pipe(map((r) => r?.getResults() ?? [])),
-    { initialValue: [] as ProfileListEntry[] }
-  )
+  private readonly searchResultEntries = toSignal(this.profileSearchService.getSearchResults().pipe(map((r) => r?.getResults() ?? [])), {
+    initialValue: [] as ProfileListEntry[],
+  })
 
   private readonly selectedProfiles = this.selectedProfileService.getSelectedProfiles()
 
-  readonly adaptedData = computed<TableData>(() => {
+  public readonly adaptedData = computed<TableData>(() => {
     const data = new ProfileEntryAdapter().adapt(this.searchResultEntries())
     const selected = this.selectedProfiles()
     data?.body.rows.forEach((row) => {
-      const checkboxCell = row.cells.find(
-        (c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT
-      )
+      const checkboxCell = row.cells.find((c): c is CheckboxTextCellData => c.type === TableCellKind.CHECKBOXTEXT)
       if (checkboxCell) {
-        checkboxCell.isSelected = selected.some(
-          (p) => p.getUrl() === (row.originalEntry as ProfileListEntry).getUrl()
-        )
+        checkboxCell.isSelected = selected.some((p) => p.getUrl() === (row.originalEntry as ProfileListEntry).getUrl())
       }
     })
     return data
   })
 
-  readonly adaptedDetailsData = signal<ListItemDetailsData | undefined>(undefined)
+  public readonly adaptedDetailsData = signal<ListItemDetailsData | undefined>(undefined)
 
-  triggerSelectAll = { id: Date.now(), value: false }
+  public triggerSelectAll = { id: Date.now(), value: false }
 
   public getMenuItemsForListItem(data: ListItemDetailsData): MenuItemInterface[] {
     return this.profileListItemDetailsMenuService.getMenuItems(data.selectable)
@@ -122,25 +117,21 @@ export class ProfileSearchResultsComponent {
   }
   public selectAll(areAllSelected: boolean): void {
     if (areAllSelected) {
-      this.profileSearchEngineService
-        .search(this.activeSearchTerm(), 0, 10000)
-        .subscribe((result) => {
-          result.getResults().forEach((entry) => {
-            if (!this.isProfileSelected(entry.getUrl())) {
-              this.selectedProfileService.addToSelection(entry)
-            }
-          })
+      this.profileSearchEngineService.search(this.activeSearchTerm(), 0, 10000).subscribe((result) => {
+        result.getResults().forEach((entry) => {
+          if (!this.isProfileSelected(entry.getUrl())) {
+            this.selectedProfileService.addToSelection(entry)
+          }
         })
+      })
     } else {
-      this.profileSearchEngineService
-        .search(this.activeSearchTerm(), 0, 10000)
-        .subscribe((result) => {
-          result.getResults().forEach((entry) => {
-            if (this.isProfileSelected(entry.getUrl())) {
-              this.selectedProfileService.removeFromSelection(entry)
-            }
-          })
+      this.profileSearchEngineService.search(this.activeSearchTerm(), 0, 10000).subscribe((result) => {
+        result.getResults().forEach((entry) => {
+          if (this.isProfileSelected(entry.getUrl())) {
+            this.selectedProfileService.removeFromSelection(entry)
+          }
         })
+      })
     }
   }
 }

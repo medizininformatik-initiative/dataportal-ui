@@ -9,6 +9,4 @@
  *
  * @see `$defs/timeRestriction` in the CCDL v1 schema.
  */
-export type CCDLTimeRestriction =
-  | { afterDate: string; beforeDate?: string }
-  | { afterDate?: string; beforeDate: string }
+export type CCDLTimeRestriction = { afterDate: string; beforeDate?: string } | { afterDate?: string; beforeDate: string }

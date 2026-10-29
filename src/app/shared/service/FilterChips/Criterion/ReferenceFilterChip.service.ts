@@ -1,14 +1,14 @@
+import { Injectable, inject } from '@angular/core'
 import { AbstractCriterion } from 'src/app/model/FeasibilityQuery/Criterion/AbstractCriterion'
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
 import { FilterChipBuilder } from 'src/app/shared/models/FilterChips/FilterChipBuilder'
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
-import { Injectable, inject } from '@angular/core'
-import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReferenceFilterChipService {
-  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private readonly referenceCriterionProvider = inject(ReferenceCriterionProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -17,8 +17,8 @@ export class ReferenceFilterChipService {
 
   /**
    * Creates filter chips for reference filters of a given criterion.
-   * @param criterion
-   * @returns
+   * @param {AbstractCriterion} criterion
+   * @returns {FilterChipData[]}
    */
   public generateReferenceChips(criterion: AbstractCriterion): FilterChipData[] {
     const chips: FilterChipData[] = []

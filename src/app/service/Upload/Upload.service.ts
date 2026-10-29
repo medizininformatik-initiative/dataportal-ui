@@ -1,20 +1,20 @@
-import { CheckAndUpgradeCCDLService } from '../Upgrade/CheckAndUpgradeCCDL.service'
+import { Injectable, inject } from '@angular/core'
 import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
 import { CrtdlProcessingPipelineService } from '../CrtdlProcessingPipeline.service'
-import { FileUploadService } from './FileUpload.service'
-import { Injectable, inject } from '@angular/core'
-import { SnackbarMessageService } from '../SnackbarMessage.service'
 import { NavigationHelperService } from '../NavigationHelper.service'
+import { SnackbarMessageService } from '../SnackbarMessage.service'
+import { CheckAndUpgradeCCDLService } from '../Upgrade/CheckAndUpgradeCCDL.service'
+import { FileUploadService } from './FileUpload.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UploadService {
-  private fileUploadService = inject(FileUploadService)
-  private snackbarMessageService = inject(SnackbarMessageService)
-  private checkAndUpgradeCCDLService = inject(CheckAndUpgradeCCDLService)
-  private crtdlProcessingPipelineService = inject(CrtdlProcessingPipelineService)
-  private navigationHelperService = inject(NavigationHelperService)
+  private readonly fileUploadService = inject(FileUploadService)
+  private readonly snackbarMessageService = inject(SnackbarMessageService)
+  private readonly checkAndUpgradeCCDLService = inject(CheckAndUpgradeCCDLService)
+  private readonly crtdlProcessingPipelineService = inject(CrtdlProcessingPipelineService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

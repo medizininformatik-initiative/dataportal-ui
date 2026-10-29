@@ -1,9 +1,9 @@
-import { AbstractKeyedSearchMediator } from '../../../Abstract/Mediator/AbstractKeyedSearchMediator'
-import { CriteriaSetSearchEngineService } from '../Engine/CriteriaSetSearchEngine'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
 import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry'
 import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList'
+import { AbstractKeyedSearchMediator } from '../../../Abstract/Mediator/AbstractKeyedSearchMediator'
+import { CriteriaSetSearchEngineService } from '../Engine/CriteriaSetSearchEngine'
 import { CriteriaSetSearchResultProviderService } from '../Result/CriteriaSetSearchResultProvider.service '
 
 /**
@@ -15,10 +15,7 @@ import { CriteriaSetSearchResultProviderService } from '../Result/CriteriaSetSea
 @Injectable({
   providedIn: 'root',
 })
-export class CriteriaSetSearchMediatorService extends AbstractKeyedSearchMediator<
-  ReferenceCriteriaListEntry,
-  ReferenceCriteriaResultList
-> {
+export class CriteriaSetSearchMediatorService extends AbstractKeyedSearchMediator<ReferenceCriteriaListEntry, ReferenceCriteriaResultList> {
   protected resultProvider: CriteriaSetSearchResultProviderService
   protected searchEngine: CriteriaSetSearchEngineService
 
@@ -44,32 +41,24 @@ export class CriteriaSetSearchMediatorService extends AbstractKeyedSearchMediato
   /**
    * Performs a search for criteria sets and sets the results for the given criteria set URLs.
    *
-   * @param searchText - The text to search for
-   * @param criteriaSetUrls - Array of criteria set URLs to search within
-   * @param page - The page number for pagination (defaults to 0)
-   * @returns An Observable that emits the search results
+   * @param {string} searchText - The text to search for
+   * @param {string[]} criteriaSetUrls - Array of criteria set URLs to search within
+   * @param {number} page - The page number for pagination (defaults to 0)
+   * @returns {Observable<ReferenceCriteriaResultList>} An Observable that emits the search results
    */
-  public searchCriteriaSets(
-    searchText: string,
-    criteriaSetUrls: string[],
-    page: number = 0
-  ): Observable<ReferenceCriteriaResultList> {
+  public searchCriteriaSets(searchText: string, criteriaSetUrls: string[], page: number = 0): Observable<ReferenceCriteriaResultList> {
     return this.searchAndSetProvider(searchText, page, criteriaSetUrls)
   }
 
   /**
    * Performs a search for criteria sets and appends results for pagination.
    *
-   * @param searchText - The text to search for
-   * @param criteriaSetUrls - Array of criteria set URLs to search within
-   * @param page - The page number for pagination
-   * @returns An Observable that emits the updated search results
+   * @param {string} searchText - The text to search for
+   * @param {string[]} criteriaSetUrls - Array of criteria set URLs to search within
+   * @param {number} page - The page number for pagination
+   * @returns {Observable<ReferenceCriteriaResultList>} An Observable that emits the updated search results
    */
-  public searchAndAppendCriteriaSets(
-    searchText: string,
-    criteriaSetUrls: string[],
-    page: number
-  ): Observable<ReferenceCriteriaResultList> {
+  public searchAndAppendCriteriaSets(searchText: string, criteriaSetUrls: string[], page: number): Observable<ReferenceCriteriaResultList> {
     return this.searchAndUpdateProvider(searchText, page, criteriaSetUrls)
   }
 }

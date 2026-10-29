@@ -1,14 +1,14 @@
-import { ElasticSearchFilterPaths } from 'src/app/service/Backend/Paths/ElasticSearchFilterPaths';
-import { SearchUrlStrategy } from '../../../Interface/InterfaceSearchUrlStrategy';
-import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder';
-import { TerminologyPaths } from 'src/app/service/Backend/Paths/TerminologyPaths';
+import { ElasticSearchFilterPaths } from 'src/app/service/Backend/Paths/ElasticSearchFilterPaths'
+import { TerminologyPaths } from 'src/app/service/Backend/Paths/TerminologyPaths'
+import { SearchUrlStrategy } from '../../../Interface/InterfaceSearchUrlStrategy'
+import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder'
 
 export class CriteriaSearchUrlStrategy implements SearchUrlStrategy {
-  private searchText: string;
-  private availabilityFilter: string;
-  private contextFilter: string;
-  private kdsFilter: string;
-  private terminologyFilter: string;
+  private readonly searchText: string
+  private readonly availabilityFilter: string
+  private readonly contextFilter: string
+  private readonly kdsFilter: string
+  private readonly terminologyFilter: string
 
   constructor(
     searchText: string,
@@ -17,11 +17,11 @@ export class CriteriaSearchUrlStrategy implements SearchUrlStrategy {
     kdsFilter: string = ElasticSearchFilterPaths.KDSMODULES,
     terminologyFilter: string = ElasticSearchFilterPaths.TERMINOLOGIES
   ) {
-    this.searchText = searchText;
-    this.availabilityFilter = availabilityFilter;
-    this.contextFilter = contextFilter;
-    this.kdsFilter = kdsFilter;
-    this.terminologyFilter = terminologyFilter;
+    this.searchText = searchText
+    this.availabilityFilter = availabilityFilter
+    this.contextFilter = contextFilter
+    this.kdsFilter = kdsFilter
+    this.terminologyFilter = terminologyFilter
   }
 
   public getSearchUrl(page: number, pageSize: number): string {
@@ -33,7 +33,7 @@ export class CriteriaSearchUrlStrategy implements SearchUrlStrategy {
       .withTerminology(this.terminologyFilter)
       .withPage(pageSize)
       .withPageSize(page)
-      .buildUrl();
-    return url;
+      .buildUrl()
+    return url
   }
 }

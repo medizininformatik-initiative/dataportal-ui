@@ -2,9 +2,7 @@
   <div
     class="select-wrapper"
     [matTooltip]="
-      selectedValues()?.length === 0
-        ? ('SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED' | translate)
-        : getCleanValue(selectedValues())
+      selectedValues()?.length === 0 ? ('SHARED_COMPONENTS.FILTER.NO_FILTER_SELECTED' | translate) : getCleanValue(selectedValues())
     "
     matTooltipPosition="below"
     matTooltipShowDelay="300"

@@ -1,15 +1,15 @@
-import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept'
+import { Injectable } from '@angular/core'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
-import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
 import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue'
+import { CloneConcept } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Concept/CloneConcept'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import { Injectable } from '@angular/core'
+import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
 import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 
 @Injectable()
 export class ConceptSelectionHelperService {
-  toggleConceptSelection(concept: Concept, selectedConcepts: Concept[]): Concept[] {
+  public toggleConceptSelection(concept: Concept, selectedConcepts: Concept[]): Concept[] {
     const isSelected = this.isConceptSelected(concept, selectedConcepts)
 
     if (isSelected) {
@@ -19,27 +19,24 @@ export class ConceptSelectionHelperService {
     }
   }
 
-  isConceptSelected(concept: Concept, selectedConcepts: Concept[]): boolean {
+  public isConceptSelected(concept: Concept, selectedConcepts: Concept[]): boolean {
     return selectedConcepts.some((existing) => this.isSameConcept(existing, concept))
   }
 
-  isSameConcept(concept1: Concept, concept2: Concept): boolean {
+  public isSameConcept(concept1: Concept, concept2: Concept): boolean {
     return (
       concept1.getTerminologyCode().getCode() === concept2.getTerminologyCode().getCode() &&
       concept1.getTerminologyCode().getSystem() === concept2.getTerminologyCode().getSystem()
     )
   }
 
-  cloneConcepts(concepts: Concept[]): Concept[] {
+  public cloneConcepts(concepts: Concept[]): Concept[] {
     return CloneConcept.deepCopyConcepts(concepts)
   }
 
-  createTerminologyFilter(valueSetUrls: string[]): SearchFilterData {
+  public createTerminologyFilter(valueSetUrls: string[]): SearchFilterData {
     const filterValues = this.createFilterValues(valueSetUrls)
-    const criteriaFilter = new CriteriaSearchFilter(
-      ElasticSearchFilterTypes.TERMINOLOGY,
-      filterValues
-    )
+    const criteriaFilter = new CriteriaSearchFilter(ElasticSearchFilterTypes.TERMINOLOGY, filterValues)
     return CriteriaSearchFilterAdapter.convertToFilterValues(criteriaFilter)
   }
 

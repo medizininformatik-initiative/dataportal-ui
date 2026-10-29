@@ -5,7 +5,7 @@ import { SnackbarService } from '../shared/service/Snackbar/Snackbar.service'
   providedIn: 'root',
 })
 export class SnackbarMessageService {
-  private snackbarService = inject(SnackbarService)
+  private readonly snackbarService = inject(SnackbarService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -33,9 +33,7 @@ export class SnackbarMessageService {
    * @returns
    */
   public displayRemovedFromCriteriaStage(): void {
-    this.snackbarService.displayErrorMessageWithNoCode(
-      'FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE'
-    )
+    this.snackbarService.displayErrorMessageWithNoCode('FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE')
   }
 
   /**

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { InfoTileComponent } from './info-tile.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { InfoTileComponent } from './info-tile.component'
 
 describe.skip('InfoTileComponent', () => {
   let component: InfoTileComponent

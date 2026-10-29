@@ -1,9 +1,7 @@
 <div class="bulk-container">
   <div>
     <div class="header-container">
-      <num-header [showToggle]="true">{{
-        'FEASIBILITY.BULK_SEARCH.HEADER' | translate
-      }}</num-header>
+      <num-header [showToggle]="true">{{ 'FEASIBILITY.BULK_SEARCH.HEADER' | translate }}</num-header>
       <div class="margin-left-auto">
         <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
       </div>
@@ -15,10 +13,7 @@
 
   <num-bulk-search-input (searchTextOutput)="submitSearch($event)"></num-bulk-search-input>
 
-  <num-bulk-search-results
-    [result]="rawResult()"
-    (tabChanged)="searchtype.set($event)"
-  ></num-bulk-search-results>
+  <num-bulk-search-results [result]="rawResult()" (tabChanged)="searchtype.set($event)"></num-bulk-search-results>
 
   <div class="width-100">
     <num-bulk-search-action-bar [resultType]="searchtype()"></num-bulk-search-action-bar>

@@ -1,28 +1,28 @@
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
+import { Injectable, inject } from '@angular/core'
+import { Observable, tap } from 'rxjs'
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
-import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
+import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
 import { EditAttributeFilterService } from './EditAttributeFilter.service'
 import { EditReferenceFilterService } from './EditReferenceFilter.service'
 import { EditValueFilterService } from './EditValueFilter.service'
-import { Injectable, inject } from '@angular/core'
-import { Observable, tap } from 'rxjs'
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
-import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
-import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditReferenceCriterionService {
-  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
-  private criterionProvider = inject(CriterionProviderService)
-  private referenceFilterService = inject(EditReferenceFilterService)
-  private valueFilterService = inject(EditValueFilterService)
-  private attributeFilterService = inject(EditAttributeFilterService)
+  private readonly referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private readonly criterionProvider = inject(CriterionProviderService)
+  private readonly referenceFilterService = inject(EditReferenceFilterService)
+  private readonly valueFilterService = inject(EditValueFilterService)
+  private readonly attributeFilterService = inject(EditAttributeFilterService)
 
   private workingReferenceCriterion: ReferenceCriterion
 
@@ -32,10 +32,7 @@ export class EditReferenceCriterionService {
   constructor() {}
 
   public initialize(referenceCriterion: ReferenceCriterion): void {
-    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(
-      referenceCriterion,
-      true
-    ) as ReferenceCriterion
+    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(referenceCriterion, true) as ReferenceCriterion
     copy.setId(referenceCriterion.getId())
     copy.setParentId(referenceCriterion.getParentId())
     this.workingReferenceCriterion = copy
@@ -43,34 +40,20 @@ export class EditReferenceCriterionService {
 
   public getReferenceCriterion(): ReferenceCriterion {
     if (!this.workingReferenceCriterion) {
-      throw new Error(
-        'EditReferenceCriterionService: ReferenceCriterion not initialized. Call initialize() first.'
-      )
+      throw new Error('EditReferenceCriterionService: ReferenceCriterion not initialized. Call initialize() first.')
     }
     return this.workingReferenceCriterion
   }
 
-  public updateConceptAttributeFilter(
-    concept: ConceptFilter,
-    attributeFilter: AttributeFilter
-  ): void {
+  public updateConceptAttributeFilter(concept: ConceptFilter, attributeFilter: AttributeFilter): void {
     const criterion = this.getReferenceCriterion()
-    this.applyAttributeFilters(
-      criterion,
-      this.attributeFilterService.buildFromConcept(criterion, concept, attributeFilter)
-    )
+    this.applyAttributeFilters(criterion, this.attributeFilterService.buildFromConcept(criterion, concept, attributeFilter))
     this.emit()
   }
 
-  public updateQuantityAttributeFilter(
-    quantityFilter: AbstractQuantityFilter,
-    attributeFilter: AttributeFilter
-  ): void {
+  public updateQuantityAttributeFilter(quantityFilter: AbstractQuantityFilter, attributeFilter: AttributeFilter): void {
     const criterion = this.getReferenceCriterion()
-    this.applyAttributeFilters(
-      criterion,
-      this.attributeFilterService.buildFromQuantity(criterion, quantityFilter, attributeFilter)
-    )
+    this.applyAttributeFilters(criterion, this.attributeFilterService.buildFromQuantity(criterion, quantityFilter, attributeFilter))
     this.emit()
   }
 
@@ -86,28 +69,15 @@ export class EditReferenceCriterionService {
     this.emit()
   }
 
-  public addReferenceCriteria(
-    id: string,
-    attributeFilter: AttributeFilter
-  ): Observable<ReferenceFilter> {
-    return this.referenceFilterService
-      .updateReferenceFilter([id], this.getReferenceCriterion().getId(), attributeFilter)
-      .pipe(
-        tap((updatedReferenceFilter) =>
-          this.applyReferenceFilter(attributeFilter, updatedReferenceFilter)
-        ),
-        tap(() => this.emit())
-      )
+  public addReferenceCriteria(id: string, attributeFilter: AttributeFilter): Observable<ReferenceFilter> {
+    return this.referenceFilterService.updateReferenceFilter([id], this.getReferenceCriterion().getId(), attributeFilter).pipe(
+      tap((updatedReferenceFilter) => this.applyReferenceFilter(attributeFilter, updatedReferenceFilter)),
+      tap(() => this.emit())
+    )
   }
 
-  public updateSelectedReferences(
-    attributeFilter: AttributeFilter,
-    updatedReferences: ReferenceCriterion[]
-  ): void {
-    const updatedReferenceFilter = this.referenceFilterService.updateSelectedReferences(
-      updatedReferences,
-      attributeFilter
-    )
+  public updateSelectedReferences(attributeFilter: AttributeFilter, updatedReferences: ReferenceCriterion[]): void {
+    const updatedReferenceFilter = this.referenceFilterService.updateSelectedReferences(updatedReferences, attributeFilter)
     this.applyReferenceFilter(attributeFilter, updatedReferenceFilter)
     this.emit()
   }
@@ -124,30 +94,18 @@ export class EditReferenceCriterionService {
     this.emit()
   }
 
-  private applyAttributeFilters(
-    criterion: ReferenceCriterion,
-    attributeFilters: AttributeFilter[]
-  ): void {
+  private applyAttributeFilters(criterion: ReferenceCriterion, attributeFilters: AttributeFilter[]): void {
     criterion.setAttributeFilters(attributeFilters)
     criterion.setIsRequiredFilterSet(this.attributeFilterService.isFilterRequired(criterion))
   }
 
-  private applyReferenceFilter(
-    attributeFilter: AttributeFilter,
-    referenceFilter: ReferenceFilter
-  ): void {
+  private applyReferenceFilter(attributeFilter: AttributeFilter, referenceFilter: ReferenceFilter): void {
     const criterion = this.getReferenceCriterion()
-    this.applyAttributeFilters(
-      criterion,
-      this.attributeFilterService.buildFromReference(criterion, referenceFilter, attributeFilter)
-    )
+    this.applyAttributeFilters(criterion, this.attributeFilterService.buildFromReference(criterion, referenceFilter, attributeFilter))
   }
 
   private emit(): void {
-    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(
-      this.workingReferenceCriterion,
-      true
-    ) as ReferenceCriterion
+    const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(this.workingReferenceCriterion, true) as ReferenceCriterion
     copy.setId(this.workingReferenceCriterion.getId())
     copy.setParentId(this.workingReferenceCriterion.getParentId())
     this.workingReferenceCriterion = copy

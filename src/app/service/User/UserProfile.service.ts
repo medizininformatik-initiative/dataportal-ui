@@ -1,8 +1,8 @@
-import { BehaviorSubject, from, Observable, of } from 'rxjs'
 import { Injectable, inject } from '@angular/core'
-import { IUserProfile } from '../../shared/models/user/user-profile.interface'
-import { map, take, tap } from 'rxjs/operators'
 import { OAuthService } from 'angular-oauth2-oidc'
+import { BehaviorSubject, from, Observable, of } from 'rxjs'
+import { map, take, tap } from 'rxjs/operators'
+import { IUserProfile } from '../../shared/models/user/user-profile.interface'
 
 /**
  * Provides centralized access to user profile loaded by OAuth service.
@@ -11,7 +11,7 @@ import { OAuthService } from 'angular-oauth2-oidc'
   providedIn: 'root',
 })
 export class UserProfileService {
-  private oauthService = inject(OAuthService)
+  private readonly oauthService = inject(OAuthService)
 
   /**
    * Current user profile data, null if not loaded or user not authenticated
@@ -31,6 +31,7 @@ export class UserProfileService {
   /**
    * Initialize profile loading on service creation
    * This method can only be executed once to prevent duplicate profile loading
+   * @returns {Observable<boolean>}
    */
   public initializeProfile(): Observable<boolean> {
     if (this.isInitialized) {
@@ -55,6 +56,7 @@ export class UserProfileService {
 
   /**
    * Checks if the user has valid OAuth tokens
+   * @returns {boolean}
    */
   private isUserAuthenticated(): boolean {
     return this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken()
@@ -62,6 +64,7 @@ export class UserProfileService {
 
   /**
    * Observable stream of user profile data
+   * @returns {Observable<IUserProfile | null>}
    */
   public getProfile(): Observable<IUserProfile | null> {
     return this.profileSubject.asObservable()
@@ -69,6 +72,7 @@ export class UserProfileService {
 
   /**
    * Current profile data (synchronous access)
+   * @returns {IUserProfile | null}
    */
   public getCurrentProfile(): IUserProfile | null {
     return this.profileSubject.value
@@ -83,6 +87,8 @@ export class UserProfileService {
 
   /**
    * Checks if the current user has any of the specified roles
+   * @param {string[]} roles
+   * @returns {boolean}
    */
   public hasRole(roles: string[]): boolean {
     const profile = this.getCurrentProfile()
@@ -96,6 +102,7 @@ export class UserProfileService {
 
   /**
    * Gets all user roles
+   * @returns {string[]}
    */
   public getUserRoles(): string[] {
     const profile = this.getCurrentProfile()
@@ -104,6 +111,7 @@ export class UserProfileService {
 
   /**
    * Gets user display name
+   * @returns {string}
    */
   public getUserName(): string {
     const profile = this.getCurrentProfile()
@@ -112,6 +120,7 @@ export class UserProfileService {
 
   /**
    * Checks if user is currently authenticated and has profile loaded
+   * @returns {boolean}
    */
   public isAuthenticated(): boolean {
     return this.getCurrentProfile() !== null

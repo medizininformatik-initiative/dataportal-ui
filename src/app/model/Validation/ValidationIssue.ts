@@ -1,46 +1,46 @@
-import { AbstractCodeMessage } from '../Utilities/AbstractCodeMessage';
-import { CriteriaSetValidationIssue } from './Issues/CriteriaSetValidationIssue';
-import { DataExtractionValidationIssue } from './Issues/DataExtractionValidationIssue';
-import { QuantityRangeValidationIssue } from './Issues/QuantityRangeValidationIssue';
-import { QuantityUnitValidationIssue } from './Issues/QuantityUnitValidationIssue';
-import { TimeRestrictionValidationIssue } from './Issues/TimeRestrictionValidationIssue';
-import { ValueSetValidationIssue } from './Issues/ValueSetValidationIssue';
+import { AbstractCodeMessage } from '../Utilities/AbstractCodeMessage'
+import { CriteriaSetValidationIssue } from './Issues/CriteriaSetValidationIssue'
+import { DataExtractionValidationIssue } from './Issues/DataExtractionValidationIssue'
+import { QuantityRangeValidationIssue } from './Issues/QuantityRangeValidationIssue'
+import { QuantityUnitValidationIssue } from './Issues/QuantityUnitValidationIssue'
+import { TimeRestrictionValidationIssue } from './Issues/TimeRestrictionValidationIssue'
+import { ValueSetValidationIssue } from './Issues/ValueSetValidationIssue'
 
 export class ValidationIssue extends AbstractCodeMessage {
   /**
    * Optional detaile information about the criteria set involved in the validation issue
    * @see CriteriaSetValidationIssueData.
    */
-  private criteriaSetValidationIssue: CriteriaSetValidationIssue;
+  private criteriaSetValidationIssue: CriteriaSetValidationIssue
 
   /**
    * Optional detailed information about the quantity range validation issue.
    * @see QuantityRangeValidationIssueData
    */
-  private quantityRangeValidationIssue?: QuantityRangeValidationIssue;
+  private quantityRangeValidationIssue?: QuantityRangeValidationIssue
   /**
    * Optional detailed information about the quantity unit validation issue.
    * @see {QuantityUnitValidationIssueData}
    */
-  private quantityUnitValidationIssue?: QuantityUnitValidationIssue;
+  private quantityUnitValidationIssue?: QuantityUnitValidationIssue
 
   /**
    * Optional detailed information about the data extraction validation issue.
    * @see DataExtractionValidationIssueData
    */
-  private dataExtractionValidationIssue?: DataExtractionValidationIssue;
+  private dataExtractionValidationIssue?: DataExtractionValidationIssue
 
   /**
    * Optional detailed information about the time restriction validation issue.
    * @see TimeRestrictionValidationIssueData
    */
-  private timeRestrictionValidationIssue?: TimeRestrictionValidationIssue;
+  private timeRestrictionValidationIssue?: TimeRestrictionValidationIssue
 
   /**
    * Optional detailed information about the termcode involved in the validation issue.
    * @see {}
    */
-  private valueSetValidationIssue?: ValueSetValidationIssue;
+  private valueSetValidationIssue?: ValueSetValidationIssue
 
   constructor(
     location: string,
@@ -53,59 +53,59 @@ export class ValidationIssue extends AbstractCodeMessage {
     valueSetValidationIssue?: ValueSetValidationIssue,
     dataExtractionValidationIssue?: DataExtractionValidationIssue
   ) {
-    super(code, message, location);
-    this.quantityRangeValidationIssue = quantityRangeValidationIssue;
-    this.quantityUnitValidationIssue = quantityUnitValidationIssue;
-    this.valueSetValidationIssue = valueSetValidationIssue;
-    this.timeRestrictionValidationIssue = timeRestrictionValidationIssue;
-    this.criteriaSetValidationIssue = criteriaSetValidationIssue;
+    super(code, message, location)
+    this.quantityRangeValidationIssue = quantityRangeValidationIssue
+    this.quantityUnitValidationIssue = quantityUnitValidationIssue
+    this.valueSetValidationIssue = valueSetValidationIssue
+    this.timeRestrictionValidationIssue = timeRestrictionValidationIssue
+    this.criteriaSetValidationIssue = criteriaSetValidationIssue
   }
 
   public getQuantityUnitValidationIssue(): QuantityUnitValidationIssue | undefined {
-    return this.quantityUnitValidationIssue;
+    return this.quantityUnitValidationIssue
   }
 
   public getTimeRestrictionValidationIssue(): TimeRestrictionValidationIssue | undefined {
-    return this.timeRestrictionValidationIssue;
+    return this.timeRestrictionValidationIssue
   }
 
   public getValueSetValidationIssue(): ValueSetValidationIssue | undefined {
-    return this.valueSetValidationIssue;
+    return this.valueSetValidationIssue
   }
 
   public getCriteriaSetValidationIssue(): CriteriaSetValidationIssue | undefined {
-    return this.criteriaSetValidationIssue;
+    return this.criteriaSetValidationIssue
   }
 
   public setQuantityUnitValidationIssue(issue: QuantityUnitValidationIssue): void {
-    this.quantityUnitValidationIssue = issue;
+    this.quantityUnitValidationIssue = issue
   }
 
   public setTimeRestrictionValidationIssue(issue: TimeRestrictionValidationIssue): void {
-    this.timeRestrictionValidationIssue = issue;
+    this.timeRestrictionValidationIssue = issue
   }
 
   public setValueSetValidationIssue(issue: ValueSetValidationIssue): void {
-    this.valueSetValidationIssue = issue;
+    this.valueSetValidationIssue = issue
   }
 
   public setCriteriaSetValidationIssue(issue: CriteriaSetValidationIssue): void {
-    this.criteriaSetValidationIssue = issue;
+    this.criteriaSetValidationIssue = issue
   }
 
   public setQuantityRangeValidationIssue(issue: QuantityRangeValidationIssue): void {
-    this.quantityRangeValidationIssue = issue;
+    this.quantityRangeValidationIssue = issue
   }
 
   public getQuantityRangeValidationIssue(): QuantityRangeValidationIssue | undefined {
-    return this.quantityRangeValidationIssue;
+    return this.quantityRangeValidationIssue
   }
 
   public setDataExtractionValidationIssue(issue: DataExtractionValidationIssue): void {
-    this.dataExtractionValidationIssue = issue;
+    this.dataExtractionValidationIssue = issue
   }
 
   public getDataExtractionValidationIssue(): DataExtractionValidationIssue | undefined {
-    return this.dataExtractionValidationIssue;
+    return this.dataExtractionValidationIssue
   }
 }

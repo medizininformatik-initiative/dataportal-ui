@@ -1,12 +1,10 @@
+import { ProfileListEntryData } from 'src/app/model/Interface/Search/ProfileListEntryData'
+import { ProfileResultListData } from 'src/app/model/Interface/Search/ProfileResultListData'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 import { ProfileResultList } from 'src/app/model/Search/ResultList/ProfileResultList'
 import { MappingStrategy } from '../../../Interface/InterfaceMappingStrategy'
-import { ProfileListEntryData } from 'src/app/model/Interface/Search/ProfileListEntryData'
-import { ProfileResultListData } from 'src/app/model/Interface/Search/ProfileResultListData'
 
-export class ProfileResultMapperStrategy
-  implements MappingStrategy<ProfileListEntry, ProfileResultList>
-{
+export class ProfileResultMapperStrategy implements MappingStrategy<ProfileListEntry, ProfileResultList> {
   /**
    * Maps the API response to a ProfileResultList.
    * @param {ProfileResultListData} response
@@ -23,9 +21,7 @@ export class ProfileResultMapperStrategy
    * @returns {ProfileListEntry[]}
    */
   public mapResponseToEntries(results: ProfileListEntryData[]): ProfileListEntry[] {
-    return results.map((resultItem: ProfileListEntryData) =>
-      this.mapEntryDataToListEntry(resultItem)
-    )
+    return results.map((resultItem: ProfileListEntryData) => this.mapEntryDataToListEntry(resultItem))
   }
 
   /**

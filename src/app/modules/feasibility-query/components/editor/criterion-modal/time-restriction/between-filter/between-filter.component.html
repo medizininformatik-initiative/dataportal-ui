@@ -1,7 +1,5 @@
-<num-date-picker [selectedDate]="afterDate" (dateChanged)="onAfterDateChange($event)">
-</num-date-picker>
-<num-date-picker [selectedDate]="beforeDate" (dateChanged)="onBeforeDateChange($event)">
-</num-date-picker>
+<num-date-picker [selectedDate]="afterDate" (dateChanged)="onAfterDateChange($event)"></num-date-picker>
+<num-date-picker [selectedDate]="beforeDate" (dateChanged)="onBeforeDateChange($event)"></num-date-picker>
 @if (displayDateWarning) {
 <div class="date-warning">
   <span>{{ 'SHARED_FILTER.TIMERESTRICTION.WARNING' | translate }}</span>

@@ -1,71 +1,52 @@
-import { AttributeDefinitionData } from '../../../model/Interface/AttributeDefinitionData'
+import { inject, Injectable } from '@angular/core'
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
-import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service'
-import { AttributeFilterTranslatorService } from './AttributeFilterTranslator.service'
-import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
-import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service'
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionBuilder } from 'src/app/model/FeasibilityQuery/Criterion/CriterionBuilder'
-import { CriterionMetadataService } from '../../Criterion/CriterionMetadata.service'
-import { HashService } from '../../Hash.service'
-import { inject, Injectable } from '@angular/core'
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
 import { StructuredQueryCriterionData } from 'src/app/model/Interface/StructuredQueryCriterionData'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { v4 as uuidv4 } from 'uuid'
+import { AttributeDefinitionData } from '../../../model/Interface/AttributeDefinitionData'
+import { ValueDefinitionData } from '../../../model/Interface/ValueDefinition'
+import { AttributeFilterFactoryService } from '../../Criterion/AttributeFilterFactory.service'
+import { CriterionMetadataService } from '../../Criterion/CriterionMetadata.service'
+import { HashService } from '../../Hash.service'
+import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service'
 import { UiProfileProviderService } from '../../Provider/UiProfileProvider.service'
 import { UITimeRestrictionFactoryService } from '../Shared/UITimeRestrictionFactory.service'
-import { v4 as uuidv4 } from 'uuid'
-import { ValueDefinitionData } from '../../../model/Interface/ValueDefinition'
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
+import { AttributeFilterTranslatorService } from './AttributeFilterTranslator.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionTranslatorService {
-  private attributeFilterTranslatorService = inject(AttributeFilterTranslatorService)
-  private criteriaProfileProviderService = inject(CriteriaProfileProviderService)
-  private criterionMetadataService = inject(CriterionMetadataService)
-  private hashService = inject(HashService)
-  private uiProfileProviderService = inject(UiProfileProviderService)
-  private uiTimeRestrictionFactoryService = inject(UITimeRestrictionFactoryService)
-  private attributeFilterFactoryService = inject(AttributeFilterFactoryService)
+  private readonly attributeFilterTranslatorService = inject(AttributeFilterTranslatorService)
+  private readonly criteriaProfileProviderService = inject(CriteriaProfileProviderService)
+  private readonly criterionMetadataService = inject(CriterionMetadataService)
+  private readonly hashService = inject(HashService)
+  private readonly uiProfileProviderService = inject(UiProfileProviderService)
+  private readonly uiTimeRestrictionFactoryService = inject(UITimeRestrictionFactoryService)
+  private readonly attributeFilterFactoryService = inject(AttributeFilterFactoryService)
 
   constructor() {}
 
   public translate(structuredQueryCriterion: StructuredQueryCriterionData): Criterion {
     const criteriaProfileData = this.getCriteriaProfileData(structuredQueryCriterion)
     const criterionId = uuidv4()
-    const termCodes = structuredQueryCriterion.termCodes.map((termCode) =>
-      TerminologyCode.fromJson(termCode)
-    )
-    const criterionBuilder = this.createCriterionBuilder(
-      criteriaProfileData,
-      criterionId,
-      termCodes
-    )
+    const termCodes = structuredQueryCriterion.termCodes.map((termCode) => TerminologyCode.fromJson(termCode))
+    const criterionBuilder = this.createCriterionBuilder(criteriaProfileData, criterionId, termCodes)
     const uiProfile = this.uiProfileProviderService.getOne(criteriaProfileData.uiProfileId)
     this.applyValueFilters(criterionBuilder, structuredQueryCriterion, uiProfile.valueDefinition)
 
     this.applyValueFilters(criterionBuilder, structuredQueryCriterion, uiProfile.valueDefinition)
-    this.applyAttributeFilters(
-      criterionBuilder,
-      structuredQueryCriterion,
-      uiProfile.attributeDefinitions,
-      criterionId
-    )
-    this.applyTimeRestriction(
-      criterionBuilder,
-      structuredQueryCriterion,
-      uiProfile.timeRestrictionAllowed
-    )
+    this.applyAttributeFilters(criterionBuilder, structuredQueryCriterion, uiProfile.attributeDefinitions, criterionId)
+    this.applyTimeRestriction(criterionBuilder, structuredQueryCriterion, uiProfile.timeRestrictionAllowed)
     return criterionBuilder.buildCriterion()
   }
 
-  private getCriteriaProfileData(
-    structuredQueryCriterion: StructuredQueryCriterionData
-  ): CriteriaProfileData {
-    const termCodes = structuredQueryCriterion.termCodes.map((termCodeData) =>
-      TerminologyCode.fromJson(termCodeData)
-    )
+  private getCriteriaProfileData(structuredQueryCriterion: StructuredQueryCriterionData): CriteriaProfileData {
+    const termCodes = structuredQueryCriterion.termCodes.map((termCodeData) => TerminologyCode.fromJson(termCodeData))
     const context = TerminologyCode.fromJson(structuredQueryCriterion.context)
     const hash = this.hashService.createCriterionHash(context, termCodes[0])
     return this.criteriaProfileProviderService.getCriteriaProfileByHash(hash)
@@ -76,11 +57,7 @@ export class CriterionTranslatorService {
     criterionId: string,
     termCodes: TerminologyCode[]
   ): CriterionBuilder {
-    const criterionMetadata = this.criterionMetadataService.createMandatoryFieldsFromData(
-      criteriaProfileData,
-      criterionId,
-      termCodes
-    )
+    const criterionMetadata = this.criterionMetadataService.createMandatoryFieldsFromData(criteriaProfileData, criterionId, termCodes)
     return new CriterionBuilder(criterionMetadata)
   }
 
@@ -93,18 +70,15 @@ export class CriterionTranslatorService {
       criterionBuilder.withValueFilters([])
     } else {
       if (!structuredQueryCriterion.valueFilter) {
-        criterionBuilder.withValueFilters([
-          this.attributeFilterFactoryService.createValueFilter(valueDefinition),
-        ])
+        criterionBuilder.withValueFilters([this.attributeFilterFactoryService.createValueFilter(valueDefinition)])
         if (!valueDefinition.optional) {
           criterionBuilder.withRequiredFilter(false)
         }
       } else {
-        const valueFilter: ValueFilter =
-          this.attributeFilterTranslatorService.translateValueFilters(
-            valueDefinition,
-            structuredQueryCriterion.valueFilter
-          )
+        const valueFilter: ValueFilter = this.attributeFilterTranslatorService.translateValueFilters(
+          valueDefinition,
+          structuredQueryCriterion.valueFilter
+        )
         criterionBuilder.withValueFilters([valueFilter])
       }
     }
@@ -116,12 +90,11 @@ export class CriterionTranslatorService {
     attributeDefinitions: AttributeDefinitionData[],
     criterionId: string
   ): void {
-    const attributeFilters: AttributeFilter[] =
-      this.attributeFilterTranslatorService.translateAttributeFilters(
-        attributeDefinitions,
-        structuredQueryCriterion.attributeFilters,
-        criterionId
-      )
+    const attributeFilters: AttributeFilter[] = this.attributeFilterTranslatorService.translateAttributeFilters(
+      attributeDefinitions,
+      structuredQueryCriterion.attributeFilters,
+      criterionId
+    )
     criterionBuilder.withAttributeFilters(attributeFilters)
   }
   private applyTimeRestriction(
@@ -134,10 +107,9 @@ export class CriterionTranslatorService {
         criterionBuilder.withTimeRestriction(criterionBuilder.buildEmptyTimeRestriction())
       }
     } else {
-      const timeRestriction =
-        this.uiTimeRestrictionFactoryService.createTimeRestrictionForFeasibilityQuery(
-          structuredQueryCriterion.timeRestriction
-        )
+      const timeRestriction = this.uiTimeRestrictionFactoryService.createTimeRestrictionForFeasibilityQuery(
+        structuredQueryCriterion.timeRestriction
+      )
 
       criterionBuilder.withTimeRestriction(timeRestriction)
     }

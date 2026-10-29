@@ -1,16 +1,16 @@
-import { CriteriaResulByIdMapperStrategy } from '../Mapping/CriteriaResulByIdMapperStrategy'
-import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
-import { CriteriaSearchResultProviderService } from '../../Criteria/Result/CriteriaSearchResultProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { map, Observable } from 'rxjs'
+import { CriteriaResultList } from 'src/app/model/Search/ResultList/CriteriaResultList'
 import { TerminologyApiService } from 'src/app/service/Backend/Api/TerminologyApi.service'
+import { CriteriaSearchResultProviderService } from '../../Criteria/Result/CriteriaSearchResultProvider.service'
+import { CriteriaResulByIdMapperStrategy } from '../Mapping/CriteriaResulByIdMapperStrategy'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriteriaSearchSigleEntryEngineService {
-  private criteriaResultProvider = inject(CriteriaSearchResultProviderService)
-  private terminologyApiService = inject(TerminologyApiService)
+  private readonly criteriaResultProvider = inject(CriteriaSearchResultProviderService)
+  private readonly terminologyApiService = inject(TerminologyApiService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

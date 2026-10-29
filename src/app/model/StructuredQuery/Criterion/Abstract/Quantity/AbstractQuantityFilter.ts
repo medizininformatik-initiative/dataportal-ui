@@ -1,6 +1,6 @@
-import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
+import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters'
 
 /**
  * Abstract base class for quantity filters in a structured query.
@@ -11,8 +11,8 @@ import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
  * @abstract
  */
 export abstract class AbstractQuantityFilter extends AbstractStructuredQueryFilters {
-  private unit: QuantityUnit;
-  protected abstract type: FilterTypes;
+  private unit: QuantityUnit
+  protected abstract type: FilterTypes
 
   /**
    * Constructor to initialize the AbstractQuantityFilter with unit and type.
@@ -22,8 +22,8 @@ export abstract class AbstractQuantityFilter extends AbstractStructuredQueryFilt
    * @param attributeCode - The attribute code for the filter.
    */
   constructor(unit: QuantityUnit) {
-    super();
-    this.unit = unit;
+    super()
+    this.unit = unit
   }
 
   /**
@@ -32,7 +32,7 @@ export abstract class AbstractQuantityFilter extends AbstractStructuredQueryFilt
    * @returns The unit value.
    */
   public getUnit(): QuantityUnit {
-    return this.unit;
+    return this.unit
   }
 
   /**
@@ -41,7 +41,7 @@ export abstract class AbstractQuantityFilter extends AbstractStructuredQueryFilt
    * @param unit - The new unit value to set.
    */
   public setUnit(unit: QuantityUnit): void {
-    this.unit = unit;
+    this.unit = unit
   }
 
   /**
@@ -50,6 +50,6 @@ export abstract class AbstractQuantityFilter extends AbstractStructuredQueryFilt
    * @returns The type value.
    */
   public getType(): FilterTypes {
-    return this.type;
+    return this.type
   }
 }

@@ -1,33 +1,30 @@
+import { inject, Injectable } from '@angular/core'
 import { concatMap, map, Observable, tap, throwError } from 'rxjs'
-import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileData } from 'src/app/model/Interface/DataSelectionProfileData'
 import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
-import { inject, Injectable } from '@angular/core'
-import { ProfileInstanceBuilderService } from './Builder/ProfileInstanceBuilder.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service'
+import { ProfileInstanceBuilderService } from './Builder/ProfileInstanceBuilder.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoadDataSelectionProfilesService {
-  private dataSelectionApiService = inject(DataSelectionApiService)
-  private profileInstanceBuilder = inject(ProfileInstanceBuilderService)
-  private dataSelectionProvider = inject(DataSelectionProviderService)
+  private readonly dataSelectionApiService = inject(DataSelectionApiService)
+  private readonly profileInstanceBuilder = inject(ProfileInstanceBuilderService)
+  private readonly dataSelectionProvider = inject(DataSelectionProviderService)
 
   constructor() {}
 
   /**
    * Fetches data selection profile data from the API, assembles profile objects,
    * registers them in the profile provider, and emits the resulting array.
-   * @param urls The profile URLs to fetch.
-   * @param markAsReference Whether to mark the profiles as references.
-   * @returns An observable that emits the fetched DataSelectionProfile array.
+   * @param {string[]} urls The profile URLs to fetch.
+   * @param {boolean} markAsReference Whether to mark the profiles as references.
+   * @returns {Observable<DataSelectionProfile[]>} An observable that emits the fetched DataSelectionProfile array.
    */
-  public loadProfiles(
-    urls: string[],
-    markAsReference: boolean = false
-  ): Observable<DataSelectionProfile[]> {
+  public loadProfiles(urls: string[], markAsReference: boolean = false): Observable<DataSelectionProfile[]> {
     const validUrls = urls.filter(this.isValidUrl)
 
     if (validUrls.length !== urls.length) {
@@ -35,9 +32,7 @@ export class LoadDataSelectionProfilesService {
     }
 
     return this.dataSelectionApiService.getDataSelectionProfileData(validUrls).pipe(
-      map((data: DataSelectionProfileData[]) =>
-        this.profileInstanceBuilder.buildProfileInstances(data, markAsReference)
-      ),
+      map((data: DataSelectionProfileData[]) => this.profileInstanceBuilder.buildProfileInstances(data, markAsReference)),
       tap((profiles) => this.setProfilesInProvider(profiles))
     )
   }

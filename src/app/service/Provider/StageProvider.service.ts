@@ -1,20 +1,20 @@
-import { AbstractArrayEntityProvider } from './Abstract/AbstractArrayEntityProvider';
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
+import { AbstractArrayEntityProvider } from './Abstract/AbstractArrayEntityProvider'
 
 @Injectable({
   providedIn: 'root',
 })
 export class StageProviderService extends AbstractArrayEntityProvider<string> {
   constructor() {
-    super();
+    super()
   }
 
   /**
    * Returns the id
-   * @param stageUID
-   * @returns
+   * @param {string} stageUID
+   * @returns {string}
    */
   protected selectId(stageUID: string): string {
-    return stageUID;
+    return stageUID
   }
 }

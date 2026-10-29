@@ -1,9 +1,9 @@
-import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch'
-import { CriteriaSetSearchPaginationService } from './Pagination/CriteriaSetSearchPagination.service'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
 import { ReferenceCriteriaListEntry } from 'src/app/model/Search/ListEntries/ReferenceCriteriaListEntry'
 import { ReferenceCriteriaResultList } from 'src/app/model/Search/ResultList/ReferenceCriteriaResultList'
+import { AbstractKeyedSearch } from '../../Abstract/AbstractKeyedSearch'
+import { CriteriaSetSearchPaginationService } from './Pagination/CriteriaSetSearchPagination.service'
 import { CriteriaSetSearchResultProviderService } from './Result/CriteriaSetSearchResultProvider.service '
 
 /**
@@ -14,12 +14,9 @@ import { CriteriaSetSearchResultProviderService } from './Result/CriteriaSetSear
 @Injectable({
   providedIn: 'root',
 })
-export class CriteriaSetSearchService extends AbstractKeyedSearch<
-  ReferenceCriteriaListEntry,
-  ReferenceCriteriaResultList
-> {
-  private resultProvider: CriteriaSetSearchResultProviderService
-  private paginationService = inject(CriteriaSetSearchPaginationService)
+export class CriteriaSetSearchService extends AbstractKeyedSearch<ReferenceCriteriaListEntry, ReferenceCriteriaResultList> {
+  private readonly resultProvider: CriteriaSetSearchResultProviderService
+  private readonly paginationService = inject(CriteriaSetSearchPaginationService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -40,37 +37,32 @@ export class CriteriaSetSearchService extends AbstractKeyedSearch<
   /**
    * Performs a new criteria set search within the specified criteria sets.
    *
-   * @param searchText - The text to search for within criteria sets
-   * @param criteriaSetUrls - Array of criteria set URLs to search within
-   * @returns An Observable that emits the first page of criteria set search results
+   * @param {string} searchText - The text to search for within criteria sets
+   * @param {string[]} criteriaSetUrls - Array of criteria set URLs to search within
+   * @returns {Observable<ReferenceCriteriaResultList>} An Observable that emits the first page of criteria set search results
    */
-  public search(
-    searchText: string,
-    criteriaSetUrls: string[]
-  ): Observable<ReferenceCriteriaResultList> {
+  public search(searchText: string, criteriaSetUrls: string[]): Observable<ReferenceCriteriaResultList> {
     return this.paginationService.searchFirstPageOfCriteriaSet(searchText, criteriaSetUrls)
   }
 
   /**
    * Loads the next page of results for a previously executed criteria set search.
    *
-   * @param searchText - The original search text
-   * @param criteriaSetUrls - Array of criteria set URLs used in the original search
-   * @returns An Observable that emits the next page of criteria set search results
+   * @param {string} searchText - The original search text
+   * @param {string[]} criteriaSetUrls - Array of criteria set URLs used in the original search
+   * @returns {Observable<ReferenceCriteriaResultList>} An Observable that emits the next page of criteria set search results
    */
-  public loadNextPage(
-    searchText: string,
-    criteriaSetUrls: string[]
-  ): Observable<ReferenceCriteriaResultList> {
+  public loadNextPage(searchText: string, criteriaSetUrls: string[]): Observable<ReferenceCriteriaResultList> {
     return this.paginationService.loadNextPageOfCriteriaSetResults(searchText, criteriaSetUrls)
   }
 
   /**
+   * Sets the search term.
    * @protected
    * Sets the current search term for internal state management.
    * Currently a placeholder implementation - extend as needed for specific requirements.
    *
-   * @param searchTerm - The search term to set
+   * @param {string} searchTerm - The search term to set
    */
   protected setSearchTerm(searchTerm: string): void {
     throw new Error('Not implemented')

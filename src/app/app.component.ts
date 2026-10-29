@@ -1,5 +1,5 @@
-import { AppLayoutComponent } from './layout/components/app-layout/app-layout.component'
 import { Component, inject, OnInit } from '@angular/core'
+import { AppLayoutComponent } from './layout/components/app-layout/app-layout.component'
 import { TabTitleService } from './service/TabTitle.service'
 
 @Component({
@@ -10,12 +10,12 @@ import { TabTitleService } from './service/TabTitle.service'
   imports: [AppLayoutComponent],
 })
 export class AppComponent implements OnInit {
-  private tabTitleService1 = inject(TabTitleService)
+  private readonly tabTitleService1 = inject(TabTitleService)
 
-  title = 'num-portal-webapp'
+  public title = 'num-portal-webapp'
   constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.tabTitleService1.initializeTitleListener()
   }
 }

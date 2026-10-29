@@ -1,7 +1,7 @@
-import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
-import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList';
-import { AbstractSearchResultProviderService } from './Result/AbstractSearchResultProvider.servcie';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs'
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
+import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList'
+import { AbstractSearchResultProviderService } from './Result/AbstractSearchResultProvider.servcie'
 
 /**
  * @abstract
@@ -16,7 +16,7 @@ export abstract class AbstractSearch<C extends AbstractListEntry, T extends Abst
   /**
    * Creates an instance of AbstractSearch.
    *
-   * @param resultProviderService - The result provider service for managing search results
+   * @param {AbstractSearchResultProviderService<C, T>} resultProviderService - The result provider service for managing search results
    * @protected
    */
   constructor(protected resultProviderService: AbstractSearchResultProviderService<C, T>) {}
@@ -25,37 +25,37 @@ export abstract class AbstractSearch<C extends AbstractListEntry, T extends Abst
    * @abstract
    * Performs a search operation with the given search term.
    *
-   * @param searchTerm - The term to search for
-   * @param dataSetUrls - Optional array of dataset URLs to filter the search
-   * @returns An Observable that emits the search results
+   * @param {string} searchTerm - The term to search for
+   * @param {string[]} dataSetUrls - Optional array of dataset URLs to filter the search
+   * @returns {Observable<T>} An Observable that emits the search results
    */
-  abstract search(searchTerm: string, dataSetUrls?: string[]): Observable<T>;
+  public abstract search(searchTerm: string, dataSetUrls?: string[]): Observable<T>
 
   /**
    * @abstract
    * Loads the next page of results for a previously executed search.
    *
-   * @param searchTerm - The original search term
-   * @param dataSetUrls - Array of dataset URLs used in the search
-   * @returns An Observable that emits the next page of search results
+   * @param {string} searchTerm - The original search term
+   * @param {string[]} dataSetUrls - Array of dataset URLs used in the search
+   * @returns {Observable<T>} An Observable that emits the next page of search results
    */
-  public abstract loadNextPage(searchTerm: string, dataSetUrls: string[]): Observable<T>;
+  public abstract loadNextPage(searchTerm: string, dataSetUrls: string[]): Observable<T>
 
   /**
    * @abstract
    * Retrieves the current search results without performing a new search.
    *
-   * @param dataSetUrls - Optional array of dataset URLs to filter results
-   * @returns An Observable that emits the current search results
+   * @param {string[]} dataSetUrls - Optional array of dataset URLs to filter results
+   * @returns {Observable<T>} An Observable that emits the current search results
    */
-  public abstract getSearchResults(dataSetUrls?: string[]): Observable<T>;
+  public abstract getSearchResults(dataSetUrls?: string[]): Observable<T>
 
   /**
    * @abstract
    * @protected
    * Sets the current search term for internal state management.
    *
-   * @param searchTerm - The search term to set
+   * @param {string} searchTerm - The search term to set
    */
-  protected abstract setSearchTerm(searchTerm: string): void;
+  protected abstract setSearchTerm(searchTerm: string): void
 }

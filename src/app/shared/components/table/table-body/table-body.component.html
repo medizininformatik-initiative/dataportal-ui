@@ -1,22 +1,12 @@
 @for (row of rows(); track row.id) {
-<tr
-  [ngClass]="{ 'clickable-row': row.isClickable }"
-  class="table-border height-3-rem table-row-hover"
->
+<tr [ngClass]="{ 'clickable-row': row.isClickable }" class="table-border height-3-rem table-row-hover">
   @for (cell of row.cells; track j; let j = $index) {
-  <td
-    (click)="onRowClick(row)"
-    [ngClass]="{ 'table-row-text-color': j > 0 }"
-    [style.width.%]="getWidth(row.cells, j)"
-  >
+  <td (click)="onRowClick(row)" [ngClass]="{ 'table-row-text-color': j > 0 }" [style.width.%]="getWidth(row.cells, j)">
     <div class="row-container">
       @switch (cell.type) { @case (TableCellKind.CHECKBOX) {
       <num-checkbox-cell [cell]="cell" (checkboxChange)="onCheckboxSelect(row)"></num-checkbox-cell>
       } @case (TableCellKind.CHECKBOXTEXT) {
-      <num-checkbox-text-cell
-        [cell]="cell"
-        (checkboxChange)="onCheckboxSelect(row)"
-      ></num-checkbox-text-cell>
+      <num-checkbox-text-cell [cell]="cell" (checkboxChange)="onCheckboxSelect(row)"></num-checkbox-text-cell>
       } @case (TableCellKind.AVAILABILITY) {
       <num-availability-cell [cell]="cell"></num-availability-cell>
       } @case (TableCellKind.DISPLAY) {

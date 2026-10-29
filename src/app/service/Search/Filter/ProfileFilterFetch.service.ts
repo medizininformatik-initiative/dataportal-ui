@@ -1,17 +1,17 @@
 import { Injectable, inject } from '@angular/core'
-import { ProfileSearchFilterProviderService } from './ProfileSearchFilterProvider.service'
-import { ProfileSearchFilterService } from './ProfileSearchFilter.service'
-import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder'
-import { DataSelectionPaths } from '../../Backend/Paths/DataSelectionPaths'
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import { ProfileSearchFilter } from 'src/app/model/Search/Filter/ProfileSearchFilter'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
+import { DataSelectionPaths } from '../../Backend/Paths/DataSelectionPaths'
+import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder'
+import { ProfileSearchFilterService } from './ProfileSearchFilter.service'
+import { ProfileSearchFilterProviderService } from './ProfileSearchFilterProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileFilterFetchService {
-  private profileSearchFilterService = inject(ProfileSearchFilterService)
-  private profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
+  private readonly profileSearchFilterService = inject(ProfileSearchFilterService)
+  private readonly profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
 
   public fetchAndUpdateFilters(searchText: string, targetFilter: string): void {
     const url = this.buildUrl(searchText, targetFilter)
@@ -22,9 +22,7 @@ export class ProfileFilterFetchService {
 
   private buildUrl(searchText: string, targetFilter?: string): string {
     const currentFilters = this.profileSearchFilterProviderService.getProfileSearchFiltersValue()
-    const builder = new SearchUrlBuilder(DataSelectionPaths.PROFILE_SEARCH_FILTER).withSearchTerm(
-      searchText
-    )
+    const builder = new SearchUrlBuilder(DataSelectionPaths.PROFILE_SEARCH_FILTER).withSearchTerm(searchText)
 
     if (targetFilter) {
       builder.withTargetFilter(targetFilter)

@@ -1,20 +1,21 @@
-import { AbstractTimeRestriction } from './AbstractTimeRestriction';
-import { TimeRestrictionType } from '../../TimeRestriction';
+import { TimeRestrictionType } from '../../TimeRestriction'
+import { AbstractTimeRestriction } from './AbstractTimeRestriction'
 
 export class BeforeFilter extends AbstractTimeRestriction {
-  afterDate: string;
-  protected readonly type: TimeRestrictionType = TimeRestrictionType.BEFORE;
+  public afterDate: string
+  protected readonly type: TimeRestrictionType = TimeRestrictionType.BEFORE
 
   constructor(afterDate: string) {
-    super(afterDate);
-    this.afterDate = afterDate;
+    super(afterDate)
+    this.afterDate = afterDate
   }
 
   /**
+   * Returns the type of this time restriction.
    *
-   * @returns TimeRestrictionType
+   * @returns {TimeRestrictionType} TimeRestrictionType
    */
-  getType() {
-    return this.type;
+  public getType() {
+    return this.type
   }
 }

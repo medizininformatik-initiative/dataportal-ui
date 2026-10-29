@@ -1,8 +1,8 @@
-import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component'
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core'
-import { InfoTooltipDirective } from 'src/app/shared/directives/info-tooltip.directive'
-import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference'
 import { TranslateModule } from '@ngx-translate/core'
+import { ProfileReference } from 'src/app/model/DataSelection/Profile/Reference/ProfileReference'
+import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component'
+import { InfoTooltipDirective } from 'src/app/shared/directives/info-tooltip.directive'
 
 @Component({
   selector: 'num-reference-col',
@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [CheckboxComponent, InfoTooltipDirective, TranslateModule],
 })
 export class ReferenceColComponent {
-  readonly reference = input.required<ProfileReference>()
-  readonly isEditable = input<boolean>(false)
-  readonly isReferenceSetChange = output<boolean>()
+  public readonly reference = input.required<ProfileReference>()
+  public readonly isEditable = input<boolean>(false)
+  public readonly isReferenceSetChange = output<boolean>()
 }

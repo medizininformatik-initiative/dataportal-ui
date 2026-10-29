@@ -11,9 +11,7 @@
   @if (termCodesFilterChips().length > 0) {
   <div class="header-col border-right-1">
     <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'EDITOR.CONTENT.CRITERION.HEADER.TERMCODES' | translate
-      }}</span>
+      <span class="num-text-accent">{{ 'EDITOR.CONTENT.CRITERION.HEADER.TERMCODES' | translate }}</span>
     </div>
     <div class="header-col-chips">
       <num-filter-chips [filterChips]="termCodesFilterChips()"></num-filter-chips>
@@ -23,24 +21,21 @@
 
   <div class="header-col border-right-1">
     <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'EDITOR.CONTENT.CRITERION.HEADER.FILTER' | translate
-      }}</span>
+      <span class="num-text-accent">{{ 'EDITOR.CONTENT.CRITERION.HEADER.FILTER' | translate }}</span>
     </div>
     @if (timeRestrictionFilterChips().length > 0) {
     <div>
-      <num-filter-chips [filterChips]="timeRestrictionFilterChips()"> </num-filter-chips>
+      <num-filter-chips [filterChips]="timeRestrictionFilterChips()"></num-filter-chips>
     </div>
     } @if (conceptFilterChips().length > 0) {
     <div>
-      <num-filter-chips [filterChips]="conceptFilterChips()"> </num-filter-chips>
+      <num-filter-chips [filterChips]="conceptFilterChips()"></num-filter-chips>
     </div>
     }
     <div class="header-col-chips">
       @if (quantityFilterChips().length > 0) {
       <num-filter-chips [filterChips]="quantityFilterChips()"></num-filter-chips>
-      } @if ( quantityFilterChips().length === 0 && conceptFilterChips().length === 0 &&
-      timeRestrictionFilterChips().length === 0 ) {
+      } @if ( quantityFilterChips().length === 0 && conceptFilterChips().length === 0 && timeRestrictionFilterChips().length === 0 ) {
       <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
       }
     </div>
@@ -49,9 +44,7 @@
   @if (refernceFilterChips().length > 0) {
   <div class="header-col">
     <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'EDITOR.CONTENT.CRITERION.HEADER.REFERENCE' | translate
-      }}</span>
+      <span class="num-text-accent">{{ 'EDITOR.CONTENT.CRITERION.HEADER.REFERENCE' | translate }}</span>
     </div>
     <div class="header-col-chips">
       <num-filter-chips [filterChips]="refernceFilterChips()"></num-filter-chips>

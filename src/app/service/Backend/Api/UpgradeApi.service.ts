@@ -1,17 +1,17 @@
-import { BackendService } from '../Backend.service'
-import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
 import { HttpClient, HttpResponse } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { Observable, tap } from 'rxjs'
 import { UpgradeData } from 'src/app/core/model/Upgrade/UpgradeData'
+import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
+import { BackendService } from '../Backend.service'
 import { UpgradePaths } from '../Paths/UpgradePaths'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UpgradeApiService {
-  private backendService = inject(BackendService)
-  private http = inject(HttpClient)
+  private readonly backendService = inject(BackendService)
+  private readonly http = inject(HttpClient)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

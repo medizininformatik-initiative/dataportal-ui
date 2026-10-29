@@ -1,11 +1,11 @@
-import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
-import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import { FilterProvider } from './SearchFilterProvider.service'
 import { Injectable, inject } from '@angular/core'
-import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
+import { CriteriaSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/CriteriaSearchFilterAdapter'
 import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
+import { FilterProvider } from './SearchFilterProvider.service'
 
 /**
  * Service for managing and filtering bulk criteria search filters.
@@ -16,12 +16,13 @@ import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilte
   providedIn: 'root',
 })
 export class BulkCriteriaSearchFilterService {
-  private searchFilterProvider = inject(FilterProvider)
+  private readonly searchFilterProvider = inject(FilterProvider)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   /**
+   * Creates a new BulkCriteriaSearchFilterService.
    * @param searchFilterProvider - Service for providing criteria search filters
    */
   constructor() {}
@@ -30,7 +31,7 @@ export class BulkCriteriaSearchFilterService {
    * Retrieves and processes criteria search filters.
    * Filters for context and terminology types, removes patient values,
    * and converts to UI-compatible format.
-   * @returns Observable that emits an array of SearchFilter objects
+   * @returns {Observable<SearchFilterData[]>} Observable that emits an array of SearchFilter objects
    */
   public getFilter(): Observable<SearchFilterData[]> {
     return this.searchFilterProvider.getCriteriaSearchFilters().pipe(
@@ -42,23 +43,19 @@ export class BulkCriteriaSearchFilterService {
 
   /**
    * Filters the criteria search filters to keep only context and terminology filters.
-   * @param filters - Array of CriteriaSearchFilter objects
-   * @returns Filtered array containing only context and terminology filters
+   * @param {CriteriaSearchFilter[]} filters - Array of CriteriaSearchFilter objects
+   * @returns {CriteriaSearchFilter[]} Filtered array containing only context and terminology filters
    */
-  private keepContextAndTerminologyFilters(
-    filters: CriteriaSearchFilter[]
-  ): CriteriaSearchFilter[] {
+  private keepContextAndTerminologyFilters(filters: CriteriaSearchFilter[]): CriteriaSearchFilter[] {
     return filters.filter(
-      (filter) =>
-        filter.getName() === ElasticSearchFilterTypes.CONTEXT ||
-        filter.getName() === ElasticSearchFilterTypes.TERMINOLOGY
+      (filter) => filter.getName() === ElasticSearchFilterTypes.CONTEXT || filter.getName() === ElasticSearchFilterTypes.TERMINOLOGY
     )
   }
 
   /**
    * Removes 'Patient' values from all filter values.
-   * @param filters - Array of CriteriaSearchFilter objects
-   * @returns Array of filters with patient values removed
+   * @param {CriteriaSearchFilter[]} filters - Array of CriteriaSearchFilter objects
+   * @returns {CriteriaSearchFilter[]} Array of filters with patient values removed
    */
   private removePatientFromFilterValues(filters: CriteriaSearchFilter[]): CriteriaSearchFilter[] {
     return filters.map((filter) => {
@@ -70,8 +67,8 @@ export class BulkCriteriaSearchFilterService {
 
   /**
    * Converts CriteriaSearchFilter objects to UI-compatible SearchFilter models.
-   * @param filters - Array of CriteriaSearchFilter objects
-   * @returns Array of SearchFilter objects for UI consumption
+   * @param {CriteriaSearchFilter[]} filters - Array of CriteriaSearchFilter objects
+   * @returns {SearchFilterData[]} Array of SearchFilter objects for UI consumption
    */
   private convertFiltersToUiModels(filters: CriteriaSearchFilter[]): SearchFilterData[] {
     return filters.map((filter) => CriteriaSearchFilterAdapter.convertToFilterValues(filter))

@@ -1,65 +1,48 @@
-import { ButtonComponent } from '../../../../../shared/components/button/button.component'
 import { Component, DestroyRef, inject, output, signal } from '@angular/core'
 import { computed } from '@angular/core'
-import { map } from 'rxjs'
-import { ProfileSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/ProfileSearchFilterAdapter'
-import { ProfileSearchFilterProviderService } from 'src/app/service/Search/Filter/ProfileSearchFilterProvider.service'
-import { ProfileFilterFetchService } from 'src/app/service/Search/Filter/ProfileFilterFetch.service'
-import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
-import { SearchbarComponent } from 'src/app/shared/components/search/searchbar.component'
-import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import {
-  InfoTooltipDirective,
-  SearchFilterComponent,
-  SectionNameComponent,
-} from 'src/app/shared/components/shared-components.module'
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { map } from 'rxjs'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
+import { ProfileFilterFetchService } from 'src/app/service/Search/Filter/ProfileFilterFetch.service'
+import { ProfileSearchFilterProviderService } from 'src/app/service/Search/Filter/ProfileSearchFilterProvider.service'
+import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
+import { SearchbarComponent } from 'src/app/shared/components/search/searchbar.component'
+import { InfoTooltipDirective, SearchFilterComponent, SectionNameComponent } from 'src/app/shared/components/shared-components.module'
+import { ProfileSearchFilterAdapter } from 'src/app/shared/models/SearchFilter/ProfileSearchFilterAdapter'
+import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
+import { ButtonComponent } from '../../../../../shared/components/button/button.component'
 
 @Component({
   selector: 'num-profile-search-bar',
   templateUrl: './profile-search-bar.component.html',
   styleUrls: ['./profile-search-bar.component.scss'],
   standalone: true,
-  imports: [
-    SearchbarComponent,
-    SearchFilterComponent,
-    ButtonComponent,
-    TranslateModule,
-    SectionNameComponent,
-    InfoTooltipDirective,
-  ],
+  imports: [SearchbarComponent, SearchFilterComponent, ButtonComponent, TranslateModule, SectionNameComponent, InfoTooltipDirective],
 })
 export class ProfileSearchBarComponent {
-  private profileSearchService = inject(ProfileSearchService)
-  private profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
-  private profileFilterFetchService = inject(ProfileFilterFetchService)
+  private readonly profileSearchService = inject(ProfileSearchService)
+  private readonly profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
+  private readonly profileFilterFetchService = inject(ProfileFilterFetchService)
   private readonly destroyRef = inject(DestroyRef)
 
-  readonly searchFilters = signal<SearchFilterData[]>([])
-  readonly searchText = toSignal(this.profileSearchService.getActiveSearchTerm(), {
+  public readonly searchFilters = signal<SearchFilterData[]>([])
+  public readonly searchText = toSignal(this.profileSearchService.getActiveSearchTerm(), {
     initialValue: '',
   })
-  readonly searchTextChange = output<string>()
+  public readonly searchTextChange = output<string>()
 
-  private readonly selectedModules = toSignal(
-    this.profileSearchFilterProviderService.getSelectedModules(),
-    { initialValue: [] as string[] }
-  )
-  private readonly selectedCategories = toSignal(
-    this.profileSearchFilterProviderService.getSelectedCategories(),
-    { initialValue: [] as string[] }
-  )
-  private readonly selectedResourceTypes = toSignal(
-    this.profileSearchFilterProviderService.getSelectedResourceTypes(),
-    { initialValue: [] as string[] }
-  )
-  readonly resetFilterDisabled = computed(
-    () =>
-      this.selectedModules().length === 0 &&
-      this.selectedCategories().length === 0 &&
-      this.selectedResourceTypes().length === 0
+  private readonly selectedModules = toSignal(this.profileSearchFilterProviderService.getSelectedModules(), {
+    initialValue: [] as string[],
+  })
+  private readonly selectedCategories = toSignal(this.profileSearchFilterProviderService.getSelectedCategories(), {
+    initialValue: [] as string[],
+  })
+  private readonly selectedResourceTypes = toSignal(this.profileSearchFilterProviderService.getSelectedResourceTypes(), {
+    initialValue: [] as string[],
+  })
+  public readonly resetFilterDisabled = computed(
+    () => this.selectedModules().length === 0 && this.selectedCategories().length === 0 && this.selectedResourceTypes().length === 0
   )
 
   constructor() {
@@ -70,9 +53,7 @@ export class ProfileSearchBarComponent {
         map((filters) => ProfileSearchFilterAdapter.convertToFilterValues(filters)),
         // TODO: temp exclusion of category filter to be included once categories filled in ontology
         map((filters: SearchFilterData[]) =>
-          filters.filter(
-            (f) => f.filterType.toLowerCase() !== ElasticSearchFilterTypes.CATEGORY.toLowerCase()
-          )
+          filters.filter((f) => f.filterType.toLowerCase() !== ElasticSearchFilterTypes.CATEGORY.toLowerCase())
         ),
         map((filters: SearchFilterData[]) => {
           const order: Record<string, number> = {
@@ -81,10 +62,7 @@ export class ProfileSearchBarComponent {
             [ElasticSearchFilterTypes.RESOURCE_TYPE.toLowerCase()]: 2,
           }
 
-          return [...filters].sort(
-            (a, b) =>
-              (order[a.filterType.toLowerCase()] ?? 99) - (order[b.filterType.toLowerCase()] ?? 99)
-          )
+          return [...filters].sort((a, b) => (order[a.filterType.toLowerCase()] ?? 99) - (order[b.filterType.toLowerCase()] ?? 99))
         })
       )
       .subscribe((filters) => {
@@ -98,10 +76,7 @@ export class ProfileSearchBarComponent {
     }
 
     this.profileFilterFetchService.fetchAndUpdateFilters(this.searchText(), newFilter.filterType)
-    this.profileSearchFilterProviderService.updateFilterSelectedValues(
-      newFilter.filterType,
-      newFilter.selectedValues
-    )
+    this.profileSearchFilterProviderService.updateFilterSelectedValues(newFilter.filterType, newFilter.selectedValues)
     this.profileSearchService.search(this.searchText()).subscribe()
   }
 

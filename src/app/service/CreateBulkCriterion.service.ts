@@ -1,25 +1,25 @@
-import { AttributeDefinitionData } from '../model/Interface/AttributeDefinitionData'
-import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
-import { AttributeFilterFactoryService } from './Criterion/AttributeFilterFactory.service'
-import { CriteriaBulkEntry } from '../model/Search/ListEntries/CriteriaBulkEntry'
-import { CriterionBuilder } from '../model/FeasibilityQuery/Criterion/CriterionBuilder'
-import { Display } from '../model/DataSelection/Profile/Display'
-import { HashService } from './Hash.service'
 import { Injectable, inject } from '@angular/core'
-import { TerminologyCode } from '../model/Terminology/TerminologyCode'
-import { TimeRestrictionNotSet } from '../model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
-import { UiProfileData } from '../model/Interface/UiProfileData'
-import { UiProfileProviderService } from './Provider/UiProfileProvider.service'
 import { v4 as uuidv4 } from 'uuid'
+import { Display } from '../model/DataSelection/Profile/Display'
+import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
+import { CriterionBuilder } from '../model/FeasibilityQuery/Criterion/CriterionBuilder'
+import { TimeRestrictionNotSet } from '../model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
+import { AttributeDefinitionData } from '../model/Interface/AttributeDefinitionData'
+import { UiProfileData } from '../model/Interface/UiProfileData'
+import { CriteriaBulkEntry } from '../model/Search/ListEntries/CriteriaBulkEntry'
+import { TerminologyCode } from '../model/Terminology/TerminologyCode'
+import { AttributeFilterFactoryService } from './Criterion/AttributeFilterFactory.service'
+import { HashService } from './Hash.service'
+import { UiProfileProviderService } from './Provider/UiProfileProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CreateBulkCriterionService {
-  private uiProfileProviderService = inject(UiProfileProviderService)
-  private hashService = inject(HashService)
-  private attributeFilterFactory = inject(AttributeFilterFactoryService)
+  private readonly uiProfileProviderService = inject(UiProfileProviderService)
+  private readonly hashService = inject(HashService)
+  private readonly attributeFilterFactory = inject(AttributeFilterFactoryService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -42,9 +42,9 @@ export class CreateBulkCriterionService {
 
   /**
    * Builds criteria profile data from the first bulk entry.
-   * @param response
-   * @param termcodes
-   * @returns
+   * @param {CriteriaBulkEntry[]} response
+   * @param {TerminologyCode[]} termcodes
+   * @returns {{ isReference: false context: TerminologyCode criterionHash: string display: Display isInvalid: boolean isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }}
    */
   private buildCriteriaProfile(
     response: CriteriaBulkEntry[],
@@ -63,6 +63,13 @@ export class CreateBulkCriterionService {
     return this.createCriteriaProfileData(firstBulkElement, termcodes)
   }
 
+  /**
+   * Creates the criteria profile data.
+   *
+   * @param {CriteriaBulkEntry} response
+   * @param {TerminologyCode[]} termcodes
+   * @returns {{ isReference: false context: TerminologyCode criterionHash: string display: Display isInvalid: boolean isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }}
+   */
   private createCriteriaProfileData(
     response: CriteriaBulkEntry,
     termcodes: TerminologyCode[]
@@ -94,9 +101,7 @@ export class CreateBulkCriterionService {
 
   private applyFilters(builder: CriterionBuilder, uiProfile: UiProfileData) {
     builder.withAttributeFilters(this.createAttributeFilter(uiProfile))
-    builder.withValueFilters(
-      [this.createValueFilter(uiProfile)].filter((filter) => filter !== undefined) as ValueFilter[]
-    )
+    builder.withValueFilters([this.createValueFilter(uiProfile)].filter((filter) => filter !== undefined))
     builder.withTimeRestriction(this.createTimeRestriction(uiProfile))
   }
 
@@ -113,8 +118,8 @@ export class CreateBulkCriterionService {
   }
 
   private createAttributeFilter(uiProfile: UiProfileData): AttributeFilter[] {
-    const attributeFilter: AttributeFilter[] = uiProfile.attributeDefinitions.map(
-      (value: AttributeDefinitionData) => this.attributeFilterFactory.createAttributeFilter(value)
+    const attributeFilter: AttributeFilter[] = uiProfile.attributeDefinitions.map((value: AttributeDefinitionData) =>
+      this.attributeFilterFactory.createAttributeFilter(value)
     )
     return attributeFilter
   }

@@ -1,18 +1,21 @@
-import { AbstractQuantityRangeFilter } from '../../Abstract/Quantity/Range/AbstractQuantityRangeFilter';
-import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { AbstractQuantityRangeFilter } from '../../Abstract/Quantity/Range/AbstractQuantityRangeFilter'
 
 export class QuantityRangeAttributeFilter extends AbstractQuantityRangeFilter {
-  private attributeCode: TerminologyCode;
+  private attributeCode: TerminologyCode
 
-  constructor(
-    attributeCode: TerminologyCode,
-    minValue: number,
-    maxValue: number,
-    unit: QuantityUnit
-  ) {
-    super(minValue, maxValue, unit);
-    this.attributeCode = attributeCode;
+  /**
+   * Creates a new QuantityRangeAttributeFilter.
+   *
+   * @param attributeCode
+   * @param minValue
+   * @param maxValue
+   * @param unit
+   */
+  constructor(attributeCode: TerminologyCode, minValue: number, maxValue: number, unit: QuantityUnit) {
+    super(minValue, maxValue, unit)
+    this.attributeCode = attributeCode
   }
 
   /**
@@ -21,7 +24,7 @@ export class QuantityRangeAttributeFilter extends AbstractQuantityRangeFilter {
    * @returns The attributeCode value.
    */
   public getAttributeCode(): TerminologyCode {
-    return this.attributeCode;
+    return this.attributeCode
   }
 
   /**
@@ -30,6 +33,6 @@ export class QuantityRangeAttributeFilter extends AbstractQuantityRangeFilter {
    * @param attributeCode - The new attributeCode value to set.
    */
   public setAttributeCode(attributeCode: TerminologyCode): void {
-    this.attributeCode = attributeCode;
+    this.attributeCode = attributeCode
   }
 }

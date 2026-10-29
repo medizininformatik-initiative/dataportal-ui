@@ -8,10 +8,10 @@ import { filter, map, merge, switchMap } from 'rxjs'
   providedIn: 'root',
 })
 export class TabTitleService {
-  private titleService = inject(Title)
-  private router = inject(Router)
-  private route = inject(ActivatedRoute)
-  private translate = inject(TranslateService)
+  private readonly titleService = inject(Title)
+  private readonly router = inject(Router)
+  private readonly route = inject(ActivatedRoute)
+  private readonly translate = inject(TranslateService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

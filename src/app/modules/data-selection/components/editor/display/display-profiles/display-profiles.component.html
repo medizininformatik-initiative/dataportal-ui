@@ -3,14 +3,8 @@
 <div class="search-summary">
   {{ filteredProfiles().length }} / {{ profiles().length }}
   <span class="search-summary-detail">
-    ({{
-      'DATASELECTION.EDITOR.DISPLAY.SEARCH_MATCH_BY_NAME'
-        | translate : { count: matchSummary().byName }
-    }},
-    {{
-      'DATASELECTION.EDITOR.DISPLAY.SEARCH_MATCH_BY_FIELD'
-        | translate : { count: matchSummary().byField }
-    }})
+    ({{ 'DATASELECTION.EDITOR.DISPLAY.SEARCH_MATCH_BY_NAME' | translate : { count: matchSummary().byName } }},
+    {{ 'DATASELECTION.EDITOR.DISPLAY.SEARCH_MATCH_BY_FIELD' | translate : { count: matchSummary().byField } }})
   </span>
 </div>
 }

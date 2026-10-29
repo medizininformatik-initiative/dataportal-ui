@@ -1,14 +1,11 @@
 import { inject, Injectable } from '@angular/core'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 import { ProfileResultList } from 'src/app/model/Search/ResultList/ProfileResultList'
-import { ProfileSearchMediatorService } from '../Mediator/ProfileSearchMediator.service'
 import { SimpleSearchPagination } from '../../../Abstract/Pagination/SimpleSearchPagination'
+import { ProfileSearchMediatorService } from '../Mediator/ProfileSearchMediator.service'
 
 @Injectable({ providedIn: 'root' })
-export class ProfileSearchPaginationService extends SimpleSearchPagination<
-  ProfileListEntry,
-  ProfileResultList
-> {
+export class ProfileSearchPaginationService extends SimpleSearchPagination<ProfileListEntry, ProfileResultList> {
   protected mediator: ProfileSearchMediatorService
 
   /** Inserted by Angular inject() migration for backwards compatibility */

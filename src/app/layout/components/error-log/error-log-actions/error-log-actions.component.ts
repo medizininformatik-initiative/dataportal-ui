@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core'
-import { DownloadErrorLogService } from 'src/app/service/Download/DownloadErrroLog.service'
-import { ErrorLogModalComponent } from '../error-log-modal.component'
-import { ErrorLogProviderService } from 'src/app/service/Validation/External/ErrorLogProvider.service'
 import { MatDialogRef } from '@angular/material/dialog'
-import { ButtonComponent } from '../../../../shared/components/button/button.component'
 import { MatTooltip } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'
+import { DownloadErrorLogService } from 'src/app/service/Download/DownloadErrroLog.service'
+import { ErrorLogProviderService } from 'src/app/service/Validation/External/ErrorLogProvider.service'
+import { ButtonComponent } from '../../../../shared/components/button/button.component'
+import { ErrorLogModalComponent } from '../error-log-modal.component'
 
 @Component({
   selector: 'num-error-log-actions',

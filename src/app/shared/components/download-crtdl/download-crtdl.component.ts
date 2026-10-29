@@ -1,12 +1,12 @@
-import { ButtonComponent } from '../button/button.component'
 import { Component, inject } from '@angular/core'
+import { MatDialogRef } from '@angular/material/dialog'
+import { TranslateModule } from '@ngx-translate/core'
 import { DownloadCRTDLService } from 'src/app/service/Download/DownloadCRTDL.service'
 import { DownloadCRTDLZipService } from 'src/app/service/Download/DownloadCRTDLZip.service'
-import { HeaderComponent } from '../header/header.component'
-import { MatDialogRef } from '@angular/material/dialog'
 import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
+import { ButtonComponent } from '../button/button.component'
+import { HeaderComponent } from '../header/header.component'
 import { SaveFileModalComponent } from '../save-file-modal/save-file-modal.component'
-import { TranslateModule } from '@ngx-translate/core'
 
 export type DownloadCRTDLFormat = 'crtdl' | 'csv'
 
@@ -15,18 +15,12 @@ export type DownloadCRTDLFormat = 'crtdl' | 'csv'
   templateUrl: './download-crtdl.component.html',
   styleUrls: ['./download-crtdl.component.scss'],
   standalone: true,
-  imports: [
-    SaveFileModalComponent,
-    HeaderComponent,
-    TranslateModule,
-    ButtonComponent,
-    NumDataCyDirective,
-  ],
+  imports: [SaveFileModalComponent, HeaderComponent, TranslateModule, ButtonComponent, NumDataCyDirective],
 })
 export class DownloadCRTDLComponent {
-  private dialogRef = inject(MatDialogRef)
-  private downloadCRTDLService = inject(DownloadCRTDLService)
-  private downloadCRTDLZipService = inject(DownloadCRTDLZipService)
+  private readonly dialogRef = inject(MatDialogRef)
+  private readonly downloadCRTDLService = inject(DownloadCRTDLService)
+  private readonly downloadCRTDLZipService = inject(DownloadCRTDLZipService)
 
   public selectedFormat: DownloadCRTDLFormat = 'crtdl'
 

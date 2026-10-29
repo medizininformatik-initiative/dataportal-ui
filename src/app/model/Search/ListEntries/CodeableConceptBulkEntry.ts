@@ -1,43 +1,39 @@
-import { ConceptData } from '../../Interface/ConceptData';
-import { Display } from '../../DataSelection/Profile/Display';
-import { TerminologyCode } from '../../Terminology/TerminologyCode';
-import { AbstractListEntry } from './AbstractListEntry';
+import { Display } from '../../DataSelection/Profile/Display'
+import { ConceptData } from '../../Interface/ConceptData'
+import { TerminologyCode } from '../../Terminology/TerminologyCode'
+import { AbstractListEntry } from './AbstractListEntry'
 
 export class CodeableConceptBulkEntry extends AbstractListEntry {
-  private readonly display: Display;
-  private readonly termCode: TerminologyCode;
+  private readonly display: Display
+  private readonly termCode: TerminologyCode
   constructor(id: string, display: Display, termCode: TerminologyCode) {
-    super(id);
-    this.display = display;
-    this.termCode = termCode;
+    super(id)
+    this.display = display
+    this.termCode = termCode
   }
 
   /**
    * Retunrs the display information of this codeable concept.
-   * @returns
+   * @returns {Display}
    */
   public getDisplay(): Display {
-    return this.display;
+    return this.display
   }
 
   /**
    * Returns the term code associated with this codeable concept.
-   * @returns
+   * @returns {TerminologyCode}
    */
   public getTermCode(): TerminologyCode {
-    return this.termCode;
+    return this.termCode
   }
 
   /**
    * Creates an instance of CodeableConceptBulkEntry from a JSON object.
-   * @param json
-   * @returns
+   * @param {ConceptData} json
+   * @returns {CodeableConceptBulkEntry}
    */
   public static fromJson(json: ConceptData): CodeableConceptBulkEntry {
-    return new CodeableConceptBulkEntry(
-      json.id,
-      Display.fromJson(json.display),
-      TerminologyCode.fromJson(json.termCode)
-    );
+    return new CodeableConceptBulkEntry(json.id, Display.fromJson(json.display), TerminologyCode.fromJson(json.termCode))
   }
 }

@@ -9,18 +9,18 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [TranslateModule],
 })
 export class PatientCountComponent implements OnInit, OnChanges {
-  readonly totalNumberOfPatients = input<number>(undefined)
+  public readonly totalNumberOfPatients = input<number>(undefined)
 
-  patientCountArray: string[] = []
+  public patientCountArray: string[] = []
 
-  LENGTH_OF_DIGIT_FIELDS = 8
+  public LENGTH_OF_DIGIT_FIELDS = 8
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.setPatientCountArray()
   }
 
-  ngOnChanges(): void {
+  public ngOnChanges(): void {
     this.setPatientCountArray()
   }
 
@@ -28,9 +28,7 @@ export class PatientCountComponent implements OnInit, OnChanges {
    * If the result array has fewer than 10 digits, pad it with leading '0' digits until its length is 10
    */
   private setPatientCountArray(): void {
-    const patientCountArray = this.totalNumberOfPatients()
-      ? this.totalNumberOfPatients()?.toString()?.split('')
-      : ['0']
+    const patientCountArray = this.totalNumberOfPatients() ? this.totalNumberOfPatients()?.toString()?.split('') : ['0']
     while (patientCountArray.length < this.LENGTH_OF_DIGIT_FIELDS) {
       patientCountArray.unshift('0')
     }

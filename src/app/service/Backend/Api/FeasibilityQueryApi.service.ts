@@ -1,17 +1,17 @@
-import { BackendService } from '../Backend.service'
-import { FeasibilityQueryPaths } from '../Paths/FeasibilityQueryPaths'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
-import { SavedFeasibilityQueryResults } from 'src/app/model/Result/SavedFeasibilityQueryResults'
 import { CCDLCohortDefinition } from 'src/app/model/CohortDefinition/CCDLCohortDefinition'
+import { SavedFeasibilityQueryResults } from 'src/app/model/Result/SavedFeasibilityQueryResults'
+import { BackendService } from '../Backend.service'
+import { FeasibilityQueryPaths } from '../Paths/FeasibilityQueryPaths'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeasibilityQueryApiService {
-  private backendService = inject(BackendService)
-  private http = inject(HttpClient)
+  private readonly backendService = inject(BackendService)
+  private readonly http = inject(HttpClient)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -19,29 +19,20 @@ export class FeasibilityQueryApiService {
   constructor() {}
 
   /**
+   * Posts the structured query.
    *
-   * @param cohortDefinition
-   * @returns A string contained in the header response which is the location of the query result
+   * @param {CCDLCohortDefinition} cohortDefinition
+   * @returns {Observable<any>} A string contained in the header response which is the location of the query result
    */
   public postStructuredQuery(cohortDefinition: CCDLCohortDefinition): Observable<any> {
-    return this.http.post<any>(
-      this.backendService.createUrl(FeasibilityQueryPaths.EXECUTE_QUERY),
-      cohortDefinition,
-      {
-        observe: 'response',
-      }
-    )
+    return this.http.post<any>(this.backendService.createUrl(FeasibilityQueryPaths.EXECUTE_QUERY), cohortDefinition, {
+      observe: 'response',
+    })
   }
 
-  public postSavedFeasibilityQuery(
-    savedFeasibilityQuery: SavedFeasibilityQueryResults,
-    feasibilityQueryResultID: string
-  ): Observable<any> {
+  public postSavedFeasibilityQuery(savedFeasibilityQuery: SavedFeasibilityQueryResults, feasibilityQueryResultID: string): Observable<any> {
     const url =
-      this.backendService.createUrl(FeasibilityQueryPaths.getBaseUrl()) +
-      '/' +
-      feasibilityQueryResultID +
-      FeasibilityQueryPaths.SAVE_QUERY
+      this.backendService.createUrl(FeasibilityQueryPaths.getBaseUrl()) + '/' + feasibilityQueryResultID + FeasibilityQueryPaths.SAVE_QUERY
 
     return this.http.post<any>(url, savedFeasibilityQuery, {
       headers: this.backendService.getHeaders(),
@@ -50,9 +41,7 @@ export class FeasibilityQueryApiService {
   }
 
   public getStructuredQueryById(id: number): Observable<any> {
-    const url = this.backendService.createUrl(
-      FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id.toString()
-    )
+    const url = this.backendService.createUrl(FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id.toString())
     return this.http.get<any>(url, {
       headers: this.backendService.getHeaders(),
     })
@@ -67,9 +56,7 @@ export class FeasibilityQueryApiService {
 
   public putFeasibilityQuery(id: number, updatedObject: object): Observable<any> {
     return this.http.put<any>(
-      this.backendService.createUrl(
-        FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id.toString() + FeasibilityQueryPaths.SAVE_QUERY
-      ),
+      this.backendService.createUrl(FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id.toString() + FeasibilityQueryPaths.SAVE_QUERY),
       updatedObject,
       {
         headers: this.backendService.getHeaders(),

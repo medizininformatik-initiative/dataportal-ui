@@ -1,41 +1,41 @@
-import { AttributesData } from 'src/app/model/Interface/AttributesData';
+import { AttributesData } from 'src/app/model/Interface/AttributesData'
 
 export class Attributes {
-  attributeRef: string;
-  mustHave: boolean;
-  linkedGroups: string[];
+  public attributeRef: string
+  public mustHave: boolean
+  public linkedGroups: string[]
 
   constructor(attributeRef: string, mustHave: boolean, linkedGroups: string[]) {
-    this.attributeRef = attributeRef;
-    this.mustHave = mustHave;
-    this.linkedGroups = linkedGroups;
+    this.attributeRef = attributeRef
+    this.mustHave = mustHave
+    this.linkedGroups = linkedGroups
   }
 
   public getLinkedGroups(): string[] {
-    return this.linkedGroups;
+    return this.linkedGroups
   }
 
   public setLinkedGroups(linkedGroups: string[]): void {
-    this.linkedGroups = linkedGroups;
+    this.linkedGroups = linkedGroups
   }
 
   public getAttributeRef(): string {
-    return this.attributeRef;
+    return this.attributeRef
   }
 
   public setAttributeRef(value: string): void {
-    this.attributeRef = value;
+    this.attributeRef = value
   }
 
   public getMustHave(): boolean {
-    return this.mustHave;
+    return this.mustHave
   }
 
   public setMustHave(value: boolean): void {
-    this.mustHave = value;
+    this.mustHave = value
   }
 
   public static fromJson(json: AttributesData): Attributes {
-    return new Attributes(json.attributeRef, json.mustHave, json.linkedGroups);
+    return new Attributes(json.attributeRef, json.mustHave, json.linkedGroups)
   }
 }

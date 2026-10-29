@@ -1,18 +1,10 @@
 <div class="container padding-left-right-5px">
   @if (showUpload()) {
-  <input
-    numDataCy="upload-crtdl"
-    type="file"
-    class="file-input"
-    (change)="upload($event)"
-    #fileUpload
-  />
+  <input numDataCy="upload-crtdl" type="file" class="file-input" (change)="upload($event)" #fileUpload />
   <button
     (click)="fileUpload.click()"
     [matTooltip]="
-      uploadDisabled
-        ? ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD_DISABLED' | translate)
-        : ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate)
+      uploadDisabled ? ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD_DISABLED' | translate) : ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate)
     "
     type="button"
     class="num-button green icon"

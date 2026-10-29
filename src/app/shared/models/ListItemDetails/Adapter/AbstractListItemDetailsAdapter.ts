@@ -3,11 +3,9 @@ import { AbstractRelative } from 'src/app/model/Search/EntryDetails/AbstractRela
 import { ListItemDetailsData } from '../ListItemDetailsData'
 import { ListItemDetailsRelativeData } from '../ListItemDetailsRelative'
 
-export abstract class AbstractListItemDetailsAdapter<
-  D extends AbstractDetails<T>,
-  T extends AbstractRelative
-> {
+export abstract class AbstractListItemDetailsAdapter<D extends AbstractDetails<T>, T extends AbstractRelative> {
   /**
+   * Adapts the value.
    *
    * @param {D extends AbstractDetails<T>} detailsData The details data to adapt.
    * @returns {ListItemDetailsData} The adapted list item details data.
@@ -33,8 +31,8 @@ export abstract class AbstractListItemDetailsAdapter<
 
   /**
    * Adapts an array of relatives to an array of ListItemDetailsRelative objects.
-   * @param relatives The array of relatives to adapt.
-   * @returns An array of ListItemDetailsRelative objects.
+   * @param {T[]} relatives The array of relatives to adapt.
+   * @returns {ListItemDetailsRelativeData[]} An array of ListItemDetailsRelative objects.
    */
   protected abstract adaptRelatives(relatives: T[]): ListItemDetailsRelativeData[]
 }

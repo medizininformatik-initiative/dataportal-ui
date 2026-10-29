@@ -1,10 +1,4 @@
-<mat-tab-group
-  class="height-100 padding-top-3"
-  animationDuration="0ms"
-  disableRipple="true"
-  mat-stretch-tabs="false"
-  [selectedIndex]="1"
->
+<mat-tab-group class="height-100 padding-top-3" animationDuration="0ms" disableRipple="true" mat-stretch-tabs="false" [selectedIndex]="1">
   <mat-tab>
     <ng-template mat-tab-label>
       <fa-icon icon="info" class="information-icon"></fa-icon>
@@ -26,11 +20,7 @@
       <div class="concept-item">
         <span class="concept-item-display">{{ bulkEntry.getDisplay() | displayTranslation }}</span>
         <span>{{ bulkEntry.getTermCodes()[0].getCode() }}</span>
-        <button
-          [disabled]="termCodes().length === 1"
-          (click)="removeTermCode(bulkEntry.getTermCodes()[0])"
-          class="delete-button"
-        >
+        <button [disabled]="termCodes().length === 1" (click)="removeTermCode(bulkEntry.getTermCodes()[0])" class="delete-button">
           {{ 'FEASIBILITY.EDITOR.MODAL.REMOVE' | translate }}
         </button>
       </div>

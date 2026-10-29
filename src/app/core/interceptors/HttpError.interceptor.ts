@@ -7,21 +7,18 @@ import { HttpErrorHandlerService } from './HttpErrorHandler.service'
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
   // lazy: handler -> TranslateService -> HttpClient -> HTTP_INTERCEPTORS (NG0200)
-  private injector = inject(Injector)
+  private readonly injector = inject(Injector)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
-  /**
-   *
-   */
   constructor() {}
 
   /**
    * Intercepts HTTP responses to handle errors globally.
-   * @param req
-   * @param next
-   * @returns
+   * @param {HttpRequest<any>} req
+   * @param {HttpHandler} next
+   * @returns {Observable<HttpEvent<any>>}
    */
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next

@@ -1,28 +1,28 @@
-import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service'
-import { BehaviorSubject, filter, map, Observable, of, switchMap, tap } from 'rxjs'
-import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery'
 import { inject, Injectable } from '@angular/core'
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service'
+import { BehaviorSubject, filter, map, Observable, of, switchMap, tap } from 'rxjs'
 import { v4 as uuidv4 } from 'uuid'
+import { FeasibilityQuery } from '../../model/FeasibilityQuery/FeasibilityQuery'
+import { ActiveFeasibilityQueryService } from './ActiveFeasibilityQuery.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeasibilityQueryProviderService {
-  private storage = inject<StorageService>(LOCAL_STORAGE)
-  private activeFeasibilityQuery = inject(ActiveFeasibilityQueryService)
+  private readonly storage = inject<StorageService>(LOCAL_STORAGE)
+  private readonly activeFeasibilityQuery = inject(ActiveFeasibilityQueryService)
 
   private readonly STORAGE_QUERY_KEY = 'QUERY'
-  private feasibilityQueryMap: Map<string, FeasibilityQuery> = new Map()
-  private feasibilityQueryMapSubject: BehaviorSubject<Map<string, FeasibilityQuery>> =
-    new BehaviorSubject(new Map())
-  private hasQueryResult: BehaviorSubject<boolean> = new BehaviorSubject(false)
+  private readonly feasibilityQueryMap: Map<string, FeasibilityQuery> = new Map()
+  private readonly feasibilityQueryMapSubject: BehaviorSubject<Map<string, FeasibilityQuery>> = new BehaviorSubject(new Map())
+  private readonly hasQueryResult: BehaviorSubject<boolean> = new BehaviorSubject(false)
 
   constructor() {}
 
   /**
    * Loads the initial feasibility query from local storage.
    * If no query is stored, initializes with a default query.
+   * @returns {Observable<boolean>}
    */
   public loadInitialQuery(): Observable<boolean> {
     const storedQuery = this.storage.get(this.STORAGE_QUERY_KEY)
@@ -36,15 +36,11 @@ export class FeasibilityQueryProviderService {
 
   /**
    * Sets the feasibility query and updates local storage.
-   * @param id the uid to set
-   * @param feasibilityQuery The new feasibility query to set
-   * @param setAsActive Whether to set the query as the active query
+   * @param {string} id the uid to set
+   * @param {FeasibilityQuery} feasibilityQuery The new feasibility query to set
+   * @param {boolean} setAsActive Whether to set the query as the active query
    */
-  public setFeasibilityQueryById(
-    feasibilityQuery: FeasibilityQuery,
-    id: string,
-    setAsActive: boolean = false
-  ): void {
+  public setFeasibilityQueryById(feasibilityQuery: FeasibilityQuery, id: string, setAsActive: boolean = false): void {
     this.storage.set(this.STORAGE_QUERY_KEY, feasibilityQuery)
     this.feasibilityQueryMap.set(id, feasibilityQuery)
     this.feasibilityQueryMapSubject.next(new Map(this.feasibilityQueryMap))
@@ -56,12 +52,13 @@ export class FeasibilityQueryProviderService {
   /**
    * Retrieves the current feasibility query as an observable.
    *
-   * @returns Observable<Query>
+   * @returns {Observable<FeasibilityQuery>} Observable<Query>
+   * @param {string} id
    */
   public getFeasibilityQueryByID(id: string): Observable<FeasibilityQuery> {
     return this.feasibilityQueryMapSubject.pipe(
       filter((feasibilityQueryMap) => feasibilityQueryMap.has(id)),
-      map((feasibilityQueryMap) => feasibilityQueryMap.get(id)!)
+      map((feasibilityQueryMap) => feasibilityQueryMap.get(id))
     )
   }
 
@@ -70,7 +67,7 @@ export class FeasibilityQueryProviderService {
       switchMap((id) =>
         this.feasibilityQueryMapSubject.pipe(
           filter((map) => map.has(id)),
-          map((map) => map.get(id)!)
+          map((map) => map.get(id))
         )
       )
     )
@@ -78,7 +75,7 @@ export class FeasibilityQueryProviderService {
   /**
    * Retrieves the current feasibility query map as an observable.
    *
-   * @returns Observable<Query>
+   * @returns {Observable<Map<string, FeasibilityQuery>>} Observable<Query>
    */
   public getFeasibilityQueryMap(): Observable<Map<string, FeasibilityQuery>> {
     return this.feasibilityQueryMapSubject.asObservable()
@@ -98,7 +95,7 @@ export class FeasibilityQueryProviderService {
   public setInclusionCriteria(criteria: string[][]): void {
     const id = this.activeFeasibilityQuery.getActiveFeasibilityQueryID()
 
-    const oldQuery = this.feasibilityQueryMap.get(id)!
+    const oldQuery = this.feasibilityQueryMap.get(id)
     const newQuery = oldQuery.clone()
 
     newQuery.setInclusionCriteria(criteria)
@@ -114,7 +111,7 @@ export class FeasibilityQueryProviderService {
   public setExclusionCriteria(criteria: string[][]): void {
     const id = this.activeFeasibilityQuery.getActiveFeasibilityQueryID()
 
-    const oldQuery = this.feasibilityQueryMap.get(id)!
+    const oldQuery = this.feasibilityQueryMap.get(id)
     const newQuery = oldQuery.clone()
     newQuery.setExclusionCriteria(criteria)
     this.feasibilityQueryMap.set(id, newQuery)
@@ -126,9 +123,7 @@ export class FeasibilityQueryProviderService {
    * @param {string} id - The ID of the criterion to delete.
    */
   public deleteFromInclusion(id: string): void {
-    const feasibilityQuery = this.feasibilityQueryMap.get(
-      this.activeFeasibilityQuery.getActiveFeasibilityQueryID()
-    )
+    const feasibilityQuery = this.feasibilityQueryMap.get(this.activeFeasibilityQuery.getActiveFeasibilityQueryID())
     if (feasibilityQuery) {
       const criteria = this.deleteCriterion(feasibilityQuery.getInclusionCriteria(), id)
       this.setInclusionCriteria(criteria)
@@ -140,9 +135,7 @@ export class FeasibilityQueryProviderService {
    * @param {string} id - The ID of the criterion to delete.
    */
   public deleteFromExclusion(id: string): void {
-    const feasibilityQuery = this.feasibilityQueryMap.get(
-      this.activeFeasibilityQuery.getActiveFeasibilityQueryID()
-    )
+    const feasibilityQuery = this.feasibilityQueryMap.get(this.activeFeasibilityQuery.getActiveFeasibilityQueryID())
     if (feasibilityQuery) {
       const criteria = this.deleteCriterion(feasibilityQuery.getExclusionCriteria(), id)
       this.setExclusionCriteria(criteria)
@@ -166,10 +159,6 @@ export class FeasibilityQueryProviderService {
     return inexclusion
   }
 
-  /**
-   *
-   * @returns {Observable<boolean>}
-   */
   public getHasQueryResult(): Observable<boolean> {
     return this.hasQueryResult.asObservable()
   }

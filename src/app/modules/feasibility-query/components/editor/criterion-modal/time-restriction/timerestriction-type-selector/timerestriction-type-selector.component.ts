@@ -1,8 +1,8 @@
 import { Component, model, output } from '@angular/core'
-import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
 import { FormsModule } from '@angular/forms'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
 
 @Component({
   selector: 'num-timerestriction-type-selector',
@@ -12,11 +12,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [FormsModule, FontAwesomeModule, TranslateModule],
 })
 export class TimerestrictionTypeSelectorComponent {
-  readonly type = model<TimeRestrictionType>()
+  public readonly type = model<TimeRestrictionType>()
 
-  timeRestrictionOptions: string[] = Object.values(TimeRestrictionType)
+  public timeRestrictionOptions: string[] = Object.values(TimeRestrictionType)
 
-  readonly timeRestrictionTypeChanged = output<TimeRestrictionType>()
+  public readonly timeRestrictionTypeChanged = output<TimeRestrictionType>()
 
   public onTimeRestrictionOptionChange(timeRestriction: string) {
     this.type.set(TimeRestrictionType[timeRestriction as keyof typeof TimeRestrictionType])

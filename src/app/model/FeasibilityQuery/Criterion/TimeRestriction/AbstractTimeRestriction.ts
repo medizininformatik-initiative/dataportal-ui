@@ -1,60 +1,60 @@
-import { TimeRestrictionType } from '../../TimeRestriction';
+import { TimeRestrictionType } from '../../TimeRestriction'
 
 /**
  * Abstract class representing a Time Restriction.
  */
 export abstract class AbstractTimeRestriction {
-  protected beforeDate?: string;
-  protected afterDate: string;
-  protected type: TimeRestrictionType;
+  protected beforeDate?: string
+  protected afterDate: string
+  protected type: TimeRestrictionType
 
   /**
    * Creates an instance of AbstractTimeRestriction.
    *
-   * @param beforeDate - Date before which the restriction applies.
-   * @param afterDate - Date after which the restriction applies.
+   * @param {string} beforeDate - Date before which the restriction applies.
+   * @param {string} afterDate - Date after which the restriction applies.
    * @param type - Type of time restriction.
    */
   constructor(afterDate: string, beforeDate?: string) {
-    this.beforeDate = beforeDate;
-    this.afterDate = afterDate;
+    this.beforeDate = beforeDate
+    this.afterDate = afterDate
   }
 
   /**
    * Gets the date before which the restriction applies.
    *
-   * @returns The before date.
+   * @returns {string | undefined} The before date.
    */
-  getBeforeDate(): string | undefined {
-    return this.beforeDate;
+  public getBeforeDate(): string | undefined {
+    return this.beforeDate
   }
 
   /**
    * Sets the date before which the restriction applies.
    *
-   * @param beforeDate - The before date to set.
+   * @param {string} beforeDate - The before date to set.
    */
-  setBeforeDate(beforeDate: string): void {
-    this.beforeDate = beforeDate;
+  public setBeforeDate(beforeDate: string): void {
+    this.beforeDate = beforeDate
   }
 
   /**
    * Gets the date after which the restriction applies.
    *
-   * @returns The after date.
+   * @returns {string | undefined} The after date.
    */
-  getAfterDate(): string | undefined {
-    return this.afterDate;
+  public getAfterDate(): string | undefined {
+    return this.afterDate
   }
 
   /**
    * Sets the date after which the restriction applies.
    *
-   * @param afterDate - The after date to set.
+   * @param {string} afterDate - The after date to set.
    */
-  setAfterDate(afterDate: string): void {
-    this.afterDate = afterDate;
+  public setAfterDate(afterDate: string): void {
+    this.afterDate = afterDate
   }
 
-  abstract getType();
+  public abstract getType()
 }

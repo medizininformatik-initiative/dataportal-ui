@@ -1,10 +1,10 @@
-import { AbstractCriterion } from './AbstractCriterion'
-import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction'
-import { AttributeFilter } from './AttributeFilter/AttributeFilter'
-import { CritGroupPosition } from '../CritGroupPosition'
 import { Display } from '../../DataSelection/Profile/Display'
 import { TerminologyCode } from '../../Terminology/TerminologyCode'
+import { CritGroupPosition } from '../CritGroupPosition'
+import { AbstractCriterion } from './AbstractCriterion'
+import { AttributeFilter } from './AttributeFilter/AttributeFilter'
 import { ValueFilter } from './AttributeFilter/ValueFilter'
+import { AbstractTimeRestriction } from './TimeRestriction/AbstractTimeRestriction'
 
 export class ReferenceCriterion extends AbstractCriterion {
   private parentId: string

@@ -1,49 +1,42 @@
-import { ButtonComponent } from '../button/button.component'
 import { Component, inject, OnDestroy, OnInit, output } from '@angular/core'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
-import { HeaderComponent } from '../header/header.component'
 import { MatDialogRef } from '@angular/material/dialog'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
 import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
 import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModal'
-import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '../button/button.component'
+import { HeaderComponent } from '../header/header.component'
 
 @Component({
   selector: 'num-save-dataquery-modal',
   templateUrl: './save-dataquery-modal.component.html',
   styleUrls: ['./save-dataquery-modal.component.scss'],
   standalone: true,
-  imports: [
-    FontAwesomeModule,
-    HeaderComponent,
-    FormsModule,
-    ButtonComponent,
-    TranslateModule,
-    NumDataCyDirective,
-  ],
+  imports: [FontAwesomeModule, HeaderComponent, FormsModule, ButtonComponent, TranslateModule, NumDataCyDirective],
 })
 export class SaveDataQueryModalComponent implements OnInit {
-  private dialogRef = inject<MatDialogRef<SaveDataQueryModalComponent>>(MatDialogRef)
+  private readonly dialogRef = inject<MatDialogRef<SaveDataQueryModalComponent>>(MatDialogRef)
 
-  readonly save = output<SaveDataModal>()
+  public readonly save = output<SaveDataModal>()
 
-  readonly cancelled = output<void>()
+  public readonly cancelled = output<void>()
 
-  title = ''
-  comment = ''
+  public title = ''
+  public comment = ''
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
-  doSave(): void {
+  public doSave(): void {
     this.dialogRef.close({
       title: this.title,
       comment: this.comment,
     })
   }
 
-  doDiscard(): void {
+  public doDiscard(): void {
     this.dialogRef.close()
   }
 }

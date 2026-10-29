@@ -1,8 +1,8 @@
-import { AbstractDetails } from '../AbstractDetails'
-import { Display } from '../../../DataSelection/Profile/Display'
-import { ProfileEntryRelative } from './ProfileEntryRelative'
 import { ProfileEntryDetailsData } from 'src/app/model/Interface/ListEntryDetailsData/ProfileEntryDetailsData'
+import { Display } from '../../../DataSelection/Profile/Display'
+import { AbstractDetails } from '../AbstractDetails'
 import { ProfileEntryDetailsField } from './ProfileEntryDetailsField'
+import { ProfileEntryRelative } from './ProfileEntryRelative'
 
 export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
   private readonly id: string
@@ -43,10 +43,6 @@ export class ProfileEntryDetails extends AbstractDetails<ProfileEntryRelative> {
     return this.description
   }
 
-  /**
-   * @param {ProfileEntryDetailsData} json
-   * @returns {ProfileEntryDetails}
-   */
   public static fromJson(json: ProfileEntryDetailsData): ProfileEntryDetails {
     return new ProfileEntryDetails(
       json.id,

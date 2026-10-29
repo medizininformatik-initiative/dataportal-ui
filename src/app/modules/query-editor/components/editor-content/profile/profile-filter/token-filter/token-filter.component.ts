@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core'
-import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
-import { ConceptBulkSearchComponent } from '../../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
-import { ConceptFilterComponent } from '../../../../../../shared-filter/components/concept/concept-filter.component'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { InformationSectionComponent } from '../../../../../../../shared/components/information-section/information-section.component'
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs'
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
-import { SelectedConceptListComponent } from '../../../../../../shared-filter/components/concept/selected-concept-list/selected-concept-list.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
+import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
+import { InformationSectionComponent } from '../../../../../../../shared/components/information-section/information-section.component'
+import { ConceptFilterComponent } from '../../../../../../shared-filter/components/concept/concept-filter.component'
+import { SelectedConceptListComponent } from '../../../../../../shared-filter/components/concept/selected-concept-list/selected-concept-list.component'
+import { ConceptBulkSearchComponent } from '../../../../../../shared-filter/components/concept-bulk-search/concept-bulk-search.component'
 
 @Component({
   selector: 'num-token-filter',
@@ -28,10 +28,10 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class TokenFilterComponent {
-  readonly tokenFilter = input.required<ProfileTokenFilter>()
-  readonly tokenFilterChanged = output<ProfileTokenFilter>()
-  tabChanged = false
-  readonly selectedConcepts = signal<Concept[]>([])
+  public readonly tokenFilter = input.required<ProfileTokenFilter>()
+  public readonly tokenFilterChanged = output<ProfileTokenFilter>()
+  public tabChanged = false
+  public readonly selectedConcepts = signal<Concept[]>([])
 
   constructor() {
     effect(() => {
@@ -41,7 +41,7 @@ export class TokenFilterComponent {
 
   /**
    * Updates the selected concepts in the token filter and emits the updated token filter instance.
-   * @param concepts - The updated list of selected concepts.
+   * @param {Concept[]} concepts - The updated list of selected concepts.
    */
   public updateSelectedConcepts(concepts: Concept[]): void {
     const newProfileTokenFilter = this.createProfileTokenFilterInstance(concepts)

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
 import { NgClass } from '@angular/common'
+import { Component } from '@angular/core'
 import { SwitchComponent } from '../switch/switch.component'
 
 @Component({
@@ -10,9 +10,9 @@ import { SwitchComponent } from '../switch/switch.component'
   imports: [NgClass, SwitchComponent],
 })
 export class LogicSwitchComponent {
-  isOrSelected = false
+  public isOrSelected = false
 
-  test(event) {
+  public test(event) {
     this.isOrSelected = event
   }
 }

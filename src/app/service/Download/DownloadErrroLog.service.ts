@@ -1,6 +1,6 @@
-import { AbstractDownloadService } from './AbstractDownload.service'
 import { Injectable, inject } from '@angular/core'
 import { ValidationReportBuilderService } from '../Validation/External/ValidationReportBuilder.service'
+import { AbstractDownloadService } from './AbstractDownload.service'
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class DownloadErrorLogService extends AbstractDownloadService {
 
   /**
    * Downloads the validation error log as a JSON file.
-   * @param filename - Optional custom filename (without extension)
+   * @param {string} filename - Optional custom filename (without extension)
    */
   public download(filename?: string): void {
     const errorLogData = this.validationReportBuilder.buildValidationReportData()

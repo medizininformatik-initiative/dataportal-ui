@@ -7,7 +7,7 @@ import { ProfileListItemDetailsMenuItemsFunctionsService } from './ProfileListIt
   providedIn: 'root',
 })
 export class ProfileListItemDetailsMenuService extends AbstractMenuItemsService<[boolean]> {
-  private listItemDetailsFunctionService = inject(ProfileListItemDetailsMenuItemsFunctionsService)
+  private readonly listItemDetailsFunctionService = inject(ProfileListItemDetailsMenuItemsFunctionsService)
 
   public override getMenuItems(selectable: boolean): MenuItemInterface[] {
     return [

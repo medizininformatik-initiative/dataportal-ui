@@ -1,7 +1,7 @@
-import { AttributeCode } from './AttributeCode';
-import { DisplayData } from './DisplayData';
-import { FilterTypes } from '../Utilities/FilterTypes';
-import { QuantityUnitData } from './Unit';
+import { FilterTypes } from '../Utilities/FilterTypes'
+import { AttributeCode } from './AttributeCode'
+import { DisplayData } from './DisplayData'
+import { QuantityUnitData } from './Unit'
 
 export interface AttributeDefinitionData {
   min: number

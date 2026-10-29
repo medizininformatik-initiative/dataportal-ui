@@ -1,7 +1,7 @@
-import { CritType } from './CritType';
+import { CritType } from './CritType'
 
 export class CritGroupPosition {
-  critType: CritType;
-  row: number;
-  column: number;
+  public critType: CritType
+  public row: number
+  public column: number
 }

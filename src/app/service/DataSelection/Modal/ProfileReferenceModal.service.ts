@@ -10,23 +10,20 @@ import {
   providedIn: 'root',
 })
 export class ProfileReferenceModalService implements OnDestroy {
-  private dialog = inject(MatDialog)
+  private readonly dialog = inject(MatDialog)
 
-  dialogSubscription: Subscription
+  public dialogSubscription: Subscription
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.dialogSubscription.unsubscribe()
   }
 
-  public openProfileReferenceModal(
-    referencedProfileUrls: string[],
-    profileId: string
-  ): Observable<string[]> {
+  public openProfileReferenceModal(referencedProfileUrls: string[], profileId: string): Observable<string[]> {
     const data = this.setModalData(referencedProfileUrls, profileId)
     const dialogRef = this.dialog.open(ProfileReferenceModalComponent, {
       disableClose: true,
@@ -36,10 +33,7 @@ export class ProfileReferenceModalService implements OnDestroy {
     return dialogRef.afterClosed()
   }
 
-  private setModalData(
-    referencedProfileUrls: string[],
-    profileId: string
-  ): ProfileReferenceModalComponentData {
+  private setModalData(referencedProfileUrls: string[], profileId: string): ProfileReferenceModalComponentData {
     return {
       referenceUrls: referencedProfileUrls,
       profileId,

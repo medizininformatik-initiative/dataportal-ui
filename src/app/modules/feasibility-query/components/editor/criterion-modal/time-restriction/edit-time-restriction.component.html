@@ -8,8 +8,7 @@
     <num-timerestriction-type-selector
       [type]="timeRestriction().getType()"
       (timeRestrictionTypeChanged)="onTimeRestrictionOptionChange($event)"
-    >
-    </num-timerestriction-type-selector>
+    ></num-timerestriction-type-selector>
     <!--Between Filter-->
     @if (selectedTimeRestrictionType() === 'BETWEEN') {
     <num-between-filter

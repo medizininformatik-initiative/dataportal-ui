@@ -1,16 +1,11 @@
 <div cdkDrag class="container criteria-box-row">
   <div class="content criteria-box-main">
-    <div
-      matTooltipPosition="below"
-      [matTooltip]="referenceCriterion().getDisplay() | displayTranslation"
-      class="title-section"
-    >
+    <div matTooltipPosition="below" [matTooltip]="referenceCriterion().getDisplay() | displayTranslation" class="title-section">
       {{ referenceCriterion().getDisplay() | displayTranslation }}
     </div>
     <div class="info-section criteria-box-info">
       <div class="info-item">
-        {{ referenceCriterion().getDisplay() | displayTranslation }},
-        {{ referenceCriterion().getTermCodes()[0].getCode() }},
+        {{ referenceCriterion().getDisplay() | displayTranslation }}, {{ referenceCriterion().getTermCodes()[0].getCode() }},
         {{ translatedSystem | displayTranslation }}
       </div>
     </div>

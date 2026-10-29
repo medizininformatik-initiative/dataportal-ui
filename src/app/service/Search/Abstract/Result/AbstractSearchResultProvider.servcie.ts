@@ -1,7 +1,7 @@
-import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry';
-import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
+import { AbstractResultList } from 'src/app/model/Search/ResultList/AbstractResultList'
 
 /**
  * @abstract
@@ -15,10 +15,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export abstract class AbstractSearchResultProviderService<
-  C extends AbstractListEntry,
-  T extends AbstractResultList<C>
-> {
+export abstract class AbstractSearchResultProviderService<C extends AbstractListEntry, T extends AbstractResultList<C>> {
   /**
    * Creates an instance of AbstractSearchResultProviderService.
    */
@@ -29,9 +26,9 @@ export abstract class AbstractSearchResultProviderService<
    * Sets search results in the provider's storage.
    * Implementation varies based on storage strategy (simple vs keyed).
    *
-   * @param args - Variable arguments depending on the implementation strategy
+   * @param {any[]} args - Variable arguments depending on the implementation strategy
    */
-  public abstract setSearchResults(...args: any[]): void;
+  public abstract setSearchResults(...args: any[]): void
 
   /**
    * @abstract
@@ -39,26 +36,26 @@ export abstract class AbstractSearchResultProviderService<
    * Used for pagination and incremental result loading.
    * Implementation varies based on storage strategy (simple vs keyed).
    *
-   * @param args - Variable arguments depending on the implementation strategy
+   * @param {any[]} args - Variable arguments depending on the implementation strategy
    */
-  public abstract updateSearchResults(...args: any[]): void;
+  public abstract updateSearchResults(...args: any[]): void
 
   /**
    * @abstract
    * Retrieves search results as an observable stream.
    * Implementation varies based on storage strategy (simple vs keyed).
    *
-   * @param args - Variable arguments depending on the implementation strategy
-   * @returns An Observable that emits the search results or null if no results
+   * @param {any[]} args - Variable arguments depending on the implementation strategy
+   * @returns {Observable<T | null>} An Observable that emits the search results or null if no results
    */
-  public abstract getSearchResults(...args: any[]): Observable<T | null>;
+  public abstract getSearchResults(...args: any[]): Observable<T | null>
 
   /**
    * @abstract
    * Clears search results from the provider's storage.
    * Implementation varies based on storage strategy (simple vs keyed).
    *
-   * @param args - Variable arguments depending on the implementation strategy
+   * @param {any[]} args - Variable arguments depending on the implementation strategy
    */
-  public abstract clearResults(...args: any[]): void;
+  public abstract clearResults(...args: any[]): void
 }

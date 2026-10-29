@@ -1,5 +1,5 @@
-import { AbstractSearchFilterValue } from './AbstractSearchFilterValue'
 import { SearchFilterValueData } from '../../Interface/Search/Filter/SearchFilterValueData'
+import { AbstractSearchFilterValue } from './AbstractSearchFilterValue'
 
 export class CriteriaSearchFilterValue extends AbstractSearchFilterValue {
   constructor(count: number, label: string) {

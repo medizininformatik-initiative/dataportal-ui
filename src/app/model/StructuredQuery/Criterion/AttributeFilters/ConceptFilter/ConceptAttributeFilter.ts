@@ -1,12 +1,18 @@
-import { AbstractConceptFilter } from '../../Abstract/ConceptFilter/AbstractConceptFilter';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { AbstractConceptFilter } from '../../Abstract/ConceptFilter/AbstractConceptFilter'
 
 export class ConceptAttributeFilter extends AbstractConceptFilter {
-  private attributeCode: TerminologyCode;
+  private attributeCode: TerminologyCode
 
+  /**
+   * Creates a new ConceptAttributeFilter.
+   *
+   * @param attributeCode
+   * @param selectedConcepts
+   */
   constructor(attributeCode: TerminologyCode, selectedConcepts: TerminologyCode[] = []) {
-    super(selectedConcepts);
-    this.attributeCode = attributeCode;
+    super(selectedConcepts)
+    this.attributeCode = attributeCode
   }
 
   /**
@@ -15,7 +21,7 @@ export class ConceptAttributeFilter extends AbstractConceptFilter {
    * @returns The attributeCode value.
    */
   public getAttributeCode(): TerminologyCode {
-    return this.attributeCode;
+    return this.attributeCode
   }
 
   /**
@@ -24,10 +30,16 @@ export class ConceptAttributeFilter extends AbstractConceptFilter {
    * @param attributeCode - The new attributeCode value to set.
    */
   public setAttributeCode(attributeCode: TerminologyCode): void {
-    this.attributeCode = attributeCode;
+    this.attributeCode = attributeCode
   }
 
+  /**
+   * Creates a filter from the given values.
+   *
+   * @param attributeCode
+   * @param selectedConcepts
+   */
   public static createFilter(attributeCode: TerminologyCode, selectedConcepts: TerminologyCode[]) {
-    return new ConceptAttributeFilter(attributeCode, Array.from(selectedConcepts));
+    return new ConceptAttributeFilter(attributeCode, Array.from(selectedConcepts))
   }
 }

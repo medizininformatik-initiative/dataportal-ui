@@ -1,16 +1,16 @@
-import { CohortDefinitionActionBarComponent } from './action-bar/cohort-definition-action-bar.component'
 import { Component, computed, inject } from '@angular/core'
-import { DisplayFeasibilityQueryComponent } from '../../../feasibility-query/components/editor/display/display.component'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper'
+import { TranslateModule } from '@ngx-translate/core'
+import { map } from 'rxjs'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
-import { map } from 'rxjs'
-import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { PlaceholderBoxComponent } from '../../../../shared/components/placeholder-box/placeholder-box.component'
-import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
-import { toSignal } from '@angular/core/rxjs-interop'
-import { TranslateModule } from '@ngx-translate/core'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
+import { DisplayFeasibilityQueryComponent } from '../../../feasibility-query/components/editor/display/display.component'
+import { CohortDefinitionActionBarComponent } from './action-bar/cohort-definition-action-bar.component'
 
 @Component({
   selector: 'num-cohort-definition',
@@ -34,14 +34,10 @@ export class CohortDefinitionComponent {
   private readonly feasibilityQueryValidation = inject(FeasibilityQueryValidationService)
   private readonly resultProviderService = inject(ResultProviderService)
 
-  readonly isFeasibilityExistent = computed(
-    () => this.feasibilityQueryValidation.validationState().isValid
-  )
+  public readonly isFeasibilityExistent = computed(() => this.feasibilityQueryValidation.validationState().isValid)
 
-  readonly totalNumberOfPatients = toSignal(
-    this.resultProviderService
-      .getResultOfActiveFeasibilityQuery()
-      .pipe(map((result) => result?.getTotalNumberOfPatients() ?? 0)),
+  public readonly totalNumberOfPatients = toSignal(
+    this.resultProviderService.getResultOfActiveFeasibilityQuery().pipe(map((result) => result?.getTotalNumberOfPatients() ?? 0)),
     { initialValue: 0 }
   )
 

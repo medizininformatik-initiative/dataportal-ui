@@ -1,27 +1,27 @@
-import { AsyncPipe } from '@angular/common'
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop'
+import { AsyncPipe } from '@angular/common'
 import { Component, computed, inject, input, OnInit } from '@angular/core'
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
-import { CriterionValidationService } from 'src/app/service/Validation/Internal/CriterionValidationService.service'
-import { CriterionMenuItemsService } from '../../service/Menu/Criterion/CriterionMenuItems.service'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
-import { FilterChipData } from '../../models/FilterChips/FilterChipData'
-import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatTooltip } from '@angular/material/tooltip'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
+import { Observable, of } from 'rxjs'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
+import { CriterionValidationService } from 'src/app/service/Validation/Internal/CriterionValidationService.service'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
+import { FilterChipData } from '../../models/FilterChips/FilterChipData'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { CriterionFilterChipService } from '../../service/FilterChips/Criterion/CriterionFilterChips.service'
+import { CriterionMenuItemsService } from '../../service/Menu/Criterion/CriterionMenuItems.service'
+import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
 import { MenuComponent } from '../menu/menu.component'
 import { MissingFilterComponent } from '../missing-filter/missing-filter.component'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
-import { Observable, of } from 'rxjs'
 import { ReferenceCriteriaBoxComponent } from '../reference-criteria-box/reference-criteria-box.component'
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
-import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
-import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
-import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-criteria-box',
@@ -45,40 +45,38 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class CriteriaBoxComponent implements OnInit {
-  private menuService = inject(CriterionMenuItemsService)
-  private filterChipsService = inject(CriterionFilterChipService)
-  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private readonly menuService = inject(CriterionMenuItemsService)
+  private readonly filterChipsService = inject(CriterionFilterChipService)
+  private readonly referenceCriterionProvider = inject(ReferenceCriterionProviderService)
   private readonly navigationHelperService = inject(NavigationHelperService)
   private readonly criterionValidationService = inject(CriterionValidationService)
 
-  readonly criterion = input.required<Criterion>()
-  readonly isEditable = input<boolean>()
+  public readonly criterion = input.required<Criterion>()
+  public readonly isEditable = input<boolean>()
 
-  readonly menuItems = this.menuService.getMenuItems()
+  public readonly menuItems = this.menuService.getMenuItems()
 
-  referenceCriterion: ReferenceCriterion[] = []
+  public referenceCriterion: ReferenceCriterion[] = []
 
-  $filterChips: Observable<FilterChipData[]> = of([])
+  public $filterChips: Observable<FilterChipData[]> = of([])
 
   /**
    * The system is derived from the first term code of the criterion, as this is mandatory. The system is then looked up in the TerminologySystemDictionary to get a user-friendly name for display purposes.
    */
-  readonly system = computed(() => {
+  public readonly system = computed(() => {
     return TerminologySystemDictionary.getNameByUrl(this.criterion().getTermCodes()[0].getSystem())
   })
 
   /**
    * A filter is considered required if the criterion does not have a required filter set. This is determined by the getIsRequiredFilterSet method of the Criterion class. If this method returns false, it means that there are required filters that have not been set, and thus the criterion is considered to be in a state where required filters are missing.
    */
-  readonly isFilterRequired = computed(() =>
-    this.criterionValidationService.isRequiredFilterSet(this.criterion())
-  )
+  public readonly isFilterRequired = computed(() => this.criterionValidationService.isRequiredFilterSet(this.criterion()))
 
-  readonly warningSignUrl = 'assets/img/alert-blue-white.png'
+  public readonly warningSignUrl = 'assets/img/alert-blue-white.png'
 
   constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.$filterChips = this.filterChipsService.generateFilterChipsFromCriterion(this.criterion())
   }
 

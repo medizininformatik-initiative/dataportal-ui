@@ -1,32 +1,28 @@
+import { inject, Injectable } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
-import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipDataSelectionAdapter'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { inject, Injectable } from '@angular/core'
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
-import { TranslateService } from '@ngx-translate/core'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { FilterChipDataSelectionAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipDataSelectionAdapter'
+import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelectionFieldsChipsService {
-  translate = inject(TranslateService)
+  public translate = inject(TranslateService)
 
-  private filterChipsSubject: BehaviorSubject<FilterChipData[]> = new BehaviorSubject<
-    FilterChipData[]
-  >([])
-  filterChips$: Observable<FilterChipData[]> = this.filterChipsSubject.asObservable()
+  private readonly filterChipsSubject: BehaviorSubject<FilterChipData[]> = new BehaviorSubject<FilterChipData[]>([])
+  public filterChips$: Observable<FilterChipData[]> = this.filterChipsSubject.asObservable()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  public generateFilterChipsFromDataSelectionFields(
-    selectedFields: SelectedBasicField[]
-  ): Observable<FilterChipData[]> {
+  public generateFilterChipsFromDataSelectionFields(selectedFields: SelectedBasicField[]): Observable<FilterChipData[]> {
     const filterChips = FilterChipDataSelectionAdapter.adaptFields(selectedFields)
     const squashedFilterChips = this.squashFilterChips(filterChips)
     this.filterChipsSubject.next(squashedFilterChips)
@@ -34,10 +30,7 @@ export class DataSelectionFieldsChipsService {
   }
 
   private squashFilterChips(filterChips: FilterChipData[]): FilterChipData[] {
-    const squashedChipsMap = new Map<
-      Display | FilterTypes | TimeRestrictionType | string,
-      FilterChipData
-    >()
+    const squashedChipsMap = new Map<Display | FilterTypes | TimeRestrictionType | string, FilterChipData>()
 
     filterChips.forEach((chip) => {
       if (!squashedChipsMap.has(chip.type)) {

@@ -1,10 +1,5 @@
 import { Component } from '@angular/core'
-import {
-  MatAccordion,
-  MatExpansionPanel,
-  MatExpansionPanelHeader,
-  MatExpansionPanelTitle,
-} from '@angular/material/expansion'
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion'
 import { TranslateModule } from '@ngx-translate/core'
 
 export interface FaqItem {
@@ -17,16 +12,10 @@ export interface FaqItem {
   templateUrl: './dashboard-faq.component.html',
   styleUrls: ['./dashboard-faq.component.scss'],
   standalone: true,
-  imports: [
-    TranslateModule,
-    MatAccordion,
-    MatExpansionPanel,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
-  ],
+  imports: [TranslateModule, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle],
 })
 export class DashboardFaqComponent {
-  faqItems: FaqItem[] = [
+  public faqItems: FaqItem[] = [
     {
       questionKey: 'FAQ.COHORT_DEFINITION.QUESTION',
       answerKey: 'FAQ.COHORT_DEFINITION.ANSWER',

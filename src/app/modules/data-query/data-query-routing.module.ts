@@ -1,6 +1,6 @@
-import { LoadQueryIntoEditorFromUrlService } from 'src/app/service/Resolver/LoadQueryIntoEditorFromUrl.service'
-import { PathSegments } from 'src/app/app-paths'
 import { Routes } from '@angular/router'
+import { PathSegments } from 'src/app/app-paths'
+import { LoadQueryIntoEditorFromUrlService } from 'src/app/service/Resolver/LoadQueryIntoEditorFromUrl.service'
 
 export const DATA_QUERY_ROUTES: Routes = [
   {
@@ -14,10 +14,7 @@ export const DATA_QUERY_ROUTES: Routes = [
     resolve: {
       preLoadedQuery: LoadQueryIntoEditorFromUrlService,
     },
-    loadComponent: () =>
-      import('./data-query/cohort-definition/cohort-definition.component').then(
-        (m) => m.CohortDefinitionComponent
-      ),
+    loadComponent: () => import('./data-query/cohort-definition/cohort-definition.component').then((m) => m.CohortDefinitionComponent),
     data: {
       animation: 'Cohort',
       title: 'TAB_TITLE.DATA_QUERY.COHORT_DEFINITION',
@@ -26,10 +23,7 @@ export const DATA_QUERY_ROUTES: Routes = [
   },
   {
     path: PathSegments.cohortDefinition,
-    loadComponent: () =>
-      import('./data-query/cohort-definition/cohort-definition.component').then(
-        (m) => m.CohortDefinitionComponent
-      ),
+    loadComponent: () => import('./data-query/cohort-definition/cohort-definition.component').then((m) => m.CohortDefinitionComponent),
     data: {
       animation: 'Cohort',
       title: 'TAB_TITLE.DATA_QUERY.COHORT_DEFINITION',
@@ -38,10 +32,7 @@ export const DATA_QUERY_ROUTES: Routes = [
   },
   {
     path: PathSegments.dataSelection,
-    loadComponent: () =>
-      import('./data-query/data-selection/data-selection.component').then(
-        (m) => m.DataSelectionComponent
-      ),
+    loadComponent: () => import('./data-query/data-selection/data-selection.component').then((m) => m.DataSelectionComponent),
     data: {
       animation: 'DataSelection',
       title: 'TAB_TITLE.DATA_QUERY.DATA_SELECTION',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { HeaderComponent } from '../../../shared/components/header/header.component'
 import { FeasibilityComponent } from './feasibility/feasibility.component'
-import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-saved-queries',
@@ -12,5 +12,5 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class SavedQueriesComponent implements OnInit {
   constructor() {}
-  ngOnInit() {}
+  public ngOnInit() {}
 }

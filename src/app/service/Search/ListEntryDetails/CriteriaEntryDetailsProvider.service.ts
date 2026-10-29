@@ -1,12 +1,12 @@
-import { BehaviorSubject, Observable } from 'rxjs'
 import { Injectable } from '@angular/core'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { CriteriaEntryDetails } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryDetails'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriteriaEntryDetailsProviderService {
-  private searchTermDetailsSubject: BehaviorSubject<CriteriaEntryDetails | null> =
+  private readonly searchTermDetailsSubject: BehaviorSubject<CriteriaEntryDetails | null> =
     new BehaviorSubject<CriteriaEntryDetails | null>(null)
 
   constructor() {}

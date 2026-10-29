@@ -1,12 +1,12 @@
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { FilterChipData } from './FilterChipData'
 import { FilterChipPropertyData } from './FilterChipPropertyData'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
 
 export class FilterChipBuilder {
-  private type: FilterTypes | TimeRestrictionType | string | Display
-  private data: FilterChipPropertyData[] = []
+  private readonly type: FilterTypes | TimeRestrictionType | string | Display
+  private readonly data: FilterChipPropertyData[] = []
 
   constructor(type: FilterTypes | TimeRestrictionType | string | Display) {
     this.type = type

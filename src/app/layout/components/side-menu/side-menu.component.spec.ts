@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 
-import { SideMenuComponent } from './side-menu.component'
-import { MaterialModule } from '../../material/material.module'
 import { RouterTestingModule } from '@angular/router/testing'
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { DirectivesModule } from 'src/app/shared/directives/directives.module'
 import { RoleGuard } from '../../../core/auth/guards/role.guard'
 import { FeatureService } from '../../../service/Feature.service'
+import { MaterialModule } from '../../material/material.module'
+import { SideMenuComponent } from './side-menu.component'
 
 describe.skip('SideMenuComponent', () => {
   let component: SideMenuComponent
@@ -27,13 +27,7 @@ describe.skip('SideMenuComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [SideMenuComponent],
-      imports: [
-        FontAwesomeTestingModule,
-        MaterialModule,
-        RouterTestingModule.withRoutes([]),
-        TranslateModule.forRoot(),
-        DirectivesModule,
-      ],
+      imports: [FontAwesomeTestingModule, MaterialModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), DirectivesModule],
       providers: [
         {
           provide: FeatureService,

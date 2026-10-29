@@ -1,65 +1,66 @@
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter';
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes';
-import { Injectable } from '@angular/core';
-import { AbstractArrayEntityProvider } from '../../Provider/Abstract/AbstractArrayEntityProvider';
+import { Injectable } from '@angular/core'
+import { BehaviorSubject, map, Observable } from 'rxjs'
+import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
+import { AbstractArrayEntityProvider } from '../../Provider/Abstract/AbstractArrayEntityProvider'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFilter> {
   protected selectId(entity: CriteriaSearchFilter): string {
-    return entity.getName();
+    return entity.getName()
   }
 
-  private criteriaSearchFiltersSubject = new BehaviorSubject<CriteriaSearchFilter[]>([]);
+  private readonly criteriaSearchFiltersSubject = new BehaviorSubject<CriteriaSearchFilter[]>([])
 
   /**
    * Gets the current list of CriteriaSearchFilter objects as an Observable.
    *
-   * @returns An Observable emitting the current list of CriteriaSearchFilter objects.
+   * @returns {Observable<CriteriaSearchFilter[]>} An Observable emitting the current list of CriteriaSearchFilter objects.
    */
   public getCriteriaSearchFilters(): Observable<CriteriaSearchFilter[]> {
-    return this.criteriaSearchFiltersSubject.asObservable();
+    return this.criteriaSearchFiltersSubject.asObservable()
   }
 
   /**
    * Gets the current list of CriteriaSearchFilter objects as an Observable.
    *
-   * @returns An Observable emitting the current list of CriteriaSearchFilter objects.
+   * @returns {CriteriaSearchFilter[]} An Observable emitting the current list of CriteriaSearchFilter objects.
    */
   public getCriteriaSearchFiltersValue(): CriteriaSearchFilter[] {
-    return this.criteriaSearchFiltersSubject.getValue();
+    return this.criteriaSearchFiltersSubject.getValue()
   }
 
   /**
    * Sets the list of CriteriaSearchFilter objects and updates the BehaviorSubject.
    *
-   * @param filters An array of CriteriaSearchFilter objects to set.
+   * @param {CriteriaSearchFilter[]} filters An array of CriteriaSearchFilter objects to set.
    */
   public setCriteriaSearchFilters(filters: CriteriaSearchFilter[]): void {
-    this.criteriaSearchFiltersSubject.next(filters);
+    this.criteriaSearchFiltersSubject.next(filters)
   }
 
   /**
    * Gets selected values for a specific filter type.
    *
-   * @param type The type of the filter to retrieve selected values for.
-   * @returns An array of selected values for the specified filter type, or an empty array if the filter is not found.
+   * @param {ElasticSearchFilterTypes} type The type of the filter to retrieve selected values for.
+   * @returns {string[]} An array of selected values for the specified filter type, or an empty array if the filter is not found.
    */
   public getSelectedValuesOfType(type: ElasticSearchFilterTypes): string[] {
-    const filters = this.criteriaSearchFiltersSubject.getValue();
-    const filter = filters.find((f) => f.getName() === type);
-    return filter ? filter.getSelectedValues() : [];
+    const filters = this.criteriaSearchFiltersSubject.getValue()
+    const filter = filters.find((f) => f.getName() === type)
+    return filter ? filter.getSelectedValues() : []
   }
 
   /**
    * Emits `true` if any filters have selected values, otherwise `false`.
+   * @returns {Observable<boolean>}
    */
   public filtersNotSet(): Observable<boolean> {
     return this.criteriaSearchFiltersSubject
       .asObservable()
-      .pipe(map((filters) => filters.every((filter) => filter.getSelectedValues().length === 0)));
+      .pipe(map((filters) => filters.every((filter) => filter.getSelectedValues().length === 0)))
   }
 
   /**
@@ -67,54 +68,49 @@ export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFi
    */
   public resetSelectedValues(): void {
     const updatedFilters = this.criteriaSearchFiltersSubject.getValue().map((filter) => {
-      filter.setSelectedValues([]);
-      return filter;
-    });
-    this.criteriaSearchFiltersSubject.next(updatedFilters);
+      filter.setSelectedValues([])
+      return filter
+    })
+    this.criteriaSearchFiltersSubject.next(updatedFilters)
   }
 
   /**
    * Initializes the filter map with the given array of CriteriaSearchFilter objects.
    *
-   * @param filters An array of CriteriaSearchFilter objects to initialize the map with.
+   * @param {CriteriaSearchFilter[]} filters An array of CriteriaSearchFilter objects to initialize the map with.
    */
   public initializeFilterMap(filters: CriteriaSearchFilter[]): void {
-    this.setCriteriaSearchFilters(filters);
+    this.setCriteriaSearchFilters(filters)
   }
 
   /**
    * Updates an existing CriteriaSearchFilter in the list.
    * If the filter does not exist, it will not be added.
    *
-   * @param updatedFilter The updated CriteriaSearchFilter object.
+   * @param {CriteriaSearchFilter} updatedFilter The updated CriteriaSearchFilter object.
    */
   public updateCriteriaSearchFilter(updatedFilter: CriteriaSearchFilter): void {
-    const filters = this.criteriaSearchFiltersSubject.getValue();
-    const index = filters.findIndex((filter) => filter.getName() === updatedFilter.getName());
+    const filters = this.criteriaSearchFiltersSubject.getValue()
+    const index = filters.findIndex((filter) => filter.getName() === updatedFilter.getName())
 
     if (index !== -1) {
-      filters[index] = updatedFilter;
-      this.criteriaSearchFiltersSubject.next([...filters]);
+      filters[index] = updatedFilter
+      this.criteriaSearchFiltersSubject.next([...filters])
     }
   }
 
   /**
    * Updates the selected values of a specific filter.
    *
-   * @param filterType The type of the filter to update.
-   * @param selectedValues The new selected values to set.
+   * @param {ElasticSearchFilterTypes} filterType The type of the filter to update.
+   * @param {string[]} selectedValues The new selected values to set.
    */
-  public updateFilterSelectedValues(
-    filterType: ElasticSearchFilterTypes,
-    selectedValues: string[]
-  ): void {
-    const filters = this.criteriaSearchFiltersSubject.getValue();
-    const filter = filters.find(
-      (f) => f.getName() === (filterType.toLocaleLowerCase() as ElasticSearchFilterTypes)
-    );
+  public updateFilterSelectedValues(filterType: ElasticSearchFilterTypes, selectedValues: string[]): void {
+    const filters = this.criteriaSearchFiltersSubject.getValue()
+    const filter = filters.find((f) => f.getName() === (filterType.toLocaleLowerCase() as ElasticSearchFilterTypes))
     if (filter) {
-      filter.setSelectedValues(selectedValues);
-      this.criteriaSearchFiltersSubject.next([...filters]);
+      filter.setSelectedValues(selectedValues)
+      this.criteriaSearchFiltersSubject.next([...filters])
     }
   }
 }

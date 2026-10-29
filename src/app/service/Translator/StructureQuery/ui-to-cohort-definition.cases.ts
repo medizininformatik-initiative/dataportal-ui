@@ -1,11 +1,11 @@
-import { AfterFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AfterFilter'
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
+import { AfterFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AfterFilter'
 import { AtFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AtFilter'
 import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter'
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import {
   ATTRIBUTE_WIRE,
   attributeFilter,

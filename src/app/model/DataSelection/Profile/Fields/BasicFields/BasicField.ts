@@ -1,9 +1,9 @@
-import { Display } from '../../Display';
-import { AbstractField } from '../AbstractField';
+import { Display } from '../../Display'
+import { AbstractField } from '../AbstractField'
 
 export class BasicField extends AbstractField {
-  private children: BasicField[] = [];
-  private isSelected: boolean;
+  private children: BasicField[] = []
+  private isSelected: boolean
 
   constructor(
     elementId: string,
@@ -15,24 +15,24 @@ export class BasicField extends AbstractField {
     isRequired: boolean,
     type: string
   ) {
-    super(elementId, display, description, isRequired, recommended, type);
-    this.children = children;
-    this.isSelected = isSelected;
+    super(elementId, display, description, isRequired, recommended, type)
+    this.children = children
+    this.isSelected = isSelected
   }
 
   public getChildren(): BasicField[] {
-    return this.children;
+    return this.children
   }
 
   public setChildren(abstractField: BasicField[]): void {
-    this.children = abstractField;
+    this.children = abstractField
   }
 
   public getIsSelected(): boolean {
-    return this.isSelected;
+    return this.isSelected
   }
 
   public setIsSelected(isSelected: boolean): void {
-    this.isSelected = isSelected;
+    this.isSelected = isSelected
   }
 }

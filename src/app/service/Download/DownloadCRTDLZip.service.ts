@@ -1,17 +1,17 @@
-import { AbstractDownloadService } from './AbstractDownload.service'
-import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRTDL.service'
-import { DataQueryApiService } from '../Backend/Api/DataQueryApi.service'
-import { FileSaverService } from 'ngx-filesaver'
 import { Injectable, inject } from '@angular/core'
+import { FileSaverService } from 'ngx-filesaver'
 import { switchMap, take } from 'rxjs'
+import { DataQueryApiService } from '../Backend/Api/DataQueryApi.service'
+import { CreateCRTDLService } from '../Translator/CRTDL/CreateCRTDL.service'
+import { AbstractDownloadService } from './AbstractDownload.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DownloadCRTDLZipService extends AbstractDownloadService {
-  private createCRTDLService = inject(CreateCRTDLService)
-  private dataQueryApiService = inject(DataQueryApiService)
-  private fileSaverService = inject(FileSaverService)
+  private readonly createCRTDLService = inject(CreateCRTDLService)
+  private readonly dataQueryApiService = inject(DataQueryApiService)
+  private readonly fileSaverService = inject(FileSaverService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

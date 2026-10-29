@@ -10,5 +10,5 @@ import { AvailabilityStatusBarComponent } from '../../../availability-status-bar
   imports: [AvailabilityStatusBarComponent],
 })
 export class AvailabilityCellComponent {
-  readonly cell = input<AvailabilityCellData>(undefined)
+  public readonly cell = input<AvailabilityCellData>(undefined)
 }

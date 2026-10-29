@@ -1,11 +1,7 @@
 <ng-container *ngTemplateOutlet="tree; context: { node: treeData(), level: 0 }"></ng-container>
 
 <ng-template #tree let-node="node" let-level="level">
-  <div
-    class="divider"
-    [style.marginLeft]="calcMarginLeft(level)"
-    [numDataCy]="node.data.display | displayTranslation"
-  >
+  <div class="divider" [style.marginLeft]="calcMarginLeft(level)" [numDataCy]="node.data.display | displayTranslation">
     <div class="width-100 node-row">
       @if (node.data.selectable) {
       <num-checkbox
@@ -15,10 +11,7 @@
         [style.marginLeft]="calcMarginLeftCheckbox(level)"
       ></num-checkbox>
       } @if (node?.children && node.children.length > 0) {
-      <div
-        class="tree-node"
-        [style.marginLeft]="calcMarginLeftTreeNode(level, node.data.selectable)"
-      >
+      <div class="tree-node" [style.marginLeft]="calcMarginLeftTreeNode(level, node.data.selectable)">
         <div (click)="toggleExpand(node)" class="icon-container">
           @if (!isExpanded(node)) {
           <fa-icon icon="minus" class="icon-collapsed"></fa-icon>
@@ -58,9 +51,7 @@
   <ul>
     @for (child of node.children; track child) {
     <li>
-      <ng-container
-        *ngTemplateOutlet="tree; context: { node: child, level: level + 1 }"
-      ></ng-container>
+      <ng-container *ngTemplateOutlet="tree; context: { node: child, level: level + 1 }"></ng-container>
     </li>
     }
   </ul>

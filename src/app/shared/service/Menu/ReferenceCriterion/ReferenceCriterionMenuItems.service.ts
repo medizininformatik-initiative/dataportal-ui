@@ -7,14 +7,15 @@ import { ReferenceCriterionMenuFunctionsService } from './ReferenceCriterionMenu
   providedIn: 'root',
 })
 export class ReferenceCriterionMenuItemsService extends AbstractMenuItemsService {
-  private referenceCriterionMenuFunctions = inject(ReferenceCriterionMenuFunctionsService)
+  private readonly referenceCriterionMenuFunctions = inject(ReferenceCriterionMenuFunctionsService)
 
   constructor() {
     super()
   }
 
   /**
-   * @returns Array of Menu functions for a criterion box
+   * Returns the menu items for this context.
+   * @returns {MenuItemInterface[]} Array of Menu functions for a criterion box
    */
   public override getMenuItems(): MenuItemInterface[] {
     return [
@@ -22,8 +23,7 @@ export class ReferenceCriterionMenuItemsService extends AbstractMenuItemsService
         disabled: false,
         icon: 'pencil-alt',
         label: 'EDIT',
-        action: (id: string) =>
-          this.referenceCriterionMenuFunctions.applyReferenceCriterionFilter(id),
+        action: (id: string) => this.referenceCriterionMenuFunctions.applyReferenceCriterionFilter(id),
       },
       {
         disabled: true,

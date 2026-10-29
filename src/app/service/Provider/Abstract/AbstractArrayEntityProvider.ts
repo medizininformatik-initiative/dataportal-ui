@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { AbstractEntityProvider } from './AbstractEntityProvdier';
+import { BehaviorSubject, Observable } from 'rxjs'
+import { AbstractEntityProvider } from './AbstractEntityProvdier'
 
 /**
  * Abstract base class for array-backed entity providers.
@@ -16,49 +16,49 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * Implemented by each concrete subclass to define what constitutes
    * the entity's primary key.
    *
-   * @param entity The entity from which to extract the ID.
-   * @returns A string that uniquely identifies the entity.
+   * @param {T} entity The entity from which to extract the ID.
+   * @returns {string} A string that uniquely identifies the entity.
    */
-  protected abstract selectId(entity: T): string;
+  protected abstract selectId(entity: T): string
 
   /**
    * Internal in-memory array holding the current set of entities.
    * Mutations are always followed by a call to {@link emit} to keep
    * {@link itemsSubject} in sync.
    */
-  protected items: T[] = [];
+  protected items: T[] = []
 
   /**
    * RxJS subject that broadcasts the current entity collection to all
    * active subscribers whenever the collection changes.
    */
-  protected itemsSubject = new BehaviorSubject<T[]>([]);
+  protected itemsSubject = new BehaviorSubject<T[]>([])
 
   /**
    * Returns an observable that emits the full entity collection whenever
    * it changes. Subscribers receive a shallow copy of the internal array.
    *
-   * @returns An {@link Observable} of the current entity array.
+   * @returns {Observable<T[]>} An {@link Observable} of the current entity array.
    */
   public getAll(): Observable<T[]> {
-    return this.itemsSubject.asObservable();
+    return this.itemsSubject.asObservable()
   }
 
   /**
    * Retrieves a single entity by its identifier.
    *
-   * @param id The unique identifier of the entity to look up.
-   * @returns The matching entity, or throws an error if no entity with the given ID is found.
+   * @param {string} id The unique identifier of the entity to look up.
+   * @returns {T} The matching entity, or throws an error if no entity with the given ID is found.
    */
   public getOne(id: string): T {
     if (!id) {
-      throw new Error('ID must be provided to get an entity.');
+      throw new Error('ID must be provided to get an entity.')
     }
-    const entity = this.items.find((e) => this.selectId(e) === id);
+    const entity = this.items.find((e) => this.selectId(e) === id)
     if (!entity) {
-      throw new Error(`Entity with id ${id} not found.`);
+      throw new Error(`Entity with id ${id} not found.`)
     }
-    return entity;
+    return entity
   }
 
   /**
@@ -66,15 +66,15 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * same ID does not already exist. If a duplicate is detected the
    * operation is silently skipped and the collection is left unchanged.
    *
-   * @param entity The entity to add.
+   * @param {T} entity The entity to add.
    */
   public addOne(entity: T): void {
-    const id = this.selectId(entity);
+    const id = this.selectId(entity)
     if (this.hasSameId(id)) {
-      return;
+      return
     }
-    this.items.push(entity);
-    this.emit();
+    this.items.push(entity)
+    this.emit()
   }
 
   /**
@@ -82,20 +82,20 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * already exists. Emits a single update after all entities are
    * processed, but only if at least one new entity was actually added.
    *
-   * @param entities The array of entities to add.
+   * @param {T[]} entities The array of entities to add.
    */
   public addMany(entities: T[]): void {
-    let changed = false;
+    let changed = false
 
     for (const entity of entities) {
-      const id = this.selectId(entity);
+      const id = this.selectId(entity)
       if (!this.hasSameId(id)) {
-        this.items.push(entity);
-        changed = true;
+        this.items.push(entity)
+        changed = true
       }
     }
     if (changed) {
-      this.emit();
+      this.emit()
     }
   }
 
@@ -103,29 +103,29 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * Replaces an existing entity with the same ID, or inserts the entity
    * if no match is found. Always emits after the operation.
    *
-   * @param entity The entity to set.
+   * @param {T} entity The entity to set.
    */
   public setOne(entity: T): void {
-    const id = this.selectId(entity);
-    const index = this.items.findIndex((item) => this.selectId(item) === id);
+    const id = this.selectId(entity)
+    const index = this.items.findIndex((item) => this.selectId(item) === id)
 
     if (index >= 0) {
-      this.items[index] = entity;
+      this.items[index] = entity
     } else {
-      this.items.push(entity);
+      this.items.push(entity)
     }
-    this.emit();
+    this.emit()
   }
 
   /**
    * Calls {@link setOne} for each entity in the array, replacing
    * existing entries or inserting new ones.
    *
-   * @param entities The array of entities to set.
+   * @param {T[]} entities The array of entities to set.
    */
   public setMany(entities: T[]): void {
     for (const entity of entities) {
-      this.setOne(entity);
+      this.setOne(entity)
     }
   }
 
@@ -134,11 +134,11 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * Previously held entities that are not present in the new array
    * are discarded. Always emits after the operation.
    *
-   * @param entities The new entity array that will replace the current collection.
+   * @param {T[]} entities The new entity array that will replace the current collection.
    */
   public setAll(entities: T[]): void {
-    this.items = [...entities];
-    this.emit();
+    this.items = [...entities]
+    this.emit()
   }
 
   /**
@@ -146,15 +146,15 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * Emits only when an entity was actually removed; otherwise the
    * collection and its subscribers are left undisturbed.
    *
-   * @param id The unique identifier of the entity to remove.
+   * @param {string} id The unique identifier of the entity to remove.
    */
   public removeOne(id: string): void {
-    const originalLength = this.items.length;
+    const originalLength = this.items.length
 
-    this.items = this.items.filter((e) => this.selectId(e) !== id);
+    this.items = this.items.filter((e) => this.selectId(e) !== id)
 
     if (this.items.length !== originalLength) {
-      this.emit();
+      this.emit()
     }
   }
 
@@ -163,16 +163,16 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * Uses a `Set` internally for O(1) ID lookups. Emits once if at
    * least one entity was removed, otherwise remains silent.
    *
-   * @param ids An array of entity IDs to remove.
+   * @param {string[]} ids An array of entity IDs to remove.
    */
   public removeMany(ids: string[]): void {
-    const idSet = new Set(ids);
-    const originalLength = this.items.length;
+    const idSet = new Set(ids)
+    const originalLength = this.items.length
 
-    this.items = this.items.filter((e) => !idSet.has(this.selectId(e)));
+    this.items = this.items.filter((e) => !idSet.has(this.selectId(e)))
 
     if (this.items.length !== originalLength) {
-      this.emit();
+      this.emit()
     }
   }
 
@@ -182,8 +182,8 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    */
   public removeAll(): void {
     if (this.items.length > 0) {
-      this.items = [];
-      this.emit();
+      this.items = []
+      this.emit()
     }
   }
 
@@ -193,16 +193,17 @@ export abstract class AbstractArrayEntityProvider<T> extends AbstractEntityProvi
    * every mutation to keep the observable stream up to date.
    */
   protected emit(): void {
-    this.itemsSubject.next([...this.items]);
+    this.itemsSubject.next([...this.items])
   }
 
   /**
    * Returns `true` when the collection already contains an entity whose
    * ID matches the given `id`; `false` otherwise.
    *
-   * @param id The identifier to look up.
+   * @param {string} id The identifier to look up.
+   * @returns {boolean}
    */
   private hasSameId(id: string): boolean {
-    return this.items.some((item) => this.selectId(item) === id);
+    return this.items.some((item) => this.selectId(item) === id)
   }
 }

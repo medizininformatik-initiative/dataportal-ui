@@ -12,17 +12,17 @@ import { SelectedItemsListComponent } from '../../../../shared/components/select
   imports: [SelectedItemsListComponent],
 })
 export class SelectedReferenceListComponent implements OnInit, OnChanges {
-  readonly selectedReferences = input<ReferenceCriterion[]>([])
+  public readonly selectedReferences = input<ReferenceCriterion[]>([])
 
-  readonly changedSelectedReferences = output<ReferenceCriterion[]>()
+  public readonly changedSelectedReferences = output<ReferenceCriterion[]>()
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
-  ngOnChanges(): void {}
+  public ngOnChanges(): void {}
 
-  get listItems(): SelectedListItem[] {
+  public get listItems(): SelectedListItem[] {
     return this.selectedReferences().map((ref) => ({
       display: ref.getDisplay(),
       code: ref.getTermCodes()[0].getCode(),

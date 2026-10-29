@@ -6,13 +6,14 @@ import { ProfileReferenceMenuFunctionsService } from './ProfileReferenceMenuFunc
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileReferenceMenuService extends AbstractMenuItemsService<
-  [string, (Record<string, unknown> | undefined)?]
-> {
-  private menuServiceDataSelectionFunctions = inject(ProfileReferenceMenuFunctionsService)
+export class ProfileReferenceMenuService extends AbstractMenuItemsService<[string, (Record<string, unknown> | undefined)?]> {
+  private readonly menuServiceDataSelectionFunctions = inject(ProfileReferenceMenuFunctionsService)
 
   /**
-   * @returns Array of Menu functions for a dataselection profile box
+   * Returns the menu items for this context.
+   * @returns {MenuItemInterface[]} Array of Menu functions for a dataselection profile box
+   * @param {string} id
+   * @param {Record<string, unknown>} args
    */
   public override getMenuItems(id: string, args?: Record<string, unknown>): MenuItemInterface[] {
     return [
@@ -20,15 +21,13 @@ export class ProfileReferenceMenuService extends AbstractMenuItemsService<
         disabled: false,
         icon: 'pencil-alt',
         label: 'EDIT',
-        action: (id: string, args?: Record<string, unknown>) =>
-          this.menuServiceDataSelectionFunctions.navigate(id, args),
+        action: (id: string, args?: Record<string, unknown>) => this.menuServiceDataSelectionFunctions.navigate(id, args),
       },
       {
         disabled: false,
         icon: 'trash',
         label: 'DELETE',
-        action: (url: string) =>
-          this.menuServiceDataSelectionFunctions.delete(url, args?.elementId as string),
+        action: (url: string) => this.menuServiceDataSelectionFunctions.delete(url, args?.elementId as string),
       },
     ]
   }

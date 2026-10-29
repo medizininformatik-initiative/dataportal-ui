@@ -1,14 +1,14 @@
-import { AbstractTableAdapter } from './AbstractTableAdapter'
 import { CodeableConceptBulkEntry } from 'src/app/model/Search/ListEntries/CodeableConceptBulkEntry'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
+import { v4 as uuidv4 } from 'uuid'
+import { TextCellData } from '../Cells/Data/TextCellData'
 import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellContext } from '../Cells/TableCellContext'
 import { TableCellUnion } from '../Cells/TableCellUnion'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
-import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
-import { TextCellData } from '../Cells/Data/TextCellData'
-import { v4 as uuidv4 } from 'uuid'
+import { AbstractTableAdapter } from './AbstractTableAdapter'
 
 export class CodeableConceptBulkFoundEntryAdapter extends AbstractTableAdapter<CodeableConceptBulkEntry> {
   protected buildHeaders(): TableHeaderData {
@@ -36,11 +36,7 @@ export class CodeableConceptBulkFoundEntryAdapter extends AbstractTableAdapter<C
 
   private buildCells(entry: CodeableConceptBulkEntry): TableCellUnion[] {
     const terminologyCode = entry.getTermCode()
-    return TableCellBuilder.row(
-      this.checkBoxCell(entry),
-      this.terminologyCell(terminologyCode),
-      this.termCodeCell(terminologyCode)
-    )
+    return TableCellBuilder.row(this.checkBoxCell(entry), this.terminologyCell(terminologyCode), this.termCodeCell(terminologyCode))
   }
 
   private checkBoxCell(entry: CodeableConceptBulkEntry) {

@@ -1,17 +1,17 @@
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
+import { inject, Injectable } from '@angular/core'
 import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { CriterionValidationService } from '../../Validation/Internal/CriterionValidationService.service'
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
-import { inject, Injectable } from '@angular/core'
 import { ReferenceFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ReferenceFilter'
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { CriterionValidationService } from '../../Validation/Internal/CriterionValidationService.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditAttributeFilterService {
-  private criterionValidationService = inject(CriterionValidationService)
+  private readonly criterionValidationService = inject(CriterionValidationService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -21,23 +21,15 @@ export class EditAttributeFilterService {
   /**
    * Returns an updated attribute filter list with the provided concept applied
    * to the matching attribute filter entry.
+   * @param {Criterion} criterion
+   * @param {ConceptFilter} conceptFilter
+   * @param {AttributeFilter} attributeFilter
+   * @returns {AttributeFilter[]}
    */
-  public buildFromConcept(
-    criterion: Criterion,
-    conceptFilter: ConceptFilter,
-    attributeFilter: AttributeFilter
-  ): AttributeFilter[] {
+  public buildFromConcept(criterion: Criterion, conceptFilter: ConceptFilter, attributeFilter: AttributeFilter): AttributeFilter[] {
     const filters = [...criterion.getAttributeFilters()]
-    const updated = this.buildAttributeFilter(
-      attributeFilter,
-      FilterTypes.CONCEPT,
-      conceptFilter,
-      undefined
-    )
-    const index = filters.findIndex(
-      (existing) =>
-        attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
-    )
+    const updated = this.buildAttributeFilter(attributeFilter, FilterTypes.CONCEPT, conceptFilter, undefined)
+    const index = filters.findIndex((existing) => attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode())
     if (index !== -1) {
       filters[index] = updated
     } else {
@@ -49,24 +41,15 @@ export class EditAttributeFilterService {
   /**
    * Returns an updated attribute filter list with the provided reference applied
    * to the matching attribute filter entry.
+   * @param {Criterion} criterion
+   * @param {ReferenceFilter} referenceFilter
+   * @param {AttributeFilter} attributeFilter
+   * @returns {AttributeFilter[]}
    */
-  public buildFromReference(
-    criterion: Criterion,
-    referenceFilter: ReferenceFilter,
-    attributeFilter: AttributeFilter
-  ): AttributeFilter[] {
+  public buildFromReference(criterion: Criterion, referenceFilter: ReferenceFilter, attributeFilter: AttributeFilter): AttributeFilter[] {
     const filters = [...criterion.getAttributeFilters()]
-    const updated = this.buildAttributeFilter(
-      attributeFilter,
-      FilterTypes.REFERENCE,
-      undefined,
-      undefined,
-      referenceFilter
-    )
-    const index = filters.findIndex(
-      (existing) =>
-        attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
-    )
+    const updated = this.buildAttributeFilter(attributeFilter, FilterTypes.REFERENCE, undefined, undefined, referenceFilter)
+    const index = filters.findIndex((existing) => attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode())
     if (index !== -1) {
       filters[index] = updated
     } else {
@@ -78,6 +61,10 @@ export class EditAttributeFilterService {
   /**
    * Returns an updated attribute filter list with the provided quantity applied
    * to the matching attribute filter entry.
+   * @param {Criterion} criterion
+   * @param {AbstractQuantityFilter} quantityFilter
+   * @param {AttributeFilter} attributeFilter
+   * @returns {AttributeFilter[]}
    */
   public buildFromQuantity(
     criterion: Criterion,
@@ -85,16 +72,8 @@ export class EditAttributeFilterService {
     attributeFilter: AttributeFilter
   ): AttributeFilter[] {
     const filters = [...criterion.getAttributeFilters()]
-    const updated = this.buildAttributeFilter(
-      attributeFilter,
-      FilterTypes.QUANTITY,
-      undefined,
-      quantityFilter
-    )
-    const index = filters.findIndex(
-      (existing) =>
-        attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode()
-    )
+    const updated = this.buildAttributeFilter(attributeFilter, FilterTypes.QUANTITY, undefined, quantityFilter)
+    const index = filters.findIndex((existing) => attributeFilter.getAttributeCode()?.getCode() === existing.getAttributeCode()?.getCode())
     if (index !== -1) {
       filters[index] = updated
     } else {

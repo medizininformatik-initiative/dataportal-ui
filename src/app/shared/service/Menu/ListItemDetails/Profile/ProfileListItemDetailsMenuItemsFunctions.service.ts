@@ -1,9 +1,9 @@
-import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
-import { filter, switchMap, take, tap } from 'rxjs'
 import { inject, Injectable } from '@angular/core'
+import { filter, switchMap, take, tap } from 'rxjs'
 import { LoadDataSelectionProfilesService } from 'src/app/service/DataSelection/LoadDataSelectionProfiles.service'
-import { ProfileEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/ProfileEntryDetails.service'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { ProfileEntryDetailsService } from 'src/app/service/Search/ListEntryDetails/ProfileEntryDetails.service'
 import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile/ProfileSearch.service'
 import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
 
@@ -11,12 +11,12 @@ import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
   providedIn: 'root',
 })
 export class ProfileListItemDetailsMenuItemsFunctionsService {
-  private profileSearchService = inject(ProfileSearchService)
-  private profileEntryDetailsService = inject(ProfileEntryDetailsService)
-  private loadDataSelectionProfilesService = inject(LoadDataSelectionProfilesService)
-  private snackbarMessageService = inject(SnackbarMessageService)
-  private dataSelectionProvider = inject(DataSelectionProviderService)
-  private profileProvider = inject(ProfileProviderService)
+  private readonly profileSearchService = inject(ProfileSearchService)
+  private readonly profileEntryDetailsService = inject(ProfileEntryDetailsService)
+  private readonly loadDataSelectionProfilesService = inject(LoadDataSelectionProfilesService)
+  private readonly snackbarMessageService = inject(SnackbarMessageService)
+  private readonly dataSelectionProvider = inject(DataSelectionProviderService)
+  private readonly profileProvider = inject(ProfileProviderService)
 
   public searchProfile(id: string): void {
     this.profileEntryDetailsService

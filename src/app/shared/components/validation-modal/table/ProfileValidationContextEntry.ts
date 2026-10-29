@@ -1,5 +1,5 @@
-import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { AbstractListEntry } from 'src/app/model/Search/ListEntries/AbstractListEntry'
 import { ProfileStateType } from 'src/app/service/Validation/Internal/DataSelectionValidation.service'
 
 /**
@@ -14,14 +14,7 @@ export class ProfileValidationEntry extends AbstractListEntry {
   private readonly profileId: string
   private readonly referenceFieldId?: string
 
-  constructor(
-    id: string,
-    display: Display,
-    state: ProfileStateType,
-    valid: boolean,
-    profileId: string,
-    referenceFieldId?: string
-  ) {
+  constructor(id: string, display: Display, state: ProfileStateType, valid: boolean, profileId: string, referenceFieldId?: string) {
     super(id)
     this.id = id
     this.display = display

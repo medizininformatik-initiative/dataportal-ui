@@ -5,11 +5,7 @@
   class="container margin-bottom-2 margin-right-2"
 >
   <div class="content" numDataCy="criterion-content" cdkDragHandle>
-    <div
-      matTooltipPosition="below"
-      [matTooltip]="criterion().getDisplay() | displayTranslation"
-      class="title-section"
-    >
+    <div matTooltipPosition="below" [matTooltip]="criterion().getDisplay() | displayTranslation" class="title-section">
       {{ criterion().getDisplay() | displayTranslation }}
     </div>
     <div class="info-section">
@@ -51,10 +47,7 @@
   <div>
     @for (reference of getReferenceCriteriaFromFilter(attributeFilter); track reference) {
     <div>
-      <num-reference-criteria-box
-        [criterionId]="criterion().getId()"
-        [referenceCriterion]="reference"
-      ></num-reference-criteria-box>
+      <num-reference-criteria-box [criterionId]="criterion().getId()" [referenceCriterion]="reference"></num-reference-criteria-box>
     </div>
     }
   </div>

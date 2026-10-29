@@ -1,6 +1,6 @@
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters';
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
+import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilters'
 
 /**
  * Abstract base class for concept filters in a structured query.
@@ -10,8 +10,8 @@ import { AbstractStructuredQueryFilters } from '../AbstractStructuredQueryFilter
  * @abstract
  */
 export abstract class AbstractConceptFilter extends AbstractStructuredQueryFilters {
-  private selectedConcepts: TerminologyCode[] = [];
-  protected type: FilterTypes = FilterTypes.CONCEPT;
+  private selectedConcepts: TerminologyCode[] = []
+  protected type: FilterTypes = FilterTypes.CONCEPT
 
   /**
    * Constructor to initialize the AbstractConceptFilter with attribute code and selected concepts.
@@ -20,8 +20,8 @@ export abstract class AbstractConceptFilter extends AbstractStructuredQueryFilte
    * @param selectedConcepts - The selected concepts for the filter.
    */
   constructor(selectedConcepts: TerminologyCode[] = []) {
-    super();
-    this.selectedConcepts = selectedConcepts;
+    super()
+    this.selectedConcepts = selectedConcepts
   }
 
   /**
@@ -30,7 +30,7 @@ export abstract class AbstractConceptFilter extends AbstractStructuredQueryFilte
    * @returns The selected concepts.
    */
   public getSelectedConcepts(): TerminologyCode[] {
-    return this.selectedConcepts;
+    return this.selectedConcepts
   }
 
   /**
@@ -39,7 +39,7 @@ export abstract class AbstractConceptFilter extends AbstractStructuredQueryFilte
    * @param selectedConcepts - The new selected concepts to set.
    */
   public setSelectedConcepts(selectedConcepts: TerminologyCode[]): void {
-    this.selectedConcepts = selectedConcepts;
+    this.selectedConcepts = selectedConcepts
   }
 
   /**
@@ -48,6 +48,6 @@ export abstract class AbstractConceptFilter extends AbstractStructuredQueryFilte
    * @returns The type of filter.
    */
   public getType(): FilterTypes {
-    return this.type;
+    return this.type
   }
 }

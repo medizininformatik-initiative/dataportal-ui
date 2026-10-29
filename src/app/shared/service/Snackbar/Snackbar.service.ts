@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { Subject } from 'rxjs'
 
 export enum ErrorCodes {
   FEAS_10001 = 'FEAS-10001',
@@ -25,51 +25,52 @@ export enum SnackbarColor {
   providedIn: 'root',
 })
 export class SnackbarService {
-  private visibilitySubject = new Subject<boolean>();
-  public visibility$ = this.visibilitySubject.asObservable();
+  private readonly visibilitySubject = new Subject<boolean>()
+  public visibility$ = this.visibilitySubject.asObservable()
 
-  private messageSubject = new Subject<string>();
-  public message$ = this.messageSubject.asObservable();
+  private readonly messageSubject = new Subject<string>()
+  public message$ = this.messageSubject.asObservable()
 
-  private colorSubject = new Subject<string>();
-  public color$ = this.colorSubject.asObservable();
+  private readonly colorSubject = new Subject<string>()
+  public color$ = this.colorSubject.asObservable()
 
   constructor() {}
 
   /**
+   * Displays the error message.
    * @todo implement timer for retry after
-   * @param errorCode
-   * @param retryAfter
+   * @param {string} errorCode
+   * @param {number} retryAfter
    */
   public displayErrorMessage(errorCode: string, retryAfter: number = 0) {
-    const message = `${MessageType.ERROR}.${errorCode}`;
+    const message = `${MessageType.ERROR}.${errorCode}`
     // if (retryAfter > 0) {
     //   message += `${retryAfter}`;
     //   this.setSnackbarTimeOut(retryAfter * 1000);
     // }
-    this.activateSnackbar(message, SnackbarColor.ERROR);
+    this.activateSnackbar(message, SnackbarColor.ERROR)
   }
 
   public displayErrorMessageWithNoCode(message: string) {
-    this.activateSnackbar(message, SnackbarColor.ERROR);
+    this.activateSnackbar(message, SnackbarColor.ERROR)
   }
 
   public displayInfoMessage(infoMessage: string) {
-    this.activateSnackbar(infoMessage, SnackbarColor.INFO);
+    this.activateSnackbar(infoMessage, SnackbarColor.INFO)
   }
 
   public activateSnackbar(message: string, color: string) {
-    this.visibilitySubject.next(true);
-    this.messageSubject.next(message);
-    this.colorSubject.next(color);
-    setTimeout(() => this.deactivateSnackbar(), 5000);
+    this.visibilitySubject.next(true)
+    this.messageSubject.next(message)
+    this.colorSubject.next(color)
+    setTimeout(() => this.deactivateSnackbar(), 5000)
   }
 
   private setSnackbarTimeOut(timeout: number = 5000) {
-    setTimeout(() => this.deactivateSnackbar(), timeout);
+    setTimeout(() => this.deactivateSnackbar(), timeout)
   }
 
   public deactivateSnackbar() {
-    this.visibilitySubject.next(false);
+    this.visibilitySubject.next(false)
   }
 }

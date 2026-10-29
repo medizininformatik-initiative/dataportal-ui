@@ -1,21 +1,13 @@
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, input, output } from '@angular/core'
+import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-  computed,
-  input,
-  output,
-} from '@angular/core'
-import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
-import { ReferenceFieldTabComponent } from './reference-field-tab/reference-field-tab.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
+import { ReferenceFieldTabComponent } from './reference-field-tab/reference-field-tab.component'
 
 @Component({
   selector: 'num-profile-reference',
@@ -35,32 +27,27 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
   ],
 })
 export class ProfileReferenceComponent implements OnInit, OnDestroy {
-  readonly referenceFields = input<ReferenceField[]>(undefined)
-  readonly profileId = input<string>(undefined)
-  readonly selectedReferenceFields = input<SelectedReferenceField[]>([])
-  readonly updatedSelectedReferenceFields = output<SelectedReferenceField[]>()
-  readonly activeFieldTabId = input<string>(undefined)
+  public readonly referenceFields = input<ReferenceField[]>(undefined)
+  public readonly profileId = input<string>(undefined)
+  public readonly selectedReferenceFields = input<SelectedReferenceField[]>([])
+  public readonly updatedSelectedReferenceFields = output<SelectedReferenceField[]>()
+  public readonly activeFieldTabId = input<string>(undefined)
 
-  readonly selectedIndex = computed(() => {
+  public readonly selectedIndex = computed(() => {
     if (this.activeFieldTabId() === undefined) {
       return 1
     } else {
-      const index = this.referenceFields().findIndex(
-        (ref) => ref.getElementId() === this.activeFieldTabId()
-      )
+      const index = this.referenceFields().findIndex((ref) => ref.getElementId() === this.activeFieldTabId())
       return index >= 0 ? index + 1 : 1
     }
   })
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
-  ngOnDestroy(): void {}
+  public ngOnDestroy(): void {}
 
-  public setSelectedReference(
-    selectedReferenceField: SelectedReferenceField,
-    referencedField: ReferenceField
-  ): void {
+  public setSelectedReference(selectedReferenceField: SelectedReferenceField, referencedField: ReferenceField): void {
     const linkedProfileIds = selectedReferenceField.getLinkedProfileIds()
     const len = linkedProfileIds.length
     const index = this.findSelectedField(referencedField)
@@ -78,15 +65,11 @@ export class ProfileReferenceComponent implements OnInit, OnDestroy {
   }
 
   private findSelectedField(referencedField: ReferenceField): number | undefined {
-    return this.selectedReferenceFields().findIndex(
-      (field) => field.getElementId() === referencedField.getElementId()
-    )
+    return this.selectedReferenceFields().findIndex((field) => field.getElementId() === referencedField.getElementId())
   }
 
   private emitUpdatedFields(): void {
-    const clonedFields = SelectedReferenceFieldsCloner.deepCopySelectedReferenceFields(
-      this.selectedReferenceFields()
-    )
+    const clonedFields = SelectedReferenceFieldsCloner.deepCopySelectedReferenceFields(this.selectedReferenceFields())
     this.updatedSelectedReferenceFields.emit(clonedFields)
   }
 }

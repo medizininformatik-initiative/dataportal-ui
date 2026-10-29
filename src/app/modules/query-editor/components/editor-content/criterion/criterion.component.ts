@@ -1,15 +1,3 @@
-import { AbstractAttributeFilters } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters'
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
-import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
-import { CloneAttributeFilter } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/CloneAttributeFilter'
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { EditCriterionService } from 'src/app/service/Criterion/Edit/EditCriterion.service'
-import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
-import { Subscription } from 'rxjs'
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
-import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -24,15 +12,27 @@ import {
   signal,
   viewChild,
 } from '@angular/core'
+import { Subscription } from 'rxjs'
+import { AbstractAttributeFilters } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AbstractAttributeFilters'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
+import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
-import { CriterionHeaderComponent } from './header/criterion-header.component'
-import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
-import { EditTimeRestrictionComponent } from '../../../../feasibility-query/components/editor/criterion-modal/time-restriction/edit-time-restriction.component'
-import { ConceptComponent } from '../../../../feasibility-query/components/editor/criterion-modal/concept/concept.component'
-import { TermcodeComponent } from '../../../../feasibility-query/components/editor/criterion-modal/termCode/termcode.component'
-import { QuantityComponent } from '../../../../feasibility-query/components/editor/criterion-modal/quantity/quantity.component'
-import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTranslationPipe'
+import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { CloneAttributeFilter } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/CloneAttributeFilter'
 import { ReferenceComponent } from 'src/app/modules/feasibility-query/components/editor/reference/reference.component'
+import { EditCriterionService } from 'src/app/service/Criterion/Edit/EditCriterion.service'
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
+import { DisplayTranslationPipe } from '../../../../../shared/pipes/DisplayTranslationPipe'
+import { ConceptComponent } from '../../../../feasibility-query/components/editor/criterion-modal/concept/concept.component'
+import { QuantityComponent } from '../../../../feasibility-query/components/editor/criterion-modal/quantity/quantity.component'
+import { TermcodeComponent } from '../../../../feasibility-query/components/editor/criterion-modal/termCode/termcode.component'
+import { EditTimeRestrictionComponent } from '../../../../feasibility-query/components/editor/criterion-modal/time-restriction/edit-time-restriction.component'
+import { FilterTabsComponent } from '../filter-tabs/filter-tabs.component'
+import { CriterionHeaderComponent } from './header/criterion-header.component'
 
 @Component({
   selector: 'num-criterion',
@@ -52,62 +52,52 @@ import { ReferenceComponent } from 'src/app/modules/feasibility-query/components
   ],
 })
 export class CriterionComponent implements AfterViewInit, OnDestroy {
-  private criterionEditService = inject(EditCriterionService)
-  private cdr = inject(ChangeDetectorRef)
-  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private readonly criterionEditService = inject(EditCriterionService)
+  private readonly cdr = inject(ChangeDetectorRef)
+  private readonly referenceCriterionProvider = inject(ReferenceCriterionProviderService)
 
-  readonly criterion = input.required<Criterion>()
+  public readonly criterion = input.required<Criterion>()
 
-  readonly attributeFilters = computed<AbstractAttributeFilters[]>(() =>
-    this.criterion().getConceptAttributeFilters()
-  )
+  public readonly attributeFilters = computed<AbstractAttributeFilters[]>(() => this.criterion().getConceptAttributeFilters())
 
-  readonly referenceFilter = computed<AbstractAttributeFilters[]>(() =>
-    this.criterion().getReferenceAttributeFilters()
-  )
+  public readonly referenceFilter = computed<AbstractAttributeFilters[]>(() => this.criterion().getReferenceAttributeFilters())
 
-  readonly conceptValueFilter = computed<ValueFilter[]>(() =>
-    this.criterion().getConceptValueFilters()
-  )
+  public readonly conceptValueFilter = computed<ValueFilter[]>(() => this.criterion().getConceptValueFilters())
 
-  readonly conceptAttributeFilter = computed<AttributeFilter[]>(() =>
+  public readonly conceptAttributeFilter = computed<AttributeFilter[]>(() =>
     CloneAttributeFilter.deepCopyAttributeFilters(this.criterion().getConceptAttributeFilters())
   )
 
-  readonly quantityValueFilter = computed<ValueFilter[]>(() =>
-    this.criterion().getQuantityValueFilters()
-  )
+  public readonly quantityValueFilter = computed<ValueFilter[]>(() => this.criterion().getQuantityValueFilters())
 
-  readonly quantityAttributeFilter = computed<AttributeFilter[]>(() =>
-    this.criterion().getQuantityAttributeFilters()
-  )
+  public readonly quantityAttributeFilter = computed<AttributeFilter[]>(() => this.criterion().getQuantityAttributeFilters())
 
-  readonly timeRestrictionTemplate = viewChild('timeRestriction', { read: TemplateRef })
+  public readonly timeRestrictionTemplate = viewChild('timeRestriction', { read: TemplateRef })
 
-  readonly conceptAttributeFiltersTemplate = viewChild('conceptAttributeFilterTemplate', {
+  public readonly conceptAttributeFiltersTemplate = viewChild('conceptAttributeFilterTemplate', {
     read: TemplateRef,
   })
 
-  readonly conceptValueFiltersTemplate = viewChild('conceptValueFiltersTemplate', {
+  public readonly conceptValueFiltersTemplate = viewChild('conceptValueFiltersTemplate', {
     read: TemplateRef,
   })
 
-  readonly termCodesTemplate = viewChild('termCodes', { read: TemplateRef })
+  public readonly termCodesTemplate = viewChild('termCodes', { read: TemplateRef })
 
-  readonly referenceTemplate = viewChild('reference', { read: TemplateRef })
+  public readonly referenceTemplate = viewChild('reference', { read: TemplateRef })
 
-  readonly quantityAttributeFilterTemplate = viewChild('quantityAttributeFilterTemplate', {
+  public readonly quantityAttributeFilterTemplate = viewChild('quantityAttributeFilterTemplate', {
     read: TemplateRef,
   })
 
-  readonly quantityValueFilterTemplate = viewChild('quantityValueFilterTemplate', {
+  public readonly quantityValueFilterTemplate = viewChild('quantityValueFilterTemplate', {
     read: TemplateRef,
   })
 
-  templates: any[] = []
+  public templates: any[] = []
   private readonly viewInitialized = signal(false)
 
-  referenceSubscription: Subscription | undefined = undefined
+  public referenceSubscription: Subscription | undefined = undefined
 
   constructor() {
     effect(() => {
@@ -124,11 +114,11 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
     })
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.referenceSubscription?.unsubscribe()
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.viewInitialized.set(true)
     this.cdr.detectChanges()
   }
@@ -202,17 +192,11 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
     })
   }
 
-  public updateConceptAttributeFilter(
-    conceptFilter: ConceptFilter,
-    attributeFilter: AttributeFilter
-  ): void {
+  public updateConceptAttributeFilter(conceptFilter: ConceptFilter, attributeFilter: AttributeFilter): void {
     this.criterionEditService.updateConceptAttributeFilter(conceptFilter, attributeFilter)
   }
 
-  public updateQuantityAttributeFilter(
-    quantityFilter: AbstractQuantityFilter,
-    attributeFilter: AttributeFilter
-  ): void {
+  public updateQuantityAttributeFilter(quantityFilter: AbstractQuantityFilter, attributeFilter: AttributeFilter): void {
     this.criterionEditService.updateQuantityAttributeFilter(quantityFilter, attributeFilter)
   }
 
@@ -226,9 +210,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
 
   public updateReferenceFilter(id: string, attributeFilter: AttributeFilter): void {
     this.referenceSubscription?.unsubscribe()
-    this.referenceSubscription = this.criterionEditService
-      .addReferenceCriteria(id, attributeFilter)
-      .subscribe()
+    this.referenceSubscription = this.criterionEditService.addReferenceCriteria(id, attributeFilter).subscribe()
   }
 
   public updateQuantityValueFilter(quantityFilter: AbstractQuantityFilter): void {
@@ -239,10 +221,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
     this.criterionEditService.updateConceptValueFilter(conceptFilter)
   }
 
-  public updateSelectedReferences(
-    attributeFilter: AttributeFilter,
-    updatedReferences: ReferenceCriterion[]
-  ): void {
+  public updateSelectedReferences(attributeFilter: AttributeFilter, updatedReferences: ReferenceCriterion[]): void {
     this.criterionEditService.updateSelectedReferences(attributeFilter, updatedReferences)
   }
 

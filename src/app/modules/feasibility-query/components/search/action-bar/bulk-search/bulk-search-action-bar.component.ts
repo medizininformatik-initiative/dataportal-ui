@@ -1,13 +1,13 @@
-import { ActionBarComponent } from '../../../../../../shared/components/action-bar/action-bar.component'
-import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { Component, computed, inject, input } from '@angular/core'
 import { toSignal } from '@angular/core/rxjs-interop'
-import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service'
-import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
 import { MatTooltip } from '@angular/material/tooltip'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriteria.service'
 import { TranslateModule } from '@ngx-translate/core'
+import { CreateBulkCriterionService } from 'src/app/service/CreateBulkCriterion.service'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
+import { SelectedBulkCriteriaProvider } from 'src/app/service/SelectedBulkCriteria.service'
+import { ActionBarComponent } from '../../../../../../shared/components/action-bar/action-bar.component'
+import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 
 @Component({
   selector: 'num-bulk-search-action-bar',
@@ -17,12 +17,12 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, MatTooltip, TranslateModule],
 })
 export class BulkSearchActionBarComponent {
-  private selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
-  private navigationHelperService = inject(NavigationHelperService)
-  private feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
-  private createBulkCriterionService = inject(CreateBulkCriterionService)
+  private readonly selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
+  private readonly navigationHelperService = inject(NavigationHelperService)
+  private readonly feasibilityQueryProviderHub = inject(FeasibilityQueryProviderHub)
+  private readonly createBulkCriterionService = inject(CreateBulkCriterionService)
 
-  readonly resultType = input<
+  public readonly resultType = input<
     'FOUND' | 'NOTFOUND'
     /** Inserted by Angular inject() migration for backwards compatibility */
   >(undefined)
@@ -31,7 +31,7 @@ export class BulkSearchActionBarComponent {
     initialValue: [],
   })
 
-  readonly disabledAddToStageButton = computed(() => this.selectedEntries().length === 0)
+  public readonly disabledAddToStageButton = computed(() => this.selectedEntries().length === 0)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

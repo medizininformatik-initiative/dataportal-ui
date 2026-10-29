@@ -1,26 +1,24 @@
+import { Injectable, inject } from '@angular/core'
 import { AbstractProfileFilter } from 'src/app/model/DataSelection/Profile/Filter/AbstractProfileFilter'
+import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter'
+import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
 import { DataSelectionUIType } from 'src/app/model/Utilities/DataSelectionUIType'
 import { FilterChipConceptAdapter } from 'src/app/shared/models/FilterChips/Adapter/FilterChipConceptAdapter'
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
-import { Injectable, inject } from '@angular/core'
-import { ProfileTimeRestrictionFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileDateFilter'
-import { ProfileTokenFilter } from 'src/app/model/DataSelection/Profile/Filter/ProfileTokenFilter'
 import { TimeRestrictionChipService } from '../Criterion/TimeRestrictionChip.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSelectionFiltersFilterChips {
-  private timeRestrictionFilterChipsService = inject(TimeRestrictionChipService)
+  private readonly timeRestrictionFilterChipsService = inject(TimeRestrictionChipService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  public generateFilterChipsForDataSelectionFilters(
-    filters: AbstractProfileFilter[]
-  ): FilterChipData[] {
+  public generateFilterChipsForDataSelectionFilters(filters: AbstractProfileFilter[]): FilterChipData[] {
     return filters.reduce<FilterChipData[]>((filterChips, filter) => {
       filterChips.push(...this.getChipsForFilter(filter))
       return filterChips
@@ -39,9 +37,7 @@ export class DataSelectionFiltersFilterChips {
   }
 
   private getTimeRestrictionChips(filter: ProfileTimeRestrictionFilter): FilterChipData[] {
-    return this.timeRestrictionFilterChipsService.generateTimeRestrictionChips(
-      filter.getTimeRestriction()
-    )
+    return this.timeRestrictionFilterChipsService.generateTimeRestrictionChips(filter.getTimeRestriction())
   }
 
   private getCodeFilterChips(filter: ProfileTokenFilter): FilterChipData[] {

@@ -1,12 +1,12 @@
 import { Component, OnInit, inject, input, model, output } from '@angular/core'
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
-import { HashService } from '../../../../../../service/Hash.service'
-import { SelectedBulkCriteriaProvider } from '../../../../../../service/SelectedBulkCriteria.service'
-import { CriteriaBulkEntry } from '../../../../../../model/Search/ListEntries/CriteriaBulkEntry'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { CriteriaBulkEntry } from '../../../../../../model/Search/ListEntries/CriteriaBulkEntry'
+import { HashService } from '../../../../../../service/Hash.service'
+import { SelectedBulkCriteriaProvider } from '../../../../../../service/SelectedBulkCriteria.service'
+import { InformationSectionComponent } from '../../../../../../shared/components/information-section/information-section.component'
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
 
 @Component({
@@ -14,31 +14,23 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
   templateUrl: './termcode.component.html',
   styleUrls: ['./termcode.component.scss'],
   standalone: true,
-  imports: [
-    MatTabGroup,
-    MatTab,
-    MatTabLabel,
-    FontAwesomeModule,
-    InformationSectionComponent,
-    TranslateModule,
-    DisplayTranslationPipe,
-  ],
+  imports: [MatTabGroup, MatTab, MatTabLabel, FontAwesomeModule, InformationSectionComponent, TranslateModule, DisplayTranslationPipe],
 })
 export class TermcodeComponent implements OnInit {
-  private hashService = inject(HashService)
-  private selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
+  private readonly hashService = inject(HashService)
+  private readonly selectedBulkCriteriaService = inject(SelectedBulkCriteriaProvider)
 
-  readonly termCodes = model<TerminologyCode[]>()
-  readonly context = input<TerminologyCode>(undefined)
+  public readonly termCodes = model<TerminologyCode[]>()
+  public readonly context = input<TerminologyCode>(undefined)
 
-  readonly changedTermCodes = output<TerminologyCode[]>()
+  public readonly changedTermCodes = output<TerminologyCode[]>()
 
-  bulkEntries: CriteriaBulkEntry[] = []
+  public bulkEntries: CriteriaBulkEntry[] = []
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
   constructor() {}
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.createBulkEntries()
   }
 
@@ -53,10 +45,7 @@ export class TermcodeComponent implements OnInit {
     this.termCodes.update((codes) =>
       codes.filter(
         (termCode: TerminologyCode) =>
-          !(
-            termCode.getCode() === termCodeToRemove.getCode() &&
-            termCode.getSystem() === termCodeToRemove.getSystem()
-          )
+          !(termCode.getCode() === termCodeToRemove.getCode() && termCode.getSystem() === termCodeToRemove.getSystem())
       )
     )
     this.createBulkEntries()

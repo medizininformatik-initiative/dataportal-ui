@@ -1,13 +1,13 @@
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
-import { BasePaths, PathSegments } from '../../../app-paths'
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { filter, Subscription } from 'rxjs'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { NgClass } from '@angular/common'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { MatTooltip } from '@angular/material/tooltip'
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { filter, Subscription } from 'rxjs'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { BasePaths, PathSegments } from '../../../app-paths'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 
 interface Breadcrumb {
@@ -30,13 +30,13 @@ const BASE_PATH_DEFAULTS: Record<string, string> = {
   imports: [NgClass, MatTooltip, DisplayTranslationPipe],
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
-  private router = inject(Router)
-  private activatedRoute = inject(ActivatedRoute)
-  private profileProviderService = inject(ProfileProviderService)
-  private criterionProviderService = inject(CriterionProviderService)
-  private navigationHelperService = inject(NavigationHelperService)
+  private readonly router = inject(Router)
+  private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly profileProviderService = inject(ProfileProviderService)
+  private readonly criterionProviderService = inject(CriterionProviderService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
 
-  breadcrumbs: Breadcrumb[] = []
+  public breadcrumbs: Breadcrumb[] = []
   private sub: Subscription
 
   /** Inserted by Angular inject() migration for backwards compatibility */
@@ -44,32 +44,27 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.breadcrumbs = this.buildBreadcrumb(this.activatedRoute.root)
     this.appendElementBreadcrumb()
-    this.sub = this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.breadcrumbs = this.buildBreadcrumb(this.activatedRoute.root)
-        this.appendElementBreadcrumb()
-      })
+    this.sub = this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.breadcrumbs = this.buildBreadcrumb(this.activatedRoute.root)
+      this.appendElementBreadcrumb()
+    })
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.sub?.unsubscribe()
   }
 
-  navigateTo(url: string): void {
+  public navigateTo(url: string): void {
     const segments = url.replace(/^\//, '').split('/')
     const basePath = segments[0]
     const subPath = segments[1]
     const id = segments[2]
 
     if (basePath === BasePaths.queryEditor) {
-      const target =
-        subPath === PathSegments.feature
-          ? `/${BasePaths.dataSelection}/${PathSegments.editor}`
-          : `/${BasePaths.dataQuery}`
+      const target = subPath === PathSegments.feature ? `/${BasePaths.dataSelection}/${PathSegments.editor}` : `/${BasePaths.dataQuery}`
       this.router.navigate([target])
       return
     }
@@ -104,11 +99,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
     }
   }
 
-  buildBreadcrumb(
-    route: ActivatedRoute,
-    url: string = '',
-    breadcrumbs: Breadcrumb[] = []
-  ): Breadcrumb[] {
+  public buildBreadcrumb(route: ActivatedRoute, url: string = '', breadcrumbs: Breadcrumb[] = []): Breadcrumb[] {
     const children: ActivatedRoute[] = route.children
     if (children.length === 0) {
       return breadcrumbs

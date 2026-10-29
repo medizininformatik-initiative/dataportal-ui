@@ -1,1 +1,1 @@
-export type SavedUsageStats = { used: number; total: number };
+export type SavedUsageStats = { used: number; total: number }

@@ -1,13 +1,13 @@
-import { CloneDisplayData } from '../../DisplayData/CloneDisplayData';
-import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField';
-import { ReferencedProfileCloner } from './ReferencedProfilesCloner';
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
+import { CloneDisplayData } from '../../DisplayData/CloneDisplayData'
+import { ReferencedProfileCloner } from './ReferencedProfilesCloner'
 
 export class ReferenceFieldsCloner {
   public static deepCopyReferenceFields(referenceFields: ReferenceField[]): ReferenceField[] {
     if (!referenceFields || referenceFields.length === 0) {
-      return [];
+      return []
     }
-    return referenceFields.map((field) => ReferenceFieldsCloner.deepCopyReferenceField(field));
+    return referenceFields.map((field) => ReferenceFieldsCloner.deepCopyReferenceField(field))
   }
 
   public static deepCopyReferenceField(referenceField: ReferenceField): ReferenceField {
@@ -18,6 +18,6 @@ export class ReferenceFieldsCloner {
       referenceField.getIsRequired(),
       referenceField.getRecommended(),
       ReferencedProfileCloner.deepCopyReferencedProfiles(referenceField.getReferencedProfiles())
-    );
+    )
   }
 }

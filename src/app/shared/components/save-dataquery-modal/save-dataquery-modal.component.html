@@ -21,12 +21,7 @@
     ></textarea>
   </div>
   <div class="save-dialog-footer">
-    <num-button
-      type="green"
-      [isDisabled]="title.length === 0"
-      (click)="doSave()"
-      class="button-save"
-    >
+    <num-button type="green" [isDisabled]="title.length === 0" (click)="doSave()" class="button-save">
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.SAVE' | translate }}
     </num-button>
   </div>

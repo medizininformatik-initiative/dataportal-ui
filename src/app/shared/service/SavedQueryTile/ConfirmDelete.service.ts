@@ -1,13 +1,13 @@
 import { Injectable, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { ConfirmDeleteModalComponent } from '../../components/confirm-delete-modal/confirm-delete-modal.component'
 import { Observable } from 'rxjs'
+import { ConfirmDeleteModalComponent } from '../../components/confirm-delete-modal/confirm-delete-modal.component'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfirmDeleteService {
-  private dialog = inject(MatDialog)
+  private readonly dialog = inject(MatDialog)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

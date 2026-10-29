@@ -1,25 +1,25 @@
-import { AppSettingsProviderService } from '../../Config/AppSettingsProvider.service'
-import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
-import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { map, Observable, switchMap } from 'rxjs'
-import { ObfuscatedResultRateLimitService } from './Obfuscate/ObfuscatedResultRateLimit.service'
-import { ObfuscatedResultService } from './Obfuscate/ObfuscatedResult.service'
-import { PollingManagerService } from './Polling/PollingManager.service'
+import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { QueryResult } from '../../../model/Result/QueryResult'
 import { QueryResultRateLimit } from '../../../model/Result/QueryResultRateLimit'
+import { AppSettingsProviderService } from '../../Config/AppSettingsProvider.service'
+import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { ResultProviderService } from '../../Provider/ResultProvider.service'
+import { ObfuscatedResultService } from './Obfuscate/ObfuscatedResult.service'
+import { ObfuscatedResultRateLimitService } from './Obfuscate/ObfuscatedResultRateLimit.service'
+import { PollingManagerService } from './Polling/PollingManager.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeasibilityQueryResultService {
-  private appSettingsProviderService = inject(AppSettingsProviderService)
-  private queryProviderService = inject(FeasibilityQueryProviderService)
-  private pollingManagerService = inject(PollingManagerService)
-  private resultProvider = inject(ResultProviderService)
-  private obfuscatedResultRateLimitService = inject(ObfuscatedResultRateLimitService)
-  private obfuscatedResultService = inject(ObfuscatedResultService)
+  private readonly appSettingsProviderService = inject(AppSettingsProviderService)
+  private readonly queryProviderService = inject(FeasibilityQueryProviderService)
+  private readonly pollingManagerService = inject(PollingManagerService)
+  private readonly resultProvider = inject(ResultProviderService)
+  private readonly obfuscatedResultRateLimitService = inject(ObfuscatedResultRateLimitService)
+  private readonly obfuscatedResultService = inject(ObfuscatedResultService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -49,10 +49,7 @@ export class FeasibilityQueryResultService {
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<QueryResult> {
     return this.activeFeasibilityQuery().pipe(
       switchMap((feasibilityQuery: FeasibilityQuery) => {
-        const result = this.obfuscatedResultService.getDetailedObfuscatedResult(
-          feasibilityQueryResultId,
-          feasibilityQuery.getId()
-        )
+        const result = this.obfuscatedResultService.getDetailedObfuscatedResult(feasibilityQueryResultId, feasibilityQuery.getId())
         return this.setProvider(result)
       })
     )

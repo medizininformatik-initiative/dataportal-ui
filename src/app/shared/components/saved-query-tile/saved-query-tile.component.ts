@@ -1,46 +1,39 @@
-import { Component, OnInit, inject, input, output } from '@angular/core'
-import { ConfirmDeleteService } from '../../service/SavedQueryTile/ConfirmDelete.service'
-import { InterfaceSavedQueryTile } from '../../models/SavedQueryTile/InterfaceSavedQueryTile'
-import { MatTooltip } from '@angular/material/tooltip'
-import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
-import { ButtonComponent } from '../button/button.component'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { DatePipe } from '@angular/common'
+import { Component, OnInit, inject, input, output } from '@angular/core'
+import { MatTooltip } from '@angular/material/tooltip'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
+import { InterfaceSavedQueryTile } from '../../models/SavedQueryTile/InterfaceSavedQueryTile'
+import { ConfirmDeleteService } from '../../service/SavedQueryTile/ConfirmDelete.service'
+import { ButtonComponent } from '../button/button.component'
 
 @Component({
   selector: 'num-saved-query-tile',
   templateUrl: './saved-query-tile.component.html',
   styleUrls: ['./saved-query-tile.component.scss'],
   standalone: true,
-  imports: [
-    MatTooltip,
-    ButtonComponent,
-    FontAwesomeModule,
-    DatePipe,
-    TranslateModule,
-    NumDataCyDirective,
-  ],
+  imports: [MatTooltip, ButtonComponent, FontAwesomeModule, DatePipe, TranslateModule, NumDataCyDirective],
 })
 export class SavedQueryTileComponent implements OnInit {
-  private confirmDeleteService = inject(ConfirmDeleteService)
+  private readonly confirmDeleteService = inject(ConfirmDeleteService)
 
-  readonly savedQuery = input<InterfaceSavedQueryTile>()
+  public readonly savedQuery = input<InterfaceSavedQueryTile>()
 
-  readonly deleteQuery = output<string>()
+  public readonly deleteQuery = output<string>()
 
-  readonly navigate = output<string>()
+  public readonly navigate = output<string>()
 
-  readonly loadValidationReport = output<string>()
+  public readonly loadValidationReport = output<string>()
 
-  crtdlIsValid: boolean
+  public crtdlIsValid: boolean
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.isValidAndExists()
   }
 

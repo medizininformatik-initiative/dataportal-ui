@@ -45,12 +45,7 @@
     <num-button type="cancel" numDataCy="cancel-download-button" (click)="doDiscard()">
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate }}
     </num-button>
-    <num-button
-      type="green"
-      numDataCy="save-file-button"
-      [isDisabled]="modal.title.length === 0"
-      (click)="download(modal.title)"
-    >
+    <num-button type="green" numDataCy="save-file-button" [isDisabled]="modal.title.length === 0" (click)="download(modal.title)">
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.DOWNLOAD' | translate }}
     </num-button>
   </div>

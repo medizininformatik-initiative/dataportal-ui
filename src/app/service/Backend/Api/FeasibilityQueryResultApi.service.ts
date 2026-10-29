@@ -1,17 +1,17 @@
-import { BackendService } from '../Backend.service'
-import { FeasibilityQueryPaths } from '../Paths/FeasibilityQueryPaths'
-import { FeasibilityQueryResultPaths } from '../Paths/FeasibilityQueryResultsPaths'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit'
+import { BackendService } from '../Backend.service'
+import { FeasibilityQueryPaths } from '../Paths/FeasibilityQueryPaths'
+import { FeasibilityQueryResultPaths } from '../Paths/FeasibilityQueryResultsPaths'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeasibilityQueryResultApiService {
-  private backendService = inject(BackendService)
-  private http = inject(HttpClient)
+  private readonly backendService = inject(BackendService)
+  private readonly http = inject(HttpClient)
 
   private resultObservable = null
 
@@ -21,11 +21,7 @@ export class FeasibilityQueryResultApiService {
   constructor() {}
 
   public getSummaryResult(feasibilityQueryResultId: string): Observable<any> {
-    const url =
-      FeasibilityQueryPaths.getBaseUrl() +
-      '/' +
-      feasibilityQueryResultId +
-      FeasibilityQueryResultPaths.SUMMARY_RESULT
+    const url = FeasibilityQueryPaths.getBaseUrl() + '/' + feasibilityQueryResultId + FeasibilityQueryResultPaths.SUMMARY_RESULT
     const result = this.http.get<any>(this.backendService.createUrl(url), {
       context: BackendService.getFeasibilityRequestContextToken(),
     })
@@ -64,9 +60,7 @@ export class FeasibilityQueryResultApiService {
   }
 
   public getDetailedResultRateLimit(): Observable<any> {
-    const url =
-      FeasibilityQueryResultPaths.getBaseUrl() +
-      FeasibilityQueryResultPaths.DETAILED_OBFUSCATED_RESULT_RATE_LIMIT
+    const url = FeasibilityQueryResultPaths.getBaseUrl() + FeasibilityQueryResultPaths.DETAILED_OBFUSCATED_RESULT_RATE_LIMIT
     return this.http.get<QueryResultRateLimit>(this.backendService.createUrl(url), {
       context: BackendService.getFeasibilityRequestContextToken(),
     })
@@ -74,10 +68,7 @@ export class FeasibilityQueryResultApiService {
 
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<any> {
     const url =
-      FeasibilityQueryResultPaths.getBaseUrl() +
-      '/' +
-      feasibilityQueryResultId +
-      FeasibilityQueryResultPaths.DETAILED_OBFUSCATED_RESULT
+      FeasibilityQueryResultPaths.getBaseUrl() + '/' + feasibilityQueryResultId + FeasibilityQueryResultPaths.DETAILED_OBFUSCATED_RESULT
     return this.http.get<any>(this.backendService.createUrl(url), {
       context: BackendService.getFeasibilityRequestContextToken(),
     })

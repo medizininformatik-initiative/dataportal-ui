@@ -1,11 +1,11 @@
 export class ProfileRemoved {
-  private readonly name: string;
+  private readonly name: string
 
   constructor(name: string) {
-    this.name = name;
+    this.name = name
   }
 
   public getName(): string {
-    return this.name;
+    return this.name
   }
 }

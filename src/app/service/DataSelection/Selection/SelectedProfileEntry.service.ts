@@ -10,6 +10,7 @@ export class SelectedProfileService {
 
   /**
    * Returns the selected profiles as a readonly signal.
+   * @returns {Signal<ProfileListEntry[]>}
    */
   public getSelectedProfiles(): Signal<ProfileListEntry[]> {
     return this._selectedProfiles.asReadonly()
@@ -17,6 +18,7 @@ export class SelectedProfileService {
 
   /**
    * Sets the selected profiles and updates the internal ID set.
+   * @param {ProfileListEntry[]} profiles
    */
   public setSelectedProfiles(profiles: ProfileListEntry[]): void {
     this._selectedProfiles.set(profiles)
@@ -26,6 +28,7 @@ export class SelectedProfileService {
 
   /**
    * Adds a profile to the current selection if it is not already included.
+   * @param {ProfileListEntry} profile
    */
   public addToSelection(profile: ProfileListEntry): void {
     if (this.profileIds.has(profile.getId())) {
@@ -37,6 +40,7 @@ export class SelectedProfileService {
 
   /**
    * Gets the IDs of all selected profiles.
+   * @returns {string[]}
    */
   public getSelectedIds(): string[] {
     return Array.from(this.profileIds)
@@ -44,6 +48,7 @@ export class SelectedProfileService {
 
   /**
    * Removes a profile from the current selection.
+   * @param {ProfileListEntry} profile
    */
   public removeFromSelection(profile: ProfileListEntry): void {
     this._selectedProfiles.update((current) => current.filter((p) => p.getId() !== profile.getId()))

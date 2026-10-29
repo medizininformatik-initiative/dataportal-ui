@@ -4,12 +4,7 @@
   </button>
   <ng-content></ng-content>
   <div class="save-modal__fields">
-    <input
-      class="save-modal__input"
-      type="text"
-      [(ngModel)]="title"
-      placeholder="{{ 'SHARED_COMPONENTS.SAVE_MODAL.LABEL' | translate }}"
-    />
+    <input class="save-modal__input" type="text" [(ngModel)]="title" placeholder="{{ 'SHARED_COMPONENTS.SAVE_MODAL.LABEL' | translate }}" />
     @if (isCommentRequired()) {
     <textarea
       class="save-modal__input save-modal__input--textarea"

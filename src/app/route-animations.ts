@@ -1,12 +1,4 @@
-import {
-  AnimationMetadata,
-  animate,
-  group,
-  query,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations'
+import { AnimationMetadata, animate, group, query, style, transition, trigger } from '@angular/animations'
 
 /**
  * Constrains the host element so that absolutely-positioned entering/leaving
@@ -18,11 +10,9 @@ const CONTAINER_SETUP = style({ position: 'relative', overflow: 'hidden' })
  * Stacks every entering and leaving view flush inside the container so they
  * can slide over each other without affecting document layout.
  */
-const ABSOLUTE_FILL = query(
-  ':enter, :leave',
-  [style({ position: 'absolute', height: '100%', top: 0, left: 0, right: 0, width: '100%' })],
-  { optional: true }
-)
+const ABSOLUTE_FILL = query(':enter, :leave', [style({ position: 'absolute', height: '100%', top: 0, left: 0, right: 0, width: '100%' })], {
+  optional: true,
+})
 
 /**
  * Any navigation that opens an editor from a search or list view.
@@ -59,12 +49,9 @@ const DEFAULT_DURATION = '600ms ease-in-out'
  * @param {string} leaveTransform
  * @param {string} enterStartTransform
  * @param {string} duration
+ * @returns {AnimationMetadata[]}
  */
-function slideAnimation(
-  leaveTransform: string,
-  enterStartTransform: string,
-  duration = DEFAULT_DURATION
-): AnimationMetadata[] {
+function slideAnimation(leaveTransform: string, enterStartTransform: string, duration = DEFAULT_DURATION): AnimationMetadata[] {
   return [
     CONTAINER_SETUP,
     ABSOLUTE_FILL,
@@ -74,10 +61,7 @@ function slideAnimation(
       }),
       query(
         ':enter',
-        [
-          style({ transform: enterStartTransform, opacity: 0 }),
-          animate(duration, style({ transform: 'translate(0, 0)', opacity: 1 })),
-        ],
+        [style({ transform: enterStartTransform, opacity: 0 }), animate(duration, style({ transform: 'translate(0, 0)', opacity: 1 }))],
         { optional: true }
       ),
     ]),

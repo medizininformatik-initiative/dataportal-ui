@@ -1,18 +1,18 @@
-import { catchError, map } from 'rxjs/operators'
-import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
-import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData'
-import { ErrorLogModalComponent } from 'src/app/layout/components/error-log/error-log-modal.component'
-import { ErrorLogProviderService } from './ErrorLogProvider.service'
 import { Injectable, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { Observable, of, throwError } from 'rxjs'
-import { ValidationApiService } from '../../Backend/Api/ValidationApi.service'
-import { ValidationReport } from 'src/app/model/Validation/ValidationReport'
+import { catchError, map } from 'rxjs/operators'
+import { DataportalErrorData } from 'src/app/core/model/DataportalErrorData'
 import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData'
+import { ErrorLogModalComponent } from 'src/app/layout/components/error-log/error-log-modal.component'
+import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue'
-import { ValidationIssueMapperService } from './ValidationIssueMapper.service'
-import { TypeGuard } from '../../TypeGuard/TypeGuard'
+import { ValidationReport } from 'src/app/model/Validation/ValidationReport'
+import { ValidationApiService } from '../../Backend/Api/ValidationApi.service'
 import { SnackbarMessageService } from '../../SnackbarMessage.service'
+import { TypeGuard } from '../../TypeGuard/TypeGuard'
+import { ErrorLogProviderService } from './ErrorLogProvider.service'
+import { ValidationIssueMapperService } from './ValidationIssueMapper.service'
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,8 @@ export class CRTDLValidationService {
   private readonly validationApiService = inject(ValidationApiService)
   private readonly errorLogProvider = inject(ErrorLogProviderService)
   private readonly validationIssueMapper = inject(ValidationIssueMapperService)
-  private matDialog = inject(MatDialog)
-  private snackbarMessageService = inject(SnackbarMessageService)
+  private readonly matDialog = inject(MatDialog)
+  private readonly snackbarMessageService = inject(SnackbarMessageService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -33,9 +33,7 @@ export class CRTDLValidationService {
     this.errorLogProvider.setValidatedCRTDL(crtdl)
     return this.validationApiService.validateCRTDL(crtdl).pipe(
       map(() => true),
-      catchError((error: DataportalErrorData) =>
-        setValidationReport ? this.handleValidationError(error) : of(false)
-      )
+      catchError((error: DataportalErrorData) => (setValidationReport ? this.handleValidationError(error) : of(false)))
     )
   }
 

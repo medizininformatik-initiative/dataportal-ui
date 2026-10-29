@@ -1,19 +1,14 @@
 import { DataSelectionPaths } from 'src/app/service/Backend/Paths/DataSelectionPaths'
-import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder'
 import { SearchUrlStrategy } from '../../../Interface/InterfaceSearchUrlStrategy'
+import { SearchUrlBuilder } from '../../../UrlBuilder/SearchUrlBuilder'
 
 export class ProfileSearchUrlStrategy implements SearchUrlStrategy {
-  private searchText: string
-  private moduleFilter: string
-  private categoryFilter: string
-  private resourceTypeFilter: string
+  private readonly searchText: string
+  private readonly moduleFilter: string
+  private readonly categoryFilter: string
+  private readonly resourceTypeFilter: string
 
-  constructor(
-    searchText: string,
-    moduleFilter: string = '',
-    categoryFilter: string = '',
-    resourceTypeFilter: string = ''
-  ) {
+  constructor(searchText: string, moduleFilter: string = '', categoryFilter: string = '', resourceTypeFilter: string = '') {
     this.searchText = searchText
     this.moduleFilter = moduleFilter
     this.categoryFilter = categoryFilter

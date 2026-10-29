@@ -1,16 +1,14 @@
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
 import { CriteriaSearchFilterValue } from 'src/app/model/Search/Filter/CriteriaSearchFilterValue'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import { SearchFilterData, SearchFilterValueData } from './SearchFilterData'
 import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
+import { SearchFilterData, SearchFilterValueData } from './SearchFilterData'
 
 export class CriteriaSearchFilterAdapter {
   public static convertToFilterValues(filter: CriteriaSearchFilter): SearchFilterData {
     const searchFilterValues: SearchFilterValueData[] = filter
       .getValues()
-      .map((filterValue: CriteriaSearchFilterValue) =>
-        this.createSearchFilterValue(filterValue, filter.getName())
-      )
+      .map((filterValue: CriteriaSearchFilterValue) => this.createSearchFilterValue(filterValue, filter.getName()))
 
     return {
       filterType: filter.getName().toLocaleUpperCase() as ElasticSearchFilterTypes,
@@ -25,10 +23,7 @@ export class CriteriaSearchFilterAdapter {
   ): SearchFilterValueData {
     const label = filterValue.getLabel()
     const count = filterValue.getCount()
-    const display =
-      filterType === ElasticSearchFilterTypes.TERMINOLOGY
-        ? TerminologySystemDictionary.getNameByUrl(label) ?? label
-        : label
+    const display = filterType === ElasticSearchFilterTypes.TERMINOLOGY ? TerminologySystemDictionary.getNameByUrl(label) ?? label : label
 
     return {
       count,

@@ -1,16 +1,16 @@
-import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { HashService } from '../Hash.service'
 import { Injectable, inject } from '@angular/core'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { CriteriaProfileData } from 'src/app/model/Interface/CriteriaProfileData'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { v4 as uuidv4 } from 'uuid'
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { HashService } from '../Hash.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriterionMetadataService {
-  private hashService = inject(HashService)
+  private readonly hashService = inject(HashService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -20,8 +20,8 @@ export class CriterionMetadataService {
   /**
    * Creates the mandatory fields (metadata) for a criterion.
    *
-   * @param criteriaProfileData The criteria profile data.
-   * @returns An object containing the mandatory fields for the criterion.
+   * @param {CriteriaProfileData} criteriaProfileData The criteria profile data.
+   * @returns {{ isReference: false context: TerminologyCode criterionHash: string display: Display isInvalid: boolean isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} An object containing the mandatory fields for the criterion.
    */
   public createMandatoryFields(criteriaProfileData: CriteriaProfileData): {
     isReference: false
@@ -54,8 +54,10 @@ export class CriterionMetadataService {
   /**
    * Creates the mandatory fields (metadata) for a criterion when translating.
    *
-   * @param criteriaProfileData The criteria profile data.
-   * @returns An object containing the mandatory fields for the criterion.
+   * @param {CriteriaProfileData} criteriaProfileData The criteria profile data.
+   * @returns {{ isReference: false context: TerminologyCode criterionHash: string display: Display isInvalid: boolean isRequiredFilterSet: boolean id: string termCodes: Array<TerminologyCode> }} An object containing the mandatory fields for the criterion.
+   * @param {string} criterionId
+   * @param {TerminologyCode[]} termCodes
    */
   public createMandatoryFieldsFromData(
     criteriaProfileData: CriteriaProfileData,
@@ -88,6 +90,12 @@ export class CriterionMetadataService {
     }
   }
 
+  /**
+   * Builds the criterion metadata from the given criterion.
+   *
+   * @param {Criterion} criterion
+   * @returns {{ isReference: boolean; context: TerminologyCode; criterionHash: string; display: Display; isInvalid: boolean; isRequiredFilterSet: boolean; id: string; termCodes: TerminologyCode[]; }}
+   */
   public fromCriterion(criterion: Criterion) {
     return {
       isReference: false,

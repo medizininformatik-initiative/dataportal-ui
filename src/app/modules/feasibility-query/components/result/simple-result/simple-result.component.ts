@@ -1,24 +1,21 @@
+import { AsyncPipe } from '@angular/common'
 import { Component, OnDestroy, OnInit, inject, output } from '@angular/core'
-import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery'
-import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service'
-import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
-import { filter, Observable, pairwise, Subject, Subscription } from 'rxjs'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
+import { MatTooltip } from '@angular/material/tooltip'
+import { TranslateModule } from '@ngx-translate/core'
+import { filter, Observable, pairwise, Subject, Subscription } from 'rxjs'
+import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult'
 import { QueryResult } from 'src/app/model/Result/QueryResult'
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit'
-import {
-  ResultDetailModalComponent,
-  ResultDetailsModalComponentData,
-} from '../result-detail-modal/result-detail-modal.component'
-import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult'
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
 import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsProvider.service'
-import { PatientCountComponent } from '../patient-count/patient-count.component'
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
+import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery'
+import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
+import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
-import { MatTooltip } from '@angular/material/tooltip'
 import { SpinnerComponent } from '../../../../../shared/components/spinner/spinner.component'
-import { AsyncPipe } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { PatientCountComponent } from '../patient-count/patient-count.component'
+import { ResultDetailModalComponent, ResultDetailsModalComponentData } from '../result-detail-modal/result-detail-modal.component'
 
 type QueryResponseType = QueryResult | ErrorQueryResult | null
 
@@ -27,54 +24,47 @@ type QueryResponseType = QueryResult | ErrorQueryResult | null
   templateUrl: './simple-result.component.html',
   styleUrls: ['./simple-result.component.scss'],
   standalone: true,
-  imports: [
-    PatientCountComponent,
-    ButtonComponent,
-    MatTooltip,
-    SpinnerComponent,
-    AsyncPipe,
-    TranslateModule,
-  ],
+  imports: [PatientCountComponent, ButtonComponent, MatTooltip, SpinnerComponent, AsyncPipe, TranslateModule],
 })
 export class SimpleResultComponent implements OnInit, OnDestroy {
-  dialog = inject(MatDialog)
-  private feasibilityQueryResultService = inject(FeasibilityQueryResultService)
-  private queryProviderService = inject(FeasibilityQueryProviderService)
-  private appSettingsProviderService = inject(AppSettingsProviderService)
-  private snackbarService = inject(SnackbarService)
+  public dialog = inject(MatDialog)
+  private readonly feasibilityQueryResultService = inject(FeasibilityQueryResultService)
+  private readonly queryProviderService = inject(FeasibilityQueryProviderService)
+  private readonly appSettingsProviderService = inject(AppSettingsProviderService)
+  private readonly snackbarService = inject(SnackbarService)
 
-  showSpinner = false
+  public showSpinner = false
 
-  pollingTime: number
-  patientCountArray: string[] = []
+  public pollingTime: number
+  public patientCountArray: string[] = []
 
   public isQueryExpired = false
   private timeoutId: ReturnType<typeof setTimeout> | null = null
   private expTime: number
 
-  queryResultRateLimit$: Observable<QueryResultRateLimit>
-  loadedResult = false
+  public queryResultRateLimit$: Observable<QueryResultRateLimit>
+  public loadedResult = false
 
-  activeFeasibilityQuerySusbscription: Subscription
+  public activeFeasibilityQuerySusbscription: Subscription
 
-  doSendSusbscription: Subscription
+  public doSendSusbscription: Subscription
 
-  modalSubscription: Subscription
+  public modalSubscription: Subscription
 
-  totalNumberOfPatients: number
+  public totalNumberOfPatients: number
 
-  readonly resultLoaded = output<boolean>()
+  public readonly resultLoaded = output<boolean>()
 
-  feasibilityQuery: FeasibilityQuery
+  public feasibilityQuery: FeasibilityQuery
 
   constructor() {
     this.queryResultRateLimit$ = this.feasibilityQueryResultService.getDetailedResultRateLimit()
     this.pollingTime = this.appSettingsProviderService.getPollingTimeUi()
   }
 
-  private destroy$ = new Subject<void>()
+  private readonly destroy$ = new Subject<void>()
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.activeFeasibilityQuerySusbscription?.unsubscribe()
     this.activeFeasibilityQuerySusbscription = this.queryProviderService
       .getActiveFeasibilityQuery()
@@ -85,7 +75,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
       })
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.activeFeasibilityQuerySusbscription?.unsubscribe()
     this.doSendSusbscription?.unsubscribe()
     this.modalSubscription?.unsubscribe()
@@ -106,6 +96,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   /**
    * Handles the subscription logic separately.
+   * @param {Observable<QueryResponseType>} obs
+   * @returns {Subscription}
    */
   private createDoSendSubscription(obs: Observable<QueryResponseType>): Subscription {
     return obs.pipe(pairwise()).subscribe({
@@ -117,6 +109,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   /**
    * Handles the logic for processing the query results.
+   * @param {QueryResponseType} prev
+   * @param {QueryResponseType} current
    */
   private handleQueryResults(prev: QueryResponseType, current: QueryResponseType): void {
     if (this.shouldFinalize(prev, current)) {
@@ -133,6 +127,9 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   /**
    * Checks if we should finalize the process.
+   * @param {QueryResponseType} prev
+   * @param {QueryResponseType} current
+   * @returns {boolean}
    */
   private shouldFinalize(prev: QueryResponseType, current: QueryResponseType): boolean {
     return this.isQueryResult(prev) && current === null
@@ -140,6 +137,9 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   /**
    * Checks if we should handle an error result.
+   * @param {QueryResponseType} prev
+   * @param {QueryResponseType} current
+   * @returns {boolean}
    */
   private shouldHandleError(prev: QueryResponseType, current: QueryResponseType): boolean {
     return !this.isQueryResult(prev) && current === null
@@ -147,6 +147,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   /**
    * Checks if we should handle a valid query result.
+   * @param {QueryResponseType} current
+   * @returns {boolean}
    */
   private shouldHandleValidResult(current: QueryResponseType): boolean {
     return this.isQueryResult(current)
@@ -154,6 +156,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   /**
    * Type guard to check if an object is a QueryResult.
+   * @param {QueryResponseType} result
+   * @returns {result is QueryResult}
    */
   private isQueryResult(result: QueryResponseType): result is QueryResult {
     return result?.getTotalNumberOfPatients() !== null
@@ -161,21 +165,20 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   /**
    * Handles errors in the query request.
+   * @param {any} error
    */
   private handleQueryError(error: any): void {
     console.error('Error fetching query result', error)
     this.showSpinner = false
   }
 
-  openDialogResultDetails(): void {
+  public openDialogResultDetails(): void {
     this.modalSubscription?.unsubscribe()
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>()
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
     const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig)
-    this.modalSubscription = modal
-      .afterClosed()
-      .subscribe(() => this.feasibilityQueryResultService.refreshResultRateLimit())
+    this.modalSubscription = modal.afterClosed().subscribe(() => this.feasibilityQueryResultService.refreshResultRateLimit())
   }
 
   private initializeState(): void {
@@ -192,6 +195,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   /**
    * If the result array has fewer than 10 digits, pad it with leading '0' digits until its length is 10
+   * @param {number} totalNumberOfPatients
    */
   private setPatientCount(totalNumberOfPatients: number): void {
     const patientCountArray = totalNumberOfPatients?.toString()?.split('')

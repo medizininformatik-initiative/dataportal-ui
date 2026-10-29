@@ -1,19 +1,19 @@
-import { ActivatedRoute } from '@angular/router'
-import { combineLatest, map, Observable, of, Subscription, switchMap, take, tap } from 'rxjs'
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
-import { data } from 'cypress/types/jquery'
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { PathSegments } from 'src/app/app-paths'
-import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service'
-import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
-import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
-import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
-import { EditorContentComponent } from './editor-content/editor-content.component'
-import { EditActionBarComponent } from './action-bar/edit-action-bar.component'
 import { AsyncPipe } from '@angular/common'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { data } from 'cypress/types/jquery'
+import { combineLatest, map, Observable, of, Subscription, switchMap, take, tap } from 'rxjs'
+import { PathSegments } from 'src/app/app-paths'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
+import { EditActionBarComponent } from './action-bar/edit-action-bar.component'
+import { EditorContentComponent } from './editor-content/editor-content.component'
 
 @Component({
   selector: 'num-query-editor',
@@ -23,30 +23,30 @@ import { AsyncPipe } from '@angular/common'
   imports: [EditorContentComponent, EditActionBarComponent, AsyncPipe],
 })
 export class QueryEditorComponent implements OnInit, OnDestroy {
-  private criterionProviderService = inject(CriterionProviderService)
-  private navigationHelperService = inject(NavigationHelperService)
-  private activatedRoute = inject(ActivatedRoute)
-  private profileProviderService = inject(ProfileProviderService)
-  private possibleReferencesService = inject(PossibleReferencesService)
-  private referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
+  private readonly criterionProviderService = inject(CriterionProviderService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
+  private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly profileProviderService = inject(ProfileProviderService)
+  private readonly possibleReferencesService = inject(PossibleReferencesService)
+  private readonly referenceCriterionProviderService = inject(ReferenceCriterionProviderService)
 
-  criterion$: Observable<Criterion>
+  public criterion$: Observable<Criterion>
 
-  dataSelectionProfile$: Observable<DataSelectionProfile>
+  public dataSelectionProfile$: Observable<DataSelectionProfile>
 
-  referenceCriterion$: Observable<ReferenceCriterion>
+  public referenceCriterion$: Observable<ReferenceCriterion>
 
-  id: string
-  type: string
+  public id: string
+  public type: string
 
-  routeSubscription: Subscription
+  public routeSubscription: Subscription
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const url = this.activatedRoute.snapshot.url
 
     this.id = url[1]?.path
@@ -61,7 +61,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe()
   }
 
@@ -82,9 +82,7 @@ export class QueryEditorComponent implements OnInit, OnDestroy {
   }
 
   private getCriterionFromProvider(id: string): void {
-    this.criterion$ = this.criterionProviderService
-      .getAll()
-      .pipe(map((criteria) => criteria.find((criterion) => criterion.getId() === id)))
+    this.criterion$ = this.criterionProviderService.getAll().pipe(map((criteria) => criteria.find((criterion) => criterion.getId() === id)))
   }
 
   private getReferenceCriterionFromProvider(id: string): void {

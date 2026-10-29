@@ -15,8 +15,8 @@ export class TimeRestrictionTranslationService {
    * Translates a Criterion's time restriction into a structured query.
    *
    * @param criterion The criterion containing the time restriction.
-   * @param timeRestriction
-   * @returns The corresponding time restriction filter.
+   * @param {FQAbstractTimeRestriction} timeRestriction
+   * @returns {SQAbstractTimeRestriction | undefined} The corresponding time restriction filter.
    */
   public translateTimeRestrictionToStructuredQuery(timeRestriction: FQAbstractTimeRestriction): SQAbstractTimeRestriction | undefined {
     if (timeRestriction && timeRestriction.getAfterDate()) {
@@ -43,38 +43,21 @@ export class TimeRestrictionTranslationService {
     return undefined
   }
 
-  /**
-   *
-   * @param startDate
-   */
   private createAfterFilter(startDate: Date): AfterFilter {
     return new AfterFilter(startDate.toISOString().split('T')[0])
   }
 
-  /**
-   *
-   * @param startDate
-   */
   private createAtFilter(startDate: Date): AtFilter {
     const afterDate = startDate.toISOString().split('T')[0]
     const beforeDate = startDate.toISOString().split('T')[0]
     return new AtFilter(afterDate, beforeDate)
   }
 
-  /**
-   *
-   * @param startDate
-   */
   private createBeforeFilter(startDate: Date): BeforeFilter {
     const beforeDate = startDate.toISOString().split('T')[0]
     return new BeforeFilter(beforeDate)
   }
 
-  /**
-   *
-   * @param startDate
-   * @param endDate
-   */
   private createBetweenFilter(startDate: Date, endDate: Date): BetweenFilter {
     const afterDate = startDate.toISOString().split('T')[0]
     const beforeDate = endDate.toISOString().split('T')[0]

@@ -1,14 +1,11 @@
-import { AbstractListItemDetailsAdapter } from './AbstractListItemDetailsAdapter'
-import { ListItemDetailsData } from '../ListItemDetailsData'
-import { ListItemDetailsRelativeData } from '../ListItemDetailsRelative'
 import { ProfileEntryDetails } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryDetails'
 import { ProfileEntryDetailsField } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryDetailsField'
 import { ProfileEntryRelative } from 'src/app/model/Search/EntryDetails/Profile/ProfileEntryRelative'
 import { v4 as uuidv4 } from 'uuid'
-export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapter<
-  ProfileEntryDetails,
-  ProfileEntryRelative
-> {
+import { ListItemDetailsData } from '../ListItemDetailsData'
+import { ListItemDetailsRelativeData } from '../ListItemDetailsRelative'
+import { AbstractListItemDetailsAdapter } from './AbstractListItemDetailsAdapter'
+export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapter<ProfileEntryDetails, ProfileEntryRelative> {
   public adapt(detailsData: ProfileEntryDetails): ListItemDetailsData {
     const result: ListItemDetailsData = {
       display: detailsData.getDisplay(),
@@ -49,6 +46,7 @@ export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapte
   }
 
   /**
+   * Adapts the relatives.
    * @param {ProfileEntryRelative[]} relatives The array of profile entry relatives to adapt.
    * @returns {ListItemDetailsRelativeData[]} The adapted list item details relative data.
    */
@@ -57,6 +55,7 @@ export class ProfileListItemDetailsAdapter extends AbstractListItemDetailsAdapte
   }
 
   /**
+   * Adapts the relative.
    *
    * @param {ProfileEntryRelative} relative The profile entry relative to adapt.
    * @returns {ListItemDetailsRelativeData} The adapted list item details relative data.

@@ -1,7 +1,7 @@
-import { ButtonComponent } from '../button/button.component'
 import { Component, inject } from '@angular/core'
 import { MatDialogRef } from '@angular/material/dialog'
 import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '../button/button.component'
 
 @Component({
   selector: 'num-confirm-delete-modal',
@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ButtonComponent, TranslateModule],
 })
 export class ConfirmDeleteModalComponent {
-  dialogRef = inject<MatDialogRef<ConfirmDeleteModalComponent>>(MatDialogRef)
+  public dialogRef = inject<MatDialogRef<ConfirmDeleteModalComponent>>(MatDialogRef)
 
   constructor() {}
 

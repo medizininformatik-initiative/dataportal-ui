@@ -9,11 +9,11 @@ import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
   imports: [NumDataCyDirective],
 })
 export class CheckboxComponent {
-  readonly checked = input(false)
-  readonly disabled = input(false)
-  readonly checkedChange = output<boolean>()
+  public readonly checked = input(false)
+  public readonly disabled = input(false)
+  public readonly checkedChange = output<boolean>()
 
-  toggle(event: MouseEvent): void {
+  public toggle(event: MouseEvent): void {
     event.stopPropagation()
     if (!this.disabled()) {
       this.checkedChange.emit(!this.checked())

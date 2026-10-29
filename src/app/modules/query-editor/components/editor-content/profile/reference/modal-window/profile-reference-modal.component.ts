@@ -5,8 +5,8 @@ import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface'
 import { ModalWindowComponent } from '../../../../../../../shared/components/modal-window/modal-window.component'
 import { TreeComponent } from '../../../../../../../shared/components/tree/tree.component'
 export class ProfileReferenceModalComponentData {
-  referenceUrls: string[]
-  profileId: string
+  public referenceUrls: string[]
+  public profileId: string
 }
 @Component({
   selector: 'num-profile-reference-modal',
@@ -17,20 +17,19 @@ export class ProfileReferenceModalComponentData {
   imports: [ModalWindowComponent, TreeComponent],
 })
 export class ProfileReferenceModalComponent implements OnInit {
-  data = inject<ProfileReferenceModalComponentData>(MAT_DIALOG_DATA)
-  private dialogRef =
-    inject<MatDialogRef<ProfileReferenceModalComponentData, string[]>>(MatDialogRef)
+  public data = inject<ProfileReferenceModalComponentData>(MAT_DIALOG_DATA)
+  private readonly dialogRef = inject<MatDialogRef<ProfileReferenceModalComponentData, string[]>>(MatDialogRef)
 
-  urlTree: TreeNode[] = []
+  public urlTree: TreeNode[] = []
 
-  selectedProfileIds: Set<string> = new Set()
+  public selectedProfileIds: Set<string> = new Set()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.selectedProfileIds.clear()
     this.initializeUrlTree()
   }

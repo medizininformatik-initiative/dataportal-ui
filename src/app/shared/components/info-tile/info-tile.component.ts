@@ -9,11 +9,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [TranslateModule],
 })
 export class InfoTileComponent implements OnInit {
-  readonly value = input('')
-  readonly label = input<string>(undefined)
-  readonly color = input<'default' | 'red'>('default')
+  public readonly value = input('')
+  public readonly label = input<string>(undefined)
+  public readonly color = input<'default' | 'red'>('default')
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 }

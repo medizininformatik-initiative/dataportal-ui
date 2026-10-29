@@ -1,10 +1,10 @@
 import { Component, effect, inject, input, model, output, untracked } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { QuantityRangeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityRangeFilter'
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
-import { QuantityNotSet } from '../../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet'
 import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service'
+import { QuantityNotSet } from '../../../../../../../model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityNotSet'
 import { ValueSelectComponent } from '../../../../../../../shared/components/value-select/value-select.component'
-import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'num-quantity-range',
@@ -14,17 +14,17 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ValueSelectComponent, TranslateModule],
 })
 export class QuantityRangeComponent {
-  private quantityFilterFactoryService = inject(QuantityFilterFactoryService)
+  private readonly quantityFilterFactoryService = inject(QuantityFilterFactoryService)
 
-  readonly minValue = model<number>()
+  public readonly minValue = model<number>()
 
-  readonly maxValue = model<number>()
+  public readonly maxValue = model<number>()
 
-  readonly quantityFilterUnit = input<QuantityUnit>(undefined)
+  public readonly quantityFilterUnit = input<QuantityUnit>(undefined)
 
-  readonly quantityRangeInstance = output<QuantityRangeFilter | QuantityNotSet>()
+  public readonly quantityRangeInstance = output<QuantityRangeFilter | QuantityNotSet>()
 
-  displayWarning = false
+  public displayWarning = false
 
   constructor() {
     let initialized = false
@@ -54,10 +54,7 @@ export class QuantityRangeComponent {
     const max = this.maxValue()
     if (min != null && max != null && this.quantityFilterUnit()) {
       if (min <= max) {
-        const quantityRangeFilter = this.quantityFilterFactoryService.createQuantityRangeFilter(
-          min,
-          max
-        )
+        const quantityRangeFilter = this.quantityFilterFactoryService.createQuantityRangeFilter(min, max)
         this.quantityRangeInstance.emit(quantityRangeFilter)
         this.displayWarning = false
       } else {

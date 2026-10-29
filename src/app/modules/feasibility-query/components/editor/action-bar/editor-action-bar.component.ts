@@ -1,10 +1,10 @@
+import { Component, computed, inject, OnInit } from '@angular/core'
+import { MatTooltip } from '@angular/material/tooltip'
+import { TranslateModule } from '@ngx-translate/core'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
-import { MatTooltip } from '@angular/material/tooltip'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { TranslateModule } from '@ngx-translate/core'
-import { Component, computed, inject, OnInit } from '@angular/core'
 @Component({
   selector: 'num-editor-action-bar',
   templateUrl: './editor-action-bar.component.html',
@@ -16,22 +16,20 @@ export class EditorActionBarComponent implements OnInit {
   private readonly validationService = inject(FeasibilityQueryValidationService)
   private readonly navigation = inject(NavigationHelperService)
 
-  readonly isFeasibilityQueryValid = computed(
-    () => this.validationService.validationState().isValid
-  )
+  public readonly isFeasibilityQueryValid = computed(() => this.validationService.validationState().isValid)
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
-  navigateToSearch(): void {
+  public navigateToSearch(): void {
     this.navigation.navigateToFeasibilityQuerySearch()
   }
 
-  navigateToBulkCriteriaSearch(): void {
+  public navigateToBulkCriteriaSearch(): void {
     this.navigation.navigateToFeasibilityQueryBulkSearch()
   }
 
-  sendRequest(): void {
+  public sendRequest(): void {
     this.navigation.navigateToFeasibilityQueryResult()
   }
 }

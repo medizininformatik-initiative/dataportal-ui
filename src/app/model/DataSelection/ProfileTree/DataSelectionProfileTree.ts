@@ -1,44 +1,44 @@
-import { DataSelectionProfileTreeNode } from './DataSelectionProfileTreeNode';
-import { DataSelectionProfileTreeRoot } from './DataSelectionProfileTreeRoot';
+import { DataSelectionProfileTreeNode } from './DataSelectionProfileTreeNode'
+import { DataSelectionProfileTreeRoot } from './DataSelectionProfileTreeRoot'
 
 export class DataSelectionProfileTree {
-  private treeRoot: DataSelectionProfileTreeRoot;
-  private treeNode: DataSelectionProfileTreeNode[] = [];
-
-  constructor(treeRoot: DataSelectionProfileTreeRoot, treeNode: DataSelectionProfileTreeNode[]) {
-    this.treeRoot = treeRoot;
-    this.treeNode = treeNode;
-  }
+  private treeRoot: DataSelectionProfileTreeRoot
+  private treeNode: DataSelectionProfileTreeNode[] = []
 
   /**
+   * Creates a new DataSelectionProfileTree.
    *
-   * @returns
+   * @param treeRoot
+   * @param treeNode
    */
-  getTreeRoot(): DataSelectionProfileTreeRoot {
-    return this.treeRoot;
+  constructor(treeRoot: DataSelectionProfileTreeRoot, treeNode: DataSelectionProfileTreeNode[]) {
+    this.treeRoot = treeRoot
+    this.treeNode = treeNode
+  }
+
+  public getTreeRoot(): DataSelectionProfileTreeRoot {
+    return this.treeRoot
   }
 
   /**
+   * Sets the tree root.
    *
    * @param treeRoot
    */
-  setTreeRoot(treeRoot: DataSelectionProfileTreeRoot): void {
-    this.treeRoot = treeRoot;
+  public setTreeRoot(treeRoot: DataSelectionProfileTreeRoot): void {
+    this.treeRoot = treeRoot
+  }
+
+  public getTreeNode(): DataSelectionProfileTreeNode[] {
+    return this.treeNode
   }
 
   /**
-   *
-   * @returns
-   */
-  getTreeNode(): DataSelectionProfileTreeNode[] {
-    return this.treeNode;
-  }
-
-  /**
+   * Sets the tree node.
    *
    * @param treeNode
    */
-  setTreeNode(treeNode: DataSelectionProfileTreeNode[]): void {
-    this.treeNode = treeNode;
+  public setTreeNode(treeNode: DataSelectionProfileTreeNode[]): void {
+    this.treeNode = treeNode
   }
 }

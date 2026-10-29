@@ -1,9 +1,9 @@
 import { Component, input } from '@angular/core'
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { CriterionComponent } from './criterion/criterion.component'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { ProfileComponent } from './profile/profile.component'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { ReferenceCriterion } from 'src/app/model/FeasibilityQuery/Criterion/ReferenceCriterion'
+import { CriterionComponent } from './criterion/criterion.component'
+import { ProfileComponent } from './profile/profile.component'
 import { ReferenceEditComponent } from './reference/reference-edit.component'
 
 @Component({
@@ -14,11 +14,11 @@ import { ReferenceEditComponent } from './reference/reference-edit.component'
   imports: [ProfileComponent, CriterionComponent, ReferenceEditComponent],
 })
 export class EditorContentComponent {
-  readonly criterion = input<Criterion>()
+  public readonly criterion = input<Criterion>()
 
-  readonly dataSelectionProfile = input<DataSelectionProfile>()
+  public readonly dataSelectionProfile = input<DataSelectionProfile>()
 
-  readonly referenceCriterion = input<ReferenceCriterion>()
+  public readonly referenceCriterion = input<ReferenceCriterion>()
 
   constructor() {}
 }

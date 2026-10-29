@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ErrorDisplayComponent } from './error-display.component'
 import { ErrorDisplayService } from '../../service/ErrorDisplay/error-display.service'
+import { ErrorDisplayComponent } from './error-display.component'
 
 describe.skip('ErrorDisplayComponent', () => {
   let component: ErrorDisplayComponent

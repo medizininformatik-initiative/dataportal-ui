@@ -1,9 +1,9 @@
-import { BehaviorSubject, Observable } from 'rxjs'
-import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
 import { Injectable } from '@angular/core'
-import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { UpgradeData } from 'src/app/core/model/Upgrade/UpgradeData'
 import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIssueData'
+import { CRTDLData } from 'src/app/model/Interface/CRTDLData'
+import { ProfileUpgrade } from 'src/app/model/Upgrade/ProfileUpgrade'
 import { ValidationReport } from 'src/app/model/Validation/ValidationReport'
 
 @Injectable({
@@ -15,8 +15,7 @@ export class ErrorLogProviderService {
   private readonly profileUpgrade$ = new BehaviorSubject<ProfileUpgrade[] | null>(null)
   private readonly upgradeData$ = new BehaviorSubject<UpgradeData | null>(null)
 
-  private validatedCRTDLData$: BehaviorSubject<CRTDLData | null> =
-    new BehaviorSubject<CRTDLData | null>(null)
+  private readonly validatedCRTDLData$: BehaviorSubject<CRTDLData | null> = new BehaviorSubject<CRTDLData | null>(null)
 
   public setValidationResult(result: ValidationReport): void {
     this.validationResult$.next(result)
@@ -39,9 +38,7 @@ export class ErrorLogProviderService {
   }
 
   public updateValidationResponseData(data: ValidationIssueData[]): void {
-    const result = this.validationResultData$.value
-      ? [...this.validationResultData$.value, ...data]
-      : data
+    const result = this.validationResultData$.value ? [...this.validationResultData$.value, ...data] : data
     this.validationResultData$.next(result)
   }
 

@@ -78,11 +78,11 @@ const withoutReferenceFilters = (filters: CCDLAttributeFilter[]): Exclude<CCDLAt
   providedIn: 'root',
 })
 export class UIQuery2StructuredQueryService {
-  private criterionProvider = inject(CriterionProviderService)
-  private referenceCriterionProvider = inject(ReferenceCriterionProviderService)
-  private timeRestrictionTranslation = inject(TimeRestrictionTranslationService)
-  private validation = inject(FeasibilityQueryValidationService)
-  private feasibilityQueryProvider = inject(FeasibilityQueryProviderService)
+  private readonly criterionProvider = inject(CriterionProviderService)
+  private readonly referenceCriterionProvider = inject(ReferenceCriterionProviderService)
+  private readonly timeRestrictionTranslation = inject(TimeRestrictionTranslationService)
+  private readonly validation = inject(FeasibilityQueryValidationService)
+  private readonly feasibilityQueryProvider = inject(FeasibilityQueryProviderService)
 
   /**
    * Buttons are disabled while the query is invalid, so the error means a bug, not a user mistake.
@@ -101,6 +101,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Handles invalid query error.
    *
    * @param state
    */
@@ -115,6 +116,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Translates a feasibility query into a cohort definition.
    *
    * @param query
    */
@@ -133,6 +135,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Handles criterion groups.
    *
    * @param groups
    */
@@ -144,6 +147,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Translates a criterion into its CCDL form.
    *
    * @param criterion
    */
@@ -160,6 +164,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Handles criterion of.
    *
    * @param criterion
    * @param attributeFilters
@@ -167,7 +172,7 @@ export class UIQuery2StructuredQueryService {
   private criterionOf<F extends CCDLAttributeFilter>(
     criterion: Criterion,
     attributeFilters: F[]
-  ): StrictOmit<CCDLCriterion, 'attributeFilters'> & { attributeFilters?: F[], } {
+  ): StrictOmit<CCDLCriterion, 'attributeFilters'> & { attributeFilters?: F[] } {
     const timeRestriction = this.timeRestrictionTranslation.translateTimeRestriction(criterion.getTimeRestriction())
     const valueFilter = this.valueFilter(criterion)
     return {
@@ -180,6 +185,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Handles attribute filters.
    *
    * @param criterion
    */
@@ -188,6 +194,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Handles attribute filter.
    *
    * @param filter
    */
@@ -214,6 +221,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Handles value filter.
    *
    * @param criterion
    */
@@ -229,6 +237,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Handles concept filter.
    *
    * @param conceptFilter
    */
@@ -243,6 +252,7 @@ export class UIQuery2StructuredQueryService {
   }
 
   /**
+   * Handles quantity filter.
    *
    * @param quantity
    */

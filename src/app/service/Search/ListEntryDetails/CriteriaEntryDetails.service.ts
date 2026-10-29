@@ -1,31 +1,26 @@
-import { AbstractEntryDetailsService } from './AbstractEntryDetailsService'
-import { CriteriaEntryDetails } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryDetails'
-import { CriteriaEntryDetailsProviderService } from './CriteriaEntryDetailsProvider.service'
-import { CriteriaEntryRelative } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryRelative'
+import { inject, Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { DisplayData } from 'src/app/model/Interface/DisplayData'
 import { CriteriaEntryDetailsData } from 'src/app/model/Interface/ListEntryDetailsData/CriteriaEntryDetailsData'
 import { CriteriaRelativeData } from 'src/app/model/Interface/ListEntryDetailsData/CriteriaRelativeData'
+import { CriteriaEntryDetails } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryDetails'
+import { CriteriaEntryRelative } from 'src/app/model/Search/EntryDetails/Criteria/CriteriaEntryRelative'
 import { Display } from '../../../model/DataSelection/Profile/Display'
-import { DisplayData } from 'src/app/model/Interface/DisplayData'
-import { inject, Injectable } from '@angular/core'
-import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs'
 import { TerminologyApiService } from '../../Backend/Api/TerminologyApi.service'
 import { TypeAssertion } from '../../TypeGuard/TypeAssersations'
+import { AbstractEntryDetailsService } from './AbstractEntryDetailsService'
+import { CriteriaEntryDetailsProviderService } from './CriteriaEntryDetailsProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
-export class CriteriaEntryDetailsService extends AbstractEntryDetailsService<
-  CriteriaEntryRelative,
-  CriteriaEntryDetails
-> {
-  private terminologyApiService = inject(TerminologyApiService)
-  private criteriaEntryDetailsProviderService = inject(CriteriaEntryDetailsProviderService)
+export class CriteriaEntryDetailsService extends AbstractEntryDetailsService<CriteriaEntryRelative, CriteriaEntryDetails> {
+  private readonly terminologyApiService = inject(TerminologyApiService)
+  private readonly criteriaEntryDetailsProviderService = inject(CriteriaEntryDetailsProviderService)
 
   public loadDetails(id: string): Observable<CriteriaEntryDetails> {
-    return this.terminologyApiService
-      .getCriteriaEntryRelations(id)
-      .pipe(map((response) => this.mapCriteriaRelationData(response)))
+    return this.terminologyApiService.getCriteriaEntryRelations(id).pipe(map((response) => this.mapCriteriaRelationData(response)))
   }
 
   private mapCriteriaRelationData(response: CriteriaEntryDetailsData): CriteriaEntryDetails {
@@ -47,9 +42,7 @@ export class CriteriaEntryDetailsService extends AbstractEntryDetailsService<
   }
 
   protected mapRelativeData(relatives: CriteriaRelativeData[]): CriteriaEntryRelative[] {
-    return relatives.map((relativeData: CriteriaRelativeData) =>
-      this.mapToCriteriaRelative(relativeData)
-    )
+    return relatives.map((relativeData: CriteriaRelativeData) => this.mapToCriteriaRelative(relativeData))
   }
 
   private mapToCriteriaRelative(relative: CriteriaRelativeData): CriteriaEntryRelative {

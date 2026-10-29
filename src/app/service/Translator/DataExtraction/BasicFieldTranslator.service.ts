@@ -1,15 +1,15 @@
-import { AttributesData } from 'src/app/model/Interface/AttributesData'
-import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField'
 import { Injectable, inject } from '@angular/core'
-import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields'
+import { BasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/BasicField'
 import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/BasicFields/SelectedBasicField'
+import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields'
+import { AttributesData } from 'src/app/model/Interface/AttributesData'
 import { SnackbarService } from '../../../shared/service/Snackbar/Snackbar.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class BasicFieldTranslatorService {
-  private snackbar = inject(SnackbarService)
+  private readonly snackbar = inject(SnackbarService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -17,25 +17,17 @@ export class BasicFieldTranslatorService {
   constructor() {}
 
   /*TODO: Snackbar message is just a temporary solution. Will be obsolete with Backend validation*/
-  public buildSelectedBasicFields(
-    attributes: AttributesData[],
-    profileFields: ProfileFields
-  ): SelectedBasicField[] {
+  public buildSelectedBasicFields(attributes: AttributesData[], profileFields: ProfileFields): SelectedBasicField[] {
     return this.filterNonReferenceAttributes(attributes)
       .map((attribute) => this.mapAttributeToSelectedBasicField(attribute, profileFields))
       .filter((element) => element !== undefined)
   }
 
   private filterNonReferenceAttributes(attributes: AttributesData[]): AttributesData[] {
-    return attributes.filter(
-      (attribute) => !attribute.linkedGroups || attribute.linkedGroups.length === 0
-    )
+    return attributes.filter((attribute) => !attribute.linkedGroups || attribute.linkedGroups.length === 0)
   }
 
-  private mapAttributeToSelectedBasicField(
-    attribute: AttributesData,
-    profileFields: ProfileFields
-  ): SelectedBasicField | undefined {
+  private mapAttributeToSelectedBasicField(attribute: AttributesData, profileFields: ProfileFields): SelectedBasicField | undefined {
     const matchingField = this.findBasicField(profileFields.getFieldTree(), attribute.attributeRef)
     if (matchingField) {
       return this.createSelectedBasicField(matchingField, attribute)
@@ -58,10 +50,7 @@ export class BasicFieldTranslatorService {
     return undefined
   }
 
-  private createSelectedBasicField(
-    basicField: BasicField,
-    attribute: AttributesData
-  ): SelectedBasicField {
+  private createSelectedBasicField(basicField: BasicField, attribute: AttributesData): SelectedBasicField {
     return new SelectedBasicField(basicField, attribute.mustHave)
   }
 }

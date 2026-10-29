@@ -1,1 +1,1 @@
-export type CohortDefinitionStatus = { exists: boolean; isValid: boolean };
+export type CohortDefinitionStatus = { exists: boolean; isValid: boolean }

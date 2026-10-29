@@ -5,9 +5,7 @@
     class="toggle-btn"
     (click)="toggleService.toggle()"
     [matTooltip]="
-      (toggleService.visible$ | async)
-        ? ('SHARED_COMPONENTS.HEADER.HIDE' | translate)
-        : ('SHARED_COMPONENTS.HEADER.SHOW' | translate)
+      (toggleService.visible$ | async) ? ('SHARED_COMPONENTS.HEADER.HIDE' | translate) : ('SHARED_COMPONENTS.HEADER.SHOW' | translate)
     "
   >
     <fa-icon [icon]="(toggleService.visible$ | async) ? 'eye-slash' : 'eye'"></fa-icon>

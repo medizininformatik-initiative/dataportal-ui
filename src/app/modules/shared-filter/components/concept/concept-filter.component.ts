@@ -1,23 +1,14 @@
-import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service'
+import { Component, DestroyRef, computed, inject, input, model, output, signal } from '@angular/core'
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop'
 import { combineLatest, filter, switchMap } from 'rxjs'
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
-import { ConceptFilterTableComponent } from './concept-filter-table/concept-filter-table.component'
-import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
-import { SearchbarComponent } from '../../../../shared/components/search/searchbar.component'
-import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
-import { SearchFilterComponent } from '../../../../shared/components/search-filter/search-filter.component'
-import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop'
 import { CodeableConceptResultList } from 'src/app/model/Search/ResultList/CodeableConcepttResultList'
-import {
-  Component,
-  DestroyRef,
-  computed,
-  inject,
-  input,
-  model,
-  output,
-  signal,
-} from '@angular/core'
+import { CodeableConceptSearchService } from 'src/app/service/Search/SearchTypes/CodeableConcept/CodeableConceptSearch.service'
+import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
+import { SearchbarComponent } from '../../../../shared/components/search/searchbar.component'
+import { SearchFilterComponent } from '../../../../shared/components/search-filter/search-filter.component'
+import { ConceptSelectionHelperService } from '../../service/ConceptSelection/ConceptSelectionHelper.service'
+import { ConceptFilterTableComponent } from './concept-filter-table/concept-filter-table.component'
 
 @Component({
   selector: 'num-concept-filter',
@@ -32,25 +23,23 @@ export class ConceptFilterComponent {
   private readonly conceptSearchService = inject(CodeableConceptSearchService)
   private readonly conceptSelectionService = inject(ConceptSelectionHelperService)
 
-  readonly valueSetUrl = input.required<string[]>()
-  readonly conceptFilterId = input<string | undefined>(undefined)
-  readonly preSelectedConcepts = model<Concept[]>([])
-  readonly changedSelectedConcepts = output<Concept[]>()
+  public readonly valueSetUrl = input.required<string[]>()
+  public readonly conceptFilterId = input<string | undefined>(undefined)
+  public readonly preSelectedConcepts = model<Concept[]>([])
+  public readonly changedSelectedConcepts = output<Concept[]>()
 
   private readonly currentSearchTerm = signal('')
   private readonly overrideUrls = signal<string[] | undefined>(undefined)
-  readonly activeUrls = computed(() => this.overrideUrls() ?? this.valueSetUrl())
+  public readonly activeUrls = computed(() => this.overrideUrls() ?? this.valueSetUrl())
 
-  readonly searchFilter = computed<SearchFilterData | undefined>(() => {
+  public readonly searchFilter = computed<SearchFilterData | undefined>(() => {
     const urls = this.valueSetUrl()
     return urls?.length > 1 ? this.conceptSelectionService.createTerminologyFilter(urls) : undefined
   })
 
-  readonly searchResults = toSignal<CodeableConceptResultList | null>(
+  public readonly searchResults = toSignal<CodeableConceptResultList | null>(
     toObservable(this.activeUrls).pipe(
-      switchMap((urls) =>
-        this.conceptSearchService.getSearchResults(urls).pipe(filter((results) => results != null))
-      )
+      switchMap((urls) => this.conceptSearchService.getSearchResults(urls).pipe(filter((results) => results != null)))
     ),
     { initialValue: null }
   )
@@ -69,9 +58,7 @@ export class ConceptFilterComponent {
   }
 
   public toggleConceptSelection(concept: Concept): void {
-    this.preSelectedConcepts.update((prev: Concept[]) =>
-      this.conceptSelectionService.toggleConceptSelection(concept, prev)
-    )
+    this.preSelectedConcepts.update((prev: Concept[]) => this.conceptSelectionService.toggleConceptSelection(concept, prev))
     this.changedSelectedConcepts.emit(this.cloneCurrentConcepts())
   }
 

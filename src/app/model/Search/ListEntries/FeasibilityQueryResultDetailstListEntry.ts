@@ -1,28 +1,28 @@
-import { AbstractListEntry } from './AbstractListEntry';
+import { AbstractListEntry } from './AbstractListEntry'
 
 export class FeasibilityQueryResultDetailstListEntry extends AbstractListEntry {
-  private readonly numberOfPatients: number;
-  private readonly siteName: string;
+  private readonly numberOfPatients: number
+  private readonly siteName: string
 
   constructor(numberOfPatients: number, siteName: string) {
-    super(siteName);
-    this.numberOfPatients = numberOfPatients;
-    this.siteName = siteName;
+    super(siteName)
+    this.numberOfPatients = numberOfPatients
+    this.siteName = siteName
   }
 
   /**
    * Gets the number of patients.
-   * @returns The number of patients.
+   * @returns {number} The number of patients.
    */
   public getNumberOfPatients(): number {
-    return this.numberOfPatients;
+    return this.numberOfPatients
   }
 
   /**
    * Gets the site name.
-   * @returns The site name.
+   * @returns {string} The site name.
    */
   public getSiteName(): string {
-    return this.siteName;
+    return this.siteName
   }
 }

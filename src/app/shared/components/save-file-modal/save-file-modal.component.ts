@@ -1,8 +1,8 @@
 import { Component, input, output } from '@angular/core'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
-import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModal'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModal'
 
 @Component({
   selector: 'num-save-file-modal',
@@ -12,23 +12,23 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [FontAwesomeModule, FormsModule, TranslateModule],
 })
 export class SaveFileModalComponent {
-  readonly isCommentRequired = input(false)
+  public readonly isCommentRequired = input(false)
 
-  readonly save = output<SaveDataModal>()
+  public readonly save = output<SaveDataModal>()
 
-  readonly cancelled = output<void>()
+  public readonly cancelled = output<void>()
 
-  title = ''
-  comment = ''
+  public title = ''
+  public comment = ''
 
-  doSave(): void {
+  public doSave(): void {
     this.save.emit({
       title: this.title,
       comment: this.comment,
     })
   }
 
-  doDiscard(): void {
+  public doDiscard(): void {
     this.cancelled.emit()
   }
 }

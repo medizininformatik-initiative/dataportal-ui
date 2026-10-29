@@ -1,12 +1,6 @@
 import { inject, Injectable } from '@angular/core'
-import {
-  DataSelectionValidationService,
-  DataSelectionValidationState,
-} from './DataSelectionValidation.service'
-import {
-  FeasibilityQueryValidationService,
-  FeasibilityQueryValidationState,
-} from './FeasibilityQueryValidationService.service'
+import { DataSelectionValidationService, DataSelectionValidationState } from './DataSelectionValidation.service'
+import { FeasibilityQueryValidationService, FeasibilityQueryValidationState } from './FeasibilityQueryValidationService.service'
 
 export interface DataDefinitionValidationState {
   dataSelectionValidationState: DataSelectionValidationState
@@ -22,10 +16,6 @@ export class DataDefinitionValidationService {
 
   constructor() {}
 
-  /**
-   *
-   * @returns {}
-   */
   public getDataDefinitionValidationStatus(): DataDefinitionValidationState {
     const dataSelectionValidationState = this.dataSelectionValidationService.validationState()
     const feasibilityQueryValidationState = this.feasibilityQueryValidationService.validationState()

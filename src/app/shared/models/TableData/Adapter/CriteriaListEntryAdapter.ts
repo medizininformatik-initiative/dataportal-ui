@@ -1,15 +1,15 @@
-import { AbstractTableAdapter } from './AbstractTableAdapter'
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
+import { CriteriaListEntry } from '../../../../model/Search/ListEntries/CriteriaListListEntry'
 import { AvailabilityCellData } from '../Cells/Data/AvailabilityCellData'
 import { CheckboxTextCellData } from '../Cells/Data/CheckboxTextCellData'
-import { CriteriaListEntry } from '../../../../model/Search/ListEntries/CriteriaListListEntry'
-import { TableCellBuilder } from '../Cells/TableCellBuilder'
-import { TableHeaderData } from '../TableHeaderData'
-import { TableRowData } from '../TableRowData'
-import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
+import { IconCellData } from '../Cells/Data/IconCellData'
 import { TextCellData } from '../Cells/Data/TextCellData'
+import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellContext } from '../Cells/TableCellContext'
 import { TableCellUnion } from '../Cells/TableCellUnion'
-import { IconCellData } from '../Cells/Data/IconCellData'
+import { TableHeaderData } from '../TableHeaderData'
+import { TableRowData } from '../TableRowData'
+import { AbstractTableAdapter } from './AbstractTableAdapter'
 
 export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListEntry> {
   constructor() {

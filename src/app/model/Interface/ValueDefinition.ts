@@ -1,7 +1,7 @@
-import { DisplayData } from './DisplayData';
-import { FilterTypes } from '../Utilities/FilterTypes';
-import { QuantityUnitData } from './Unit';
-import { TerminologyCodeData } from './TerminologyCodeData';
+import { FilterTypes } from '../Utilities/FilterTypes'
+import { DisplayData } from './DisplayData'
+import { TerminologyCodeData } from './TerminologyCodeData'
+import { QuantityUnitData } from './Unit'
 
 export interface ValueDefinitionData {
   display: DisplayData

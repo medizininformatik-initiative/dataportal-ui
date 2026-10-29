@@ -1,7 +1,7 @@
-import { AvailabilityStatusType } from 'src/app/model/Availability/AvailabilityStatusType'
 import { Component, computed, effect, input, signal } from '@angular/core'
-import { STATUS_CONFIG } from 'src/app/shared/models/AvailabilityStatus/AvailabilityStatus'
 import { TranslateModule } from '@ngx-translate/core'
+import { AvailabilityStatusType } from 'src/app/model/Availability/AvailabilityStatusType'
+import { STATUS_CONFIG } from 'src/app/shared/models/AvailabilityStatus/AvailabilityStatus'
 
 @Component({
   selector: 'num-availability-status-bar',
@@ -11,11 +11,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [TranslateModule],
 })
 export class AvailabilityStatusBarComponent {
-  readonly status = input<AvailabilityStatusType>('UNKNOWN')
+  public readonly status = input<AvailabilityStatusType>('UNKNOWN')
 
-  readonly animatedPercentage = signal(0)
+  public readonly animatedPercentage = signal(0)
 
-  readonly config = computed(() => STATUS_CONFIG[this.status()])
+  public readonly config = computed(() => STATUS_CONFIG[this.status()])
 
   constructor() {
     effect(() => {

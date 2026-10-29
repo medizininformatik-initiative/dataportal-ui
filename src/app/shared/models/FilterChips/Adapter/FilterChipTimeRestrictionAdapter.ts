@@ -1,11 +1,11 @@
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { Translation } from 'src/app/model/DataSelection/Profile/Translation'
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BeforeFilter'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
+import { v4 as uuidv4 } from 'uuid'
 import { FilterChipBuilder } from '../FilterChipBuilder'
 import { FilterChipData } from '../FilterChipData'
-import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
-import { Translation } from 'src/app/model/DataSelection/Profile/Translation'
-import { v4 as uuidv4 } from 'uuid'
 
 export class FilterChipTimeRestrictionAdapter {
   public static adaptTimeRestriction(timeRestriction: AbstractTimeRestriction): FilterChipData[] {
@@ -39,27 +39,21 @@ export class FilterChipTimeRestrictionAdapter {
   }
 
   private static createAtChip(timeRestriction: any): FilterChipData {
-    const atText = this.createDisplayDataInstance(
-      `${this.formatDate(timeRestriction.getBeforeDate())}`
-    )
+    const atText = this.createDisplayDataInstance(`${this.formatDate(timeRestriction.getBeforeDate())}`)
     const builder = new FilterChipBuilder('SHARED_FILTER.TIMERESTRICTION.AT')
     builder.addData(uuidv4(), atText)
     return builder.buildFilterChip()
   }
 
   private static createBeforeChip(timeRestriction: BeforeFilter): FilterChipData {
-    const beforeText = this.createDisplayDataInstance(
-      `${this.formatDate(timeRestriction.getAfterDate())}`
-    )
+    const beforeText = this.createDisplayDataInstance(`${this.formatDate(timeRestriction.getAfterDate())}`)
     const builder = new FilterChipBuilder('SHARED_FILTER.TIMERESTRICTION.BEFORE')
     builder.addData(uuidv4(), beforeText)
     return builder.buildFilterChip()
   }
 
   private static createAfterChip(timeRestriction: any): FilterChipData {
-    const afterText = this.createDisplayDataInstance(
-      `${this.formatDate(timeRestriction.getAfterDate())}`
-    )
+    const afterText = this.createDisplayDataInstance(`${this.formatDate(timeRestriction.getAfterDate())}`)
     const builder = new FilterChipBuilder('SHARED_FILTER.TIMERESTRICTION.AFTER')
     builder.addData(uuidv4(), afterText)
     return builder.buildFilterChip()
@@ -83,24 +77,18 @@ export class FilterChipTimeRestrictionAdapter {
   }
 
   /**
+   * Creates the display data instance for between filter.
    * @todo Das muss dringend in die Trannslation json, lediglich ein Hotfix
-   * @param timeRestriction
-   * @returns
+   * @param {any} timeRestriction
+   * @returns {Display}
    */
   private static createDisplayDataInstanceForBetweenFilter(timeRestriction) {
     const german = 'de-DE'
     const english = 'en-US'
-    const englishText = `From ${this.formatDate(
-      timeRestriction.getAfterDate()
-    )} to ${this.formatDate(timeRestriction.getBeforeDate())}`
+    const englishText = `From ${this.formatDate(timeRestriction.getAfterDate())} to ${this.formatDate(timeRestriction.getBeforeDate())}`
 
-    const germanText = `Von ${this.formatDate(
-      timeRestriction.getAfterDate()
-    )} bis ${this.formatDate(timeRestriction.getBeforeDate())}`
+    const germanText = `Von ${this.formatDate(timeRestriction.getAfterDate())} bis ${this.formatDate(timeRestriction.getBeforeDate())}`
 
-    return new Display(
-      [new Translation(german, germanText), new Translation(english, englishText)],
-      germanText
-    )
+    return new Display([new Translation(german, germanText), new Translation(english, englishText)], germanText)
   }
 }

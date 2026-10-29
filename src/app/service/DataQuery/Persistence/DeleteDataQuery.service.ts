@@ -1,12 +1,12 @@
-import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
 import { Injectable, inject } from '@angular/core'
 import { Observable } from 'rxjs'
+import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeleteDataQueryService {
-  private dataQueryApiService = inject(DataQueryApiService)
+  private readonly dataQueryApiService = inject(DataQueryApiService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -15,8 +15,8 @@ export class DeleteDataQueryService {
 
   /**
    * deletes a saved data query by its ID.
-   * @param id
-   * @returns
+   * @param {number} id
+   * @returns {Observable<void>}
    */
   public deleteDataQueryById(id: number): Observable<void> {
     return this.dataQueryApiService.deleteDataQueryById(id)

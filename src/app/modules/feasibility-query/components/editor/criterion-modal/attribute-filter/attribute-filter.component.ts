@@ -1,7 +1,7 @@
-import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
-import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { Component, input, output } from '@angular/core'
+import { AttributeFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
+import { AbstractQuantityFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/AbstractQuantityFilter'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 import { ConceptComponent } from '../concept/concept.component'
 import { QuantityComponent } from '../quantity/quantity.component'
@@ -14,8 +14,8 @@ import { QuantityComponent } from '../quantity/quantity.component'
   imports: [ConceptComponent, QuantityComponent],
 })
 export class AttributeFilterComponent {
-  readonly attributeFilter = input<AttributeFilter>()
-  readonly attributeFilterChange = output<AttributeFilter>()
+  public readonly attributeFilter = input<AttributeFilter>()
+  public readonly attributeFilterChange = output<AttributeFilter>()
 
   public updateConceptFilter(conceptFilter: ConceptFilter): void {
     this.emitUpdatedFilter(FilterTypes.CONCEPT, conceptFilter, undefined)
@@ -25,11 +25,7 @@ export class AttributeFilterComponent {
     this.emitUpdatedFilter(FilterTypes.QUANTITY, undefined, quantityFilter)
   }
 
-  private emitUpdatedFilter(
-    type: FilterTypes,
-    conceptFilter?: ConceptFilter,
-    quantityFilter?: AbstractQuantityFilter
-  ): void {
+  private emitUpdatedFilter(type: FilterTypes, conceptFilter?: ConceptFilter, quantityFilter?: AbstractQuantityFilter): void {
     const filter = this.attributeFilter()
     const updated = new AttributeFilter(
       filter.getDisplay(),

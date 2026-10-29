@@ -1,15 +1,10 @@
+import { Display } from '../../../DataSelection/Profile/Display'
+import { CriteriaEntryDetailsData } from '../../../Interface/ListEntryDetailsData/CriteriaEntryDetailsData'
 import { AbstractDetails } from '../AbstractDetails'
 import { CriteriaEntryRelative } from './CriteriaEntryRelative'
-import { CriteriaEntryDetailsData } from '../../../Interface/ListEntryDetailsData/CriteriaEntryDetailsData'
-import { Display } from '../../../DataSelection/Profile/Display'
 
 export class CriteriaEntryDetails extends AbstractDetails<CriteriaEntryRelative> {
-  constructor(
-    children: CriteriaEntryRelative[] = [],
-    parents: CriteriaEntryRelative[] = [],
-    display: Display,
-    selectable: boolean
-  ) {
+  constructor(children: CriteriaEntryRelative[] = [], parents: CriteriaEntryRelative[] = [], display: Display, selectable: boolean) {
     super(display, parents, children, selectable)
   }
 

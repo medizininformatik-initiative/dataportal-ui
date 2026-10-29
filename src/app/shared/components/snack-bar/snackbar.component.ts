@@ -1,7 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core'
-import { SnackbarService } from '../../service/Snackbar/Snackbar.service'
 import { NgClass } from '@angular/common'
+import { Component, OnInit, inject } from '@angular/core'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { SnackbarService } from '../../service/Snackbar/Snackbar.service'
 
 @Component({
   selector: 'num-snackbar',
@@ -11,17 +11,17 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
   imports: [NgClass, DisplayTranslationPipe],
 })
 export class SnackbarComponent implements OnInit {
-  snackbarService = inject(SnackbarService)
+  public snackbarService = inject(SnackbarService)
 
-  isVisible = false
-  message = ''
-  color = 'red'
+  public isVisible = false
+  public message = ''
+  public color = 'red'
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
   constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.snackbarService.visibility$.subscribe((isVisible) => {
       this.isVisible = isVisible
     })

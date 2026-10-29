@@ -3,7 +3,7 @@ import { InterfaceUrlBuilder } from '../../Backend/UrlBuilder/InterfaceUrlBuilde
 
 export class SearchUrlBuilder implements InterfaceUrlBuilder {
   private baseUrl: string
-  private queryParams: Map<string, string> = new Map()
+  private readonly queryParams: Map<string, string> = new Map()
 
   /**
    * The maximum number of pages shown each page contains {$MAX_ENTRIES_PER_PAGE}
@@ -88,8 +88,8 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
 
   /**
    * The page size is limited to 20 to prevent performance issues with large datasets.
-   * @param offset
-   * @returns
+   * @param {number} offset
+   * @returns {this}
    */
   public withPage(offset: number): this {
     if (offset > SearchUrlBuilder.MAX_PAGES) {

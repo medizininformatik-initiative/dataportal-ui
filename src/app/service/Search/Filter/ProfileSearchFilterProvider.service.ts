@@ -1,7 +1,7 @@
-import { BehaviorSubject, map, Observable } from 'rxjs'
-import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 import { Injectable } from '@angular/core'
+import { BehaviorSubject, map, Observable } from 'rxjs'
 import { ProfileSearchFilter } from 'src/app/model/Search/Filter/ProfileSearchFilter'
+import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
 
 @Injectable({
   providedIn: 'root',
@@ -65,9 +65,7 @@ export class ProfileSearchFilterProviderService {
   private getSelectedValuesOfType(filterType: string): Observable<string[]> {
     return this.profileSearchFiltersSubject.asObservable().pipe(
       map((filters) => {
-        const filter = filters.find(
-          (item) => item.getName().toLowerCase() === filterType.toLowerCase()
-        )
+        const filter = filters.find((item) => item.getName().toLowerCase() === filterType.toLowerCase())
         return filter?.getSelectedValues() ?? []
       })
     )

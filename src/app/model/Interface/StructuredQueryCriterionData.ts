@@ -1,8 +1,8 @@
-import { ContextData } from './ContextData';
-import { TimeRestrictionData } from './TimeRestrictionData';
-import { ValueFilterData } from './ValueFilterData';
-import { TerminologyCodeData } from './TerminologyCodeData';
-import { AttributeFilterData } from './AttributeFilterData';
+import { AttributeFilterData } from './AttributeFilterData'
+import { ContextData } from './ContextData'
+import { TerminologyCodeData } from './TerminologyCodeData'
+import { TimeRestrictionData } from './TimeRestrictionData'
+import { ValueFilterData } from './ValueFilterData'
 
 export interface StructuredQueryCriterionData {
   attributeFilters?: AttributeFilterData[]

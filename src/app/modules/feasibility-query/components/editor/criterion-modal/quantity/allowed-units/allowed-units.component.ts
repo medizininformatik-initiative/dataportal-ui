@@ -1,9 +1,9 @@
-import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
 import { Component, computed, input, model, output } from '@angular/core'
-import { CloneQuantityUnit } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Quantity/CloneQuantityUnit'
+import { MatOption } from '@angular/material/core'
 import { MatFormField } from '@angular/material/form-field'
 import { MatSelect } from '@angular/material/select'
-import { MatOption } from '@angular/material/core'
+import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
+import { CloneQuantityUnit } from 'src/app/model/Utilities/CriterionCloner/ValueAttributeFilter/Quantity/CloneQuantityUnit'
 
 @Component({
   selector: 'num-allowed-units',
@@ -13,13 +13,13 @@ import { MatOption } from '@angular/material/core'
   imports: [MatFormField, MatSelect, MatOption],
 })
 export class AllowedUnitsComponent {
-  readonly allowedUnits = input<QuantityUnit[]>([])
-  readonly selectedUnit = model<QuantityUnit>()
-  readonly selectionChange = output<QuantityUnit>()
+  public readonly allowedUnits = input<QuantityUnit[]>([])
+  public readonly selectedUnit = model<QuantityUnit>()
+  public readonly selectionChange = output<QuantityUnit>()
 
-  readonly selectedUnitDisplay = computed(() => this.selectedUnit()?.getDisplay() ?? '')
+  public readonly selectedUnitDisplay = computed(() => this.selectedUnit()?.getDisplay() ?? '')
 
-  onSelectionChange(selectedValue: string) {
+  public onSelectionChange(selectedValue: string) {
     const unit = this.allowedUnits().find((u) => u.getDisplay() === selectedValue)
     if (unit) {
       this.selectedUnit.set(unit)

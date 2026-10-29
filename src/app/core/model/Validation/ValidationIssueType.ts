@@ -1,9 +1,9 @@
-import { TimeRestrictionValidationIssueData } from './TimeRestrictionValidationIssueData';
-import { QuantityUnitValidationIssueData } from './QuantityUnitValidationIssueData';
-import { QuantityRangeValidationIssueData } from './QuantityRangeValidationIssueData';
-import { CriteriaSetValidationIssueData } from './CriteriaSetValidationIssueData';
-import { DataExtractionValidationIssueData } from './DataExtractionValidationIssueData';
-import { ValueSetValidationIssueData } from './ValueSetValidationIssueData';
+import { CriteriaSetValidationIssueData } from './CriteriaSetValidationIssueData'
+import { DataExtractionValidationIssueData } from './DataExtractionValidationIssueData'
+import { QuantityRangeValidationIssueData } from './QuantityRangeValidationIssueData'
+import { QuantityUnitValidationIssueData } from './QuantityUnitValidationIssueData'
+import { TimeRestrictionValidationIssueData } from './TimeRestrictionValidationIssueData'
+import { ValueSetValidationIssueData } from './ValueSetValidationIssueData'
 
 /**
  * Discriminated union of all validation issue types.
@@ -15,4 +15,4 @@ export type ValidationIssueType =
   | CriteriaSetValidationIssueData
   | ValueSetValidationIssueData
   | QuantityRangeValidationIssueData
-  | DataExtractionValidationIssueData;
+  | DataExtractionValidationIssueData

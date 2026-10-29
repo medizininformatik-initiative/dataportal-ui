@@ -1,25 +1,25 @@
 import { A11yModule } from '@angular/cdk/a11y'
-import { CheckboxComponent } from '../checkbox/checkbox.component'
 import { Component, computed, inject, input, OnInit, output, Signal } from '@angular/core'
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
-import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
-import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
-import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { InfoTooltipDirective } from '../../directives/info-tooltip.directive'
 import { MatTooltip } from '@angular/material/tooltip'
-import { MissingFilterComponent } from '../missing-filter/missing-filter.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
+import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
+import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
+import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
+import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner'
+import { DataSelectionProviderService } from 'src/app/service/Provider/DataSelectionProvider.service'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
+import { InfoTooltipDirective } from '../../directives/info-tooltip.directive'
 import { ProfileReferenceChipData } from '../../models/FilterChips/ProfileReferenceChipData'
+import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 import { ProfileReferenceChipsService } from '../../service/FilterChips/DataSelection/ProfileReferenceChips.service'
 import { ProfileReferenceMenuFunctionsService } from '../../service/Menu/ProfileReference/ProfileReferenceMenuFunctionsService.service'
 import { ProfileReferenceMenuService } from '../../service/Menu/ProfileReference/ProfileReferenceMenuService.service'
-import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
-import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
-import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner'
-import { TranslateModule } from '@ngx-translate/core'
+import { CheckboxComponent } from '../checkbox/checkbox.component'
+import { FilterChipsComponent } from '../filter-chips/filter-chips.component'
+import { MissingFilterComponent } from '../missing-filter/missing-filter.component'
 @Component({
   selector: 'num-profile-reference-tile',
   templateUrl: './profile-reference-tile.component.html',
@@ -38,35 +38,35 @@ import { TranslateModule } from '@ngx-translate/core'
   ],
 })
 export class ProfileReferenceTileComponent implements OnInit {
-  private dataSelectionProviderService = inject(DataSelectionProviderService)
-  private profileProviderService = inject(ProfileProviderService)
-  private profileReferenceChipsService = inject(ProfileReferenceChipsService)
-  private profileReferenceMenuService = inject(ProfileReferenceMenuService)
-  private menuServiceDataSelectionFunctions = inject(ProfileReferenceMenuFunctionsService)
+  private readonly dataSelectionProviderService = inject(DataSelectionProviderService)
+  private readonly profileProviderService = inject(ProfileProviderService)
+  private readonly profileReferenceChipsService = inject(ProfileReferenceChipsService)
+  private readonly profileReferenceMenuService = inject(ProfileReferenceMenuService)
+  private readonly menuServiceDataSelectionFunctions = inject(ProfileReferenceMenuFunctionsService)
 
-  readonly referenceField = input<SelectedReferenceField>()
-  readonly unlinkedRequiredOrRecommendedReferences = input<ReferenceField>(undefined)
-  readonly parentId = input<string>(undefined)
-  readonly deleteTrigger = output<boolean>()
-  readonly isEditable = input<boolean>(true)
+  public readonly referenceField = input<SelectedReferenceField>()
+  public readonly unlinkedRequiredOrRecommendedReferences = input<ReferenceField>(undefined)
+  public readonly parentId = input<string>(undefined)
+  public readonly deleteTrigger = output<boolean>()
+  public readonly isEditable = input<boolean>(true)
 
-  filterChips: ProfileReferenceChipData[] = []
-  type: Signal<string> = computed(() => this.field()?.getType() ?? '')
+  public filterChips: ProfileReferenceChipData[] = []
+  public type: Signal<string> = computed(() => this.field()?.getType() ?? '')
 
-  field: Signal<ReferenceField | SelectedReferenceField> = computed(
+  public field: Signal<ReferenceField | SelectedReferenceField> = computed(
     () => this.referenceField() || this.unlinkedRequiredOrRecommendedReferences()
   )
-  display: Signal<Display> = computed(() => this.field()?.getDisplay())
-  elementId: Signal<string> = computed(() => this.field()?.getElementId() ?? undefined)
+  public display: Signal<Display> = computed(() => this.field()?.getDisplay())
+  public elementId: Signal<string> = computed(() => this.field()?.getElementId() ?? undefined)
 
-  readonly menuItems: Signal<ReturnType<ProfileReferenceMenuService['getMenuItems']>> = computed(() => {
+  public readonly menuItems: Signal<ReturnType<ProfileReferenceMenuService['getMenuItems']>> = computed(() => {
     const idToUse = this.parentId() ?? ''
     return this.profileReferenceMenuService.getMenuItems(idToUse, { elementId: this.elementId() })
   })
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.profileReferenceMenuService.getMenuItems(this.parentId(), { elementId: this.elementId() })
     this.initializeDisplayDataFilterChips()
   }
@@ -107,7 +107,7 @@ export class ProfileReferenceTileComponent implements OnInit {
     return index
   }
 
-  navigateToReferenceField(): void {
+  public navigateToReferenceField(): void {
     this.menuServiceDataSelectionFunctions.navigate(this.parentId(), {
       elementId: this.elementId(),
     })

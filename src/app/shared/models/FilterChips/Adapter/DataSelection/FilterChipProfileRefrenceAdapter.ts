@@ -3,9 +3,10 @@ import { ProfileReferenceChipData, ProfileReferenceGroup } from '../../ProfileRe
 
 export class FilterChipProfileRefrenceAdapter {
   /**
+   * Adapts the to profile reference chip data.
    *@todo check what '4' is? Placeholder/dummy?
-   * @param profileReferenceGroup
-   * @returns
+   * @param {ProfileReferenceGroup} profileReferenceGroup
+   * @returns {ProfileReferenceChipData}
    */
   public static adaptToProfileReferenceChipData(profileReferenceGroup: ProfileReferenceGroup): ProfileReferenceChipData {
     const builder = new FilterChipBuilder(profileReferenceGroup.elementId)

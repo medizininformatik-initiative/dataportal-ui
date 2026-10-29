@@ -1,9 +1,9 @@
 import { Component, input, output } from '@angular/core'
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
+import { MatOption } from '@angular/material/core'
 import { MatFormField } from '@angular/material/form-field'
 import { MatSelect } from '@angular/material/select'
-import { MatOption } from '@angular/material/core'
 import { TranslateModule } from '@ngx-translate/core'
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
 
 @Component({
   selector: 'num-quantity-comparision-select',
@@ -13,13 +13,13 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [MatFormField, MatSelect, MatOption, TranslateModule],
 })
 export class QuantityComparisionSelectComponent {
-  quantityFilterOptionsArray: string[] = Object.values(QuantityComparisonOption)
+  public quantityFilterOptionsArray: string[] = Object.values(QuantityComparisonOption)
 
-  readonly existingOption = input<QuantityComparisonOption>(QuantityComparisonOption.NONE)
+  public readonly existingOption = input<QuantityComparisonOption>(QuantityComparisonOption.NONE)
 
-  readonly selectedOption = output<string>()
+  public readonly selectedOption = output<string>()
 
-  selectQuantityFilterOption(option: string) {
+  public selectQuantityFilterOption(option: string) {
     this.selectedOption.emit(option)
   }
 }

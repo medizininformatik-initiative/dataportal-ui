@@ -1,8 +1,8 @@
 import { Component, input, output } from '@angular/core'
-import { CheckboxCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxCellData'
-import { CheckboxComponent } from '../../../checkbox/checkbox.component'
 import { MatTooltip } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'
+import { CheckboxCellData } from 'src/app/shared/models/TableData/Cells/Data/CheckboxCellData'
+import { CheckboxComponent } from '../../../checkbox/checkbox.component'
 
 @Component({
   selector: 'num-checkbox-cell',
@@ -12,9 +12,9 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [CheckboxComponent, MatTooltip, TranslateModule],
 })
 export class CheckboxCellComponent {
-  readonly cell = input.required<CheckboxCellData>()
+  public readonly cell = input.required<CheckboxCellData>()
 
-  readonly checkboxChange = output<void>()
+  public readonly checkboxChange = output<void>()
 
   public onCheckboxChange(): void {
     this.checkboxChange.emit()

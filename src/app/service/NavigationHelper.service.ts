@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core'
-import { BasePaths, UrlPaths } from '../app-paths'
 import { Router } from '@angular/router'
+import { BasePaths, UrlPaths } from '../app-paths'
 
 /**
  * Service for handling navigation throughout the application.
@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
   providedIn: 'root',
 })
 export class NavigationHelperService {
-  private router = inject(Router)
+  private readonly router = inject(Router)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -29,8 +29,10 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.editor | /feasibility-query/editor}
-   * @param id - The query profile identifier
+   * @param {string} id - The query profile identifier
    * @returns
+   * @param {{ activeTab: string }} state.activeTab
+   * @param {{ activeTab: string }} state
    */
   public navigateToEditProfile(id: string, state?: { activeTab: string }): void {
     this.router.navigate([`${UrlPaths.queryEditor.feature}`, id], { state })

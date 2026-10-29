@@ -1,15 +1,15 @@
-import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service'
 import { HttpContext, HttpContextToken, HttpHeaders } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { OAuthStorage } from 'angular-oauth2-oidc'
+import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service'
 import { IS_FEASIBILITY_REQUEST, IS_VALIDATION } from './HttpContextToken'
 
 @Injectable({
   providedIn: 'root',
 })
 export class BackendService {
-  private authStorage = inject(OAuthStorage)
-  private appSettingsProvider = inject(AppSettingsProviderService)
+  private readonly authStorage = inject(OAuthStorage)
+  private readonly appSettingsProvider = inject(AppSettingsProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -21,9 +21,7 @@ export class BackendService {
   }
 
   public getHeaders() {
-    return new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', 'Bearer ' + this.getAccessToken())
+    return new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + this.getAccessToken())
   }
 
   public createUrl(pathToResource: string, paramString?: string): string {
@@ -46,7 +44,7 @@ export class BackendService {
 
   /**
    * Returns an HttpContext with the validation context token set to true
-   * @returns
+   * @returns {HttpContext}
    */
   public static getValidationContextToken(): HttpContext {
     return new HttpContext().set(IS_VALIDATION, true)
@@ -54,7 +52,7 @@ export class BackendService {
 
   /**
    * Returns an HttpContext with the feasibility request context token set to true
-   * @returns
+   * @returns {HttpContext}
    */
   public static getFeasibilityRequestContextToken(): HttpContext {
     return new HttpContext().set(IS_FEASIBILITY_REQUEST, true)

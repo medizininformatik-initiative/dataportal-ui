@@ -1,24 +1,16 @@
-import { CreateSelectedReferenceService } from 'src/app/service/CreateSelectedReference.service'
+import { AsyncPipe } from '@angular/common'
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject, input, output } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { filter, map, Observable, Subscription, switchMap, take, tap } from 'rxjs'
-import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
-import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service'
-import { ProfileReferenceModalService } from 'src/app/service/DataSelection/Modal/ProfileReferenceModal.service'
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-  inject,
-  input,
-  output,
-} from '@angular/core'
-import { PossibleReferencesComponent } from '../possible-references/possible-references.component'
-import { PlaceholderBoxComponent } from '../../../../../../../shared/components/placeholder-box/placeholder-box.component'
+import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
+import { CreateSelectedReferenceService } from 'src/app/service/CreateSelectedReference.service'
+import { ProfileReferenceModalService } from 'src/app/service/DataSelection/Modal/ProfileReferenceModal.service'
+import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service'
 import { ButtonComponent } from '../../../../../../../shared/components/button/button.component'
-import { AsyncPipe } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { PlaceholderBoxComponent } from '../../../../../../../shared/components/placeholder-box/placeholder-box.component'
+import { PossibleReferencesComponent } from '../possible-references/possible-references.component'
 
 @Component({
   selector: 'num-reference-field-tab',
@@ -26,41 +18,35 @@ import { TranslateModule } from '@ngx-translate/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./reference-field-tab.component.scss'],
   standalone: true,
-  imports: [
-    PossibleReferencesComponent,
-    PlaceholderBoxComponent,
-    ButtonComponent,
-    AsyncPipe,
-    TranslateModule,
-  ],
+  imports: [PossibleReferencesComponent, PlaceholderBoxComponent, ButtonComponent, AsyncPipe, TranslateModule],
 })
 export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
-  private createSelectedReferenceService = inject(CreateSelectedReferenceService)
-  private possibleReferencesService = inject(PossibleReferencesService)
-  private profileReferenceModalService = inject(ProfileReferenceModalService)
+  private readonly createSelectedReferenceService = inject(CreateSelectedReferenceService)
+  private readonly possibleReferencesService = inject(PossibleReferencesService)
+  private readonly profileReferenceModalService = inject(ProfileReferenceModalService)
 
-  readonly referenceField = input<ReferenceField>(undefined)
+  public readonly referenceField = input<ReferenceField>(undefined)
 
-  readonly profileId = input<string>(undefined)
+  public readonly profileId = input<string>(undefined)
 
-  readonly selectedField = input<SelectedReferenceField>(undefined)
+  public readonly selectedField = input<SelectedReferenceField>(undefined)
 
-  readonly selectedProfileAsReference = output<SelectedReferenceField>()
+  public readonly selectedProfileAsReference = output<SelectedReferenceField>()
 
-  possibleReferences$: Observable<PossibleProfileReferenceData[]>
+  public possibleReferences$: Observable<PossibleProfileReferenceData[]>
 
-  referencedProfileUrls: string[] = []
+  public referencedProfileUrls: string[] = []
 
-  elementId: string
+  public elementId: string
 
-  openModalWindowSubscription: Subscription
+  public openModalWindowSubscription: Subscription
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.referencedProfileUrls = this.referenceField()
       .getReferencedProfiles()
       .map((profile) => profile.getUrl())
@@ -68,7 +54,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
     this.loadPossibleReferences()
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.openModalWindowSubscription?.unsubscribe()
   }
 
@@ -86,21 +72,16 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         filter((urls) => urls.length > 0),
-        switchMap((urls: string[]) =>
-          this.possibleReferencesService.loadAndMapProfiles(urls, this.elementId, this.profileId())
-        )
+        switchMap((urls: string[]) => this.possibleReferencesService.loadAndMapProfiles(urls, this.elementId, this.profileId()))
       )
-      .subscribe((possibleProfileReferenceData: PossibleProfileReferenceData[]) =>
-        this.onReferencesConfirmed(possibleProfileReferenceData)
-      )
+      .subscribe((possibleProfileReferenceData: PossibleProfileReferenceData[]) => this.onReferencesConfirmed(possibleProfileReferenceData))
   }
 
   private onReferencesConfirmed(selected: PossibleProfileReferenceData[]): void {
-    const selectedFields: SelectedReferenceField =
-      this.createSelectedReferenceService.mapPossibleReferencesToSelectedReferences(
-        selected,
-        this.referenceField()
-      )
+    const selectedFields: SelectedReferenceField = this.createSelectedReferenceService.mapPossibleReferencesToSelectedReferences(
+      selected,
+      this.referenceField()
+    )
     this.selectedProfileAsReference.emit(selectedFields)
   }
 
@@ -123,11 +104,7 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((possibleReferences) => {
-        this.possibleReferencesService.setReferencesMapElement(
-          this.profileId(),
-          this.elementId,
-          possibleReferences
-        )
+        this.possibleReferencesService.setReferencesMapElement(this.profileId(), this.elementId, possibleReferences)
         this.onReferencesConfirmed(possibleReferences)
       })
   }

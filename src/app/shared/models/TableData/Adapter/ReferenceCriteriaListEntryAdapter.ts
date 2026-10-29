@@ -1,14 +1,14 @@
-import { AbstractTableAdapter } from './AbstractTableAdapter'
+import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { ReferenceCriteriaListEntry } from '../../../../model/Search/ListEntries/ReferenceCriteriaListEntry'
+import { DisplayCellData } from '../Cells/Data/DisplayCellData'
+import { IconCellData } from '../Cells/Data/IconCellData'
+import { TextCellData } from '../Cells/Data/TextCellData'
 import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellContext } from '../Cells/TableCellContext'
 import { TableCellUnion } from '../Cells/TableCellUnion'
 import { TableHeaderData } from '../TableHeaderData'
 import { TableRowData } from '../TableRowData'
-import { TerminologySystemDictionary } from 'src/app/model/Utilities/TerminologySystemDictionary'
-import { IconCellData } from '../Cells/Data/IconCellData'
-import { DisplayCellData } from '../Cells/Data/DisplayCellData'
-import { TextCellData } from '../Cells/Data/TextCellData'
+import { AbstractTableAdapter } from './AbstractTableAdapter'
 
 export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<ReferenceCriteriaListEntry> {
   protected buildHeaders(): TableHeaderData {

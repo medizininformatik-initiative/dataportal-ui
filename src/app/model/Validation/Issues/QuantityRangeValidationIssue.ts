@@ -1,41 +1,41 @@
-import { OperatorOptions } from '../../Utilities/Quantity/OperatorOptions';
-import { QuantityUnit } from '../../FeasibilityQuery/QuantityUnit';
-import { QuantityRangeValidationIssueData } from 'src/app/core/model/Validation/QuantityRangeValidationIssueData';
+import { QuantityRangeValidationIssueData } from 'src/app/core/model/Validation/QuantityRangeValidationIssueData'
+import { QuantityUnit } from '../../FeasibilityQuery/QuantityUnit'
+import { OperatorOptions } from '../../Utilities/Quantity/OperatorOptions'
 
 export class QuantityRangeValidationIssue {
-  private readonly type: OperatorOptions.QUANTITY_RANGE;
-  private readonly minValue: number;
-  private readonly maxValue: number;
-  private readonly unit: QuantityUnit;
+  private readonly type: OperatorOptions.QUANTITY_RANGE
+  private readonly minValue: number
+  private readonly maxValue: number
+  private readonly unit: QuantityUnit
 
   constructor(minValue: number, maxValue: number, unit: QuantityUnit) {
-    this.type = OperatorOptions.QUANTITY_RANGE;
-    this.unit = unit;
-    this.minValue = minValue;
-    this.maxValue = maxValue;
+    this.type = OperatorOptions.QUANTITY_RANGE
+    this.unit = unit
+    this.minValue = minValue
+    this.maxValue = maxValue
   }
 
   public getType(): OperatorOptions.QUANTITY_RANGE {
-    return this.type;
+    return this.type
   }
 
   public getUnit(): QuantityUnit {
-    return this.unit;
+    return this.unit
   }
 
   public getMinValue(): number {
-    return this.minValue;
+    return this.minValue
   }
 
   public getMaxValue(): number {
-    return this.maxValue;
+    return this.maxValue
   }
 
   public static fromJson(data: QuantityRangeValidationIssueData): QuantityRangeValidationIssue {
-    const minValue = data.valueFilter.minValue;
-    const maxValue = data.valueFilter.maxValue;
-    const unitData = data.valueFilter.unit;
-    const unit = QuantityUnit.fromJson(unitData);
-    return new QuantityRangeValidationIssue(minValue, maxValue, unit);
+    const minValue = data.valueFilter.minValue
+    const maxValue = data.valueFilter.maxValue
+    const unitData = data.valueFilter.unit
+    const unit = QuantityUnit.fromJson(unitData)
+    return new QuantityRangeValidationIssue(minValue, maxValue, unit)
   }
 }

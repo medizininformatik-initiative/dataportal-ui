@@ -7,9 +7,9 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
   pure: false,
 })
 export class HighlightPipe implements PipeTransform {
-  private sanitizer = inject(DomSanitizer)
+  private readonly sanitizer = inject(DomSanitizer)
 
-  transform(text: string | undefined, term: string | undefined): SafeHtml {
+  public transform(text: string | undefined, term: string | undefined): SafeHtml {
     if (!text) {
       return ''
     }

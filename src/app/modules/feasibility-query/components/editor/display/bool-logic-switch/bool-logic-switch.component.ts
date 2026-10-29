@@ -1,5 +1,5 @@
-import { Component, OnInit, input, output } from '@angular/core'
 import { NgClass } from '@angular/common'
+import { Component, OnInit, input, output } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -10,21 +10,21 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [NgClass, TranslateModule],
 })
 export class BoolLogicSwitchComponent implements OnInit {
-  readonly switched = output<string>()
+  public readonly switched = output<string>()
 
-  readonly label = input<'AND' | 'OR'>('AND')
+  public readonly label = input<'AND' | 'OR'>('AND')
 
-  readonly position = input<'inner' | 'outer'>('outer')
+  public readonly position = input<'inner' | 'outer'>('outer')
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
-  getLabelKey(): string {
+  public getLabelKey(): string {
     return 'FEASIBILITY.EDITOR.SWITCH.LABEL_' + this.label()
   }
 
-  switch(): void {
+  public switch(): void {
     this.switched.emit(this.position())
   }
 }

@@ -1,5 +1,5 @@
-import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { Injectable } from '@angular/core'
+import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 
 export enum ProfileStateType {
   BasicFieldsSetButReferenceNotSet,
@@ -36,8 +36,7 @@ export class ProfileValidationService {
    * @returns {ProfileValidationState}
    */
   public validate(profile: DataSelectionProfile): ProfileValidationState {
-    const hasUnlinkedReferences =
-      profile.getProfileFields().getUnlinkedRequiredOrRecommendedReferences().length > 0
+    const hasUnlinkedReferences = profile.getProfileFields().getUnlinkedRequiredOrRecommendedReferences().length > 0
     const basicFieldsSet = profile.getProfileFields().getSelectedBasicFields().length > 0
     const referenceFieldsSet = profile.getProfileFields().getSelectedReferenceFields().length > 0
     const referenceFieldId = this.getUnlinkedReferenceFieldId(profile)

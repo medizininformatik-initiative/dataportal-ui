@@ -1,12 +1,9 @@
 import { computed, inject, Injectable, Signal } from '@angular/core'
-import { DataSelectionMainProfileProviderService } from '../../DataSelectionMainProfileProvider.service'
-import {
-  ProfileValidationService,
-  ProfileValidationState,
-} from './ProfileValidationService.service'
 import { toSignal } from '@angular/core/rxjs-interop'
-import { DataSelectionProviderService } from '../../Provider/DataSelectionProvider.service'
 import { map } from 'rxjs'
+import { DataSelectionMainProfileProviderService } from '../../DataSelectionMainProfileProvider.service'
+import { DataSelectionProviderService } from '../../Provider/DataSelectionProvider.service'
+import { ProfileValidationService, ProfileValidationState } from './ProfileValidationService.service'
 
 export { ProfileStateType, ProfileValidationState } from './ProfileValidationService.service'
 
@@ -38,7 +35,7 @@ export class DataSelectionValidationService {
     equal: () => false,
   })
 
-  readonly validationState: Signal<DataSelectionValidationState> = computed(() => {
+  public readonly validationState: Signal<DataSelectionValidationState> = computed(() => {
     const dataSelection = this.activeDataSelection()
     if (!dataSelection) {
       return INITIAL_STATE

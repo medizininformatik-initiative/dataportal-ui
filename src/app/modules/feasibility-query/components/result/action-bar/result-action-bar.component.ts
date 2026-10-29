@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, inject, input } from '@angular/core'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { TranslateModule } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
-import { TranslateModule } from '@ngx-translate/core'
 
 /**
  * @todo add save button for feasibility and download button. Save and download should be active once a result is available.
@@ -16,17 +16,17 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, TranslateModule],
 })
 export class ResultActionBarComponent implements OnInit, OnDestroy {
-  private navigationHelperService = inject(NavigationHelperService)
+  private readonly navigationHelperService = inject(NavigationHelperService)
 
-  readonly hasQueryResult = input<boolean>(undefined)
+  public readonly hasQueryResult = input<boolean>(undefined)
 
-  saveDataQueryModalSubscription: Subscription
+  public saveDataQueryModalSubscription: Subscription
 
   constructor() {}
 
-  ngOnInit() {}
+  public ngOnInit() {}
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.saveDataQueryModalSubscription?.unsubscribe()
   }
 

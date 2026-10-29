@@ -1,25 +1,25 @@
 export abstract class AbstractAttributeGroupFilter {
-  type: string;
-  name: string;
+  public type: string
+  public name: string
 
   constructor(type: string, name: string) {
-    this.type = type;
-    this.name = name;
+    this.type = type
+    this.name = name
   }
 
   public getType(): string {
-    return this.type;
+    return this.type
   }
 
   public setType(value: string): void {
-    this.type = value;
+    this.type = value
   }
 
   public getName(): string {
-    return this.name;
+    return this.name
   }
 
   public setName(value: string): void {
-    this.name = value;
+    this.name = value
   }
 }

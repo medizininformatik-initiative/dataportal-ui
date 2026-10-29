@@ -7,13 +7,13 @@ import { ProfileSearchService } from '../Search/SearchTypes/Profile/ProfileSearc
   providedIn: 'root',
 })
 export class DataSelectionProfileResolverService {
-  private profileSearchService = inject(ProfileSearchService)
+  private readonly profileSearchService = inject(ProfileSearchService)
 
   constructor() {}
 
   /**
    * Resolves the data selection profiles by fetching it from the backend.
-   * @returns An observable containing the data selection profile results.
+   * @returns {Observable<ProfileResultList>} An observable containing the data selection profile results.
    */
   public resolve(): Observable<ProfileResultList> {
     return this.profileSearchService.search('')

@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing'
 import { MaterialModule } from '../../../layout/material/material.module'
 
 import { ButtonComponent } from './button.component'
-import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe.skip('ButtonComponent', () => {
   let component: ButtonComponent

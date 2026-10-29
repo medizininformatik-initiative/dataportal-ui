@@ -1,17 +1,17 @@
+import { Injectable, inject } from '@angular/core'
 import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import { FilterProvider } from './SearchFilterProvider.service'
-import { Injectable, inject } from '@angular/core'
-import { CriteriaSearchFilterService } from './CriteriaSearchFilter.service'
-import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder'
 import { TerminologyPaths } from '../../Backend/Paths/TerminologyPaths'
+import { SearchUrlBuilder } from '../UrlBuilder/SearchUrlBuilder'
+import { CriteriaSearchFilterService } from './CriteriaSearchFilter.service'
+import { FilterProvider } from './SearchFilterProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriteriaFilterFetchService {
-  private searchFilterService = inject(CriteriaSearchFilterService)
-  private filterProvider = inject(FilterProvider)
+  private readonly searchFilterService = inject(CriteriaSearchFilterService)
+  private readonly filterProvider = inject(FilterProvider)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -27,8 +27,8 @@ export class CriteriaFilterFetchService {
    * URL parameters (consistent with the API contract: the target filter's own
    * current selection should not constrain the options returned for it).
    *
-   * @param searchText The current search term.
-   * @param targetFilter The filter type that is the target of the request.
+   * @param {string} searchText The current search term.
+   * @param {string} targetFilter The filter type that is the target of the request.
    */
   public fetchAndUpdateFilters(searchText: string, targetFilter: string): void {
     const url = this.buildUrl(searchText, targetFilter?.toLocaleLowerCase())
@@ -39,17 +39,13 @@ export class CriteriaFilterFetchService {
 
   private buildUrl(searchText: string, targetFilter?: string): string {
     const currentFilters = this.filterProvider.getCriteriaSearchFiltersValue()
-    const builder = new SearchUrlBuilder(TerminologyPaths.SEARCH_FILTER_ENDPOINT).withSearchTerm(
-      searchText
-    )
+    const builder = new SearchUrlBuilder(TerminologyPaths.SEARCH_FILTER_ENDPOINT).withSearchTerm(searchText)
 
     if (targetFilter) {
       builder.withTargetFilter(targetFilter)
     }
 
-    const filtersToApply = targetFilter
-      ? currentFilters.filter((f) => f.getName() !== targetFilter)
-      : currentFilters
+    const filtersToApply = targetFilter ? currentFilters.filter((f) => f.getName() !== targetFilter) : currentFilters
 
     filtersToApply
       .filter((f) => f.getSelectedValues().length > 0)
@@ -70,7 +66,7 @@ export class CriteriaFilterFetchService {
 
   /**
    * Update the existing filters with the values
-   * @param fetchedFilters
+   * @param {CriteriaSearchFilter[]} fetchedFilters
    */
   private mergeFiltersIntoProvider(fetchedFilters: CriteriaSearchFilter[]): void {
     const currentFilters = this.filterProvider.getCriteriaSearchFiltersValue()

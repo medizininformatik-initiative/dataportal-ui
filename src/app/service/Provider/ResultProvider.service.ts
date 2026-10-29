@@ -1,15 +1,15 @@
-import { AbstractArrayEntityProvider } from './Abstract/AbstractArrayEntityProvider'
+import { Injectable, inject } from '@angular/core'
 import { Observable, of, switchMap } from 'rxjs'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
-import { FeasibilityQueryProviderService } from './FeasibilityQueryProvider.service'
-import { Injectable, inject } from '@angular/core'
 import { QueryResult } from '../../model/Result/QueryResult'
+import { AbstractArrayEntityProvider } from './Abstract/AbstractArrayEntityProvider'
+import { FeasibilityQueryProviderService } from './FeasibilityQueryProvider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ResultProviderService extends AbstractArrayEntityProvider<QueryResult> {
-  private feasibilityQueryProvider = inject(FeasibilityQueryProviderService)
+  private readonly feasibilityQueryProvider = inject(FeasibilityQueryProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

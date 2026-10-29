@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Display } from 'src/app/model/DataSelection/Profile/Display';
+import { Component } from '@angular/core'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
 
 @Component({
   selector: 'num-profile-reference-chip',
@@ -7,11 +7,11 @@ import { Display } from 'src/app/model/DataSelection/Profile/Display';
   styleUrls: ['./profile-reference-chip.component.scss'],
 })
 export class ProfileReferenceChipComponent {
-  display: Display;
+  public display: Display
 
-  label: string;
+  public label: string
 
-  linkedProfileId: string;
+  public linkedProfileId: string
 
-  elementId: string;
+  public elementId: string
 }

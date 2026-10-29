@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, it } from '@jest/globals'
 import { TestBed } from '@angular/core/testing'
+import { beforeEach, describe, expect, it } from '@jest/globals'
 import { cohortDefinitionErrors } from '../../../../../test-support/schemas/cohortDefinitionSchema'
-import { GROUPS } from './ui-to-cohort-definition.cases'
 import { FeasibilityQueryValidationService } from '../../Validation/Internal/FeasibilityQueryValidationService.service'
+import { GROUPS } from './ui-to-cohort-definition.cases'
 import { buildQuery, translate } from './ui-to-cohort-definition.fixtures'
 
 /**

@@ -16,7 +16,7 @@ export class Concept {
 
   /**
    * Returns the Display object.
-   * @returns The Display object.
+   * @returns {Display} The Display object.
    */
   public getDisplay(): Display {
     return this.display
@@ -24,16 +24,12 @@ export class Concept {
 
   /**
    * The TerminologyCode of the concept.
-   * @returns The TerminologyCode of the concept.
+   * @returns {TerminologyCode} The TerminologyCode of the concept.
    */
   public getTerminologyCode(): TerminologyCode {
     return this.terminologyCode
   }
 
-  /**
-   * @param json
-   * @returns
-   */
   public static fromJson(json: ConceptData): Concept {
     const display = Display.fromJson(json.display)
     const terminologyCode = TerminologyCode.fromJson(json.terminologyCode)

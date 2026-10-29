@@ -1,11 +1,11 @@
 import { CdkDropList } from '@angular/cdk/drag-drop'
 import { Component, computed, ElementRef, inject, input } from '@angular/core'
-import { CriteriaBoxComponent } from '../../../../../shared/components/criteria-box/criteria-box.component'
-import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
-import { DropGroupDirective } from '../../../../../shared/directives/drop-group/drop-group.directive'
-import { StageProviderService } from '../../../../../service/Provider/StageProvider.service'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
+import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
+import { StageProviderService } from '../../../../../service/Provider/StageProvider.service'
+import { CriteriaBoxComponent } from '../../../../../shared/components/criteria-box/criteria-box.component'
+import { DropGroupDirective } from '../../../../../shared/directives/drop-group/drop-group.directive'
 
 @Component({
   selector: 'num-criteria-stage',
@@ -15,18 +15,18 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [CdkDropList, DropGroupDirective, CriteriaBoxComponent, TranslateModule],
 })
 export class CriteriaStageComponent {
-  readonly elementRef = inject(ElementRef)
+  public readonly elementRef = inject(ElementRef)
   private readonly criterionProviderService = inject(CriterionProviderService)
   private readonly stageProviderService = inject(StageProviderService)
 
-  readonly isEditable = input<boolean | undefined>(undefined)
+  public readonly isEditable = input<boolean | undefined>(undefined)
 
   private readonly stageUIDs = toSignal(this.stageProviderService.getAll(), { initialValue: [] })
   private readonly allCriteria = toSignal(this.criterionProviderService.getAll(), {
     initialValue: [],
   })
 
-  readonly criteriaArray = computed(() => {
+  public readonly criteriaArray = computed(() => {
     this.allCriteria()
     return this.stageUIDs().map((uid) => this.criterionProviderService.getOne(uid))
   })

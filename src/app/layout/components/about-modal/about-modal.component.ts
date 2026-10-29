@@ -1,13 +1,13 @@
-import { AboutInfoBuilderService } from 'src/app/service/AboutInfo/AboutInfoBuilder.service'
-import { AboutInfoData } from 'src/app/model/Interface/AboutInfo/AboutInfoData'
 import { Component, OnInit, inject } from '@angular/core'
-import { DownloadAboutInfoService } from 'src/app/service/Download/DownloadAboutInfo.service'
 import { MatDialogRef } from '@angular/material/dialog'
-import { ModalWindowComponent } from '../../../shared/components/modal-window/modal-window.component'
-import { InfoTileComponent } from '../../../shared/components/info-tile/info-tile.component'
-import { ButtonComponent } from '../../../shared/components/button/button.component'
 import { MatTooltip } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'
+import { AboutInfoData } from 'src/app/model/Interface/AboutInfo/AboutInfoData'
+import { AboutInfoBuilderService } from 'src/app/service/AboutInfo/AboutInfoBuilder.service'
+import { DownloadAboutInfoService } from 'src/app/service/Download/DownloadAboutInfo.service'
+import { ButtonComponent } from '../../../shared/components/button/button.component'
+import { InfoTileComponent } from '../../../shared/components/info-tile/info-tile.component'
+import { ModalWindowComponent } from '../../../shared/components/modal-window/modal-window.component'
 
 @Component({
   selector: 'num-about-modal',
@@ -21,14 +21,14 @@ export class AboutModalComponent implements OnInit {
   private readonly downloadAboutInfoService = inject(DownloadAboutInfoService)
   private readonly dialogRef = inject<MatDialogRef<AboutModalComponent>>(MatDialogRef)
 
-  aboutInfo: AboutInfoData
+  public aboutInfo: AboutInfoData
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.aboutInfo = this.aboutInfoBuilder.buildAboutInfo()
   }
 

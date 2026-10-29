@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { TranslateModule } from '@ngx-translate/core'
+import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
 
 export interface SelectedListItem {
@@ -16,7 +16,7 @@ export interface SelectedListItem {
   imports: [TranslateModule, DisplayTranslationPipe],
 })
 export class SelectedItemsListComponent {
-  readonly items = input<SelectedListItem[]>([])
+  public readonly items = input<SelectedListItem[]>([])
 
-  readonly removeItem = output<number>()
+  public readonly removeItem = output<number>()
 }

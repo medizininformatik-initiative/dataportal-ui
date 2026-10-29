@@ -11,11 +11,7 @@
   <div class="filter-container">
     <div class="filter-bar">
       @for (filter of searchFilters(); track filter.filterType) {
-      <num-search-filter
-        [filter]="filter"
-        (filterChange)="setElasticSearchFilter($event)"
-        [multiSelect]="false"
-      ></num-search-filter>
+      <num-search-filter [filter]="filter" (filterChange)="setElasticSearchFilter($event)" [multiSelect]="false"></num-search-filter>
       }
     </div>
     <button

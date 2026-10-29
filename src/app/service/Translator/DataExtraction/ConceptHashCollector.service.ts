@@ -1,16 +1,16 @@
+import { Injectable, inject } from '@angular/core'
 import { AttributeGroupsData } from 'src/app/model/Interface/AttributeGroupsData'
 import { DataExtractionData } from 'src/app/model/Interface/DataExtractionData'
 import { FilterData } from 'src/app/model/Interface/FilterData'
-import { HashService } from '../../Hash.service'
-import { Injectable, inject } from '@angular/core'
 import { TerminologyCodeData } from 'src/app/model/Interface/TerminologyCodeData'
+import { HashService } from '../../Hash.service'
 import { TypeGuard } from '../../TypeGuard/TypeGuard'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConceptHashCollectorService {
-  private hashService = inject(HashService)
+  private readonly hashService = inject(HashService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])

@@ -1,5 +1,5 @@
-import { InterfaceSavedQueryTile } from './InterfaceSavedQueryTile'
 import { SavedDataQueryListItem } from 'src/app/model/SavedDataQuery/SavedDataQueryListItem'
+import { InterfaceSavedQueryTile } from './InterfaceSavedQueryTile'
 
 export class SavedFeasibilityQueryAdapter {
   public static adapt(savedFeasibilityQuery: SavedDataQueryListItem): InterfaceSavedQueryTile {

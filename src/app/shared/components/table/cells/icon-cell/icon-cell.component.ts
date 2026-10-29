@@ -1,8 +1,8 @@
 import { Component, input, output } from '@angular/core'
-import { IconCellData } from 'src/app/shared/models/TableData/Cells/Data/IconCellData'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatTooltip } from '@angular/material/tooltip'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { IconCellData } from 'src/app/shared/models/TableData/Cells/Data/IconCellData'
 
 @Component({
   selector: 'num-icon-cell',
@@ -12,11 +12,11 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [FontAwesomeModule, MatTooltip, TranslateModule],
 })
 export class IconCellComponent {
-  readonly iconData = input<IconCellData>()
+  public readonly iconData = input<IconCellData>()
 
-  readonly color = input('black')
+  public readonly color = input('black')
 
-  readonly iconClicked = output<void>()
+  public readonly iconClicked = output<void>()
 
   public onIconClick(): void {
     // TODO: The 'emit' function requires a mandatory void argument

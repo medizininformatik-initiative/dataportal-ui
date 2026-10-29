@@ -1,6 +1,6 @@
 import { Component, computed, effect, input } from '@angular/core'
-import { LinkedBadgeComponent } from 'src/app/shared/components/linked-badge/linked-badge.component'
 import { ProfileFields } from 'src/app/model/DataSelection/Profile/Fields/ProfileFields'
+import { LinkedBadgeComponent } from 'src/app/shared/components/linked-badge/linked-badge.component'
 import { ProfileReferenceTileComponent } from 'src/app/shared/components/profile-reference-tile/profile-reference-tile.component'
 
 @Component({
@@ -11,20 +11,15 @@ import { ProfileReferenceTileComponent } from 'src/app/shared/components/profile
   imports: [LinkedBadgeComponent, ProfileReferenceTileComponent],
 })
 export class LinkedReferencesComponent {
-  readonly fields = input.required<ProfileFields>()
-  readonly isEditable = input<boolean>(true)
-  readonly profileId = input.required<string>()
+  public readonly fields = input.required<ProfileFields>()
+  public readonly isEditable = input<boolean>(true)
+  public readonly profileId = input.required<string>()
 
-  readonly unlinked = computed(
-    () => this.fields()?.getUnlinkedRequiredOrRecommendedReferences() ?? []
-  )
+  public readonly unlinked = computed(() => this.fields()?.getUnlinkedRequiredOrRecommendedReferences() ?? [])
 
-  readonly selectedReferences = computed(() => this.fields()?.getSelectedReferenceFields() ?? [])
+  public readonly selectedReferences = computed(() => this.fields()?.getSelectedReferenceFields() ?? [])
 
-  readonly showBadge = computed(
-    () =>
-      (this.unlinked().length > 0 && !!this.isEditable()) || this.selectedReferences().length > 0
-  )
+  public readonly showBadge = computed(() => (this.unlinked().length > 0 && !!this.isEditable()) || this.selectedReferences().length > 0)
 
   constructor() {}
 }

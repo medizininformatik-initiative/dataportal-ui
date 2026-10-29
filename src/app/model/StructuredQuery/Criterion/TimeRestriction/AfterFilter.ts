@@ -1,7 +1,7 @@
-import { AbstractTimeRestriction } from './AbstractTimeRestriction';
+import { AbstractTimeRestriction } from './AbstractTimeRestriction'
 
 export class AfterFilter extends AbstractTimeRestriction {
   constructor(afterDate: string) {
-    super(afterDate);
+    super(afterDate)
   }
 }

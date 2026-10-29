@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core'
-import { ErrorDisplayService } from '../../service/ErrorDisplay/error-display.service'
-import { DataportalErrorPayloadType } from 'src/app/core/model/DataportalErrorPayloadType'
-import { InfoTileComponent } from '../info-tile/info-tile.component'
-import { ButtonComponent } from '../button/button.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { TranslateModule } from '@ngx-translate/core'
+import { DataportalErrorPayloadType } from 'src/app/core/model/DataportalErrorPayloadType'
+import { ErrorDisplayService } from '../../service/ErrorDisplay/error-display.service'
+import { ButtonComponent } from '../button/button.component'
+import { InfoTileComponent } from '../info-tile/info-tile.component'
 
 @Component({
   selector: 'num-error-display',
@@ -14,19 +14,19 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [InfoTileComponent, ButtonComponent, FontAwesomeModule, TranslateModule],
 })
 export class ErrorDisplayComponent implements OnInit {
-  errorDisplayService = inject(ErrorDisplayService)
+  public errorDisplayService = inject(ErrorDisplayService)
 
-  isVisible = false
-  errorData: DataportalErrorPayloadType | null = null
-  errorUrl = ''
-  errorType = ''
+  public isVisible = false
+  public errorData: DataportalErrorPayloadType | null = null
+  public errorUrl = ''
+  public errorType = ''
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.errorDisplayService.visibility$.subscribe((isVisible) => {
       this.isVisible = isVisible
     })

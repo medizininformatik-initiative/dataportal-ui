@@ -1,17 +1,7 @@
-import {
-  Component,
-  OnChanges,
-  OnInit,
-  effect,
-  inject,
-  input,
-  model,
-  output,
-  untracked,
-} from '@angular/core'
+import { Component, OnChanges, OnInit, effect, inject, input, model, output, untracked } from '@angular/core'
 import { QuantityComparatorFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Quantity/QuantityComparatorFilter'
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
 import { QuantityUnit } from 'src/app/model/FeasibilityQuery/QuantityUnit'
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
 import { QuantityFilterFactoryService } from 'src/app/service/Factory/QuantityFilterFactory.service'
 import { ValueSelectComponent } from '../../../../../../../shared/components/value-select/value-select.component'
 
@@ -23,15 +13,15 @@ import { ValueSelectComponent } from '../../../../../../../shared/components/val
   imports: [ValueSelectComponent],
 })
 export class QuantityComparatorComponent {
-  private quantityFilterFactoryService = inject(QuantityFilterFactoryService)
+  private readonly quantityFilterFactoryService = inject(QuantityFilterFactoryService)
 
-  readonly value = model<number>()
+  public readonly value = model<number>()
 
-  readonly quantityComparatorType = input<QuantityComparisonOption>(undefined)
+  public readonly quantityComparatorType = input<QuantityComparisonOption>(undefined)
 
-  readonly quantityFilterUnit = input<QuantityUnit>(undefined)
+  public readonly quantityFilterUnit = input<QuantityUnit>(undefined)
 
-  readonly quantityComparatorInstance = output<QuantityComparatorFilter>()
+  public readonly quantityComparatorInstance = output<QuantityComparatorFilter>()
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -57,10 +47,7 @@ export class QuantityComparatorComponent {
   private emitComparatorInstance(): void {
     const val = this.value()
     if (val != null) {
-      const quantityComparator = this.quantityFilterFactoryService.createQuantityComparatorFilter(
-        val,
-        this.quantityComparatorType()
-      )
+      const quantityComparator = this.quantityFilterFactoryService.createQuantityComparatorFilter(val, this.quantityComparatorType())
       this.quantityComparatorInstance.emit(quantityComparator)
     }
   }

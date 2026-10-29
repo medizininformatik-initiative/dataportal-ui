@@ -1,18 +1,18 @@
-import { AboutModalComponent } from '../../about-modal/about-modal.component'
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { ErrorLogModalComponent } from '../../error-log/error-log-modal.component'
-import { ErrorLogProviderService } from 'src/app/service/Validation/External/ErrorLogProvider.service'
-import { IUserProfile } from '../../../../shared/models/user/user-profile.interface'
+import { MatBadge } from '@angular/material/badge'
+import { MatOption } from '@angular/material/core'
 import { MatDialog } from '@angular/material/dialog'
+import { MatFormField } from '@angular/material/form-field'
+import { MatSelect } from '@angular/material/select'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { TranslateModule } from '@ngx-translate/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { Subscription, tap } from 'rxjs'
 import { UserProfileService } from 'src/app/service/User/UserProfile.service'
-import { MatFormField } from '@angular/material/form-field'
-import { MatSelect } from '@angular/material/select'
-import { MatBadge } from '@angular/material/badge'
-import { MatOption } from '@angular/material/core'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { TranslateModule } from '@ngx-translate/core'
+import { ErrorLogProviderService } from 'src/app/service/Validation/External/ErrorLogProvider.service'
+import { IUserProfile } from '../../../../shared/models/user/user-profile.interface'
+import { AboutModalComponent } from '../../about-modal/about-modal.component'
+import { ErrorLogModalComponent } from '../../error-log/error-log-modal.component'
 
 @Component({
   selector: 'num-header-user-menu',
@@ -22,28 +22,28 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [MatFormField, MatSelect, MatBadge, MatOption, FontAwesomeModule, TranslateModule],
 })
 export class UserMenuComponent implements OnInit, OnDestroy {
-  private oauthService = inject(OAuthService)
-  private matDialog = inject(MatDialog)
-  private userProfileService = inject(UserProfileService)
+  private readonly oauthService = inject(OAuthService)
+  private readonly matDialog = inject(MatDialog)
+  private readonly userProfileService = inject(UserProfileService)
   private readonly errorLogProvider = inject(ErrorLogProviderService)
 
-  profile: IUserProfile
-  validationResultSubscription$: Subscription
+  public profile: IUserProfile
+  public validationResultSubscription$: Subscription
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initProfile()
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.validationResultSubscription$?.unsubscribe()
   }
 
-  async initProfile(): Promise<void> {
+  public async initProfile(): Promise<void> {
     const isLoggedIn = this.oauthService.hasValidAccessToken()
     if (isLoggedIn) {
       this.profile = this.userProfileService.getCurrentProfile()

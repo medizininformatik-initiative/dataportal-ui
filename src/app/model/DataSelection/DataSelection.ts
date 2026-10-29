@@ -1,4 +1,4 @@
-import { DataSelectionProfile } from './Profile/DataSelectionProfile';
+import { DataSelectionProfile } from './Profile/DataSelectionProfile'
 
 /**
  * @todo
@@ -8,24 +8,24 @@ import { DataSelectionProfile } from './Profile/DataSelectionProfile';
  *
  */
 export class DataSelection {
-  private id: string;
+  private readonly id: string
 
-  private profiles: DataSelectionProfile[] = [];
+  private profiles: DataSelectionProfile[] = []
 
   constructor(profiles: DataSelectionProfile[], id: string) {
-    this.profiles = profiles;
-    this.id = id;
+    this.profiles = profiles
+    this.id = id
   }
 
   public getProfiles(): DataSelectionProfile[] {
-    return this.profiles;
+    return this.profiles
   }
 
   public setProfiles(profiles: DataSelectionProfile[]): void {
-    this.profiles = profiles;
+    this.profiles = profiles
   }
 
   public getId(): string {
-    return this.id;
+    return this.id
   }
 }

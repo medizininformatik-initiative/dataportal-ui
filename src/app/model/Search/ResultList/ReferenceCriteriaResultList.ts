@@ -1,4 +1,4 @@
-import { AbstractResultList } from './AbstractResultList';
-import { ReferenceCriteriaListEntry } from '../ListEntries/ReferenceCriteriaListEntry';
+import { ReferenceCriteriaListEntry } from '../ListEntries/ReferenceCriteriaListEntry'
+import { AbstractResultList } from './AbstractResultList'
 
 export class ReferenceCriteriaResultList extends AbstractResultList<ReferenceCriteriaListEntry> {}

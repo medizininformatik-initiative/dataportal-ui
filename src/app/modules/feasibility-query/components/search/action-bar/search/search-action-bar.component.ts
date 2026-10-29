@@ -1,20 +1,20 @@
-import { ActionBarComponent } from '../../../../../../shared/components/action-bar/action-bar.component'
-import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCriterionService'
-import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 import { Component, computed, DestroyRef, inject } from '@angular/core'
-import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
-import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
-import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
 import { MatBadge } from '@angular/material/badge'
 import { MatTooltip } from '@angular/material/tooltip'
-import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
-import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service'
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
-import { StageProviderService } from 'src/app/service/Provider/StageProvider.service'
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
-import { tap } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
+import { tap } from 'rxjs'
+import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
+import { CriteriaListEntry } from 'src/app/model/Search/ListEntries/CriteriaListListEntry'
+import { BuildCriterionService } from 'src/app/service/Criterion/Build/BuildCriterionService'
+import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
+import { FeasibilityQueryProviderHub } from 'src/app/service/Provider/FeasibilityQueryProviderHub'
+import { SelectedTableItemsProvider } from 'src/app/service/Provider/SelectedTableItemsProvider.service'
+import { StageProviderService } from 'src/app/service/Provider/StageProvider.service'
+import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
+import { ActionBarComponent } from '../../../../../../shared/components/action-bar/action-bar.component'
+import { ButtonComponent } from '../../../../../../shared/components/button/button.component'
 
 @Component({
   selector: 'num-search-action-bar',
@@ -24,9 +24,7 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [ActionBarComponent, ButtonComponent, MatBadge, MatTooltip, TranslateModule],
 })
 export class SearchActionBarComponent {
-  private readonly listItemService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(
-    SelectedTableItemsProvider
-  )
+  private readonly listItemService = inject<SelectedTableItemsProvider<CriteriaListEntry>>(SelectedTableItemsProvider)
   private readonly buildCriterionService = inject(BuildCriterionService)
   private readonly stageProviderService = inject(StageProviderService)
   private readonly navigationHelperService = inject(NavigationHelperService)
@@ -35,21 +33,17 @@ export class SearchActionBarComponent {
   private readonly snackbarService = inject(SnackbarService)
   private readonly destroyRef = inject(DestroyRef)
 
-  readonly selectedItems = toSignal(this.listItemService.getItems(), {
+  public readonly selectedItems = toSignal(this.listItemService.getItems(), {
     initialValue: [] as CriteriaListEntry[],
   })
 
-  readonly stageItems = toSignal(this.stageProviderService.getAll(), {
+  public readonly stageItems = toSignal(this.stageProviderService.getAll(), {
     initialValue: [] as string[],
   })
 
-  readonly isFeasibilityExistent = computed(
-    () => this.feasibilityQueryValidationService.validationState().isValid
-  )
+  public readonly isFeasibilityExistent = computed(() => this.feasibilityQueryValidationService.validationState().isValid)
 
-  readonly canViewStage = computed(
-    () => this.stageItems().length > 0 || this.isFeasibilityExistent()
-  )
+  public readonly canViewStage = computed(() => this.stageItems().length > 0 || this.isFeasibilityExistent())
 
   public addItemsToStage(): void {
     const ids = this.listItemService.getIds()
@@ -62,9 +56,7 @@ export class SearchActionBarComponent {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(() =>
-        this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_COHORT')
-      )
+      .subscribe(() => this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_COHORT'))
   }
 
   public navigateToEditor(): void {

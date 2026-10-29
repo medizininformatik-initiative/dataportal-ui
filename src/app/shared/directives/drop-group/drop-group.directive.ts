@@ -1,8 +1,8 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop'
 import { Directive, HostListener, inject, input, OnInit } from '@angular/core'
-import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
+import { FeasibilityQuery } from '../../../model/FeasibilityQuery/FeasibilityQuery'
 import { StageProviderService } from '../../../service/Provider/StageProvider.service'
 
 @Directive({
@@ -10,25 +10,23 @@ import { StageProviderService } from '../../../service/Provider/StageProvider.se
   standalone: true,
 })
 export class DropGroupDirective implements OnInit {
-  private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
-  private feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
-  private stageProviderService = inject(StageProviderService) // ← untouched, stage is outside the facade
+  private readonly feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
+  private readonly feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
+  private readonly stageProviderService = inject(StageProviderService) // ← untouched, stage is outside the facade
 
-  readonly groupType = input<string>(undefined)
+  public readonly groupType = input<string>(undefined)
 
-  criteria: string[][] = []
-  feasibilityQuery: FeasibilityQuery
+  public criteria: string[][] = []
+  public feasibilityQuery: FeasibilityQuery
 
-  ngOnInit() {
-    this.feasibilityQueryProviderService
-      .getActiveFeasibilityQuery()
-      .subscribe((feasibilityQuery) => {
-        this.feasibilityQuery = feasibilityQuery
-      })
+  public ngOnInit() {
+    this.feasibilityQueryProviderService.getActiveFeasibilityQuery().subscribe((feasibilityQuery) => {
+      this.feasibilityQuery = feasibilityQuery
+    })
   }
 
   @HostListener('cdkDropListDropped', ['$event'])
-  onDrop(event: CdkDragDrop<any[]>) {
+  public onDrop(event: CdkDragDrop<any[]>) {
     const droppedCriterion: string = event.item.data
 
     if (event.container.id !== event.previousContainer.id) {
@@ -81,36 +79,22 @@ export class DropGroupDirective implements OnInit {
   }
 
   private deleteFromInclusion(droppedCriterion: string): void {
-    const criteria = this.deleteCriterion(
-      this.feasibilityQuery.getInclusionCriteria(),
-      droppedCriterion
-    )
+    const criteria = this.deleteCriterion(this.feasibilityQuery.getInclusionCriteria(), droppedCriterion)
     this.feasibilityQueryProviderService.setInclusionCriteria(criteria)
   }
 
   private deleteFromExclusion(droppedCriterion: string): void {
-    const criteria = this.deleteCriterion(
-      this.feasibilityQuery.getExclusionCriteria(),
-      droppedCriterion
-    )
+    const criteria = this.deleteCriterion(this.feasibilityQuery.getExclusionCriteria(), droppedCriterion)
     this.feasibilityQueryProviderService.setExclusionCriteria(criteria)
   }
 
-  private moveCriterionInInclusion(
-    criterionID: string,
-    previousIndex: number,
-    currentIndex: number
-  ): void {
+  private moveCriterionInInclusion(criterionID: string, previousIndex: number, currentIndex: number): void {
     this.criteria = this.feasibilityQuery.getInclusionCriteria()
     this.moveCriterion(criterionID, previousIndex, currentIndex)
     this.feasibilityQueryProviderService.setInclusionCriteria(this.criteria)
   }
 
-  private moveCriterionInExclusion(
-    criterionID: string,
-    previousIndex: number,
-    currentIndex: number
-  ): void {
+  private moveCriterionInExclusion(criterionID: string, previousIndex: number, currentIndex: number): void {
     this.criteria = this.feasibilityQuery.getExclusionCriteria()
     this.moveCriterion(criterionID, previousIndex, currentIndex)
     this.feasibilityQueryProviderService.setExclusionCriteria(this.criteria)
@@ -135,10 +119,7 @@ export class DropGroupDirective implements OnInit {
     const positionCurr = this.getPosition(this.criteria, currentIndex)
     let position = positionCurr
     if (previousIndex < currentIndex) {
-      position =
-        positionPrev[0] < positionCurr[0]
-          ? [positionCurr[0] + 1, positionCurr[1]]
-          : [positionCurr[0], positionCurr[1] + 1]
+      position = positionPrev[0] < positionCurr[0] ? [positionCurr[0] + 1, positionCurr[1]] : [positionCurr[0], positionCurr[1] + 1]
       this.addCriterionToPosition(this.criteria, criterionID, position)
       this.criteria = this.deleteCriterion(this.criteria, criterionID)
     } else {
@@ -148,12 +129,7 @@ export class DropGroupDirective implements OnInit {
     }
   }
 
-  private addCriterionToPosition(
-    criteria: string[][],
-    criterionID: string,
-    position: [number, number],
-    addToInnerArray?: boolean
-  ): void {
+  private addCriterionToPosition(criteria: string[][], criterionID: string, position: [number, number], addToInnerArray?: boolean): void {
     if (position[0] >= criteria.length) {
       this.criteria.push([criterionID])
     } else if (criteria[position[0]]?.length > 1 || addToInnerArray) {
@@ -163,11 +139,7 @@ export class DropGroupDirective implements OnInit {
     }
   }
 
-  private addCriterionToInnerArray(
-    criteria: string[][],
-    criterionID: string,
-    currentIndex: number
-  ): void {
+  private addCriterionToInnerArray(criteria: string[][], criterionID: string, currentIndex: number): void {
     const position = this.getPosition(criteria, currentIndex)
     if (currentIndex >= criteria.length) {
       this.criteria.push([criterionID])
