@@ -21,10 +21,23 @@ jobs:
           chmod +x .github/scripts/setup-ontology.sh
           .github/scripts/setup-ontology.sh
 
+      - name: Restore Elasticsearch data
+        id: es-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: cypress/docker/es-data
+          key: es-data-${{ hashFiles('cypress/docker/docker-compose.yml') }}
+
+      - name: Prepare Elasticsearch data folder
+        run: |
+          mkdir -p cypress/docker/es-data
+          sudo chown -R 1000:0 cypress/docker/es-data
+
       - name: Start Docker Compose
-        run: docker compose -f cypress/docker/docker-compose.yml up -d
+        run: docker compose -f cypress/docker/docker-compose.yml -f cypress/docker/docker-compose.ci.yml up -d
 
       - name: Check backend health with curl (wait until ready)
+        id: backend-health
         run: |
           max_attempts=60
           attempt=0
@@ -82,13 +95,16 @@ jobs:
           path: dist/num-portal-webapp
 
 
+      - name: Start dev server
+        run: nohup npm start > ng-serve.log 2>&1 &
+
+      - name: Wait for dev server
+        run: .github/scripts/wait-for-url.sh http://localhost:4200 || { cat ng-serve.log; exit 1; }
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        env:
-          DEBUG: '@cypress/github-action'
         with:
-          start: npm start
-          wait-on: 'http://127.0.0.1:8080, http://localhost:4200'
+          install: false
           browser: chrome
 
       - name: Upload Cypress screenshots
@@ -96,4 +112,19 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
-          path: cypress/screenshots
+          path: |
+            cypress/screenshots
+            ng-serve.log
+
+      - name: Stop Elasticsearch to save a consistent copy
+        if: always() && steps.es-cache.outputs.cache-hit != 'true' && steps.backend-health.outcome == 'success'
+        run: |
+          docker compose -f cypress/docker/docker-compose.yml -f cypress/docker/docker-compose.ci.yml stop -t 60 dataportal-elastic
+          sudo chown -R "$(id -u):$(id -g)" cypress/docker/es-data
+
+      - name: Save Elasticsearch data
+        if: always() && steps.es-cache.outputs.cache-hit != 'true' && steps.backend-health.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: cypress/docker/es-data
+          key: ${{ steps.es-cache.outputs.cache-primary-key }}
