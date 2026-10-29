@@ -1,21 +1,32 @@
 /**
- * Asks the backend whether it accepts every generated case: `npm run crtdl:validate`.
- * Run it after changing `ontology.ts`, `cases.ts` or the builders, and after an ontology upgrade.
- * Defaults are the local docker stack (cypress/docker); override with BACKEND_URL / AUTH_URL.
- */
+ * Ask backend whether it accepts every generated case: `npm run crtdl:validate`. Run after
+ * changing `ontology.ts`, `cases.ts` or builders, and after ontology upgrade. Defaults = local
+ * docker stack (cypress/docker). Override with `BACKEND_URL` / `AUTH_URL`.
+ * */
 import { CASES } from './cases'
 
 const BACKEND = process.env.BACKEND_URL ?? 'http://localhost:8090/api/v6'
 const AUTH = process.env.AUTH_URL ?? 'http://localhost:8080/realms/dataportal/protocol/openid-connect/token'
 
+/**
+ * Fetch auth token.
+ * */
 async function token(): Promise<string> {
   const response = await fetch(AUTH, {
     method: 'POST',
-    body: new URLSearchParams({ grant_type: 'password', client_id: 'dataportal-webapp', username: 'testuser', password: 'testpassword' }),
+    body: new URLSearchParams({
+      grant_type: 'password',
+      client_id: 'dataportal-webapp',
+      username: 'testuser',
+      password: 'testpassword',
+    }),
   })
   return (await response.json()).access_token
 }
 
+/**
+ * Validate every case, exit non-zero on failure.
+ * */
 async function main() {
   const bearer = await token()
   let invalid = 0

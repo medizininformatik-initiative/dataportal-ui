@@ -3,7 +3,6 @@ import { Component, computed, inject, input, OnInit, output } from '@angular/cor
 import { DataSelectionFieldsChipsService } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFieldsChips.service'
 import { DataSelectionFiltersFilterChips } from 'src/app/shared/service/FilterChips/DataSelection/DataSelectionFiltersFilterChips.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
-import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTranslationPipe'
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter'
@@ -22,13 +21,7 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./profile-header.component.scss'],
   providers: [DataSelectionFieldsChipsService, DataSelectionFiltersFilterChips],
   standalone: true,
-  imports: [
-    SearchbarComponent,
-    NumPillExpandableDirective,
-    FilterChipsComponent,
-    AsyncPipe,
-    TranslateModule,
-  ],
+  imports: [SearchbarComponent, NumPillExpandableDirective, FilterChipsComponent, AsyncPipe, TranslateModule],
 })
 export class ProfileHeaderComponent implements OnInit {
   private profileProviderService = inject(ProfileProviderService)
@@ -60,14 +53,12 @@ export class ProfileHeaderComponent implements OnInit {
   })
 
   readonly profileReferenceChips = computed<FilterChipData[]>(() => {
-    const selectedReferenceFields =
-      this.profile()?.getProfileFields()?.getSelectedReferenceFields() ?? []
+    const selectedReferenceFields = this.profile()?.getProfileFields()?.getSelectedReferenceFields() ?? []
     return this.getProfileReferenceChips(selectedReferenceFields)
   })
 
   ngOnInit(): void {
-    this.labelNumber =
-      this.profile()?.getLabelNumber() > 0 ? ' (' + this.profile()?.getLabelNumber() + ')' : ''
+    this.labelNumber = this.profile()?.getLabelNumber() > 0 ? ' (' + this.profile()?.getLabelNumber() + ')' : ''
     this.label = this.translation.transform(this.profile()?.getLabel()) + this.labelNumber
     this.placeholder = this.translation.transform(this.profile()?.getDisplay()) + this.labelNumber
   }
@@ -76,9 +67,7 @@ export class ProfileHeaderComponent implements OnInit {
     this.updatedLabel.emit(label)
   }
 
-  private getProfileReferenceChips(
-    selectedReferenceFields: SelectedReferenceField[]
-  ): FilterChipData[] {
+  private getProfileReferenceChips(selectedReferenceFields: SelectedReferenceField[]): FilterChipData[] {
     const groupedByElementId = selectedReferenceFields.reduce((acc, ref) => {
       const key = ref.getElementId()
       if (!acc[key]) {
@@ -86,18 +75,15 @@ export class ProfileHeaderComponent implements OnInit {
       }
       const linkedProfiles = ref
         .getLinkedProfileIds()
-        .map((id) => this.profileProviderService.getOne(id).getDisplay())
-        .filter((profileDisplay): profileDisplay is Display => !!profileDisplay)
+        .map((id) => this.profileProviderService.getOne(id))
+        .filter((profile) => !!profile?.getDisplay())
+        .map((profile) => ({ display: profile.getDisplay(), number: profile.getLabelNumber() }))
 
       acc[key].push(...linkedProfiles)
       return acc
     }, {} as ProfileReferenceGroup)
 
-    const groups: ProfileReferenceGroup[] = Object.entries(groupedByElementId).map(
-      ([elementId, profiles]) => ({ elementId, profiles })
-    )
-    return groups.map((group) =>
-      FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(group)
-    )
+    const groups: ProfileReferenceGroup[] = Object.entries(groupedByElementId).map(([elementId, profiles]) => ({ elementId, profiles }))
+    return groups.map((group) => FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(group))
   }
 }

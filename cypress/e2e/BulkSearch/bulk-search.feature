@@ -8,9 +8,10 @@ Feature: Bulk search
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Bulk Search" page
+    And I am on the "{{pages.feasibilityBulkSearch}}" page
     And I set the language to English
 
+  @component:criteria-bulk-search @behavior:validate
   Scenario Outline: The search button stays disabled until codes, context and terminology are set
     Then the bulk search button should be disabled
     When I enter the bulk search codes "<codes>"
@@ -21,9 +22,10 @@ Feature: Bulk search
     Then the bulk search button should be enabled
 
     Examples:
-      | codes         | terminology | context  |
-      | E10, E11, E66 | ICD-10-GM   | Diagnose |
+      | codes          | terminology          | context          |
+      | {{bulk.codes}} | {{bulk.terminology}} | {{bulk.context}} |
 
+  @component:criteria-bulk-search @behavior:parse
   Scenario Outline: Codes can be separated by different delimiters
     When I enter the bulk search codes "<codes>"
     And I select the bulk search terminology "<terminology>"
@@ -35,11 +37,12 @@ Feature: Bulk search
     And the bulk search result should list the code "<third>"
 
     Examples:
-      | codes         | terminology | context  | count | first | second | third |
-      | E10,E11,E66   | ICD-10-GM   | Diagnose | 3     | E10   | E11    | E66   |
-      | E10 E11 E66   | ICD-10-GM   | Diagnose | 3     | E10   | E11    | E66   |
-      | E10\nE11\nE66 | ICD-10-GM   | Diagnose | 3     | E10   | E11    | E66   |
+      | codes                           | terminology          | context          | count | first          | second          | third          |
+      | {{bulkSearch.commaSeparated}}   | {{bulk.terminology}} | {{bulk.context}} | 3     | {{bulk.first}} | {{bulk.second}} | {{bulk.third}} |
+      | {{bulkSearch.spaceSeparated}}   | {{bulk.terminology}} | {{bulk.context}} | 3     | {{bulk.first}} | {{bulk.second}} | {{bulk.third}} |
+      | {{bulkSearch.newlineSeparated}} | {{bulk.terminology}} | {{bulk.context}} | 3     | {{bulk.first}} | {{bulk.second}} | {{bulk.third}} |
 
+  @component:criteria-bulk-search @behavior:report-not-found
   Scenario Outline: A code that does not exist is reported as not found
     When I enter the bulk search codes "<codes>"
     And I select the bulk search terminology "<terminology>"
@@ -49,5 +52,5 @@ Feature: Bulk search
     And the bulk search should not have found <notFound> codes
 
     Examples:
-      | codes      | terminology | context  | found | notFound |
-      | E11, ZZZ99 | ICD-10-GM   | Diagnose | 1     | 1        |
+      | codes                     | terminology          | context          | found | notFound |
+      | {{bulkSearch.oneUnknown}} | {{bulk.terminology}} | {{bulk.context}} | 1     | 1        |

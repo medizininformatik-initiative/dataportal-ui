@@ -1,20 +1,26 @@
 /**
- * Generic open/closed assertions for any `num-*-modal` component — replaces
- * the same `.should('be.visible')`/`.should('not.exist')` pair duplicated per
- * specific modal tag across several step-definition files.
- */
+ * Generic open and closed assertions for any `num-*-modal` component. Replaces same
+ * `.should('be.visible')` / `.should('not.exist')` pair duplicated per modal tag across step
+ * files.
+ * */
 export class NumModal {
+  /**
+   * Assert modal open.
+   * */
   public shouldBeOpen(tag: string) {
-    // `exist`, not `be.visible` — a CDK MatDialog host (e.g.
-    // num-save-dataquery-modal) renders with `display: contents`, which
-    // Cypress can't compute a bounding box for, so `be.visible` reports it
-    // as not visible even though its content genuinely is. Every modal this
-    // helper targets (dialogs and num-spinner alike) is added/removed from
-    // the DOM structurally, not CSS-hidden, so existence is an equally valid
-    // "is open" signal and isn't subject to this false negative.
+    /**
+     * `exist`, not `be.visible`: CDK MatDialog host (e.g. `num-save-dataquery-modal`) renders with
+     * `display: contents`, Cypress cannot compute bounding box, so `be.visible` reports not
+     * visible though content is. Every modal targeted here (dialogs and `num-spinner`) is added or
+     * removed from DOM structurally, not CSS-hidden: existence is equally valid "is open" signal,
+     * no false negative.
+     * */
     cy.get(tag).should('exist')
   }
 
+  /**
+   * Assert modal closed.
+   * */
   public shouldBeClosed(tag: string) {
     cy.get(tag).should('not.exist')
   }

@@ -3,10 +3,7 @@ import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterCh
 import { Injectable, inject } from '@angular/core'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
-import {
-  ProfileReferenceChipData,
-  ProfileReferenceGroup,
-} from 'src/app/shared/models/FilterChips/ProfileReferenceChipData'
+import { ProfileReferenceChipData, ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData'
 
 @Injectable({
   providedIn: 'root',
@@ -19,16 +16,12 @@ export class ProfileReferenceChipsService {
 
   constructor() {}
 
-  public getProfileReferenceChips(
-    selectedReferenceFields: SelectedReferenceField
-  ): ProfileReferenceChipData {
+  public getProfileReferenceChips(selectedReferenceFields: SelectedReferenceField): ProfileReferenceChipData {
     const referenceGroup = this.getProfileReferenceGroup(selectedReferenceFields)
     return this.adaptToProfileReferenceChipData(referenceGroup)
   }
 
-  private getProfileReferenceGroup(
-    selectedReferenceFields: SelectedReferenceField
-  ): ProfileReferenceGroup {
+  private getProfileReferenceGroup(selectedReferenceFields: SelectedReferenceField): ProfileReferenceGroup {
     const displays = this.getLinkedProfileDisplays(selectedReferenceFields)
     const referenceGroup: ProfileReferenceGroup = {
       elementId: selectedReferenceFields.getElementId(),
@@ -37,12 +30,15 @@ export class ProfileReferenceChipsService {
     return referenceGroup
   }
 
-  private getLinkedProfileDisplays(selectedReferenceField: SelectedReferenceField): Display[] {
+  private getLinkedProfileDisplays(selectedReferenceField: SelectedReferenceField): { display: Display; number: number }[] {
     return selectedReferenceField
       .getLinkedProfileIds()
-      .map((id) => this.profileProviderService.getOne(id).getLabel())
+      .map((id) => ({
+        display: this.profileProviderService.getOne(id).getLabel(),
+        number: this.profileProviderService.getOne(id).getLabelNumber(),
+      }))
 
-      .filter((profileDisplay): profileDisplay is Display => !!profileDisplay)
+      .filter((profileDisplay): profileDisplay is { display: Display; number: number } => !!profileDisplay.display)
   }
 
   private adaptToProfileReferenceChipData(groups: ProfileReferenceGroup): ProfileReferenceChipData {

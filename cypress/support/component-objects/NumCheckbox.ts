@@ -1,21 +1,19 @@
+import { dataCy } from '../dataCy'
 /**
- * Query/interaction helper for the `num-checkbox` shared component — a
- * `<span role="checkbox">` with a click handler, never a real `<input>`.
- * `cy.check()`/`input[type="checkbox"]` cannot work against it; this wraps the
- * actual clickable element via its `data-cy="checkbox"` (see
- * checkbox.component.html / cypress/CLAUDE.md's registry).
- */
+ * Query and interaction helper for `num-checkbox` shared component: `<span role="checkbox">`
+ * with click handler, never real `<input>`. `cy.check()` / `input[type="checkbox"]` cannot
+ * work. Wraps real clickable element via `data-cy="checkbox"` (see checkbox.component.html,
+ * cypress/CLAUDE.md registry).
+ * */
 export class NumCheckbox {
   /**
-   * Toggles the checkbox in the current scope. Call from within a
-   * `.within()` block scoped to the right container (e.g. a table row) —
-   * deliberately takes no scope selector of its own: `cy.get('body')` used as
-   * a "scope" inside an active `.within()` block breaks *out* of it back to
-   * the whole document, so composing a selector-based scope here would
-   * silently toggle the wrong checkbox when called from within one.
-   */
+   * Toggle checkbox in current scope. Call inside `.within()` scoped to right container (e.g.
+   * table row). Takes no scope selector on purpose: `cy.get('body')` as scope inside active
+   * `.within()` breaks OUT to whole document, so selector-based scope would silently toggle
+   * wrong checkbox.
+   * */
   public toggle() {
-    cy.get('[data-cy="checkbox"]').click()
+    cy.get(dataCy('checkbox')).click()
   }
 }
 

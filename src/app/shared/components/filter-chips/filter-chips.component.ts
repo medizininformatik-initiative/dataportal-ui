@@ -29,9 +29,7 @@ export class FilterChipsComponent {
   constructor() {
     effect(() => {
       this.filterChips().forEach((chip) => {
-        chip.twoLineDisplay = chip.typeExpanded
-          ? this.getTrimmedLength(chip.type) > this.twoLineCharLimit
-          : false
+        chip.twoLineDisplay = chip.typeExpanded ? this.getTrimmedLength(chip.type) > this.twoLineCharLimit : false
       })
     })
   }
@@ -42,9 +40,7 @@ export class FilterChipsComponent {
 
   public toggleTypeExpanded(chip: FilterChipData) {
     chip.typeExpanded = !chip.typeExpanded
-    chip.twoLineDisplay = chip.typeExpanded
-      ? this.getTrimmedLength(chip.type) > this.twoLineCharLimit
-      : false
+    chip.twoLineDisplay = chip.typeExpanded ? this.getTrimmedLength(chip.type) > this.twoLineCharLimit : false
   }
 
   public getTrimmedLength(display: FilterChipData['type']): number {
@@ -56,5 +52,13 @@ export class FilterChipsComponent {
       .slice(this.maxVisible())
       .map((chip) => this.translation.transform(chip.text))
       .join(' • ')
+  }
+
+  public buildChipText(chip: FilterChipPropertyData): string {
+    let label = this.translation.transform(chip.text)
+    if (chip.labelNumber && chip.labelNumber > 0) {
+      label += ` (${chip.labelNumber})`
+    }
+    return label
   }
 }

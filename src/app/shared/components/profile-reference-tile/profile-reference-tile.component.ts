@@ -59,25 +59,21 @@ export class ProfileReferenceTileComponent implements OnInit {
   display: Signal<Display> = computed(() => this.field()?.getDisplay())
   elementId: Signal<string> = computed(() => this.field()?.getElementId() ?? undefined)
 
-  readonly menuItems: Signal<ReturnType<ProfileReferenceMenuService['getMenuItems']>> = computed(
-    () => {
-      const idToUse = this.parentId() ?? ''
-      return this.profileReferenceMenuService.getMenuItems(idToUse, { elementId: this.elementId() })
-    }
-  )
+  readonly menuItems: Signal<ReturnType<ProfileReferenceMenuService['getMenuItems']>> = computed(() => {
+    const idToUse = this.parentId() ?? ''
+    return this.profileReferenceMenuService.getMenuItems(idToUse, { elementId: this.elementId() })
+  })
 
   constructor() {}
 
   ngOnInit(): void {
     this.profileReferenceMenuService.getMenuItems(this.parentId(), { elementId: this.elementId() })
-    this.initiliazeDisplayDataFiletrChips()
+    this.initializeDisplayDataFilterChips()
   }
 
-  private initiliazeDisplayDataFiletrChips() {
+  private initializeDisplayDataFilterChips() {
     if (this.referenceField()) {
-      this.filterChips.push(
-        this.profileReferenceChipsService.getProfileReferenceChips(this.referenceField())
-      )
+      this.filterChips.push(this.profileReferenceChipsService.getProfileReferenceChips(this.referenceField()))
     }
   }
 
@@ -94,9 +90,7 @@ export class ProfileReferenceTileComponent implements OnInit {
     const index = this.getIndexOfSelectedReferenceField(selectedReferences)
 
     if (index !== -1) {
-      selectedReferences[index] = SelectedReferenceFieldsCloner.deepCopySelectedReferenceField(
-        this.referenceField()
-      )
+      selectedReferences[index] = SelectedReferenceFieldsCloner.deepCopySelectedReferenceField(this.referenceField())
       this.updateProfile(profile)
     }
   }
@@ -108,8 +102,7 @@ export class ProfileReferenceTileComponent implements OnInit {
 
   private getIndexOfSelectedReferenceField(selectedReferences: SelectedReferenceField[]): number {
     const index = selectedReferences.findIndex(
-      (field: SelectedReferenceField) =>
-        field.getElementId() === this.referenceField().getElementId()
+      (field: SelectedReferenceField) => field.getElementId() === this.referenceField().getElementId()
     )
     return index
   }
@@ -125,8 +118,7 @@ export class ProfileReferenceTileComponent implements OnInit {
     if (this.unlinkedRequiredOrRecommendedReferences()) {
       const profileFields = profile.getProfileFields().getReferenceFields()
       const foundField = profileFields.find(
-        (field: ReferenceField) =>
-          field.getElementId() === this.unlinkedRequiredOrRecommendedReferences().getElementId()
+        (field: ReferenceField) => field.getElementId() === this.unlinkedRequiredOrRecommendedReferences().getElementId()
       )
       if (foundField) {
         foundField.setRecommended(false)

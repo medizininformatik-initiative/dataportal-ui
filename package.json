@@ -12,6 +12,10 @@
     "pretty-quick": "pretty-quick --pattern \"src/**/*.{scss,html}\"",
     "e2e": "ng e2e",
     "cypress": "npx cypress open",
+    "cypress:run": "cypress run --browser chrome",
+    "gherkin:align": "node cypress/scripts/align-tables.cjs",
+    "cypress:lint": "eslint --rulesdir cypress/eslint-rules cypress --ext .ts",
+    "gherkin:lint": "node cypress/scripts/lint-features.mjs",
     "coverage:features": "node cypress/scripts/feature-coverage.mjs"
   },
   "private": true,
@@ -100,6 +104,14 @@
     }
   },
   "lint-staged": {
+    "cypress/e2e/**/*.feature": [
+      "node cypress/scripts/align-tables.cjs",
+      "node cypress/scripts/lint-features.mjs"
+    ],
+    "cypress/**/*.ts": [
+      "prettier --write",
+      "eslint --rulesdir cypress/eslint-rules --max-warnings=0"
+    ],
     "src/**/*.{ts}": [
       "ng-lint-staged lint --fix --"
     ]
@@ -110,6 +122,8 @@
     "indent": 4
   },
   "cypress-cucumber-preprocessor": {
+    "filterSpecs": true,
+    "omitFiltered": true,
     "stepDefinitions": [
       "cypress/e2e/[filepath]/**/*.{js,ts}",
       "cypress/e2e/[filepath].{js,ts}",

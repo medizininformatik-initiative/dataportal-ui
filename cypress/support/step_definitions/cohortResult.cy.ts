@@ -1,62 +1,87 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { dataCy } from '../dataCy'
+import { defineStep } from '../defineStep'
 import { numButton } from '../component-objects/NumButton'
 import { numModal } from '../component-objects/NumModal'
 
 /**
- * Relocated from `cypress/e2e/CohorttResult/cohort-result.ts` — its
- * save-dialog steps (I see a dialog / I add the title / ... / I should see
- * the dialog closing) turned out to be shared with saved-queries.feature,
- * not cohort-result.feature-specific. Cucumber only auto-loads a step file
- * for a feature of the exact same basename, or for anything under
- * support/step_definitions/ (see cypress/CLAUDE.md) — a genuinely shared
- * step file has to live here, not next to one particular feature.
- */
+ * Steps for feasibility result and save-cohort dialog. Moved from
+ * `cypress/e2e/CohortResult/cohort-result.ts`: save-dialog steps are shared with
+ * saved-queries.feature. Cucumber auto-loads step file only for same-basename feature or under
+ * `support/step_definitions/` (see cypress/CLAUDE.md), so shared steps live here.
+ * */
 export class CohortResult {
+  /**
+   * Assert result spinner visible.
+   * */
   public spinnerIsVisible() {
     numModal.shouldBeOpen('num-spinner')
   }
 
+  /**
+   * Assert result spinner gone.
+   * */
   public spinnerIsNotVisible() {
     numModal.shouldBeClosed('num-spinner')
   }
 
+  /**
+   * Wait for feasibility result. Computation time varies with backend load, so use long retry
+   * timeout, no fixed sleep. Timeout bound by backend `.settings` (`passthroughPollingTimeUi`,
+   * `queryResultExpiry`, both PT1M here, from `GET /.settings`, no auth): result arrives or
+   * query expires within ~60s, so 70s = full cycle plus slack. Spinner disappearing IS
+   * completion signal: needs same long timeout as "Number of patients" check, not default ~4s.
+   * */
   public resultIsVisible() {
-    // Feasibility computation time varies with backend load — a generous
-    // retry timeout stays patient without blindly sleeping a fixed amount
-    // every time the way the old `after {int} seconds` step did. The
-    // timeout is bounded by the backend's own `.settings` config
-    // (`passthroughPollingTimeUi`/`queryResultExpiry`, both PT1M in this
-    // env — confirmed via `GET /.settings`, no auth needed): a real result
-    // either arrives or the query expires within ~60s, so 70s covers a full
-    // cycle plus slack. The spinner disappearing *is* the completion
-    // signal, so it needs the same generous timeout as the "Number of
-    // patients" check below, not the default ~4s.
+    /**
+     * Wait for feasibility result. Computation time varies with backend load, so use long retry
+     * timeout, no fixed sleep. Timeout bound by backend `.settings` (`passthroughPollingTimeUi`,
+     * `queryResultExpiry`, both PT1M here, from `GET /.settings`, no auth): result arrives or
+     * query expires within ~60s, so 70s = full cycle plus slack. Spinner disappearing IS
+     * completion signal: needs same long timeout as "Number of patients" check, not default ~4s.
+     * */
     cy.get('num-spinner', { timeout: 70000 }).should('not.exist')
     cy.get('div', { timeout: 70000 }).contains('Number of patients').should('be.visible')
   }
 
+  /**
+   * Assert save-cohort dialog open.
+   * */
   public openSaveDialog() {
     numModal.shouldBeOpen('num-save-dataquery-modal')
   }
 
+  /**
+   * Type title into save dialog.
+   * */
   public addTitle(title: string) {
-    // Typing while the dialog is still opening loses the text (the input is
-    // re-initialised as the open animation ends, leaving it empty and "Save"
-    // disabled). Wait for Material's opening state to end, then assert the value.
+    /**
+     * Typing while dialog still opens loses text: input re-initialises when open animation ends,
+     * leaving it empty and "Save" disabled. Wait for Material opening state to end, then assert
+     * value.
+     * */
     cy.get('.mat-mdc-dialog-container')
       .should('have.class', 'mdc-dialog--open')
       .and('not.have.class', 'mdc-dialog--opening')
-    cy.get('[data-cy="dialog-title-input"]').type(title).should('have.value', title)
+    cy.get(dataCy('dialog-title-input')).type(title).should('have.value', title)
   }
 
+  /**
+   * Type comment into save dialog.
+   * */
   public addComment(comment: string) {
-    cy.get('[data-cy="dialog-comment-input"]').type(comment)
+    cy.get(dataCy('dialog-comment-input')).type(comment)
   }
 
+  /**
+   * Click "Save" in save dialog.
+   * */
   public saveCohort() {
     numButton.clickByText('num-save-dataquery-modal', 'Save')
   }
 
+  /**
+   * Assert save dialog closed.
+   * */
   public shouldSeeDialogClosing() {
     numModal.shouldBeClosed('num-save-dataquery-modal')
   }

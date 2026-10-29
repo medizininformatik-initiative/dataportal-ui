@@ -1,18 +1,28 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { dataCy } from '../dataCy'
+import { defineStep } from '../defineStep'
 import { NavItemValue, NavItemPaths, NavItemBaseRoutes } from '../../e2e/Utilities/NavItems'
 import { Page } from '../../e2e/Utilities/pages'
 import { getUrlPathByPage } from '../../e2e/Utilities/pathResolver'
 
+const MAT_NAV_LIST = 'mat-nav-list'
+const NAV_ITEM_FONT = `${MAT_NAV_LIST} .navItem-font`
+
 /**
  * Class for side navigation component tests.
  * @see NavItemValue
- */
+ * */
 export class SideNavTests {
+  /**
+   * Click nav item, assert URL.
+   * */
   public navigateTo(navItemSelector: NavItemValue) {
-    cy.get(`[data-cy="nav-${NavItemBaseRoutes[navItemSelector]}"]`).click()
+    cy.get(dataCy(`nav-${NavItemBaseRoutes[navItemSelector]}`)).click()
     cy.url().should('include', NavItemPaths[navItemSelector])
   }
 
+  /**
+   * Visit page URL only when not already there.
+   * */
   public visitUrl(url: Page) {
     const resolvedUrl: string = getUrlPathByPage(url)
     cy.url().then((currentUrl) => {
@@ -22,39 +32,74 @@ export class SideNavTests {
     })
     cy.url().should('include', resolvedUrl)
   }
+
+  /**
+   * Match toggle inside nav list, not by `aria-label`: label is translated, follows app
+   * language, not suite language.
+   * */
+  public toggle() {
+    cy.get(`${MAT_NAV_LIST} .num-logo-row button`).click()
+  }
+
+  /**
+   * Assert nav collapsed.
+   * */
+  public shouldBeCollapsed() {
+    cy.get(MAT_NAV_LIST).should('have.class', 'collapsed')
+  }
+
+  /**
+   * Assert nav expanded.
+   * */
+  public shouldBeExpanded() {
+    cy.get(MAT_NAV_LIST).should('not.have.class', 'collapsed')
+  }
+
+  /**
+   * Assert nav lists `count` areas.
+   * */
+  public shouldListAreas(count: number) {
+    cy.get(`${MAT_NAV_LIST} a.num-mat-list-item`).should('have.length', count)
+  }
+
+  /**
+   * Assert nav shows label.
+   * */
+  public shouldShowLabel(label: string) {
+    cy.get(NAV_ITEM_FONT).should('contain', label)
+  }
+
+  /**
+   * Assert nav shows no labels.
+   * */
+  public shouldShowNoLabels() {
+    cy.get(NAV_ITEM_FONT).should('not.exist')
+  }
+
+  /**
+   * Unlike `visitUrl`, never navigates. `visitUrl` does hard `cy.visit()` on URL mismatch: after
+   * click it can hide navigation that never happened. This only asserts.
+   * */
+  public shouldArriveOn(page: Page) {
+    cy.url().should('include', getUrlPathByPage(page))
+  }
 }
 export const sideNavTests = new SideNavTests()
-defineStep('I navigate to the {string} page', (navItem: NavItemValue) => {
-  sideNavTests.navigateTo(navItem)
-})
-defineStep('I am on the {string} page', (page: Page) => {
-  sideNavTests.visitUrl(page)
-})
 
-// Side navigation state. The toggle is matched inside the nav list rather than by
-// its aria-label, because that label is translated and follows the app's current
-// language, not the language the suite runs in.
-defineStep('I toggle the side navigation', () => {
-  cy.get('mat-nav-list .num-logo-row button').click()
-})
-defineStep('the side navigation should be collapsed', () => {
-  cy.get('mat-nav-list').should('have.class', 'collapsed')
-})
-defineStep('the side navigation should be expanded', () => {
-  cy.get('mat-nav-list').should('not.have.class', 'collapsed')
-})
-defineStep('the side navigation should list {int} areas', (count: number) => {
-  cy.get('mat-nav-list a.num-mat-list-item').should('have.length', count)
-})
-defineStep('the side navigation should show the label {string}', (label: string) => {
-  cy.get('mat-nav-list .navItem-font').should('contain', label)
-})
-defineStep('the side navigation should show no labels', () => {
-  cy.get('mat-nav-list .navItem-font').should('not.exist')
-})
-// Unlike `I am on the {string} page`, this never navigates: that step does a hard
-// cy.visit() when the URL does not match, so used after a click it can hide a
-// navigation that never happened. This one only asserts.
-defineStep('I should arrive on the {string} page', (page: Page) => {
-  cy.url().should('include', getUrlPathByPage(page))
-})
+defineStep('I navigate to the {string} page', (navItem: NavItemValue) =>
+  sideNavTests.navigateTo(navItem)
+)
+defineStep('I am on the {string} page', (page: Page) => sideNavTests.visitUrl(page))
+defineStep('I toggle the side navigation', () => sideNavTests.toggle())
+defineStep('the side navigation should be collapsed', () => sideNavTests.shouldBeCollapsed())
+defineStep('the side navigation should be expanded', () => sideNavTests.shouldBeExpanded())
+defineStep('the side navigation should list {int} areas', (count: number) =>
+  sideNavTests.shouldListAreas(count)
+)
+defineStep('the side navigation should show the label {string}', (label: string) =>
+  sideNavTests.shouldShowLabel(label)
+)
+defineStep('the side navigation should show no labels', () => sideNavTests.shouldShowNoLabels())
+defineStep('I should arrive on the {string} page', (page: Page) =>
+  sideNavTests.shouldArriveOn(page)
+)

@@ -1,5 +1,5 @@
-import { FilterChipBuilder } from '../../FilterChipBuilder';
-import { ProfileReferenceChipData, ProfileReferenceGroup } from '../../ProfileReferenceChipData';
+import { FilterChipBuilder } from '../../FilterChipBuilder'
+import { ProfileReferenceChipData, ProfileReferenceGroup } from '../../ProfileReferenceChipData'
 
 export class FilterChipProfileRefrenceAdapter {
   /**
@@ -7,13 +7,11 @@ export class FilterChipProfileRefrenceAdapter {
    * @param profileReferenceGroup
    * @returns
    */
-  public static adaptToProfileReferenceChipData(
-    profileReferenceGroup: ProfileReferenceGroup
-  ): ProfileReferenceChipData {
-    const builder = new FilterChipBuilder(profileReferenceGroup.elementId);
+  public static adaptToProfileReferenceChipData(profileReferenceGroup: ProfileReferenceGroup): ProfileReferenceChipData {
+    const builder = new FilterChipBuilder(profileReferenceGroup.elementId)
     profileReferenceGroup.profiles.forEach((profileDisplay) => {
-      builder.addData('4', profileDisplay, false);
-    });
-    return builder.buildFilterChip() as ProfileReferenceChipData;
+      builder.addData('4', profileDisplay.display, false, profileDisplay.number)
+    })
+    return builder.buildFilterChip() as ProfileReferenceChipData
   }
 }

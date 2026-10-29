@@ -1,24 +1,38 @@
 /**
- * Compares a CRTDL that was sent with the one the app gave back. Pure: no Cypress, no CRTDL
- * knowledge beyond which keys the app rewrites.
- *
- * Everything in `expected` must be in `actual`, and lists must keep their length (nothing is
- * dropped or duplicated). The app may add defaults, so extra keys in `actual` are fine.
- */
+ * Compare sent CRTDL with CRTDL app gave back. Pure: no Cypress, no CRTDL knowledge beyond
+ * keys app rewrites. Everything in `expected` must be in `actual`. Lists keep length: nothing
+ * dropped or duplicated. App may add defaults: extra keys in `actual` are fine.
+ * */
 export interface Rules {
-  /** Keys the app regenerates (compared by nothing). */
+  /**
+   * Keys app regenerates, compared by nothing.
+   * */
   ignoreKeys: string[]
-  /** Lists whose entries are regenerated, so only their length is compared. */
+  /**
+   * Lists whose entries are regenerated, so only their length is compared.
+   * */
   lengthOnlyKeys: string[]
 }
 
 export const CRTDL_RULES: Rules = {
-  ignoreKeys: ['id'], // group ids are regenerated on upload
-  lengthOnlyKeys: ['linkedGroups'], // they hold those regenerated ids
+  /**
+   * Group ids regenerate on upload.
+   * */
+  ignoreKeys: ['id'],
+  /**
+   * Keys holding regenerated ids.
+   * */
+  lengthOnlyKeys: ['linkedGroups'],
 }
 
+/**
+ * Cast value to object.
+ * */
 const asObject = (value: unknown) => value as Record<string, unknown>
 
+/**
+ * List differences between expected and actual CRTDL.
+ * */
 export function differences(expected: unknown, actual: unknown, rules: Rules = CRTDL_RULES, path = '$'): string[] {
   if (Array.isArray(expected)) {
     if (!Array.isArray(actual)) return [`${path}: expected a list, got ${JSON.stringify(actual)}`]

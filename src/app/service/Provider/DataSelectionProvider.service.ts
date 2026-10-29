@@ -13,9 +13,7 @@ export class DataSelectionProviderService {
   private profileProviderService = inject(ProfileProviderService)
 
   private selectionMap: Map<string, DataSelection> = new Map()
-  private selectionMapSubject: BehaviorSubject<Map<string, DataSelection>> = new BehaviorSubject(
-    new Map()
-  )
+  private selectionMapSubject: BehaviorSubject<Map<string, DataSelection>> = new BehaviorSubject(new Map())
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -38,9 +36,7 @@ export class DataSelectionProviderService {
   public getActiveDataSelection(): Observable<DataSelection> {
     return this.activeDataSelection
       .getActiveDataSelectionIdObservable()
-      .pipe(
-        switchMap((id) => this.selectionMapSubject.pipe(map((selections) => selections.get(id))))
-      )
+      .pipe(switchMap((id) => this.selectionMapSubject.pipe(map((selections) => selections.get(id)))))
   }
 
   public getActiveProfiles(): Observable<DataSelectionProfile[]> {
@@ -64,11 +60,7 @@ export class DataSelectionProviderService {
     this.setProfileInDataSelection(id, profile, profileProvider)
   }
 
-  public setDataSelection(
-    id: string,
-    dataSelection: DataSelection,
-    setAsActive: boolean = false
-  ): void {
+  public setDataSelection(id: string, dataSelection: DataSelection, setAsActive: boolean = false): void {
     this.selectionMap.set(id, dataSelection)
     this.selectionMapSubject.next(new Map(this.selectionMap))
     if (setAsActive) {
@@ -87,18 +79,12 @@ export class DataSelectionProviderService {
     const dataSelection = this.selectionMap.get(dataSelectionId)
 
     if (dataSelection) {
-      const updatedElements = dataSelection
-        .getProfiles()
-        .filter((profile: DataSelectionProfile) => profile.getId() !== profileId)
+      const updatedElements = dataSelection.getProfiles().filter((profile: DataSelectionProfile) => profile.getId() !== profileId)
       this.commitDataSelection(updatedElements, dataSelectionId)
     }
   }
 
-  public setProfileInDataSelection(
-    dataSelectionId: string,
-    profile: DataSelectionProfile,
-    profileProvider?: 'ADD' | 'SET'
-  ): void {
+  public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile, profileProvider?: 'ADD' | 'SET'): void {
     const dataSelection = this.selectionMap.get(dataSelectionId)
     if (dataSelection) {
       const profiles = dataSelection.getProfiles()
@@ -143,15 +129,16 @@ export class DataSelectionProviderService {
     this.setDataSelection(dataSelection.getId(), dataSelection, true)
   }
 
-  private resolveDuplicateLabel(
-    profiles: DataSelectionProfile[],
-    profile: DataSelectionProfile
-  ): DataSelectionProfile {
+  private resolveDuplicateLabel(profiles: DataSelectionProfile[], profile: DataSelectionProfile): DataSelectionProfile {
+    const texts = profile.getLabel().getTexts()
     const sameProfiles = profiles.filter(
       (existingProfile) =>
-        existingProfile.getLabel().getOriginal() === profile.getLabel().getOriginal()
+        existingProfile.getId() !== profile.getId() &&
+        existingProfile
+          .getLabel()
+          .getTexts()
+          .some((text) => texts.includes(text))
     )
-
     if (sameProfiles.length > 0) {
       sameProfiles.sort((a, b) => b.getLabelNumber() - a.getLabelNumber())
       const newLabelNumber = sameProfiles[0].getLabelNumber() + 1

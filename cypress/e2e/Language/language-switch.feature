@@ -6,18 +6,20 @@ Feature: Language switch
 
   Background:
     Given I am logged in as a user
-    And I am on the "Feasibility Search" page
+    And I am on the "{{pages.feasibilitySearch}}" page
 
+  @component:language @behavior:switch
   Scenario Outline: Switching language translates the side navigation
     When I set the language to <language>
     Then the side navigation should show the label "<first>"
     And the side navigation should show the label "<second>"
 
     Examples:
-      | language | first             | second                         |
-      | German   | Kohortenselektion | Gespeicherte Datendefinitionen |
-      | English  | Cohort Selection  | Saved data definitions         |
+      | language                   | first                                | second                                           |
+      | {{languageSwitch.german}}  | {{languageSwitch.kohortenselektion}} | {{languageSwitch.gespeicherteDatendefinitionen}} |
+      | {{languageSwitch.english}} | {{languageSwitch.cohortSelection}}   | {{languageSwitch.savedDataDefinitions}}          |
 
+  @component:language @behavior:switch
   Scenario Outline: Switching back restores the first language
     When I set the language to <from>
     And I set the language to <to>
@@ -25,14 +27,15 @@ Feature: Language switch
     And the side navigation should show the label "<second>"
 
     Examples:
-      | from    | to      | first            | second                 |
-      | German  | English | Cohort Selection | Saved data definitions |
+      | from                      | to                         | first                              | second                                  |
+      | {{languageSwitch.german}} | {{languageSwitch.english}} | {{languageSwitch.cohortSelection}} | {{languageSwitch.savedDataDefinitions}} |
 
+  @component:language @behavior:persist
   Scenario Outline: The chosen language stays when navigating inside the app
     When I set the language to <language>
     And I navigate to the "<page>" page
     Then the side navigation should show the label "<label>"
 
     Examples:
-      | language | page           | label            |
-      | German   | Data Selection | Merkmalselektion |
+      | language                  | page                             | label                               |
+      | {{languageSwitch.german}} | {{languageSwitch.dataSelection}} | {{languageSwitch.merkmalselektion}} |

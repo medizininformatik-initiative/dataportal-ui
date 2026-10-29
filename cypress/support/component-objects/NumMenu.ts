@@ -1,31 +1,50 @@
+import { dataCy } from '../dataCy'
 import { MenuItemValue } from '../../e2e/Utilities/menuItems'
 
+const MAT_MDC_MENU_CONTENT_VISIBLE = '.mat-mdc-menu-content:visible'
+const MAT_MDC_MENU_ITEM = '.mat-mdc-menu-item'
+
 /**
- * Query/interaction helper for the `num-menu` shared component. Relocated
- * from `cypress/support/step_definitions/menu.cy.ts`. Its internal
- * `.mat-mdc-menu-content`/`.mat-mdc-menu-item` are Angular Material's own
- * generated DOM — no template of ours to attach `data-cy` to, so these stay
- * `cy.contains()` per cypress/CLAUDE.md's data-cy principle; the trigger
- * itself already has `data-cy="openMenu"`.
- */
+ * Query and interaction helper for `num-menu` shared component. Moved from
+ * `cypress/support/step_definitions/menu.cy.ts`. Inner `.mat-mdc-menu-content` /
+ * MAT_MDC_MENU_ITEM are Material generated DOM: no template of ours for `data-cy`, so
+ * `cy.contains()` stays (cypress/CLAUDE.md data-cy principle). Trigger already has
+ * `data-cy="openMenu"`.
+ * */
 export class NumMenu {
+  /**
+   * Click menu trigger.
+   * */
   public open() {
-    cy.get('[data-cy="openMenu"]').click()
+    cy.get(dataCy('openMenu')).click()
   }
 
+  /**
+   * Click last menu trigger of page: newest entry when several lists carry one.
+   * */
+  public openLast() {
+    cy.get(dataCy('openMenu')).last().click()
+  }
+
+  /**
+   * Assert menu offers item.
+   * */
   public shouldOfferItem(menuItemLabel: MenuItemValue) {
-    cy.get('.mat-mdc-menu-content:visible')
+    cy.get(MAT_MDC_MENU_CONTENT_VISIBLE)
       .should('exist')
       .within(() => {
-        cy.get('.mat-mdc-menu-item').contains(menuItemLabel).should('be.visible')
+        cy.get(MAT_MDC_MENU_ITEM).contains(menuItemLabel).should('be.visible')
       })
   }
 
+  /**
+   * Click menu item.
+   * */
   public clickItem(menuItemLabel: MenuItemValue) {
-    cy.get('.mat-mdc-menu-content:visible')
+    cy.get(MAT_MDC_MENU_CONTENT_VISIBLE)
       .should('exist')
       .within(() => {
-        cy.get('.mat-mdc-menu-item').contains(menuItemLabel).should('be.visible').click()
+        cy.get(MAT_MDC_MENU_ITEM).contains(menuItemLabel).should('be.visible').click()
       })
   }
 }

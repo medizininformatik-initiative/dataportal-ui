@@ -16,14 +16,14 @@ export class SelectableReferenceTileComponent implements OnInit {
 
   readonly selectedProfile = output<PossibleProfileReferenceData>()
 
-  display: Display
+  display: string
 
   label: string
 
   constructor() {}
 
   ngOnInit(): void {
-    this.display = this.possibleReference().display
+    this.display = this.possibleReference().display.getOriginal()
     this.label = this.possibleReference().label
   }
 

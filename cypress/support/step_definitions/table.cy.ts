@@ -1,27 +1,48 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
+import { defineStep } from '../defineStep'
 import { numTable } from '../component-objects/NumTable'
 
+/**
+ * Steps for result tables.
+ * */
 export class Table {
+  /**
+   * Assert row containing text exists.
+   * */
   public assertRowItemExits(text: string) {
     numTable.shouldContainRow(text)
   }
 
+  /**
+   * Tick checkbox in row.
+   * */
   public selectCheckboxInRow(text: string): void {
     numTable.selectCheckboxInRow(text)
   }
 
+  /**
+   * Assert table row count.
+   * */
   public assertTableRowCount(rowCount: number): void {
     cy.get('num-table tbody > tr').should('have.length', rowCount)
   }
 
+  /**
+   * Toggle select-all checkbox.
+   * */
   public toggleSelectAll(): void {
     numTable.toggleSelectAll()
   }
 
+  /**
+   * Assert all rows selected.
+   * */
   public assertAllRowsSelected(): void {
     numTable.shouldHaveAllRowsChecked()
   }
 
+  /**
+   * Assert no row selected.
+   * */
   public assertNoRowSelected(): void {
     numTable.shouldHaveNoRowChecked()
   }

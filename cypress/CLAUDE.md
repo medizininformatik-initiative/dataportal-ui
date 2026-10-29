@@ -11,8 +11,8 @@ ontology context, and how to re-verify one).
 
 `package.json`'s `cypress-cucumber-preprocessor.stepDefinitions` glob resolves a
 `.feature` file's steps from either (a) a `.ts` file with the **exact same
-basename**, in the same directory (`CohortEdit/cohort-edit.ts` ↔
-`CohortEdit/cohort-edit.feature`), or (b) anything under
+basename**, in the same directory (`CohortSearch/cohort-search.ts` ↔
+`CohortSearch/cohort-search.feature`), or (b) anything under
 `cypress/support/step_definitions/` (loaded globally, for every feature).
 There's no third option — placing new steps in an unrelated same-folder file
 (e.g. adding a new feature's steps into an existing sibling's `.ts`) silently
@@ -34,7 +34,7 @@ Cypress component-object (see below) that reads it:
 | Component | `numDataCy` value(s) | Read by |
 |---|---|---|
 | `checkbox` | `"checkbox"` | `NumCheckbox` |
-| `criteria-box` | `criterion().getDisplay()` (dynamic, on the inner `.container` div — **not** the `num-criteria-box` host tag, so a plain `[data-cy="..."]` lookup needs `.container[data-cy="..."]` to stay unambiguous, see below); `"criterion-content"` | `criterionToEditor.cy.ts`, `NumFilterChips`, `cohort-edit.ts` |
+| `criteria-box` | `criterion().getDisplay()` (dynamic, on the inner `.container` div — **not** the `num-criteria-box` host tag, so a plain `[data-cy="..."]` lookup needs `.container[data-cy="..."]` to stay unambiguous, see below); `"criterion-content"` | `criterionToEditor.cy.ts`, `NumFilterChips`, `quantityFilter.cy.ts` |
 | `side-menu` | `'nav-' + navItem.routeTo` (dynamic, one of the `BasePaths.*` values) | `sideNav.cy.ts` |
 | `save-dataquery-modal` | `"dialog-title-input"`, `"dialog-comment-input"` | `NumModal`/`support/step_definitions/cohortResult.cy.ts` |
 | `saved-query-tile` | `"saved-query-delete-icon"` | `savedQueries.cy.ts` |
@@ -44,6 +44,16 @@ Cypress component-object (see below) that reads it:
 | `language` | `"language-select"`, `"language-option-de"`, `"language-option-en"` | `language.cy.ts` |
 | `tree` | `node.data.display \| displayTranslation` (dynamic, per tree node) | `data-selection-search.ts` |
 | `action-bar` | `"upload-crtdl"` (the file `<input>`); `"download-crtdl-button"` (opens the download modal); `"save-cohort-button"` | `uploadFile.cy.ts`; `action-bar.cy.ts` (icon-only buttons — see its `ICON_ONLY_BUTTONS` lookup, since the other action-bar buttons are text-matched, this one has no visible text) |
+
+Cypress code never writes `[data-cy="..."]` itself, and never passes a free string as a fixed hook:
+- `dataCy(hook)` (`support/dataCy.ts`) takes only a `Hook`: a value of `FIXED_HOOKS` or `nav-<route>`.
+  A typo is a `tsc` error.
+- `dataCyOf(text, carrier)` is for hooks that carry entity text (criterium, chip, tree node, ...).
+  `carrier` is the element class/tag from the `Carrier` union, so no bare wildcard lookup exists.
+- New `numDataCy="literal"` in a template: add it to `FIXED_HOOKS`. Spec
+  `num-data-cy.registry.spec.ts` fails on a literal missing from `FIXED_HOOKS` and on an entry no
+  template uses. New text-carrying element: add its selector to `Carrier`.
+- `cypress:lint` (`no-restricted-syntax`) rejects any raw `data-cy` string outside `dataCy.ts`.
 
 Deliberately **not** migrated: `dashboard`, `data-selection-boxes`,
 `query-editor/criterion`, `reference-edit`, `save-dialog` (feasibility-query
@@ -68,7 +78,7 @@ Discovered while retrofitting `save-dataquery-modal`: an empty `<input>`/
 `<textarea>` or a bare icon (`fa-icon`, no label) has nothing to match against,
 so `data-cy` is the right tool. A button with a real, stable, translated label
 does — Cypress's own guidance already covers that case (see below), and this
-codebase already does it successfully (`action-bar.cy.ts`, `cohort-edit.ts`'s
+codebase already does it successfully (`action-bar.cy.ts`, `cohort-edit.feature`'s
 `cy.contains('button', 'Select')`). Adding `data-cy` to every button would just
 duplicate what text-matching already does correctly. When multiple instances of
 the same component share one label (e.g. every `saved-query-tile` has a
@@ -177,7 +187,7 @@ plain by-name one.
 
 ## A value filter's chip can share its data-cy with its own criteria-box
 
-`NumFilterChips`/`cohort-edit.ts` look up a criteria-box by
+`NumFilterChips`/`quantityFilter.cy.ts` look up a criteria-box by
 `[data-cy="<criterium display>"]`. For a **value** (not attribute) quantity
 filter, the filter concept *is* the criterion itself, so its filter-chip
 block ends up carrying the exact same `data-cy` text as the criteria-box it
@@ -207,8 +217,8 @@ never showed this because their update path happens to settle before the
 "Selected Filters" summary (`.header-col-chips`, fed by the same round trip)
 shows the new value **before** clicking "Close" — Cypress's normal retry
 absorbs the propagation delay without a fixed `cy.wait()`. See
-`CohortEdit.shouldSeeChipValueInFilterSummary` in
-`cypress/e2e/CohortEdit/cohort-edit.ts`.
+the step `I should see {string} applied in the filter summary` in
+`cypress/support/step_definitions/quantityFilter.cy.ts`.
 
 ## A quantity comparator filter chip's exact text is `"<symbol> <value> <unit>"`
 
@@ -301,3 +311,48 @@ value) references exactly one value set. The two ICD value sets sit in different
 `http://fhir.de/ValueSet/bfarm/icd-10-gm` in `MII_PR_Onko_Tod`), so one code can never appear in
 two systems in the same table. That is why `attribute-concept-same-code-different-system.feature`
 is `@pending`.
+
+## Time restriction is one shared component: keep its scenarios in step
+
+`num-edit-time-restriction` is used by the criterion editor, the profile (data selection) editor and
+the reference editor. Its scenarios (comparators before/at/after, between, invalid between) must exist
+in every feature that edits one; the rule and steps are in `TESTING.md`. The datepicker commits on
+blur, so an unblurred date shows no chip and is not applied yet.
+
+A run can also end on `data-query/cohort-definition` in German mid-scenario (seen once on a ~30s data
+selection scenario, same symptom as the OAuth refresh note above). Rerun before debugging the step.
+
+## A selector root appears once per file, and once per suite (enforced per file by `no-duplicate-selector`)
+
+Rule `cypress/eslint-rules/no-duplicate-selector.js` compares the **root** (first token) of a static
+selector, so `.box`, `.box .row` and `.box .name` are three uses of `.box`, not three different
+strings. It checks the first argument of `cy.get`, `.find`, `.closest`, `.filter`, `.children`,
+`.parents` and 2-argument `.contains`; template literals count up to their first `${}`. Bare tags
+(`td`) and attribute-only selectors (`[role="tab"]`) are exempt. Fix by where it is used:
+- One file: file-level `const NAME = '...'` above the class (or a private method when it takes a
+  parameter or the whole `cy.get(...)` chain repeats).
+- Two or more files: it belongs to a component, so move it into that component's class in
+  `support/component-objects/` (`NumBetweenFilter` for `num-between-filter`). Step classes call its
+  methods and never hold the selector. No shared `selectors.ts` bag.
+- Fixed `data-cy` value: `dataCy()` as above.
+ESLint sees one file at a time, so the cross-file case has no rule: check it in review.
+
+## Step files: one class, steps only call it (enforced by `cypress/.eslintrc.json`)
+
+Every file with `defineStep` declares a class that holds all `cy.*`, selectors, waits, validation and
+data-table parsing; each step body is one call on that class's instance. ESLint (`npm run cypress:lint`,
+also run on staged `cypress/**/*.ts` with Prettier) rejects `cy.*`, `expect`/`if`/`switch`/`throw` or a
+multi-statement body inside `defineStep`, and a step file without a class. Forwarding to a `Num*`
+component-object still goes through a thin method of the file's own class.
+
+## Comment style (enforced by `cypress/.eslintrc.json` and `cypress/eslint-rules/comment-format.js`)
+
+Every comment in `cypress/**/*.ts` is a multi-line block: `/**` alone on the first line, ` * text`
+lines, closing ` * */`, no trailing spaces. `//` comments and one-line `/** x */` blocks are rejected;
+directives (`@ts-*`, `eslint-*`, `/// <reference`) are exempt. Classes, methods, function declarations
+and top-level function consts need a block (`defineStep` callbacks do not). The description must
+start with a capital letter or a backtick, end with `.`, and avoid the words a/an/the/just/really/
+basically/actually/simply/very/please: write terse, article-free sentences ("Open editor of criterium
+added last."). A description cannot start with a quote character, so move the quoted text later.
+`npm run cypress:lint` loads the local rule via `--rulesdir`; an editor ESLint plugin shows it only if
+`eslint.options.rulePaths` points at `cypress/eslint-rules`.

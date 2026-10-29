@@ -103,7 +103,7 @@ services:
     container_name: elastic-search-init
     environment:
       ES_HOST: dataportal-elastic
-      ONTO_GIT_TAG: v5.0.0
+      ONTO_GIT_TAG: v5.0.1
       ONTO_REPO: https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download
       DOWNLOAD_FILENAME: elastic.zip
       FORCE_REINSTALL: true
