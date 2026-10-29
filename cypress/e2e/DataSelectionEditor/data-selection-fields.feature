@@ -11,7 +11,7 @@ Feature: Data Selection Editor - fields
     When I click on the button "{{labels.showSelection}}"
     And I click the edit button on the data selection box "{{dataSelection.conditionFeature}}"
     And I click on the menu item "{{labels.configure}}"
-    Then I am on the "{{pages.queryEditorProfile}}" page
+    Then I should arrive on the "{{pages.queryEditorProfile}}" page
 
   @component:data-selection-feature-editor @behavior:select
   Scenario Outline: Selecting a field lists it and deselecting a default field removes it

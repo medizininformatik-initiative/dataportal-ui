@@ -20,7 +20,7 @@ Feature: Value filter (quantity-comparator) - comparator, value and unit
     And I select the unit "<unit>"
     Then I should see "<chip_value>" applied in the filter summary
     And I click on the button "{{labels.close}}"
-    Then I am on the "{{pages.feasibilityEditor}}" page
+    Then I should arrive on the "{{pages.feasibilityEditor}}" page
     And I should see "<criterium>" in the cohort criteria list with "<panel_name>" and "<chip_value>" selected
     Examples:
       | criterium         | code         | default_comparator                        | new_comparator                           | panel_name        | value | unit         | chip_value                           |

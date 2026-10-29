@@ -10,7 +10,7 @@ Feature: Data Selection Editor - information
     When I click on the button "{{labels.showSelection}}"
     And I click the edit button on the data selection box "{{dataSelection.conditionFeature}}"
     And I click on the menu item "{{labels.configure}}"
-    Then I am on the "{{pages.queryEditorProfile}}" page
+    Then I should arrive on the "{{pages.queryEditorProfile}}" page
 
   @component:data-selection-feature-editor @behavior:show
   Scenario Outline: The information tab explains fields, references, time restriction and concepts

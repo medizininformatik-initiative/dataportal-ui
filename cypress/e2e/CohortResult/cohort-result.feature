@@ -18,7 +18,7 @@ Feature: Cohort Result
     And I save the cohort
     Then I should see the dialog closing
     When I click on the button "{{labels.feasibility}}"
-    Then I am on the "{{pages.feasibilityResult}}" page
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
     Then I see the result
     When I navigate to the "{{pages.savedQueries}}" page
     And I delete the saved query "<title>"

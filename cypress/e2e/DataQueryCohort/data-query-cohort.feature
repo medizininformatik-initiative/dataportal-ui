@@ -23,7 +23,7 @@ Feature: Data Query Cohort
     When I navigate to the "{{labels.dataDefinition}}" page
     Then I should see "<criterium>" in the cohort definition editor
     When I click on the button "{{labels.toFeatureSelection}}"
-    Then I am on the "{{pages.dataQueryDataSelection}}" page
+    Then I should arrive on the "{{pages.dataQueryDataSelection}}" page
 
     Examples:
       | criterium               | code               |

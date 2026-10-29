@@ -31,7 +31,7 @@ Feature: Cohort Search
     Then the button "<button2>" should be enabled
     And the button "<button1>" should be disabled
     When I click on the button "<button2>"
-    Then I am on the "{{pages.feasibilityEditor}}" page
+    Then I should arrive on the "{{pages.feasibilityEditor}}" page
 
     Examples: Selection Criteria
       | criterium            | code            | button1                         | button2                              |

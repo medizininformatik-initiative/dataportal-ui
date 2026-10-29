@@ -10,8 +10,8 @@
     "first": "J13",
     "second": "J15.0",
     "third": "J15.7",
-    "firstChip": "Pneumonie durch Streptococcus pneumoniae",
-    "secondChip": "Pneumonie durch Klebsiella pneumoniae"
+    "firstChip": "Pneumonia caused by Streptococcus pneumoniae",
+    "secondChip": "Pneumonia caused by Klebsiella pneumoniae"
   },
   "pneumonia": {
     "criterium": "Pneumonia",
@@ -58,6 +58,6 @@
     "departmentFirst": "1500"
   },
   "noFilter": {
-    "criterium": "BIOMAT erheben"
+    "criterium": "BIOMAT raise"
   }
 }

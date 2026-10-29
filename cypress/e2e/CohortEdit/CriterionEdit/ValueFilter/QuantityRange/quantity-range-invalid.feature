@@ -25,7 +25,7 @@ Feature: Value filter (quantity-range) - minimum greater than maximum
     And I select a minimum of <min> and a maximum of <max>
     Then I see the quantity range warning "<warning>"
     When I click on the button "{{labels.close}}"
-    Then I am on the "{{pages.feasibilityEditor}}" page
+    Then I should arrive on the "{{pages.feasibilityEditor}}" page
     And the criterium "<criterium>" shows no filter chips
 
     Examples:

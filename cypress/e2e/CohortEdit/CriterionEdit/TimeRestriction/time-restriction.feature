@@ -10,18 +10,18 @@ Feature: Criterion editor - time restriction
     Given I add the criterium "<criterium>" via code "<code>" to the editor
     When I open the menu
     And I click on the menu item "{{labels.configure}}"
-    Then I am on the "{{pages.queryEditorCriteria}}" page
+    Then I should arrive on the "{{pages.queryEditorCriteria}}" page
     When I set the time restriction to <comparator> with date "<date>"
     Then the time restriction date is "<date>"
     When I click on the button "{{labels.close}}"
-    Then I am on the "{{pages.feasibilityEditor}}" page
+    Then I should arrive on the "{{pages.feasibilityEditor}}" page
     And I see the criterium "<criterium>" with filter chip "<date>" in the block "<block>"
     When I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
     Then the button "{{labels.feasibility}}" should be enabled
     When I click on the button "{{labels.feasibility}}"
-    Then I am on the "{{pages.feasibilityResult}}" page
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
     When I click on the button "{{labels.editCohortSelection}}"
-    Then I am on the "{{pages.feasibilityEditor}}" page
+    Then I should arrive on the "{{pages.feasibilityEditor}}" page
     @comparator:before
     Examples:
       | criterium                  | code                  | comparator | date                          | block  |
@@ -43,11 +43,11 @@ Feature: Criterion editor - time restriction
     Given I add the criterium "<criterium>" via code "<code>" to the editor
     When I open the menu
     And I click on the menu item "{{labels.configure}}"
-    Then I am on the "{{pages.queryEditorCriteria}}" page
+    Then I should arrive on the "{{pages.queryEditorCriteria}}" page
     When I set the time restriction to between "<after>" and "<before>"
     Then the time restriction dates are "<after>" and "<before>"
     When I click on the button "{{labels.close}}"
-    Then I am on the "{{pages.feasibilityEditor}}" page
+    Then I should arrive on the "{{pages.feasibilityEditor}}" page
     And I see the criterium "<criterium>" with filter chip "<chip>" in the block "<block>"
 
     Examples:
@@ -62,11 +62,11 @@ Feature: Criterion editor - time restriction
     Given I add the criterium "<criterium>" via code "<code>" to the editor
     When I open the menu
     And I click on the menu item "{{labels.configure}}"
-    Then I am on the "{{pages.queryEditorCriteria}}" page
+    Then I should arrive on the "{{pages.queryEditorCriteria}}" page
     When I set the time restriction to between "<after>" and "<before>"
     Then I see the time restriction warning "<warning>"
     When I click on the button "{{labels.close}}"
-    Then I am on the "{{pages.feasibilityEditor}}" page
+    Then I should arrive on the "{{pages.feasibilityEditor}}" page
     And the criterium "<criterium>" shows no filter chips
 
     Examples:

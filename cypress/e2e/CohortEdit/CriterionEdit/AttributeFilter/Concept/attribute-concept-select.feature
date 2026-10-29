@@ -84,8 +84,7 @@ Feature: Attribute filter (concept) - selecting concepts
       | criterium                  | criteriumCode         | tab                  | first              | second              |
       | {{causeOfDeath.criterium}} | {{causeOfDeath.code}} | {{causeOfDeath.tab}} | {{concepts.first}} | {{concepts.second}} |
 
-  # A concept chip shows the concept's DISPLAY text, not its code. The ontology only has the
-  # German original for these concepts, so the chip text is German in the English UI too.
+  # A concept chip shows the concept's DISPLAY text, not its code, in the UI language.
   # <firstChip> / <secondChip> must belong to <first> / <second>.
   @component:criterion-editor @behavior:show-chips @filter:attribute-filter @type:concept
   Scenario Outline: Selected concepts are shown as filter chips on the criterium

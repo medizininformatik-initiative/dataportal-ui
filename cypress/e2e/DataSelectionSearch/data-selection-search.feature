@@ -15,7 +15,7 @@ Feature: Data Selection Search
     When I click on the button "<button1>"
     Then the button "<button1>" should be disabled
     When I click on the button "<button2>"
-    Then I am on the "{{pages.dataSelectionEditor}}" page
+    Then I should arrive on the "{{pages.dataSelectionEditor}}" page
     And I should see a data selection box labeled "<feature>"
     When I click the edit button on the data selection box "<feature>"
     And I click on the menu item "{{labels.configure}}"
@@ -42,7 +42,7 @@ Feature: Data Selection Search
     And I select the checkbox in the row containing "<feature>"
     When I click on the button "<button1>"
     And I click on the button "<button2>"
-    Then I am on the "{{pages.dataSelectionEditor}}" page
+    Then I should arrive on the "{{pages.dataSelectionEditor}}" page
     When I click the edit button on the data selection box "<feature>"
     And I click on the menu item "{{labels.configure}}"
     And I select the checkbox labeled "<field>"

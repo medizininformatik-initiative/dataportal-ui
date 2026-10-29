@@ -12,7 +12,7 @@ Feature: Data Selection Editor - references
     And I add the feature "{{dataSelection.oncologyFeature}}" to the data selection
     And I add the feature "{{dataSelection.deathFeature}}" to the data selection
     When I click on the button "{{labels.showSelection}}"
-    Then I am on the "{{pages.dataSelectionEditor}}" page
+    Then I should arrive on the "{{pages.dataSelectionEditor}}" page
 
   @component:data-selection-editor @behavior:show
   Scenario Outline: Only boxes with an unresolved recommended reference show the warning
@@ -27,7 +27,7 @@ Feature: Data Selection Editor - references
   @component:data-selection-editor @behavior:navigate
   Scenario Outline: The warning opens the profile editor on the unresolved reference tab
     When I click the unresolved reference warning of the data selection box "<feature>"
-    Then I am on the "{{pages.queryEditorProfile}}" page
+    Then I should arrive on the "{{pages.queryEditorProfile}}" page
     And the reference tab "<reference>" is active
 
     Examples:
@@ -40,7 +40,7 @@ Feature: Data Selection Editor - references
     And I link the reference to the feature "<target>"
     Then a chip labeled "<target>" should appear in the "{{labels.selectedReference}}" section
     When I click on the button "{{labels.close}}"
-    Then I am on the "{{pages.dataSelectionEditor}}" page
+    Then I should arrive on the "{{pages.dataSelectionEditor}}" page
     And the data selection box "<feature>" shows the reference "<reference>" linked to "<target>"
     And the data selection box "<target>" warns about the unresolved reference "<reference>"
 

@@ -12,7 +12,7 @@ Feature: Cohort editing
     When I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
     Then the button "{{labels.feasibility}}" should be enabled
     When I click on the button "{{labels.feasibility}}"
-    Then I am on the "{{pages.feasibilityResult}}" page
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
     Examples:
       | criterium               | code               |
       | {{pneumonia.criterium}} | {{pneumonia.code}} |
@@ -42,7 +42,7 @@ Feature: Cohort editing
       And I select the unit "<unit>"
       Then I should see "<chip_value>" applied in the filter summary
       When I click on the button "{{labels.close}}"
-      Then I am on the "{{pages.feasibilityEditor}}" page
+      Then I should arrive on the "{{pages.feasibilityEditor}}" page
       And the button "{{labels.feasibility}}" should be enabled
 
       Examples:

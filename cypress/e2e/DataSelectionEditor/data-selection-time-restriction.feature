@@ -12,7 +12,7 @@ Feature: Data Selection Editor - time restriction
     When I click on the button "{{labels.showSelection}}"
     And I click the edit button on the data selection box "{{dataSelection.conditionFeature}}"
     And I click on the menu item "{{labels.configure}}"
-    Then I am on the "{{pages.queryEditorProfile}}" page
+    Then I should arrive on the "{{pages.queryEditorProfile}}" page
 
   @component:data-selection-feature-editor @behavior:apply @filter:time-restriction
   Scenario Outline: The time restriction shows as a header chip and stays when switching tabs

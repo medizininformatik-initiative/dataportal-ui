@@ -27,7 +27,7 @@ Feature: Action bar - upload, download and save
     And I add the criterium "<criterium>" via code "<code>" to the editor
     When I open the menu
     And I click on the menu item "{{labels.configure}}"
-    Then I am on the "{{pages.queryEditorCriteria}}" page
+    Then I should arrive on the "{{pages.queryEditorCriteria}}" page
     And the action bar offers no upload, download or save
     Examples:
       | criterium               | code               |
