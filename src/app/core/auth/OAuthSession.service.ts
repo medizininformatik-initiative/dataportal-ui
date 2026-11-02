@@ -6,14 +6,13 @@ import { Router } from '@angular/router'
 export class OAuthSessionService {
   private oauthService = inject(OAuthService)
   private router = inject(Router)
+  private isLoggingOut = false
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {
     this.oauthService.events.subscribe((event: OAuthEvent) => {
-      console.log('OAuth event:', event)
-
       switch (event.type) {
         case 'session_terminated':
         case 'session_error':
@@ -81,8 +80,15 @@ export class OAuthSessionService {
   }
 
   private logout(reason: string) {
-    console.warn('Logging out:', reason)
-    this.oauthService.logOut(false)
+    const time = new Date().toLocaleTimeString()
+    console.warn(time, 'Logging out:', reason)
+    if (this.isLoggingOut) {
+      return
+    }
+    this.isLoggingOut = true
+    // Keycloak rejects post_logout_redirect_uri (400) without id_token_hint or client_id
+    const clientId = this.oauthService.clientId
+    this.oauthService.logOut({ client_id: clientId })
     this.router.navigate(['/login'])
   }
 

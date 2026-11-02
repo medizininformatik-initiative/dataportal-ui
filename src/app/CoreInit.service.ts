@@ -7,6 +7,7 @@ import { DataSelectionMainProfileInitializerService } from './service/DataSelect
 import { DataSelectionProfile } from './model/DataSelection/Profile/DataSelectionProfile'
 import { Injectable, inject } from '@angular/core'
 import { OAuthInitService } from './core/auth/OAuthInit.service'
+import { OAuthSessionService } from './core/auth/OAuthSession.service'
 import { Observable, of, throwError } from 'rxjs'
 import { ProvidersInitService } from './service/Provider/ProvidersInit.service'
 import { TerminologyApiService } from './service/Backend/Api/TerminologyApi.service'
@@ -20,6 +21,8 @@ export class CoreInitService {
   private appConfigService = inject(AppConfigService)
   private dataportalConfigService = inject(DataportalConfigService)
   private oauthInitService = inject(OAuthInitService)
+  // injected so its constructor subscribes to the OAuth events (session expiry logout)
+  private oauthSessionService = inject(OAuthSessionService)
   private dataSelectionMainProfileInitializerService = inject(
     DataSelectionMainProfileInitializerService
   )
