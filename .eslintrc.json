@@ -1,6 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": ["projects/**/*", "src/index.html", "src/assets/**/*.html"],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -21,6 +21,7 @@
               "ArrowFunctionExpression": false,
               "FunctionExpression": false
             },
+            "checkConstructors": false,
             "enableFixer": false
           }
         ],
@@ -183,7 +184,8 @@
       }
     },
     {
-      "files": ["*.component.ts", "*.directive.ts", "*.pipe.ts"],
+      "files": ["*.ts"],
+      "excludedFiles": ["*.service.ts"],
       "rules": {
         "jsdoc/require-jsdoc": "off",
         "jsdoc/require-description": "off",
