@@ -197,6 +197,12 @@
       }
     },
     {
+      "files": ["*.service.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }]
+      }
+    },
+    {
       "files": ["*.html"],
       "extends": [
         "plugin:@angular-eslint/template/recommended",
