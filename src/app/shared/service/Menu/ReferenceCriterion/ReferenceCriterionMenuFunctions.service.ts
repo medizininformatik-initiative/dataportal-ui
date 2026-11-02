@@ -18,7 +18,7 @@ export class ReferenceCriterionMenuFunctionsService {
    * Deletes the reference criterion from its parent criterion.
    * @param {string} id
    */
-  public deleteCriterion(id: string) {
+  public deleteCriterion(id: string): void {
     const parentID = this.referenceCriterionProvider.getOne(id)?.getParentId()
     if (!parentID) {
       throw new Error(`ReferenceCriterion with id ${id} does not have a parent ID.`)
@@ -41,9 +41,8 @@ export class ReferenceCriterionMenuFunctionsService {
 
   /**
    * Not implemented yet.
-   * @param {string} id
    */
-  public duplicateCriterion(id: string) {
+  public duplicateCriterion(): void {
     // Not implemented yet
     return
   }
@@ -52,7 +51,7 @@ export class ReferenceCriterionMenuFunctionsService {
    * Applies the reference criterion filter to the parent criterion.
    * @param {string} id
    */
-  public applyReferenceCriterionFilter(id: string) {
+  public applyReferenceCriterionFilter(id: string): void {
     const referenceCriterion = this.referenceCriterionProvider.getOne(id)
     const criterion = this.criterionProviderService.getOne(referenceCriterion.getParentId())
 

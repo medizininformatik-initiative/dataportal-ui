@@ -96,7 +96,16 @@ export class CriterionMetadataService {
    * @param {Criterion} criterion
    * @returns {{ isReference: boolean; context: TerminologyCode; criterionHash: string; display: Display; isInvalid: boolean; isRequiredFilterSet: boolean; id: string; termCodes: TerminologyCode[]; }}
    */
-  public fromCriterion(criterion: Criterion) {
+  public fromCriterion(criterion: Criterion): {
+    isReference: boolean
+    context: TerminologyCode
+    criterionHash: string
+    display: Display
+    isInvalid: boolean
+    isRequiredFilterSet: boolean
+    id: string
+    termCodes: TerminologyCode[]
+  } {
     return {
       isReference: false,
       context: criterion.getContext(),

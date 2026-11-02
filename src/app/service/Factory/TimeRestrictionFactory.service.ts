@@ -5,6 +5,8 @@ import { BeforeFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestr
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
 import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
 
+type RestrictionFilter = AfterFilter | AtFilter | BeforeFilter | BetweenFilter
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,9 +19,9 @@ export class TimeRestrictionFactoryService {
    * @param {TimeRestrictionType} timeRestrictionType The type of time restriction (AFTER, AT, BEFORE, BETWEEN).
    * @param {string} afterDate The start date for the restriction.
    * @param {string} beforeDate (Optional) The end date for the restriction, required for the BETWEEN filter.
-   * @returns {AfterFilter | AtFilter | BeforeFilter | BetweenFilter} The created filter instance or null if no valid filter is created.
+   * @returns {RestrictionFilter} The created filter instance or null if no valid filter is created.
    */
-  public createTimeRestrictionFilter(timeRestrictionType: TimeRestrictionType, afterDate: string, beforeDate?: string) {
+  public createTimeRestrictionFilter(timeRestrictionType: TimeRestrictionType, afterDate: string, beforeDate?: string): RestrictionFilter {
     switch (timeRestrictionType) {
       case TimeRestrictionType.AFTER:
         return new AfterFilter(afterDate)

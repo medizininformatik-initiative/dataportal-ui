@@ -11,7 +11,7 @@ export class FilterTypesService {
    * @param {FilterTypes} type
    * @returns {boolean}
    */
-  public isQuantity(type: FilterTypes) {
+  public isQuantity(type: FilterTypes): boolean {
     return this.isQuantityComparator(type) || this.isQuantityRange(type) || this.isQuantityNotSet(type) ? true : false
   }
 

@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Display } from '../model/DataSelection/Profile/Display'
 import { AttributeFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFilter'
 import { ValueFilter } from '../model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
+import { Criterion } from '../model/FeasibilityQuery/Criterion/Criterion'
 import { CriterionBuilder } from '../model/FeasibilityQuery/Criterion/CriterionBuilder'
 import { TimeRestrictionNotSet } from '../model/FeasibilityQuery/Criterion/TimeRestriction/TimeRestrictionNotSet'
 import { AttributeDefinitionData } from '../model/Interface/AttributeDefinitionData'
@@ -32,7 +33,7 @@ export class CreateBulkCriterionService {
    * @param {string} uiProfileId
    * @returns {Criterion}
    */
-  public createBulkCriterion(response: CriteriaBulkEntry[], uiProfileId: string) {
+  public createBulkCriterion(response: CriteriaBulkEntry[], uiProfileId: string): Criterion {
     const uiProfile: UiProfileData = this.uiProfileProviderService.getOne(uiProfileId)
     const termcodes: TerminologyCode[] = this.extractTermcodes(response)
     const criteriaProfile = this.buildCriteriaProfile(response, termcodes)
@@ -115,7 +116,7 @@ export class CreateBulkCriterionService {
    * @param {CriterionBuilder} builder
    * @param {UiProfileData} uiProfile
    */
-  private applyFilters(builder: CriterionBuilder, uiProfile: UiProfileData) {
+  private applyFilters(builder: CriterionBuilder, uiProfile: UiProfileData): void {
     builder.withAttributeFilters(this.createAttributeFilter(uiProfile))
     builder.withValueFilters([this.createValueFilter(uiProfile)].filter((filter: ValueFilter) => filter !== undefined))
     builder.withTimeRestriction(this.createTimeRestriction(uiProfile))

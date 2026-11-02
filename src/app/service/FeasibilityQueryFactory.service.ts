@@ -24,7 +24,7 @@ export class FeasibilityQueryFactoryService {
     const feasibilityQuery = new FeasibilityQuery(uuidv4())
     this.feasibilityQueryService.setFeasibilityQueryById(feasibilityQuery, feasibilityQuery.getId(), true)
     this.consentService.setConsent(false)
-    this.consentService.setProvisionCode(false, false, false, false)
+    this.consentService.setProvisionCode({ distributedAnalysis: false, euGdpr: false, insuranceData: false, contact: false })
     return feasibilityQuery
   }
 }

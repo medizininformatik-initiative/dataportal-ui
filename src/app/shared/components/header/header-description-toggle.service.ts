@@ -20,7 +20,7 @@ export class HeaderDescriptionToggleService {
   /**
    * Toggles the header description and stores the state in the local storage.
    */
-  public toggle() {
+  public toggle(): void {
     const next = !this.visible.value
     this.visible.next(next)
     localStorage.setItem(this.STORAGE_KEY, String(next))

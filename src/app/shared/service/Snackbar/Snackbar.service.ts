@@ -40,9 +40,8 @@ export class SnackbarService {
    * Displays the error message.
    * @todo implement timer for retry after
    * @param {string} errorCode
-   * @param {number} retryAfter
    */
-  public displayErrorMessage(errorCode: string, retryAfter: number = 0) {
+  public displayErrorMessage(errorCode: string): void {
     const message = `${MessageType.ERROR}.${errorCode}`
     // if (retryAfter > 0) {
     //   message += `${retryAfter}`;
@@ -55,7 +54,7 @@ export class SnackbarService {
    * Displays an error message as given, without an error code lookup.
    * @param {string} message
    */
-  public displayErrorMessageWithNoCode(message: string) {
+  public displayErrorMessageWithNoCode(message: string): void {
     this.activateSnackbar(message, SnackbarColor.ERROR)
   }
 
@@ -63,7 +62,7 @@ export class SnackbarService {
    * Displays an info message.
    * @param {string} infoMessage
    */
-  public displayInfoMessage(infoMessage: string) {
+  public displayInfoMessage(infoMessage: string): void {
     this.activateSnackbar(infoMessage, SnackbarColor.INFO)
   }
 
@@ -72,7 +71,7 @@ export class SnackbarService {
    * @param {string} message
    * @param {string} color
    */
-  public activateSnackbar(message: string, color: string) {
+  public activateSnackbar(message: string, color: string): void {
     this.visibilitySubject.next(true)
     this.messageSubject.next(message)
     this.colorSubject.next(color)
@@ -83,14 +82,14 @@ export class SnackbarService {
    * Hides the snackbar after the given time.
    * @param {number} timeout
    */
-  private setSnackbarTimeOut(timeout: number = 5000) {
+  private setSnackbarTimeOut(timeout: number = 5000): void {
     setTimeout(() => this.deactivateSnackbar(), timeout)
   }
 
   /**
    * Hides the snackbar.
    */
-  public deactivateSnackbar() {
+  public deactivateSnackbar(): void {
     this.visibilitySubject.next(false)
   }
 }

@@ -22,7 +22,7 @@ export class ProfileReferenceModalService implements OnDestroy {
   /**
    * Unsubscribes from the dialog.
    */
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.dialogSubscription.unsubscribe()
   }
 

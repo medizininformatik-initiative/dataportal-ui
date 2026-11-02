@@ -206,10 +206,10 @@ export class DataExtraction2UiDataSelectionService {
   /**
    * Extracts the trailing number of the given text.
    *
-   * @param {any} text
-   * @returns {{ text: any; number: number; }}
+   * @param {string} text
+   * @returns {{ text: string; number: number; }}
    */
-  public parseTrailingNumber(text) {
+  public parseTrailingNumber(text: string): { text: string; number: number } {
     const match = text.match(/^(.*) \((\d+)\)$/)
 
     if (!match) {

@@ -9,6 +9,7 @@ import { SearchFilterData } from 'src/app/model/Interface/Search/Filter/SearchFi
 import { ListEntryData } from 'src/app/model/Interface/Search/ListEntryData'
 import { ResultListData } from 'src/app/model/Interface/Search/ResultListData'
 import { UiProfileData } from 'src/app/model/Interface/UiProfileData'
+import { CodeSystemEntry } from 'src/app/model/Utilities/TerminologySystemDictionary'
 import { BackendService } from '../Backend.service'
 import { TerminologyPaths } from '../Paths/TerminologyPaths'
 import { ChunkedRequestService } from './ChunkedRequest.service'
@@ -78,9 +79,9 @@ export class TerminologyApiService {
 
   /**
    * Fetches the terminology systems.
-   * @returns {Observable<any>}
+   * @returns {Observable<CodeSystemEntry[]>}
    */
-  public getTerminologySystems() {
+  public getTerminologySystems(): Observable<CodeSystemEntry[]> {
     return this.http.get<any>(this.backendService.createUrl(TerminologyPaths.SYSTEMS_ENDPOINT))
   }
 

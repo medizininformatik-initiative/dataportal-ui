@@ -6,6 +6,13 @@ import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { ContextTermCode } from 'src/app/model/Utilities/ContextTermCode'
 import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryProvider.service'
 
+export interface ProvisionFlags {
+  distributedAnalysis: boolean
+  euGdpr: boolean
+  insuranceData: boolean
+  contact: boolean
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -111,13 +118,13 @@ export class ConsentService implements OnDestroy {
   constructor(...args: unknown[])
 
   constructor() {
-    this.setProvisionCode(false, true, false, false)
+    this.setProvisionCode({ distributedAnalysis: false, euGdpr: true, insuranceData: false, contact: false })
   }
 
   /**
    * Writes the consent criterion into the active feasibility query.
    */
-  public setFeasibilityQueryConsent() {
+  public setFeasibilityQueryConsent(): void {
     this.activeFeasibilityQuerySusbscription?.unsubscribe()
     this.activeFeasibilityQuerySusbscription = this.feasibilityQueryProviderService
       .getActiveFeasibilityQuery()
@@ -138,7 +145,7 @@ export class ConsentService implements OnDestroy {
    * Sets the consent look-up table key.
    * @param {string} key
    */
-  public setConsentLookUpTableKey(key: string) {
+  public setConsentLookUpTableKey(key: string): void {
     this.consentLookUpTableKey = key
   }
 
@@ -154,7 +161,7 @@ export class ConsentService implements OnDestroy {
    * Returns whether consent is given.
    * @returns {boolean}
    */
-  public getConsent() {
+  public hasConsent(): boolean {
     return this.consent
   }
 
@@ -162,7 +169,7 @@ export class ConsentService implements OnDestroy {
    * Sets the consent and updates the feasibility query.
    * @param {boolean} consent
    */
-  public setConsent(consent: boolean) {
+  public setConsent(consent: boolean): void {
     this.consent = consent
     this.setFeasibilityQueryConsent()
   }
@@ -180,13 +187,10 @@ export class ConsentService implements OnDestroy {
 
   /**
    * Sets the provision code from the four consent options.
-   * @param {boolean} distributedAnalysis
-   * @param {boolean} euGdpr
-   * @param {boolean} insuranceData
-   * @param {boolean} contact
+   * @param {ProvisionFlags} flags
    */
-  public setProvisionCode(distributedAnalysis: boolean, euGdpr: boolean, insuranceData: boolean, contact: boolean) {
-    const key = `${distributedAnalysis}:${euGdpr}:${insuranceData}:${contact}`
+  public setProvisionCode(flags: ProvisionFlags): void {
+    const key = `${flags.distributedAnalysis}:${flags.euGdpr}:${flags.insuranceData}:${flags.contact}`
     this.consentLookUpTableKey = key
     this.consentTermcode = this.createTerminologyCode(key)
   }
@@ -196,7 +200,7 @@ export class ConsentService implements OnDestroy {
    * @param {string} key
    * @returns {TerminologyCode}
    */
-  private createTerminologyCode(key: string) {
+  private createTerminologyCode(key: string): TerminologyCode {
     const termCodeObject = this.lookupTable[key]
     return new TerminologyCode(termCodeObject.code, termCodeObject.display, termCodeObject.system)
   }
@@ -230,7 +234,7 @@ export class ConsentService implements OnDestroy {
    * Resets the consent to its default.
    */
   public clearConsent(): void {
-    this.setProvisionCode(false, true, false, false)
+    this.setProvisionCode({ distributedAnalysis: false, euGdpr: true, insuranceData: false, contact: false })
     this.setConsent(false)
   }
 }

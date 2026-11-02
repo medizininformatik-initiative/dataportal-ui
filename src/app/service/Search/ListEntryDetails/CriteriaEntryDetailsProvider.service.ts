@@ -23,7 +23,7 @@ export class CriteriaEntryDetailsProviderService {
    * Sets the criteria entry details.
    * @param {CriteriaEntryDetails | null} details
    */
-  public setCriteriaEntryDetails(details: CriteriaEntryDetails | null) {
+  public setCriteriaEntryDetails(details: CriteriaEntryDetails | null): void {
     this.searchTermDetailsSubject.next(details)
   }
 

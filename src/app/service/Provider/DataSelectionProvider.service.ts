@@ -167,7 +167,7 @@ export class DataSelectionProviderService {
    * @param {DataSelectionProfile[]} updatedElements
    * @param {string} dataSelectionId
    */
-  private commitDataSelection(updatedElements: DataSelectionProfile[], dataSelectionId: string) {
+  private commitDataSelection(updatedElements: DataSelectionProfile[], dataSelectionId: string): void {
     const updatedDataSelection = new DataSelection(updatedElements, dataSelectionId)
     this.setDataSelection(updatedDataSelection.getId(), updatedDataSelection, true)
   }

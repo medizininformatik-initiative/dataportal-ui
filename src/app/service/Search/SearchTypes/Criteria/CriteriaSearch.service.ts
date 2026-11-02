@@ -56,7 +56,7 @@ export class CriteriaSearchService extends AbstractSimpleSearch<CriteriaListEntr
    * Sets the active search term.
    * @param {string} searchTerm
    */
-  protected setSearchTerm(searchTerm: string) {
+  protected setSearchTerm(searchTerm: string): void {
     this.criteriaSearchStateService.setActiveSearchTerm(searchTerm)
   }
 

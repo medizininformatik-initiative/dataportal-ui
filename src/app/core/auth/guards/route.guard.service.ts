@@ -45,7 +45,7 @@ export class RouteGuard implements CanActivate {
    * @param {string} id
    * @returns {Observable<boolean>}
    */
-  private handleProfile(id: string) {
+  private handleProfile(id: string): Observable<boolean> {
     try {
       const canRoute = this.profileService.getOne(id) ? true : false
       if (!canRoute) {
@@ -64,7 +64,7 @@ export class RouteGuard implements CanActivate {
    * @param {string} id
    * @returns {Observable<boolean>}
    */
-  private handleCriterion(id: string) {
+  private handleCriterion(id: string): Observable<boolean> {
     try {
       const canRoute = this.criterionProviderService.getOne(id) ? true : false
       if (!canRoute) {
@@ -83,7 +83,7 @@ export class RouteGuard implements CanActivate {
    * @param {string} id
    * @returns {Observable<boolean>}
    */
-  private handleReferenceCriterion(id: string) {
+  private handleReferenceCriterion(id: string): Observable<boolean> {
     try {
       const canRoute = this.referenceCriterionProviderService.getOne(id) ? true : false
       if (!canRoute) {

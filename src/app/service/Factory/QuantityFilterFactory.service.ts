@@ -35,7 +35,7 @@ export class QuantityFilterFactoryService {
    * Sets the unit for new filters.
    * @param {QuantityUnit} selectedUnit
    */
-  public setQuantityUnit(selectedUnit: QuantityUnit) {
+  public setQuantityUnit(selectedUnit: QuantityUnit): void {
     this.quantityUnit = selectedUnit
   }
 

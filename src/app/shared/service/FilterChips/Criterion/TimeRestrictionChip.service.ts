@@ -24,7 +24,7 @@ export class TimeRestrictionChipService {
    * @param {AbstractTimeRestriction} timeRestriction
    * @returns {string | true}
    */
-  private isTimeRestrictionSet(timeRestriction: AbstractTimeRestriction) {
+  private isTimeRestrictionSet(timeRestriction: AbstractTimeRestriction): string | true {
     return timeRestriction?.getBeforeDate() !== null || timeRestriction?.getAfterDate()
   }
 }

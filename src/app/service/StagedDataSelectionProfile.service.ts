@@ -118,7 +118,7 @@ export class StagedProfileService implements OnDestroy {
    * @param {string} text
    * @returns {{ text: string; number: number; }}
    */
-  public parseTrailingNumber(text: string) {
+  public parseTrailingNumber(text: string): { text: string; number: number } {
     const match = text.match(/^(.*) \((\d+)\)$/)
 
     if (!match) {

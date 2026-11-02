@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core'
 import { map, Observable, switchMap, take } from 'rxjs'
+import { CCDLCohortDefinition } from 'src/app/model/CohortDefinition/CCDLCohortDefinition'
 import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL'
+import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction'
 import { QueryResult } from 'src/app/model/Result/QueryResult'
 import { SavedUsageStats } from 'src/app/model/Types/SavedUsageStats'
 import { SaveDataModal } from '../../../shared/models/SaveDataModal/SaveDataModal'
@@ -57,7 +59,12 @@ export class SavedDataQueryService {
    * @param {CRTDL} crtdl
    * @returns {{ display: string; version: string; cohortDefinition: CCDLCohortDefinition; dataExtraction: DataExtraction; }}
    */
-  private createCrtdlJson(crtdl: CRTDL) {
+  private createCrtdlJson(crtdl: CRTDL): {
+    display: string
+    version: string
+    cohortDefinition: CCDLCohortDefinition
+    dataExtraction: DataExtraction
+  } {
     return {
       display: crtdl.getDisplay(),
       version: crtdl.getVersion(),

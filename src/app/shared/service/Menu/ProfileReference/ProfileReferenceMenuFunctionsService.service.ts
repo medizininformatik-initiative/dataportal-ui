@@ -22,7 +22,7 @@ export class ProfileReferenceMenuFunctionsService {
    * @param {string} id
    * @param {Record<string, unknown>} args
    */
-  public navigate(id: string, args?: Record<string, unknown>) {
+  public navigate(id: string, args?: Record<string, unknown>): void {
     const elementId = args?.elementId as string | undefined
     const state = elementId ? { activeTab: elementId } : undefined
     this.navigationHelperService.navigateToEditProfile(id, state)

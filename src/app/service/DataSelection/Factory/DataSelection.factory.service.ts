@@ -48,7 +48,7 @@ export class DataSelectionFactoryService {
    * Loads the patient profile.
    * @returns {Observable<DataSelectionProfile>}
    */
-  private loadMainProfile() {
+  private loadMainProfile(): Observable<DataSelectionProfile> {
     return this.dataSelectionMainProfileInitializerService.initializePatientProfile()
   }
 

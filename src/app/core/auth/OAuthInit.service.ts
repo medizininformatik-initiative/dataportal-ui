@@ -73,7 +73,7 @@ export class OAuthInitService {
   /**
    * Passes the built auth config to the OAuth service.
    */
-  private configureAuthConfig() {
+  private configureAuthConfig(): void {
     const authConfig = this.authConfigService.buildAuthConfig()
     this.oauthService.configure(authConfig)
   }

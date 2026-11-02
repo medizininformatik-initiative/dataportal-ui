@@ -54,7 +54,7 @@ export class ActiveSearchTermService {
    *
    * @param {string} searchText - The criteria search term to set as active
    */
-  public setActiveCriteriaSearchTerm(searchText: string) {
+  public setActiveCriteriaSearchTerm(searchText: string): void {
     this.activeCriteriaSearchTermSubject.next(searchText)
   }
 }

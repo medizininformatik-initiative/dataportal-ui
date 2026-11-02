@@ -81,7 +81,9 @@ export class StructuredQuery2UIQueryTranslatorService {
    */
   private setConsent(terminologyCode: TerminologyCode): void {
     const flags = this.consentService.getBooleanFlags(terminologyCode.getCode())
-    this.consentService.setProvisionCode(flags.distributedAnalysis, flags.euGdpr, flags.insuranceData, flags.contact)
+    if (flags) {
+      this.consentService.setProvisionCode(flags)
+    }
     this.consentService.setConsent(true)
   }
 

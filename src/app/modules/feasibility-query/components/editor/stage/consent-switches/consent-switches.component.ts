@@ -5,7 +5,7 @@ import { AnalysisType } from 'src/app/model/Utilities/Consent/AnalysisType'
 import { ContactOption } from 'src/app/model/Utilities/Consent/ContactOption'
 import { GdprCompliance } from 'src/app/model/Utilities/Consent/GdprCompliance'
 import { InsuranceData } from 'src/app/model/Utilities/Consent/InsuranceData'
-import { ConsentService } from 'src/app/service/Consent/Consent.service'
+import { ConsentService, ProvisionFlags } from 'src/app/service/Consent/Consent.service'
 import { SectionNameComponent } from '../../../../../../shared/components/section-name/section-name.component'
 import { SwitchComponent } from '../../../../../../shared/components/switch/switch.component'
 
@@ -43,7 +43,7 @@ export class ConsentSwitchesComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getProvisionCode()
-    this.consent = this.consentService.getConsent()
+    this.consent = this.consentService.hasConsent()
     ;[this.distributedAnalysis, this.euGdpr, this.insuranceDataBoolean, this.contact] = this.consentService
       .getConsentLookUpTableKey()
       .split(':')
@@ -70,8 +70,17 @@ export class ConsentSwitchesComponent implements OnInit {
         this.contact = !this.contact // Toggle the value
         break
     }
-    this.consentService.setProvisionCode(this.distributedAnalysis, this.euGdpr, this.insuranceDataBoolean, this.contact)
+    this.consentService.setProvisionCode(this.getProvisionFlags())
     this.getProvisionCode()
+  }
+
+  private getProvisionFlags(): ProvisionFlags {
+    return {
+      distributedAnalysis: this.distributedAnalysis,
+      euGdpr: this.euGdpr,
+      insuranceData: this.insuranceDataBoolean,
+      contact: this.contact,
+    }
   }
 
   private getProvisionCode(): void {

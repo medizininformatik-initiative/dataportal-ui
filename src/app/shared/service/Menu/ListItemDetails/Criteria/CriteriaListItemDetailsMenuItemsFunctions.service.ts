@@ -32,7 +32,7 @@ export class CriteriaListItemDetailsMenuItemsFunctionsService {
    * Shows the criteria entry in the result list.
    * @param {string} id
    */
-  public showCriteriaInResultList(id: string) {
+  public showCriteriaInResultList(id: string): void {
     this.searchService.search(id).pipe(take(1)).subscribe()
     this.criteriaEntryDetailsService
       .loadDetails(id)
@@ -46,7 +46,7 @@ export class CriteriaListItemDetailsMenuItemsFunctionsService {
    * Builds the criterion and adds it to the stage.
    * @param {string} id
    */
-  public addToStage(id: string) {
+  public addToStage(id: string): void {
     this.criterionService
       .buildCriteriaFromHashes([id])
       .pipe(
@@ -62,7 +62,7 @@ export class CriteriaListItemDetailsMenuItemsFunctionsService {
    * Searches for the criteria entry and loads its details.
    * @param {string} id
    */
-  public searchCriteria(id: string) {
+  public searchCriteria(id: string): void {
     this.searchService
       .search(id)
       .pipe(

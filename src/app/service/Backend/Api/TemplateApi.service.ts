@@ -46,9 +46,9 @@ export class TemplateApiService {
    * Deletes the saved template.
    *
    * @param {number} id
-   * @returns {Observable<any>}
+   * @returns {Observable<unknown>}
    */
-  public deleteSavedTemplate(id: number) {
+  public deleteSavedTemplate(id: number): Observable<unknown> {
     const headers = this.backendService.getHeaders()
     const url = this.backendService.createUrl(TemplatePaths.TEMPLATE_QUERY_ENDPOINT + '/' + id)
     return this.http.delete<any>(url, {

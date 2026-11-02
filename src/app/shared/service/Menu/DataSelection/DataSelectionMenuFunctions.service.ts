@@ -22,16 +22,15 @@ export class DataSelectionMenuFunctionsService {
   /**
    * Opens the edit page of the profile.
    * @param {string} id
-   * @param {Record<string, unknown>} args
    */
-  public redirectToDataSelectionEditPage(id: string, args?: Record<string, unknown>) {
+  public redirectToDataSelectionEditPage(id: string): void {
     this.navigationHelperService.navigateToEditProfile(id)
   }
   /**
    * Adds a copy of the profile to the data selection.
    * @param {string} id
    */
-  public cloneDataSelectionObject(id: string) {
+  public cloneDataSelectionObject(id: string): void {
     const profile = this.profileProvider.getOne(id)
     const copiedProfile = DataSelectionProfileCloner.deepCopyProfile(profile, uuidv4())
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId()
@@ -42,7 +41,7 @@ export class DataSelectionMenuFunctionsService {
    * Deletes the profile and the references to it.
    * @param {string} id
    */
-  public deleteDataSelectionObject(id: string) {
+  public deleteDataSelectionObject(id: string): void {
     this.removeReferenceService.delete(id)
   }
 }

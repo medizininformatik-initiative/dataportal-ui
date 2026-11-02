@@ -23,7 +23,7 @@ export class ErrorDisplayService {
    * @param {DataportalErrorType} errorType
    * @param {string} url
    */
-  public showError(errorData: DataportalErrorPayloadType, errorType: DataportalErrorType, url: string) {
+  public showError(errorData: DataportalErrorPayloadType, errorType: DataportalErrorType, url: string): void {
     this.errorDataSubject.next(errorData)
     this.errorTypeSubject.next(errorType)
     this.errorUrlSubject.next(url)
@@ -33,14 +33,14 @@ export class ErrorDisplayService {
   /**
    * Hides the error.
    */
-  public hideError() {
+  public hideError(): void {
     this.visibilitySubject.next(false)
   }
 
   /**
    * Clears the error data, type and url.
    */
-  public clearError() {
+  public clearError(): void {
     this.errorDataSubject.next(null)
     this.errorTypeSubject.next('')
     this.errorUrlSubject.next('')

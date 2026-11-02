@@ -20,7 +20,7 @@ export class BackendService {
    * Returns the access token from the auth storage.
    * @returns {string}
    */
-  private getAccessToken() {
+  private getAccessToken(): string {
     return this.authStorage.getItem('access_token')
   }
 
@@ -28,7 +28,7 @@ export class BackendService {
    * Builds the JSON and bearer token headers.
    * @returns {HttpHeaders}
    */
-  public getHeaders() {
+  public getHeaders(): HttpHeaders {
     return new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + this.getAccessToken())
   }
 

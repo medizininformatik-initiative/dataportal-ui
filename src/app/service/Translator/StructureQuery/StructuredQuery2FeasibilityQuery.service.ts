@@ -70,7 +70,7 @@ export class StructuredQuery2FeasibilityQueryService {
     return forkJoin([inclusion$, exclusion$]).pipe(
       map(([inclusion, exclusion]) => {
         feasibilityQuery.setInclusionCriteria(inclusion)
-        feasibilityQuery.setConsent(this.consentService.getConsent())
+        feasibilityQuery.setConsent(this.consentService.hasConsent())
         if (exclusion) {
           feasibilityQuery.setExclusionCriteria(exclusion)
         }
