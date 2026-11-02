@@ -174,26 +174,51 @@ export class AppSettingsProviderService implements AppSettingGetter {
     return this.getDurationSeconds('readResultDetailedObfuscatedInterval')
   }
 
+  /**
+   * Returns the detailed obfuscated result amount in seconds.
+   * @returns {number}
+   */
   public getResultDetailedObfuscatedAmount(): number {
     return this.getDurationSeconds('readResultDetailedObfuscatedAmount')
   }
 
+  /**
+   * Returns the polling interval for the detailed obfuscated result in seconds.
+   * @returns {number}
+   */
   public getResultDetailedObfuscatedPollingInterval(): number {
     return this.getDurationSeconds('readResultDetailedObfuscatedPollingInterval')
   }
 
+  /**
+   * Returns the polling interval for the result summary in seconds.
+   * @returns {number}
+   */
   public getResultSummaryPollingInterval(): number {
     return this.getDurationSeconds('readResultSummaryPollingInterval')
   }
 
+  /**
+   * Reads an ISO 8601 duration from the config and converts it to seconds.
+   * @param {DataportalConfigKey} key
+   * @returns {number}
+   */
   private getDurationSeconds(key: DataportalConfigKey): number {
     return iso8601.toSeconds(iso8601.parse(this.getDataPortalConfigByKey(key) as string))
   }
 
+  /**
+   * Returns the maximum number of saved queries per user.
+   * @returns {number}
+   */
   public getMaxSavedQueriesPerUser(): number {
     return this.getDataPortalConfigByKey('maxSavedQueriesPerUser')
   }
 
+  /**
+   * Returns the query result expiry in seconds.
+   * @returns {number}
+   */
   public getQueryResultExpiry(): number {
     return this.getDurationSeconds('queryResultExpiry')
   }

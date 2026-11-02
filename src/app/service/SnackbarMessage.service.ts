@@ -14,7 +14,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays message when item is added to data selection
-   * @returns
    */
   public displayAddedToDataSelection(): void {
     this.snackbarService.displayInfoMessage('DATASELECTION.SNACKBAR.ADDED')
@@ -22,7 +21,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays message when item is added to stage
-   * @returns
    */
   public displayAddedToCriteriaStage(): void {
     this.snackbarService.displayInfoMessage('FEASIBILITY.SEARCH.SNACKBAR.ADDED_TO_STAGE')
@@ -30,7 +28,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays message when item is removed from stage
-   * @returns
    */
   public displayRemovedFromCriteriaStage(): void {
     this.snackbarService.displayErrorMessageWithNoCode('FEASIBILITY.SEARCH.SNACKBAR.REMOVED_FROM_STAGE')
@@ -38,7 +35,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays success message for query save
-   * @returns
    */
   public displayDataDefinitionSaveSuccess(): void {
     this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.SUCCESS.SAVE')
@@ -46,7 +42,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays success message for saved query deletion
-   * @returns
    */
   public displaySavedQueryDeleteSuccess(): void {
     this.snackbarService.displayInfoMessage('SAVEDQUERIES.SUCCESS.DELETE')
@@ -54,7 +49,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays success message for query execution
-   * @returns
    */
   public displayFeasibilityExecutionSuccess(): void {
     this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.SUCCESS.EXECUTE')
@@ -62,7 +56,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays error message for data definition upload failure
-   * @returns
    */
   public dataDefinitionUploadError(): void {
     this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD')
@@ -70,7 +63,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays error message for CRTDL validation failure
-   * @returns
    */
   public crtdlValidationError(): void {
     this.snackbarService.displayErrorMessageWithNoCode('SNACKBAR.ERROR.UPLOAD')
@@ -78,7 +70,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays success message for data definition upload
-   * @returns
    */
   public dataDefinitionUploadSuccess(): void {
     this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD')
@@ -86,7 +77,6 @@ export class SnackbarMessageService {
 
   /**
    * Displays success message for data definition download
-   * @returns
    */
   public dataDefinitionDownloadSuccess(): void {
     this.snackbarService.displayInfoMessage('DATAQUERY.DATASELECTION.SUCCESS.DOWNLOAD')
@@ -94,12 +84,14 @@ export class SnackbarMessageService {
 
   /**
    * Displays success message for criterion edit
-   * @returns
    */
   public displayCriterionEditSuccess(): void {
     this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.EDIT_SUCCESS')
   }
 
+  /**
+   * Shows that the time restriction was applied to all criteria.
+   */
   public displayTimeRestrictionAppliedToAll(): void {
     this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.SUCCESS.TIME_RESTRICTION_APPLIED')
   }

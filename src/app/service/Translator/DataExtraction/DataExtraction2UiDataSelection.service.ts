@@ -53,6 +53,12 @@ export class DataExtraction2UiDataSelectionService {
     }
   }
 
+  /**
+   * Loads the concepts of the hashes and applies them to the profiles.
+   * @param {DataSelectionProfile[]} profiles
+   * @param {string[]} hashes
+   * @returns {Observable<DataSelectionProfile[]>}
+   */
   private loadConcepts(profiles: DataSelectionProfile[], hashes: string[]): Observable<DataSelectionProfile[]> {
     return this.codeableConceptApiService.getCodeableConceptsByIds(hashes).pipe(
       tap((concepts: ConceptData[]) => this.conceptTranslationCacheService.setMany(concepts)),
@@ -74,6 +80,11 @@ export class DataExtraction2UiDataSelectionService {
     return new DataSelection(profiles, uuidv4())
   }
 
+  /**
+   * Applies label, fields, filters and reference of the extracted group to the profile.
+   * @param {DataSelectionProfile} profile
+   * @param {DataExtractionData} dataExtraction
+   */
   private applyExternalProfile(profile: DataSelectionProfile, dataExtraction: DataExtractionData): void {
     const externProfile = this.findExternalProfileFromIdMap(profile, dataExtraction)
     this.applyLabel(profile, externProfile)
@@ -82,6 +93,11 @@ export class DataExtraction2UiDataSelectionService {
     this.applyReference(profile, externProfile)
   }
 
+  /**
+   * Sets the label of the profile from the extracted group name.
+   * @param {DataSelectionProfile} profile
+   * @param {AttributeGroupsData} externProfile
+   */
   private applyLabel(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
     if (externProfile.name) {
       const newLabel = this.parseTrailingNumber(externProfile.name)
@@ -93,6 +109,11 @@ export class DataExtraction2UiDataSelectionService {
     }
   }
 
+  /**
+   * Sets the selected fields of the profile from the extracted attributes.
+   * @param {DataSelectionProfile} profile
+   * @param {AttributeGroupsData} externProfile
+   */
   private applyProfileFields(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
     if (externProfile.attributes?.length > 0) {
       const updatedFields = this.setProfileFields(externProfile.attributes, profile.getProfileFields())
@@ -102,6 +123,11 @@ export class DataExtraction2UiDataSelectionService {
     }
   }
 
+  /**
+   * Sets the filters of the profile from the extracted filters.
+   * @param {DataSelectionProfile} profile
+   * @param {AttributeGroupsData} externProfile
+   */
   private applyFilters(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
     if (TypeGuard.isFilterDataArray(externProfile.filter)) {
       const profileFilter = this.profileFilterTranslatorService.createProfileFilters(externProfile, profile)
@@ -109,10 +135,21 @@ export class DataExtraction2UiDataSelectionService {
     }
   }
 
+  /**
+   * Sets the reference of the profile from the extracted group.
+   * @param {DataSelectionProfile} profile
+   * @param {AttributeGroupsData} externProfile
+   */
   private applyReference(profile: DataSelectionProfile, externProfile: AttributeGroupsData): void {
     profile.setReference(new ProfileReference(true, externProfile.includeReferenceOnly ?? false))
   }
 
+  /**
+   * Finds the extracted attribute group that belongs to the profile.
+   * @param {DataSelectionProfile} profile
+   * @param {DataExtractionData} dataExtraction
+   * @returns {AttributeGroupsData | undefined}
+   */
   private findExternalProfileFromIdMap(profile: DataSelectionProfile, dataExtraction: DataExtractionData): AttributeGroupsData | undefined {
     const idTupel = this.idMap.find((id) => id.newId === profile.getId())
     return dataExtraction.attributeGroups.find((externProfile: AttributeGroupsData) => externProfile.id === idTupel.oldId)
@@ -135,6 +172,11 @@ export class DataExtraction2UiDataSelectionService {
     return ProfileFieldsCloner.deepCopyProfileFields(profileFields)
   }
 
+  /**
+   * Returns the group references of all attribute groups.
+   * @param {DataExtractionData} dataExtraction
+   * @returns {string[]}
+   */
   private getGroupReferences(dataExtraction: DataExtractionData): string[] {
     return dataExtraction.attributeGroups.map((attributeGroup: AttributeGroupsData) => attributeGroup.groupReference)
   }

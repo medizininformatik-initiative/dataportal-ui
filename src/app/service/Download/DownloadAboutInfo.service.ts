@@ -34,6 +34,11 @@ export class DownloadAboutInfoService extends AbstractDownloadService {
     this.triggerDownload(blob, `${finalFilename}${DownloadAboutInfoService.FILE_EXTENSION}`)
   }
 
+  /**
+   * Creates the file name for the about info download.
+   * @param {string} filename
+   * @returns {string}
+   */
   private fileName(filename?: string): string {
     return this.createFilename(filename, DownloadAboutInfoService.FILE_PREFIX, DownloadAboutInfoService.LOCALE_FORMAT)
   }

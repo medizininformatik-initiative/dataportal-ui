@@ -24,6 +24,11 @@ export class ProfileFilterBuilderService {
     }
   }
 
+  /**
+   * Builds the profile filter that matches the UI type of the filter data.
+   * @param {ProfileFilterData} filter
+   * @returns {AbstractProfileFilter}
+   */
   private buildFilter(filter: ProfileFilterData): AbstractProfileFilter {
     const uiType = filter.ui_type
     switch (uiType) {
@@ -45,6 +50,11 @@ export class ProfileFilterBuilderService {
     return new ProfileTimeRestrictionFilter(filter.name, filter.type, new BetweenFilter(null, null))
   }
 
+  /**
+   * Builds a token filter from the filter data.
+   * @param {ProfileFilterData} filter
+   * @returns {ProfileTokenFilter}
+   */
   private buildTokenFilter(filter: ProfileFilterData): ProfileTokenFilter {
     return new ProfileTokenFilter(uuidv4(), filter.name, filter.type, filter.valueSetUrls, [])
   }

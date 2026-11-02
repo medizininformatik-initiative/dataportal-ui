@@ -25,8 +25,9 @@ export class SaveFeasibilityQueryModalService {
   /**
    * Saves the feasibility query.
    *
-   * @param title
-   * @param comment
+   * @param {string} title
+   * @param {string} comment
+   * @returns {Observable<void>}
    */
   public saveFeasibilityQuery(title: string, comment: string): Observable<void> {
     return this.activeFeasibilityQuery.getActiveFeasibilityQueryIdObservable().pipe(
@@ -42,9 +43,10 @@ export class SaveFeasibilityQueryModalService {
   /**
    * Saves the feasibility query result.
    *
-   * @param title
-   * @param comment
-   * @param result
+   * @param {string} title
+   * @param {string} comment
+   * @param {QueryResult} result
+   * @returns {Observable<void>}
    */
   private saveFeasibilityQueryResult(title: string, comment: string, result: QueryResult): Observable<void> {
     const savedQuery = new SavedFeasibilityQueryResults(title, comment, result.getTotalNumberOfPatients())

@@ -18,6 +18,9 @@ export class TabTitleService {
 
   constructor() {}
 
+  /**
+   * Updates the tab title on every navigation end and language change.
+   */
   public initializeTitleListener() {
     const onNavEnd$ = this.router.events.pipe(filter((event) => event instanceof NavigationEnd))
 

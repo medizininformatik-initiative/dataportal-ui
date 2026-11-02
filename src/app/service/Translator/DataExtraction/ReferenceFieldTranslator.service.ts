@@ -39,6 +39,11 @@ export class ReferenceFieldTranslatorService {
     return result
   }
 
+  /**
+   * Keeps the attributes that are linked to other groups.
+   * @param {AttributesData[]} attributes
+   * @returns {AttributesData[]}
+   */
   private filterReferenceAttributes(attributes: AttributesData[]): AttributesData[] {
     return attributes.filter((attribute: AttributesData) => attribute.linkedGroups && attribute.linkedGroups.length > 0)
   }
@@ -64,6 +69,11 @@ export class ReferenceFieldTranslatorService {
     return undefined
   }
 
+  /**
+   * Clears the recommended flag of reference fields that are not in the result.
+   * @param {ProfileFields} profileFields
+   * @param {SelectedReferenceField[]} result
+   */
   private clearUnmatchedRecommendedFlags(profileFields: ProfileFields, result: SelectedReferenceField[]): void {
     profileFields.getReferenceFields().forEach((refField: ReferenceField) => {
       if (refField.getRecommended() && !this.isFieldInResult(refField, result)) {
@@ -72,10 +82,22 @@ export class ReferenceFieldTranslatorService {
     })
   }
 
+  /**
+   * Checks whether the reference field is in the result.
+   * @param {ReferenceField} refField
+   * @param {SelectedReferenceField[]} result
+   * @returns {boolean}
+   */
   private isFieldInResult(refField: ReferenceField, result: SelectedReferenceField[]): boolean {
     return result.some((res: SelectedReferenceField) => res.getSelectedField().getElementId() === refField.getElementId())
   }
 
+  /**
+   * Finds the reference field with the element id.
+   * @param {ReferenceField[]} referenceFields
+   * @param {string} attributeRef
+   * @returns {ReferenceField}
+   */
   private findReferenceField(referenceFields: ReferenceField[], attributeRef: string): ReferenceField {
     return referenceFields.find((field: ReferenceField) => field.getElementId() === attributeRef)
   }

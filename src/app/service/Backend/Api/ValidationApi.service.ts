@@ -19,6 +19,11 @@ export class ValidationApiService {
 
   constructor() {}
 
+  /**
+   * Validates a data query in the backend.
+   * @param {DataqueryData} dataquery
+   * @returns {Observable<HttpResponse<ValidationIssueData[]>>}
+   */
   public validateDataQuery(dataquery: DataqueryData): Observable<HttpResponse<ValidationIssueData[]>> {
     const url = this.backendService.createUrl(ValidationPaths.VALIDATE_DATAQUERY)
     return this.http.post<ValidationIssueData[]>(url, dataquery, {
@@ -27,6 +32,11 @@ export class ValidationApiService {
     })
   }
 
+  /**
+   * Validates a CRTDL in the backend.
+   * @param {CRTDLData} crtdl
+   * @returns {Observable<HttpResponse<void>>}
+   */
   public validateCRTDL(crtdl: CRTDLData): Observable<HttpResponse<void>> {
     const url = this.backendService.createUrl(ValidationPaths.VALIDATE_CRTDL)
     return this.http.post<void>(url, crtdl, {

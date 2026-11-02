@@ -30,11 +30,21 @@ export class DataSelection2DataExtraction {
 
   constructor() {}
 
+  /**
+   * Translates the data selection to a data extraction.
+   * @param {DataSelection} dataSelection
+   * @returns {DataExtraction}
+   */
   public translateToDataExtraction(dataSelection: DataSelection): DataExtraction {
     const attribuetGroups = dataSelection.getProfiles().map((profile: DataSelectionProfile) => this.translateAttributeGroups(profile))
     return attribuetGroups.length > 0 ? new DataExtraction(attribuetGroups) : undefined
   }
 
+  /**
+   * Translates a profile to an attribute group.
+   * @param {DataSelectionProfile} profile
+   * @returns {AttributeGroup}
+   */
   private translateAttributeGroups(profile: DataSelectionProfile): AttributeGroup {
     const attributes = this.translateSelectedFields(profile.getProfileFields())
     const filters = this.translateFilters(profile.getFilters())
@@ -51,10 +61,9 @@ export class DataSelection2DataExtraction {
 
   /**
    * Translates the selected fields.
-   * @todo its all broken -- need to be fixed
-   * @param selectedFields
-   * @returns {Attributes[] | undefined}
    * @param {ProfileFields} profileFields
+   * @returns {Attributes[] | undefined}
+   * @todo its all broken -- need to be fixed
    */
   private translateSelectedFields(profileFields: ProfileFields): Attributes[] | undefined {
     const selectedBasicFields = profileFields.getSelectedBasicFields()
@@ -76,6 +85,11 @@ export class DataSelection2DataExtraction {
     return combinedAttributes.length > 0 ? combinedAttributes : undefined
   }
 
+  /**
+   * Translates the profile filters, or returns undefined if none can be translated.
+   * @param {AbstractProfileFilter[]} filters
+   * @returns {AbstractAttributeGroupFilter[] | undefined}
+   */
   private translateFilters(filters: AbstractProfileFilter[]): AbstractAttributeGroupFilter[] | undefined {
     const abstractProfileFilters: AbstractAttributeGroupFilter[] = []
 
@@ -89,6 +103,11 @@ export class DataSelection2DataExtraction {
     return abstractProfileFilters.length > 0 ? abstractProfileFilters : undefined
   }
 
+  /**
+   * Translates a filter according to its UI type.
+   * @param {AbstractProfileFilter} filter
+   * @returns {AbstractAttributeGroupFilter | undefined}
+   */
   private getTranslatedFilter(filter: AbstractProfileFilter): AbstractAttributeGroupFilter | undefined {
     switch (filter.getUiType()) {
       case DataSelectionUIType.TIMERESTRICTION:
@@ -100,6 +119,11 @@ export class DataSelection2DataExtraction {
     }
   }
 
+  /**
+   * Translates a time restriction filter to a date filter.
+   * @param {ProfileTimeRestrictionFilter} profileDateFilter
+   * @returns {DateFilter | undefined}
+   */
   private translateDateFilter(profileDateFilter: ProfileTimeRestrictionFilter): DateFilter | undefined {
     const time = this.timeRestrictionTranslation.translateTimeRestrictionToStructuredQuery(profileDateFilter.getTimeRestriction())
     return time
@@ -107,6 +131,11 @@ export class DataSelection2DataExtraction {
       : undefined
   }
 
+  /**
+   * Translates the selected tokens to a token filter.
+   * @param {ProfileTokenFilter} profileTokenFilter
+   * @returns {TokenFilter | undefined}
+   */
   private translateTokenFilter(profileTokenFilter: ProfileTokenFilter): TokenFilter | undefined {
     const selectedTokens = profileTokenFilter.getSelectedTokens()
     if (selectedTokens.length > 0) {

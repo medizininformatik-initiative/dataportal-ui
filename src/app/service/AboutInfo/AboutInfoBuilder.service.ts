@@ -72,10 +72,9 @@ export class AboutInfoBuilderService {
 
   /**
    * Formats the backend build time as a localized string.
-   * @param - The Git information data containing build time
+   * @param {GitInformationData} gitInformation
    * @returns {string} The formatted build time string, or empty string if not available
    * @private
-   * @param {GitInformationData} gitInformation
    */
   private buildBackendBuildTime(gitInformation: GitInformationData): string {
     return gitInformation?.build?.time ? new Date(gitInformation.build.time).toLocaleString() : ''

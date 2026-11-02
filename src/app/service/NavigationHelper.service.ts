@@ -19,7 +19,6 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.result | /feasibility-query/result}
-   * @returns
    */
   public navigateToFeasibilityQueryResult(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.result], {
@@ -30,25 +29,31 @@ export class NavigationHelperService {
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.editor | /feasibility-query/editor}
    * @param {string} id - The query profile identifier
-   * @returns
-   * @param {{ activeTab: string }} state.activeTab
    * @param {{ activeTab: string }} state
+   * @param {string} state.activeTab
    */
   public navigateToEditProfile(id: string, state?: { activeTab: string }): void {
     this.router.navigate([`${UrlPaths.queryEditor.feature}`, id], { state })
   }
 
+  /**
+   * Navigates to the criterion editor.
+   * @param {string} id
+   */
   public navigateToEditCriterion(id: string): void {
     this.router.navigate([`${UrlPaths.queryEditor.criteria}`, id])
   }
 
+  /**
+   * Navigates to the reference criterion editor.
+   * @param {string} id
+   */
   public navigateToEditReferenceCriterion(id: string): void {
     this.router.navigate([`${UrlPaths.queryEditor.reference}`, id])
   }
 
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.editor | /feasibility-query/editor}
-   * @returns
    */
   public navigateToFeasibilityQueryEditor(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.editor])
@@ -56,7 +61,6 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.search | /feasibility-query/search}
-   * @returns
    */
   public navigateToFeasibilityQuerySearch(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.search])
@@ -64,7 +68,6 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.dataSelection.editor | /data-selection/editor}
-   * @returns
    */
   public navigateToFeasibilityQueryBulkSearch(): void {
     this.router.navigate([UrlPaths.feasibilityQuery.bulkSearch])
@@ -72,7 +75,6 @@ export class NavigationHelperService {
 
   /**
    * Navigates to the data selection editor page.
-   * @returns
    */
   public navigateToDataSelectionEditor(): void {
     this.router.navigate([UrlPaths.dataSelection.editor])
@@ -80,7 +82,6 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.dataSelection.search | /data-selection/search}
-   * @returns
    */
   public navigateToDataSelectionSearch(): void {
     this.router.navigate([UrlPaths.dataSelection.search])
@@ -88,7 +89,6 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.dataQuery.cohortDefinition | /data-query/cohort-definition}
-   * @returns
    */
   public navigateToDataQueryCohortDefinition(): void {
     this.router.navigate([UrlPaths.dataQuery.cohortDefinition], {
@@ -98,7 +98,6 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link UrlPaths.dataQuery.dataSelection | /data-query/data-selection}
-   * @returns
    */
   public navigateToDataQueryDataSelection(): void {
     this.router.navigate([UrlPaths.dataQuery.dataSelection], {
@@ -108,7 +107,6 @@ export class NavigationHelperService {
 
   /**
    * Navigates to {@link BasePaths.savedQueries | /saved-queries}
-   * @returns
    */
   public navigateToSavedQueries(): void {
     this.router.navigate([BasePaths.savedQueries], {
@@ -116,6 +114,10 @@ export class NavigationHelperService {
     })
   }
 
+  /**
+   * Returns the active tab from the current navigation state.
+   * @returns {string}
+   */
   public getCurrentNavigation(): string {
     return this.router.getCurrentNavigation()?.extras.state?.['activeTab']
   }

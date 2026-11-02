@@ -8,6 +8,11 @@ import { AbstractArrayEntityProvider } from '../../Provider/Abstract/AbstractArr
   providedIn: 'root',
 })
 export class FilterProvider extends AbstractArrayEntityProvider<CriteriaSearchFilter> {
+  /**
+   * Returns the name of the filter as its id.
+   * @param {CriteriaSearchFilter} entity
+   * @returns {string}
+   */
   protected selectId(entity: CriteriaSearchFilter): string {
     return entity.getName()
   }

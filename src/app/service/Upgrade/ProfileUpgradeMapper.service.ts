@@ -64,6 +64,11 @@ export class ProfileUpgradeMapperService {
     }
   }
 
+  /**
+   * Marks the upgrade as a profile filter change.
+   * @param {ProfileUpgrade} upgradeInstance
+   * @param {ProfileFilterUpgradeData} details
+   */
   private applyProfileFilterUpgrade(upgradeInstance: ProfileUpgrade, details: ProfileFilterUpgradeData): void {
     upgradeInstance.setProfileFilterChange(new ProfileFilterChange())
   }

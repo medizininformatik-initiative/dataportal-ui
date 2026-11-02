@@ -30,6 +30,11 @@ export class StructuredQuery2UIQueryTranslatorService {
 
   constructor() {}
 
+  /**
+   * Loads the criteria of the hashes and translates the inclusion or exclusion criteria to criterion ids.
+   * @param {StructuredQueryCriterionData[][]} inexclusion
+   * @returns {Observable<string[][]>}
+   */
   public translate(inexclusion: StructuredQueryCriterionData[][]): Observable<string[][]> {
     const hashes = this.collectCRTDLHashesService.collectCriterionData(inexclusion)
     const criteriaHahes = hashes.criteriaHashes
@@ -44,6 +49,11 @@ export class StructuredQuery2UIQueryTranslatorService {
     )
   }
 
+  /**
+   * Translates the criteria to criterion ids and sets the consent.
+   * @param {StructuredQueryCriterionData[][]} inexclusion
+   * @returns {string[][]}
+   */
   public translateInExclusion(inexclusion: StructuredQueryCriterionData[][]): string[][] {
     const translatedCriteria: string[][] = []
     inexclusion.forEach((criterionArray: StructuredQueryCriterionData[]) => {
@@ -65,12 +75,21 @@ export class StructuredQuery2UIQueryTranslatorService {
     return translatedCriteria.filter((array: string[]) => array.length > 0)
   }
 
+  /**
+   * Sets the consent options from the term code.
+   * @param {TerminologyCode} terminologyCode
+   */
   private setConsent(terminologyCode: TerminologyCode): void {
     const flags = this.consentService.getBooleanFlags(terminologyCode.getCode())
     this.consentService.setProvisionCode(flags.distributedAnalysis, flags.euGdpr, flags.insuranceData, flags.contact)
     this.consentService.setConsent(true)
   }
 
+  /**
+   * Checks whether the term code is a consent.
+   * @param {TerminologyCode} termCode
+   * @returns {boolean}
+   */
   private isConsent(termCode: TerminologyCode): boolean {
     return this.consentService.getBooleanFlags(termCode.getCode()) !== null
   }

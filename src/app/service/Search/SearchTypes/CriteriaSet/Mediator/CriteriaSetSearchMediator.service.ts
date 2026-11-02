@@ -25,8 +25,6 @@ export class CriteriaSetSearchMediatorService extends AbstractKeyedSearchMediato
   /**
    * Creates an instance of CriteriaSetSearchMediatorService.
    *
-   * @param resultProvider - The result provider for managing criteria set search results
-   * @param searchEngine - The search engine for executing criteria set searches
    * @protected
    */
   constructor() {

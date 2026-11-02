@@ -63,6 +63,9 @@ export class CrtdlProcessingPipelineService {
     )
   }
 
+  /**
+   * Opens the validation report dialog.
+   */
   private openValidationReportModal(): void {
     this.matDialog.open(ErrorLogModalComponent)
   }

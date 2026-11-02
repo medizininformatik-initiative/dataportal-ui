@@ -16,6 +16,10 @@ export class DataDefinitionValidationService {
 
   constructor() {}
 
+  /**
+   * Combines the validation states of the data selection and the feasibility query.
+   * @returns {DataDefinitionValidationState}
+   */
   public getDataDefinitionValidationStatus(): DataDefinitionValidationState {
     const dataSelectionValidationState = this.dataSelectionValidationService.validationState()
     const feasibilityQueryValidationState = this.feasibilityQueryValidationService.validationState()

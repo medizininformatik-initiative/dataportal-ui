@@ -23,6 +23,11 @@ export class CriterionBuilderHelperService {
 
   constructor() {}
 
+  /**
+   * Creates a criterion builder from the profile data.
+   * @param {CriteriaProfileData} profileData
+   * @returns {CriterionBuilder}
+   */
   public setBuilderWithCriteriaProfileData(profileData: CriteriaProfileData): CriterionBuilder {
     const mandatoryFields = this.criterionMetadataService.createMandatoryFields(profileData)
     const uiProfile = this.uiProfileProviderService.getOne(profileData.uiProfileId)
@@ -39,6 +44,11 @@ export class CriterionBuilderHelperService {
     return builder
   }
 
+  /**
+   * Checks whether the UI profile has a required attribute filter.
+   * @param {UiProfileData} uiProfile
+   * @returns {boolean}
+   */
   private setIsRequiredFilterSet(uiProfile: UiProfileData): boolean {
     if (uiProfile.attributeDefinitions.length > 0) {
       return !uiProfile.attributeDefinitions.some((attributeDefinition: AttributeDefinitionData) => !attributeDefinition.optional)
@@ -53,7 +63,6 @@ export class CriterionBuilderHelperService {
    * Adds attribute filters to the criterion builder.
    *
    * @param {AttributeDefinitionData[]} attributeDefinitions The attribute definitions to add as filters.
-   * @param criterionBuilder The criterion builder to which attribute filters will be added.
    * @returns {AttributeFilter[] | []} The modified CriterionBuilder.
    */
   private addAttributeFilters(attributeDefinitions: AttributeDefinitionData[]): AttributeFilter[] | [] {
@@ -67,10 +76,8 @@ export class CriterionBuilderHelperService {
   /**
    * Adds value filters to the criterion builder.
    *
-   * @param valueDefinitions The value definitions to add as filters.
-   * @param criterionBuilder The criterion builder to which value filters will be added.
-   * @returns {ValueFilter[] | []} The modified CriterionBuilder.
    * @param {ValueDefinitionData} valueDefinition
+   * @returns {ValueFilter[] | []} The modified CriterionBuilder.
    */
   private addValueFilters(valueDefinition: ValueDefinitionData): ValueFilter[] | [] {
     if (valueDefinition) {

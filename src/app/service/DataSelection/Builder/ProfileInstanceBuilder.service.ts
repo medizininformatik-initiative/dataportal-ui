@@ -18,10 +18,22 @@ export class ProfileInstanceBuilderService {
 
   constructor() {}
 
+  /**
+   * Builds a profile instance for each profile data entry.
+   * @param {DataSelectionProfileData[]} item
+   * @param {boolean} markAsReference
+   * @returns {DataSelectionProfile[]}
+   */
   public buildProfileInstances(item: DataSelectionProfileData[], markAsReference: boolean): DataSelectionProfile[] {
     return item.map((profile: DataSelectionProfileData) => this.buildProfileInstance(profile, markAsReference))
   }
 
+  /**
+   * Builds a profile instance with its filters and fields.
+   * @param {DataSelectionProfileData} item
+   * @param {boolean} markAsReference
+   * @returns {DataSelectionProfile}
+   */
   private buildProfileInstance(item: DataSelectionProfileData, markAsReference: boolean): DataSelectionProfile {
     const filters = this.profileFilterBuilder.buildFilters(item.filters)
     const fields = this.profileFieldBuilder.buildProfileFields(item.fields, item.references)

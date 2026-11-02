@@ -15,6 +15,10 @@ export class TerminologySystemProvider {
 
   constructor() {}
 
+  /**
+   * Loads the terminology systems and emits true when they are stored.
+   * @returns {Observable<boolean>}
+   */
   public initializeTerminologySystems(): Observable<boolean> {
     return this.terminologyApiService.getTerminologySystems().pipe(
       tap((data: CodeSystemEntry[]) => {

@@ -14,6 +14,11 @@ export class BulkCriteriaService {
 
   constructor() {}
 
+  /**
+   * Searches for the given bulk search terms.
+   * @param {string} searchterms
+   * @returns {Observable<CriteriaBulkResultList>}
+   */
   public search(searchterms: string): Observable<CriteriaBulkResultList> {
     return this.bulkCriteriaSearchEngineService.search(searchterms)
   }

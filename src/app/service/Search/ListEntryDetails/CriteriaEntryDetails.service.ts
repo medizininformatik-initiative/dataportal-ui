@@ -19,10 +19,20 @@ export class CriteriaEntryDetailsService extends AbstractEntryDetailsService<Cri
   private readonly terminologyApiService = inject(TerminologyApiService)
   private readonly criteriaEntryDetailsProviderService = inject(CriteriaEntryDetailsProviderService)
 
+  /**
+   * Loads the details and relations of a criteria entry.
+   * @param {string} id
+   * @returns {Observable<CriteriaEntryDetails>}
+   */
   public loadDetails(id: string): Observable<CriteriaEntryDetails> {
     return this.terminologyApiService.getCriteriaEntryRelations(id).pipe(map((response) => this.mapCriteriaRelationData(response)))
   }
 
+  /**
+   * Validates the response and maps it to criteria entry details.
+   * @param {CriteriaEntryDetailsData} response
+   * @returns {CriteriaEntryDetails}
+   */
   private mapCriteriaRelationData(response: CriteriaEntryDetailsData): CriteriaEntryDetails {
     TypeAssertion.assertCriteriaEntryDetailsData(response)
 
@@ -36,15 +46,30 @@ export class CriteriaEntryDetailsService extends AbstractEntryDetailsService<Cri
     return details
   }
 
+  /**
+   * Validates the display data and maps it to a display.
+   * @param {DisplayData} display
+   * @returns {Display}
+   */
   private mapDisplay(display: DisplayData): Display {
     TypeAssertion.assertDisplayData(display)
     return Display.fromJson(display)
   }
 
+  /**
+   * Maps the relative data to criteria entry relatives.
+   * @param {CriteriaRelativeData[]} relatives
+   * @returns {CriteriaEntryRelative[]}
+   */
   protected mapRelativeData(relatives: CriteriaRelativeData[]): CriteriaEntryRelative[] {
     return relatives.map((relativeData: CriteriaRelativeData) => this.mapToCriteriaRelative(relativeData))
   }
 
+  /**
+   * Validates the relative data and maps it to a criteria entry relative.
+   * @param {CriteriaRelativeData} relative
+   * @returns {CriteriaEntryRelative}
+   */
   private mapToCriteriaRelative(relative: CriteriaRelativeData): CriteriaEntryRelative {
     TypeAssertion.assertCriteriaRelativeData(relative)
     return CriteriaEntryRelative.fromJson(relative)

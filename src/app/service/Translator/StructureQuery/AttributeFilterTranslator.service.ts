@@ -31,10 +31,9 @@ export class AttributeFilterTranslatorService {
 
   /**
    * Translates the value filters from the structured query format to the internal format.
-   * @param uiProfile
+   * @param {ValueDefinitionData} valueDefinitionData
    * @param {ValueFilterData} structuredQueryValueFilters
    * @returns {ValueFilter}
-   * @param {ValueDefinitionData} valueDefinitionData
    */
   public translateValueFilters(valueDefinitionData: ValueDefinitionData, structuredQueryValueFilters: ValueFilterData): ValueFilter {
     const attributeFilterBuilder = this.applyFilter(structuredQueryValueFilters, valueDefinitionData)
@@ -43,11 +42,10 @@ export class AttributeFilterTranslatorService {
 
   /**
    * Translates a list of attribute filters from the structured query format to the internal format.
-   * @param uiProfile
+   * @param {AttributeDefinitionData[]} attributeDefinitionData
    * @param {AttributeFilterData[]} structuredQueryAttributeFilters
    * @param {string} parentId
    * @returns {AttributeFilter[]}
-   * @param {AttributeDefinitionData[]} attributeDefinitionData
    */
   public translateAttributeFilters(
     attributeDefinitionData: AttributeDefinitionData[],
@@ -61,12 +59,10 @@ export class AttributeFilterTranslatorService {
   }
   /**
    * Translates a single attribute filter from the structured query format to the internal format.
-   * @param uiProfile
-   * @param attributeFilterData
-   * @param {string} parentId
-   * @returns {AttributeFilter}
    * @param {AttributeDefinitionData} attributeFilter
    * @param {AttributeFilterData[]} SQData
+   * @param {string} parentId
+   * @returns {AttributeFilter}
    */
   private translateAttributeFilter(
     attributeFilter: AttributeDefinitionData,
@@ -89,10 +85,9 @@ export class AttributeFilterTranslatorService {
 
   /**
    * Applies the appropriate filter translation based on the filter type for Attribute Filters and Value Filters.
-   * @param attributeFilterBuilder
    * @param {AttributeFilterData | ValueFilterData} attributeFilterData
-   * @param {string} parentId - The id of the parent criterion, used for reference filters.
    * @param {AttributeDefinitionData | ValueDefinitionData} attributeDefinitionData
+   * @param {string} parentId - The id of the parent criterion, used for reference filters.
    * @returns {AttributeFiltersBuilder}
    */
   private applyFilter(
@@ -136,11 +131,9 @@ export class AttributeFilterTranslatorService {
 
   /**
    * Finds an attribute filter definition in the UI profile.
-   * @param attributeDefinitions
-   * @param attributeFilter
-   * @returns {AttributeFilterData | undefined}
    * @param {AttributeFilterData[]} sq
    * @param {TerminologyCodeBaseData} attributeCode
+   * @returns {AttributeFilterData | undefined}
    */
   public findAttributeFilterInProfile(sq: AttributeFilterData[], attributeCode: TerminologyCodeBaseData): AttributeFilterData | undefined {
     return sq.find((attributeDefinition: AttributeFilterData) => {

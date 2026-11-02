@@ -88,10 +88,24 @@ export class EditAttributeFilterService {
     return filters
   }
 
+  /**
+   * Checks whether a required filter of the criterion is still unset.
+   * @param {Criterion} criterion
+   * @returns {boolean}
+   */
   public isFilterRequired(criterion: Criterion): boolean {
     return this.criterionValidationService.isRequiredFilterSet(criterion)
   }
 
+  /**
+   * Builds an attribute filter from the given filter and its type.
+   * @param {AttributeFilter} attributeFilter
+   * @param {FilterTypes} filterType
+   * @param {ConceptFilter} conceptFilter
+   * @param {AbstractQuantityFilter} quantityFilter
+   * @param {ReferenceFilter} referenceFilter
+   * @returns {AttributeFilter}
+   */
   private buildAttributeFilter(
     attributeFilter: AttributeFilter,
     filterType: FilterTypes,

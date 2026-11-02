@@ -86,6 +86,7 @@ export class UIQuery2StructuredQueryService {
 
   /**
    * Buttons are disabled while the query is invalid, so the error means a bug, not a user mistake.
+   * @returns {Observable<CCDLCohortDefinition>}
    */
   public translateActiveQuery(): Observable<CCDLCohortDefinition> {
     return this.feasibilityQueryProvider.getActiveFeasibilityQuery().pipe(
@@ -103,7 +104,8 @@ export class UIQuery2StructuredQueryService {
   /**
    * Handles invalid query error.
    *
-   * @param state
+   * @param {FeasibilityQueryValidationState} state
+   * @returns {CohortTranslationError}
    */
   private invalidQueryError(state: FeasibilityQueryValidationState): CohortTranslationError {
     if (!state.hasInclusionCriteria) {
@@ -118,7 +120,8 @@ export class UIQuery2StructuredQueryService {
   /**
    * Translates a feasibility query into a cohort definition.
    *
-   * @param query
+   * @param {FeasibilityQuery} query
+   * @returns {CCDLCohortDefinition}
    */
   private cohortDefinition(query: FeasibilityQuery): CCDLCohortDefinition {
     const inclusionCriteria = this.criterionGroups(query.getInclusionCriteria())
@@ -137,7 +140,8 @@ export class UIQuery2StructuredQueryService {
   /**
    * Handles criterion groups.
    *
-   * @param groups
+   * @param {string[][]} groups
+   * @returns {NonEmptyArray<NonEmptyArray<CCDLCriterion>> | undefined}
    */
   private criterionGroups(groups: string[][]): NonEmptyArray<NonEmptyArray<CCDLCriterion>> | undefined {
     const translated = groups
@@ -149,7 +153,8 @@ export class UIQuery2StructuredQueryService {
   /**
    * Translates a criterion into its CCDL form.
    *
-   * @param criterion
+   * @param {Criterion} criterion
+   * @returns {CCDLCriterion}
    */
   private criterion(criterion: Criterion): CCDLCriterion {
     return this.criterionOf(criterion, this.attributeFilters(criterion))
@@ -157,7 +162,8 @@ export class UIQuery2StructuredQueryService {
 
   /**
    * A referenced criterion may not reference again (CCDL schema), so nested references are left out.
-   * @param criterion
+   * @param {Criterion} criterion
+   * @returns {CCDLReferencedCriterion}
    */
   private referencedCriterion(criterion: Criterion): CCDLReferencedCriterion {
     return this.criterionOf(criterion, withoutReferenceFilters(this.attributeFilters(criterion)))
@@ -166,8 +172,9 @@ export class UIQuery2StructuredQueryService {
   /**
    * Handles criterion of.
    *
-   * @param criterion
-   * @param attributeFilters
+   * @param {Criterion} criterion
+   * @param {F[]} attributeFilters
+   * @returns {StrictOmit<CCDLCriterion, 'attributeFilters'> & { attributeFilters?: F[] }}
    */
   private criterionOf<F extends CCDLAttributeFilter>(
     criterion: Criterion,
@@ -187,7 +194,8 @@ export class UIQuery2StructuredQueryService {
   /**
    * Handles attribute filters.
    *
-   * @param criterion
+   * @param {Criterion} criterion
+   * @returns {CCDLAttributeFilter[]}
    */
   private attributeFilters(criterion: Criterion): CCDLAttributeFilter[] {
     return criterion.getAttributeFilters().flatMap((filter) => this.attributeFilter(filter) ?? [])
@@ -196,7 +204,8 @@ export class UIQuery2StructuredQueryService {
   /**
    * Handles attribute filter.
    *
-   * @param filter
+   * @param {AttributeFilter} filter
+   * @returns {CCDLAttributeFilter | undefined}
    */
   private attributeFilter(filter: AttributeFilter): CCDLAttributeFilter | undefined {
     const attributeCode = termCode(filter.getAttributeCode())
@@ -223,7 +232,8 @@ export class UIQuery2StructuredQueryService {
   /**
    * Handles value filter.
    *
-   * @param criterion
+   * @param {Criterion} criterion
+   * @returns {CCDLValueFilter | undefined}
    */
   private valueFilter(criterion: Criterion): CCDLValueFilter | undefined {
     for (const valueFilter of criterion.getValueFilters()) {
@@ -239,7 +249,8 @@ export class UIQuery2StructuredQueryService {
   /**
    * Handles concept filter.
    *
-   * @param conceptFilter
+   * @param {ConceptFilter} conceptFilter
+   * @returns {CCDLConceptFilter}
    */
   private conceptFilter(conceptFilter: ConceptFilter): CCDLConceptFilter {
     return {
@@ -254,7 +265,8 @@ export class UIQuery2StructuredQueryService {
   /**
    * Handles quantity filter.
    *
-   * @param quantity
+   * @param {AbstractQuantityFilter} quantity
+   * @returns {CCDLQuantityComparatorFilter | CCDLQuantityRangeFilter | undefined}
    */
   private quantityFilter(quantity: AbstractQuantityFilter): CCDLQuantityComparatorFilter | CCDLQuantityRangeFilter | undefined {
     if (quantity instanceof QuantityComparatorFilter) {

@@ -36,8 +36,8 @@ export class FeasibilityQueryProviderService {
 
   /**
    * Sets the feasibility query and updates local storage.
-   * @param {string} id the uid to set
    * @param {FeasibilityQuery} feasibilityQuery The new feasibility query to set
+   * @param {string} id the uid to set
    * @param {boolean} setAsActive Whether to set the query as the active query
    */
   public setFeasibilityQueryById(feasibilityQuery: FeasibilityQuery, id: string, setAsActive: boolean = false): void {
@@ -62,6 +62,10 @@ export class FeasibilityQueryProviderService {
     )
   }
 
+  /**
+   * Returns the active feasibility query.
+   * @returns {Observable<FeasibilityQuery>}
+   */
   public getActiveFeasibilityQuery(): Observable<FeasibilityQuery> {
     return this.activeFeasibilityQuery.getActiveFeasibilityQueryIdObservable().pipe(
       switchMap((id: string) =>
@@ -159,6 +163,10 @@ export class FeasibilityQueryProviderService {
     return inexclusion
   }
 
+  /**
+   * Returns whether a query result exists.
+   * @returns {Observable<boolean>}
+   */
   public getHasQueryResult(): Observable<boolean> {
     return this.hasQueryResult.asObservable()
   }

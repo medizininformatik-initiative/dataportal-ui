@@ -18,12 +18,20 @@ export class ActuatorApiService {
 
   constructor() {}
 
+  /**
+   * Fetches the actuator info from the backend.
+   * @returns {Observable<ActuatorData>}
+   */
   public getActuatorInfo(): Observable<ActuatorData> {
     return this.http.get<ActuatorData>(this.backendService.createUrl(ActuatorPaths.INFO_ENDPOINT), {
       headers: this.backendService.getHeaders(),
     })
   }
 
+  /**
+   * Fetches the actuator health from the backend.
+   * @returns {Observable<BuildInformationData>}
+   */
   public getActuatorHealth(): Observable<BuildInformationData> {
     return this.http.get<any>(this.backendService.createUrl(ActuatorPaths.HEALTH_ENDPOINT), {
       headers: this.backendService.getHeaders(),

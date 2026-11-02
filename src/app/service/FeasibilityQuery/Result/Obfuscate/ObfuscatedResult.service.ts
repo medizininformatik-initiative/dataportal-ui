@@ -17,12 +17,24 @@ export class ObfuscatedResultService {
 
   constructor() {}
 
+  /**
+   * Fetches the detailed obfuscated result and maps it to a query result.
+   * @param {string} feasibilityQueryResultId
+   * @param {string} feasibilityQueryId
+   * @returns {Observable<QueryResult>}
+   */
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string, feasibilityQueryId: string): Observable<QueryResult> {
     return this.feasibilityQueryResultApiService
       .getDetailedObfuscatedResult(feasibilityQueryResultId)
       .pipe(map((result) => this.mapQueryResult(result, feasibilityQueryId)))
   }
 
+  /**
+   * Maps the response to a detailed query result.
+   * @param {any} result
+   * @param {string} feasibilityQueryId
+   * @returns {QueryResult}
+   */
   private mapQueryResult(result, feasibilityQueryId: string): QueryResult {
     const queryResult: QueryResult = this.queryResultMapperService.createQueryResult(true, result, feasibilityQueryId)
     return queryResult

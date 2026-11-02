@@ -56,6 +56,11 @@ export class CriteriaSearchFilterService {
     return values.map((value: SearchFilterValueData) => new CriteriaSearchFilterValue(value.count, value.label))
   }
 
+  /**
+   * Maps the filter name to its filter type.
+   * @param {string} name
+   * @returns {ElasticSearchFilterTypes}
+   */
   private setFilterType(name: string): ElasticSearchFilterTypes {
     return ElasticSearchFilterTypes[name.toUpperCase() as keyof typeof ElasticSearchFilterTypes]
   }

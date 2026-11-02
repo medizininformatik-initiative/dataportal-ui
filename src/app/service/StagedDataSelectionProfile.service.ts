@@ -28,17 +28,23 @@ export class StagedProfileService implements OnDestroy {
   constructor(...args: unknown[])
   constructor() {}
 
+  /**
+   * Unsubscribes from the subscription.
+   */
   public ngOnDestroy(): void {
     this.subscription?.unsubscribe()
   }
 
+  /**
+   * Stages a deep copy of the profile.
+   * @param {DataSelectionProfile} profile
+   */
   public initialize(profile: DataSelectionProfile): void {
     this.stagedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
   }
   /**
    * Updates the selected basic fields in the staged profile.
    * @param {SelectedBasicField[]} selectedBasicFields - The selected basic fields to set
-   * @returns
    */
   public updateSelectedBasicFields(selectedBasicFields: SelectedBasicField[]): void {
     const profile = this.stagedProfile
@@ -51,7 +57,6 @@ export class StagedProfileService implements OnDestroy {
   /**
    * Updates the selected reference fields in the staged profile.
    * @param {SelectedReferenceField[]} selectedReferenceFields - The selected reference fields to set
-   * @returns
    */
   public updateSelectedReferenceFields(selectedReferenceFields: SelectedReferenceField[]): void {
     const profile = this.stagedProfile
@@ -62,6 +67,10 @@ export class StagedProfileService implements OnDestroy {
     }
   }
 
+  /**
+   * Sets the filter on the staged profile.
+   * @param {ProfileTokenFilter | ProfileTimeRestrictionFilter} filter
+   */
   public updateProfileFilter(filter: ProfileTokenFilter | ProfileTimeRestrictionFilter): void {
     const profile = this.stagedProfile
     if (profile) {
@@ -73,7 +82,6 @@ export class StagedProfileService implements OnDestroy {
   /**
    * Updates the label of the staged profile.
    * @param {string} label - The new label text
-   * @returns
    */
   public updateLabel(label: string): void {
     this.subscription?.unsubscribe()
@@ -185,7 +193,6 @@ export class StagedProfileService implements OnDestroy {
   /**
    * Sets a profile in the active data selection.
    * @param {DataSelectionProfile} profile - The profile to set
-   * @returns
    * @private
    */
   private setProfileInDataSelectionProvider(profile: DataSelectionProfile): void {

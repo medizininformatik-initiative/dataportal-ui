@@ -17,6 +17,12 @@ export class ProfileFilterTranslatorService {
 
   constructor() {}
 
+  /**
+   * Creates the token and date filters of the profile from the extracted group.
+   * @param {AttributeGroupsData} externProfile
+   * @param {DataSelectionProfile} profile
+   * @returns {AbstractProfileFilter[]}
+   */
   public createProfileFilters(externProfile: AttributeGroupsData, profile: DataSelectionProfile): AbstractProfileFilter[] {
     const tokenFilters = this.profileTokenFilterTranslator.createTokenFilters(externProfile, profile)
     const dateFilters = this.profileDateFilterTranslator.createDateFilters(externProfile, profile)

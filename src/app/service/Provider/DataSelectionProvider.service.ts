@@ -20,6 +20,11 @@ export class DataSelectionProviderService {
 
   constructor() {}
 
+  /**
+   * Creates the data selection with the main profile and sets it as active.
+   * @param {DataSelectionProfile} mainProfile
+   * @returns {Observable<boolean>}
+   */
   public initDataSelection(mainProfile: DataSelectionProfile): Observable<boolean> {
     const dataSelection: DataSelection = new DataSelection([], uuidv4())
     this.setDataSelection(dataSelection.getId(), dataSelection)
@@ -29,20 +34,37 @@ export class DataSelectionProviderService {
     return of(true)
   }
 
+  /**
+   * Returns the data selection with the given id.
+   * @param {string} id
+   * @returns {Observable<DataSelection>}
+   */
   public getDataSelection(id: string): Observable<DataSelection> {
     return this.selectionMapSubject.pipe(map((selections: Map<string, DataSelection>) => selections.get(id)))
   }
 
+  /**
+   * Returns the active data selection.
+   * @returns {Observable<DataSelection>}
+   */
   public getActiveDataSelection(): Observable<DataSelection> {
     return this.activeDataSelection
       .getActiveDataSelectionIdObservable()
       .pipe(switchMap((id: string) => this.selectionMapSubject.pipe(map((selections: Map<string, DataSelection>) => selections.get(id)))))
   }
 
+  /**
+   * Returns the profiles of the active data selection.
+   * @returns {Observable<DataSelectionProfile[]>}
+   */
   public getActiveProfiles(): Observable<DataSelectionProfile[]> {
     return this.getActiveDataSelection().pipe(map((ds: DataSelection) => ds.getProfiles()))
   }
 
+  /**
+   * Replaces the profiles of the active data selection.
+   * @param {DataSelectionProfile[]} profiles
+   */
   public setActiveProfiles(profiles: DataSelectionProfile[]): void {
     const id: string = this.activeDataSelection.getActiveDataSelectionId()
     const dataSelection = this.selectionMap.get(id)
@@ -55,11 +77,22 @@ export class DataSelectionProviderService {
     }
   }
 
+  /**
+   * Adds or sets a profile in the active data selection.
+   * @param {DataSelectionProfile} profile
+   * @param {'ADD' | 'SET'} profileProvider
+   */
   public setActiveProfile(profile: DataSelectionProfile, profileProvider?: 'ADD' | 'SET'): void {
     const id: string = this.activeDataSelection.getActiveDataSelectionId()
     this.setProfileInDataSelection(id, profile, profileProvider)
   }
 
+  /**
+   * Stores the data selection and optionally sets it as active.
+   * @param {string} id
+   * @param {DataSelection} dataSelection
+   * @param {boolean} setAsActive
+   */
   public setDataSelection(id: string, dataSelection: DataSelection, setAsActive: boolean = false): void {
     this.selectionMap.set(id, dataSelection)
     this.selectionMapSubject.next(new Map(this.selectionMap))
@@ -68,6 +101,10 @@ export class DataSelectionProviderService {
     }
   }
 
+  /**
+   * Removes the data selection.
+   * @param {string} uid
+   */
   public removeDataSelection(uid: string): void {
     if (this.selectionMap.has(uid)) {
       this.selectionMap.delete(uid)
@@ -75,6 +112,11 @@ export class DataSelectionProviderService {
     }
   }
 
+  /**
+   * Removes the profile from the data selection.
+   * @param {string} dataSelectionId
+   * @param {string} profileId
+   */
   public removeProfileFromDataSelection(dataSelectionId: string, profileId: string): void {
     const dataSelection = this.selectionMap.get(dataSelectionId)
 
@@ -84,6 +126,12 @@ export class DataSelectionProviderService {
     }
   }
 
+  /**
+   * Adds or sets a profile in the data selection.
+   * @param {string} dataSelectionId
+   * @param {DataSelectionProfile} profile
+   * @param {'ADD' | 'SET'} profileProvider
+   */
   public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile, profileProvider?: 'ADD' | 'SET'): void {
     const dataSelection = this.selectionMap.get(dataSelectionId)
     if (dataSelection) {
@@ -100,6 +148,11 @@ export class DataSelectionProviderService {
     }
   }
 
+  /**
+   * Replaces the profile with the same id, or adds it if missing.
+   * @param {DataSelectionProfile[]} profiles
+   * @param {DataSelectionProfile} profile
+   */
   private upsertProfile(profiles: DataSelectionProfile[], profile: DataSelectionProfile): void {
     const index = profiles.findIndex((existing: DataSelectionProfile) => existing.getId() === profile.getId())
     if (index !== -1) {
@@ -109,26 +162,47 @@ export class DataSelectionProviderService {
     }
   }
 
+  /**
+   * Stores a data selection built from the profiles.
+   * @param {DataSelectionProfile[]} updatedElements
+   * @param {string} dataSelectionId
+   */
   private commitDataSelection(updatedElements: DataSelectionProfile[], dataSelectionId: string) {
     const updatedDataSelection = new DataSelection(updatedElements, dataSelectionId)
     this.setDataSelection(updatedDataSelection.getId(), updatedDataSelection, true)
   }
 
+  /**
+   * Stores the active data selection with the profiles in the new order.
+   * @param {DataSelectionProfile[]} profiles
+   */
   public reorderProfiles(profiles: DataSelectionProfile[]): void {
     const id = this.activeDataSelection.getActiveDataSelectionId()
     const updatedDataSelection = new DataSelection(profiles, id)
     this.setDataSelection(updatedDataSelection.getId(), updatedDataSelection, true)
   }
 
+  /**
+   * Empties the selection map.
+   */
   public resetSelectionMap(): void {
     this.selectionMapSubject.next(new Map())
   }
 
+  /**
+   * Replaces the active data selection with an empty one.
+   */
   public clearDataSelection(): void {
     const dataSelection: DataSelection = new DataSelection([], uuidv4())
     this.setDataSelection(dataSelection.getId(), dataSelection, true)
   }
 
+  /**
+   * Gives the profile a numbered label if another profile has the same label.
+   * @param {DataSelectionProfile[]} profiles
+   * @param {DataSelectionProfile} profile
+   * @returns {DataSelectionProfile}
+   */
   private resolveDuplicateLabel(profiles: DataSelectionProfile[], profile: DataSelectionProfile): DataSelectionProfile {
     const texts = profile.getLabel().getTexts()
     const sameProfiles = profiles.filter(

@@ -33,6 +33,11 @@ export class CriteriaSearchService extends AbstractSimpleSearch<CriteriaListEntr
     return this.paginator.searchFirstPage(searchTerm)
   }
 
+  /**
+   * Sets the search term and loads the next page of results.
+   * @param {string} searchTerm
+   * @returns {Observable<CriteriaResultList>}
+   */
   public loadNextPage(searchTerm: string): Observable<CriteriaResultList> {
     this.setSearchTerm(searchTerm)
     return this.paginator.loadNextPage(searchTerm)
@@ -41,16 +46,24 @@ export class CriteriaSearchService extends AbstractSimpleSearch<CriteriaListEntr
   /**
    * Returns the search results.
    *
-   * @returns {Observable<CriteriaResultList>
+   * @returns {Observable<CriteriaResultList>} {Observable<CriteriaResultList>
    */
   public getSearchResults(): Observable<CriteriaResultList> {
     return this.resultProviderService.getSearchResults()
   }
 
+  /**
+   * Sets the active search term.
+   * @param {string} searchTerm
+   */
   protected setSearchTerm(searchTerm: string) {
     this.criteriaSearchStateService.setActiveSearchTerm(searchTerm)
   }
 
+  /**
+   * Returns the active search term.
+   * @returns {Observable<string>}
+   */
   public getActiveSearchTerm(): Observable<string> {
     return this.criteriaSearchStateService.getActiveSearchTerm()
   }

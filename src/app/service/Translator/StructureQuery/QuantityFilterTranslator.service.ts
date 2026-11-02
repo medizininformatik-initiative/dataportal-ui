@@ -43,10 +43,9 @@ export class QuantityFilterTranslatorService {
 
   /**
    * Create a quantity filter builder instance from UI profile data.
-   * @param uiProfileData
-   * @returns {QuantityFilterBuilder}
    * @param {AttributeDefinitionData | ValueDefinitionData} attributeDefinitionData
    * @param {AttributeFilterData | ValueFilterData} attributeFilter
+   * @returns {QuantityFilterBuilder}
    */
   private createQuantityBuilderInstance(
     attributeDefinitionData: AttributeDefinitionData | ValueDefinitionData,
@@ -60,9 +59,8 @@ export class QuantityFilterTranslatorService {
 
   /**
    * Translates allowed units from UI profile data to quantity unit array.
-   * @param uiProfileData
-   * @returns {QuantityUnit[]}
    * @param {AttributeDefinitionData | ValueDefinitionData} attributeDefinitionData
+   * @returns {QuantityUnit[]}
    */
   private createAllowedUnitsFromUiProfileData(attributeDefinitionData: AttributeDefinitionData | ValueDefinitionData): QuantityUnit[] {
     const allowedUnits: QuantityUnitData[] = attributeDefinitionData.allowedUnits

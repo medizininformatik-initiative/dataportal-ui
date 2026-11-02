@@ -45,7 +45,6 @@ export class LoadQueryIntoEditorFromUrlService {
 
   /**
    * This prevents consent from previous queries affecting the current query loading.
-   * @returns void
    */
   private clearPreviousConsent(): void {
     this.consentService.clearConsent()

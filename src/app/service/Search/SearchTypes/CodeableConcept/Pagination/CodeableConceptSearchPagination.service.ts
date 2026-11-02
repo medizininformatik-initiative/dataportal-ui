@@ -51,9 +51,6 @@ export class CodeableConceptSearchPaginationService extends KeyedSearchPaginatio
 
   /**
    * Loads the next page of results for a specific concept filter.
-   * @param searchText The search text to use for filtering results.
-   * @param valueSetUrls Array of value set URLs to filter results.
-   * @returns Observable containing the next page of search results.
    * @param {string[]} dataSetUrl
    */
   public resetPaginationForConceptFilter(dataSetUrl: string[]): void {

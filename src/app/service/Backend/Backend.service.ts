@@ -16,23 +16,48 @@ export class BackendService {
 
   constructor() {}
 
+  /**
+   * Returns the access token from the auth storage.
+   * @returns {string}
+   */
   private getAccessToken() {
     return this.authStorage.getItem('access_token')
   }
 
+  /**
+   * Builds the JSON and bearer token headers.
+   * @returns {HttpHeaders}
+   */
   public getHeaders() {
     return new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + this.getAccessToken())
   }
 
+  /**
+   * Builds the backend api url for a resource.
+   * @param {string} pathToResource
+   * @param {string} paramString
+   * @returns {string}
+   */
   public createUrl(pathToResource: string, paramString?: string): string {
     const apiUrl = this.getBaseUrl() + this.appSettingsProvider.getUiBackendApiPath()
     return this.buildUrl(apiUrl, pathToResource, paramString)
   }
 
+  /**
+   * Returns the backend base url from the app settings.
+   * @returns {string}
+   */
   public getBaseUrl(): string {
     return this.appSettingsProvider.getBackendBaseUrl()
   }
 
+  /**
+   * Joins base, path and optional parameters into one url.
+   * @param {string} base
+   * @param {string} path
+   * @param {string} paramString
+   * @returns {string}
+   */
   private buildUrl(base: string, path: string, paramString?: string): string {
     let url = base.endsWith('/') ? base : base + '/'
     url += path
@@ -58,6 +83,12 @@ export class BackendService {
     return new HttpContext().set(IS_FEASIBILITY_REQUEST, true)
   }
 
+  /**
+   * Splits an array into chunks of the given size.
+   * @param {T[]} array
+   * @param {number} chunkSize
+   * @returns {T[][]}
+   */
   public chunkArray<T>(array: T[], chunkSize: number): T[][] {
     const chunks = []
     for (let i = 0; i < array.length; i += chunkSize) {
@@ -66,6 +97,12 @@ export class BackendService {
     return chunks
   }
 
+  /**
+   * Splits strings into chunks whose joined length stays below the max url length.
+   * @param {string[]} array
+   * @param {number} maxUrlLength
+   * @returns {string[][]}
+   */
   public chunkArrayForStrings(array: string[], maxUrlLength: number = 1900): string[][] {
     const chunks = [[]]
     let i = 0

@@ -20,8 +20,6 @@ export class CriteriaSetSearchPaginationService extends KeyedSearchPagination<Re
 
   /**
    * Creates an instance of CriteriaSetSearchPaginationService.
-   *
-   * @param mediatorService - The mediator service for coordinating criteria set searches
    */
   constructor() {
     const mediatorService = inject(CriteriaSetSearchMediatorService)

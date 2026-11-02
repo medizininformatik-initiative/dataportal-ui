@@ -33,6 +33,13 @@ export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<Profi
     this.searchEngine = searchEngine
   }
 
+  /**
+   * Searches for profiles and maps the response to a result list.
+   * @param {string} searchText
+   * @param {number} page
+   * @param {number} pageSize
+   * @returns {Observable<ProfileResultList>}
+   */
   public search(
     searchText: string,
     page: number = 0,
@@ -43,6 +50,13 @@ export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<Profi
     return this.searchResultProcessorService.fetchAndMapSearchResults(url, resultMapper)
   }
 
+  /**
+   * Builds the search url from the search text, the selected filters and the page.
+   * @param {string} searchText
+   * @param {number} page
+   * @param {number} pageSize
+   * @returns {string}
+   */
   protected createUrl(searchText: string, page: number = 0, pageSize: number = SearchUrlBuilder.MAX_ENTRIES_PER_PAGE): string {
     const modules = this.selectedModules().join(',')
     const categories = this.selectedCategories().join(',')
@@ -51,6 +65,10 @@ export class ProfileSearchEngineService extends AbstractSimpleSearchEngine<Profi
     return new ProfileSearchUrlStrategy(searchText, modules, categories, resourceTypes).getSearchUrl(page, pageSize)
   }
 
+  /**
+   * Returns the mapper for the search results.
+   * @returns {ProfileResultMapperStrategy}
+   */
   protected getMapping(): ProfileResultMapperStrategy {
     return new ProfileResultMapperStrategy()
   }

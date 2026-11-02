@@ -28,6 +28,11 @@ export class CollectCRTDLHashesService {
 
   constructor() {}
 
+  /**
+   * Collects the concept and criteria hashes of the inclusion or exclusion criteria.
+   * @param {StructuredQueryCriterionData[][]} inexclusion
+   * @returns {HashCollection}
+   */
   public collectCriterionData(inexclusion: StructuredQueryCriterionData[][]): HashCollection {
     this.hashes = { conceptHashes: [], criteriaHashes: [] }
     inexclusion.forEach((criterionArray: StructuredQueryCriterionData[]) => {
@@ -36,6 +41,10 @@ export class CollectCRTDLHashesService {
     return this.hashes
   }
 
+  /**
+   * Collects the hashes of every criterion that is not a consent.
+   * @param {StructuredQueryCriterionData[]} innerArray
+   */
   private innerCriterion(innerArray: StructuredQueryCriterionData[]): void {
     innerArray.forEach((criterion: StructuredQueryCriterionData) => {
       if (!this.isConsent(criterion)) {
@@ -46,9 +55,8 @@ export class CollectCRTDLHashesService {
 
   /**
    * Checks if the given terminology code represents a consent.
-   * @param termCode TerminologyCode object
-   * @returns {boolean} True if it is a consent, false otherwise
    * @param {StructuredQueryCriterionData} criterion
+   * @returns {boolean} True if it is a consent, false otherwise
    */
   private isConsent(criterion: StructuredQueryCriterionData): boolean {
     const terminologyCode = TerminologyCode.fromJson(criterion.termCodes[0])
@@ -58,7 +66,6 @@ export class CollectCRTDLHashesService {
   /**
    * Processes a single structured query criterion and collects its hashes.
    * @param {StructuredQueryCriterionData} structuredQueryCriterion StructuredQueryCriterionData object
-   * @returns void
    */
   private processStructuredQueryCriterion(structuredQueryCriterion: StructuredQueryCriterionData): void {
     this.collectCriterionHashesFromReferenceFilters(structuredQueryCriterion)
@@ -125,6 +132,10 @@ export class CollectCRTDLHashesService {
     this.hashes.conceptHashes.push(...valueConceptHashes)
   }
 
+  /**
+   * Collects the concept hashes from the attribute filters of the reference criterion.
+   * @param {ReferenceCriteriaData} structuredQueryCriterion
+   */
   private collectConceptHashesFromReferenceCriterionFromAttributeFilters(structuredQueryCriterion: ReferenceCriteriaData): void {
     const attributeFilters: AttributeFilterData[] | undefined = structuredQueryCriterion?.attributeFilters
     if (!attributeFilters) {
@@ -134,6 +145,10 @@ export class CollectCRTDLHashesService {
     this.hashes.conceptHashes.push(...attributeConceptHashes)
   }
 
+  /**
+   * Collects the concept hashes from the value filter of the reference criterion.
+   * @param {ReferenceCriteriaData} structuredQueryCriterion
+   */
   private collectConceptHashesFromReferenceCriterionFromValueFilters(structuredQueryCriterion: ReferenceCriteriaData): void {
     const valueFilter: ValueFilterData | undefined = structuredQueryCriterion?.valueFilter
     if (!valueFilter) {

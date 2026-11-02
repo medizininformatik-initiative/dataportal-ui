@@ -59,9 +59,8 @@ export abstract class AbstractKeyedSearchResultProvider<
   /**
    * Gets the search results for a specific key as an observable.
    *
-   * @param key The key to identify the result set.
-   * @returns {Observable<T | null>} An Observable of the search result for the given key.
    * @param {string[]} dataSetUrls
+   * @returns {Observable<T | null>} An Observable of the search result for the given key.
    */
   public getSearchResults(dataSetUrls: string[]): Observable<T | null> {
     const key = this.generateKey(dataSetUrls)

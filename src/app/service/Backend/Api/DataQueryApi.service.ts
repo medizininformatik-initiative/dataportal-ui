@@ -18,6 +18,11 @@ export class DataQueryApiService {
 
   constructor() {}
 
+  /**
+   * Saves a data query in the backend.
+   * @param {SavedDataQueryData} dataQuery
+   * @returns {Observable<HttpResponse<any>>}
+   */
   public postDataQuery(dataQuery: SavedDataQueryData): Observable<HttpResponse<any>> {
     const url = this.backendService.createUrl(DataqueryPaths.DATA)
     return this.http.post<any>(url, dataQuery, {
@@ -26,6 +31,11 @@ export class DataQueryApiService {
     })
   }
 
+  /**
+   * Converts a CRTDL to a CSV file.
+   * @param {any} crtdlData
+   * @returns {Observable<Blob>}
+   */
   public postConvertCrtdltToCsv(crtdlData: any): Observable<Blob> {
     const url = this.backendService.createUrl(DataqueryPaths.CONVERT_CRTDL)
     return this.http.post(url, crtdlData, {
@@ -35,6 +45,10 @@ export class DataQueryApiService {
     })
   }
 
+  /**
+   * Fetches the list of saved data queries.
+   * @returns {Observable<SavedDataQueryListItemData[]>}
+   */
   public getDataQuery(): Observable<SavedDataQueryListItemData[]> {
     const url = this.backendService.createUrl(DataqueryPaths.DATA)
     return this.http.get<SavedDataQueryListItemData[]>(url, {
@@ -42,6 +56,12 @@ export class DataQueryApiService {
     })
   }
 
+  /**
+   * Fetches a saved data query, optionally skipping the validation.
+   * @param {number} dataQueryId
+   * @param {boolean} skipValidation
+   * @returns {Observable<SavedDataQueryData>}
+   */
   public getDataQueryById(dataQueryId: number, skipValidation: boolean = false): Observable<SavedDataQueryData> {
     const skip = DataqueryPaths.SKIP_VALIDATION + skipValidation
     const url = this.backendService.createUrl(DataqueryPaths.DATA) + '/' + dataQueryId + skip
@@ -50,6 +70,12 @@ export class DataQueryApiService {
     })
   }
 
+  /**
+   * Updates a saved data query.
+   * @param {number} dataQueryId
+   * @param {SavedDataQuery} dataQuery
+   * @returns {Observable<SavedDataQueryData>}
+   */
   public putDataQueryById(dataQueryId: number, dataQuery: SavedDataQuery): Observable<SavedDataQueryData> {
     const url = this.backendService.createUrl(DataqueryPaths.DATA) + '/' + dataQueryId
     return this.http.put<SavedDataQueryData>(url, dataQuery, {
@@ -57,6 +83,11 @@ export class DataQueryApiService {
     })
   }
 
+  /**
+   * Deletes a saved data query.
+   * @param {number} dataQueryId
+   * @returns {Observable<void>}
+   */
   public deleteDataQueryById(dataQueryId: number): Observable<void> {
     const url = this.backendService.createUrl(DataqueryPaths.DATA) + '/' + dataQueryId
     return this.http.delete<void>(url, {
@@ -64,12 +95,20 @@ export class DataQueryApiService {
     })
   }
 
+  /**
+   * Fetches the CRTDL of the data query.
+   * @returns {Observable<CRTDLData>}
+   */
   public getDatQueryCrtdl(): Observable<CRTDLData> {
     return this.http.get<CRTDLData>(this.backendService.createUrl(DataqueryPaths.CRTDL), {
       headers: this.backendService.getHeaders(),
     })
   }
 
+  /**
+   * Fetches the number of saved data query slots.
+   * @returns {Observable<DataQuerySlots>}
+   */
   public getSavedDataQuerySlots(): Observable<DataQuerySlots> {
     return this.http.get<DataQuerySlots>(this.backendService.createUrl(DataqueryPaths.SAVED_QUERY_SLOTS), {
       headers: this.backendService.getHeaders(),

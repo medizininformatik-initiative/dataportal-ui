@@ -37,6 +37,12 @@ export class CriteriaFilterFetchService {
     })
   }
 
+  /**
+   * Builds the filter url from the search text and the current filters.
+   * @param {string} searchText
+   * @param {string} targetFilter
+   * @returns {string}
+   */
   private buildUrl(searchText: string, targetFilter?: string): string {
     const currentFilters = this.filterProvider.getCriteriaSearchFiltersValue()
     const builder = new SearchUrlBuilder(TerminologyPaths.SEARCH_FILTER_ENDPOINT).withSearchTerm(searchText)

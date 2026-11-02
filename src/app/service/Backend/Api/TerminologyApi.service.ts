@@ -76,6 +76,10 @@ export class TerminologyApiService {
     return this.http.get<CriteriaListEntryData>(this.backendService.createUrl(TerminologyPaths.ENTRY_ENDPOINT + '/' + id))
   }
 
+  /**
+   * Fetches the terminology systems.
+   * @returns {Observable<any>}
+   */
   public getTerminologySystems() {
     return this.http.get<any>(this.backendService.createUrl(TerminologyPaths.SYSTEMS_ENDPOINT))
   }

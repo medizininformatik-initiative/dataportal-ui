@@ -21,6 +21,11 @@ export class SavedDataQueryService {
 
   constructor() {}
 
+  /**
+   * Creates the CRTDL and saves it as a data query.
+   * @param {SaveDataModal | null} data
+   * @returns {Observable<SavedUsageStats>}
+   */
   public saveDataQuery(data: SaveDataModal | null = null): Observable<SavedUsageStats> {
     return this.createCRTDLService.createCRTDLForSave().pipe(
       switchMap((crtdl: CRTDL) => this.buildSavedDataQueryData(crtdl, data)),
@@ -29,6 +34,12 @@ export class SavedDataQueryService {
     )
   }
 
+  /**
+   * Builds the data query to save from the CRTDL, the result size and the modal data.
+   * @param {CRTDL} crtdl
+   * @param {SaveDataModal | null} data
+   * @returns {Observable<any>}
+   */
   private buildSavedDataQueryData(crtdl: CRTDL, data: SaveDataModal | null): Observable<any> {
     return this.getResultSize().pipe(
       map((result: QueryResult) => ({
@@ -55,10 +66,19 @@ export class SavedDataQueryService {
     }
   }
 
+  /**
+   * Returns the result of the active feasibility query.
+   * @returns {Observable<QueryResult>}
+   */
   private getResultSize(): Observable<QueryResult> {
     return this.resultProvider.getResultOfActiveFeasibilityQuery()
   }
 
+  /**
+   * Posts the data query and returns the usage stats from the response.
+   * @param {any} data
+   * @returns {Observable<SavedUsageStats>}
+   */
   private postDataQuery(data: any): Observable<SavedUsageStats> {
     return this.dataQueryApiService.postDataQuery(data).pipe(
       take(1),

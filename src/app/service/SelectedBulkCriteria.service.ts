@@ -11,6 +11,11 @@ export class SelectedBulkCriteriaProvider extends AbstractArrayEntityProvider<Cr
   private readonly searchResultsSubject = new Subject<CriteriaBulkEntry[]>()
   private readonly foundEntriesMap = new Map<string, CriteriaBulkEntry>()
 
+  /**
+   * Returns the id of the entry.
+   * @param {CriteriaBulkEntry} entity
+   * @returns {string}
+   */
   protected selectId(entity: CriteriaBulkEntry): string {
     return entity.getId()
   }
@@ -40,26 +45,51 @@ export class SelectedBulkCriteriaProvider extends AbstractArrayEntityProvider<Cr
     return this.searchResultsSubject.asObservable()
   }
 
+  /**
+   * Returns the map of found entries.
+   * @returns {Map<string, CriteriaBulkEntry>}
+   */
   public getFoundEntriesMap(): Map<string, CriteriaBulkEntry> {
     return this.foundEntriesMap
   }
 
+  /**
+   * Returns the found entry with the given id.
+   * @param {string} id
+   * @returns {CriteriaBulkEntry | undefined}
+   */
   public getFoundById(id: string): CriteriaBulkEntry | undefined {
     return this.foundEntriesMap.get(id)
   }
 
+  /**
+   * Returns the id of the UI profile.
+   * @returns {string | undefined}
+   */
   public getUiProfileId(): string | undefined {
     return this.uiProfileId
   }
 
+  /**
+   * Sets the id of the UI profile.
+   * @param {string} uiProfileId
+   */
   public setUiProfileId(uiProfileId: string): void {
     this.uiProfileId = uiProfileId
   }
 
+  /**
+   * Adds the entries to the selection.
+   * @param {CriteriaBulkEntry[]} entries
+   */
   public addSelected(entries: CriteriaBulkEntry[]): void {
     this.addMany(entries)
   }
 
+  /**
+   * Removes the entry from the selection if selected, otherwise adds it.
+   * @param {CriteriaBulkEntry} entry
+   */
   public toggle(entry: CriteriaBulkEntry): void {
     if (this.items.some((e: CriteriaBulkEntry) => this.selectId(e) === entry.getId())) {
       this.removeOne(entry.getId())
@@ -68,10 +98,17 @@ export class SelectedBulkCriteriaProvider extends AbstractArrayEntityProvider<Cr
     }
   }
 
+  /**
+   * Removes the entries from the selection.
+   * @param {CriteriaBulkEntry[]} entries
+   */
   public deselect(entries: CriteriaBulkEntry[]): void {
     this.removeMany(entries.map((e: CriteriaBulkEntry) => e.getId()))
   }
 
+  /**
+   * Clears the selection.
+   */
   public clear(): void {
     this.removeAll()
   }

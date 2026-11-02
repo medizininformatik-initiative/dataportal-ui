@@ -31,6 +31,11 @@ export class CriterionTranslatorService {
 
   constructor() {}
 
+  /**
+   * Translates a structured query criterion to a criterion.
+   * @param {StructuredQueryCriterionData} structuredQueryCriterion
+   * @returns {Criterion}
+   */
   public translate(structuredQueryCriterion: StructuredQueryCriterionData): Criterion {
     const criteriaProfileData = this.getCriteriaProfileData(structuredQueryCriterion)
     const criterionId = uuidv4()
@@ -45,6 +50,11 @@ export class CriterionTranslatorService {
     return criterionBuilder.buildCriterion()
   }
 
+  /**
+   * Returns the criteria profile data for the term codes of the criterion.
+   * @param {StructuredQueryCriterionData} structuredQueryCriterion
+   * @returns {CriteriaProfileData}
+   */
   private getCriteriaProfileData(structuredQueryCriterion: StructuredQueryCriterionData): CriteriaProfileData {
     const termCodes = structuredQueryCriterion.termCodes.map((termCodeData) => TerminologyCode.fromJson(termCodeData))
     const context = TerminologyCode.fromJson(structuredQueryCriterion.context)
@@ -52,6 +62,13 @@ export class CriterionTranslatorService {
     return this.criteriaProfileProviderService.getCriteriaProfileByHash(hash)
   }
 
+  /**
+   * Creates a criterion builder with the metadata of the profile.
+   * @param {CriteriaProfileData} criteriaProfileData
+   * @param {string} criterionId
+   * @param {TerminologyCode[]} termCodes
+   * @returns {CriterionBuilder}
+   */
   private createCriterionBuilder(
     criteriaProfileData: CriteriaProfileData,
     criterionId: string,
@@ -61,6 +78,12 @@ export class CriterionTranslatorService {
     return new CriterionBuilder(criterionMetadata)
   }
 
+  /**
+   * Adds the value filters to the builder.
+   * @param {CriterionBuilder} criterionBuilder
+   * @param {StructuredQueryCriterionData} structuredQueryCriterion
+   * @param {ValueDefinitionData} valueDefinition
+   */
   private applyValueFilters(
     criterionBuilder: CriterionBuilder,
     structuredQueryCriterion: StructuredQueryCriterionData,
@@ -84,6 +107,13 @@ export class CriterionTranslatorService {
     }
   }
 
+  /**
+   * Adds the attribute filters to the builder.
+   * @param {CriterionBuilder} criterionBuilder
+   * @param {StructuredQueryCriterionData} structuredQueryCriterion
+   * @param {AttributeDefinitionData[]} attributeDefinitions
+   * @param {string} criterionId
+   */
   private applyAttributeFilters(
     criterionBuilder: CriterionBuilder,
     structuredQueryCriterion: StructuredQueryCriterionData,
@@ -97,6 +127,12 @@ export class CriterionTranslatorService {
     )
     criterionBuilder.withAttributeFilters(attributeFilters)
   }
+  /**
+   * Adds the time restriction to the builder if one is set and allowed.
+   * @param {CriterionBuilder} criterionBuilder
+   * @param {StructuredQueryCriterionData} structuredQueryCriterion
+   * @param {boolean} timeRestrictionAllowed
+   */
   private applyTimeRestriction(
     criterionBuilder: CriterionBuilder,
     structuredQueryCriterion: StructuredQueryCriterionData,

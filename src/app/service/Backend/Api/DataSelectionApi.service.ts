@@ -21,6 +21,11 @@ export class DataSelectionApiService {
 
   constructor() {}
 
+  /**
+   * Fetches the profile data for the given ids in chunks.
+   * @param {string[]} ids
+   * @returns {Observable<any[]>}
+   */
   public getDataSelectionProfileData(ids: string[]) {
     const path = DataSelectionPaths.PROFILE_DATA_ENDPOINT
     return this.chunkedRequestService.getChunkedRequest(ids, path)
@@ -35,6 +40,11 @@ export class DataSelectionApiService {
     return this.http.get<ResultListData<T>>(parsedUrl)
   }
 
+  /**
+   * Fetches the details of a profile entry.
+   * @param {string} id
+   * @returns {Observable<ProfileEntryDetailsData>}
+   */
   public getDataSelectionProfileEntryDetails(id: string): Observable<ProfileEntryDetailsData> {
     const parsedUrl =
       this.backendService.createUrl(DataSelectionPaths.PROFILE_ENTRY_DETAILS_ENDPOINT) +
@@ -42,6 +52,11 @@ export class DataSelectionApiService {
     return this.http.get<ProfileEntryDetailsData>(parsedUrl)
   }
 
+  /**
+   * Fetches the profile search filter, from the default endpoint if no url is given.
+   * @param {string} url
+   * @returns {Observable<any>}
+   */
   public getProfileSearchFilter(url?: string) {
     const parsedUrl = this.backendService.createUrl(url ?? DataSelectionPaths.PROFILE_SEARCH_FILTER)
     return this.http.get<any>(parsedUrl)

@@ -32,6 +32,11 @@ export class CRTDL2UIModelService {
 
   constructor() {}
 
+  /**
+   * Translates the cohort definition and data extraction of a CRTDL to the UI model.
+   * @param {CRTDLData} crtdl
+   * @returns {Observable<UiCRTDL>}
+   */
   public createCRTDLFromJson(crtdl: CRTDLData): Observable<UiCRTDL> {
     const cohortDefinition = crtdl.cohortDefinition
     const dataExtraction = crtdl.dataExtraction
@@ -40,6 +45,11 @@ export class CRTDL2UIModelService {
     return this.combineFeasibilityAndDataExtraction(translatedCohort, translatedDataExtraction)
   }
 
+  /**
+   * Validates the cohort definition and translates it to a feasibility query.
+   * @param {StructuredQueryData} cohortDefinition
+   * @returns {Observable<FeasibilityQuery>}
+   */
   private assertCohortAndTranslate(cohortDefinition: StructuredQueryData): Observable<FeasibilityQuery> {
     if (cohortDefinition !== undefined) {
       try {
@@ -52,6 +62,11 @@ export class CRTDL2UIModelService {
     return of(new FeasibilityQuery(uuidv4()))
   }
 
+  /**
+   * Translates the structured query and stores the feasibility query in the provider.
+   * @param {StructuredQueryData} cohortDefinition
+   * @returns {Observable<FeasibilityQuery>}
+   */
   private translateStructuredQueryAndSetProvider(cohortDefinition: StructuredQueryData): Observable<FeasibilityQuery> {
     this.feasibilityQueryService.clearFeasibilityQuery()
     return this.structuredQuery2FeasibilityQueryService.translate(cohortDefinition).pipe(
@@ -62,6 +77,11 @@ export class CRTDL2UIModelService {
     )
   }
 
+  /**
+   * Validates the data extraction and translates it to a data selection.
+   * @param {DataExtractionData} dataExtraction
+   * @returns {Observable<DataSelection>}
+   */
   private assertDataExtractionAndTranslate(dataExtraction: DataExtractionData): Observable<DataSelection> {
     if (TypeGuard.isDataExtractionData(dataExtraction)) {
       try {
@@ -75,6 +95,11 @@ export class CRTDL2UIModelService {
     return this.dataSelectionFactoryService.instantiate()
   }
 
+  /**
+   * Translates the data extraction and stores the data selection in the provider.
+   * @param {DataExtractionData} dataExtraction
+   * @returns {Observable<DataSelection>}
+   */
   private translateDataExtractionAndSetProvider(dataExtraction: DataExtractionData): Observable<DataSelection> {
     this.resetDataSelection()
     return this.dataExtraction2UiDataSelectionService.translate(dataExtraction).pipe(
@@ -86,6 +111,12 @@ export class CRTDL2UIModelService {
     )
   }
 
+  /**
+   * Combines the feasibility query and the data selection to one UI CRTDL.
+   * @param {Observable<FeasibilityQuery>} cohortDefinition
+   * @param {Observable<DataSelection>} dataExtraction
+   * @returns {Observable<UiCRTDL>}
+   */
   private combineFeasibilityAndDataExtraction(
     cohortDefinition: Observable<FeasibilityQuery>,
     dataExtraction: Observable<DataSelection>
@@ -93,14 +124,25 @@ export class CRTDL2UIModelService {
     return combineLatest([cohortDefinition, dataExtraction]).pipe(map(([cohort, data]) => new UiCRTDL(uuidv4(), cohort, data)))
   }
 
+  /**
+   * Stores the feasibility query in the provider as the active one.
+   * @param {FeasibilityQuery} feasibilityQuery
+   */
   private setFeasibilityQueryProvider(feasibilityQuery: FeasibilityQuery): void {
     this.feasibilityQueryService.setFeasibilityQueryById(feasibilityQuery, feasibilityQuery.getId(), true)
   }
 
+  /**
+   * Stores the data selection in the provider as the active one.
+   * @param {DataSelection} dataSelection
+   */
   private setDataSelectionProvider(dataSelection: DataSelection): void {
     this.dataSelectionProvider.setDataSelection(dataSelection.getId(), dataSelection, true)
   }
 
+  /**
+   * Clears the data selection and the stored profiles.
+   */
   private resetDataSelection(): void {
     this.dataSelectionProvider.clearDataSelection()
     this.profileProviderService.removeAll()

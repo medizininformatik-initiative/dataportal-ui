@@ -39,6 +39,10 @@ export class ActiveDataSelectionService {
     this.activeDataSelectionIDSubject.next(id)
   }
 
+  /**
+   * Returns the id of the active data selection.
+   * @returns {string}
+   */
   public getActiveDataSelectionId(): string {
     return this.activeDataSelectionId
   }

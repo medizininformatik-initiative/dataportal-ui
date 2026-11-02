@@ -34,10 +34,20 @@ export class EditReferenceFilterService {
     )
   }
 
+  /**
+   * Stores the references in the provider.
+   * @param {ReferenceCriterion[]} references
+   */
   private updateProvider(references: ReferenceCriterion[]): void {
     references.forEach((reference: ReferenceCriterion) => this.referenceCriterionProvider.setOne(reference))
   }
 
+  /**
+   * Builds a reference filter from the updated references.
+   * @param {ReferenceCriterion[]} updatedReferences
+   * @param {AttributeFilter} attributeFilter
+   * @returns {ReferenceFilter}
+   */
   public updateSelectedReferences(updatedReferences: ReferenceCriterion[], attributeFilter: AttributeFilter): ReferenceFilter {
     return this.buildReferenceFilter(
       attributeFilter.getReference(),
@@ -45,6 +55,12 @@ export class EditReferenceFilterService {
     )
   }
 
+  /**
+   * Builds a reference filter that also contains the new references.
+   * @param {ReferenceCriterion[]} references
+   * @param {AttributeFilter} attributeFilter
+   * @returns {ReferenceFilter}
+   */
   private addSelectedReferences(references: ReferenceCriterion[], attributeFilter: AttributeFilter): ReferenceFilter {
     const reference = attributeFilter.getReference()
 
@@ -54,6 +70,12 @@ export class EditReferenceFilterService {
     ])
   }
 
+  /**
+   * Creates a reference filter with the same allowed references and the given selection.
+   * @param {ReferenceFilter} referenceFilter
+   * @param {string[]} selectedReferenceIds
+   * @returns {ReferenceFilter}
+   */
   private buildReferenceFilter(referenceFilter: ReferenceFilter, selectedReferenceIds: string[]): ReferenceFilter {
     return ReferenceFilter.create(referenceFilter.getId(), [...referenceFilter.getAllowedReferenceUri()], [...selectedReferenceIds])
   }

@@ -17,6 +17,11 @@ export class ConceptHashCollectorService {
 
   constructor() {}
 
+  /**
+   * Collects the concept hashes of all attribute groups.
+   * @param {DataExtractionData} dataExtraction
+   * @returns {string[]}
+   */
   public collectConceptHashes(dataExtraction: DataExtractionData): string[] {
     const hashes: string[] = []
     dataExtraction.attributeGroups.forEach((group: AttributeGroupsData) => {
@@ -25,6 +30,11 @@ export class ConceptHashCollectorService {
     return hashes
   }
 
+  /**
+   * Adds the concept hashes of the group filters to the list.
+   * @param {AttributeGroupsData} group
+   * @param {string[]} hashes
+   */
   private collectGroupHashes(group: AttributeGroupsData, hashes: string[]): void {
     if (group.filter) {
       group.filter.forEach((filter: FilterData) => {
@@ -33,6 +43,11 @@ export class ConceptHashCollectorService {
     }
   }
 
+  /**
+   * Adds the concept hashes of a token filter to the list.
+   * @param {FilterData} filter
+   * @param {string[]} hashes
+   */
   private collectFilterHashes(filter: FilterData, hashes: string[]): void {
     if (filter.type === 'token' && TypeGuard.isFilterData(filter)) {
       filter.codes.forEach((code: TerminologyCodeData) => {
@@ -41,6 +56,11 @@ export class ConceptHashCollectorService {
     }
   }
 
+  /**
+   * Creates the concept hash for a code.
+   * @param {TerminologyCodeData} code
+   * @returns {string}
+   */
   private createConceptHash(code: TerminologyCodeData): string {
     return this.hashService.createConceptHash({
       code: code.code,

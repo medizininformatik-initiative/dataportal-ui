@@ -26,12 +26,24 @@ export class ProfileTokenFilterTranslatorService {
 
   constructor() {}
 
+  /**
+   * Creates the token filters of the profile from the extracted group.
+   * @param {AttributeGroupsData} externProfile
+   * @param {DataSelectionProfile} profile
+   * @returns {ProfileTokenFilter[]}
+   */
   public createTokenFilters(externProfile: AttributeGroupsData, profile: DataSelectionProfile): ProfileTokenFilter[] {
     return (profile.getFilters() ?? [])
       .filter((filterData: AbstractProfileFilter) => filterData.getType() === DataSelectionFilterType.TOKEN)
       .map((filterData: AbstractProfileFilter) => this.createProfileTokenFilter(filterData as ProfileTokenFilter, externProfile))
   }
 
+  /**
+   * Creates a token filter with the codes found in the extracted group.
+   * @param {ProfileTokenFilter} filterData
+   * @param {AttributeGroupsData} externProfile
+   * @returns {ProfileTokenFilter}
+   */
   private createProfileTokenFilter(filterData: ProfileTokenFilter, externProfile: AttributeGroupsData): ProfileTokenFilter {
     const foundFilter = externProfile.filter.find((externFilter: FilterData) => externFilter.name === filterData.getName())
     if (foundFilter && TypeGuard.isFilterData(foundFilter)) {
@@ -42,6 +54,11 @@ export class ProfileTokenFilterTranslatorService {
     }
   }
 
+  /**
+   * Creates a concept from the code.
+   * @param {TerminologyCodeData} code
+   * @returns {Concept}
+   */
   private createConcept(code: TerminologyCodeData): Concept {
     const termCodeData = this.buildTermCodeData(code)
     const hash = this.hashService.createConceptHash(termCodeData)
@@ -50,6 +67,11 @@ export class ProfileTokenFilterTranslatorService {
     return new Concept(display, TerminologyCode.fromJson(code))
   }
 
+  /**
+   * Copies the code data.
+   * @param {TerminologyCodeData} code
+   * @returns {TerminologyCodeData}
+   */
   private buildTermCodeData(code: TerminologyCodeData): TerminologyCodeData {
     return {
       code: code.code,

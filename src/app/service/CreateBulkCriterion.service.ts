@@ -26,6 +26,12 @@ export class CreateBulkCriterionService {
 
   constructor() {}
 
+  /**
+   * Creates one criterion from the bulk entries of a UI profile.
+   * @param {CriteriaBulkEntry[]} response
+   * @param {string} uiProfileId
+   * @returns {Criterion}
+   */
   public createBulkCriterion(response: CriteriaBulkEntry[], uiProfileId: string) {
     const uiProfile: UiProfileData = this.uiProfileProviderService.getOne(uiProfileId)
     const termcodes: TerminologyCode[] = this.extractTermcodes(response)
@@ -36,6 +42,11 @@ export class CreateBulkCriterionService {
     return builder.buildCriterion()
   }
 
+  /**
+   * Takes the first term code of each entry.
+   * @param {CriteriaBulkEntry[]} foudnEntries
+   * @returns {TerminologyCode[]}
+   */
   private extractTermcodes(foudnEntries: CriteriaBulkEntry[]): TerminologyCode[] {
     return foudnEntries.map((entry: CriteriaBulkEntry) => entry.getTermCodes()[0])
   }
@@ -99,17 +110,32 @@ export class CreateBulkCriterionService {
     }
   }
 
+  /**
+   * Adds the attribute and value filters of the UI profile to the builder.
+   * @param {CriterionBuilder} builder
+   * @param {UiProfileData} uiProfile
+   */
   private applyFilters(builder: CriterionBuilder, uiProfile: UiProfileData) {
     builder.withAttributeFilters(this.createAttributeFilter(uiProfile))
     builder.withValueFilters([this.createValueFilter(uiProfile)].filter((filter: ValueFilter) => filter !== undefined))
     builder.withTimeRestriction(this.createTimeRestriction(uiProfile))
   }
 
+  /**
+   * Creates a time restriction if the UI profile allows one.
+   * @param {UiProfileData} uiProfile
+   * @returns {TimeRestrictionNotSet | undefined}
+   */
   private createTimeRestriction(uiProfile: UiProfileData): TimeRestrictionNotSet | undefined {
     const timeRestrictionAllowed: boolean = uiProfile.timeRestrictionAllowed
     return timeRestrictionAllowed ? new TimeRestrictionNotSet() : undefined
   }
 
+  /**
+   * Creates the value filter of the UI profile, if it has a value definition.
+   * @param {UiProfileData} uiProfile
+   * @returns {ValueFilter | undefined}
+   */
   private createValueFilter(uiProfile: UiProfileData): ValueFilter | undefined {
     if (!uiProfile.valueDefinition) {
       return undefined
@@ -117,6 +143,11 @@ export class CreateBulkCriterionService {
     return this.attributeFilterFactory.createValueFilter(uiProfile.valueDefinition)
   }
 
+  /**
+   * Creates the attribute filters of the UI profile.
+   * @param {UiProfileData} uiProfile
+   * @returns {AttributeFilter[]}
+   */
   private createAttributeFilter(uiProfile: UiProfileData): AttributeFilter[] {
     const attributeFilter: AttributeFilter[] = uiProfile.attributeDefinitions.map((value: AttributeDefinitionData) =>
       this.attributeFilterFactory.createAttributeFilter(value)

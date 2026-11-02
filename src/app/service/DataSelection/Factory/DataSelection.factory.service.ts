@@ -22,6 +22,10 @@ export class DataSelectionFactoryService {
 
   constructor() {}
 
+  /**
+   * Creates a data selection with the main profile and registers it as active.
+   * @returns {Observable<DataSelection>}
+   */
   public instantiate(): Observable<DataSelection> {
     return this.loadMainProfile().pipe(
       map((mainProfile: DataSelectionProfile) => {
@@ -32,14 +36,27 @@ export class DataSelectionFactoryService {
     )
   }
 
+  /**
+   * Registers the data selection as the active one in the provider.
+   * @param {DataSelection} dataSelection
+   */
   private setDataSelectionProvider(dataSelection: DataSelection): void {
     this.dataSelectionProviderService.setDataSelection(dataSelection.getId(), dataSelection, true)
   }
 
+  /**
+   * Loads the patient profile.
+   * @returns {Observable<DataSelectionProfile>}
+   */
   private loadMainProfile() {
     return this.dataSelectionMainProfileInitializerService.initializePatientProfile()
   }
 
+  /**
+   * Creates a data selection that contains only the main profile.
+   * @param {DataSelectionProfile} mainProfile
+   * @returns {DataSelection}
+   */
   private setProfileInDataSelection(mainProfile: DataSelectionProfile): DataSelection {
     const dataSelection = new DataSelection([], uuidv4())
     dataSelection.setProfiles([mainProfile])

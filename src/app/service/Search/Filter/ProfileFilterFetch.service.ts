@@ -13,6 +13,11 @@ export class ProfileFilterFetchService {
   private readonly profileSearchFilterService = inject(ProfileSearchFilterService)
   private readonly profileSearchFilterProviderService = inject(ProfileSearchFilterProviderService)
 
+  /**
+   * Fetches the filters for the search text and merges them into the provider.
+   * @param {string} searchText
+   * @param {string} targetFilter
+   */
   public fetchAndUpdateFilters(searchText: string, targetFilter: string): void {
     const url = this.buildUrl(searchText, targetFilter)
     this.profileSearchFilterService.fetchFilter(url).subscribe((fetchedFilters: ProfileSearchFilter[]) => {
@@ -20,6 +25,12 @@ export class ProfileFilterFetchService {
     })
   }
 
+  /**
+   * Builds the filter url from the search text and the current filters.
+   * @param {string} searchText
+   * @param {string} targetFilter
+   * @returns {string}
+   */
   private buildUrl(searchText: string, targetFilter?: string): string {
     const currentFilters = this.profileSearchFilterProviderService.getProfileSearchFiltersValue()
     const builder = new SearchUrlBuilder(DataSelectionPaths.PROFILE_SEARCH_FILTER).withSearchTerm(searchText)
@@ -50,6 +61,10 @@ export class ProfileFilterFetchService {
     return builder.buildUrl()
   }
 
+  /**
+   * Updates the provider with the fetched filters and keeps the selected values.
+   * @param {ProfileSearchFilter[]} fetchedFilters
+   */
   private mergeFiltersIntoProvider(fetchedFilters: ProfileSearchFilter[]): void {
     const currentFilters = this.profileSearchFilterProviderService.getProfileSearchFiltersValue()
 

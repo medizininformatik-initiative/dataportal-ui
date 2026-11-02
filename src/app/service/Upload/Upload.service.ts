@@ -21,17 +21,29 @@ export class UploadService {
 
   constructor() {}
 
+  /**
+   * Reads the CRTDL file.
+   * @param {File} file
+   */
   public uploadCRTDL(file: File): void {
     if (file) {
       this.fileUploadService.readFile(file, this.onReaderLoad.bind(this))
     }
   }
 
+  /**
+   * Parses the read file and translates it.
+   * @param {string | ArrayBuffer | null} result
+   */
   private onReaderLoad(result: string | ArrayBuffer | null): void {
     const importedQuery = JSON.parse(result as string)
     this.uploadAndTranslate(importedQuery)
   }
 
+  /**
+   * Upgrades and processes the CRTDL.
+   * @param {CRTDLData} crtdl
+   */
   public uploadAndTranslate(crtdl: CRTDLData): void {
     const preUpgraded = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDL(crtdl)
     this.crtdlProcessingPipelineService.process(preUpgraded).subscribe(() => {

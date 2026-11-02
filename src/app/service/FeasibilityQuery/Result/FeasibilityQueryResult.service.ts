@@ -26,14 +26,25 @@ export class FeasibilityQueryResultService {
 
   constructor() {}
 
+  /**
+   * Returns the rate limit for the detailed result.
+   * @returns {Observable<QueryResultRateLimit>}
+   */
   public getDetailedResultRateLimit(): Observable<QueryResultRateLimit> {
     return this.obfuscatedResultRateLimitService.getRateLimit()
   }
 
+  /**
+   * Refreshes the rate limit for the detailed result.
+   */
   public refreshResultRateLimit(): void {
-    return this.obfuscatedResultRateLimitService.refreshRateLimit()
+    this.obfuscatedResultRateLimitService.refreshRateLimit()
   }
 
+  /**
+   * Sends the query request and polls for the result.
+   * @returns {Observable<QueryResult>}
+   */
   public doSendQueryRequest(): Observable<QueryResult> {
     this.appSettingsProviderService.getPollingTimeUi()
     this.obfuscatedResultRateLimitService.refreshRateLimit()
@@ -46,6 +57,11 @@ export class FeasibilityQueryResultService {
     )
   }
 
+  /**
+   * Fetches the detailed obfuscated result of the active feasibility query.
+   * @param {string} feasibilityQueryResultId
+   * @returns {Observable<QueryResult>}
+   */
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<QueryResult> {
     return this.activeFeasibilityQuery().pipe(
       switchMap((feasibilityQuery: FeasibilityQuery) => {
@@ -55,6 +71,11 @@ export class FeasibilityQueryResultService {
     )
   }
 
+  /**
+   * Stores each result with a patient count in the result provider.
+   * @param {Observable<QueryResult>} result
+   * @returns {Observable<QueryResult>}
+   */
   private setProvider(result: Observable<QueryResult>): Observable<QueryResult> {
     return result.pipe(
       map((queryResult: QueryResult) => {
@@ -68,14 +89,25 @@ export class FeasibilityQueryResultService {
     )
   }
 
+  /**
+   * Returns the active feasibility query.
+   * @returns {Observable<FeasibilityQuery>}
+   */
   private activeFeasibilityQuery(): Observable<FeasibilityQuery> {
     return this.queryProviderService.getActiveFeasibilityQuery()
   }
 
+  /**
+   * Stores the query result in the result provider.
+   * @param {QueryResult} queryResult
+   */
   private setQueryResultProvider(queryResult: QueryResult): void {
     this.resultProvider.setOne(queryResult)
   }
 
+  /**
+   * Stops the result polling.
+   */
   public stopPolling(): void {
     this.pollingManagerService.stopPolling()
   }

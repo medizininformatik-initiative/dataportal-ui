@@ -11,6 +11,10 @@ export class CriteriaSearchDataResolverService {
 
   constructor() {}
 
+  /**
+   * Loads the criteria search results for an empty search term.
+   * @returns {Observable<CriteriaResultList>}
+   */
   public resolve(): Observable<CriteriaResultList> {
     return this.searchService.search('').pipe()
   }

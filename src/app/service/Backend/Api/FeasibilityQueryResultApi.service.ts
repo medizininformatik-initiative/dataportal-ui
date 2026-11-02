@@ -20,6 +20,11 @@ export class FeasibilityQueryResultApiService {
 
   constructor() {}
 
+  /**
+   * Fetches the summary result of a feasibility query.
+   * @param {string} feasibilityQueryResultId
+   * @returns {Observable<any>}
+   */
   public getSummaryResult(feasibilityQueryResultId: string): Observable<any> {
     const url = FeasibilityQueryPaths.getBaseUrl() + '/' + feasibilityQueryResultId + FeasibilityQueryResultPaths.SUMMARY_RESULT
     const result = this.http.get<any>(this.backendService.createUrl(url), {
@@ -28,6 +33,12 @@ export class FeasibilityQueryResultApiService {
     return this.createReplySubject(result)
   }
 
+  /**
+   * Fetches the detailed result, or returns the already running request if it exists.
+   * @param {string} resultUrl
+   * @param {boolean} gottenDetailedResult
+   * @returns {Observable<any>}
+   */
   public getDetailedResult(resultUrl: string, gottenDetailedResult: boolean): Observable<any> {
     if (gottenDetailedResult) {
       return this.resultObservable
@@ -59,6 +70,10 @@ export class FeasibilityQueryResultApiService {
     })
   }
 
+  /**
+   * Fetches the rate limit for the detailed obfuscated result.
+   * @returns {Observable<any>}
+   */
   public getDetailedResultRateLimit(): Observable<any> {
     const url = FeasibilityQueryResultPaths.getBaseUrl() + FeasibilityQueryResultPaths.DETAILED_OBFUSCATED_RESULT_RATE_LIMIT
     return this.http.get<QueryResultRateLimit>(this.backendService.createUrl(url), {
@@ -66,6 +81,11 @@ export class FeasibilityQueryResultApiService {
     })
   }
 
+  /**
+   * Fetches the detailed obfuscated result of a feasibility query.
+   * @param {string} feasibilityQueryResultId
+   * @returns {Observable<any>}
+   */
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<any> {
     const url =
       FeasibilityQueryResultPaths.getBaseUrl() + '/' + feasibilityQueryResultId + FeasibilityQueryResultPaths.DETAILED_OBFUSCATED_RESULT
@@ -74,6 +94,11 @@ export class FeasibilityQueryResultApiService {
     })
   }
 
+  /**
+   * Wraps the result observable into a new observable that forwards its values and errors.
+   * @param {any} result
+   * @returns {Observable<any>}
+   */
   private createReplySubject(result: any): Observable<any> {
     return Observable.create((obs: any) => {
       result.subscribe(

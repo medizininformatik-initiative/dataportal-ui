@@ -22,18 +22,34 @@ export class CriteriaByIdSearchService extends AbstractSearch<CriteriaListEntry,
     super(resultProvider)
     this.resultProvider = resultProvider
   }
+  /**
+   * Searches for the criteria entry with the given id.
+   * @param {string} id
+   * @returns {Observable<CriteriaResultList>}
+   */
   public search(id: string): Observable<CriteriaResultList> {
     return this.criteriaSearchSingleEntryEngineService.search(id)
   }
 
+  /**
+   * Not supported, a search by id has a single page.
+   * @returns {Observable<CriteriaResultList>}
+   */
   public loadNextPage(): Observable<CriteriaResultList> {
     throw new Error('Method not implemented.')
   }
 
+  /**
+   * Returns the search results.
+   * @returns {Observable<CriteriaResultList>}
+   */
   public getSearchResults(): Observable<CriteriaResultList> {
     return this.resultProvider.getSearchResults()
   }
 
+  /**
+   * Not supported, a search by id has no search term.
+   */
   protected setSearchTerm(): void {
     throw new Error('Method not implemented.')
   }

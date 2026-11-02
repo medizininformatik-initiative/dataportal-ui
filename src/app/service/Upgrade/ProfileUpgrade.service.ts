@@ -25,6 +25,11 @@ export class ProfileUpgradeService {
 
   constructor() {}
 
+  /**
+   * Upgrades the CRTDL in the backend and stores the result.
+   * @param {CRTDLData} crtdl
+   * @returns {Observable<UpgradeData | boolean>}
+   */
   public upgrade(crtdl: CRTDLData): Observable<UpgradeData | boolean> {
     return this.upgradeApiService.upgradeCRTDL(crtdl).pipe(
       filter((response) => !!response.body),
@@ -38,6 +43,11 @@ export class ProfileUpgradeService {
     )
   }
 
+  /**
+   * Maps the annotations to profile upgrades.
+   * @param {AnnotationsData[]} upgradeData
+   * @returns {ProfileUpgrade[]}
+   */
   private mapUpgrades(upgradeData: AnnotationsData[]): ProfileUpgrade[] {
     return upgradeData.map((annotation: AnnotationsData) => this.upgradeMapper.mapToUpgrade(annotation))
   }

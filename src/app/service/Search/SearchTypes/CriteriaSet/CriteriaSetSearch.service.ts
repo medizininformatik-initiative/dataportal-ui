@@ -23,9 +23,6 @@ export class CriteriaSetSearchService extends AbstractKeyedSearch<ReferenceCrite
 
   /**
    * Creates an instance of CriteriaSetSearchService.
-   *
-   * @param resultProvider - The result provider for managing criteria set search results
-   * @param paginationService - The pagination service for handling paginated searches
    */
   constructor() {
     const resultProvider = inject(CriteriaSetSearchResultProviderService)

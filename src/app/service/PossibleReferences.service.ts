@@ -31,6 +31,11 @@ export class PossibleReferencesService {
 
   constructor() {}
 
+  /**
+   * Builds the map of possible references for the profile.
+   * @param {string} profileId
+   * @returns {Observable<void>}
+   */
   public initialize(profileId: string): Observable<void> {
     const profile = this.profileProviderService.getOne(profileId)
     const initialMap = new Map<string, Map<string, PossibleProfileReferenceData[]>>()
@@ -48,6 +53,11 @@ export class PossibleReferencesService {
     this.possibleReferencesMapSubject.next(new Map(updatedMap))
   }
 
+  /**
+   * Rebuilds the possible references for all profiles of the parent profile.
+   * @param {DataSelectionProfile} parentProfile
+   * @returns {Observable<void>}
+   */
   public rebuildPossibleReferences(parentProfile: DataSelectionProfile): Observable<void> {
     return this.dataSelectionProviderService.getActiveProfiles().pipe(
       take(1),
@@ -83,6 +93,12 @@ export class PossibleReferencesService {
     return this.possibleReferencesMapSubject.asObservable()
   }
 
+  /**
+   * Returns the ids of the profiles linked to the element of the parent profile.
+   * @param {DataSelectionProfile} parentProfile
+   * @param {string} elementId
+   * @returns {string[]}
+   */
   public getLinkedProfileIds(parentProfile: DataSelectionProfile, elementId: string): string[] {
     const matchedField = parentProfile
       .getProfileFields()
@@ -137,14 +153,20 @@ export class PossibleReferencesService {
   /**
    * First use-case for newly selected profiles
    * Maps URLs to possible reference data objects.
-   * @param urls - The URLs to map.
-   * @returns {PossibleProfileReferenceData[]} A list of possible profile references.
    * @param {DataSelectionProfile[]} profiles
+   * @returns {PossibleProfileReferenceData[]} A list of possible profile references.
    */
   private mapProfilesToReferences(profiles: DataSelectionProfile[]): PossibleProfileReferenceData[] {
     return profiles.map((profile: DataSelectionProfile) => this.mapProfileToReference(profile, true))
   }
 
+  /**
+   * Loads the profiles of the urls and maps them to possible references.
+   * @param {string[]} urls
+   * @param {string} elementId
+   * @param {string} parentProfileId
+   * @returns {Observable<PossibleProfileReferenceData[]>}
+   */
   public loadAndMapProfiles(urls: string[], elementId: string, parentProfileId: string): Observable<PossibleProfileReferenceData[]> {
     return this.loadDataSelectionProfilesService.loadProfiles(urls, true).pipe(
       map((profiles: DataSelectionProfile[]) => {
@@ -159,10 +181,19 @@ export class PossibleReferencesService {
     )
   }
 
+  /**
+   * Clears the possible references.
+   */
   public clearReferencesMap(): void {
     this.possibleReferencesMapSubject.next(new Map())
   }
 
+  /**
+   * Sets the references for a profile and element in the nested map.
+   * @param {string} profileId
+   * @param {string} elementId
+   * @param {PossibleProfileReferenceData[]} references
+   */
   private updateNestedMap(profileId: string, elementId: string, references: PossibleProfileReferenceData[]): void {
     const currentMap = this.possibleReferencesMapSubject.getValue()
     const outerMap = new Map(currentMap.get(profileId) ?? new Map<string, PossibleProfileReferenceData[]>())

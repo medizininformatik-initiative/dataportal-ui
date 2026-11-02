@@ -18,16 +18,30 @@ export class ResultProviderService extends AbstractArrayEntityProvider<QueryResu
     super()
   }
 
+  /**
+   * Returns the id of the result.
+   * @param {QueryResult} result
+   * @returns {string}
+   */
   protected selectId(result: QueryResult): string {
     return result.getId()
   }
 
+  /**
+   * Returns the last result of the active feasibility query.
+   * @returns {Observable<QueryResult | undefined>}
+   */
   public getResultOfActiveFeasibilityQuery(): Observable<QueryResult | undefined> {
     return this.feasibilityQueryProvider
       .getActiveFeasibilityQuery()
       .pipe(switchMap((feasibilityQuery: FeasibilityQuery) => this.getLastResult(feasibilityQuery)))
   }
 
+  /**
+   * Returns the last result of the feasibility query, if there is one.
+   * @param {FeasibilityQuery} feasibilityQuery
+   * @returns {Observable<QueryResult | undefined>}
+   */
   private getLastResult(feasibilityQuery: FeasibilityQuery): Observable<QueryResult | undefined> {
     const resultIds = feasibilityQuery.getResultIds()
 

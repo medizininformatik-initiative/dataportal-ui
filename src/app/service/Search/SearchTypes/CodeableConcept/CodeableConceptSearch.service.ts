@@ -22,9 +22,6 @@ export class CodeableConceptSearchService extends AbstractKeyedSearch<CodeableCo
 
   /**
    * Creates an instance of CodeableConceptSearchService.
-   *
-   * @param resultProvider - The result provider for managing codeable concept search results
-   * @param paginationService - The pagination service for handling paginated searches
    */
   constructor() {
     const resultProvider = inject(CodeableConceptSearchResultProviderService)

@@ -37,6 +37,11 @@ export class LoadDataSelectionProfilesService {
     )
   }
 
+  /**
+   * Checks whether the string is a valid url.
+   * @param {string} url
+   * @returns {boolean}
+   */
   private isValidUrl(url: string): boolean {
     try {
       new URL(url)

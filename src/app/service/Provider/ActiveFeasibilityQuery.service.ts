@@ -30,6 +30,10 @@ export class ActiveFeasibilityQueryService {
     return this.activeFeasibilityQueryIDSubject.asObservable()
   }
 
+  /**
+   * Returns the id of the active feasibility query.
+   * @returns {string}
+   */
   public getActiveFeasibilityQueryID(): string {
     return this.activeFeasibilityQueryID
   }

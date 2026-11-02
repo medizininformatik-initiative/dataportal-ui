@@ -46,6 +46,14 @@ export class EditValueFilterService {
     return [valueFilter]
   }
 
+  /**
+   * Builds a value filter of the given type from the concept or quantity filter.
+   * @param {ValueFilter} existing
+   * @param {FilterTypes} type
+   * @param {ConceptFilter} conceptFilter
+   * @param {AbstractQuantityFilter} quantityFilter
+   * @returns {ValueFilter}
+   */
   private buildValueFilter(
     existing: ValueFilter,
     type: FilterTypes,
@@ -67,6 +75,11 @@ export class EditValueFilterService {
     )
   }
 
+  /**
+   * Returns the first value filter of the criterion.
+   * @param {Criterion} criterion
+   * @returns {ValueFilter}
+   */
   private getFirstValueFilter(criterion: Criterion): ValueFilter {
     const filters = criterion.getValueFilters()
     if (!filters?.length) {

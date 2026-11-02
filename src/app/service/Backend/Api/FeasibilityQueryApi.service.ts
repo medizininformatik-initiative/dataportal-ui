@@ -30,6 +30,12 @@ export class FeasibilityQueryApiService {
     })
   }
 
+  /**
+   * Saves the result of a feasibility query.
+   * @param {SavedFeasibilityQueryResults} savedFeasibilityQuery
+   * @param {string} feasibilityQueryResultID
+   * @returns {Observable<any>}
+   */
   public postSavedFeasibilityQuery(savedFeasibilityQuery: SavedFeasibilityQueryResults, feasibilityQueryResultID: string): Observable<any> {
     const url =
       this.backendService.createUrl(FeasibilityQueryPaths.getBaseUrl()) + '/' + feasibilityQueryResultID + FeasibilityQueryPaths.SAVE_QUERY
@@ -40,6 +46,11 @@ export class FeasibilityQueryApiService {
     })
   }
 
+  /**
+   * Fetches the structured query of a feasibility query.
+   * @param {number} id
+   * @returns {Observable<any>}
+   */
   public getStructuredQueryById(id: number): Observable<any> {
     const url = this.backendService.createUrl(FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id.toString())
     return this.http.get<any>(url, {
@@ -47,6 +58,10 @@ export class FeasibilityQueryApiService {
     })
   }
 
+  /**
+   * Fetches the number of saved feasibility query slots.
+   * @returns {Observable<any>}
+   */
   public getSavedQuerySlotCount(): Observable<any> {
     const url = this.backendService.createUrl(FeasibilityQueryPaths.SAVED_QUERY_SLOTS)
     return this.http.get(url, {
@@ -54,6 +69,12 @@ export class FeasibilityQueryApiService {
     })
   }
 
+  /**
+   * Updates a feasibility query.
+   * @param {number} id
+   * @param {object} updatedObject
+   * @returns {Observable<any>}
+   */
   public putFeasibilityQuery(id: number, updatedObject: object): Observable<any> {
     return this.http.put<any>(
       this.backendService.createUrl(FeasibilityQueryPaths.EXECUTE_QUERY + '/' + id.toString() + FeasibilityQueryPaths.SAVE_QUERY),

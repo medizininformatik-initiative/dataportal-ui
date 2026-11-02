@@ -124,9 +124,7 @@ export class ReferenceFilterTranslatorService {
 
   /**
    * Applies the appropriate filter translation based on the filter type for Attribute Filters and Value Filters.
-   * @param attributeFilterBuilder
    * @param {AttributeFilterData | ValueFilterData} attributeFilterData
-   * @param parentId - The id of the parent criterion, used for reference filters.
    * @param {AttributeDefinitionData | ValueDefinitionData} attributeDefinitionData
    * @returns {AttributeFiltersBuilder}
    */
@@ -164,11 +162,9 @@ export class ReferenceFilterTranslatorService {
 
   /**
    * Finds an attribute filter definition in the UI profile.
-   * @param attributeDefinitions
-   * @param attributeFilter
-   * @returns {AttributeFilterData | undefined}
    * @param {AttributeFilterData[]} sq
    * @param {TerminologyCodeBaseData} attributeCode
+   * @returns {AttributeFilterData | undefined}
    */
   public findAttributeFilterInProfile(sq: AttributeFilterData[], attributeCode: TerminologyCodeBaseData): AttributeFilterData | undefined {
     return sq.find((attributeDefinition: AttributeFilterData) => {

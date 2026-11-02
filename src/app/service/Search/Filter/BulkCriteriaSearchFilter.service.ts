@@ -23,7 +23,6 @@ export class BulkCriteriaSearchFilterService {
 
   /**
    * Creates a new BulkCriteriaSearchFilterService.
-   * @param searchFilterProvider - Service for providing criteria search filters
    */
   constructor() {}
 

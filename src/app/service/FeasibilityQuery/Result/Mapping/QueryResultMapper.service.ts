@@ -14,12 +14,25 @@ import { Issue } from 'src/app/model/Utilities/Issue'
 export class QueryResultMapperService {
   constructor() {}
 
+  /**
+   * Creates an error result from the issues.
+   * @param {IssueData[]} issueData
+   * @param {string} feasibilityQueryId
+   * @returns {ErrorQueryResult}
+   */
   public createErrorQueryResult(issueData: IssueData[], feasibilityQueryId: string): ErrorQueryResult {
     const issues: Issue[] = (issueData || []).map((issue: IssueData) => Issue.fromJson(issue))
     return new ErrorQueryResult(feasibilityQueryId, issues)
   }
 
   /*@TODO Issue #631 - Generic Error message dev on feasibility details*/
+  /**
+   * Creates a query result from the response of the backend.
+   * @param {boolean} detailedReceived
+   * @param {QueryResultData} result
+   * @param {string} feasibilityQueryId
+   * @returns {QueryResult}
+   */
   public createQueryResult(detailedReceived: boolean, result: QueryResultData, feasibilityQueryId: string): QueryResult {
     return new QueryResult(
       detailedReceived,
@@ -31,6 +44,11 @@ export class QueryResultMapperService {
     )
   }
 
+  /**
+   * Maps the result line data to result lines.
+   * @param {QueryResultLineData[]} resultLines
+   * @returns {QueryResultLine[]}
+   */
   private createResultLines(resultLines: QueryResultLineData[]): QueryResultLine[] {
     return resultLines.map((line: QueryResultLineData) => QueryResultLine.fromJson(line))
   }

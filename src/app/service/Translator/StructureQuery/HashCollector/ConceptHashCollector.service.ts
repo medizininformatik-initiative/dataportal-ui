@@ -38,9 +38,8 @@ export class ConceptHashCollectorService {
 
   /**
    * Extracts concept hashes from a filter base data object
-   * @param filterBaseData AttributeFilterBaseData or ValueFilterData
-   * @returns {string[]} Array of concept hashes
    * @param {AttributeFilterData | ValueFilterData} filterData
+   * @returns {string[]} Array of concept hashes
    */
   private getConceptHashesFromFilter(filterData: AttributeFilterData | ValueFilterData): string[] {
     if (filterData.type === FilterTypes.CONCEPT) {

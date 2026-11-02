@@ -20,6 +20,10 @@ export class SaveDataQueryModalService {
 
   constructor() {}
 
+  /**
+   * Opens the save data query dialog and emits the usage stats after saving.
+   * @returns {Observable<SavedUsageStats>}
+   */
   public openSaveDataQueryModal(): Observable<SavedUsageStats> {
     const dialogRef = this.dialog.open(SaveDataQueryModalComponent, {
       disableClose: true,

@@ -19,7 +19,8 @@ export class TemplateApiService {
   /**
    * Loads the template.
    *
-   * @param id
+   * @param {number} id
+   * @returns {Observable<any>}
    */
   public loadTemplate(id: number): Observable<any> {
     const headers = this.backendService.getHeaders()
@@ -29,8 +30,9 @@ export class TemplateApiService {
   /**
    * Updates the template.
    *
-   * @param id
-   * @param updatedObject
+   * @param {number} id
+   * @param {object} updatedObject
+   * @returns {Observable<any>}
    */
   public updateTemplate(id: number, updatedObject: object): Observable<any> {
     const headers = this.backendService.getHeaders()
@@ -43,7 +45,8 @@ export class TemplateApiService {
   /**
    * Deletes the saved template.
    *
-   * @param id
+   * @param {number} id
+   * @returns {Observable<any>}
    */
   public deleteSavedTemplate(id: number) {
     const headers = this.backendService.getHeaders()

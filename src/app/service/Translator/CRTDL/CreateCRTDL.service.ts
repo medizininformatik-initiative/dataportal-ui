@@ -24,20 +24,38 @@ export class CreateCRTDLService {
 
   constructor() {}
 
+  /**
+   * Creates a CRTDL from the active query and data selection.
+   * @returns {Observable<CRTDL>}
+   */
   public createCRTDLForSave(): Observable<CRTDL> {
     return combineLatest([this.uiQueryTranslator.getActive(), this.getDataExtraction()]).pipe(
       map(([cohortDefinition, dataExtraction]) => this.buildCRTDL(cohortDefinition, dataExtraction))
     )
   }
 
+  /**
+   * Creates a CRTDL from the active query and data selection.
+   * @returns {Observable<CRTDL>}
+   */
   public createCRTDL(): Observable<CRTDL> {
     return this.createCRTDLForSave()
   }
 
+  /**
+   * Builds a CRTDL from the cohort definition and the data extraction.
+   * @param {CCDLCohortDefinition} cohortDefinition
+   * @param {DataExtraction} dataExtraction
+   * @returns {CRTDL}
+   */
   public buildCRTDL(cohortDefinition: CCDLCohortDefinition, dataExtraction: DataExtraction): CRTDL {
     return new CRTDL(cohortDefinition, dataExtraction)
   }
 
+  /**
+   * Translates the active data selection to a data extraction.
+   * @returns {Observable<DataExtraction>}
+   */
   private getDataExtraction(): Observable<DataExtraction> {
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId()
     return this.dataSelectionProvider

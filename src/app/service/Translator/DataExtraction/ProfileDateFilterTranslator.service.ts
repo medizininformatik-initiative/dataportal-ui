@@ -19,6 +19,12 @@ export class ProfileDateFilterTranslatorService {
 
   constructor() {}
 
+  /**
+   * Creates the time restriction filters of the profile from the extracted group.
+   * @param {AttributeGroupsData} externProfile
+   * @param {DataSelectionProfile} profile
+   * @returns {ProfileTimeRestrictionFilter[]}
+   */
   public createDateFilters(externProfile: AttributeGroupsData, profile: DataSelectionProfile): ProfileTimeRestrictionFilter[] {
     return (profile.getFilters() ?? [])
       .filter((filterData: AbstractProfileFilter) => filterData.getType() === DataSelectionFilterType.DATE)
@@ -27,6 +33,12 @@ export class ProfileDateFilterTranslatorService {
       )
   }
 
+  /**
+   * Creates a time restriction filter with the dates found in the extracted group.
+   * @param {ProfileTimeRestrictionFilter} filterData
+   * @param {AttributeGroupsData} externProfile
+   * @returns {ProfileTimeRestrictionFilter}
+   */
   private createProfileTimeRestrictionFilter(
     filterData: ProfileTimeRestrictionFilter,
     externProfile: AttributeGroupsData

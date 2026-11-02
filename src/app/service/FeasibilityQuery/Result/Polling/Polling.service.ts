@@ -33,6 +33,10 @@ export class PollingService {
     return this.feasibilityQueryResultApiService.getSummaryResult(resultId)
   }
 
+  /**
+   * Posts the active cohort definition and returns the feasibility id from the polling url.
+   * @returns {Observable<string>}
+   */
   public getFeasibilityIdFromPollingUrl(): Observable<string> {
     return this.translator.getActive().pipe(
       switchMap((cohortDefinition: CCDLCohortDefinition) => this.feasibilityQueryApiService.postStructuredQuery(cohortDefinition)),

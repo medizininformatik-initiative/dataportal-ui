@@ -21,6 +21,10 @@ export class DownloadCRTDLZipService extends AbstractDownloadService {
     super()
   }
 
+  /**
+   * Creates the CRTDL and downloads it as a zip file.
+   * @param {string} filename
+   */
   public download(filename?: string): void {
     this.createCRTDLService
       .createCRTDL()

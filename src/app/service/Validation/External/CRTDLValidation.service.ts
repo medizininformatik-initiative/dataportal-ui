@@ -29,6 +29,12 @@ export class CRTDLValidationService {
 
   constructor() {}
 
+  /**
+   * Validates the CRTDL in the backend and emits whether it is valid.
+   * @param {CRTDLData} crtdl
+   * @param {boolean} setValidationReport
+   * @returns {Observable<boolean>}
+   */
   public validate(crtdl: CRTDLData, setValidationReport: boolean = true): Observable<boolean> {
     this.errorLogProvider.setValidatedCRTDL(crtdl)
     return this.validationApiService.validateCRTDL(crtdl).pipe(
@@ -37,6 +43,11 @@ export class CRTDLValidationService {
     )
   }
 
+  /**
+   * Builds the validation report from a validation error.
+   * @param {DataportalErrorData} error
+   * @returns {Observable<boolean>}
+   */
   public handleValidationError(error: DataportalErrorData): Observable<boolean> {
     if (TypeGuard.isValidationError(error)) {
       const payload = error.payload
@@ -50,6 +61,11 @@ export class CRTDLValidationService {
     return throwError(() => error)
   }
 
+  /**
+   * Builds a validation report from the issues.
+   * @param {ValidationIssueData[]} errors
+   * @returns {ValidationReport}
+   */
   public buildValidationReport(errors: ValidationIssueData[]): ValidationReport {
     const validationErrors: ValidationIssue[] = errors.map((error: ValidationIssueData) =>
       this.validationIssueMapper.mapToValidationIssue(error)
@@ -57,6 +73,10 @@ export class CRTDLValidationService {
     return new ValidationReport(validationErrors)
   }
 
+  /**
+   * Opens the validation report dialog.
+   * @param {ValidationReport} validationReport
+   */
   private opeValidationReportModal(validationReport: ValidationReport): void {
     this.matDialog.open(ErrorLogModalComponent, {
       data: validationReport,

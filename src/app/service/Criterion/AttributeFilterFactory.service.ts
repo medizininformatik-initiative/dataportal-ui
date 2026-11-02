@@ -72,7 +72,6 @@ export class AttributeFilterFactoryService {
    * Adds a concept filter to the builder based on the referenced value set.
    * @param {AttributeDefinitionData | ValueDefinitionData} attributeDefinition - The definition containing the referenced value set
    * @param {AttributeFiltersBuilder} builder - The builder to add the concept filter to
-   * @returns void
    */
   private addConceptFilter(attributeDefinition: AttributeDefinitionData | ValueDefinitionData, builder: AttributeFiltersBuilder): void {
     const valueSet = attributeDefinition.referencedValueSet
@@ -84,7 +83,6 @@ export class AttributeFilterFactoryService {
    * Adds a quantity filter to the builder with allowed units and precision.
    * @param {AttributeDefinitionData | ValueDefinitionData} attributeDefinition - The definition containing quantity filter configuration
    * @param {AttributeFiltersBuilder} builder - The builder to add the quantity filter to
-   * @returns void
    */
   private addQuantityFilter(attributeDefinition: AttributeDefinitionData | ValueDefinitionData, builder: AttributeFiltersBuilder): void {
     const allowedUnits: QuantityUnit[] = this.getAllowedUnits(attributeDefinition.allowedUnits)
@@ -105,7 +103,6 @@ export class AttributeFilterFactoryService {
    * Adds a reference filter to the builder with referenced criteria set.
    * @param {AttributeDefinitionData | ValueDefinitionData} attributeDefinition - The attribute definition containing referenced criteria
    * @param {AttributeFiltersBuilder} builder - The builder to add the reference filter to
-   * @returns void
    */
   private addReferenceFilter(attributeDefinition: AttributeDefinitionData | ValueDefinitionData, builder: AttributeFiltersBuilder): void {
     const referenceFilter = builder.buildReferenceFilter(uuidv4(), (attributeDefinition as AttributeDefinitionData).referencedCriteriaSet)

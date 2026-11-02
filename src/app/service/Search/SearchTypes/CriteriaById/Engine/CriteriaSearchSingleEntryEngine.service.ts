@@ -18,6 +18,11 @@ export class CriteriaSearchSigleEntryEngineService {
 
   constructor() {}
 
+  /**
+   * Fetches the criteria entry with the given id and maps it to a result list.
+   * @param {string} id
+   * @returns {Observable<CriteriaResultList>}
+   */
   public search(id: string): Observable<CriteriaResultList> {
     const mapping = this.getMapping()
     return this.terminologyApiService.getEntryById(id).pipe(
@@ -28,6 +33,10 @@ export class CriteriaSearchSigleEntryEngineService {
     )
   }
 
+  /**
+   * Returns the mapper for the search results.
+   * @returns {CriteriaResulByIdMapperStrategy}
+   */
   protected getMapping(): CriteriaResulByIdMapperStrategy {
     return new CriteriaResulByIdMapperStrategy()
   }

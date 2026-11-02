@@ -33,6 +33,11 @@ export class ProfileSearchService extends AbstractSimpleSearch<ProfileListEntry,
     return this.paginator.searchFirstPage(searchTerm)
   }
 
+  /**
+   * Sets the search term and loads the next page of results.
+   * @param {string} searchTerm
+   * @returns {Observable<ProfileResultList>}
+   */
   public loadNextPage(searchTerm: string): Observable<ProfileResultList> {
     this.setSearchTerm(searchTerm)
     return this.paginator.loadNextPage(searchTerm)
@@ -41,16 +46,24 @@ export class ProfileSearchService extends AbstractSimpleSearch<ProfileListEntry,
   /**
    * Returns the search results.
    *
-   * @returns {Observable<ProfileResultList>
+   * @returns {Observable<ProfileResultList>} {Observable<ProfileResultList>
    */
   public getSearchResults(): Observable<ProfileResultList> {
     return this.resultProviderService.getSearchResults().pipe(filter(Boolean))
   }
 
+  /**
+   * Returns the active search term.
+   * @returns {Observable<string>}
+   */
   public getActiveSearchTerm(): Observable<string> {
     return this.profileSearchStateService.getActiveSearchTerm()
   }
 
+  /**
+   * Sets the active search term.
+   * @param {string} searchTerm
+   */
   protected setSearchTerm(searchTerm: string): void {
     this.profileSearchStateService.setActiveSearchTerm(searchTerm)
   }

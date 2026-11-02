@@ -16,6 +16,10 @@ export class FeasibilityQueryFactoryService {
 
   constructor() {}
 
+  /**
+   * Creates a new feasibility query and registers it.
+   * @returns {FeasibilityQuery}
+   */
   public instantiate(): FeasibilityQuery {
     const feasibilityQuery = new FeasibilityQuery(uuidv4())
     this.feasibilityQueryService.setFeasibilityQueryById(feasibilityQuery, feasibilityQuery.getId(), true)

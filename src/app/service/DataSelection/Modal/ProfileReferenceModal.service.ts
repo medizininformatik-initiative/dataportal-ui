@@ -19,10 +19,19 @@ export class ProfileReferenceModalService implements OnDestroy {
 
   constructor() {}
 
+  /**
+   * Unsubscribes from the dialog.
+   */
   public ngOnDestroy() {
     this.dialogSubscription.unsubscribe()
   }
 
+  /**
+   * Opens the profile reference dialog and emits the selected urls when it closes.
+   * @param {string[]} referencedProfileUrls
+   * @param {string} profileId
+   * @returns {Observable<string[]>}
+   */
   public openProfileReferenceModal(referencedProfileUrls: string[], profileId: string): Observable<string[]> {
     const data = this.setModalData(referencedProfileUrls, profileId)
     const dialogRef = this.dialog.open(ProfileReferenceModalComponent, {
@@ -33,6 +42,12 @@ export class ProfileReferenceModalService implements OnDestroy {
     return dialogRef.afterClosed()
   }
 
+  /**
+   * Builds the data for the profile reference dialog.
+   * @param {string[]} referencedProfileUrls
+   * @param {string} profileId
+   * @returns {ProfileReferenceModalComponentData}
+   */
   private setModalData(referencedProfileUrls: string[], profileId: string): ProfileReferenceModalComponentData {
     return {
       referenceUrls: referencedProfileUrls,

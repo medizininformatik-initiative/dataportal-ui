@@ -30,8 +30,6 @@ export class ActuatorInformationService {
 
   /**
    * Caches the actuator information.
-   * @param - The actuator information to cache
-   * @returns void
    * @param {ActuatorData} info
    */
   public cacheActuatorInfo(info: ActuatorData): void {

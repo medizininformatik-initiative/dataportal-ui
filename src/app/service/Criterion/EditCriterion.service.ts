@@ -36,7 +36,7 @@ export class EditCriterionService {
   /**
    * Initializes the value.
    *
-   * @param criterion
+   * @param {AbstractCriterion} criterion
    */
   public initialize(criterion: AbstractCriterion): void {
     const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(criterion)
@@ -45,6 +45,10 @@ export class EditCriterionService {
     this.criterion$ = this.criterionSubject.asObservable()
   }
 
+  /**
+   * Returns the criterion being edited.
+   * @returns {Criterion}
+   */
   public getCriterion(): Criterion {
     const value = this.criterionSubject?.getValue()
     if (!value) {
@@ -56,7 +60,7 @@ export class EditCriterionService {
   /**
    * Updates the value filter.
    *
-   * @param valueFilter
+   * @param {ValueFilter} valueFilter
    */
   public updateValueFilter(valueFilter: ValueFilter): void {
     const criterion = this.getCriterion()
@@ -69,8 +73,8 @@ export class EditCriterionService {
   /**
    * Updates the concept attribute filter.
    *
-   * @param concept
-   * @param attributeFilter
+   * @param {ConceptFilter} concept
+   * @param {AttributeFilter} attributeFilter
    */
   public updateConceptAttributeFilter(concept: ConceptFilter, attributeFilter: AttributeFilter): void {
     const criterion = this.getCriterion()
@@ -83,8 +87,8 @@ export class EditCriterionService {
   /**
    * Updates the quantity attribute filter.
    *
-   * @param quantityFilter
-   * @param attributeFilter
+   * @param {AbstractQuantityFilter} quantityFilter
+   * @param {AttributeFilter} attributeFilter
    */
   public updateQuantityAttributeFilter(quantityFilter: AbstractQuantityFilter, attributeFilter: AttributeFilter): void {
     const criterion = this.getCriterion()
@@ -97,7 +101,7 @@ export class EditCriterionService {
   /**
    * Updates the time restriction.
    *
-   * @param timeRestriction
+   * @param {AbstractTimeRestriction} timeRestriction
    */
   public updateTimeRestriction(timeRestriction: AbstractTimeRestriction): void {
     const criterion = this.getCriterion()
@@ -108,7 +112,7 @@ export class EditCriterionService {
   /**
    * Updates the term codes.
    *
-   * @param termCodes
+   * @param {TerminologyCode[]} termCodes
    */
   public updateTermCodes(termCodes: TerminologyCode[]): void {
     const criterion = this.getCriterion()
@@ -119,13 +123,17 @@ export class EditCriterionService {
   /**
    * Updates the reference filter.
    *
-   * @param ids
-   * @param attributeFilter
+   * @param {string[]} ids
+   * @param {AttributeFilter} attributeFilter
+   * @returns {Observable<ReferenceCriterion[]>}
    */
   public updateReferenceFilter(ids: string[], attributeFilter: AttributeFilter): Observable<ReferenceCriterion[]> {
     return this.referenceFilterService.updateReferenceFilter(ids, this.getCriterion().getId(), attributeFilter)
   }
 
+  /**
+   * Publishes a copy of the edited criterion.
+   */
   private emit(): void {
     const criterion = this.getCriterion()
     const copy = CloneAbstractCriterion.deepCopyAbstractCriterion(criterion)
@@ -137,7 +145,7 @@ export class EditCriterionService {
   /**
    * Updates the provider.
    *
-   * @param criterion
+   * @param {Criterion} criterion
    */
   private updateProvider(criterion: Criterion): void {
     this.criterionProvider.setOne(criterion)
@@ -146,7 +154,7 @@ export class EditCriterionService {
   /**
    * Updates the concept value filter.
    *
-   * @param conceptFilter
+   * @param {ConceptFilter} conceptFilter
    */
   public updateConceptValueFilter(conceptFilter: ConceptFilter): void {
     const criterion = this.getCriterion()
@@ -157,7 +165,7 @@ export class EditCriterionService {
   /**
    * Updates the quantity value filter.
    *
-   * @param quantityFilter
+   * @param {AbstractQuantityFilter} quantityFilter
    */
   public updateQuantityValueFilter(quantityFilter: AbstractQuantityFilter): void {
     const criterion = this.getCriterion()

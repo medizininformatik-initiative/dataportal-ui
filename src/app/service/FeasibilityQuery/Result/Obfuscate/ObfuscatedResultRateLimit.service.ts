@@ -26,6 +26,11 @@ export class ObfuscatedResultRateLimitService {
     shareReplay(1)
   )
 
+  /**
+   * Creates the rate limit from the response.
+   * @param {any} result
+   * @returns {QueryResultRateLimit}
+   */
   private createResultRateLimit(result: any): QueryResultRateLimit {
     return new QueryResultRateLimit(result.limit, result.remaining)
   }

@@ -17,6 +17,10 @@ export class RemoveReferenceService {
 
   constructor() {}
 
+  /**
+   * Removes the reference to the profile from the active data selection.
+   * @param {string} profileIdToBeDeleted
+   */
   public delete(profileIdToBeDeleted: string): void {
     this.dataSelectionProviderService
       .getActiveDataSelection()
@@ -36,6 +40,12 @@ export class RemoveReferenceService {
       )
   }
 
+  /**
+   * Removes the selected reference fields that point to the deleted profile.
+   * @param {DataSelectionProfile} profile
+   * @param {string} profileIdToBeDeleted
+   * @returns {DataSelectionProfile}
+   */
   public removeReferenceFromProfile(profile: DataSelectionProfile, profileIdToBeDeleted: string): DataSelectionProfile {
     const selectedReferenceFields = profile.getProfileFields().getSelectedReferenceFields()
 

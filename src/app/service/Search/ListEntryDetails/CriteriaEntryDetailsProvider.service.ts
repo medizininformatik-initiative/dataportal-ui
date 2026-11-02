@@ -11,14 +11,25 @@ export class CriteriaEntryDetailsProviderService {
 
   constructor() {}
 
+  /**
+   * Returns the criteria entry details as an observable.
+   * @returns {Observable<CriteriaEntryDetails | null>}
+   */
   public getCriteriaEntryDetails$(): Observable<CriteriaEntryDetails | null> {
     return this.searchTermDetailsSubject.asObservable()
   }
 
+  /**
+   * Sets the criteria entry details.
+   * @param {CriteriaEntryDetails | null} details
+   */
   public setCriteriaEntryDetails(details: CriteriaEntryDetails | null) {
     this.searchTermDetailsSubject.next(details)
   }
 
+  /**
+   * Clears the criteria entry details.
+   */
   public resetCriteriaEntryDetails(): void {
     this.searchTermDetailsSubject.next(null)
   }

@@ -25,10 +25,19 @@ export class ReadDataQueryService {
 
   constructor() {}
 
+  /**
+   * Reads the saved queries and maps them to tiles.
+   * @returns {Observable<InterfaceSavedQueryTile[]>}
+   */
   public readSavedQueries(): Observable<InterfaceSavedQueryTile[]> {
     return this.dataQueryApiService.getDataQuery().pipe(map((queries: SavedDataQueryListItemData[]) => this.processQueries(queries)))
   }
 
+  /**
+   * Validates the saved queries and maps them to tiles.
+   * @param {SavedDataQueryListItemData[]} queries
+   * @returns {InterfaceSavedQueryTile[]}
+   */
   private processQueries(queries: SavedDataQueryListItemData[]): InterfaceSavedQueryTile[] {
     try {
       this.assertQueries(queries)
@@ -39,10 +48,19 @@ export class ReadDataQueryService {
     }
   }
 
+  /**
+   * Asserts that every query has the expected shape.
+   * @param {SavedDataQueryListItemData[]} queries
+   */
   private assertQueries(queries: SavedDataQueryListItemData[]): void {
     queries.every((query: SavedDataQueryListItemData) => TypeAssertion.assertSavedDataQueryListItemData(query))
   }
 
+  /**
+   * Maps a saved query to a tile.
+   * @param {any} query
+   * @returns {InterfaceSavedQueryTile}
+   */
   private adaptQuery(query: any): InterfaceSavedQueryTile {
     const savedDataQueryListItem = SavedDataQueryListItem.fromJson(query)
     return SavedFeasibilityQueryAdapter.adapt(savedDataQueryListItem)

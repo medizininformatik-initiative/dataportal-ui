@@ -10,14 +10,26 @@ export class DataSelectionMainProfileProviderService {
 
   constructor() {}
 
+  /**
+   * Sets the patient profile.
+   * @param {DataSelectionProfile} profile
+   */
   public setPatientProfile(profile: DataSelectionProfile): void {
     this.patientProfileSubject.next(profile)
   }
 
+  /**
+   * Returns the patient profile as an observable.
+   * @returns {Observable<DataSelectionProfile | null>}
+   */
   public getPatientProfile$(): Observable<DataSelectionProfile | null> {
     return this.patientProfileSubject.asObservable()
   }
 
+  /**
+   * Returns the current patient profile.
+   * @returns {DataSelectionProfile}
+   */
   public getPatientProfileValue(): DataSelectionProfile {
     return this.patientProfileSubject.getValue()
   }

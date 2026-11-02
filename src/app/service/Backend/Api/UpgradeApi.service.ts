@@ -18,6 +18,11 @@ export class UpgradeApiService {
 
   constructor() {}
 
+  /**
+   * Sends a CRTDL to the backend to upgrade it to the current version.
+   * @param {CRTDLData} crtdl
+   * @returns {Observable<HttpResponse<UpgradeData>>}
+   */
   public upgradeCRTDL(crtdl: CRTDLData): Observable<HttpResponse<UpgradeData>> {
     const url = this.backendService.createUrl(UpgradePaths.UPGRADE_CRTDL)
     const response$ = this.http.post<UpgradeData>(url, crtdl, {

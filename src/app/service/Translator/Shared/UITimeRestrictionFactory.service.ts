@@ -12,6 +12,11 @@ import { TimeRestrictionData } from 'src/app/model/Interface/TimeRestrictionData
 export class UITimeRestrictionFactoryService {
   constructor() {}
 
+  /**
+   * Creates the time restriction type that matches the start and end of the data selection.
+   * @param {any} timeRestriction
+   * @returns {AbstractTimeRestriction}
+   */
   public createTimeRestrictionForDataSelection(timeRestriction: any): AbstractTimeRestriction {
     if (timeRestriction.start && timeRestriction.end) {
       if (timeRestriction.start === timeRestriction.end) {
@@ -28,6 +33,11 @@ export class UITimeRestrictionFactoryService {
     }
   }
 
+  /**
+   * Creates the time restriction type that matches the dates of the feasibility query.
+   * @param {TimeRestrictionData} timeRestriction
+   * @returns {AbstractTimeRestriction}
+   */
   public createTimeRestrictionForFeasibilityQuery(timeRestriction: TimeRestrictionData): AbstractTimeRestriction {
     const beforeDate: string = timeRestriction.beforeDate
     const afterDate: string = timeRestriction.afterDate

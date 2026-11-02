@@ -12,6 +12,9 @@ import { FeasibilityQueryProviderService } from '../Provider/FeasibilityQueryPro
 export class ConsentService implements OnDestroy {
   private readonly feasibilityQueryProviderService = inject(FeasibilityQueryProviderService)
 
+  /**
+   * Unsubscribes from the active feasibility query.
+   */
   public ngOnDestroy(): void {
     this.activeFeasibilityQuerySusbscription?.unsubscribe()
   }
@@ -111,6 +114,9 @@ export class ConsentService implements OnDestroy {
     this.setProvisionCode(false, true, false, false)
   }
 
+  /**
+   * Writes the consent criterion into the active feasibility query.
+   */
   public setFeasibilityQueryConsent() {
     this.activeFeasibilityQuerySusbscription?.unsubscribe()
     this.activeFeasibilityQuerySusbscription = this.feasibilityQueryProviderService
@@ -120,27 +126,51 @@ export class ConsentService implements OnDestroy {
       })
   }
 
+  /**
+   * Returns the consent look-up table key.
+   * @returns {string}
+   */
   public getConsentLookUpTableKey(): string {
     return this.consentLookUpTableKey
   }
 
+  /**
+   * Sets the consent look-up table key.
+   * @param {string} key
+   */
   public setConsentLookUpTableKey(key: string) {
     this.consentLookUpTableKey = key
   }
 
+  /**
+   * Returns the consent terminology code.
+   * @returns {TerminologyCode}
+   */
   public getConsentTermCode(): TerminologyCode {
     return this.consentTermcode
   }
 
+  /**
+   * Returns whether consent is given.
+   * @returns {boolean}
+   */
   public getConsent() {
     return this.consent
   }
 
+  /**
+   * Sets the consent and updates the feasibility query.
+   * @param {boolean} consent
+   */
   public setConsent(consent: boolean) {
     this.consent = consent
     this.setFeasibilityQueryConsent()
   }
 
+  /**
+   * Builds the consent criterion for the structured query.
+   * @returns {StructuredQueryCriterion}
+   */
   public getConsentStructuredQueryCriterion(): StructuredQueryCriterion {
     const criterion = new StructuredQueryCriterion()
     criterion.setContext(ContextTermCode.getContextTermCode())
@@ -148,12 +178,24 @@ export class ConsentService implements OnDestroy {
     return criterion
   }
 
+  /**
+   * Sets the provision code from the four consent options.
+   * @param {boolean} distributedAnalysis
+   * @param {boolean} euGdpr
+   * @param {boolean} insuranceData
+   * @param {boolean} contact
+   */
   public setProvisionCode(distributedAnalysis: boolean, euGdpr: boolean, insuranceData: boolean, contact: boolean) {
     const key = `${distributedAnalysis}:${euGdpr}:${insuranceData}:${contact}`
     this.consentLookUpTableKey = key
     this.consentTermcode = this.createTerminologyCode(key)
   }
 
+  /**
+   * Creates the terminology code for a look-up table key.
+   * @param {string} key
+   * @returns {TerminologyCode}
+   */
   private createTerminologyCode(key: string) {
     const termCodeObject = this.lookupTable[key]
     return new TerminologyCode(termCodeObject.code, termCodeObject.display, termCodeObject.system)
@@ -184,6 +226,9 @@ export class ConsentService implements OnDestroy {
 
     return null
   }
+  /**
+   * Resets the consent to its default.
+   */
   public clearConsent(): void {
     this.setProvisionCode(false, true, false, false)
     this.setConsent(false)

@@ -25,10 +25,21 @@ export class CodeableConceptSearchEngineService extends AbstractKeyedSearchEngin
     this.searchEngine = searchEngine
   }
 
+  /**
+   * Builds the search url for a page of the value sets.
+   * @param {string} searchText
+   * @param {number} page
+   * @param {string[]} valueSetUrls
+   * @returns {string}
+   */
   protected createUrl(searchText: string, page: number, valueSetUrls: string[]): string {
     return new CodeableConceptSearchUrlStrategy(searchText, valueSetUrls).getSearchUrl(page)
   }
 
+  /**
+   * Returns the mapper for the search results.
+   * @returns {CodeableConceptResultMapperStrategy}
+   */
   protected getMapping(): CodeableConceptResultMapperStrategy {
     return new CodeableConceptResultMapperStrategy()
   }

@@ -17,6 +17,12 @@ export class ChunkedRequestService {
 
   constructor() {}
 
+  /**
+   * Requests the ids from the path in chunks so the url stays short enough.
+   * @param {string[]} ids
+   * @param {string} path
+   * @returns {Observable<Array<any>>}
+   */
   public getChunkedRequest(ids: string[], path: string): Observable<Array<any>> {
     const chunks = this.backendService.chunkArrayForStrings(ids, this.chunkSize)
     const observables = chunks.map((chunk: string[]) => {

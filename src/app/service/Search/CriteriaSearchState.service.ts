@@ -17,18 +17,34 @@ export class CriteriaSearchStateService {
   constructor(...args: unknown[])
   constructor() {}
 
+  /**
+   * Returns the active search term.
+   * @returns {Observable<string>}
+   */
   public getActiveSearchTerm(): Observable<string> {
     return this.searchTermSubject.asObservable()
   }
 
+  /**
+   * Sets the active search term.
+   * @param {string} searchTerm
+   */
   public setActiveSearchTerm(searchTerm: string): void {
     this.searchTermSubject.next(searchTerm)
   }
 
+  /**
+   * Returns the active search filter.
+   * @returns {Observable<CriteriaSearchFilter>}
+   */
   public getActiveSearchFilter(): Observable<CriteriaSearchFilter> {
     return this.searchFilterSubject.asObservable()
   }
 
+  /**
+   * Sets the active search filter.
+   * @param {CriteriaSearchFilter} searchFilter
+   */
   public setActiveSearchFilter(searchFilter: CriteriaSearchFilter): void {
     this.searchFilterSubject.next(searchFilter)
   }
