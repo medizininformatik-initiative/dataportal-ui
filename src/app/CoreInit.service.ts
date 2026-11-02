@@ -145,6 +145,10 @@ export class CoreInitService {
     )
   }
 
+  /**
+   * Loads the actuator info and emits whether it was loaded.
+   * @returns {Observable<boolean>}
+   */
   private loadActuatorInformation(): Observable<boolean> {
     return this.actuatorInformationService.getActuatorInfo().pipe(
       tap((info: ActuatorData) => console.log('Actuator information loaded:', !!info)),

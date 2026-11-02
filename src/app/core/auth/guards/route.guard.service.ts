@@ -20,6 +20,11 @@ export class RouteGuard implements CanActivate {
 
   constructor() {}
 
+  /**
+   * Checks whether the route may be activated, based on its path segment and id.
+   * @param {ActivatedRouteSnapshot} route
+   * @returns {Observable<boolean>}
+   */
   public canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     const id = route.paramMap.get('id')
     const url = route.url[0]?.path
@@ -35,6 +40,11 @@ export class RouteGuard implements CanActivate {
     }
   }
 
+  /**
+   * Emits whether the profile with the given id exists, and redirects if not.
+   * @param {string} id
+   * @returns {Observable<boolean>}
+   */
   private handleProfile(id: string) {
     try {
       const canRoute = this.profileService.getOne(id) ? true : false
@@ -49,6 +59,11 @@ export class RouteGuard implements CanActivate {
     }
   }
 
+  /**
+   * Emits whether the criterion with the given id exists, and redirects if not.
+   * @param {string} id
+   * @returns {Observable<boolean>}
+   */
   private handleCriterion(id: string) {
     try {
       const canRoute = this.criterionProviderService.getOne(id) ? true : false
@@ -63,6 +78,11 @@ export class RouteGuard implements CanActivate {
     }
   }
 
+  /**
+   * Emits whether the reference criterion with the given id exists, and redirects if not.
+   * @param {string} id
+   * @returns {Observable<boolean>}
+   */
   private handleReferenceCriterion(id: string) {
     try {
       const canRoute = this.referenceCriterionProviderService.getOne(id) ? true : false

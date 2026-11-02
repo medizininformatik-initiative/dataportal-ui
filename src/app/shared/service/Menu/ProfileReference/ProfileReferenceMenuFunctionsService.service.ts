@@ -17,12 +17,22 @@ export class ProfileReferenceMenuFunctionsService {
 
   constructor() {}
 
+  /**
+   * Navigates to the profile and opens the tab of the element if given.
+   * @param {string} id
+   * @param {Record<string, unknown>} args
+   */
   public navigate(id: string, args?: Record<string, unknown>) {
     const elementId = args?.elementId as string | undefined
     const state = elementId ? { activeTab: elementId } : undefined
     this.navigationHelperService.navigateToEditProfile(id, state)
   }
 
+  /**
+   * Removes the reference field from the profile.
+   * @param {string} profileId
+   * @param {string} elementId
+   */
   public delete(profileId: string, elementId: string): void {
     const profile = this.profileProviderService.getOne(profileId)
 

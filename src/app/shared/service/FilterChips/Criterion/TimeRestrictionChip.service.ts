@@ -9,9 +9,8 @@ import { FilterChipTimeRestrictionAdapter } from '../../../models/FilterChips/Ad
 export class TimeRestrictionChipService {
   /**
    * Generates the time restriction chips.
-   * @param criterion
-   * @returns {FilterChipData[]}
    * @param {AbstractTimeRestriction} timeRestriction
+   * @returns {FilterChipData[]}
    */
   public generateTimeRestrictionChips(timeRestriction: AbstractTimeRestriction): FilterChipData[] {
     if (this.isTimeRestrictionSet(timeRestriction)) {
@@ -20,6 +19,11 @@ export class TimeRestrictionChipService {
     return []
   }
 
+  /**
+   * Checks whether the time restriction has a before or after date.
+   * @param {AbstractTimeRestriction} timeRestriction
+   * @returns {string | true}
+   */
   private isTimeRestrictionSet(timeRestriction: AbstractTimeRestriction) {
     return timeRestriction?.getBeforeDate() !== null || timeRestriction?.getAfterDate()
   }

@@ -16,11 +16,21 @@ export class ProfileReferenceChipsService {
 
   constructor() {}
 
+  /**
+   * Returns the chip data of the selected reference field.
+   * @param {SelectedReferenceField} selectedReferenceFields
+   * @returns {ProfileReferenceChipData}
+   */
   public getProfileReferenceChips(selectedReferenceFields: SelectedReferenceField): ProfileReferenceChipData {
     const referenceGroup = this.getProfileReferenceGroup(selectedReferenceFields)
     return this.adaptToProfileReferenceChipData(referenceGroup)
   }
 
+  /**
+   * Groups the displays of the linked profiles of the reference field.
+   * @param {SelectedReferenceField} selectedReferenceFields
+   * @returns {ProfileReferenceGroup}
+   */
   private getProfileReferenceGroup(selectedReferenceFields: SelectedReferenceField): ProfileReferenceGroup {
     const displays = this.getLinkedProfileDisplays(selectedReferenceFields)
     const referenceGroup: ProfileReferenceGroup = {
@@ -47,6 +57,11 @@ export class ProfileReferenceChipsService {
       .filter((profileDisplay): profileDisplay is { display: Display; number: number } => !!profileDisplay.display)
   }
 
+  /**
+   * Adapts the group to chip data.
+   * @param {ProfileReferenceGroup} groups
+   * @returns {ProfileReferenceChipData}
+   */
   private adaptToProfileReferenceChipData(groups: ProfileReferenceGroup): ProfileReferenceChipData {
     return FilterChipProfileRefrenceAdapter.adaptToProfileReferenceChipData(groups)
   }

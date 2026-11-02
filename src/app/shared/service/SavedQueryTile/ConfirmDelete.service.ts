@@ -14,6 +14,10 @@ export class ConfirmDeleteService {
 
   constructor() {}
 
+  /**
+   * Opens the delete confirmation dialog and emits whether the user confirmed.
+   * @returns {Observable<boolean>}
+   */
   public confirmDelete(): Observable<boolean> {
     const dialogRef = this.dialog.open(ConfirmDeleteModalComponent, {
       disableClose: true,

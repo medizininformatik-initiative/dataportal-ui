@@ -38,9 +38,8 @@ export class QuantityFilterChipService {
   /**
    * Generates quantity filter chips obtained from AttributeFilter.
    *
-   * @param quantityFilter The AbstractQuantityFilter object
-   * @returns {FilterChipData} Array of FilterChipData
    * @param {AttributeFilter | ValueFilter} filter
+   * @returns {FilterChipData} Array of FilterChipData
    */
   private createQuantityChips(filter: AttributeFilter | ValueFilter): FilterChipData {
     const quantityFilter = filter?.getQuantity()

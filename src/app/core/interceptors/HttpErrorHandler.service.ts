@@ -49,9 +49,8 @@ export class HttpErrorHandlerService {
   /**
    * Handles BadRequest (400) errors
    * @param {any} errorPayload - The error payload
-   * @param requestUrl - The URL of the failed request
-   * @returns {Observable<never>} Observable that throws an error
    * @param {HttpRequest<any>} request
+   * @returns {Observable<never>} Observable that throws an error
    */
   private handleBadRequest(errorPayload: any, request: HttpRequest<any>): Observable<never> {
     const isValidationEndpoint = request.context.get(IS_VALIDATION)

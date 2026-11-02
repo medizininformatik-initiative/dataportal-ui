@@ -14,6 +14,10 @@ export class ReferenceCriterionMenuFunctionsService {
 
   constructor() {}
 
+  /**
+   * Deletes the reference criterion from its parent criterion.
+   * @param {string} id
+   */
   public deleteCriterion(id: string) {
     const parentID = this.referenceCriterionProvider.getOne(id)?.getParentId()
     if (!parentID) {
@@ -35,11 +39,19 @@ export class ReferenceCriterionMenuFunctionsService {
     this.referenceCriterionProvider.removeOne(id)
   }
 
+  /**
+   * Not implemented yet.
+   * @param {string} id
+   */
   public duplicateCriterion(id: string) {
     // Not implemented yet
     return
   }
 
+  /**
+   * Applies the reference criterion filter to the parent criterion.
+   * @param {string} id
+   */
   public applyReferenceCriterionFilter(id: string) {
     const referenceCriterion = this.referenceCriterionProvider.getOne(id)
     const criterion = this.criterionProviderService.getOne(referenceCriterion.getParentId())

@@ -62,9 +62,8 @@ export class ConceptFilterChipService {
   /**
    * Generates concept filter chips from a specific ConceptFilter.
    *
-   * @param conceptFilter The ConceptFilter object
-   * @returns {FilterChipData[]} Array of FilterChipData
    * @param {ValueFilter} valueFilter
+   * @returns {FilterChipData[]} Array of FilterChipData
    */
   private generateConceptChipsFromValueFilter(valueFilter: ValueFilter): FilterChipData[] {
     const conceptFilter = valueFilter?.getConcept()
@@ -78,9 +77,8 @@ export class ConceptFilterChipService {
    * Adapts the ConceptFilter into an array of FilterChipData.
    *
    * @param {ConceptFilter} conceptFilter The ConceptFilter object
-   * @param attributeCode Optional TerminologyCode for the attribute
-   * @returns {FilterChipData[]} Array of FilterChipData
    * @param {Display} display
+   * @returns {FilterChipData[]} Array of FilterChipData
    */
   public generateConceptChips(conceptFilter: ConceptFilter, display: Display): FilterChipData[] {
     return FilterChipConceptAdapter.adaptCodeableConcept(conceptFilter.getSelectedConcepts(), display)

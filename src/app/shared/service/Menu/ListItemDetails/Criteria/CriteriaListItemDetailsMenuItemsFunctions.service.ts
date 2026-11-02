@@ -28,6 +28,10 @@ export class CriteriaListItemDetailsMenuItemsFunctionsService {
 
   constructor() {}
 
+  /**
+   * Shows the criteria entry in the result list.
+   * @param {string} id
+   */
   public showCriteriaInResultList(id: string) {
     this.searchService.search(id).pipe(take(1)).subscribe()
     this.criteriaEntryDetailsService
@@ -38,6 +42,10 @@ export class CriteriaListItemDetailsMenuItemsFunctionsService {
       })
   }
 
+  /**
+   * Builds the criterion and adds it to the stage.
+   * @param {string} id
+   */
   public addToStage(id: string) {
     this.criterionService
       .buildCriteriaFromHashes([id])
@@ -50,6 +58,10 @@ export class CriteriaListItemDetailsMenuItemsFunctionsService {
       .subscribe(() => this.snackbarMessageService.displayAddedToCriteriaStage())
   }
 
+  /**
+   * Searches for the criteria entry and loads its details.
+   * @param {string} id
+   */
   public searchCriteria(id: string) {
     this.searchService
       .search(id)

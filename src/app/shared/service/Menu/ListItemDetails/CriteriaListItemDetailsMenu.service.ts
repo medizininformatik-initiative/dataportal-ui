@@ -15,9 +15,9 @@ export class CriteriaListItemDetailsMenuService extends AbstractMenuItemsService
 
   /**
    * Returns the menu items for this context.
-   * @param selectable
+   * @param {boolean} selectable
    * @todo Labels need to be redefined for translation jsons
-   * @returns Array of Menu functions for a criterion box
+   * @returns {MenuItemInterface[]} Array of Menu functions for a criterion box
    */
   public override getMenuItems(selectable: boolean): MenuItemInterface[] {
     return [

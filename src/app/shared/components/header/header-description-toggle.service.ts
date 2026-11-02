@@ -9,10 +9,17 @@ export class HeaderDescriptionToggleService {
 
   public readonly visible$ = this.visible.asObservable()
 
+  /**
+   * Returns whether the header description is visible.
+   * @returns {boolean}
+   */
   public get isVisible(): boolean {
     return this.visible.value
   }
 
+  /**
+   * Toggles the header description and stores the state in the local storage.
+   */
   public toggle() {
     const next = !this.visible.value
     this.visible.next(next)

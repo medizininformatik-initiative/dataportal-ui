@@ -21,6 +21,10 @@ export class AppConfigProviderService {
     return this.appConfigMapSubject.asObservable()
   }
 
+  /**
+   * Stores the app config once and ignores any later attempt to overwrite it.
+   * @param {AppConfigData} appConfig
+   */
   public setAppConfigMap(appConfig: AppConfigData): void {
     if (this.appConfigMap.size > 0) {
       console.warn('[AppConfigProviderService] Attempt to overwrite locked settings ignored.')

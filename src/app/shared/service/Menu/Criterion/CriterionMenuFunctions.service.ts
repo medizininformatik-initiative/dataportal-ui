@@ -23,6 +23,10 @@ export class CriterionMenuFunctionsService {
 
   constructor() {}
 
+  /**
+   * Deletes the criterion from the stage and the query.
+   * @param {string} id
+   */
   public deleteCriterion(id: string): void {
     this.stageProviderService.removeOne(id)
     this.queryProviderService.deleteFromInclusion(id)
@@ -30,6 +34,10 @@ export class CriterionMenuFunctionsService {
     this.criterionProviderService.removeOne(id)
   }
 
+  /**
+   * Duplicates the criterion and adds the copy to the stage.
+   * @param {string} id
+   */
   public duplicateCriterion(id: string): void {
     const clonedCriterion = CloneAbstractCriterion.deepCopyAbstractCriterion(this.criterionProviderService.getOne(id), false)
 
@@ -54,6 +62,10 @@ export class CriterionMenuFunctionsService {
     this.stageProviderService.addOne(clonedCriterion.getId())
   }
 
+  /**
+   * Opens the criterion filter editor.
+   * @param {string} id
+   */
   public editCriterionFilter(id: string): void {
     const criterion = this.criterionProviderService.getOne(id)
     if (criterion) {

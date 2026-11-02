@@ -17,6 +17,12 @@ export class ErrorDisplayService {
   public errorUrl$ = this.errorUrlSubject.asObservable()
   public errorType$ = this.errorTypeSubject.asObservable()
 
+  /**
+   * Shows the error with its type and url.
+   * @param {DataportalErrorPayloadType} errorData
+   * @param {DataportalErrorType} errorType
+   * @param {string} url
+   */
   public showError(errorData: DataportalErrorPayloadType, errorType: DataportalErrorType, url: string) {
     this.errorDataSubject.next(errorData)
     this.errorTypeSubject.next(errorType)
@@ -24,10 +30,16 @@ export class ErrorDisplayService {
     this.visibilitySubject.next(true)
   }
 
+  /**
+   * Hides the error.
+   */
   public hideError() {
     this.visibilitySubject.next(false)
   }
 
+  /**
+   * Clears the error data, type and url.
+   */
   public clearError() {
     this.errorDataSubject.next(null)
     this.errorTypeSubject.next('')

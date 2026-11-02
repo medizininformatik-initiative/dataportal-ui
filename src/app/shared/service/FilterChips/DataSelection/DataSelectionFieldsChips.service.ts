@@ -22,6 +22,11 @@ export class DataSelectionFieldsChipsService {
 
   constructor() {}
 
+  /**
+   * Generates the filter chips of the selected fields.
+   * @param {SelectedBasicField[]} selectedFields
+   * @returns {Observable<FilterChipData[]>}
+   */
   public generateFilterChipsFromDataSelectionFields(selectedFields: SelectedBasicField[]): Observable<FilterChipData[]> {
     const filterChips = FilterChipDataSelectionAdapter.adaptFields(selectedFields)
     const squashedFilterChips = this.squashFilterChips(filterChips)
@@ -29,6 +34,11 @@ export class DataSelectionFieldsChipsService {
     return this.filterChipsSubject.asObservable()
   }
 
+  /**
+   * Merges chips with the same key into one.
+   * @param {FilterChipData[]} filterChips
+   * @returns {FilterChipData[]}
+   */
   private squashFilterChips(filterChips: FilterChipData[]): FilterChipData[] {
     const squashedChipsMap = new Map<Display | FilterTypes | TimeRestrictionType | string, FilterChipData>()
 

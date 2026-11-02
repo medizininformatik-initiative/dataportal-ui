@@ -27,6 +27,12 @@ export class CriterionFilterChipService {
 
   constructor() {}
 
+  /**
+   * Generates the filter chips of the criterion.
+   * @param {AbstractCriterion} criterion
+   * @param {boolean} includeReferenceChips
+   * @returns {Observable<FilterChipData[]>}
+   */
   public generateFilterChipsFromCriterion(criterion: AbstractCriterion, includeReferenceChips = false): Observable<FilterChipData[]> {
     this.filterChipsSubject.next([])
 
@@ -43,6 +49,11 @@ export class CriterionFilterChipService {
     return this.filterChipsSubject.asObservable()
   }
 
+  /**
+   * Generates the chips of the concept filters.
+   * @param {AbstractCriterion} criterion
+   * @returns {FilterChipData[]}
+   */
   public generateConceptChips(criterion: AbstractCriterion): FilterChipData[] {
     const attributeFilters = criterion.getAttributeFilters()
     const valueFilters = criterion.getValueFilters()
@@ -53,6 +64,11 @@ export class CriterionFilterChipService {
     return [...attributeChips, ...valueChips]
   }
 
+  /**
+   * Generates the chips of the quantity filters.
+   * @param {AbstractCriterion} criterion
+   * @returns {FilterChipData[]}
+   */
   public generateQuantityChips(criterion: AbstractCriterion): FilterChipData[] {
     const attributeFilters = criterion.getAttributeFilters()
     const valueFilters = criterion.getValueFilters()
@@ -65,6 +81,11 @@ export class CriterionFilterChipService {
     }
   }
 
+  /**
+   * Generates the chips of the term codes, if there is more than one.
+   * @param {Criterion} criterion
+   * @returns {FilterChipData[]}
+   */
   public generateTermcodeChips(criterion: Criterion): FilterChipData[] {
     const termCodeLength = criterion.getTermCodes().length
     if (termCodeLength <= 1) {
@@ -73,10 +94,20 @@ export class CriterionFilterChipService {
     return [this.terminologyCodeChipService.generateTermcodeChipsFromCriterion(criterion)]
   }
 
+  /**
+   * Generates the chips of the time restriction.
+   * @param {AbstractCriterion} criterion
+   * @returns {FilterChipData[]}
+   */
   public buildTimeRestrictionChips(criterion: AbstractCriterion): FilterChipData[] {
     return this.timeRestrictionChipService.generateTimeRestrictionChips(criterion.getTimeRestriction())
   }
 
+  /**
+   * Generates the chips of the references.
+   * @param {AbstractCriterion} criterion
+   * @returns {FilterChipData[]}
+   */
   public createReferenceChips(criterion: AbstractCriterion): FilterChipData[] {
     return this.referenceFilterChipService.generateReferenceChips(criterion)
   }

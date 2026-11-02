@@ -51,14 +51,27 @@ export class SnackbarService {
     this.activateSnackbar(message, SnackbarColor.ERROR)
   }
 
+  /**
+   * Displays an error message as given, without an error code lookup.
+   * @param {string} message
+   */
   public displayErrorMessageWithNoCode(message: string) {
     this.activateSnackbar(message, SnackbarColor.ERROR)
   }
 
+  /**
+   * Displays an info message.
+   * @param {string} infoMessage
+   */
   public displayInfoMessage(infoMessage: string) {
     this.activateSnackbar(infoMessage, SnackbarColor.INFO)
   }
 
+  /**
+   * Shows the snackbar with the given message and color, then hides it after 5 seconds.
+   * @param {string} message
+   * @param {string} color
+   */
   public activateSnackbar(message: string, color: string) {
     this.visibilitySubject.next(true)
     this.messageSubject.next(message)
@@ -66,10 +79,17 @@ export class SnackbarService {
     setTimeout(() => this.deactivateSnackbar(), 5000)
   }
 
+  /**
+   * Hides the snackbar after the given time.
+   * @param {number} timeout
+   */
   private setSnackbarTimeOut(timeout: number = 5000) {
     setTimeout(() => this.deactivateSnackbar(), timeout)
   }
 
+  /**
+   * Hides the snackbar.
+   */
   public deactivateSnackbar() {
     this.visibilitySubject.next(false)
   }

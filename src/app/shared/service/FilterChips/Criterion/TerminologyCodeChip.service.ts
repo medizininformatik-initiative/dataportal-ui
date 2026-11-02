@@ -29,6 +29,11 @@ export class TerminologyCodeChipService {
     return chip
   }
 
+  /**
+   * Creates the chip data from the term code.
+   * @param {TerminologyCode} termcodeFilter
+   * @returns {FilterChipPropertyData}
+   */
   private createChipData(termcodeFilter: TerminologyCode): FilterChipPropertyData {
     return {
       id: termcodeFilter.getCode(),

@@ -21,6 +21,10 @@ export class OAuthInitService {
 
   constructor() {}
 
+  /**
+   * Configures OAuth and starts the login, giving up after the termination timeout.
+   * @returns {Observable<boolean>}
+   */
   public initOAuth(): Observable<boolean> {
     this.configureAuthConfig()
     const timeout$ = this.setTimeoOut()
@@ -28,6 +32,10 @@ export class OAuthInitService {
     return race([login$, timeout$]).pipe(catchError((err) => throwError(() => new Error(err.message || this.ERROR_INIT_FAIL))))
   }
 
+  /**
+   * Loads the discovery document and logs in, emitting whether a valid access token exists.
+   * @returns {Observable<boolean>}
+   */
   private startOAuthLogin(): Observable<boolean> {
     const init$ = from(
       this.oauthService.loadDiscoveryDocumentAndLogin().then((loggedIn: boolean) => {
@@ -48,6 +56,10 @@ export class OAuthInitService {
     return init$
   }
 
+  /**
+   * Emits false once the termination timeout has passed.
+   * @returns {Observable<boolean>}
+   */
   private setTimeoOut(): Observable<boolean> {
     return timer(this.TERMINATION_TIMEOUT).pipe(
       mapTo(false),
@@ -58,6 +70,9 @@ export class OAuthInitService {
     )
   }
 
+  /**
+   * Passes the built auth config to the OAuth service.
+   */
   private configureAuthConfig() {
     const authConfig = this.authConfigService.buildAuthConfig()
     this.oauthService.configure(authConfig)

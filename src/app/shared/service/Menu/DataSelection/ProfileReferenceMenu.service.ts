@@ -11,9 +11,9 @@ export class ProfileReferenceMenuService extends AbstractMenuItemsService<[strin
 
   /**
    * Returns the menu items for this context.
-   * @param id
-   * @param args
-   * @returns Array of Menu functions for a dataselection profile box
+   * @param {string} id
+   * @param {Record<string, unknown>} args
+   * @returns {MenuItemInterface[]} Array of Menu functions for a dataselection profile box
    */
   public override getMenuItems(id: string, args?: Record<string, unknown>): MenuItemInterface[] {
     return [

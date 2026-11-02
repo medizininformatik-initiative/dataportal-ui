@@ -20,6 +20,10 @@ export class ProfileListItemDetailsMenuItemsFunctionsService {
   private readonly dataSelectionProvider = inject(DataSelectionProviderService)
   private readonly profileProvider = inject(ProfileProviderService)
 
+  /**
+   * Searches for the profile and loads its details.
+   * @param {string} id
+   */
   public searchProfile(id: string): void {
     this.profileEntryDetailsService
       .loadDetails(id)
@@ -30,10 +34,18 @@ export class ProfileListItemDetailsMenuItemsFunctionsService {
       .subscribe()
   }
 
+  /**
+   * Shows the profile entry in the result list.
+   * @param {string} id
+   */
   public showProfileInResultList(id: string): void {
     this.profileEntryDetailsService.loadDetails(id).pipe(take(1)).subscribe()
   }
 
+  /**
+   * Adds the profile to the data selection.
+   * @param {string} id
+   */
   public addToDataSelection(id: string): void {
     this.profileEntryDetailsService
       .loadDetails(id)

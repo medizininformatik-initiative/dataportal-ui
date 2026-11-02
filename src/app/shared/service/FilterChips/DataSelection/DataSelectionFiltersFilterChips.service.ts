@@ -18,6 +18,11 @@ export class DataSelectionFiltersFilterChips {
 
   constructor() {}
 
+  /**
+   * Generates the chips of all profile filters.
+   * @param {AbstractProfileFilter[]} filters
+   * @returns {FilterChipData[]}
+   */
   public generateFilterChipsForDataSelectionFilters(filters: AbstractProfileFilter[]): FilterChipData[] {
     return filters.reduce<FilterChipData[]>((filterChips: FilterChipData[], filter: AbstractProfileFilter) => {
       filterChips.push(...this.getChipsForFilter(filter))
@@ -25,6 +30,11 @@ export class DataSelectionFiltersFilterChips {
     }, [])
   }
 
+  /**
+   * Generates the chips that match the UI type of the filter.
+   * @param {AbstractProfileFilter} filter
+   * @returns {FilterChipData[]}
+   */
   private getChipsForFilter(filter: AbstractProfileFilter): FilterChipData[] {
     switch (filter.getUiType()) {
       case DataSelectionUIType.TIMERESTRICTION:
@@ -36,10 +46,20 @@ export class DataSelectionFiltersFilterChips {
     }
   }
 
+  /**
+   * Generates the chips of a time restriction filter.
+   * @param {ProfileTimeRestrictionFilter} filter
+   * @returns {FilterChipData[]}
+   */
   private getTimeRestrictionChips(filter: ProfileTimeRestrictionFilter): FilterChipData[] {
     return this.timeRestrictionFilterChipsService.generateTimeRestrictionChips(filter.getTimeRestriction())
   }
 
+  /**
+   * Generates the chips of a token filter.
+   * @param {ProfileTokenFilter} filter
+   * @returns {FilterChipData[]}
+   */
   private getCodeFilterChips(filter: ProfileTokenFilter): FilterChipData[] {
     return FilterChipConceptAdapter.adaptCodeableConcept(
       filter.getSelectedTokens(),
