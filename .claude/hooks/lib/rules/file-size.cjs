@@ -3,7 +3,13 @@
 
 const VOID = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr'])
 
-const countLines = (content) => content.replace(/\n$/, '').split('\n').length
+const COMMENT_LINE = /^\s*(\/\*|\*|\/\/)/
+
+// Comment-only lines in .ts files do not count, so doc blocks never push a file over the limit.
+const countLines = (content, skipComments = false) => {
+  const lines = content.replace(/\n$/, '').split('\n')
+  return skipComments ? lines.filter((l) => !COMMENT_LINE.test(l)).length : lines.length
+}
 
 const templateDepth = (html) => {
   let depth = 0
@@ -34,7 +40,7 @@ const measure = ({ relPath, content }) => {
   const hard = []
   const isComponent = relPath.endsWith('.component.ts')
   const isService = relPath.endsWith('.service.ts')
-  const lines = countLines(content)
+  const lines = countLines(content, relPath.endsWith('.ts'))
   const band = (label, value, red, tolerance) => {
     if (value > red + tolerance) {
       hard.push(`${relPath}: ${label} ${value} > ${red + tolerance}`)

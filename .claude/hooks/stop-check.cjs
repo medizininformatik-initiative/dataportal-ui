@@ -2,11 +2,11 @@ const { existsSync, readFileSync, rmSync, writeFileSync } = require('node:fs')
 const path = require('node:path')
 const { classify, reportLine, trimOutput } = require('./lib/diagnostics.cjs')
 const { collectMessages, summarize } = require('./lib/eslint-results.cjs')
-const { getChangedFiles, isNewFile } = require('./lib/git-changes.cjs')
+const { getAddedLines, getChangedFiles, isNewFile } = require('./lib/git-changes.cjs')
 const { readInput } = require('./lib/input.cjs')
 const { allow, blockStop, notify } = require('./lib/output.cjs')
 const { ROOT } = require('./lib/paths.cjs')
-const { runTool } = require('./lib/run-command.cjs')
+const { run, runTool } = require('./lib/run-command.cjs')
 const { checkHard } = require('./lib/rules/file-size.cjs')
 const { fingerprint, loadState, saveState } = require('./lib/state.cjs')
 
@@ -74,7 +74,12 @@ if (strictFiles.length > 0) {
   writeFileSync(tmp, JSON.stringify({ extends: './tsconfig.strict.json', include: ['src/**/*.d.ts'], files: strictFiles }))
   const strict = runTool('tsc', ['-p', tmp], [], 200000)
   rmSync(tmp, { force: true })
-  const ownErrors = (strict.stdout || '').split('\n').filter((l) => strictFiles.some((f) => l.startsWith(f)))
+  // Only errors on lines this session added; old strict errors in a touched file stay.
+  const addedByFile = new Map(strictFiles.map((f) => [f, new Set(getAddedLines(f).map((l) => l.lineNumber))]))
+  const ownErrors = (strict.stdout || '').split('\n').filter((l) => {
+    const m = l.match(/^(.+?)\((\d+),\d+\)/)
+    return m && addedByFile.get(m[1])?.has(Number(m[2]))
+  })
   const status = strict.error ? 'ERROR' : ownErrors.length > 0 ? 'FAIL' : 'PASS'
   results.push({ label: 'Strict TS', tool: 'tsc', status, output: ownErrors.join('\n') || strict.error?.message || '', hints: [] })
 }
@@ -83,10 +88,25 @@ if (tsFiles.length > 0) {
 }
 
 // 5.8 hard size limits (soft band is post-edit's job)
+// Ratchet: a violation counts only if the file did not have it at the base, or its value grew.
+const parseViolation = (msg) => {
+  const m = msg.match(/^(.*?)(\d+)( > \d+)$/)
+  return m ? { key: m[1] + m[3], value: Number(m[2]) } : { key: msg, value: 0 }
+}
+const baseViolations = (f) => {
+  const old = run('git', ['show', `${state.base}:${f}`], 30000)
+  return old.status === 0 ? new Map(checkHard({ relPath: f, content: old.stdout }).map(parseViolation).map((v) => [v.key, v.value])) : new Map()
+}
 const sizeErrors = tsFiles
   .concat(htmlFiles)
   .filter((f) => !f.endsWith('.spec.ts') && existsSync(path.join(ROOT, f)))
-  .flatMap((f) => checkHard({ relPath: f, content: readFileSync(path.join(ROOT, f), 'utf8') }))
+  .flatMap((f) => {
+    const before = baseViolations(f)
+    return checkHard({ relPath: f, content: readFileSync(path.join(ROOT, f), 'utf8') }).filter((msg) => {
+      const v = parseViolation(msg)
+      return !before.has(v.key) || v.value > before.get(v.key)
+    })
+  })
 results.push({ label: 'Size', tool: 'size', status: sizeErrors.length > 0 ? 'FAIL' : 'PASS', output: sizeErrors.join('\n'), hints: sizeErrors.length ? ['Split the file/function, do not just shorten lines.'] : [] })
 
 // 4.5 jest
