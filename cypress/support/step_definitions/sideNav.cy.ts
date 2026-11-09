@@ -4,8 +4,8 @@ import { NavItemValue, NavItemPaths, NavItemBaseRoutes } from '../../e2e/Utiliti
 import { Page } from '../../e2e/Utilities/pages'
 import { getUrlPathByPage } from '../../e2e/Utilities/pathResolver'
 
-const MAT_NAV_LIST = 'mat-nav-list'
-const NAV_ITEM_FONT = `${MAT_NAV_LIST} .navItem-font`
+const SIDE_MENU = 'num-side-menu'
+const NAV_ITEM_FONT = `${SIDE_MENU} .navItem-font`
 
 /**
  * Class for side navigation component tests.
@@ -38,28 +38,28 @@ export class SideNavTests {
    * language, not suite language.
    * */
   public toggle() {
-    cy.get(`${MAT_NAV_LIST} .num-logo-row button`).click()
+    cy.get(`${SIDE_MENU} .num-toggle-button`).click()
   }
 
   /**
    * Assert nav collapsed.
    * */
   public shouldBeCollapsed() {
-    cy.get(MAT_NAV_LIST).should('have.class', 'collapsed')
+    cy.get(SIDE_MENU).should('have.class', 'collapsed')
   }
 
   /**
    * Assert nav expanded.
    * */
   public shouldBeExpanded() {
-    cy.get(MAT_NAV_LIST).should('not.have.class', 'collapsed')
+    cy.get(SIDE_MENU).should('not.have.class', 'collapsed')
   }
 
   /**
    * Assert nav lists `count` areas.
    * */
   public shouldListAreas(count: number) {
-    cy.get(`${MAT_NAV_LIST} a.num-mat-list-item`).should('have.length', count)
+    cy.get(`${SIDE_MENU} .num-nav-group > a.num-nav-link`).should('have.length', count)
   }
 
   /**

@@ -209,7 +209,7 @@ criterium sits in a group.
 
 **Implemented and passing:** `cypress/e2e/Navigation/side-navigation.feature`
 (3 scenarios; steps appended to `sideNav.cy.ts`). The side nav lists four areas
-and collapses to icons only (the `collapsed` class on `mat-nav-list`).
+and collapses to icons only (the `collapsed` class on `num-side-menu`).
 
 > **A weak existing step:** `I am on the {string} page` does a hard `cy.visit()` when
 > the URL does not match, so used after a click it cannot fail for a navigation

@@ -117,12 +117,12 @@ export class DataSelectionUnresolvedReference {
   public unlinkFromFeature(feature: string) {
     const checkbox = () =>
       cy.contains(NUM_SELECTABLE_REFERENCE_TILE, feature).find(dataCy('checkbox'))
-    checkbox().should('have.attr', 'aria-checked', 'true')
+    checkbox().should('be.checked')
     checkbox().click()
     /**
      * Click re-renders tile: read state from fresh lookup, not chained.
      * */
-    checkbox().should('have.attr', 'aria-checked', 'false')
+    checkbox().should('not.be.checked')
   }
 
   /**
@@ -136,7 +136,7 @@ export class DataSelectionUnresolvedReference {
    * Assert required option of reference enabled or disabled.
    * */
   public requiredShouldBe(field: string, name: string, state: string) {
-    this.required(field, name).should('have.attr', 'aria-checked', String(state === 'enabled'))
+    this.required(field, name).should(state === 'enabled' ? 'be.checked' : 'not.be.checked')
   }
 
   /**
