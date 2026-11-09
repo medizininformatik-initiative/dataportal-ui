@@ -1,17 +1,22 @@
 import { Injectable, inject } from '@angular/core'
 import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc'
-import { Router } from '@angular/router'
 
 @Injectable({ providedIn: 'root' })
 export class OAuthSessionService {
   private oauthService = inject(OAuthService)
-  private router = inject(Router)
   private isLoggingOut = false
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
-  constructor() {
+  constructor() {}
+
+  /**
+   * Starts the session-expiry logout handling. Call after the initial login succeeded,
+   * so errors of the login itself (stale code, bad nonce) do not trigger a logout.
+   * Token refresh is left to setupAutomaticSilentRefresh (see OAuthInit.service).
+   */
+  public start(): void {
     this.oauthService.events.subscribe((event: OAuthEvent) => {
       switch (event.type) {
         case 'session_terminated':
@@ -46,16 +51,6 @@ export class OAuthSessionService {
           this.logout('Security validation failed')
           break
 
-        case 'token_expires':
-          this.oauthService.silentRefresh().catch(() => {
-            this.logout('Token refresh failed')
-          })
-          break
-
-        case 'logout':
-          console.log('User logged out')
-          break
-
         default:
           // informational events
           break
@@ -88,16 +83,7 @@ export class OAuthSessionService {
     this.isLoggingOut = true
     // Keycloak rejects post_logout_redirect_uri (400) without id_token_hint or client_id
     const clientId = this.oauthService.clientId
+    // redirects the browser to Keycloak logout, then back to redirectUri, which starts a new login
     this.oauthService.logOut({ client_id: clientId })
-    this.router.navigate(['/login'])
-  }
-
-  private getSessionRemainingFormatted(): string {
-    const seconds = this.getSessionRemainingSeconds()
-    const minutes = Math.floor(seconds / 60)
-    const remaining = seconds % 60
-    const remainingTime = `${minutes}:${remaining.toString().padStart(2, '0')}`
-    console.log('Session remaining time (formatted):', remainingTime)
-    return remainingTime
   }
 }

@@ -21,7 +21,6 @@ export class CoreInitService {
   private appConfigService = inject(AppConfigService)
   private dataportalConfigService = inject(DataportalConfigService)
   private oauthInitService = inject(OAuthInitService)
-  // injected so its constructor subscribes to the OAuth events (session expiry logout)
   private oauthSessionService = inject(OAuthSessionService)
   private dataSelectionMainProfileInitializerService = inject(
     DataSelectionMainProfileInitializerService
@@ -102,7 +101,12 @@ export class CoreInitService {
    */
   private initOAuth(): Observable<boolean> {
     return this.oauthInitService.initOAuth().pipe(
-      tap((result) => console.log('OAuth initialized:', result)),
+      tap((result) => {
+        console.log('OAuth initialized:', result)
+        if (result) {
+          this.oauthSessionService.start()
+        }
+      }),
       catchError((err) => {
         console.error('OAuth init failed:', err)
         return throwError(() => err)
