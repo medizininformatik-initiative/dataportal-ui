@@ -15,9 +15,9 @@ Feature: Language switch
     And the side navigation should show the label "<second>"
 
     Examples:
-      | language                   | first                                | second                                           |
-      | {{languageSwitch.german}}  | {{languageSwitch.kohortenselektion}} | {{languageSwitch.gespeicherteDatendefinitionen}} |
-      | {{languageSwitch.english}} | {{languageSwitch.cohortSelection}}   | {{languageSwitch.savedDataDefinitions}}          |
+      | language                   | first                                 | second                                           |
+      | {{languageSwitch.german}}  | {{languageSwitch.kohortendefinition}} | {{languageSwitch.gespeicherteDatendefinitionen}} |
+      | {{languageSwitch.english}} | {{languageSwitch.cohortDefinition}}   | {{languageSwitch.savedDataDefinitions}}          |
 
   @component:language @behavior:switch
   Scenario Outline: Switching back restores the first language
@@ -27,8 +27,8 @@ Feature: Language switch
     And the side navigation should show the label "<second>"
 
     Examples:
-      | from                      | to                         | first                              | second                                  |
-      | {{languageSwitch.german}} | {{languageSwitch.english}} | {{languageSwitch.cohortSelection}} | {{languageSwitch.savedDataDefinitions}} |
+      | from                      | to                         | first                               | second                                  |
+      | {{languageSwitch.german}} | {{languageSwitch.english}} | {{languageSwitch.cohortDefinition}} | {{languageSwitch.savedDataDefinitions}} |
 
   @component:language @behavior:persist
   Scenario Outline: The chosen language stays when navigating inside the app
@@ -37,5 +37,5 @@ Feature: Language switch
     Then the side navigation should show the label "<label>"
 
     Examples:
-      | language                  | page                             | label                               |
-      | {{languageSwitch.german}} | {{languageSwitch.dataSelection}} | {{languageSwitch.merkmalselektion}} |
+      | language                  | page                             | label                                |
+      | {{languageSwitch.german}} | {{languageSwitch.dataSelection}} | {{languageSwitch.merkmaldefinition}} |

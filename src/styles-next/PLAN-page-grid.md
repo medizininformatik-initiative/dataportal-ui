@@ -170,7 +170,7 @@ Insights:
 
 Next session, in this order:
 
-1. Full Cypress run of all 39 specs (about 15 min, no edits meanwhile). Not done since the label, tooltip, wording and result-page changes. The local override (10s polling) may break result scenarios, check that first; run once with the override removed if it does.
+1. DONE (2026-11-09, after the commits): full Cypress run of all 39 specs with the 10s polling override: 157 of 164 tests passed, the 7 failures (3 specs: language switch, side navigation, attribute-concept-multiple) were test data with the old menu labels. Fixed by renaming the keys in `test-data/feature-data.json` (`cohortDefinition`, `kohortendefinition`, `merkmaldefinition`, `featureDefinition`) and the features that use them; the 3 specs pass (11 of 11). The result scenarios, including the new details scenario, pass with the override. The last full run of all 39 after this fix has NOT been done.
 2. Shah looks at: result page (finished state with a real number, Details enabled), details modal with many sites (the 50-site mock is removed, pad in the browser with `ng.getComponent` if needed), spinner colours, action bar tint and hairline, disabled tooltips, the three breadcrumb trails.
 3. Warning red: which element looks wrong? `missing-filter` uses `--num-color--error-on-tint` `#b30519`, searchbar uses `--num-color--error-on-white` `#c4122f`; `PLAN-side-menu.md` suggests `danger 800` `#ba0000`.
 4. Contrast (measured): white label on the green 500 fill is 2.26:1 (blue: 4.39:1); the green ramp is lighter than the blue ramp at the same step (OKLab L 0.735 vs 0.575). Shah said "it's fine" for now; green 800 (`#607311`, 5.31:1) would match blue. Decide before the colour pass.
