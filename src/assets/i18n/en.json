@@ -390,6 +390,7 @@
         "CANCEL": "Cancel"
       },
       "DROP_EXCLUSION": "Add to exclusion criteria",
+      "DROP_STAGE": "Add to selected criteria",
       "DROP_INCLUSION": "Add to inclusion criteria",
       "EDIT_SUCCESS": "Criterion edited successfully",
       "EMPTY": "Sorry, we could not find any results for ",

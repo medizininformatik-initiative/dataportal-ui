@@ -15,12 +15,13 @@
     cursor: grab;
   }
 
-  // Pressed on a handle (the box or the move icon): the box is grabbed - it gets a frame and a deeper shadow, a hint appears, the move icon swells (no scale: the stage and the lists are scroll boxes and would cut the edges)
-  &:has(.content:active, .menu-icon:active) {
+  // Pressed anywhere on the box (not on the menu): the box is grabbed - it gets a frame and a deeper shadow, a hint appears, the move icon swells (no scale: the stage and the lists are scroll boxes and would cut the edges)
+  &:active:not(:has(num-menu:active)) {
     box-shadow: inset 0 0 0 2px var(--color-accent), 0 8px 20px rgba(0, 0, 0, 0.2);
     cursor: grabbing;
 
-    .content {
+    .content,
+    .content ::ng-deep .filter-wrapper > div {
       cursor: grabbing;
     }
 
@@ -127,6 +128,11 @@
   cursor: grab;
 }
 
+// Chips are part of the grab area (a click still expands them)
+.content ::ng-deep .filter-wrapper > div {
+  cursor: grab;
+}
+
 .img-layout {
   height: 24px; /* multiple of 4 */
   width: 32px; /* multiple of 4 */
@@ -134,7 +140,7 @@
 }
 
 // The hint beside the move icon, while the box is pressed and while it is dragged
-.container:has(.content:active, .menu-icon:active)::after,
+.container:active:not(:has(num-menu:active))::after,
 .container.cdk-drag-preview::after {
   content: '\2194\00a0\2195\00a0'attr(data-grab-hint); // left-right and up-down arrows
   position: absolute;
@@ -149,7 +155,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .container:has(.content:active, .menu-icon:active)::after,
+  .container:active:not(:has(num-menu:active))::after,
   .container.cdk-drag-preview::after {
     animation: grab-hint-in 0.2s ease-out;
   }
@@ -164,7 +170,7 @@
 
 // The move icon nudges left, right, up and down: the box can go any way (while pressed and while dragged)
 @media (prefers-reduced-motion: no-preference) {
-  .container:has(.content:active, .menu-icon:active) .drag-handle,
+  .container:active:not(:has(num-menu:active)) .drag-handle,
   .container.cdk-drag-preview .drag-handle {
     animation: drag-handle-nudge 0.9s ease-in-out infinite;
   }

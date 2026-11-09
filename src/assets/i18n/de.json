@@ -379,6 +379,7 @@
         "CANCEL": "Abbrechen"
       },
       "DROP_EXCLUSION": "Zu den Ausschlusskriterien hinzufügen",
+      "DROP_STAGE": "Zu den ausgewählten Kriterien hinzufügen",
       "DROP_INCLUSION": "Zu den Einschlusskriterien hinzufügen",
       "EDIT_SUCCESS": "Kriterium erfolgreich bearbeitet",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse zu ",

@@ -5,7 +5,7 @@
   [attr.data-grab-hint]="'SHARED_COMPONENTS.CRITERIA_BOX.GRAB_HINT' | translate"
   class="container margin-bottom-2 margin-right-2"
 >
-  <div class="content" numDataCy="criterion-content" cdkDragHandle>
+  <div class="content" numDataCy="criterion-content">
     <div
       matTooltipPosition="below"
       [matTooltip]="criterion().getDisplay() | displayTranslation"
@@ -35,7 +35,7 @@
     @if (isEditable()) {
     <num-menu [menuItems]="menuItems" [id]="criterion().getId()"></num-menu>
     } @if (isEditable()) {
-    <div class="menu-icon" cdkDragHandle>
+    <div class="menu-icon">
       <fa-icon
         [matTooltip]="'SHARED_COMPONENTS.CRITERIA_BOX.DRAG_ICON_LABEL' | translate"
         class="icon drag-handle"

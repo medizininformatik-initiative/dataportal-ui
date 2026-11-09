@@ -3,7 +3,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto auto fit-content(35%) minmax(0, 1fr) auto; // header, time restriction, section name, stage, display, actions
+  grid-template-rows: auto auto fit-content(35%) minmax(0, 1fr) auto; // header, time restriction, stage (heading + list), display, actions
   row-gap: var(--spacing-16); // the one vertical rhythm between the rows
   overflow: auto;
 }
@@ -17,7 +17,16 @@
   margin-top: var(--spacing-8);
 }
 
+// Heading and stage list in one cell, so the drop label can sit in the heading row
+.stage-col {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  row-gap: var(--spacing-16);
+}
+
 .stage-container {
+  min-height: 0;
   overflow: auto; // fit-content(35%) only caps the row if the item can shrink
 }
 

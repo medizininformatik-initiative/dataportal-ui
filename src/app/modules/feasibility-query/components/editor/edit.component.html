@@ -15,11 +15,16 @@
     </div>
     -->
   <num-apply-time-restriction />
-  <num-section-name>
-    {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }}
-  </num-section-name>
-  <div class="stage-container">
-    <num-criteria-stage [isEditable]="true" #stage></num-criteria-stage>
+  <div
+    class="stage-col drop-col"
+    [attr.data-drop-label]="'FEASIBILITY.EDITOR.DROP_STAGE' | translate"
+  >
+    <num-section-name>
+      {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }}
+    </num-section-name>
+    <div class="stage-container">
+      <num-criteria-stage [isEditable]="true" #stage></num-criteria-stage>
+    </div>
   </div>
   <div class="display-container">
     <num-display-feasibility-query [isEditable]="true"></num-display-feasibility-query>

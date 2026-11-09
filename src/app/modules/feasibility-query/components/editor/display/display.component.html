@@ -1,6 +1,6 @@
 <div class="display-row height-100 padding-bottom-3">
   <div
-    class="display-col display-half"
+    class="display-col display-half drop-col"
     [attr.data-drop-label]="'FEASIBILITY.EDITOR.DROP_INCLUSION' | translate"
   >
     <num-section-name>
@@ -9,7 +9,7 @@
     <div class="inexclusion margin-right-2">
       <num-display-criteria
         id="Inclusion"
-        class="inexclusion"
+        class="inexclusion drop-list"
         cdkDropList
         numAppDropGroup
         groupType="Inclusion"
@@ -18,7 +18,7 @@
     </div>
   </div>
   <div
-    class="display-col display-half"
+    class="display-col display-half drop-col"
     [attr.data-drop-label]="'FEASIBILITY.EDITOR.DROP_EXCLUSION' | translate"
   >
     <num-section-name>
@@ -27,7 +27,7 @@
     <div class="inexclusion">
       <num-display-criteria
         id="Exclusion"
-        class="inexclusion"
+        class="inexclusion drop-list"
         cdkDropList
         numAppDropGroup
         groupType="Exclusion"

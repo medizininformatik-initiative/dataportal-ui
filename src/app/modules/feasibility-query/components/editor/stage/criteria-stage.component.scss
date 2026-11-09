@@ -18,6 +18,11 @@
   }
 }
 
+// A dragged criterion is inserted by the CDK as a sibling after the empty-list hint; hiding the hint makes the criterion take its place
+.container.cdk-drop-list-dragging .no-selected-criteria {
+  display: none;
+}
+
 .no-selected-criteria {
   width: 100%;
   height: 96px;
