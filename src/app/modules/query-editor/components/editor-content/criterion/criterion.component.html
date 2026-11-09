@@ -11,7 +11,7 @@
 </ng-template>
 
 <ng-template #conceptAttributeFilterTemplate let-index>
-  <div class="width-100">
+  <div>
     <num-concept
       [conceptFilter]="conceptAttributeFilter()[index].getConcept()"
       (changedConceptFilter)="updateConceptAttributeFilter($event, conceptAttributeFilter()[index])"
@@ -20,7 +20,7 @@
 </ng-template>
 
 <ng-template #conceptValueFiltersTemplate>
-  <div class="width-100">
+  <div>
     <num-concept
       [conceptFilter]="conceptValueFilter()[0].getConcept()"
       (changedConceptFilter)="updateConceptValueFilter($event, conceptValueFilter()[0])"

@@ -31,7 +31,7 @@ Focus: typography. Colors wait.
      Do it only when `grep -r "map-get(\$theme, \(primary\|accent\|green\|red\|warn\)" styles-next` finds nothing.
    - Grep for leftover hex / `rgba(` in `custom-material/` and `general-styles/`.
    - Compile both trees and diff the CSS, point `angular.json` (`styles`) at `src/styles-next/styles.scss`, delete `src/styles/`, commit.
-   - Delete `color-variables-proposal.md` and `text-color-shades-proposal.md` (obsolete).
+   - ~~Delete `color-variables-proposal.md` and `text-color-shades-proposal.md`~~ done 2026-11-09.
 
 Open: role names are placeholders.
 

@@ -5,12 +5,6 @@
   overflow: auto;
 }
 
-// Beats the global .selection-box (height: 100%, margin-bottom: 8px); the row gap spaces the tabs
-.selection-box {
-  height: auto;
-  margin-bottom: 0;
-}
-
 .criterion-display {
   display: flex;
   flex-direction: column;

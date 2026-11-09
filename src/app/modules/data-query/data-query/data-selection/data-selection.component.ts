@@ -9,7 +9,6 @@ import { PlaceholderBoxComponent } from '../../../../shared/components/placehold
 import { QueryPageComponent } from '../query-page/query-page.component'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
-import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 
 @Component({
   selector: 'num-data-selection',
@@ -27,7 +26,6 @@ import { FeasibilityQueryValidationService } from 'src/app/service/Validation/In
 })
 export class DataSelectionComponent {
   private readonly dataSelectionProviderService = inject(DataSelectionProviderService)
-  private readonly feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
   private readonly appSettingsProviderService = inject(AppSettingsProviderService)
 
   readonly isDataSelectionExistent = toSignal(
@@ -36,8 +34,6 @@ export class DataSelectionComponent {
       .pipe(map((dataSelection) => dataSelection.getProfiles().length > 0)),
     { initialValue: false }
   )
-
-  readonly isCohortExistent = this.feasibilityQueryValidationService.validationState().isValid
 
   readonly emailLink = this.appSettingsProviderService.getEmail()
 }
