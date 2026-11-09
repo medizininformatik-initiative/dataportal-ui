@@ -87,23 +87,97 @@ Seen, not done:
 - `apply-time-restriction.component.scss` (data-selection copy only): toggle `height: 40px`, `padding: 0 14px`; select, date input and apply button 40px too. The feasibility editor has its own copy of this component, unchanged.
 - Not done, seen: the box right edge stops at the scrollbar while the search bar runs full width; the reference tile is narrower than the box (about 80%); `min-height: 104px` makes boxes with few fields taller than needed; `num-section-name` still has its own `margin: var(--spacing-sm) 0` (also on page 4), it adds to the row gap.
 
-### Drag and drop on the criterion box (2026-11-09)
+### Drag and drop on the criterion box (2026-11-09), DONE in `64b038b0`
 
-Decided with Shah. To do after the Cypress run (a rebuild would disturb it):
+Decided with Shah and built:
 
-1. Whole box is the drag handle: remove both `cdkDragHandle` from `criteria-box.component.html` (now only `.content` and the move icon, so padding and edges did not drag). Chips get `cursor: grab` instead of `pointer`.
-2. Stage gets the drop-target look of the two lists: frame while the criterion is over it, drop label, empty hint hidden while dragging. Label text like the other two (new key `FEASIBILITY.EDITOR.DROP_STAGE`, de + en).
-3. No pulsing frames anywhere (usability): remove `drop-target-pulse` and the `cdk-drop-list-receiving` animation in `display.component.scss`; `receiving` stays a static frame.
+1. Whole box is the drag handle: both `cdkDragHandle` are gone from `criteria-box.component.html`. Chips have `cursor: grab`. The grabbed look applies to a press anywhere except the `⋮` menu.
+2. The stage has the drop-target look of the two lists: frame while the criterion is over it, drop label (`FEASIBILITY.EDITOR.DROP_STAGE`, de + en), empty hint hidden while dragging. The rules live in `general-styles/_drop-target.scss` (`.drop-list` on the cdkDropList, `.drop-col` on its column with the heading), used by both lists and the stage. The stage heading and list are one grid cell (`.stage-col` in `edit.component.scss`).
+3. No pulsing frames anywhere (usability): `receiving` is a static frame. The short scale-in on the active list stays and is off under `prefers-reduced-motion`.
 
-Next step (not now): the `⋮` menu stays click-only. A press on the menu button must not start a drag, so it needs to stay outside the drag area once the whole box is the handle (`cdkDragHandle` on everything but `.handle-icons` menu, or stop `pointerdown` on `num-menu`). Check this after step 1.
+Not checked in a browser by Claude: the look of the stage while dragging (frame, label, hint). 13 e2e tests that drag criteria pass, but Cypress does not look at the frame.
+
+Next step (open): the `⋮` menu must stay click-only. Check that a press on `num-menu` does not start a drag now that the whole box is the handle. If it does: `(pointerdown)` with `$event.stopPropagation()` on `num-menu`, or `cdkDragDisabled` while the pointer is on it.
 
 ### More to do (Shah, 2026-11-09), not looked at yet
 
-- Search pages: the filters and the filter reset button need to go below the search bar (today they sit to the right of it, see `TODO-2026-10-21.md` items 8 and 9).
-- Data selection: the button that adds a time constraint to all data selections has the wrong label. Check the text and the i18n keys (de + en).
-- Breadcrumbs on `/query-editor/criterion/:id` are wrong: they show "Editor » Editor » Norethisteron und Estrogen" (screenshot from Shah). The first crumb and the middle crumb carry the same label. Find where the crumbs for this route are built, check the other editor routes (`feature`, `reference`) too, and fix the labels and targets.
-- Local backend config (Shah's setup): set the backend configs so the detailed results are still visible after the polling times out. Also lower the polling timeout to 10 seconds, so a timeout is quick to reproduce and debug. Not looked at yet: find the backend polling and detailed-results settings (backend `docker-compose` / `application.yml`, `cypress/docker/`) and the UI polling code that reads them.
-- The red of the warning is the wrong red. The app has two error reds (`--num-color--error-on-white`, `--num-color--error-on-tint`); find which red the warning uses and which it should use. This belongs to the color pass (`PLAN.md`, role for the two error reds).
+- DONE in session 7 (`42034a04`): search pages: the filters and the filter reset button need to go below the search bar (today they sit to the right of it, see `TODO-2026-10-21.md` items 8 and 9).
+- DONE in session 7: data selection: the button that adds a time constraint to all data selections has the wrong label (now "alle Merkmale"). Check the text and the i18n keys (de + en).
+- DONE in session 7 (`f7c459a5`): breadcrumbs on `/query-editor/criterion/:id` are wrong: they show "Editor » Editor » Norethisteron und Estrogen" (screenshot from Shah). The first crumb and the middle crumb carry the same label. Find where the crumbs for this route are built, check the other editor routes (`feature`, `reference`) too, and fix the labels and targets.
+- DONE in session 7 (local override file, not committed): local backend config (Shah's setup): set the backend configs so the detailed results are still visible after the polling times out. Also lower the polling timeout to 10 seconds, so a timeout is quick to reproduce and debug. Not looked at yet: find the backend polling and detailed-results settings (backend `docker-compose` / `application.yml`, `cypress/docker/`) and the UI polling code that reads them.
+- STILL OPEN (needs Shah: which element?): the red of the warning is the wrong red. The app has two error reds (`--num-color--error-on-white`, `--num-color--error-on-tint`); find which red the warning uses and which it should use. This belongs to the color pass (`PLAN.md`, role for the two error reds).
+
+### Session 6 (2026-11-09): develop merged, cleanup, e2e green, drag fix
+
+Commits on `chore/remove-dead-palettes` (not pushed): `aeda6909` (merge of `origin/develop`, 8 conflicts), `788afd69` (Cypress selectors, 3 only-if-referenced examples), `d67cbe6d` (editor label race), `64b038b0` (drag handle, stage drop target), `556a9987` (unused rules, flag-icons, notes).
+
+Done:
+
+- develop merged, so the e2e suite of develop (with `numDataCy` and the data-cy registry) is in this branch. Conflict rule: keep our markup, add develop's `numDataCy` hook.
+- Cypress adapted to our markup: checkbox state is `be.checked` (native input, no `aria-checked`), side nav is `num-side-menu` and `.num-nav-group > a.num-nav-link`.
+- Full suite: 162 of 163 tests passed; the one failure (time-restriction date field) is fixed at its root, see insight 3. The five editor specs passed twice (22 of 22). The last full run of all 39 specs after the label fix has NOT been done.
+- Cleanup: unused rules removed (table row, footer, search input, mat-chip, language toggle, h5, header `.toolbar`, divider modifiers, text label and meta classes), `mat.elevation-classes` and `mat.app-background` removed, spacing generator replaced by the 9 classes the templates use, `width-100` and the global `.selection-box` overrides removed, 15 prototype files deleted. flag-icons through Sass with only `de` and `gb`. Built CSS 217 KB to about 175 KB.
+- Material usage counted (grep): tooltip 59 uses in 38 templates, tabs 60 tabs in 22 groups, dialog 19 files (TS only), form-field and select 5 to 6 files, then badge, input, datepicker, sidenav, stepper, menu, toolbar, expansion with 1 to 3 files each.
+
+Insights:
+
+1. Chrome coverage of one session says "not hit", not "dead". Stateful rules (focus, drop, checked), other pages and the other language never show up. Before deleting, check the templates with grep, and prefer a coverage run driven by the whole e2e suite.
+2. CSS coverage across the e2e suite without a tool: a temporary `cypress/support` file that scans `document.styleSheets` for `styles.css` every 600 ms and keeps the indexes of rules with a matching element, written per test with `cy.writeFile`. Strip user-state pseudo-classes and pseudo-elements from the selector first (otherwise `::-webkit-scrollbar` looks unused). It must skip other origins (the Keycloak login page throws a SecurityError). Decode the indexes with the CSSOM list of the live page, align it 1:1 with `postcss` rules of the same file, then map to source files with the source map (`source-map` package, `originalPositionFor`). The served `styles.css` must be identical to the one analysed (compare the text).
+3. Fast Cypress finds races a person never hits. Reproduce them with one scripted run in Chrome DevTools with short waits (`evaluate_script`, `ng.getComponent(el)` in dev mode, a `MutationObserver` that logs added and removed custom elements with timestamps). Found this way: the header search bar emits its start value after 300 ms, `updateLabel` rebuilt the staged profile and `setActiveProfile` replaced the profile, so tab content re-rendered (a picked time restriction type flipped back, the reference modal result was lost). Fixed by ignoring an unchanged label in `ProfileHeaderComponent.setLabel`.
+4. A modal result must not depend on the component that opened it: `reference-field-tab` unsubscribes in `ngOnDestroy`, so a re-created tab drops the result silently. `track reference` (object identity) in an `@for` re-creates every item when the data object is replaced; track by a stable id (`reference.getElementId()`).
+5. `cy.get(x).should('be.enabled')` is not a wait for a stable element: it passes on the old element that is replaced a moment later. Split `.clear()` and `.type()` into separate queries (Cypress re-queries only at the start of a command), and find out which event replaces the element.
+6. flag-icons Sass: `@use 'flag-icons/sass/flag-icons' with ($flag-icons-included-countries: ('de', 'gb'), $flag-icons-use-square: false)`. Do not override `$flag-icons-path`: `resolve-url-loader` resolves `url()` from the Sass partial's folder, so the default `../flags` is right and a path relative to `styles.scss` breaks the build (the dev server then keeps serving the old CSS, check the size).
+7. `indigo-pink.css` is the only source of Material colors (no theme mixin is called). About 47 KB of it is the `html { --mat-... }` token block, about 35 KB are rules for components the app does not use (chips, list, slide toggle, radio, FAB, button variants). Replacing it with a theme from our palettes for only the used components is the way to shrink it (see next session).
+8. The pre-commit hook (`pretty-quick`) rejects partially staged files. To commit one hunk of a file: put the partial content in the working tree, `git add`, commit, then copy the full content back.
+9. Develop made `isFeasibilityExistent` a signal (`computed`); our template read it as a plain value before and never showed the empty state. A signal in a template must be called.
+10. Jest does not start in this environment (`esbuild` invariant "Buffer.from("") instanceof Uint8Array" from `src/test.ts`). The data-cy registry spec `num-data-cy.registry.spec.ts` has not run in this branch.
+11. A `.mat-divider` class is used as a plain class on a div (`list-item-details-sections`), not as the Material component; its rules in `_divider-classes` stay.
+
+Next session, in this order:
+
+1. Run all 39 specs once (`npx cypress run --browser chrome --headless`, about 15 min, do not edit files meanwhile: the dev server rebuild disturbs the run).
+2. Look at the drag and drop in the browser: stage frame, label and hint; the `⋮` menu must stay click-only (see above).
+3. The open items of "More to do" below: filters and reset button under the search bar, time constraint label, warning red, breadcrumbs (`breadcrumbs.component.ts` differs from develop, check there first), backend polling config.
+4. Material theme: replace `indigo-pink.css` by a theme built from our palettes for the used components only, assign primary, accent and warn on purpose, diff the compiled CSS, look at tabs, selects, tooltip, datepicker, badge. Order for removing Material later: expansion, stepper, menu, toolbar (1 file each), badge, sidenav, form-field and select and datepicker together, tooltip, then dialog and tabs.
+5. Fix jest (insight 10) and run the registry spec.
+6. Harden `reference-field-tab` (modal result must survive a re-created tab).
+7. More coverage: dashboard FAQ (expansion panel), drag states, the other language; then `_button-color` red and outline, side-menu states.
+8. Merge `origin/chore/lint-cleanup` last (35 commits, 944 files, includes `feat/claude-hooks`); it conflicts with every touched file. Decide before pushing: this branch is 150 develop commits ahead of its remote, merge kept.
+9. Visual pass at 1366x768 and 1920x1080 (nav open and collapsed, intro shown and hidden), then the "Before the next session" list below.
+
+### Session 7 (2026-11-09, later): wording, breadcrumbs, tooltips, result page
+
+Commits (not pushed): `c75f9eb5` drag back to stage, `ffa5dd69` buttons and action bar, `f1c108a5` details modal, `42034a04` search layout, `c711225b` spinner colours, `f7c459a5` wording, breadcrumbs, disabled tooltips, result page, Cypress details scenario.
+
+Naming scheme (Shah, decided): Cohort Definition is the general term (menu group, root breadcrumb, tab title prefix). Cohort Selection is the overview page where the cohort is edited (becomes a feasibility query once inclusion criteria exist). Result is the result page. Feature Definition is the data-selection group, Feature Selection its overview page. Criterion Editor and Reference Editor are the single-criterion pages. "Criteria editor" is not used for the overview page.
+
+Insights:
+
+1. Angular `snapshot.data` inherits the parent's `data` through empty-path and componentless parents (`paramsInheritanceStrategy: 'emptyOnly'`). Reading `routeConfig.data` gives only the route's own data. This was the "Editor » Editor" breadcrumb.
+2. A CDK `cdkDropList` that is emptied by dragging its last item away collapses to 0px (the CDK hides the source element), so it cannot take the item back. Give the list a `min-height`. Reproduced with synthetic `mousedown`/`mousemove`/`mouseup` events dispatched from `evaluate_script` (20 moves, 30 ms apart).
+3. A `::before` overlay inside a `position: relative` box paints above non-positioned siblings. That is why the action bar tint washed over its buttons. `isolation: isolate` on the box plus `z-index: -1` on the overlay puts it behind the children and above the box background.
+4. Percentage heights do not resolve inside a flex item with an auto height. A grid with `grid-template-rows: auto minmax(0, 1fr)` and a `max-height` on the container gives the table a definite height, so it scrolls inside the dialog instead of growing.
+5. `matTooltip` works on disabled buttons in Chrome (hover on `[disabled]` fires the tooltip). Do not use `pointer-events: none` for disabled buttons, it would kill the reason tooltips. Pattern for a reason: `[matTooltip]="cond ? ('SHARED_COMPONENTS.DISABLED.X' | translate) : ('...' | translate)"`, no new input on `num-button`.
+6. App settings are read once at startup. A tab opened before a backend setting changed keeps the old value (`queryResultExpiry` was `PT1M`, now `PT1H` locally). After a change in the backend, reload the tab before judging a UI state.
+7. Backend env names (from `application.yml` in the jar): `PT_POLLING_TIME_UI`, `QUERYRESULT_EXPIRY` (not `QUERYRESULT_EXPIRY_MINUTES`, which the compose file sets but nothing reads), `PRIVACY_QUOTA_READ_DETAILED_OBFUSCATED_AMOUNT`. The local override is `cypress/docker/docker-compose.override.yml` (in `.git/info/exclude`): 10s polling, 1h expiry, quota 1000. CI is unchanged, so the comments in `cypress/CLAUDE.md` and `cohortResult.cy.ts` that say `PT1M` are right for CI only.
+8. `PollingManager.pollingProcess`: `endWith(lastValidResult ?? lastError ?? null)` is evaluated when the pipe is built, so it always emits `null`. It works because the component also finalizes on `complete`. Not fixed, worth a look.
+9. `CohortDefinitionActionBar.isFeasibilityQueryValid` is a plain value read once (not a signal), so its send button and its new disabled tooltip can go stale.
+10. Pre-commit has a feature-tag linter: `@behavior:` values must come from the list in `cypress/scripts/lint-features.mjs` (or be added there and to `cypress/TESTING.md`). `@behavior:open` is used for the details scenario.
+11. `prettier --write` with a glob like `result.component.*` also rewrites the spec file. Name the files.
+12. The spinner: `steps(12)` makes the ring jump one dot at a time, so with a colour gradient it looks like only the colours change. Shah wanted the original motion back, only the colours changed (kept: 1.2s steps(12), original opacities).
+13. A modal, a table and a card all need a definite parent height before `height: 100%` works; check with `getBoundingClientRect` and `scrollHeight` vs `clientHeight` in `evaluate_script` instead of by eye.
+14. Rebuilds reload the page and drop the in-memory cohort. A helper that re-runs "search, add, drag to Inclusion, send" in one `evaluate_script` call saves time (see the session notes of 2026-11-09, second file).
+
+Next session, in this order:
+
+1. Full Cypress run of all 39 specs (about 15 min, no edits meanwhile). Not done since the label, tooltip, wording and result-page changes. The local override (10s polling) may break result scenarios, check that first; run once with the override removed if it does.
+2. Shah looks at: result page (finished state with a real number, Details enabled), details modal with many sites (the 50-site mock is removed, pad in the browser with `ng.getComponent` if needed), spinner colours, action bar tint and hairline, disabled tooltips, the three breadcrumb trails.
+3. Warning red: which element looks wrong? `missing-filter` uses `--num-color--error-on-tint` `#b30519`, searchbar uses `--num-color--error-on-white` `#c4122f`; `PLAN-side-menu.md` suggests `danger 800` `#ba0000`.
+4. Contrast (measured): white label on the green 500 fill is 2.26:1 (blue: 4.39:1); the green ramp is lighter than the blue ramp at the same step (OKLab L 0.735 vs 0.575). Shah said "it's fine" for now; green 800 (`#607311`, 5.31:1) would match blue. Decide before the colour pass.
+5. Disabled-button tooltips not done (option 1 extras): reset filter, apply-time-restriction, arrow buttons. Fix insight 9 together.
+6. Insight 8 (`endWith`), then harden `reference-field-tab`, fix jest (esbuild error), run `num-data-cy.registry.spec.ts`. `simple-result.component.spec.ts` is a stub that cannot pass (`declarations` for a standalone component); replace it when jest runs.
+7. Material theme (replace `indigo-pink.css`), lint branch merge, push decision: unchanged from session 6.
+8. `angular.json` still points at `styles-next/styles.scss` (uncommitted since before this session, left alone).
 
 ### Before the next session
 
@@ -111,9 +185,9 @@ All pages are done. Do these, in this order:
 
 1. DONE in session 5 (uncommitted, waits for Shah's look): wrapper decision replaced by a grid app shell, see "Session 5". Then do one visual pass.
 2. One look at every page at 1366x768 (side nav open and collapsed, intro shown and hidden) and at 1920x1080. The "not checked" list in session 4 comes first.
-3. Cleanup (section 7, step 6): delete the utility classes `margin-bottom-3`, `margin-bottom-4`, `width-100`, `margin-left-auto` after grepping their users; set the default of `--header-description-margin` to `8px 0 0` and delete the hook (modals `result-detail-modal`, `validation-modal`, `save-dataquery-modal`, `download-crtdl` still use the old `1em 0`, decide for them first); update `PLAN-design-tokens.md`.
+3. Cleanup (section 7, step 6): DONE 2026-11-09 for the utility classes (`width-100`, `margin-bottom-3/4`, `margin-left-auto` are gone) and the `.selection-box` global. Still open: set the default of `--header-description-margin` to `8px 0 0` and delete the hook (modals `result-detail-modal`, `validation-modal`, `save-dataquery-modal`, `download-crtdl` still use the old `1em 0`, decide for them first); update `PLAN-design-tokens.md`.
 4. The "seen, not done" list of session 4 and the page 8 leftovers (section "Page 8", last bullet).
-5. Cypress: run the e2e specs that touch the changed pages (result, cohort, data selection, query editor, saved queries, bulk search), selectors were only grepped, never run.
+5. Cypress: DONE 2026-11-09 (full suite ran 3 times, see Session 6).
 6. `npm run check:styles`, `npm run lint`, `npx prettier --check` on the edited files only.
 
 Rules: do not add Co-Authored-By lines. Unrelated dirty files, leave alone: `angular.json`, `ReferenceCriteriaListEntry.ts`, `playground.component.ts`, `edit.component.scss` (one stray blank line), `.vscode/settings.json`, `.impeccable/`, `prototype-bulk-chips.html`.
