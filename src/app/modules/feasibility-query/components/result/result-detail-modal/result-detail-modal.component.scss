@@ -1,16 +1,43 @@
-.modal-header-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
+// Same frame as save-file-modal and save-dataquery-modal: 40px padding, round close button top right.
+// Sizes to its content (a few sites), the table scrolls on its own once the dialog hits 90vh.
+.result-modal {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr); // header, table: a grid area is a definite height, so the table can fill it and scroll
+  gap: var(--spacing-16);
+  width: min(720px, 90vw);
+  max-height: 90vh;
+  padding: var(--spacing-40) var(--spacing-40) var(--spacing-32);
+  box-sizing: border-box;
 
-.icon-close {
-  cursor: pointer;
-  font-size: 9pt;
-}
+  &__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--border-color);
+    transition: color 0.2s ease, background 0.2s ease;
 
-.overflow {
-  height: 100%;
-  overflow: auto;
+    &:hover {
+      color: var(--color-text-secondary);
+      background: rgba(197, 202, 207, 0.15);
+    }
+
+    fa-icon {
+      font-size: 18px;
+    }
+  }
+
+  &__table {
+    min-height: 0;
+  }
 }
