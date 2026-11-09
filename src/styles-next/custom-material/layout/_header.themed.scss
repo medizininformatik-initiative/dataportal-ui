@@ -51,18 +51,6 @@
       padding-left: 0 !important;
     }
 
-    .toolbar {
-      background: transparent;
-      font-size: 16px;
-      margin: 0 0 16px 0;
-      display: flex;
-      align-items: center;
-
-      fa-icon {
-        padding-left: 16px;
-      }
-    }
-
     .logo-wrapper {
       width: var(--nav-width-expanded);
       min-width: var(--nav-width-expanded);
@@ -102,10 +90,6 @@
       flex: 1 1 auto;
       height: 100%;
       overflow: auto;
-    }
-
-    .margin-right {
-      margin-right: 16px;
     }
 
     // Language select: fit the content. Material's form-field infix has a fixed default width (about 180px)

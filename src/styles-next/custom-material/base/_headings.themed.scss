@@ -1,4 +1,4 @@
-// Global styles for the HTML heading elements h3 to h5 (h1: only the page title in `num-header`; h2: no global rule, each heading styles itself).
+// Global styles for the HTML heading elements h3 and h4 (h1: only the page title in `num-header`; h2: no global rule, each heading styles itself).
 @mixin headings_themed($theme) {
   h3 {
     padding: 0 0 10px 0;
@@ -11,14 +11,6 @@
 
   h4 {
     margin: 0 0 16px 0 !important;
-    letter-spacing: 0 !important;
-  }
-
-  h5 {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    line-height: 24px !important;
-    margin: 0 0 8px 0 !important;
     letter-spacing: 0 !important;
   }
 }

@@ -1,4 +1,11 @@
-@use '@angular/material' as mat;
+// Only the two flags the language switch and the detail panels use (fi-de, fi-gb)
+@use 'flag-icons/sass/flag-icons' with (
+  $flag-icons-included-countries: (
+    'de',
+    'gb',
+  ),
+  $flag-icons-use-square: false
+);
 @import './font';
 @import './themes';
 @import './custom-material';
@@ -6,15 +13,9 @@
 @import './general-styles/_header-card';
 @import './general-styles/_drop-target';
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import '/node_modules/flag-icons/css/flag-icons.min.css';
 @import './custom-material/material/mat-badge';
 
-@include mat.elevation-classes();
-@include mat.app-background();
-
 .FDPGTheme {
-  @include mat.elevation-classes();
-  @include mat.app-background();
   @include custom-material_themed($num-portal-webapp-theme-fdpg);
 }
 

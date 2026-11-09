@@ -20,28 +20,6 @@
   color: var(--color-text-primary);
 }
 
-// Bold label text  (Titillium Web 14 / 19, black, semibold)
-// Use for field names, section titles, and other prominent labels
-.num-text-label {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-md);
-  color: var(--color-text-primary);
-}
-
-// Muted / meta text  (Titillium Web 12 / 16, secondary grey)
-// Replaces: .info-item in criteria-box / reference-criteria-box
-.num-text-meta {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 400;
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-sm);
-  color: var(--color-text-secondary);
-}
-
 // Accent / label text  (Titillium Web 14 / 19, brand blue)
 // Replaces: .section-label (data-selection-boxes variant)
 .num-text-accent {

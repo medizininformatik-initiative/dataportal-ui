@@ -87,6 +87,24 @@ Seen, not done:
 - `apply-time-restriction.component.scss` (data-selection copy only): toggle `height: 40px`, `padding: 0 14px`; select, date input and apply button 40px too. The feasibility editor has its own copy of this component, unchanged.
 - Not done, seen: the box right edge stops at the scrollbar while the search bar runs full width; the reference tile is narrower than the box (about 80%); `min-height: 104px` makes boxes with few fields taller than needed; `num-section-name` still has its own `margin: var(--spacing-sm) 0` (also on page 4), it adds to the row gap.
 
+### Drag and drop on the criterion box (2026-11-09)
+
+Decided with Shah. To do after the Cypress run (a rebuild would disturb it):
+
+1. Whole box is the drag handle: remove both `cdkDragHandle` from `criteria-box.component.html` (now only `.content` and the move icon, so padding and edges did not drag). Chips get `cursor: grab` instead of `pointer`.
+2. Stage gets the drop-target look of the two lists: frame while the criterion is over it, drop label, empty hint hidden while dragging. Label text like the other two (new key `FEASIBILITY.EDITOR.DROP_STAGE`, de + en).
+3. No pulsing frames anywhere (usability): remove `drop-target-pulse` and the `cdk-drop-list-receiving` animation in `display.component.scss`; `receiving` stays a static frame.
+
+Next step (not now): the `⋮` menu stays click-only. A press on the menu button must not start a drag, so it needs to stay outside the drag area once the whole box is the handle (`cdkDragHandle` on everything but `.handle-icons` menu, or stop `pointerdown` on `num-menu`). Check this after step 1.
+
+### More to do (Shah, 2026-11-09), not looked at yet
+
+- Search pages: the filters and the filter reset button need to go below the search bar (today they sit to the right of it, see `TODO-2026-10-21.md` items 8 and 9).
+- Data selection: the button that adds a time constraint to all data selections has the wrong label. Check the text and the i18n keys (de + en).
+- Breadcrumbs on `/query-editor/criterion/:id` are wrong: they show "Editor » Editor » Norethisteron und Estrogen" (screenshot from Shah). The first crumb and the middle crumb carry the same label. Find where the crumbs for this route are built, check the other editor routes (`feature`, `reference`) too, and fix the labels and targets.
+- Local backend config (Shah's setup): set the backend configs so the detailed results are still visible after the polling times out. Also lower the polling timeout to 10 seconds, so a timeout is quick to reproduce and debug. Not looked at yet: find the backend polling and detailed-results settings (backend `docker-compose` / `application.yml`, `cypress/docker/`) and the UI polling code that reads them.
+- The red of the warning is the wrong red. The app has two error reds (`--num-color--error-on-white`, `--num-color--error-on-tint`); find which red the warning uses and which it should use. This belongs to the color pass (`PLAN.md`, role for the two error reds).
+
 ### Before the next session
 
 All pages are done. Do these, in this order:
