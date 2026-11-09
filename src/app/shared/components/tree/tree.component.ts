@@ -5,6 +5,7 @@ import { CheckboxComponent } from '../checkbox/checkbox.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatTooltip } from '@angular/material/tooltip'
 import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
 
 @Component({
   selector: 'num-tree',
@@ -17,6 +18,7 @@ import { DisplayTranslationPipe } from '../../pipes/DisplayTranslationPipe'
     FontAwesomeModule,
     MatTooltip,
     DisplayTranslationPipe,
+    NumDataCyDirective,
   ],
 })
 export class TreeComponent implements OnInit {

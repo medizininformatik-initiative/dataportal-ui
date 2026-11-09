@@ -1,7 +1,7 @@
 <button
   [matTooltip]="'SHARED_COMPONENTS.MENU.OPTIONS' | translate"
   class="num-button blue icon"
-  data-cy="openMenu"
+  numDataCy="openMenu"
   type="button"
   #menuTrigger="matMenuTrigger"
   [matMenuTriggerFor]="menu"
@@ -14,7 +14,7 @@
     {{ 'SHARED_COMPONENTS.MENU.OPTIONS' | translate }}
   </div>
   @for (item of menuItems(); track item.label; let isLast = $last) {
-  <div data-cy="{{ item.label | translate }}">
+  <div [numDataCy]="item.label | translate">
     <button
       [ngClass]="{
         divider: !isLast,

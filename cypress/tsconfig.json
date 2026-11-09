@@ -3,6 +3,8 @@
     "target": "es5",
     "lib": ["es5", "dom"],
     "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "types": ["cypress", "node"]
   },
   "include": ["**/*.ts"]

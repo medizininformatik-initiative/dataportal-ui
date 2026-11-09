@@ -4,6 +4,7 @@ import { DownloadCRTDLService } from 'src/app/service/Download/DownloadCRTDL.ser
 import { DownloadCRTDLZipService } from 'src/app/service/Download/DownloadCRTDLZip.service'
 import { HeaderComponent } from '../header/header.component'
 import { MatDialogRef } from '@angular/material/dialog'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
 import { SaveFileModalComponent } from '../save-file-modal/save-file-modal.component'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -14,7 +15,13 @@ export type DownloadCRTDLFormat = 'crtdl' | 'csv'
   templateUrl: './download-crtdl.component.html',
   styleUrls: ['./download-crtdl.component.scss'],
   standalone: true,
-  imports: [SaveFileModalComponent, HeaderComponent, TranslateModule, ButtonComponent],
+  imports: [
+    SaveFileModalComponent,
+    HeaderComponent,
+    TranslateModule,
+    ButtonComponent,
+    NumDataCyDirective,
+  ],
 })
 export class DownloadCRTDLComponent {
   private dialogRef = inject(MatDialogRef)

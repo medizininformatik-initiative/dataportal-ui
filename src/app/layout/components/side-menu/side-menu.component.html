@@ -2,6 +2,7 @@
   @let label = item.translationKey | translate;
   <a
     class="num-nav-link"
+    [numDataCy]="'nav-' + item.routeTo"
     [class.num-nav-link--child]="child"
     [class.num-nav-link--grandchild]="grandchild"
     routerLinkActive="num-nav-link--active"

@@ -43,9 +43,13 @@ export class SearchActionBarComponent {
     initialValue: [] as string[],
   })
 
-  readonly isFeasibilityExistent = this.feasibilityQueryValidationService.validationState().isValid
+  readonly isFeasibilityExistent = computed(
+    () => this.feasibilityQueryValidationService.validationState().isValid
+  )
 
-  readonly canViewStage = computed(() => this.stageItems().length > 0 || this.isFeasibilityExistent)
+  readonly canViewStage = computed(
+    () => this.stageItems().length > 0 || this.isFeasibilityExistent()
+  )
 
   public addItemsToStage(): void {
     const ids = this.listItemService.getIds()

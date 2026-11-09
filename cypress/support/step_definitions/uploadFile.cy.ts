@@ -1,14 +1,28 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
-import { ActionBar } from './action-bar.cy'
+import { dataCy } from '../dataCy'
+import { defineStep } from '../defineStep'
+import { resolve } from '../testData'
 
+/**
+ * Upload CRTDL fixture through upload input.
+ * */
 export class UploadFile {
+  /**
+   * Select fixture file, wait for uploaded criterium.
+   * */
   uploadFile(fileName: string): void {
-    cy.get('[data-cy="upload-ccdl"]').selectFile(`cypress/fixtures/${fileName}.json`, { force: true });
-    cy.wait(1000);
+    cy.get(dataCy('upload-crtdl')).selectFile(`cypress/fixtures/${fileName}.json`, {
+      force: true,
+    })
+    /**
+     * Real post-condition, no fixed wait: UploadService navigates to Data Query - Cohort
+     * Definition, renders uploaded criterium once processing finishes (checked against
+     * fixtures/Single_Inclusion_Criteria_With_Patient.json content).
+     * */
+    cy.contains(resolve('{{files.singleInclusionCriterium}}'), { timeout: 15000 }).should(
+      'be.visible'
+    )
   }
 }
 
 export const uploadFile = new UploadFile()
-defineStep('I upload the file {string}', (fileName: string) => {
-  uploadFile.uploadFile(fileName)
-})
+defineStep('I upload the file {string}', (fileName: string) => uploadFile.uploadFile(fileName))

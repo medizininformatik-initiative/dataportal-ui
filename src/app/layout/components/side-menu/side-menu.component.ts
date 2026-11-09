@@ -5,6 +5,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { NgTemplateOutlet } from '@angular/common'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
+import { NumDataCyDirective } from '../../../shared/directives/num-data-cy.directive'
 
 @Component({
   selector: 'num-side-menu',
@@ -18,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatTooltip,
     FontAwesomeModule,
     TranslateModule,
+    NumDataCyDirective,
   ],
   host: { '[class.collapsed]': 'isCollapsed()' },
 })

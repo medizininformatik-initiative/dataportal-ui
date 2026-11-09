@@ -5,6 +5,7 @@ import { FeasibilityQueryValidationService } from 'src/app/service/Validation/In
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { MatTooltip } from '@angular/material/tooltip'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
 import { SaveDataQueryModalService } from 'src/app/service/SaveDataQueryModal.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { UploadService } from 'src/app/service/Upload/Upload.service'
@@ -15,7 +16,7 @@ import { ValidationModalComponent } from '../validation-modal/validation-modal.c
   templateUrl: './action-bar.component.html',
   styleUrls: ['./action-bar.component.scss'],
   standalone: true,
-  imports: [MatTooltip, FontAwesomeModule, TranslateModule],
+  imports: [MatTooltip, FontAwesomeModule, TranslateModule, NumDataCyDirective],
 })
 export class ActionBarComponent {
   private dialog = inject(MatDialog)

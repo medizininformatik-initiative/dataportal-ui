@@ -86,8 +86,8 @@ export class ProfileHeaderComponent implements OnInit {
       const linkedProfiles = ref
         .getLinkedProfileIds()
         .map((id) => this.profileProviderService.getOne(id))
-        .map((profile) => ({ display: profile.getLabel(), number: profile.getLabelNumber() }))
-        .filter((linkedProfile) => !!linkedProfile.display)
+        .filter((profile) => !!profile?.getDisplay())
+        .map((profile) => ({ display: profile.getDisplay(), number: profile.getLabelNumber() }))
 
       acc[key].push(...linkedProfiles)
       return acc

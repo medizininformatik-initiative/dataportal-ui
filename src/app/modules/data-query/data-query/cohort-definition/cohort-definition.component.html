@@ -2,7 +2,7 @@
   <num-header-description>
     {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
   </num-header-description>
-  @if (isFeasibilityExistent) {
+  @if (isFeasibilityExistent()) {
   <num-display-feasibility-query [isEditable]="false"></num-display-feasibility-query>
   } @else {
   <num-placeholder-box>

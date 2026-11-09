@@ -1,30 +1,36 @@
-import { defineStep } from '@badeball/cypress-cucumber-preprocessor'
-import { MenuItemValue } from '../../e2e/Utilities/menuItems'
+import { defineStep } from '../defineStep'
+import { numMenu } from '../component-objects/NumMenu'
 
-export class MenuTests {
+/**
+ * Steps for generic menu (`num-menu`).
+ * */
+export class Menu {
   /**
-   * Opens the menu by clicking on the button with data-cy attribute "openMenu".
-   */
-  public openMenu() {
-    cy.get('[data-cy="openMenu"]').click()
+   * Open menu.
+   * */
+  public open() {
+    numMenu.open()
   }
 
   /**
-   * @see MenuItemValue
-   * @param menuItemLabel
-   */
-  public clickMenuItem(menuItemLabel: MenuItemValue) {
-    cy.get('.mat-mdc-menu-content:visible')
-      .should('exist')
-      .within(() => {
-        cy.get('.mat-mdc-menu-item').contains(menuItemLabel).should('be.visible').click()
-      })
+   * Assert menu offers item.
+   * */
+  public shouldOfferItem(menuItem: string) {
+    numMenu.shouldOfferItem(menuItem)
+  }
+
+  /**
+   * Click menu item.
+   * */
+  public clickItem(menuItem: string) {
+    numMenu.clickItem(menuItem)
   }
 }
 
-const menuTests = new MenuTests()
+export const menu = new Menu()
 
-defineStep('I open the menu', () => menuTests.openMenu())
-defineStep('I click on the menu item {string}', (menuItem: string) =>
-  menuTests.clickMenuItem(menuItem)
+defineStep('I open the menu', () => menu.open())
+defineStep('the menu should offer the item {string}', (menuItem: string) =>
+  menu.shouldOfferItem(menuItem)
 )
+defineStep('I click on the menu item {string}', (menuItem: string) => menu.clickItem(menuItem))
