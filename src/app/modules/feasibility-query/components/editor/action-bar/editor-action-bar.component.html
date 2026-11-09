@@ -3,7 +3,11 @@
     type="green"
     [isDisabled]="!isFeasibilityQueryValid()"
     (click)="sendRequest()"
-    [matTooltip]="'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate"
+    [matTooltip]="
+      !isFeasibilityQueryValid()
+        ? ('SHARED_COMPONENTS.DISABLED.QUERY_INVALID' | translate)
+        : ('FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate)
+    "
   >
     {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY' | translate }}
   </num-button>

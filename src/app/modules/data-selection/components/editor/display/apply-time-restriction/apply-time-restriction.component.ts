@@ -108,7 +108,7 @@ export class ApplyTimeRestrictionComponent {
         this.dataSelectionProvider.setActiveProfile(clonedProfile, 'SET')
       }
     })
-    this.snackbarMessageService.displayTimeRestrictionAppliedToAll()
+    this.snackbarMessageService.displayTimeRestrictionAppliedToAllFeatures()
     this.isExpanded.set(false)
     this.reset()
   }

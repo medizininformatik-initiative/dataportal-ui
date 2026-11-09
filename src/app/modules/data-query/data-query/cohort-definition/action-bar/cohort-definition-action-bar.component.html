@@ -10,7 +10,11 @@
     type="green"
     [isDisabled]="!isFeasibilityQueryValid"
     (click)="sendQuery()"
-    tooltip="{{ 'DATAQUERY.COHORT.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate }}"
+    [tooltip]="
+      !isFeasibilityQueryValid
+        ? ('SHARED_COMPONENTS.DISABLED.QUERY_INVALID' | translate)
+        : ('DATAQUERY.COHORT.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate)
+    "
   >
     {{ 'DATAQUERY.COHORT.ACTION_BAR.SEND_QUERY' | translate }}
   </num-button>

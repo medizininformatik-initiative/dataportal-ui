@@ -1,7 +1,5 @@
-<div class="container">
-  <num-patient-count [totalNumberOfPatients]="totalNumberOfPatients"></num-patient-count>
-
-  <div class="action-row">
+<num-patient-count [totalNumberOfPatients]="totalNumberOfPatients">
+  <div class="status">
     <num-button
       type="green"
       class="button-dialog-result-details"
@@ -9,8 +7,17 @@
         !loadedResult || isQueryExpired || (queryResultRateLimit$ | async)?.getRemaining() === 0
       "
       matTooltipShowDelay="300"
-      [matTooltip]="'FEASIBILITY.RESULT.DETAILS_TOOLTIP' | translate"
-      matTooltipPosition="right"
+      [matTooltip]="
+        (!loadedResult
+          ? 'SHARED_COMPONENTS.DISABLED.DETAILS_NOT_READY'
+          : isQueryExpired
+          ? 'SHARED_COMPONENTS.DISABLED.DETAILS_EXPIRED'
+          : (queryResultRateLimit$ | async)?.getRemaining() === 0
+          ? 'SHARED_COMPONENTS.DISABLED.DETAILS_QUOTA_USED'
+          : 'FEASIBILITY.RESULT.DETAILS_TOOLTIP'
+        ) | translate
+      "
+      matTooltipPosition="above"
       (click)="openDialogResultDetails()"
     >
       {{ 'FEASIBILITY.RESULT.DETAILS_BUTTON' | translate }}
@@ -22,4 +29,4 @@
     <num-spinner [countdown]="pollingTime"></num-spinner>
     }
   </div>
-</div>
+</num-patient-count>

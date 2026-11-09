@@ -4,7 +4,11 @@
     (click)="addItemsToStage()"
     matBadgePosition="above after"
     [isDisabled]="disabledAddToStageButton() || resultType() === 'NOTFOUND'"
-    matTooltip="{{ 'FEASIBILITY.BULK_SEARCH.ACTION_BAR.ADD_TO_STAGE_TOOLTIP' | translate }}"
+    [matTooltip]="
+      disabledAddToStageButton() || resultType() === 'NOTFOUND'
+        ? ('SHARED_COMPONENTS.DISABLED.BULK_NOTHING_TO_ADD' | translate)
+        : ('FEASIBILITY.BULK_SEARCH.ACTION_BAR.ADD_TO_STAGE_TOOLTIP' | translate)
+    "
   >
     {{ 'FEASIBILITY.BULK_SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
   </num-button>

@@ -24,6 +24,9 @@
     <num-button
       type="green"
       [isDisabled]="title.length === 0"
+      [tooltip]="
+        title.length === 0 ? ('SHARED_COMPONENTS.DISABLED.TITLE_REQUIRED' | translate) : ''
+      "
       (click)="doSave()"
       class="button-save"
     >

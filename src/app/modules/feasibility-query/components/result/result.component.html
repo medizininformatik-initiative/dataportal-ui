@@ -15,11 +15,13 @@
       {{ 'FEASIBILITY.RESULT.HEADER_DESCRIPTION' | translate }}
     </num-header-description>
   </div>
-  <div class="simple-result-container">
+  <section class="card">
     <num-simple-result (resultLoaded)="setResultLoaded($event)"></num-simple-result>
-  </div>
-  <div class="feasibility-container">
+  </section>
+  <section class="card feasibility-container">
+    <num-section-name>{{ 'FEASIBILITY.RESULT.COHORT_HEADING' | translate }}</num-section-name>
+    <p class="cohort-hint">{{ 'FEASIBILITY.RESULT.COHORT_HINT' | translate }}</p>
     <num-display-feasibility-query [isEditable]="false"></num-display-feasibility-query>
-  </div>
+  </section>
   <num-result-action-bar [hasQueryResult]="!resultLoaded"></num-result-action-bar>
 </div>

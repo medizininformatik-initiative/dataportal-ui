@@ -17,7 +17,25 @@
   margin-top: var(--spacing-8);
 }
 
+// The two blocks (result, sent cohort) are framed cards with the same edge and the same inner padding
+.card {
+  padding: var(--spacing-16) var(--spacing-24);
+  background-color: #fff;
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--border-radius-card);
+}
+
+// Heading and hint of the sent cohort, then the two lists, which scroll inside
 .feasibility-container {
   min-height: 0;
-  overflow: hidden; // the two lists inside scroll, not the row
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.cohort-hint {
+  margin: 0 0 var(--spacing-8);
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
 }

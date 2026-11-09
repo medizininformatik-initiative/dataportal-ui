@@ -1,10 +1,18 @@
-<div class="container">
-  @for (digit of patientCountArray; track digit) {
-  <div class="number-of-patients">
-    <div class="digit">
-      {{ digit }}
+<div class="count">
+  <num-section-name>{{ 'FEASIBILITY.RESULT.PATIENT_NUMBER' | translate }}</num-section-name>
+  <div class="row">
+    <div class="digits" role="img" [attr.aria-label]="value">
+      @for (digit of patientCountArray; track $index) {
+      <span
+        class="digit"
+        [class.digit--leading]="isLeadingZero($index)"
+        [class.digit--group-start]="startsGroup($index)"
+        aria-hidden="true"
+      >
+        {{ digit }}
+      </span>
+      }
     </div>
+    <ng-content></ng-content>
   </div>
-  }
-  {{ 'FEASIBILITY.RESULT.PATIENT_NUMBER' | translate }}
 </div>

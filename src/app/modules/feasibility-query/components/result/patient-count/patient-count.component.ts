@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit, input } from '@angular/core'
+import { SectionNameComponent } from '../../../../../shared/components/section-name/section-name.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -6,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './patient-count.component.html',
   styleUrls: ['./patient-count.component.scss'],
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, SectionNameComponent],
 })
 export class PatientCountComponent implements OnInit, OnChanges {
   readonly totalNumberOfPatients = input<number>(undefined)
@@ -22,6 +23,24 @@ export class PatientCountComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.setPatientCountArray()
+  }
+
+  /** Number without padding zeros, for screen readers. */
+  get value(): string {
+    return String(Number(this.patientCountArray.join('')))
+  }
+
+  /** True for the padding zeros in front of the number (the last digit never counts as padding). */
+  isLeadingZero(index: number): boolean {
+    return (
+      index < this.patientCountArray.length - 1 &&
+      this.patientCountArray.slice(0, index + 1).every((d) => d === '0')
+    )
+  }
+
+  /** True for the first digit of each group of three, counted from the right. */
+  startsGroup(index: number): boolean {
+    return index > 0 && (this.patientCountArray.length - index) % 3 === 0
   }
 
   /**

@@ -5,7 +5,11 @@
     [isDisabled]="!selectedItems().length"
     [matBadge]="selectedItems().length"
     matBadgePosition="above after"
-    matTooltip="{{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE_TOOLTIP' | translate }}"
+    [matTooltip]="
+      !selectedItems().length
+        ? ('SHARED_COMPONENTS.DISABLED.SELECT_CRITERIA_FIRST' | translate)
+        : ('FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE_TOOLTIP' | translate)
+    "
     class="margin-right-3"
   >
     {{ 'FEASIBILITY.SEARCH.ACTION_BAR.ADD_TO_STAGE' | translate }}
@@ -17,7 +21,11 @@
     (click)="navigateToEditor()"
     [matBadge]="stageItems().length"
     matBadgePosition="above after"
-    matTooltip="{{ 'FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE_TOOLTIP' | translate }}"
+    [matTooltip]="
+      !canViewStage()
+        ? ('SHARED_COMPONENTS.DISABLED.STAGE_EMPTY' | translate)
+        : ('FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE_TOOLTIP' | translate)
+    "
   >
     {{ 'FEASIBILITY.SEARCH.ACTION_BAR.VIEW_STAGE' | translate }}
   </num-button>

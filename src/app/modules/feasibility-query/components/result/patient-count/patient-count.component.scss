@@ -1,28 +1,42 @@
-.number-of-patients {
-  width: 40px;
-  height: 40px;
-  font-size: 24px;
-  margin: 0 var(--spacing-8);
-  background-color: rgba(241, 242, 243, 0.5);
-  border-radius: var(--border-radius-sm);
-  text-align: center;
-}
-
-.digit {
-  color: rgba(106, 116, 131);
-  font-weight: 700;
-  font-size: 24px;
-  width: 100%;
-  height: 100%;
-  align-content: center;
-}
-
 :host {
   display: block;
 }
 
-.container {
+// Digits and whatever is projected after them (status, button) share one line
+.row {
   display: flex;
-  flex-direction: row;
-  margin-bottom: var(--spacing-24);
+  align-items: center;
+  gap: var(--spacing-24);
+}
+
+.digits {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+// Digits in groups of three from the right, like 1,234,567
+.digit--group-start {
+  margin-left: var(--spacing-8);
+}
+
+.digit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 56px;
+  background-color: #fff;
+  border: 1px solid color-mix(in srgb, var(--color-text-secondary) 65%, #fff);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-primary);
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+
+  // Padding zeros step back, the real number reads first
+  &--leading {
+    color: color-mix(in srgb, var(--color-text-primary) 30%, #fff);
+    background-color: color-mix(in srgb, var(--color-accent) 4%, #fff);
+  }
 }

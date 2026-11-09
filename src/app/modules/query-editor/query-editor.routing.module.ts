@@ -9,7 +9,6 @@ export const QUERY_EDITOR_ROUTES: Routes = [
     loadComponent: () =>
       import('./components/query-editor.component').then((m) => m.QueryEditorComponent),
     data: {
-      breadcrumb: 'BREADCRUMB.QUERY_EDITOR',
       hideSideNav: false,
       title: 'TAB_TITLE.QUERY_EDITOR_CRITERION',
     },
@@ -32,7 +31,6 @@ export const QUERY_EDITOR_ROUTES: Routes = [
       import('./components/query-editor.component').then((m) => m.QueryEditorComponent),
     data: {
       hideSideNav: false,
-      breadcrumb: 'BREADCRUMB.QUERY_EDITOR',
       title: 'TAB_TITLE.QUERY_EDITOR_REFERENCE',
     },
     canActivate: [RouteGuard],
