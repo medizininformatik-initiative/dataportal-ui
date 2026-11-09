@@ -3,6 +3,7 @@ import { HttpErrorResponse, HttpRequest, HttpStatusCode } from '@angular/common/
 import { Injectable, inject } from '@angular/core'
 import { IS_FEASIBILITY_REQUEST, IS_VALIDATION } from 'src/app/service/Backend/HttpContextToken'
 import { Observable, throwError } from 'rxjs'
+import { OAuthSessionService } from '../auth/OAuthSession.service'
 import { TypeGuard } from 'src/app/service/TypeGuard/TypeGuard'
 
 @Injectable({
@@ -10,6 +11,7 @@ import { TypeGuard } from 'src/app/service/TypeGuard/TypeGuard'
 })
 export class HttpErrorHandlerService {
   private dataportalErrorHandler = inject(DataportalErrorHandlerService)
+  private oauthSessionService = inject(OAuthSessionService)
 
   private static readonly DEFAULT_RETRY_AFTER_HEADER = 'Retry-After'
 
@@ -32,7 +34,8 @@ export class HttpErrorHandlerService {
         return this.handleBadRequest(errorPayload, request)
 
       case HttpStatusCode.Unauthorized:
-        /* Not implemented */
+        // token rejected by the backend (revoked, session ended): log out and start a new login
+        this.oauthSessionService.logout('Unauthorized (401)')
         return throwError(() => error)
 
       case HttpStatusCode.TooManyRequests:

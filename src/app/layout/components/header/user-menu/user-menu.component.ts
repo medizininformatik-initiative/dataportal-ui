@@ -5,6 +5,7 @@ import { ErrorLogProviderService } from 'src/app/service/Validation/External/Err
 import { IUserProfile } from '../../../../shared/models/user/user-profile.interface'
 import { MatDialog } from '@angular/material/dialog'
 import { OAuthService } from 'angular-oauth2-oidc'
+import { OAuthSessionService } from 'src/app/core/auth/OAuthSession.service'
 import { Subscription, tap } from 'rxjs'
 import { UserProfileService } from 'src/app/service/User/UserProfile.service'
 import { MatFormField } from '@angular/material/form-field'
@@ -23,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class UserMenuComponent implements OnInit, OnDestroy {
   private oauthService = inject(OAuthService)
+  private oauthSessionService = inject(OAuthSessionService)
   private matDialog = inject(MatDialog)
   private userProfileService = inject(UserProfileService)
   private readonly errorLogProvider = inject(ErrorLogProviderService)
@@ -51,7 +53,8 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   }
 
   public logout(): void {
-    this.oauthService.logOut()
+    // client_id needed, otherwise Keycloak answers 400 to the post_logout_redirect_uri
+    this.oauthSessionService.logout('User logout')
   }
 
   public getActuatorInfo(): void {

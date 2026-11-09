@@ -74,7 +74,7 @@ export class OAuthSessionService {
     return seconds
   }
 
-  private logout(reason: string) {
+  public logout(reason: string) {
     const time = new Date().toLocaleTimeString()
     console.warn(time, 'Logging out:', reason)
     if (this.isLoggingOut) {
