@@ -10,7 +10,7 @@
         {{ 'INFORMATION.REFERENCES.EXTENDED_DESCRIPTION' | translate }}
       </num-information-section>
     </mat-tab>
-    @for (reference of referenceFields(); track reference) {
+    @for (reference of referenceFields(); track reference.getElementId()) {
     <mat-tab class="height-100" label="{{ reference.getDisplay() | displayTranslation }}">
       <num-reference-field-tab
         [referenceField]="reference"
