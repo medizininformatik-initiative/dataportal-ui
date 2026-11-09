@@ -11,6 +11,7 @@
   animation: rotate 1.2s infinite steps(12);
 }
 
+// Colours run from the brand green (first dot) to the brand blue (last dot); opacity and motion as before
 .dot {
   width: 8px;
   height: 8px;
@@ -23,62 +24,62 @@
 .dot:nth-child(1) {
   transform: translate(-50%, -50%) rotate(0deg) translate(30px);
   opacity: 0.92;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 0%, var(--num-color--primary-green));
 }
 .dot:nth-child(2) {
   transform: translate(-50%, -50%) rotate(30deg) translate(30px);
   opacity: 0.84;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 9%, var(--num-color--primary-green));
 }
 .dot:nth-child(3) {
   transform: translate(-50%, -50%) rotate(60deg) translate(30px);
   opacity: 0.75;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 18%, var(--num-color--primary-green));
 }
 .dot:nth-child(4) {
   transform: translate(-50%, -50%) rotate(90deg) translate(30px);
   opacity: 0.67;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 27%, var(--num-color--primary-green));
 }
 .dot:nth-child(5) {
   transform: translate(-50%, -50%) rotate(120deg) translate(30px);
   opacity: 0.59;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 36%, var(--num-color--primary-green));
 }
 .dot:nth-child(6) {
   transform: translate(-50%, -50%) rotate(150deg) translate(30px);
   opacity: 0.51;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 45%, var(--num-color--primary-green));
 }
 .dot:nth-child(7) {
   transform: translate(-50%, -50%) rotate(180deg) translate(30px);
   opacity: 0.43;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 55%, var(--num-color--primary-green));
 }
 .dot:nth-child(8) {
   transform: translate(-50%, -50%) rotate(210deg) translate(30px);
   opacity: 0.35;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 64%, var(--num-color--primary-green));
 }
 .dot:nth-child(9) {
   transform: translate(-50%, -50%) rotate(240deg) translate(30px);
   opacity: 0.26;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 73%, var(--num-color--primary-green));
 }
 .dot:nth-child(10) {
   transform: translate(-50%, -50%) rotate(270deg) translate(30px);
   opacity: 0.18;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 82%, var(--num-color--primary-green));
 }
 .dot:nth-child(11) {
   transform: translate(-50%, -50%) rotate(300deg) translate(30px);
   opacity: 0.1;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 91%, var(--num-color--primary-green));
 }
 .dot:nth-child(12) {
   transform: translate(-50%, -50%) rotate(330deg) translate(30px);
   opacity: 0.05;
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 100%, var(--num-color--primary-green));
 }
 
 @keyframes rotate {
