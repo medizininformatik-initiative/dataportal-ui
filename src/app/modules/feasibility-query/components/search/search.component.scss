@@ -21,19 +21,11 @@
   margin-top: var(--spacing-8);
 }
 
+// Search bar on top, filters and reset button below it
 .search-row {
   display: flex;
-  flex-wrap: wrap; // filters drop below the search bar on narrow screens
-  align-items: flex-start; // the min-length warning grows the search bar, controls stay on top
-  gap: var(--spacing-8); // same as the gap between the filters
-
-  > num-criteria-search-bar {
-    flex: 1 1 20rem; // takes the space the filters leave, up to 55%; wraps below 20rem
-    max-width: 48%;
-    width: auto;
-    // same height as the filter heading above the filters, so the controls share one line
-    margin-top: calc(var(--font-app-content-filter-hint-line) + 0.25rem);
-  }
+  flex-direction: column;
+  gap: var(--spacing-16);
 }
 
 .result-container {
