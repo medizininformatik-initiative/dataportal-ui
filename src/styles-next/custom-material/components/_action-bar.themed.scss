@@ -8,21 +8,24 @@
       padding: 0 16px;
       height: 80px;
       border-radius: 5px;
+      border: 1px solid rgba(role-color($theme, secondary, 500), 0.25); // hairline in the tint's own hue
       background-color: role-color($theme, neutral, 0);
       box-sizing: border-box;
       overflow-x: auto;
       overflow-y: hidden;
       box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
       position: relative;
+      isolation: isolate; // own stacking context, so the tint below stays behind the buttons instead of washing over them
 
       &::before {
         content: '';
         position: absolute;
         inset: 0;
         background: role-color($theme, secondary, 500);
-        opacity: 0.1;
+        opacity: 0.15;
         border-radius: 5px;
         pointer-events: none;
+        z-index: -1; // behind the buttons, above the white container background
       }
 
       > * {

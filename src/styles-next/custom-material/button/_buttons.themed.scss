@@ -13,6 +13,7 @@
     15px,
     $focus: role-color($theme, accent, 700)
   );
+  // green disabled label and ring use the hover green: the 500 green is too faint on white
   @include button-color(
     $theme,
     'green',
@@ -21,7 +22,8 @@
     119px,
     4px,
     $outline: true,
-    $focus: role-color($theme, secondary, 700)
+    $focus: role-color($theme, secondary, 700),
+    $disabled-color: role-color($theme, secondary, 600)
   );
   @include button-color(
     $theme,

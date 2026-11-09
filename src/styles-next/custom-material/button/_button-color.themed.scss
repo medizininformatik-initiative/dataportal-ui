@@ -8,11 +8,12 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
   $min-width,
   $gap,
   $outline: false,
-  $focus: $hover
+  $focus: $hover,
+  $disabled-color: $color
 ) {
   $white: role-color($theme, neutral, 0);
-  $disabled-bg: role-color($theme, neutral, 50);
-  $disabled-ring: 0px 0px 1px 1px $color;
+  $disabled-bg: $white; // white, not the off-white of neutral 50: on the tinted action bar it must read as a white button
+  $disabled-ring: 0px 0px 1px 1px $disabled-color;
 
   .num-button.#{$name} {
     min-width: $min-width !important;
@@ -34,9 +35,9 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
 
     &.disabled {
       background-color: $disabled-bg;
-      color: $color;
+      color: $disabled-color;
       box-shadow: $disabled-ring;
-      cursor: unset;
+      cursor: not-allowed;
     }
 
     @if $outline {
@@ -57,7 +58,7 @@ $raised-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px
           color: rgba($color, 0.4);
           background-color: transparent;
           box-shadow: none;
-          cursor: unset;
+          cursor: not-allowed;
         }
       }
     }
