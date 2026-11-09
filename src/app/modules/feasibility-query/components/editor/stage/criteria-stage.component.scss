@@ -2,6 +2,7 @@
 
 .container {
   width: 100%;
+  min-height: 96px; // same as the empty hint: while the only criterion is dragged away the CDK hides it and the list would collapse to 0px, so it could not take the criterion back
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;

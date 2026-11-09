@@ -33,7 +33,12 @@
   </div>
   <div class="handle-icons">
     @if (isEditable()) {
-    <num-menu [menuItems]="menuItems" [id]="criterion().getId()"></num-menu>
+    <num-menu
+      [menuItems]="menuItems"
+      [id]="criterion().getId()"
+      (mousedown)="$event.stopPropagation()"
+      (touchstart)="$event.stopPropagation()"
+    ></num-menu>
     } @if (isEditable()) {
     <div class="menu-icon">
       <fa-icon
