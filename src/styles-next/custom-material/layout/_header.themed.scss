@@ -89,7 +89,13 @@
       margin-right: 8px;
       flex: 1 1 auto;
       height: 100%;
-      overflow: auto;
+      overflow: hidden;
+
+      // every flex level down to the current crumb may shrink, so its ellipsis applies
+      // instead of the crumb running under the language field
+      > num-breadcrumbs {
+        min-width: 0;
+      }
     }
 
     // Fixed widths, so the header does not change from route to route or language to language.

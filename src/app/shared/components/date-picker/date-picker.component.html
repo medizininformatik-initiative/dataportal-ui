@@ -1,4 +1,4 @@
-<div class="date-input-wrapper">
+<div class="date-input-wrapper" [class.invalid]="invalid()">
   <input
     class="date-input"
     matInput
@@ -7,6 +7,7 @@
     (ngModelChange)="selectedDate.set($event)"
     (dateChange)="emitSelectedDate()"
     placeholder="dd.mm.yyyy"
+    [attr.aria-invalid]="invalid()"
   />
   <mat-datepicker-toggle class="date-toggle" [for]="dateStartPicker">
     <fa-icon matDatepickerToggleIcon icon="calendar-alt"></fa-icon>

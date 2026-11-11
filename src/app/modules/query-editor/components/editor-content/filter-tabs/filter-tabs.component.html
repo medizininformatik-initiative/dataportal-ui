@@ -1,17 +1,24 @@
 @if (content() && content().length > 0) {
 <div class="container">
-  <div class="tabs-container">
+  <div class="tabs-container" role="tablist">
     @for (item of content(); track i; let i = $index) {
-    <div class="tab" [class.active]="selectedIndex === i" (click)="selectedIndex = i">
+    <button
+      type="button"
+      role="tab"
+      class="tab"
+      [class.active]="selectedIndex === i"
+      [attr.aria-selected]="selectedIndex === i"
+      (click)="selectedIndex = i"
+    >
       @if (item.display) {
       {{ item.display | displayTranslation }}
       } @else {
       {{ 'EDITOR.CONTENT.TAB_LABEL.' + item.name | translate }}
       }
-    </div>
+    </button>
     }
   </div>
-  <div class="tab-content">
+  <div class="tab-content" role="tabpanel">
     @for (item of content(); track i; let i = $index) { @if (selectedIndex === i) {
     <ng-container
       [ngTemplateOutlet]="item.template"
