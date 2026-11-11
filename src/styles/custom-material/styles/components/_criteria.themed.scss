@@ -1,15 +1,18 @@
 @mixin criteria_themed($theme) {
   // Card grid: the actions column spans the full box height; title block and filters stack beside it.
   // Nothing is absolutely positioned, so long titles and many filter rows can never overlap the icons.
-  // Scoped to the box's own container: nested num-reference-criteria-box has its own .container.
+  // Scoped to the box's own container through .criteria-box (nested num-reference-criteria-box has its
+  // own .container without it). Not through the num-criteria-box element: while dragging, the CDK
+  // appends a copy of the container to <body>, outside of num-criteria-box, and the copy keeps
+  // its classes, so it gets the same design.
   // Surface, edge shadow and hover come from .num-card .num-card--raised (_ui-classes.scss);
   // no box-shadow here, or the global :hover would be outranked.
-  num-criteria-box > .container {
+  .container.criteria-box {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     grid-template-areas:
       'toggle content actions'
-      'filters filters actions';
+      '. filters actions';
     column-gap: var(--spacing-8);
     width: 448px;
     max-width: 100%;
@@ -168,14 +171,23 @@
       }
     }
 
-    // Filter rows: grey label on the left, values as pills (the Impeccable proposal).
-    // Same markup and behaviour as num-filter-chips, only restyled inside the box.
+    // Filters as a table: grey label column on the left, one value pill per line on the right.
+    // The label column is as wide as the longest label (at most 116px) and shared by all filters,
+    // so every value starts at the same x position. Each .filter-wrapper joins the grid of
+    // num-filter-chips through a subgrid. Same markup and behaviour as num-filter-chips.
     num-filter-chips {
+      display: grid;
+      grid-template-columns: fit-content(116px) minmax(0, 1fr);
+      column-gap: var(--spacing-8);
+      row-gap: var(--spacing-8);
+
       .filter-wrapper {
-        position: relative;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: subgrid;
+        row-gap: var(--spacing-4);
+        align-items: start;
         min-height: 22px;
-        padding-left: 124px;
-        align-items: baseline;
       }
 
       .block-triangle {
@@ -183,16 +195,16 @@
       }
 
       .block {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 116px;
+        grid-column: 1;
+        grid-row: 1;
+        width: auto;
         max-width: 116px;
         min-width: 0;
+        margin: 0;
         height: auto;
         min-height: 22px;
         padding: 0;
-        justify-content: flex-start;
+        display: block; // text-overflow: ellipsis does not work on the inline-flex of the base style
         border: 0;
         border-radius: 0;
         background: transparent;
@@ -205,7 +217,7 @@
         text-transform: none;
 
         &.expanded {
-          width: 116px;
+          width: auto;
           min-width: 0;
           max-width: 116px;
           white-space: normal;
@@ -215,16 +227,20 @@
       }
 
       .chip-container {
+        grid-column: 2;
+        justify-self: start;
+        max-width: 100%;
         height: 22px;
-        margin: 0 6px 4px 0;
+        margin: 0;
         padding: 0 8px;
-        border: 0;
+        // white with a thin accent edge: the old pale blue fill was nearly invisible on the tile tint
+        border: 1px solid var(--color-accent-border);
         border-radius: 6px;
-        background: #e9eff8;
+        background: #fff;
         color: var(--color-text-primary);
         font-family: var(--font-body);
         font-size: 13px;
-        line-height: 22px;
+        line-height: 20px;
         font-variant-numeric: tabular-nums;
 
         &.expanded {
@@ -235,7 +251,7 @@
         }
 
         &.count-badge {
-          background: #e9eff8;
+          background: #fff;
           color: var(--color-accent-strong);
           font-weight: 600;
         }
