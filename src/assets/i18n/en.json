@@ -391,6 +391,8 @@
       "HEADER": "Criteria editor",
       "HEADER_INFO": "Edit your criteria here and compile your cohort selection. The cohort selection can be used to directly submit a cross-location feasibility query.",
       "HEADER_TITLE": "Selected criteria",
+      "COLLAPSE_ALL": "Collapse all",
+      "EXPAND_ALL": "Expand all",
       "INCLUSION": "Inclusion criteria",
       "MODAL": {
         "ADD": "Add",
@@ -571,7 +573,10 @@
       "TIMERESTRICTION": "Time Restriction"
     },
     "CRITERIA_BOX": {
-      "DRAG_ICON_LABEL": "Drag criterion to inclusion or exclusion group (Drag & Drop)"
+      "DRAG_ICON_LABEL": "Drag criterion to inclusion or exclusion group (Drag & Drop)",
+      "COLLAPSE_LABEL": "Collapse criterion",
+      "EXPAND_LABEL": "Expand criterion",
+      "REFERENCES": "References"
     },
     "DELETE_MODAL": {
       "CANCEL": "Cancel",

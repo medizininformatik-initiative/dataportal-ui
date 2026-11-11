@@ -6,18 +6,48 @@
   // no box-shadow here, or the global :hover would be outranked.
   num-criteria-box > .container {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     grid-template-areas:
-      'content actions'
-      'filters actions';
+      'toggle content actions'
+      'filters filters actions';
+    column-gap: var(--spacing-8);
     width: 448px;
     max-width: 100%;
     padding: var(--spacing-16);
     cursor: grab;
     --num-card-tint: 0.1; // original 10% tint, overrides the 15% of .num-card--raised
 
+    // Chevron on the left folds the box to title + type · code on one line each.
+    .collapse-toggle {
+      grid-area: toggle;
+      align-self: start; // same row as the title line
+      height: var(--line-height-md);
+      width: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      border-radius: var(--border-radius-sm);
+      background: transparent;
+      color: var(--color-text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background: var(--color-accent-border);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 1px;
+      }
+    }
+
     .content {
       grid-area: content;
+      align-self: start;
       min-width: 0;
       display: flex;
       flex-direction: column;
@@ -45,11 +75,6 @@
     .info-section {
       color: var(--color-text-section);
       overflow-wrap: anywhere;
-
-      .separator {
-        margin-inline: var(--spacing-4);
-        opacity: 0.6;
-      }
     }
 
     // Drag handle + options menu as a compact icon toolbar (24px targets),
@@ -115,11 +140,120 @@
       cursor: grab;
     }
 
+    // Collapsed: compact padding, one line each, the actions side by side.
+    &.collapsed {
+      padding: var(--spacing-8);
+
+      .title-section {
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+      }
+
+      .info-section {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .handle-icons {
+        flex-direction: row;
+        justify-content: center;
+        margin-block: calc(-1 * var(--spacing-8));
+        padding-block: 0;
+      }
+
+      .filter-chips-container {
+        margin-top: var(--spacing-8);
+        padding-top: var(--spacing-8);
+      }
+    }
+
+    // Filter rows: grey label on the left, values as pills (the Impeccable proposal).
+    // Same markup and behaviour as num-filter-chips, only restyled inside the box.
+    num-filter-chips {
+      .filter-wrapper {
+        position: relative;
+        min-height: 22px;
+        padding-left: 124px;
+        align-items: baseline;
+      }
+
+      .block-triangle {
+        display: none;
+      }
+
+      .block {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 116px;
+        max-width: 116px;
+        min-width: 0;
+        height: auto;
+        min-height: 22px;
+        padding: 0;
+        justify-content: flex-start;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: var(--color-text-section);
+        font-family: var(--font-body);
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 22px;
+        letter-spacing: normal;
+        text-transform: none;
+
+        &.expanded {
+          width: 116px;
+          min-width: 0;
+          max-width: 116px;
+          white-space: normal;
+          overflow-wrap: anywhere;
+          padding-right: 0;
+        }
+      }
+
+      .chip-container {
+        height: 22px;
+        margin: 0 6px 4px 0;
+        padding: 0 8px;
+        border: 0;
+        border-radius: 6px;
+        background: #e9eff8;
+        color: var(--color-text-primary);
+        font-family: var(--font-body);
+        font-size: 13px;
+        line-height: 22px;
+        font-variant-numeric: tabular-nums;
+
+        &.expanded {
+          height: auto;
+          min-height: 22px;
+          min-width: 0;
+          padding-right: 8px;
+        }
+
+        &.count-badge {
+          background: #e9eff8;
+          color: var(--color-accent-strong);
+          font-weight: 600;
+        }
+      }
+    }
+
     .img-layout {
       height: 24px; /* multiple of 4 */
       width: 32px; /* multiple of 4 */
       margin-right: var(--spacing-8);
     }
+  }
+
+  // Reference box: menu trigger as a plain icon, same size as in num-criteria-box.
+  num-reference-criteria-box .handle-icons .menu-trigger-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
   }
 
   .mat-mdc-menu-panel {
