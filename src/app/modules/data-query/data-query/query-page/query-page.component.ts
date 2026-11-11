@@ -1,6 +1,7 @@
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { Component, inject, input } from '@angular/core'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
-import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper'
+import { MatStep, MatStepLabel, MatStepper, MatStepperIcon } from '@angular/material/stepper'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -14,7 +15,15 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './query-page.component.html',
   styleUrls: ['./query-page.component.scss'],
   standalone: true,
-  imports: [MatStepper, MatStep, MatStepLabel, HeaderComponent, TranslateModule],
+  imports: [
+    MatStepper,
+    MatStep,
+    MatStepLabel,
+    MatStepperIcon,
+    FontAwesomeModule,
+    HeaderComponent,
+    TranslateModule,
+  ],
 })
 export class QueryPageComponent {
   private readonly navigationHelperService = inject(NavigationHelperService)

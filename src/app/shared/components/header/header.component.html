@@ -1,8 +1,9 @@
 <div class="header-font">
-  <h1 class="header-title">
-    <ng-content></ng-content>
-  </h1>
-  @if (showToggle()) {
+  @if (isHeading()) {
+  <h1 class="header-title"><ng-container [ngTemplateOutlet]="title" /></h1>
+  } @else {
+  <span class="header-title"><ng-container [ngTemplateOutlet]="title" /></span>
+  } @if (showToggle()) {
   <button
     class="toggle-btn"
     (click)="toggleService.toggle()"
@@ -16,3 +17,4 @@
   </button>
   }
 </div>
+<ng-template #title><ng-content></ng-content></ng-template>

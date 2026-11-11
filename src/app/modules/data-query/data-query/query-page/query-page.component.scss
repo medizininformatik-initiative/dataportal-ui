@@ -27,3 +27,10 @@
 ::ng-deep .mat-horizontal-content-container {
   padding-bottom: 0 !important;
 }
+
+// Brand blue instead of Material's default indigo; a completed step shows a check
+.page-header ::ng-deep .mat-stepper-horizontal {
+  --mat-stepper-header-selected-state-icon-background-color: var(--color-accent);
+  --mat-stepper-header-edit-state-icon-background-color: var(--color-accent);
+  --mat-stepper-header-done-state-icon-background-color: var(--color-accent);
+}
