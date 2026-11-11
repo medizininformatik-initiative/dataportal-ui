@@ -1,4 +1,4 @@
-import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs'
+import { map, Observable, Subscription } from 'rxjs'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
@@ -8,7 +8,6 @@ import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/B
 import { SelectedReferenceField } from '../model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { ProfileTimeRestrictionFilter } from '../model/DataSelection/Profile/Filter/ProfileDateFilter'
 import { ProfileTokenFilter } from '../model/DataSelection/Profile/Filter/ProfileTokenFilter'
-import { initial } from 'lodash'
 
 /**
  * Service for managing staged profile changes before committing to data selection.

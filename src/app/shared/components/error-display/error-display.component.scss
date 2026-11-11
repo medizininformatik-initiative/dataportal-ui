@@ -6,8 +6,8 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
+  justify-content: center; // centred like every other dialog
+  align-items: center;
   z-index: 9999;
   padding: var(--spacing-20);
   box-sizing: border-box;
@@ -114,11 +114,6 @@
 
 .action-button {
   padding: var(--spacing-8) var(--spacing-16);
-}
-
-.button-icon {
-  font-size: var(--font-size-md);
-  margin-right: var(--spacing-4);
 }
 
 // Scrollbar styling

@@ -1,6 +1,7 @@
 @if (tableData()) {
-<table>
+<table role="table">
   <thead
+    role="rowgroup"
     num-table-header
     class="table-header sticky-header"
     [tableData]="tableData()"
@@ -8,6 +9,7 @@
     (selectAll)="selectAll.emit($event)"
   ></thead>
   <tbody
+    role="rowgroup"
     num-table-body
     infiniteScroll
     [infiniteScrollDistance]="infiniteScrollDistance()"

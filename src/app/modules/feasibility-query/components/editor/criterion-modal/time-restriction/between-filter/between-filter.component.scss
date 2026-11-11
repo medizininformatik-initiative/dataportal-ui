@@ -8,9 +8,9 @@
 
 .date-warning {
   width: 100%;
-  font-family: 'Open Sans', sans-serif;
-  font-size: var(--font-size-sm);
-  color: #e05050;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--num-color--error-on-white); // 6.04:1 on white (was #e05050, 3.9:1)
   margin-top: var(--spacing-2);
 }
 .mat-expansion-panel-header {

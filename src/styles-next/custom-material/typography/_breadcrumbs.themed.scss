@@ -1,0 +1,10 @@
+@use '../../functions/type';
+
+/* Group "breadcrumbs": the location trail on the left of the app header (C04).
+   Writes the variables of its roles. The values are in themes/fdpg-light/_type-roles.scss under the same names.
+   Parsed as: type.vars($theme, '<role>')  =  write family, weight, size and line of that role as four variables
+   (see functions/_type.scss). Components read them: font-size: var(--font-app-header-breadcrumb-current-size); */
+@mixin breadcrumbs_themed($theme) {
+  @include type.vars($theme, 'app-header-breadcrumb-current');
+  @include type.vars($theme, 'app-header-breadcrumb-separator');
+}

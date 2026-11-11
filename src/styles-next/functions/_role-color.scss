@@ -1,0 +1,22 @@
+@use 'sass:map';
+
+// role-color($theme, $role, $shade): hex of one shade, found through a role.
+//
+// Two lookups:
+//   1. map.get($theme, roles)        -> the roles map  (role -> palette)
+//   2. map.get(<roles>, $role, $shade) -> with several keys, map.get walks into
+//      nested maps: roles[$role][$shade] = palette[$shade] = hex
+// A missing role or shade gives null (no error), so check the CSS output.
+//
+// Examples (fdpg-light: accent -> blue palette, danger -> red palette, neutral -> grey palette):
+//   role-color($theme, accent, 500)    -> #5a79af
+//   role-color($theme, accent, 600)    -> #49689c
+//   role-color($theme, danger, 300)    -> #ff8383
+//   role-color($theme, neutral, 0)       -> #ffffff   (0 = white)
+//
+// In a mixin:
+//   background-color: role-color($theme, accent, 500);
+//   &:hover { background-color: role-color($theme, accent, 600); }
+@function role-color($theme, $role, $shade) {
+  @return map.get(map.get($theme, roles), $role, $shade);
+}

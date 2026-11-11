@@ -3,11 +3,6 @@
   width: 100%;
 }
 
-::ng-deep .mat-mdc-tab .mdc-tab__text-label {
-  font-weight: 500;
-  font-size: medium;
-  color: var(--color-accent);
-}
 .selected-concept-list {
   display: flex;
   flex-direction: column;
@@ -29,7 +24,7 @@
   justify-content: space-between;
   height: 48px;
   margin-bottom: var(--spacing-8);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .concept-item-display {

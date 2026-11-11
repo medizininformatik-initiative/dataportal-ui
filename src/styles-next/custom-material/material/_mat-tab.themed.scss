@@ -1,0 +1,19 @@
+/* Material tabs in role colors. Without this the labels and the indicator are Material's default indigo (#3f51b5).
+   Active = accent 600 (same as the cancel button text), inactive = foreground text. Used by every `mat-tab-group` in the app.
+   Parsed as: Material M2 reads these --mat-tab-header-* / --mdc-tab-indicator-* variables from the host `mat-tab-group`. */
+@mixin mat-tab_themed($theme) {
+  .mat-mdc-tab-group,
+  .mat-mdc-tab-nav-bar {
+    --mat-tab-header-active-label-text-color: #{role-color($theme, accent, 600)};
+    --mat-tab-header-active-focus-label-text-color: #{role-color($theme, accent, 600)};
+    --mat-tab-header-active-hover-label-text-color: #{role-color($theme, accent, 600)};
+    --mat-tab-header-active-ripple-color: #{role-color($theme, accent, 600)};
+    --mat-tab-header-inactive-ripple-color: #{role-color($theme, accent, 600)};
+    --mdc-tab-indicator-active-indicator-color: #{role-color($theme, accent, 600)};
+    --mat-tab-header-active-focus-indicator-color: #{role-color($theme, accent, 600)};
+    --mat-tab-header-active-hover-indicator-color: #{role-color($theme, accent, 600)};
+    --mat-tab-header-inactive-label-text-color: #{foreground-color($theme, text)};
+    --mat-tab-header-inactive-focus-label-text-color: #{foreground-color($theme, text)};
+    --mat-tab-header-inactive-hover-label-text-color: #{foreground-color($theme, text)};
+  }
+}

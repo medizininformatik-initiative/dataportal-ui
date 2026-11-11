@@ -1,20 +1,41 @@
+// Page frame: one column, four rows; the query display takes the rest and its two lists scroll.
 .container {
   height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.height-59 {
-  height: 42px;
-  border-radius: var(--border-radius-card);
-  background: var(--border-color);
-}
-
-.simple-result-container {
-  height: 24%;
-}
-
-.feasibility-container {
-  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto; // header, simple result, query display, actions
+  row-gap: var(--spacing-16); // the one vertical rhythm between the rows
   overflow: auto;
+}
+
+// Intro sits 8px under the title; its own 1em margins are off, the row gap spaces it from the next row
+.page-header {
+  --header-description-margin: var(--spacing-8) 0 0;
+}
+
+.title-row {
+  margin-top: var(--spacing-8);
+}
+
+// The two blocks (result, sent cohort) are framed cards with the same edge and the same inner padding
+.card {
+  padding: var(--spacing-16) var(--spacing-24);
+  background-color: #fff;
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--border-radius-card);
+}
+
+// Heading and hint of the sent cohort, then the two lists, which scroll inside
+.feasibility-container {
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.cohort-hint {
+  margin: 0 0 var(--spacing-8);
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
 }

@@ -96,7 +96,7 @@ Feature: Attribute filter (concept) - criterium with several concept filters
     And I have selected the concepts in the filter "<filter>":
       | <concept> |
     When I click on the button "{{labels.close}}"
-    And I navigate to the "{{languageSwitch.kohortenselektion}}" page
+    And I navigate to the "{{languageSwitch.kohortendefinition}}" page
     And I add the criterium "<otherCriterium>" via code "<otherCode>" to the editor
     And I open the editor of the added criterium
     And I open the editor tab "<filter>"

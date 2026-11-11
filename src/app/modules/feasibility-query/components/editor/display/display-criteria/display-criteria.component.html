@@ -22,14 +22,24 @@
   </div>
   } @if (criteriaGroups().length === 0 && isEditable()) {
   <div class="no-selected-criteria">
-    <div class="wrapper">
-      <div class="wrapper-solid-dashed-box">
-        <div class="solid-box">
-          <fa-icon class="drag-handle" size="m" icon="expand-arrows-alt"></fa-icon>
-        </div>
-        <div class="dashed-box"></div>
+    <div class="demo" aria-hidden="true">
+      <div class="slot"></div>
+      <div class="ghost">
+        <i></i>
+        <i></i>
+        <fa-icon class="ghost-move" icon="expand-arrows-alt"></fa-icon>
       </div>
-      <div class="text-wrapper">{{ 'FEASIBILITY.EDITOR.DRAG_AND_DROP' | translate }}</div>
+      <svg class="cursor" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z" />
+      </svg>
+    </div>
+    <div class="text">
+      <strong>{{ 'FEASIBILITY.EDITOR.EMPTY_LIST.TITLE' | translate }}</strong>
+      <span>
+        {{ 'FEASIBILITY.EDITOR.EMPTY_LIST.HINT_BEFORE' | translate }}
+        <fa-icon class="inline-move" icon="expand-arrows-alt"></fa-icon>
+        {{ 'FEASIBILITY.EDITOR.EMPTY_LIST.HINT_AFTER' | translate }}
+      </span>
     </div>
   </div>
   }

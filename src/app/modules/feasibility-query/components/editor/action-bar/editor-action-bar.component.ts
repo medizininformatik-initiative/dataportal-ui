@@ -8,7 +8,6 @@ import { Component, computed, inject, OnInit } from '@angular/core'
 @Component({
   selector: 'num-editor-action-bar',
   templateUrl: './editor-action-bar.component.html',
-  styleUrls: ['./editor-action-bar.component.scss'],
   standalone: true,
   imports: [ActionBarComponent, ButtonComponent, MatTooltip, TranslateModule],
 })
@@ -24,11 +23,7 @@ export class EditorActionBarComponent implements OnInit {
   ngOnInit(): void {}
 
   navigateToSearch(): void {
-    this.navigation.navigateToFeasibilityQuerySearch()
-  }
-
-  navigateToBulkCriteriaSearch(): void {
-    this.navigation.navigateToFeasibilityQueryBulkSearch()
+    this.navigation.navigateBackToFeasibilitySearch()
   }
 
   sendRequest(): void {

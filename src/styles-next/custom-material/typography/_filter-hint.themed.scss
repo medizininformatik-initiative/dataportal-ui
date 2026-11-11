@@ -1,0 +1,10 @@
+@use '../../functions/type';
+
+/* Group "filter-hint": the one-line label above a group of filters ("Suche verfeinern:"), a <p> next to an info icon.
+   It names controls, it does not head a block, so it is no heading and has its own role (not the section name).
+   Writes the variables of its role. The values are in themes/fdpg-light/_type-roles.scss under the same name.
+   Parsed as: type.vars($theme, '<role>')  =  write family, weight, size, line (and letter-spacing if set) of that role as variables
+   (see functions/_type.scss). The component reads them: font-size: var(--font-app-content-filter-hint-size); */
+@mixin filter-hint_themed($theme) {
+  @include type.vars($theme, 'app-content-filter-hint');
+}

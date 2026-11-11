@@ -6,6 +6,7 @@
         : ('SHARED_COMPONENTS.TABLE.' + cell().context + '.SELECT_CHECKBOX' | translate)
     "
     [disabled]="!cell().isDisabled"
+    [tabbable]="false"
     [checked]="cell().isSelected"
     (checkedChange)="onCheckboxChange()"
   ></num-checkbox>

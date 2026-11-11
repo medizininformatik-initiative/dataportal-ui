@@ -51,17 +51,17 @@
     "note": "Note"
   },
   "languageSwitch": {
-    "merkmalselektion": "Merkmalselektion",
+    "merkmaldefinition": "Merkmaldefinition",
     "dataSelection": "Data Selection",
     "german": "German",
     "savedDataDefinitions": "Saved data definitions",
-    "cohortSelection": "Cohort Selection",
+    "cohortDefinition": "Cohort Definition",
     "english": "English",
     "gespeicherteDatendefinitionen": "Gespeicherte Datendefinitionen",
-    "kohortenselektion": "Kohortenselektion"
+    "kohortendefinition": "Kohortendefinition"
   },
   "sideNavigation": {
-    "featureSelection": "Feature Selection"
+    "featureDefinition": "Feature Definition"
   },
   "dataSelectionSearchFailures": {
     "zzzqqqxxx": "zzzqqqxxx"

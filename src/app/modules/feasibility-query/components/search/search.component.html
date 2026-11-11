@@ -1,19 +1,18 @@
 <div class="container">
-  <div>
-    <div class="header-container">
+  <div class="page-header">
+    <div class="title-row">
       <num-header [showToggle]="true">{{ 'FEASIBILITY.SEARCH.HEADER' | translate }}</num-header>
-      <div class="margin-left-auto">
-        <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
-      </div>
+      <num-search-mode-toggle (modeChange)="searchModeChange($event)"></num-search-mode-toggle>
     </div>
     <num-header-description>
       {{ 'FEASIBILITY.SEARCH.HEADER_INFO' | translate }}
     </num-header-description>
   </div>
 
-  <num-criteria-search-bar></num-criteria-search-bar>
-
-  <num-criteria-search-filter-bar></num-criteria-search-filter-bar>
+  <div class="search-row">
+    <num-criteria-search-bar></num-criteria-search-bar>
+    <num-criteria-search-filter-bar></num-criteria-search-filter-bar>
+  </div>
 
   <div class="result-container">
     <num-criteria-search-results></num-criteria-search-results>

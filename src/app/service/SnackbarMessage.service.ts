@@ -105,4 +105,10 @@ export class SnackbarMessageService {
   public displayTimeRestrictionAppliedToAll(): void {
     this.snackbarService.displayInfoMessage('FEASIBILITY.EDITOR.SUCCESS.TIME_RESTRICTION_APPLIED')
   }
+
+  public displayTimeRestrictionAppliedToAllFeatures(): void {
+    this.snackbarService.displayInfoMessage(
+      'FEASIBILITY.EDITOR.SUCCESS.TIME_RESTRICTION_APPLIED_FEATURES'
+    )
+  }
 }

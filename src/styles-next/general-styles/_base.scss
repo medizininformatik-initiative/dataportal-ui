@@ -1,0 +1,55 @@
+html,
+body {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+mark {
+  background-color: var(--color-accent-bg);
+  color: var(--color-text-primary);
+  border-radius: 2px;
+  padding: 0 1px;
+  font-weight: 600;
+}
+
+// Global scrollbar
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f2f3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5cacf;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8aeb5;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c5cacf #f1f2f3;
+}

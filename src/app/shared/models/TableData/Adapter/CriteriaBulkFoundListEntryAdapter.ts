@@ -12,7 +12,7 @@ export class CriteriaBulkFoundListEntryAdapter extends AbstractTableAdapter<Crit
   protected buildHeaders(): TableHeaderData {
     return {
       headers: [
-        { label: 'DISPLAY', addAllCheckbox: false },
+        { label: 'CRITERION', addAllCheckbox: false },
         { label: 'TERMINOLOGY_CODE', addAllCheckbox: false },
         { label: 'TERMCODE', addAllCheckbox: false },
       ],

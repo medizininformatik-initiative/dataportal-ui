@@ -11,11 +11,17 @@ import { Router } from '@angular/router'
 })
 export class NavigationHelperService {
   private router = inject(Router)
+  private feasibilitySearchUrl = UrlPaths.feasibilityQuery.search
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
 
   constructor() {}
+
+  /** Navigates back to the search page (normal or bulk) the editor was entered from. */
+  public navigateBackToFeasibilitySearch(): void {
+    this.router.navigate([this.feasibilitySearchUrl])
+  }
 
   /**
    * Navigates to {@link UrlPaths.feasibilityQuery.result | /feasibility-query/result}
@@ -49,6 +55,10 @@ export class NavigationHelperService {
    * @returns
    */
   public navigateToFeasibilityQueryEditor(): void {
+    const from = [UrlPaths.feasibilityQuery.search, UrlPaths.feasibilityQuery.bulkSearch].find(
+      (u) => this.router.url.includes(u)
+    )
+    if (from) this.feasibilitySearchUrl = from
     this.router.navigate([UrlPaths.feasibilityQuery.editor])
   }
 

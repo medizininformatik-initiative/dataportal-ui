@@ -1,3 +1,4 @@
+import { ApplyTimeRestrictionComponent } from '../apply-time-restriction/apply-time-restriction.component'
 import { DataSelectionBoxesComponent } from '../data-selection-boxes/data-selection-boxes.component'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { SearchbarComponent } from 'src/app/shared/components/search/searchbar.component'
@@ -22,7 +23,12 @@ import { toSignal } from '@angular/core/rxjs-interop'
   templateUrl: './display-profiles.component.html',
   styleUrls: ['./display-profiles.component.scss'],
   standalone: true,
-  imports: [DataSelectionBoxesComponent, SearchbarComponent, TranslateModule],
+  imports: [
+    ApplyTimeRestrictionComponent,
+    DataSelectionBoxesComponent,
+    SearchbarComponent,
+    TranslateModule,
+  ],
 })
 export class DisplayProfilesComponent {
   private profileProvider = inject(ProfileProviderService)

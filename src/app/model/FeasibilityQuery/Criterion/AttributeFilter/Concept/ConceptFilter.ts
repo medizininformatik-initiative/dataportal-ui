@@ -1,14 +1,13 @@
-import { AbstractConceptFilter } from './AbstractConceptFilter';
-import { Concept } from './Concept';
-import { FilterTypes } from 'src/app/model/Utilities/FilterTypes';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { AbstractConceptFilter } from './AbstractConceptFilter'
+import { Concept } from './Concept'
+import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'
 
 /**
  * Class representing a ConceptFilter.
  */
 export class ConceptFilter extends AbstractConceptFilter {
-  private allowedConceptUrls: string[];
-  private type: FilterTypes = FilterTypes.CONCEPT;
+  private allowedConceptUrls: string[]
+  private type: FilterTypes = FilterTypes.CONCEPT
 
   /**
    * Creates an instance of ConceptFilter.
@@ -17,8 +16,8 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @param selectedConcepts - The selected concepts.
    */
   constructor(id: string, allowedConceptUrls: string[], selectedConcepts: Array<Concept>) {
-    super(id, selectedConcepts);
-    this.allowedConceptUrls = allowedConceptUrls;
+    super(id, selectedConcepts)
+    this.allowedConceptUrls = allowedConceptUrls
   }
 
   /**
@@ -27,7 +26,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @returns The allowed concept URI.
    */
   public getAllowedConceptUrls(): string[] {
-    return this.allowedConceptUrls;
+    return this.allowedConceptUrls
   }
 
   /**
@@ -36,7 +35,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @param allowedConceptUri - The new allowed concept URI.
    */
   public setAllowedConceptUri(allowedConceptUrls: string[]): void {
-    this.allowedConceptUrls = allowedConceptUrls;
+    this.allowedConceptUrls = allowedConceptUrls
   }
 
   /**
@@ -45,7 +44,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @returns The filter type.
    */
   public getType(): FilterTypes {
-    return this.type;
+    return this.type
   }
 
   /**
@@ -54,7 +53,7 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @param type - The new filter type.
    */
   public setType(type: FilterTypes): void {
-    this.type = type;
+    this.type = type
   }
 
   /**
@@ -63,10 +62,10 @@ export class ConceptFilter extends AbstractConceptFilter {
    * @returns True if the selected concepts set exists, otherwise false.
    */
   public isSelectedConceptSet(): boolean {
-    return this.selectedConcepts !== undefined && this.selectedConcepts !== null;
+    return this.selectedConcepts !== undefined && this.selectedConcepts !== null
   }
 
   public hasSelectedConcepts(): boolean {
-    return this.isSelectedConceptSet() && this.selectedConcepts.length > 0;
+    return this.isSelectedConceptSet() && this.selectedConcepts.length > 0
   }
 }

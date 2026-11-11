@@ -5,7 +5,7 @@ import { BasePaths, PathSegments } from '../../support/e2e'
  * string (grepped, zero hits). `NavItemPaths` never had entries for them.
  * */
 export const NavItem = {
-  cohort: 'Kohortenselektion',
+  cohort: 'Kohortendefinition',
   dataSelection: 'Data Selection',
   dataDefinition: 'Data Definition',
   savedQueries: 'Saved Queries',

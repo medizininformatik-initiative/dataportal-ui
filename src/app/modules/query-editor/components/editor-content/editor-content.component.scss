@@ -1,6 +1,9 @@
-.background {
+// Frame of the three editors (criterion, profile, reference): their header and tabs are the two rows.
+:host {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: fit-content(40%) minmax(0, 1fr); // header (capped, scrolls), tabs (rest)
+  row-gap: var(--spacing-16); // the one spacing between header and tabs
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
+  min-height: 0;
 }

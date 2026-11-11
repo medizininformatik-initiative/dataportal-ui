@@ -1,0 +1,15 @@
+@use '../../functions/type';
+
+/* Group "details-panel" (C22): the drawer that opens on a table row click (`num-list-item-details-generic` and its `-sections`).
+   Writes the variables of its roles. The values are in themes/fdpg-light/_type-roles.scss under the same names.
+   tab = tab labels, title = the name of the open entry, label = row label (left column), value = row text,
+   relative-name / relative-meta = the parent and child cards.
+   Components read them: font-size: var(--font-details-panel-label-size); */
+@mixin details-panel_themed($theme) {
+  @include type.vars($theme, 'details-panel-tab');
+  @include type.vars($theme, 'details-panel-title');
+  @include type.vars($theme, 'details-panel-label');
+  @include type.vars($theme, 'details-panel-value');
+  @include type.vars($theme, 'details-panel-relative-name');
+  @include type.vars($theme, 'details-panel-relative-meta');
+}

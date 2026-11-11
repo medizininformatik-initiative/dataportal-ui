@@ -1,23 +1,19 @@
+// plain dialog title like the other dialogs (the gradient header was its own pattern)
 .about-modal-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: var(--spacing-16) var(--spacing-24);
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--num-color--primary-green) 100%);
-  color: white;
-  font-size: 1.25rem;
-  border-radius: 4px;
-
-  .icon {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
+  padding: var(--spacing-16) var(--spacing-24) 0;
+  color: var(--color-text-primary);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: var(--font-weight-bold);
 }
 
+// the body scrolls, so the footer buttons stay visible on a 720px high screen
 .about-modal-content {
   background: white;
   padding: var(--spacing-24);
   flex: 1;
+  max-height: calc(90vh - 160px);
+  overflow-y: auto;
 }
 
 .info-section {

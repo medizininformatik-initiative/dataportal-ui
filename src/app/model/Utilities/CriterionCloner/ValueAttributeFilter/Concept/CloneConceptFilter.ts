@@ -1,7 +1,6 @@
-import { CloneTerminologyCode } from '../../TerminologyCode/CloneTerminologyCode';
-import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter';
-import { v4 as uuidv4 } from 'uuid';
-import { CloneConcept } from './CloneConcept';
+import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/ConceptFilter'
+import { v4 as uuidv4 } from 'uuid'
+import { CloneConcept } from './CloneConcept'
 
 export class CloneConceptFilter {
   /**
@@ -13,11 +12,11 @@ export class CloneConceptFilter {
   static deepCopyConceptFilter(conceptFilter: ConceptFilter): ConceptFilter {
     const copiedSelectedConcepts = CloneConcept.deepCopyConcepts(
       conceptFilter.getSelectedConcepts()
-    );
+    )
     return new ConceptFilter(
       uuidv4(),
       conceptFilter.getAllowedConceptUrls(),
       copiedSelectedConcepts
-    );
+    )
   }
 }

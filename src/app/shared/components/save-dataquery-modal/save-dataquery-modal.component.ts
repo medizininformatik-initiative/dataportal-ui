@@ -1,5 +1,5 @@
 import { ButtonComponent } from '../button/button.component'
-import { Component, inject, OnDestroy, OnInit, output } from '@angular/core'
+import { Component, inject, OnInit, output } from '@angular/core'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
 import { HeaderComponent } from '../header/header.component'

@@ -1,3 +1,10 @@
+// Row of the editor grid: the box sizes to its content, the row scrolls when it is capped
+:host {
+  display: block;
+  min-height: 0;
+  overflow: auto;
+}
+
 // Layout Containers
 .display-container {
   display: flex;

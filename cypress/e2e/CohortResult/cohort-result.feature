@@ -27,3 +27,20 @@ Feature: Cohort Result
     Examples:
       | criterium            | code            | title                  | comment                  |
       | {{labAge.criterium}} | {{labAge.code}} | {{cohortResult.title}} | {{cohortResult.comment}} |
+
+  @component:feasibility-result @behavior:open
+  Scenario Outline: The details button waits for the result, then lists the sites
+    When I add the criterium "<criterium>" via code "<code>" to the editor
+    Then I should see the criterium "<criterium>" in the editor
+    When I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
+    And I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    And I see the details button is disabled
+    When I see the result
+    Then I see the details button is enabled
+    When I open the result details
+    Then I see the sites in the result details
+
+    Examples:
+      | criterium            | code            |
+      | {{labAge.criterium}} | {{labAge.code}} |

@@ -1,0 +1,151 @@
+/* Type roles of "FDPG Light": one entry per role (family, weight, size, line height).
+   Read with: type.vars($theme, 'role-name')  (see functions/_type.scss).
+   The key is the role name and is the same name everywhere: here, in the group file, in the CSS variables
+   (--font-app-content-page-header-title-*) and in the prototype. No separate adjective names like 'strong' or 'large'.
+   Two roles may have equal values today (duplicates are allowed); equal entries can be merged later when the
+   whole app is converted.
+   Draft: page header, section name, search bar input, table, button, breadcrumbs, text link, side menu so far.. */
+$_brand: "'Titillium Web', sans-serif";
+
+$fdpg-light-type-roles: (
+  'app-content-page-header-title': (
+    family: $_brand,
+    weight: 600,
+    size: 24px,
+    line: 32px,
+  ),
+  'app-content-page-header-intro': (
+    family: $_brand,
+    weight: 400,
+    size: 16px,
+    line: 24px,
+    letter-spacing: normal,
+  ),
+  'app-content-section-name': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+    letter-spacing: normal,
+  ),
+  'app-content-filter-hint': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+    letter-spacing: normal,
+  ),
+  'app-content-search-bar-input': (
+    family: $_brand,
+    weight: 400,
+    size: 16px,
+    line: 24px,
+  ),
+  /* Same values as 'app-content-search-bar-input' today. Own name so a search field inside a filter can change later. */
+    'app-content-filter-search-input':
+    (
+      family: $_brand,
+      weight: 400,
+      size: 16px,
+      line: 24px,
+    ),
+  'table-header': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+  ),
+  'table-cell': (
+    family: $_brand,
+    weight: 400,
+    size: 14px,
+    line: 20px,
+  ),
+  'button': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+  ),
+  'app-header-breadcrumb-current': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+  ),
+  'app-header-breadcrumb-separator': (
+    family: $_brand,
+    weight: 400,
+    size: 16px,
+    line: 24px,
+  ),
+  'text-link': (
+    family: $_brand,
+    weight: 400,
+    size: 16px,
+    line: 24px,
+  ),
+  'side-menu-parent-item': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+  ),
+  'side-menu-child-item': (
+    family: $_brand,
+    weight: 400,
+    size: 16px,
+    line: 24px,
+  ),
+  'side-menu-child-item-active': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+  ),
+  /* Details panel (C22): the drawer that opens on a table row click. Generic panel, used on the criteria and the profile search.
+     letter-spacing: normal because the drawer container inherits Material's 0.25px (decision Q8). */
+    'details-panel-tab':
+    (
+      family: $_brand,
+      weight: 400,
+      size: 16px,
+      line: 24px,
+      letter-spacing: normal,
+    ),
+  'details-panel-title': (
+    family: $_brand,
+    weight: 600,
+    size: 16px,
+    line: 24px,
+    letter-spacing: normal,
+  ),
+  'details-panel-label': (
+    family: $_brand,
+    weight: 600,
+    size: 14px,
+    line: 20px,
+    letter-spacing: normal,
+  ),
+  'details-panel-value': (
+    family: $_brand,
+    weight: 400,
+    size: 14px,
+    line: 20px,
+    letter-spacing: normal,
+  ),
+  'details-panel-relative-name': (
+    family: $_brand,
+    weight: 600,
+    size: 14px,
+    line: 20px,
+    letter-spacing: normal,
+  ),
+  'details-panel-relative-meta': (
+    family: $_brand,
+    weight: 400,
+    size: 12px,
+    line: 16px,
+    letter-spacing: normal,
+  ),
+);

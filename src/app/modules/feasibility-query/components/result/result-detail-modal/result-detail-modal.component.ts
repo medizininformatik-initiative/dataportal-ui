@@ -9,7 +9,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { QueryResult } from '../../../../../model/Result/QueryResult'
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
 import { TableData } from '../../../../../shared/models/TableData/TableData'
-import { ModalWindowComponent } from '../../../../../shared/components/modal-window/modal-window.component'
 import { HeaderComponent } from '../../../../../shared/components/header/header.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { HeaderDescriptionComponent } from '../../../../../shared/components/header-description/header-description.component'
@@ -23,7 +22,6 @@ export class ResultDetailsModalComponentData {}
   styleUrls: ['./result-detail-modal.component.scss'],
   standalone: true,
   imports: [
-    ModalWindowComponent,
     HeaderComponent,
     FontAwesomeModule,
     HeaderDescriptionComponent,

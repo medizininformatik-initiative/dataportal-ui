@@ -1,0 +1,29 @@
+<div class="page-header">
+  <mat-stepper
+    labelPosition="bottom"
+    [selectedIndex]="step()"
+    (selectionChange)="navigateToStep($event.selectedIndex)"
+  >
+    <!-- the step of this page is its h1 and carries the eye button for the intro -->
+    <mat-step [completed]="step() > 0">
+      <ng-template matStepLabel>
+        <num-header [isHeading]="step() === 0" [showToggle]="step() === 0">
+          {{ 'DATAQUERY.COHORT.HEADER' | translate }}
+        </num-header>
+      </ng-template>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>
+        <num-header [isHeading]="step() === 1" [showToggle]="step() === 1">
+          {{ 'DATAQUERY.DATASELECTION.HEADER' | translate }}
+        </num-header>
+      </ng-template>
+    </mat-step>
+    <ng-template matStepperIcon="edit"><fa-icon icon="check" /></ng-template>
+  </mat-stepper>
+  <ng-content select="num-header-description" />
+</div>
+<div class="content">
+  <ng-content />
+</div>
+<ng-content select="[actions]" />

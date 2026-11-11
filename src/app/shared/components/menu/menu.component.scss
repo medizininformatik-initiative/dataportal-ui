@@ -43,7 +43,7 @@
 
 /* ── Icon ──────────────────────────────────────────── */
 .icon-color {
-  color: var(--border-color);
+  color: var(--color-text-secondary); // was the border grey (about 1.7:1)
   padding-right: var(--spacing-10);
   transition: color 0.15s ease;
 }
@@ -58,7 +58,7 @@
 /* ── Primary item (e.g. delete) ────────────────────── */
 .menu-item--primary {
   color: var(--color-accent) !important;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
 }
 
 .menu-item--primary .icon-color {

@@ -3,8 +3,9 @@ import { routeAnimations } from 'src/app/route-animations'
 import { Component, OnInit, inject } from '@angular/core'
 import { filter, map, mergeMap } from 'rxjs'
 import { HeaderComponent } from '../header/header.component'
-import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
 import { SideMenuComponent } from '../side-menu/side-menu.component'
+import { SnackbarComponent } from '../../../shared/components/snack-bar/snackbar.component'
+import { ErrorDisplayComponent } from '../../../shared/components/error-display/error-display.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -15,19 +16,17 @@ import { TranslateModule } from '@ngx-translate/core'
   standalone: true,
   imports: [
     HeaderComponent,
-    MatSidenavContainer,
-    MatSidenav,
     SideMenuComponent,
-    MatSidenavContent,
     RouterOutlet,
     TranslateModule,
+    SnackbarComponent,
+    ErrorDisplayComponent,
   ],
 })
 export class AppLayoutComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute)
   private router = inject(Router)
 
-  isHandset: boolean
   isSideMenuExpanded = true
   showSideNav = true
 
@@ -48,11 +47,13 @@ export class AppLayoutComponent implements OnInit {
       })
   }
 
-  prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
+  /** Moves focus into <main>; a plain #hash link would be eaten by the router. */
+  focusMain(event: Event) {
+    event.preventDefault()
+    document.getElementById('main-content')?.focus()
   }
 
-  toggleSideMenu(): void {
-    this.isSideMenuExpanded = !this.isSideMenuExpanded
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
   }
 }

@@ -2,16 +2,32 @@
 <div class="error-display-overlay" (click)="closeError()">
   <div class="error-display-container" (click)="$event.stopPropagation()">
     <div class="error-display-header">
-      <h3 class="error-title">{{ errorType || 'Error' }}</h3>
-      <button class="close-button" (click)="closeError()" aria-label="Close">×</button>
+      <h3 class="error-title">
+        {{ 'SHARED_COMPONENTS.ERROR_DISPLAY.TITLE.' + (errorType || 'GENERIC_ERROR') | translate }}
+      </h3>
+      <button
+        class="close-button"
+        (click)="closeError()"
+        [attr.aria-label]="'SHARED_COMPONENTS.ERROR_DISPLAY.CLOSE' | translate"
+      >
+        ×
+      </button>
     </div>
     <div class="error-display-body">
       @if (errorUrl) {
-      <num-info-tile label="Request URL" [value]="errorUrl" color="red"> </num-info-tile>
+      <num-info-tile
+        [label]="'SHARED_COMPONENTS.ERROR_DISPLAY.REQUEST_URL' | translate"
+        [value]="errorUrl"
+        color="red"
+      ></num-info-tile>
       } @if (errorData && errorData.length > 0) {
       <div class="error-list">
         @for (error of errorData; track error; let i = $index) {
-        <num-info-tile [label]="'Error ' + (i + 1)" [value]="getErrorMessage(error)" color="red">
+        <num-info-tile
+          [label]="('SHARED_COMPONENTS.ERROR_DISPLAY.ERROR' | translate) + ' ' + (i + 1)"
+          [value]="getErrorMessage(error)"
+          color="red"
+        >
           @if (getErrorDetails(error)) {
           <div class="error-details">
             {{ getErrorDetails(error) }}
@@ -21,10 +37,13 @@
         }
       </div>
       } @if (!errorData || errorData.length === 0) {
-      <div class="no-errors">No error details available</div>
+      <div class="no-errors">{{ 'SHARED_COMPONENTS.ERROR_DISPLAY.NO_DETAILS' | translate }}</div>
       }
     </div>
     <div class="error-display-footer">
+      <num-button type="cancel" (click)="closeError()">
+        {{ 'SHARED_COMPONENTS.ERROR_DISPLAY.CLOSE' | translate }}
+      </num-button>
       <num-button type="green" class="action-button" (click)="downloadError()">
         <fa-icon size="lg" [icon]="'download'"></fa-icon>
         {{ 'SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate }}

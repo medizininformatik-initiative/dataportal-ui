@@ -31,10 +31,10 @@
 .field-name {
   font-family: var(--font-body);
   font-style: normal;
-  font-weight: 500;
-  font-size: var(--font-size-sm);
-  line-height: 12px;
-  color: #080707;
+  font-weight: 400;
+  font-size: var(--font-size-md);
+  line-height: 20px;
+  color: var(--color-text-primary);
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -45,10 +45,10 @@
 .field-description {
   font-family: var(--font-body);
   font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 12px;
-  color: var(--color-text-section);
+  font-weight: 400;
+  font-size: var(--font-size-sm); // 12px: the smallest size in the editor
+  line-height: 16px;
+  color: var(--color-text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -62,43 +62,6 @@
 
   &:hover {
     color: var(--color-accent);
-  }
-}
-
-// ── Checkbox override — 15×15, white, #C3C7CD border ──────────
-::ng-deep .mat-mdc-checkbox {
-  .mdc-checkbox {
-    width: 15px;
-    height: 15px;
-    flex: 0 0 15px;
-    padding: 0;
-
-    .mdc-checkbox__background {
-      width: 15px;
-      height: 15px;
-      top: 0;
-      left: 0;
-      border-radius: 3px !important;
-      background-color: #ffffff !important;
-      border: 1px solid #c3c7cd !important;
-    }
-
-    .mdc-checkbox__native-control {
-      width: 15px;
-      height: 15px;
-    }
-
-    // ripple sizing
-    .mdc-checkbox__ripple,
-    .mat-mdc-checkbox-ripple {
-      display: none;
-    }
-  }
-
-  // checked state — filled accent square, white tick
-  &.mat-mdc-checkbox-checked .mdc-checkbox__background {
-    background-color: var(--color-accent) !important;
-    border-color: var(--color-accent) !important;
   }
 }
 
@@ -133,19 +96,7 @@
   min-height: 0;
 }
 
-.header-container {
-  display: flex;
-  width: 100%;
-}
-
 // ── Tab bar ─────────────────────────────────────────────────────
-::ng-deep .mat-mdc-tab .mdc-tab__text-label {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: var(--font-size-sm);
-  color: var(--color-accent);
-}
-
-::ng-deep .mat-mdc-tab-label-container {
+:host ::ng-deep .mat-mdc-tab-label-container {
   background-color: white;
 }

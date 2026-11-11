@@ -1,5 +1,8 @@
 :host {
   --primary-light: var(--color-accent-bg);
+  display: block;
+  min-height: 0;
+  overflow: auto;
 }
 
 .criterion-display {

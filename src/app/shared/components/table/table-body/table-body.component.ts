@@ -4,13 +4,12 @@ import { CheckboxTextCellData } from 'src/app/shared/models/TableData/Cells/Data
 import { Component, input, output } from '@angular/core'
 import { DisplayCellComponent } from '../cells/display-cell/display-cell.component'
 import { IconCellComponent } from '../cells/icon-cell/icon-cell.component'
-import { NgClass } from '@angular/common'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TextCellComponent } from '../cells/text-cell/text-cell.component'
 import { CheckboxCellComponent } from '../cells/checkbox-cell/checkbox-cell.component'
 import { TableCellKind } from '../../../models/TableData/Cells/TableCellKind'
 import { TableCellUnion } from '../../../models/TableData/Cells/TableCellUnion'
-import { getColumnWidthPercent } from '../table-column-width.util'
+import { getColumnWidth } from '../table-column-width.util'
 
 /* eslint-disable @angular-eslint/component-selector */
 
@@ -20,7 +19,6 @@ import { getColumnWidthPercent } from '../table-column-width.util'
   styleUrls: ['./table-body.component.scss'],
   standalone: true,
   imports: [
-    NgClass,
     CheckboxTextCellComponent,
     AvailabilityCellComponent,
     DisplayCellComponent,
@@ -38,6 +36,30 @@ export class TableBodyComponent {
 
   readonly iconClicked = output<TableRowData>()
 
+  activeIndex = 0
+
+  public onRowKeydown(event: KeyboardEvent, row: TableRowData): void {
+    const rowEl = event.currentTarget as HTMLElement
+    if (event.target !== rowEl) return
+    const move = { ArrowDown: rowEl.nextElementSibling, ArrowUp: rowEl.previousElementSibling }[
+      event.key
+    ] as HTMLElement | null | undefined
+    if (move) {
+      event.preventDefault()
+      move.focus()
+    } else if (event.key === 'Enter' && row.isClickable) {
+      this.onRowClick(row)
+    } else if (
+      event.key === ' ' &&
+      row.cells.some(
+        (c) => c.type === TableCellKind.CHECKBOX || c.type === TableCellKind.CHECKBOXTEXT
+      )
+    ) {
+      event.preventDefault()
+      this.onCheckboxSelect(row)
+    }
+  }
+
   public onIconClick(row: TableRowData): void {
     this.iconClicked.emit(row)
   }
@@ -46,8 +68,8 @@ export class TableBodyComponent {
     this.rowClicked.emit(row)
   }
 
-  public getWidth(cells: TableCellUnion[], index: number): number | undefined {
-    return getColumnWidthPercent(cells, index)
+  public getWidth(cells: TableCellUnion[], index: number): string | undefined {
+    return getColumnWidth(cells, index)
   }
 
   public onCheckboxSelect(row: TableRowData): void {

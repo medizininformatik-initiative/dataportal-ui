@@ -28,7 +28,13 @@ export class UploadService {
   }
 
   private onReaderLoad(result: string | ArrayBuffer | null): void {
-    const importedQuery = JSON.parse(result as string)
+    let importedQuery: CRTDLData
+    try {
+      importedQuery = JSON.parse(result as string)
+    } catch {
+      this.snackbarMessageService.dataDefinitionUploadError()
+      return
+    }
     this.uploadAndTranslate(importedQuery)
   }
 

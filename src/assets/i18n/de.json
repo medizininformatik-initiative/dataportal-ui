@@ -13,6 +13,7 @@
         "UI": "UI",
         "VERSION": "Version"
       },
+      "BREADCRUMBS": "Brotkrümelnavigation",
       "CLOSE": "Schließen",
       "ERROR_LOG": {
         "LABEL": "Protokoll",
@@ -60,6 +61,7 @@
         }
       }
     },
+    "SKIP_TO_CONTENT": "Zum Inhalt springen",
     "SIDENAV": {
       "LABEL": "Seitennavigation"
     },
@@ -71,16 +73,16 @@
     "DASHBOARD": "Dashboard",
     "DATA_PROTECTION": "Datenschutz",
     "DATA_QUERY": "Datendefinition",
-    "DATA_QUERY_COHORT_DEFINITION": "Kohortenselektion",
-    "DATA_QUERY_DATA_SELECTION": "Merkmalselektion",
-    "DATA_SELECTION": "Merkmalselektion",
-    "DATA_SELECTION_EDITOR": "Auswahl",
-    "DATA_SELECTION_SEARCH": "Suche",
-    "FEASIBILITY_QUERY": "Kohortenselektion",
-    "FEASIBILITY_QUERY_BULK_SEARCH": "Massensuche",
-    "FEASIBILITY_QUERY_EDITOR": "Auswahl",
+    "DATA_QUERY_COHORT_DEFINITION": "Kohortendefinition",
+    "DATA_QUERY_DATA_SELECTION": "Merkmaldefinition",
+    "DATA_SELECTION": "Merkmaldefinition",
+    "DATA_SELECTION_EDITOR": "Merkmalselektion",
+    "DATA_SELECTION_SEARCH": "Merkmalsuche",
+    "FEASIBILITY_QUERY": "Kohortendefinition",
+    "FEASIBILITY_QUERY_BULK_SEARCH": "Bulksuche",
+    "FEASIBILITY_QUERY_EDITOR": "Kohortenselektion",
     "FEASIBILITY_QUERY_RESULT": "Ergebnis",
-    "FEASIBILITY_QUERY_SEARCH": "Suche",
+    "FEASIBILITY_QUERY_SEARCH": "Kriteriensuche",
     "QUERY_EDITOR": "Editor",
     "SAVED_QUERIES": "Gespeicherte Datendefinitionen"
   },
@@ -123,7 +125,7 @@
         "SEND_QUERY_TOOLTIP": "Machbarkeitsabfrage für diese Kohorte ausführen"
       },
       "EMPTY": "Sie haben noch keine Kohorte definiert. Laden Sie eine existierende Kohortenselektion oder erstellen Sie eine neue Kohorte.",
-      "HEADER": "Kohortenselektion",
+      "HEADER": "Kohortendefinition",
       "INFO_TOOLTIP_TEXT": "Eine Kohortendefinition legt die Gruppe von Patienten oder Datenobjekten fest, die Sie analysieren möchten. Definieren Sie Ein- und Ausschlusskriterien, um Ihre Zielpopulation präzise zu beschreiben. Dieser Schritt ist erforderlich, um fortzufahren.",
       "INFO_TOOLTIP_TITLE": "Kohortendefinition",
       "REQUIRED": "Kohortenselektion ist ein Pflichtfeld"
@@ -144,9 +146,9 @@
       },
       "ERROR": {
         "DOWNLOAD": "Es wurde keine Kohorte definiert, Download nicht möglich.",
-        "UPLOAD": "Datendefinition konnte nicht hochgeladen werden"
+        "UPLOAD": "Die Datei konnte nicht gelesen werden. Laden Sie eine Datendefinition (CRTDL, .json) hoch, die aus dem Dataportal heruntergeladen wurde."
       },
-      "HEADER": "Merkmalselektion",
+      "HEADER": "Merkmaldefinition",
       "SAVE": {
         "CRTDL_DESCRIPTION": "Maschinenlesbare Abfragedefinition (JSON)",
         "CRTDL_TITLE": "Als CRTDL",
@@ -195,7 +197,7 @@
         "SELECTED_FIELDS_TOOLTIP_TEXT": "Felder sind die konkreten Datenpunkte eines Merkmals, z. B. Diagnose-Code oder Datum. Die vorausgewählten Felder wurden anhand typischer Forschungsanforderungen vordefiniert. Sie können weitere Felder hinzufügen oder nicht benötigte entfernen.",
         "SELECTED_FIELDS_TOOLTIP_TITLE": "Selektierte Felder"
       },
-      "HEADER": "Merkmale",
+      "HEADER": "Merkmalselektion",
       "HEADER_DESCRIPTION": "Hier können Sie definieren, welche Merkmale von Patientinnen und Patienten der Kohorte für Ihre Forschungsfrage relevant sind. Achten Sie auf Datensparsamkeit und Kongruenz zur Beschreibung im Studienprotokoll / Ethikvotum / Forschungsantrag (insofern bereits vorhanden). Ändern Sie die Selektion durch Klick auf das Stiftsymbol und fügen Sie bei Bedarf weitere Filter (z. B. auf bestimmte Diagnosecodes) hinzu.",
       "HEADER_INFO": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter <a href=\"mailto:{{email}}\" target=\"_blank\">{{email}}</a>. Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: <a href=\"https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/\" target=\"_blank\">https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/</a> Achten Sie bei der Bearbeitung darauf, dass alle Zwischenergebnisse durch Klick auf \"Speichern\" in der Bearbeitungsansicht der Module zwischengespeichert werden müssen.",
       "SECTION": "Ausgewählte Kriterien",
@@ -209,7 +211,7 @@
         "JUMP_TO_DATASELECTION_TOOLTIP": "Zum Editor navigieren, um die ausgewählten Merkmale zu bearbeiten"
       },
       "CLOSE_DETAILS": "Schließen",
-      "HEADER": "Merkmalselektion",
+      "HEADER": "Merkmalsuche",
       "HEADER_INFO1": "Für Ihre Forschungsfrage können Sie nun definieren, welche Daten Sie von den Patientinnen und Patienten der Kohorte erhalten möchten. Wir empfehlen für die Merkmalselektion eine Sprechstunde im FDPG zu buchen und die Merkmalselektion gemeinsam mit Unterstützung von Verantwortlichen des FDPG durchzuführen. Melden Sie sich dazu unter ",
       "HEADER_INFO2": ". Auf der FDPG Webseite gibt es zwei Tutorials zur Nutzung: ",
       "HEADER_INFO3": "Achten Sie bei der Bearbeitung darauf, dass alle Zwischenergebnisse durch Klick auf \"Speichern\" in der Bearbeitungsansicht der Module zwischengespeichert werden müssen.",
@@ -323,8 +325,12 @@
       "HEADER": "Bulksuche",
       "HEADER_INFO": "Hier können Sie mehrere Codes gleichzeitig zu einem Kriterium verknüpfen. Fügen Sie eine Liste (Tab- oder Komma-getrennt) von Kodierungen eines spezifischen Systems (z. B. LOINC, ICD-10, OPS) ein und spezifizieren Sie den Kontext (z. B. Laboruntersuchung, Diagnose, Prozedur). Die Suche verknüpft die Kriterien als \"oder\".",
       "INPUT_PLACEHOLDER": "Geben Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
-      "PLACEHOLDER": "Fügen Sie hier Ihre Termcodes ein, um nach mehreren Kriterien gleichzeitig zu suchen. Nutzen Sie Kommas, Leerzeichen oder Zeilenumbrüche zur Trennung.",
-      "SEARCH_BUTTON_TOOLTIP": "Alle eingegebenen Begriffe mit ausgewählten Filtern suchen"
+      "PLACEHOLDER": "Hier erscheinen die Ergebnisse Ihrer Suche, getrennt nach gefundenen und nicht gefundenen Codes.",
+      "REMOVE_NOT_FOUND": "Nicht gefundene entfernen",
+      "REMOVE_TERM": "{{term}} entfernen",
+      "SEARCH_BUTTON_TOOLTIP": "Alle eingegebenen Begriffe mit ausgewählten Filtern suchen",
+      "TERMS_COUNT": "{{count}} Begriffe erkannt",
+      "TERMS_NOT_FOUND": "{{count}} nicht gefunden"
     },
     "EDITOR": {
       "ACTION_BAR": {
@@ -370,14 +376,22 @@
       "CRITERIA_STAGE": {
         "APPLY_BUTTON": "Hinzufügen ({{count}})",
         "APPLY_TIME_RESTRICTION": "Zeiteinschränkung für alle Kriterien hinzufügen",
+        "APPLY_TIME_RESTRICTION_FEATURES": "Zeiteinschränkung für alle Merkmale hinzufügen",
         "CANCEL": "Abbrechen"
       },
-      "DRAG_AND_DROP": "Zum Sortieren „Drag & Drop“ nutzen",
+      "DROP_EXCLUSION": "Zu den Ausschlusskriterien hinzufügen",
+      "DROP_STAGE": "Zu den ausgewählten Kriterien hinzufügen",
+      "DROP_INCLUSION": "Zu den Einschlusskriterien hinzufügen",
       "EDIT_SUCCESS": "Kriterium erfolgreich bearbeitet",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse zu ",
+      "EMPTY_LIST": {
+        "HINT_AFTER": "an und legen Sie es hier ab.",
+        "HINT_BEFORE": "Fassen Sie ein Kriterium am Symbol",
+        "TITLE": "Kriterium hierher ziehen"
+      },
       "EXCLUSION": "Ausschlusskriterien",
       "FILTER_SELECTION": "Ausgewählte Elemente",
-      "HEADER": "Kriterieneditor",
+      "HEADER": "Kohortenselektion",
       "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen Sie Ihre Kohortenselektion zusammen. Die Kohortenselektion kann verwendet werden, um direkt eine standortübergreifende Machbarkeitsabfrage zu stellen.",
       "HEADER_TITLE": "Ausgewählte Kriterien",
       "INCLUSION": "Einschlusskriterien",
@@ -406,7 +420,8 @@
       },
       "REQUIRED_FILTER": "Bitte einen Filter setzen",
       "SUCCESS": {
-        "TIME_RESTRICTION_APPLIED": "Zeiteinschränkung wurde auf alle Kriterien angewendet"
+        "TIME_RESTRICTION_APPLIED": "Zeiteinschränkung wurde auf alle Kriterien angewendet",
+        "TIME_RESTRICTION_APPLIED_FEATURES": "Zeiteinschränkung wurde auf alle Merkmale angewendet"
       },
       "SWITCH": {
         "LABEL_AND": "UND",
@@ -430,6 +445,8 @@
         "EDIT_STAGE": "Kohortenselektion bearbeiten",
         "SAVE_QUERY": "Kohorte speichern"
       },
+      "COHORT_HEADING": "Gesendete Kohorte",
+      "COHORT_HINT": "Die Kriterien, für die die Machbarkeitsabfrage gesendet wurde.",
       "DETAILS_BUTTON": "Details",
       "DETAILS_TOOLTIP": "Die Zahl zeigt Ihnen, wie viele Ihrer Detailergebnisaufrufe Sie verbraucht haben – wird täglich zurückgesetzt",
       "HEADER": {
@@ -460,9 +477,9 @@
       },
       "CLOSE_DETAILS": "Schließen",
       "EMPTY": "Entschuldigung, wir konnten keine Ergebnisse finden für ",
-      "FILTER_HEADING": "Suche verfeinern:",
+      "FILTER_HEADING": "Suche verfeinern",
       "HEADER": "Kriteriensuche",
-      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Sie können die Kohortenselektion direkt verwenden, um die Zahl von Patientinnen und Patienten deutschlandweit abzuschätzen. Wenn Sie die Rohdaten, pseudonymisiert, lokal analysieren möchten, fügen Sie das Kriterium \"MDAT wissenschaftlich nutzen EU DSGVO NIVEAU\" oder weitere Kriterien aus dem Modul \"EINWILLIGUNG\" hinzu.",
+      "HEADER_INFO": "Definieren Sie Ihre Kohorte anhand von Kriterien, die Sie über das Suchfeld auswählen können. Für gezieltes Suchen können Sie auf bestimmte Terminologien (z. B. ICD-10, LOINC, OPS) oder KDS-Module einschränken. Wenn Sie die Rohdaten, pseudonymisiert, lokal analysieren möchten, fügen Sie das Kriterium \"MDAT wissenschaftlich nutzen EU DSGVO NIVEAU\" oder weitere Kriterien aus dem Modul \"EINWILLIGUNG\" hinzu.",
       "INFO_TOOLTIP": "<b>KDS-Module:</b> Thematische Datenkategorien im MII-Kerndatensatz (z. B. Diagnose, Medikation, Laborbefunde).<br><br><b>Kontext:</b> Beschreibt einen spezifischen klinischen Bereich oder Anwendungsfall eines Kriteriums (es ist spezifischer als Module).<br><br><b>Terminologie:</b> Die Terminologie bezeichnet das standardisierte Vokabular oder Kodierungssystem, das zur Definition des Kriteriums verwendet wird.",
       "LABEL": "Code oder Suchbegriff eingeben",
       "SEARCHBAR": "Suchen nach Begriff oder Terminologiecode",
@@ -518,10 +535,24 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Startseite",
-    "DATAQUERY": "Datendefinition",
-    "DATASELECTION": "Merkmalselektion",
+    "DATAQUERY": {
+      "COHORT_DEFINITION": "Kohortendefinition",
+      "DATASELECTION_DEFINITION": "Merkmaldefinition",
+      "TITLE": "Datendefinition"
+    },
+    "DATASELECTION": {
+      "EDITOR": "Merkmalselektion",
+      "SEARCH": "Merkmalsuche",
+      "TITLE": "Merkmaldefinition"
+    },
     "OPTIONS": "Einstellungen",
-    "QUERYBUILDER_EDITOR": "Kohortenselektion",
+    "QUERYBUILDER_EDITOR": {
+      "BULK_SEARCH": "Bulksuche",
+      "EDITOR": "Kohortenselektion",
+      "SEARCH": "Kriteriensuche",
+      "SEARCH_GROUP": "Suche",
+      "TITLE": "Kohortendefinition"
+    },
     "QUERYBUILDER_OVERVIEW": "Gespeicherte Datendefinitionen",
     "QUERYBUILDER_RESULT": "Machbarkeitsabfrage senden",
     "SIGNOUT": "Abmelden"
@@ -529,6 +560,7 @@
   "SAVED_QUERIES": {
     "COMMENT": "Kommentar",
     "CREATED_AT": "Erstellt am",
+    "DELETE": "Datendefinition löschen",
     "HEADER": "Gespeicherte Datendefinitionen",
     "LOAD": "Datendefinition laden",
     "PATIENTS": "Anzahl der Patienten:",
@@ -559,12 +591,38 @@
       "TIMERESTRICTION": "Zeiteinschränkung"
     },
     "CRITERIA_BOX": {
-      "DRAG_ICON_LABEL": "Kriterium in Einschluss- oder Ausschlussgruppe verschieben (Drag & Drop)"
+      "DRAG_ICON_LABEL": "Kriterium in Einschluss- oder Ausschlussgruppe verschieben (Drag & Drop)",
+      "GRAB_HINT": "Ziehen, um zu verschieben"
     },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",
+      "DELETE": "Löschen",
       "HEADER": "Löschung bestätigen",
-      "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?"
+      "TITLE": "Möchten Sie die Datendefinition wirklich löschen?"
+    },
+    "DISABLED": {
+      "BULK_NOTHING_TO_ADD": "Führen Sie zuerst eine Suche aus und wählen Sie gefundene Kriterien aus.",
+      "BULK_SEARCH_INCOMPLETE": "Geben Sie Suchbegriffe ein und setzen Sie alle Filter.",
+      "DETAILS_EXPIRED": "Das Ergebnis ist abgelaufen. Senden Sie die Machbarkeitsabfrage erneut.",
+      "DETAILS_NOT_READY": "Die Details sind verfügbar, sobald das Ergebnis geladen ist.",
+      "DETAILS_QUOTA_USED": "Ihre Detailergebnis-Aufrufe sind aufgebraucht. Sie werden täglich zurückgesetzt.",
+      "NO_FEATURES_ADDED": "Es wurden noch keine Merkmale hinzugefügt.",
+      "QUERY_INVALID": "Die Kohortenselektion braucht mindestens ein Einschlusskriterium, und alle Kriterien müssen vollständig sein.",
+      "SELECT_CRITERIA_FIRST": "Wählen Sie zuerst Kriterien in der Tabelle aus.",
+      "SELECT_FEATURES_FIRST": "Wählen Sie zuerst Merkmale in der Tabelle aus.",
+      "STAGE_EMPTY": "Die Kohortenselektion enthält noch keine Kriterien.",
+      "TITLE_REQUIRED": "Bitte geben Sie zuerst einen Titel ein."
+    },
+    "ERROR_DISPLAY": {
+      "CLOSE": "Schließen",
+      "ERROR": "Fehler",
+      "NO_DETAILS": "Keine Fehlerdetails vorhanden",
+      "REQUEST_URL": "Anfrage-URL",
+      "TITLE": {
+        "FEASIBILITY_ERROR": "Die Machbarkeitsabfrage ist fehlgeschlagen",
+        "GENERIC_ERROR": "Ein Fehler ist aufgetreten",
+        "VALIDATION_ERROR": "Die Datendefinition ist ungültig"
+      }
     },
     "FILTER": {
       "AVAILABILITY": "Verfügbarkeit",
@@ -575,6 +633,7 @@
       "NO_FILTER_SELECTED": "Keine Suchfilter ausgewählt",
       "RESOURCETYPE": "FHIR Datentyp",
       "SEARCH": "Suchen...",
+      "SELECTED_COUNT": "{{count}} von {{total}} ausgewählt",
       "TERMINOLOGY": "Terminologie"
     },
     "HEADER": {
@@ -635,7 +694,7 @@
       "COHORT_WARNING": "Kohortenselektion ist erforderlich",
       "COMMENT": "Kommentar",
       "DOWNLOAD": "Herunterladen",
-      "HEADER": "Abfrage speichern",
+      "HEADER": "Datendefinition speichern",
       "LABEL": "Titel",
       "SAVE": "Speichern",
       "TITLE": "Titel"
@@ -696,7 +755,7 @@
       "SELECT_CHECKBOX_ALL": "Alles auswählen",
       "SITE": "Standort",
       "STATUS": "Status",
-      "TERMCODE": "Terminology Code",
+      "TERMCODE": "Code",
       "TERMINOLOGY_CODE": "Terminologie",
       "WHAT_IS_MISSING": "Was fehlt?"
     }
@@ -729,33 +788,34 @@
     },
     "SUCCESS": {
       "DOWNLOAD": "Datenanfrage wurde heruntergeladen.",
-      "SAVED_DATAQUERY": "Datenanfrage wurde gespeichert."
+      "SAVED_DATAQUERY": "Datendefinition wurde gespeichert."
     }
   },
   "TAB_TITLE": {
     "DASHBOARD": "Dashboard",
     "DATA_PROTECTION": "Datenschutz",
     "DATA_QUERY": {
-      "COHORT_DEFINITION": "Datendefinition - Kohortenselektion",
-      "DATA_SELECTION": "Datendefinition - Merkmalselektion",
+      "COHORT_DEFINITION": "Datendefinition - Kohortendefinition",
+      "DATA_SELECTION": "Datendefinition - Merkmaldefinition",
       "INDEX": "Datendefinition"
     },
     "DATA_SELECTION": {
-      "EDITOR": "Merkmalselektion - Editor",
-      "INDEX": "Merkmalselektion",
-      "SEARCH": "Merkmalselektion - Suche"
+      "EDITOR": "Merkmaldefinition - Merkmalselektion",
+      "INDEX": "Merkmaldefinition",
+      "SEARCH": "Merkmaldefinition - Merkmalsuche"
     },
     "FEASIBILITY_QUERY": {
-      "EDITOR": "Machbarkeitsabfrage - Editor",
-      "INDEX": "Machbarkeitsabfrage",
-      "RESULT": "Machbarkeitsabfrage - Ergebnis",
-      "SEARCH": "Machbarkeitsabfrage - Suche"
+      "BULK_SEARCH": "Kohortendefinition - Bulksuche",
+      "EDITOR": "Kohortendefinition - Kohortenselektion",
+      "INDEX": "Kohortendefinition",
+      "RESULT": "Kohortendefinition - Ergebnis",
+      "SEARCH": "Kohortendefinition - Kriteriensuche"
     },
-    "QUERY_EDITOR": "Merkmalselektion - Abfrageeditor",
-    "QUERY_EDITOR_CRITERION": "Kohortenselektion - Kriterieneditor",
-    "QUERY_EDITOR_FEATURE": "Merkmalselektion - Merkmaleditor",
-    "QUERY_EDITOR_REFERENCE": "Kohortenselektion - Referenz",
-    "SAVED_QUERIES": "Gespeicherte Abfragen"
+    "QUERY_EDITOR": "Merkmaldefinition - Abfrageeditor",
+    "QUERY_EDITOR_CRITERION": "Kohortendefinition - Kriterieneditor",
+    "QUERY_EDITOR_FEATURE": "Merkmaldefinition - Merkmaleditor",
+    "QUERY_EDITOR_REFERENCE": "Kohortendefinition - Referenzeditor",
+    "SAVED_QUERIES": "Gespeicherte Datendefinitionen"
   },
   "VALIDATION": {
     "10000": "Schema ist ungültig",

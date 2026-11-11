@@ -49,6 +49,9 @@
       type="green"
       numDataCy="save-file-button"
       [isDisabled]="modal.title.length === 0"
+      [tooltip]="
+        modal.title.length === 0 ? ('SHARED_COMPONENTS.DISABLED.TITLE_REQUIRED' | translate) : ''
+      "
       (click)="download(modal.title)"
     >
       {{ 'SHARED_COMPONENTS.SAVE_MODAL.DOWNLOAD' | translate }}

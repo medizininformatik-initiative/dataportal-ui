@@ -1,17 +1,19 @@
 <div class="searchbar-container">
-  <div class="searchbar-row form-design">
+  <div class="searchbar-field">
     @if (icon()) {
     <fa-icon class="icon-design" [icon]="icon()" size="lg" [fixedWidth]="true"></fa-icon>
     }
     <input
+      #field
       placeholder="{{ label() | translate }}"
+      [attr.aria-label]="label() | translate"
       [value]="inputValue()"
       (input)="onInput($event)"
       class="input-design"
     />
   </div>
   @if (showWarning()) {
-  <span class="search-warning">
+  <span class="search-warning" role="alert">
     {{ 'SHARED_COMPONENTS.SEARCH.MIN_LENGTH' | translate }}
   </span>
   }

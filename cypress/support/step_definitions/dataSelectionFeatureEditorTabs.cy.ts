@@ -68,7 +68,7 @@ export class DataSelectionFeatureEditorTabs {
   public requiredShouldBe(field: string, state: string) {
     this.panelRow(field)
       .find(dataCy('checkbox'))
-      .should('have.attr', 'aria-checked', String(state === 'enabled'))
+      .should(state === 'enabled' ? 'be.checked' : 'not.be.checked')
   }
 
   /**
@@ -97,7 +97,7 @@ export class DataSelectionFeatureEditorTabs {
       .first()
       .find(dataCy('checkbox'))
       .first()
-      .should('have.attr', 'aria-checked', 'false')
+      .should('not.be.checked')
   }
 
   /**

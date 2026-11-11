@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, HostListener, OnInit, inject } from '@angular/core'
 import { ErrorDisplayService } from '../../service/ErrorDisplay/error-display.service'
 import { DataportalErrorPayloadType } from 'src/app/core/model/DataportalErrorPayloadType'
 import { InfoTileComponent } from '../info-tile/info-tile.component'
@@ -42,6 +42,13 @@ export class ErrorDisplayComponent implements OnInit {
     this.errorDisplayService.errorType$.subscribe((type) => {
       this.errorType = type
     })
+  }
+
+  @HostListener('document:keydown.escape')
+  public onEscape() {
+    if (this.isVisible) {
+      this.closeError()
+    }
   }
 
   public closeError() {

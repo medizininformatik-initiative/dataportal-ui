@@ -1,7 +1,6 @@
 @for (query of savedQueries$ | async; track query) {
-<div class="width-100">
+<div>
   <num-saved-query-tile
-    class="width-100"
     [savedQuery]="query"
     (navigate)="loadQueryIntoEditor($event)"
     (loadValidationReport)="loadValidationReport($event)"

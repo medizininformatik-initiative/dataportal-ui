@@ -3,6 +3,8 @@ import { defineStep } from '../defineStep'
 import { numButton } from '../component-objects/NumButton'
 import { numModal } from '../component-objects/NumModal'
 
+const DETAILS_BUTTON = '.button-dialog-result-details button'
+
 /**
  * Steps for feasibility result and save-cohort dialog. Moved from
  * `cypress/e2e/CohortResult/cohort-result.ts`: save-dialog steps are shared with
@@ -41,6 +43,37 @@ export class CohortResult {
      * */
     cy.get('num-spinner', { timeout: 70000 }).should('not.exist')
     cy.get('div', { timeout: 70000 }).contains('Number of patients').should('be.visible')
+  }
+
+  /**
+   * Assert details button disabled, as long as result is not loaded.
+   * */
+  public detailsButtonShouldBeDisabled() {
+    cy.get(DETAILS_BUTTON).should('be.disabled')
+  }
+
+  /**
+   * Assert details button usable once result is loaded.
+   * */
+  public detailsButtonShouldBeEnabled() {
+    cy.get(DETAILS_BUTTON, { timeout: 70000 }).should('be.enabled')
+  }
+
+  /**
+   * Click details button.
+   * */
+  public openDetails() {
+    cy.get(DETAILS_BUTTON).click()
+  }
+
+  /**
+   * Assert details dialog lists at least one site.
+   * */
+  public detailsShouldListSites() {
+    cy.get('num-result-detail-modal tbody tr', { timeout: 20000 }).should(
+      'have.length.greaterThan',
+      0
+    )
   }
 
   /**
@@ -96,3 +129,9 @@ defineStep('I add the title {string}', (title: string) => cohortResult.addTitle(
 defineStep('I add the comment {string}', (comment: string) => cohortResult.addComment(comment))
 defineStep('I save the cohort', () => cohortResult.saveCohort())
 defineStep('I should see the dialog closing', () => cohortResult.shouldSeeDialogClosing())
+defineStep('I see the details button is disabled', () =>
+  cohortResult.detailsButtonShouldBeDisabled()
+)
+defineStep('I see the details button is enabled', () => cohortResult.detailsButtonShouldBeEnabled())
+defineStep('I open the result details', () => cohortResult.openDetails())
+defineStep('I see the sites in the result details', () => cohortResult.detailsShouldListSites())

@@ -1,0 +1,43 @@
+// Grey ramp (slightly blue-tinted). 0 is white, the lightest grey.
+// Read 0 with role-color / map.get only: Angular Material's m2-get-color-from-palette
+// treats a number between 0 and 1 as an opacity, not as a shade.
+// Greys only: no red, green or hover colors here.
+$num-grey-palette: (
+  0: #ffffff,
+  50: #f9f9f9,
+  // page background (lightest)
+  100: #f1f2f3,
+  // light UI surface (hover bg, scrollbar track)
+  200: #e8ebed,
+  300: #c5cacf,
+  // borders, placeholders
+  400: #afb8c0,
+  // disabled
+  500: #9ea9b3,
+  // mid grey
+  600: #8d9aa6,
+  700: #7c8b98,
+  800: #6c7b89,
+  900: #5e6c78,
+  A100: #ffffff,
+  A200: #f1f5f9,
+  A400: #e6ebef,
+  A700: #a9b6c2,
+  contrast: (
+    0: #000000,
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);

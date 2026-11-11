@@ -5,7 +5,7 @@
     (click)="toggle()"
   >
     <fa-icon icon="calendar-alt"></fa-icon>
-    {{ 'FEASIBILITY.EDITOR.CRITERIA_STAGE.APPLY_TIME_RESTRICTION' | translate }}
+    {{ 'FEASIBILITY.EDITOR.CRITERIA_STAGE.APPLY_TIME_RESTRICTION_FEATURES' | translate }}
   </button>
 
   @if (isExpanded()) {
@@ -28,13 +28,12 @@
     />
     }
 
+    <num-button type="cancel" (click)="cancel()">
+      {{ 'FEASIBILITY.EDITOR.CRITERIA_STAGE.CANCEL' | translate }}
+    </num-button>
     <num-button type="blue" [isDisabled]="!isApplyEnabled()" (click)="apply()">
       {{ 'FEASIBILITY.EDITOR.CRITERIA_STAGE.APPLY_BUTTON' | translate : { count: profileCount() } }}
     </num-button>
-
-    <button class="apply-time-restriction__cancel" (click)="cancel()">
-      {{ 'FEASIBILITY.EDITOR.CRITERIA_STAGE.CANCEL' | translate }}
-    </button>
   </div>
   }
 </div>

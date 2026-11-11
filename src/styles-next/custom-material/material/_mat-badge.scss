@@ -1,0 +1,11 @@
+// Green-outlined circular badge content, overriding Material's default badge theme.
+// Angular Material injects its own component styles into the DOM at runtime (after
+// our compiled stylesheet), so !important is required here regardless of import order.
+.mat-badge-content {
+  border: 1px solid var(--num-color--primary-green) !important;
+  color: var(--num-color--primary-green) !important;
+  background-color: white !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 25% !important;
+}

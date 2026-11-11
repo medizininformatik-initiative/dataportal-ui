@@ -1,11 +1,10 @@
-import { AbstractQuantityComparatorFilter } from '../../Abstract/Quantity/Comparator/AbstractQuantityComparatorFilter';
-import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions';
-import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
-import { Comparator } from 'src/app/model/Utilities/Quantity/Comparator';
+import { AbstractQuantityComparatorFilter } from '../../Abstract/Quantity/Comparator/AbstractQuantityComparatorFilter'
+import { QuantityUnit } from 'src/app/model/StructuredQuery/QuantityUnit'
+import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
+import { Comparator } from 'src/app/model/Utilities/Quantity/Comparator'
 
 export class QuantityComparatorAttributeFilter extends AbstractQuantityComparatorFilter {
-  private attributeCode: TerminologyCode;
+  private attributeCode: TerminologyCode
 
   constructor(
     attributeCode: TerminologyCode,
@@ -13,8 +12,8 @@ export class QuantityComparatorAttributeFilter extends AbstractQuantityComparato
     comparator: Comparator,
     value: number
   ) {
-    super(unit, comparator, value);
-    this.attributeCode = attributeCode;
+    super(unit, comparator, value)
+    this.attributeCode = attributeCode
   }
 
   /**
@@ -23,7 +22,7 @@ export class QuantityComparatorAttributeFilter extends AbstractQuantityComparato
    * @returns The attributeCode value.
    */
   public getAttributeCode(): TerminologyCode {
-    return this.attributeCode;
+    return this.attributeCode
   }
 
   /**
@@ -32,7 +31,7 @@ export class QuantityComparatorAttributeFilter extends AbstractQuantityComparato
    * @param attributeCode - The new attributeCode value to set.
    */
   public setAttributeCode(attributeCode: TerminologyCode): void {
-    this.attributeCode = attributeCode;
+    this.attributeCode = attributeCode
   }
 
   public static createFilter(
@@ -41,6 +40,6 @@ export class QuantityComparatorAttributeFilter extends AbstractQuantityComparato
     comparator: Comparator,
     value: number
   ) {
-    return new QuantityComparatorAttributeFilter(attributeCode, unit, comparator, value);
+    return new QuantityComparatorAttributeFilter(attributeCode, unit, comparator, value)
   }
 }

@@ -15,6 +15,16 @@
     "conditionConcept": "Viral food poisoning",
     "selectedField": "category",
     "defaultField": "abatement",
-    "removableField": "Code"
+    "removableField": "Code",
+    "referenceTab": "Part of",
+    "secondFeature": "Laboratory test",
+    "secondReferenceTab": "Specimen",
+    "secondReference": "Specimen",
+    "thirdFeature": "Medication statement",
+    "thirdReferenceTab": "Information source",
+    "thirdReference": "Organization",
+    "referenceDisplay": "Procedure",
+    "secondReferenceDisplay": "Profile - Specimen - Bioprobe",
+    "thirdReferenceDisplay": "Profile - Organization - Sammlung/Biobank"
   }
 }

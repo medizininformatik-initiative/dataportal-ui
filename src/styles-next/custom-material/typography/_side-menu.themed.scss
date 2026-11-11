@@ -1,0 +1,11 @@
+@use '../../functions/type';
+
+/* Group "side-menu": the text of the navigation on the left. Writes the variables of its roles.
+   The values are in themes/fdpg-light/_type-roles.scss under the same names.
+   parent-item = level 1, child-item = levels 2 and 3 (and the group label), child-item-active = the open page (levels 2 and 3).
+   Components read them: font-size: var(--font-side-menu-child-item-size); */
+@mixin side-menu_themed($theme) {
+  @include type.vars($theme, 'side-menu-parent-item');
+  @include type.vars($theme, 'side-menu-child-item');
+  @include type.vars($theme, 'side-menu-child-item-active');
+}

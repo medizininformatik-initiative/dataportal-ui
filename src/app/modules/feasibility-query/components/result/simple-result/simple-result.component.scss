@@ -1,23 +1,21 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
+:host {
+  display: block;
 }
 
-.action-row {
+// Details button and spinner follow the digits on the same line (projected into num-patient-count)
+.status {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 1rem;
-  margin-top: var(--spacing-16);
-  padding-left: var(--spacing-10);
+  gap: var(--spacing-16);
+
+  // 80px spinner, 56px digit line: the negative margin keeps the line from growing while it spins
+  num-spinner {
+    margin: -12px 0;
+  }
 }
 
 ::ng-deep .mdc-tooltip__surface {
   max-width: 250px !important;
   font-size: var(--font-size-sm) !important;
   box-shadow: 0 11px 15px -4px #0003, 0 24px 38px 5px #00000024, 0 9px 46px 8px #0000001f;
-  letter-spacing: 0.5px !important;
 }

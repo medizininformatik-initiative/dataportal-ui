@@ -1,5 +1,4 @@
 import { ErrorQueryResult } from 'src/app/model/Result/ErrorQueryResult'
-import { HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Issue } from 'src/app/model/Utilities/Issue'
 import { IssueData } from 'src/app/core/model/Feasibility/IssueData'

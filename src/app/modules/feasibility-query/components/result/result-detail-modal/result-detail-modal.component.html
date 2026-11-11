@@ -1,17 +1,20 @@
-<num-modal-window [displaySaveButtons]="false">
-  <div>
-    <div class="modal-header-row">
-      <num-header [showToggle]="true">{{
-        'FEASIBILITY.RESULT.SAVE_DIALOG.HEADER' | translate
-      }}</num-header>
-      <fa-icon size="2x" class="icon-close" icon="window-close" (click)="doClose()"></fa-icon>
-    </div>
+<div class="result-modal">
+  <button
+    class="result-modal__close"
+    (click)="doClose()"
+    [attr.aria-label]="'SHARED_COMPONENTS.ERROR_DISPLAY.CLOSE' | translate"
+  >
+    <fa-icon icon="times"></fa-icon>
+  </button>
+  <div class="result-modal__head">
+    <num-header [showToggle]="true">
+      {{ 'FEASIBILITY.RESULT.SAVE_DIALOG.HEADER' | translate }}
+    </num-header>
     <num-header-description>
       {{ 'FEASIBILITY.RESULT.SAVE_DIALOG.HEADER_DESCRIPTION' | translate }}
     </num-header-description>
   </div>
-  <br />
-  <div class="overflow">
+  <div class="result-modal__table">
     <num-table [tableData]="adaptedData"></num-table>
   </div>
-</num-modal-window>
+</div>

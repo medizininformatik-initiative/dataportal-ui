@@ -18,8 +18,8 @@ Feature: Side navigation
     And the side navigation should show the label "<fourth>"
 
     Examples:
-      | count | first                     | second                             | third                               | fourth                                  |
-      | 4     | {{labels.dataDefinition}} | {{languageSwitch.cohortSelection}} | {{sideNavigation.featureSelection}} | {{languageSwitch.savedDataDefinitions}} |
+      | count | first                     | second                              | third                                | fourth                                  |
+      | 4     | {{labels.dataDefinition}} | {{languageSwitch.cohortDefinition}} | {{sideNavigation.featureDefinition}} | {{languageSwitch.savedDataDefinitions}} |
 
   @component:navigation @behavior:collapse
   Scenario: Collapsing the side navigation hides the labels
@@ -36,5 +36,5 @@ Feature: Side navigation
     And the side navigation should show the label "<label>"
 
     Examples:
-      | label                              |
-      | {{languageSwitch.cohortSelection}} |
+      | label                               |
+      | {{languageSwitch.cohortDefinition}} |

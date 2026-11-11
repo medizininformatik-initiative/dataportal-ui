@@ -1,0 +1,55 @@
+// Brand blue ramp. 500 = brand anchor, hue 218. Lighter below 500, darker above.
+// Usage ("$accent" = mat.m2-get-color-from-palette):
+//
+// 50:   general table (themed)
+// 100:  general table (themed)
+// 200:  general table (themed), cancel button (border), side menu (active item), typography (background)
+//       --num-color--accent-200: between-filter
+// 300:  unused
+// 400:  cancel button (hover)
+//       --num-color--accent-400: selected-items-list, menu, ui-classes
+//       NOTE: old 400 was dark #345396, these three need a dark blue (now near 700)
+// 500:  BRAND
+//       $accent default read (= 500): divider classes, color classes, expansion panel
+//       $accent 500: typography, checkbox, filter chips, mat-chip, buttons
+//       --num-color--primary-blue: user-menu, dashboard
+//       --color-accent (defined in styles.scss, plus -bg/-border): ~55 components,
+//         e.g. header, spinner, searchbar, logic-switch, criteria-stage, display-criteria
+//       hand-pasted #5a79af: tree, checkbox-cell, checkbox-text-cell, save-dataquery-modal,
+//         error-log-header (gradient start)
+// 600:  cancel button (text), blue button (hover)
+//       --num-color--accent-600: between-filter, bulk-search-input (hover)
+// 700:  blue button (keyboard focus)
+// 800, 900, A100, A200, A400, A700: unused
+$num-blue-palette: (
+  50: #f2f4f8,
+  100: #dde3ee,
+  200: #bbc8dd,
+  300: #98accd,
+  400: #7992be,
+  500: #5a79af,
+  600: #49689c,
+  700: #3c5786,
+  800: #2f476f,
+  900: #233657,
+  A100: #c4d3ee,
+  A200: #8ca8d9,
+  A400: #4173c8,
+  A700: #2956a3,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);

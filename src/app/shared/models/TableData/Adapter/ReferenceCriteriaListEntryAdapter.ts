@@ -14,7 +14,7 @@ export class ReferenceCriteriaListEntryAdapter extends AbstractTableAdapter<Refe
   protected buildHeaders(): TableHeaderData {
     return {
       headers: [
-        { label: 'EMPTY', addAllCheckbox: false },
+        { label: 'CRITERIA.ICON', addAllCheckbox: false, visuallyHidden: true },
         { label: 'NAME', addAllCheckbox: false },
         { label: 'TERMINOLOGY_CODE', addAllCheckbox: false },
         { label: 'TERMCODE', addAllCheckbox: false },

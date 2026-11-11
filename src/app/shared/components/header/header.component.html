@@ -1,6 +1,9 @@
-<p class="header-font">
-  <ng-content></ng-content>
-  @if (showToggle()) {
+<div class="header-font">
+  @if (isHeading()) {
+  <h1 class="header-title"><ng-container [ngTemplateOutlet]="title" /></h1>
+  } @else {
+  <span class="header-title"><ng-container [ngTemplateOutlet]="title" /></span>
+  } @if (showToggle()) {
   <button
     class="toggle-btn"
     (click)="toggleService.toggle()"
@@ -13,4 +16,5 @@
     <fa-icon [icon]="(toggleService.visible$ | async) ? 'eye-slash' : 'eye'"></fa-icon>
   </button>
   }
-</p>
+</div>
+<ng-template #title><ng-content></ng-content></ng-template>

@@ -13,6 +13,7 @@
         "UI": "UI",
         "VERSION": "Version"
       },
+      "BREADCRUMBS": "Breadcrumb",
       "CLOSE": "Close",
       "ERROR_LOG": {
         "LABEL": "Log",
@@ -60,6 +61,7 @@
         }
       }
     },
+    "SKIP_TO_CONTENT": "Skip to content",
     "SIDENAV": {
       "LABEL": "Side navigation"
     },
@@ -72,15 +74,15 @@
     "DATA_PROTECTION": "Data Protection",
     "DATA_QUERY": "Data Definition",
     "DATA_QUERY_COHORT_DEFINITION": "Cohort Definition",
-    "DATA_QUERY_DATA_SELECTION": "Feature Selection",
-    "DATA_SELECTION": "Feature Selection",
-    "DATA_SELECTION_EDITOR": "Overview",
-    "DATA_SELECTION_SEARCH": "Search",
-    "FEASIBILITY_QUERY": "Cohort Selection",
+    "DATA_QUERY_DATA_SELECTION": "Feature Definition",
+    "DATA_SELECTION": "Feature Definition",
+    "DATA_SELECTION_EDITOR": "Feature Selection",
+    "DATA_SELECTION_SEARCH": "Feature Search",
+    "FEASIBILITY_QUERY": "Cohort Definition",
     "FEASIBILITY_QUERY_BULK_SEARCH": "Bulk Search",
-    "FEASIBILITY_QUERY_EDITOR": "Overview",
+    "FEASIBILITY_QUERY_EDITOR": "Cohort Selection",
     "FEASIBILITY_QUERY_RESULT": "Result",
-    "FEASIBILITY_QUERY_SEARCH": "Search",
+    "FEASIBILITY_QUERY_SEARCH": "Criteria Search",
     "QUERY_EDITOR": "Editor",
     "SAVED_QUERIES": "Saved Data Definitions"
   },
@@ -123,7 +125,7 @@
         "SEND_QUERY_TOOLTIP": "Execute feasibility query for this cohort"
       },
       "EMPTY": "You have not defined a cohort yet. Upload an existing cohort selection or create a new one.",
-      "HEADER": "Cohort Selection",
+      "HEADER": "Cohort Definition",
       "INFO_TOOLTIP_TEXT": "A cohort definition specifies the group of patients or data objects you want to analyze. Define inclusion and exclusion criteria to precisely describe your target population. This step is required to proceed.",
       "INFO_TOOLTIP_TITLE": "Cohort Definition",
       "REQUIRED": "Cohort selection is a mandatory field"
@@ -144,9 +146,9 @@
       },
       "ERROR": {
         "DOWNLOAD": "No cohort defined; download not possible",
-        "UPLOAD": "Could not upload data definition"
+        "UPLOAD": "The file could not be read. Upload a data definition (CRTDL, .json) downloaded from the Dataportal."
       },
-      "HEADER": "Feature Selection",
+      "HEADER": "Feature Definition",
       "SAVE": {
         "CRTDL_DESCRIPTION": "Machine-readable query definition (JSON)",
         "CRTDL_TITLE": "As CRTDL",
@@ -195,7 +197,7 @@
         "SELECTED_FIELDS_TOOLTIP_TEXT": "Fields are the specific data points of a profile, e.g. diagnosis code or date. Pre-selected fields have been predefined based on typical research requirements. You can add further fields or remove ones you don't need.",
         "SELECTED_FIELDS_TOOLTIP_TITLE": "Selected Fields"
       },
-      "HEADER": "Features",
+      "HEADER": "Feature Selection",
       "HEADER_DESCRIPTION": "Define which patient features in the cohort are relevant to your research question here. Pay attention to data sparseness and alignment with your study protocol, ethics approval, or research proposal (if available). Change the selection by clicking the pencil icon and add filters (e.g., specific diagnosis codes) as needed.",
       "HEADER_INFO": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at <a href=\"mailto:{{email}}\" target=\"_blank\">{{email}}</a>. There are two tutorials on how to use the system on the FDPG website: <a href=\"https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/\" target=\"_blank\">https://forschen-fuer-gesundheit.de/daten-und-bioproben/daten-finden/</a> When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
       "SECTION": "Selected criteria",
@@ -209,7 +211,7 @@
         "JUMP_TO_DATASELECTION_TOOLTIP": "Navigate to editor to edit selected features"
       },
       "CLOSE_DETAILS": "Close",
-      "HEADER": "Feature Selection",
+      "HEADER": "Feature Search",
       "HEADER_INFO1": "For your research question, you can now define which data you would like to receive from the patients in the cohort. We recommend booking a consultation at the FDPG for feature selection and carrying out the feature selection together with the support of FDPG staff. To do so, please register at ",
       "HEADER_INFO2": ". There are two tutorials on how to use the system on the FDPG website: ",
       "HEADER_INFO3": "When editing, please note that all intermediate results must be saved by clicking on \"Save\" in the module editing view.",
@@ -334,8 +336,12 @@
       "HEADER": "Bulk Search",
       "HEADER_INFO": "Here you can link several codes to one criterion at the same time. Insert a list (separated by tabs or commas) of codes from a specific system (e.g. LOINC, ICD-10, OPS) and specify the context (e.g. laboratory test, diagnosis, procedure). The query links the criteria as \"or\".",
       "INPUT_PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them.",
-      "PLACEHOLDER": "Enter your term codes here to search for multiple criteria at once. Use commas, spaces, or line breaks to separate them.",
-      "SEARCH_BUTTON_TOOLTIP": "Search for all entered terms with selected filters"
+      "PLACEHOLDER": "The results of your search appear here, split into found and not found codes.",
+      "REMOVE_NOT_FOUND": "Remove not found",
+      "REMOVE_TERM": "Remove {{term}}",
+      "SEARCH_BUTTON_TOOLTIP": "Search for all entered terms with selected filters",
+      "TERMS_COUNT": "{{count}} terms recognised",
+      "TERMS_NOT_FOUND": "{{count}} not found"
     },
     "EDITOR": {
       "ACTION_BAR": {
@@ -346,7 +352,7 @@
         "DATA_REQUEST": "Data definition",
         "RETRY_AFTER": "Please wait {{seconds}} seconds",
         "SAVE_DATAQUERY": "Save data definition",
-        "SEND_QUERY": "Send Feasibility query",
+        "SEND_QUERY": "Send feasibility query",
         "SEND_QUERY_TOOLTIP": "Execute the feasibility query"
       },
       "CONSENT": {
@@ -381,14 +387,22 @@
       "CRITERIA_STAGE": {
         "APPLY_BUTTON": "Apply ({{count}})",
         "APPLY_TIME_RESTRICTION": "Apply time period to all criteria",
+        "APPLY_TIME_RESTRICTION_FEATURES": "Apply time period to all features",
         "CANCEL": "Cancel"
       },
-      "DRAG_AND_DROP": "Use drag & drop to sort",
+      "DROP_EXCLUSION": "Add to exclusion criteria",
+      "DROP_STAGE": "Add to selected criteria",
+      "DROP_INCLUSION": "Add to inclusion criteria",
       "EDIT_SUCCESS": "Criterion edited successfully",
       "EMPTY": "Sorry, we could not find any results for ",
+      "EMPTY_LIST": {
+        "HINT_AFTER": "and drop it here.",
+        "HINT_BEFORE": "Grab a criterion by its handle",
+        "TITLE": "Drag a criterion here"
+      },
       "EXCLUSION": "Exclusion criteria",
       "FILTER_SELECTION": "Selected items",
-      "HEADER": "Criteria editor",
+      "HEADER": "Cohort Selection",
       "HEADER_INFO": "Edit your criteria here and compile your cohort selection. The cohort selection can be used to directly submit a cross-location feasibility query.",
       "HEADER_TITLE": "Selected criteria",
       "INCLUSION": "Inclusion criteria",
@@ -417,7 +431,8 @@
       },
       "REQUIRED_FILTER": "Please set a filter",
       "SUCCESS": {
-        "TIME_RESTRICTION_APPLIED": "Time restriction applied to all criteria"
+        "TIME_RESTRICTION_APPLIED": "Time restriction applied to all criteria",
+        "TIME_RESTRICTION_APPLIED_FEATURES": "Time restriction applied to all features"
       },
       "SWITCH": {
         "LABEL_AND": "AND",
@@ -441,6 +456,8 @@
         "EDIT_STAGE": "Edit cohort selection",
         "SAVE_QUERY": "Save cohort"
       },
+      "COHORT_HEADING": "Cohort sent",
+      "COHORT_HINT": "The criteria the feasibility query was sent for.",
       "DETAILS_BUTTON": "Details",
       "DETAILS_TOOLTIP": "Shows how many detailed result calls you have used — resets daily",
       "HEADER": {
@@ -471,9 +488,9 @@
       },
       "CLOSE_DETAILS": "Close",
       "EMPTY": "Sorry, we could not find any results for ",
-      "FILTER_HEADING": "Refine Your Search:",
-      "HEADER": "Criteria search",
-      "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD-10, LOINC, OPS) or CDS modules. Use the cohort selection to estimate patient counts nationwide. If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU” or other criteria from the “EINWILLIGUNG” module.",
+      "FILTER_HEADING": "Refine search",
+      "HEADER": "Criteria Search",
+      "HEADER_INFO": "Define your cohort based on criteria selectable via the search field. For targeted searches, restrict by terminology (e.g., ICD-10, LOINC, OPS) or CDS modules. If you want to analyze the raw data locally in pseudonymized form, add the criterion “MDAT scientific use EU GDPR NIVEAU” or other criteria from the “EINWILLIGUNG” module.",
       "INFO_TOOLTIP": "<b>CDS Modules:</b> Thematic data categories in the MII Core Data Set (e.g., Diagnosis, Medication, Laboratory).<br><br><b>Context:</b> Describes a specific clinical area or use case of a criterion (it is more specific than modules).<br><br><b>Terminology:</b> Identifies the standardized vocabulary or coding system used to define the criterion.",
       "LABEL": "Enter code or search term",
       "SEARCHBAR": "Search for term or terminology code",
@@ -529,10 +546,24 @@
   },
   "NAVIGATION": {
     "DASHBOARD": "Home",
-    "DATAQUERY": "Data Definition",
-    "DATASELECTION": "Feature Selection",
+    "DATAQUERY": {
+      "COHORT_DEFINITION": "Cohort Definition",
+      "DATASELECTION_DEFINITION": "Feature Definition",
+      "TITLE": "Data Definition"
+    },
+    "DATASELECTION": {
+      "EDITOR": "Feature Selection",
+      "SEARCH": "Feature Search",
+      "TITLE": "Feature Definition"
+    },
     "OPTIONS": "Settings",
-    "QUERYBUILDER_EDITOR": "Cohort Selection",
+    "QUERYBUILDER_EDITOR": {
+      "BULK_SEARCH": "Bulk Search",
+      "EDITOR": "Cohort Selection",
+      "SEARCH": "Criteria Search",
+      "SEARCH_GROUP": "Search",
+      "TITLE": "Cohort Definition"
+    },
     "QUERYBUILDER_OVERVIEW": "Saved data definitions",
     "QUERYBUILDER_RESULT": "Send Feasibility Query",
     "SIGNOUT": "Sign Out"
@@ -540,6 +571,7 @@
   "SAVED_QUERIES": {
     "COMMENT": "Comment",
     "CREATED_AT": "Created at",
+    "DELETE": "Delete data definition",
     "HEADER": "Saved Data Definitions",
     "LOAD": "Load Data Definition",
     "PATIENTS": "Number of patients:",
@@ -570,13 +602,38 @@
       "TIMERESTRICTION": "Time Restriction"
     },
     "CRITERIA_BOX": {
-      "DRAG_ICON_LABEL": "Drag criterion to inclusion or exclusion group (Drag & Drop)"
+      "DRAG_ICON_LABEL": "Drag criterion to inclusion or exclusion group (Drag & Drop)",
+      "GRAB_HINT": "Drag to move"
     },
     "DELETE_MODAL": {
       "CANCEL": "Cancel",
       "DELETE": "Delete",
       "HEADER": "Confirm deletion",
-      "TITLE": "Do you really want to delete the data query?"
+      "TITLE": "Do you really want to delete the data definition?"
+    },
+    "DISABLED": {
+      "BULK_NOTHING_TO_ADD": "Run a search first and select the criteria found.",
+      "BULK_SEARCH_INCOMPLETE": "Enter search terms and set all filters.",
+      "DETAILS_EXPIRED": "The result has expired. Send the feasibility query again.",
+      "DETAILS_NOT_READY": "Details are available once the result has loaded.",
+      "DETAILS_QUOTA_USED": "You have used all your detailed result requests. They reset daily.",
+      "NO_FEATURES_ADDED": "No features have been added yet.",
+      "QUERY_INVALID": "The cohort selection needs at least one inclusion criterion, and all criteria must be complete.",
+      "SELECT_CRITERIA_FIRST": "Select criteria in the table first.",
+      "SELECT_FEATURES_FIRST": "Select features in the table first.",
+      "STAGE_EMPTY": "The cohort selection has no criteria yet.",
+      "TITLE_REQUIRED": "Please enter a title first."
+    },
+    "ERROR_DISPLAY": {
+      "CLOSE": "Close",
+      "ERROR": "Error",
+      "NO_DETAILS": "No error details available",
+      "REQUEST_URL": "Request URL",
+      "TITLE": {
+        "FEASIBILITY_ERROR": "The feasibility query failed",
+        "GENERIC_ERROR": "An error occurred",
+        "VALIDATION_ERROR": "The data definition is not valid"
+      }
     },
     "FILTER": {
       "AVAILABILITY": "Availability",
@@ -587,6 +644,7 @@
       "NO_FILTER_SELECTED": "No search filter selected",
       "RESOURCETYPE": "FHIR Data Type",
       "SEARCH": "Search...",
+      "SELECTED_COUNT": "{{count}} of {{total}} selected",
       "TERMINOLOGY": "Terminology"
     },
     "HEADER": {
@@ -645,7 +703,7 @@
       "COHORT_WARNING": "Cohort selection is required",
       "COMMENT": "Comment",
       "DOWNLOAD": "Download",
-      "HEADER": "Save query",
+      "HEADER": "Save data definition",
       "LABEL": "Title",
       "SAVE": "Save",
       "TITLE": "Title"
@@ -706,7 +764,7 @@
       "SELECT_CHECKBOX_ALL": "Select All",
       "SITE": "Location",
       "STATUS": "Status",
-      "TERMCODE": "Terminology code",
+      "TERMCODE": "Code",
       "TERMINOLOGY_CODE": "Terminology",
       "WHAT_IS_MISSING": "What is missing"
     }
@@ -739,33 +797,34 @@
     },
     "SUCCESS": {
       "DOWNLOAD": "Data selection downloaded successfully.",
-      "SAVED_DATAQUERY": "Data query saved successfully."
+      "SAVED_DATAQUERY": "Data definition saved."
     }
   },
   "TAB_TITLE": {
     "DASHBOARD": "Dashboard",
     "DATA_PROTECTION": "Data Protection",
     "DATA_QUERY": {
-      "COHORT_DEFINITION": "Data Definition - Cohort Selection",
-      "DATA_SELECTION": "Data Definition - Feature Selection",
+      "COHORT_DEFINITION": "Data Definition - Cohort Definition",
+      "DATA_SELECTION": "Data Definition - Feature Definition",
       "INDEX": "Data Definition"
     },
     "DATA_SELECTION": {
-      "EDITOR": "Feature Selection - Editor",
-      "INDEX": "Feature Selection",
-      "SEARCH": "Feature Selection - Search"
+      "EDITOR": "Feature Definition - Feature Selection",
+      "INDEX": "Feature Definition",
+      "SEARCH": "Feature Definition - Feature Search"
     },
     "FEASIBILITY_QUERY": {
-      "EDITOR": "Feasibility Query - Editor",
-      "INDEX": "Feasibility Query",
-      "RESULT": "Feasibility Query - Result",
-      "SEARCH": "Feasibility Query - Search"
+      "BULK_SEARCH": "Cohort Definition - Bulk Search",
+      "EDITOR": "Cohort Definition - Cohort Selection",
+      "INDEX": "Cohort Definition",
+      "RESULT": "Cohort Definition - Result",
+      "SEARCH": "Cohort Definition - Criteria Search"
     },
-    "QUERY_EDITOR": "Feature Selection - Query Editor",
-    "QUERY_EDITOR_CRITERION": "Cohort Selection - Criterion Editor",
-    "QUERY_EDITOR_FEATURE": "Feature Selection - Feature Editor",
-    "QUERY_EDITOR_REFERENCE": "Cohort Selection - Reference Editor",
-    "SAVED_QUERIES": "Saved Queries"
+    "QUERY_EDITOR": "Feature Definition - Query Editor",
+    "QUERY_EDITOR_CRITERION": "Cohort Definition - Criterion Editor",
+    "QUERY_EDITOR_FEATURE": "Feature Definition - Feature Editor",
+    "QUERY_EDITOR_REFERENCE": "Cohort Definition - Reference Editor",
+    "SAVED_QUERIES": "Saved Data Definitions"
   },
   "VALIDATION": {
     "10000": "invalid schema",

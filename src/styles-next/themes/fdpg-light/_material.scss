@@ -1,0 +1,36 @@
+// PURPOSE
+// Translates our palettes (plain lists like $num-blue-palette) into the format Angular Material
+// understands (mat.m2-define-palette). It is not a level of the schema (theme > role > palette >
+// shade > color). It is an adapter for a third-party library. Typography is imported here too.
+//
+// WHY WE STILL KEEP IT
+// 1. _theme.scss feeds these Material palettes into mat.m2-define-light-theme(...) as the
+//    primary / accent / warn slots.
+// 2. Many mixins in custom-material/ still read them through the old theme keys
+//    (map-get($theme, accent), $green, $red, $primary ...) and mat.m2-get-color-from-palette.
+//    Only the blue button uses role-color() so far.
+//
+// WHAT TO DO TO DELETE THIS FILE
+// 1. Move every mixin from map-get($theme, <key>) + mat.m2-get-color-from-palette(...) to
+//    role-color($theme, <role>, <shade>). Then drop the old keys primary, accent, green, red,
+//    warn from $theme in _theme.scss.
+// 2. Decide the open question about indigo-pink.css (styles.scss). No Material theme mixin is called
+//    today, so Material components get their colors from that prebuilt css, not from this theme.
+//    If we replace it with real Material theming, the Material slots primary / accent / warn must be
+//    assigned on purpose (for example blue / green / red). Today primary = grey and warn = yellow.
+// 3. Check that nothing still reads the Material 'background' map from $theme (search-input mixin).
+// 4. Build and diff the compiled css before and after.
+
+@use '@angular/material' as mat;
+
+@import '../../palettes/blue.palette';
+@import '../../palettes/green.palette';
+@import '../../palettes/grey.palette';
+@import '../../palettes/red.palette';
+@import '../../palettes/yellow.palette';
+
+$num-portal-webapp-primary-fdpg: mat.m2-define-palette($num-grey-palette);
+$num-portal-webapp-accent-fdpg: mat.m2-define-palette($num-blue-palette);
+$num-portal-webapp-green: mat.m2-define-palette($num-green-palette);
+$num-portal-webapp-red: mat.m2-define-palette($num-red-palette);
+$num-portal-webapp-warn: mat.m2-define-palette($num-yellow-palette);

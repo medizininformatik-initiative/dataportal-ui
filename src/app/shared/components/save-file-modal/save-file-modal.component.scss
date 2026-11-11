@@ -21,7 +21,7 @@
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    color: var(--border-color);
+    color: var(--color-text-secondary); // the border grey was about 1.7:1
     transition: color 0.2s ease, background 0.2s ease;
 
     &:hover {
@@ -37,7 +37,18 @@
   &__fields {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
+  }
+
+  &__label {
+    font-size: var(--font-size-md);
+    line-height: 20px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+
+    &:not(:first-child) {
+      margin-top: var(--spacing-12);
+    }
   }
 
   &__input {
@@ -45,20 +56,16 @@
     height: 42px;
     padding: 0 17px;
     font-style: normal;
-    font-weight: var(--font-weight-bold);
+    font-weight: 400;
     font-size: 16px;
     line-height: 24px;
     color: var(--color-text-primary);
     background: #ffffff;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--color-text-secondary); // control boundary 3:1 (WCAG 1.4.11)
     border-radius: var(--border-radius-card);
     box-sizing: border-box;
     outline: none;
     transition: border-color 0.2s ease;
-
-    &::placeholder {
-      color: var(--border-color);
-    }
 
     &:focus {
       border-color: var(--color-accent);
@@ -79,13 +86,4 @@
     gap: 12px;
     margin-top: var(--spacing-4);
   }
-}
-
-h2 {
-  margin: 0 0 var(--spacing-8) 0;
-  font-style: normal;
-  font-weight: var(--font-weight-bold);
-  font-size: 18px;
-  line-height: 22px;
-  color: var(--border-color);
 }

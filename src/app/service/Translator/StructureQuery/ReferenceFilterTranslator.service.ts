@@ -3,7 +3,6 @@ import { AttributeFilterData } from 'src/app/model/Interface/AttributeFilterData
 import { AttributeFiltersBuilder } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/AttributeFiltersBuilder'
 import { ConceptFilterTranslatorService } from './ConceptFilterTranslator.service'
 import { CriteriaProfileProviderService } from '../../Provider/CriteriaProfileProvider.service'
-import { CriterionTranslatorService } from './CriterionTranslator.service'
 import { CritGroupPosition } from 'src/app/model/FeasibilityQuery/CritGroupPosition'
 import { Display } from 'src/app/model/DataSelection/Profile/Display'
 import { FilterTypes } from 'src/app/model/Utilities/FilterTypes'

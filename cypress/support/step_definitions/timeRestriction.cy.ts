@@ -45,10 +45,12 @@ export class TimeRestriction {
      * */
     this.pickType(type)
     /**
-     * Datepicker commits (`dateChange`) on blur: blur here. Without it filter stays unapplied,
-     * header chip missing, until next click blurs input.
+     * Field is disabled until type is applied and `clear` can re-render it: wait for enabled,
+     * query again before typing, do not chain. Datepicker commits (`dateChange`) on blur: blur
+     * here. Without it filter stays unapplied, header chip missing, until next click blurs input.
      * */
-    cy.get(DATE_INPUT).clear().type(date).should('have.value', date).blur()
+    cy.get(DATE_INPUT).should('be.enabled').clear()
+    cy.get(DATE_INPUT).type(date).should('have.value', date).blur()
   }
 
   /**

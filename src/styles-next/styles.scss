@@ -1,0 +1,28 @@
+@use '@angular/material' as mat;
+// Only the two flags the language switch and the detail panels use (fi-de, fi-gb)
+@use 'flag-icons/sass/flag-icons' with (
+  $flag-icons-included-countries: (
+    'de',
+    'gb',
+  ),
+  $flag-icons-use-square: false
+);
+@import './font';
+@import './themes';
+@import './custom-material';
+@import './general-styles/_ui-classes';
+@import './general-styles/_header-card';
+@import './general-styles/_drop-target';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+/* The prebuilt theme sets Roboto on .mat-typography (the body class) and its headings; Roboto is not
+   loaded, so text fell back to Arial. Re-emit the hierarchy with our typography config. */
+@include mat.typography-hierarchy(map-get($num-portal-webapp-theme-fdpg, num-typography));
+@import './custom-material/material/mat-badge';
+
+.FDPGTheme {
+  @include custom-material_themed($num-portal-webapp-theme-fdpg);
+}
+
+@import './general-styles/_tokens';
+@import './general-styles/_base';
+@import './general-styles/_utilities';

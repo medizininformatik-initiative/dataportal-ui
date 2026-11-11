@@ -9,6 +9,7 @@
   />
   <button
     (click)="fileUpload.click()"
+    [attr.aria-label]="'SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate"
     [matTooltip]="
       uploadDisabled
         ? ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD_DISABLED' | translate)
@@ -24,6 +25,7 @@
   } @if (showDownload()) {
   <button
     (click)="downloadCRTDL()"
+    [attr.aria-label]="'SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate"
     numDataCy="download-crtdl-button"
     [matTooltip]="
       isDataDefinitionValid()
@@ -40,6 +42,7 @@
   } @if (showSave()) {
   <button
     (click)="onSaveDataQuery()"
+    [attr.aria-label]="'SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate"
     numDataCy="save-cohort-button"
     [matTooltip]="
       isDataDefinitionValid()

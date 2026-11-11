@@ -1,0 +1,9 @@
+@use '../../functions/type';
+
+/* Group "text-link": every text link (<a>), styled by the global rule in base/_links.themed.scss (breadcrumbs, about modal email).
+   Writes the variables of the role "text-link". The values are in themes/fdpg-light/_type-roles.scss under the same name.
+   Parsed as: type.vars($theme, 'text-link')  =  write family, weight, size and line of that role as four variables
+   (see functions/_type.scss). The link rule reads them: font-size: var(--font-text-link-size); */
+@mixin text-link_themed($theme) {
+  @include type.vars($theme, 'text-link');
+}

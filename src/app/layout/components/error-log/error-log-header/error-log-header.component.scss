@@ -1,7 +1,7 @@
 .error-log-header {
   display: flex;
   padding: var(--spacing-16) var(--spacing-24);
-  background: linear-gradient(135deg, #5a79af 0%, #9bb823 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, #9bb823 100%);
   color: white;
   font-size: 1.25rem;
   border-radius: 4px;

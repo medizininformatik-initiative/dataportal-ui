@@ -1,5 +1,5 @@
 import { AppSettingsProviderService } from '../Config/AppSettingsProvider.service'
-import { HttpContext, HttpContextToken, HttpHeaders } from '@angular/common/http'
+import { HttpContext, HttpHeaders } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { OAuthStorage } from 'angular-oauth2-oidc'
 import { IS_FEASIBILITY_REQUEST, IS_VALIDATION } from './HttpContextToken'

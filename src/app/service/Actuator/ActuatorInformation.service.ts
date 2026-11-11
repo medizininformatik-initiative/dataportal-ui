@@ -2,7 +2,7 @@ import { ActuatorApiService } from '../Backend/Api/ActuatorApi.service'
 import { ActuatorData } from 'src/app/model/Interface/ActuatorInfoData/ActuatorData'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { Injectable, inject } from '@angular/core'
-import { map, tap } from 'rxjs/operators'
+import { tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',

@@ -20,12 +20,14 @@ export class NumBetweenFilter {
    * Type start and end date, blur. Earlier date goes first, so no warning shows on first blur.
    * */
   public setRange(startDate: string, endDate: string) {
-    cy.get(INPUTS).eq(0).clear().type(startDate).should('have.value', startDate)
+    cy.get(INPUTS).eq(0).should('be.enabled').clear()
+    cy.get(INPUTS).eq(0).type(startDate).should('have.value', startDate)
     /**
      * Datepicker commits (`dateChange`) on blur, order check runs on that event: blur here, not on
      * next click.
      * */
-    cy.get(INPUTS).eq(1).clear().type(endDate).should('have.value', endDate).blur()
+    cy.get(INPUTS).eq(1).should('be.enabled').clear()
+    cy.get(INPUTS).eq(1).type(endDate).should('have.value', endDate).blur()
   }
 
   /**

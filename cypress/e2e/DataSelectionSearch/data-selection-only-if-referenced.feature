@@ -19,20 +19,22 @@ Feature: Data Selection - Only if referenced
     And I click the edit button on the data selection box "<feature>"
     And I click on the menu item "{{labels.configure}}"
     And I click the "{{labels.references}}" tab
-    And I click the "{{labels.partOf}}" tab
+    And I click the "<tab>" tab
     And I click to add a new reference
     And I add a reference named "<reference>"
     And I add the reference
-    Then a chip labeled "<reference>" should appear in the "{{labels.selectedReference}}" section
+    Then a chip labeled "<referenceDisplay>" should appear in the "{{labels.selectedReference}}" section
     When I click on the button "{{labels.close}}"
-    Then the data selection box "<reference>" offers the "{{labels.onlyIfReferenced}}" option
+    Then the data selection box "<referenceDisplay>" offers the "{{labels.onlyIfReferenced}}" option
     And the data selection box "<feature>" does not offer the "{{labels.onlyIfReferenced}}" option
-    And the "{{labels.onlyIfReferenced}}" option of the data selection box "<reference>" is enabled
-    When I toggle the "{{labels.onlyIfReferenced}}" option of the data selection box "<reference>"
-    Then the "{{labels.onlyIfReferenced}}" option of the data selection box "<reference>" is disabled
-    When I toggle the "{{labels.onlyIfReferenced}}" option of the data selection box "<reference>"
-    Then the "{{labels.onlyIfReferenced}}" option of the data selection box "<reference>" is enabled
+    And the "{{labels.onlyIfReferenced}}" option of the data selection box "<referenceDisplay>" is enabled
+    When I toggle the "{{labels.onlyIfReferenced}}" option of the data selection box "<referenceDisplay>"
+    Then the "{{labels.onlyIfReferenced}}" option of the data selection box "<referenceDisplay>" is disabled
+    When I toggle the "{{labels.onlyIfReferenced}}" option of the data selection box "<referenceDisplay>"
+    Then the "{{labels.onlyIfReferenced}}" option of the data selection box "<referenceDisplay>" is enabled
 
     Examples:
-      | feature                   | reference                   |
-      | {{dataSelection.feature}} | {{dataSelection.reference}} |
+      | feature                         | tab                                  | reference                         | referenceDisplay                         |
+      | {{dataSelection.feature}}       | {{dataSelection.referenceTab}}       | {{dataSelection.reference}}       | {{dataSelection.referenceDisplay}}       |
+      | {{dataSelection.secondFeature}} | {{dataSelection.secondReferenceTab}} | {{dataSelection.secondReference}} | {{dataSelection.secondReferenceDisplay}} |
+      | {{dataSelection.thirdFeature}}  | {{dataSelection.thirdReferenceTab}}  | {{dataSelection.thirdReference}}  | {{dataSelection.thirdReferenceDisplay}}  |

@@ -19,7 +19,7 @@ export class CriteriaListEntryAdapter extends AbstractTableAdapter<CriteriaListE
   protected buildHeaders(): TableHeaderData {
     return {
       headers: [
-        { label: 'EMPTY', addAllCheckbox: false },
+        { label: 'CRITERIA.ICON', addAllCheckbox: false, visuallyHidden: true },
         { label: 'NAME', addAllCheckbox: false },
         { label: 'AVAILABILITY', addAllCheckbox: false },
         { label: 'TERMINOLOGY_CODE', addAllCheckbox: false },

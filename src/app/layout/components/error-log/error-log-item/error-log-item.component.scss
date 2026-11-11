@@ -2,21 +2,9 @@
   display: flex;
   gap: 1rem;
   padding: var(--spacing-16);
-  background-color: rgba(90, 121, 175, 0.1);
+  background-color: var(--color-accent-bg);
   border-left: 4px solid #9bb823;
   border-radius: 4px;
-}
-
-.error-number {
-  flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #9bb823;
-  color: white;
-  border-radius: 50%;
 }
 
 .error-details {
@@ -43,7 +31,7 @@
     summary {
       color: #667eea;
       font-size: 0.875rem;
-      font-weight: 500;
+      font-weight: 400;
       user-select: none;
     }
   }

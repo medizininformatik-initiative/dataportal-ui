@@ -2,14 +2,17 @@ import { ActiveSearchTermService } from 'src/app/service/Search/ActiveSearchTerm
 import { debounceTime } from 'rxjs/operators'
 import { Subject } from 'rxjs'
 import {
+  afterNextRender,
   Component,
   computed,
   effect,
+  ElementRef,
   inject,
   input,
   output,
   signal,
   untracked,
+  viewChild,
 } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
@@ -41,6 +44,12 @@ export class SearchbarComponent {
         }
       })
 
+    afterNextRender(() => {
+      if (this.autofocus()) {
+        this.field()?.nativeElement.focus()
+      }
+    })
+
     effect(() => {
       const value = this.searchText() ?? ''
       const minLength = this.minLength()
@@ -56,6 +65,9 @@ export class SearchbarComponent {
   readonly searchText = input<string>('')
   readonly searchTextChange = output<string>()
   readonly icon = input<string>('search')
+  /** Focus the field once the view is rendered (search pages only). */
+  readonly autofocus = input(false)
+  private readonly field = viewChild<ElementRef<HTMLInputElement>>('field')
 
   readonly inputValue = signal(this.searchText() || '')
   readonly currentText = signal('')

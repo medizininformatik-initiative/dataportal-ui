@@ -71,7 +71,16 @@ export class ProfileHeaderComponent implements OnInit {
     this.placeholder = this.translation.transform(this.profile()?.getDisplay()) + this.labelNumber
   }
 
+  /**
+   * The search bar emits its start value once after its debounce. An unchanged label must not reach
+   * the staged profile: saving it replaces the profile and resets what is open in the editor tabs.
+   * @param label - The label text from the search bar
+   */
   public setLabel(label: string) {
+    if (label === this.label) {
+      return
+    }
+    this.label = label
     this.updatedLabel.emit(label)
   }
 

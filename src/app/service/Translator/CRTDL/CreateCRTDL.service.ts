@@ -1,5 +1,5 @@
 import { ActiveDataSelectionService } from '../../Provider/ActiveDataSelection.service'
-import { combineLatest, map, Observable, of } from 'rxjs'
+import { combineLatest, map, Observable } from 'rxjs'
 import { CRTDL } from 'src/app/model/CRTDL/DataExtraction/CRTDL'
 import { DataExtraction } from 'src/app/model/CRTDL/DataExtraction/DataExtraction'
 import { DataSelection2DataExtraction } from './DataSelection2DataExtraction.service'

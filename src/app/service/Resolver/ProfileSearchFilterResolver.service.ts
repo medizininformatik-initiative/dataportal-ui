@@ -1,4 +1,3 @@
-import { CriteriaSearchFilter } from 'src/app/model/Search/Filter/CriteriaSearchFilter'
 import { inject, Injectable } from '@angular/core'
 import { Observable, tap } from 'rxjs'
 import { ProfileSearchFilterProviderService } from '../Search/Filter/ProfileSearchFilterProvider.service'

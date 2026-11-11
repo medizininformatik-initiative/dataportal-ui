@@ -15,11 +15,11 @@
 
       <!-- Translations -->
       <div class="detail-row divider">
-        <div class="detail-label num-text-label">
+        <div class="detail-label">
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.TRANSLATIONS' | translate }}
         </div>
         @if (translations().length) {
-        <div class="detail-value num-text-body">
+        <div class="detail-value">
           @for (t of translations(); track t.getLanguage()) {
           <div class="translation-entry">
             <span
@@ -27,24 +27,24 @@
               style="font-size: 14px"
               [ngClass]="'fi-' + (t.getLanguage() === 'en-US' ? 'gb' : 'de')"
             ></span>
-            <span [matTooltip]="t.getValue() | displayTranslation" class="num-text-accent">
+            <span [matTooltip]="t.getValue() | displayTranslation" class="translation-link">
               {{ t.getValue() }}
             </span>
           </div>
           }
         </div>
         } @else {
-        <div class="num-text-accent">
+        <div class="detail-empty">
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_TRANSLATIONS' | translate }}
         </div>
         }
       </div>
       @if(data.description) {
       <div class="detail-row divider">
-        <div class="detail-label num-text-label">
+        <div class="detail-label">
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.DESCRIPTION' | translate }}
         </div>
-        <div class="detail-value num-text-body">
+        <div class="detail-value">
           {{ data.description | displayTranslation }}
         </div>
       </div>
@@ -52,17 +52,17 @@
       <!-- Fields -->
       @if (data.fields) {
       <div class="detail-row divider">
-        <div class="detail-label num-text-label">
+        <div class="detail-label">
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.FIELDS' | translate }}
         </div>
-        <div class="detail-value num-text-body">
+        <div class="detail-value">
           {{ displayFields() }}
         </div>
       </div>
       }
       <!-- Parents -->
       <div class="detail-row divider" [class.relatives-row]="parents.length">
-        <div class="detail-label num-text-label">
+        <div class="detail-label">
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.PARENTS' | translate }}
         </div>
         @if (parents.length) {
@@ -74,7 +74,7 @@
           />
         </div>
         } @else {
-        <div class="num-text-accent">
+        <div class="detail-empty">
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_PARENTS' | translate }}
         </div>
         }
@@ -82,7 +82,7 @@
 
       <!-- Children -->
       <div class="detail-row" [class.relatives-row]="children.length">
-        <div class="detail-label num-text-label">
+        <div class="detail-label">
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.CHILDREN' | translate }}
         </div>
         @if (children.length) {
@@ -94,7 +94,7 @@
           />
         </div>
         } @else {
-        <div class="num-text-accent">
+        <div class="detail-empty">
           {{ 'SHARED_COMPONENTS.LIST_ITEM_DETAILS.NO_CHILDREN' | translate }}
         </div>
         }

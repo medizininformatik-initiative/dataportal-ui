@@ -1,13 +1,12 @@
-import { Concept } from './Concept';
-import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode';
+import { Concept } from './Concept'
 
 /**
  * Abstract class representing a concept filter.
  */
 export abstract class AbstractConceptFilter {
-  protected selectedConcepts: Array<Concept> = [];
+  protected selectedConcepts: Array<Concept> = []
 
-  protected readonly id: string;
+  protected readonly id: string
 
   /**
    * Creates an instance of AbstractConceptFilter.
@@ -16,12 +15,12 @@ export abstract class AbstractConceptFilter {
    * @param allowedConcepts - The allowed concepts.
    */
   constructor(id: string, selectedConcepts: Array<Concept> = []) {
-    this.selectedConcepts = selectedConcepts;
-    this.id = id;
+    this.selectedConcepts = selectedConcepts
+    this.id = id
   }
 
   public getId(): string {
-    return this.id;
+    return this.id
   }
 
   /**
@@ -30,7 +29,7 @@ export abstract class AbstractConceptFilter {
    * @returns A Set of selected concepts.
    */
   public getSelectedConcepts(): Array<Concept> {
-    return this.selectedConcepts;
+    return this.selectedConcepts
   }
 
   /**
@@ -39,7 +38,7 @@ export abstract class AbstractConceptFilter {
    * @param selectedConcepts - A Set of selected concepts.
    */
   public setSelectedConcepts(selectedConcepts: Array<Concept>): void {
-    this.selectedConcepts = selectedConcepts;
+    this.selectedConcepts = selectedConcepts
   }
 
   /**
@@ -52,6 +51,6 @@ export abstract class AbstractConceptFilter {
       this.selectedConcepts !== undefined &&
       this.selectedConcepts !== null &&
       this.selectedConcepts.length > 0
-    );
+    )
   }
 }

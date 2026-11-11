@@ -52,7 +52,7 @@ export class DataSelectionOnlyIfReferenced {
   public optionShouldBe(name: string, state: string) {
     this.box(name)
       .find(`num-reference-col ${dataCy('checkbox')}`)
-      .should('have.attr', 'aria-checked', String(state === 'enabled'))
+      .should(state === 'enabled' ? 'be.checked' : 'not.be.checked')
   }
 }
 

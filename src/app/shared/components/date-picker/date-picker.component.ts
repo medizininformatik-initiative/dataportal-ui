@@ -1,4 +1,4 @@
-import { Component, model, output } from '@angular/core'
+import { Component, input, model, output } from '@angular/core'
 import { MatInput } from '@angular/material/input'
 import {
   MatDatepickerInput,
@@ -28,6 +28,8 @@ export class DatePickerComponent {
   readonly dateChanged = output<string>()
 
   readonly selectedDate = model('')
+  /** marks the field as wrong (error border, aria-invalid); the message is shown by the parent */
+  readonly invalid = input(false)
 
   public emitSelectedDate(): void {
     this.dateChanged.emit(this.selectedDate())

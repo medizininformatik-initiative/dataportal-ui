@@ -1,8 +1,10 @@
 <div cdkDropListGroup class="container">
-  <div>
-    <num-header [showToggle]="true">
-      {{ 'FEASIBILITY.EDITOR.HEADER' | translate }}
-    </num-header>
+  <div class="page-header">
+    <div class="title-row">
+      <num-header [showToggle]="true">
+        {{ 'FEASIBILITY.EDITOR.HEADER' | translate }}
+      </num-header>
+    </div>
     <num-header-description>
       {{ 'FEASIBILITY.EDITOR.HEADER_INFO' | translate }}
     </num-header-description>
@@ -13,13 +15,18 @@
     </div>
     -->
   <num-apply-time-restriction />
-  <num-section-name>
-    {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }}
-  </num-section-name>
-  <div class="margin-bottom-4 stage-container">
-    <num-criteria-stage [isEditable]="true" #stage></num-criteria-stage>
+  <div
+    class="stage-col drop-col"
+    [attr.data-drop-label]="'FEASIBILITY.EDITOR.DROP_STAGE' | translate"
+  >
+    <num-section-name>
+      {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }}
+    </num-section-name>
+    <div class="stage-container">
+      <num-criteria-stage [isEditable]="true" #stage></num-criteria-stage>
+    </div>
   </div>
-  <div class="overflow-auto">
+  <div class="display-container">
     <num-display-feasibility-query [isEditable]="true"></num-display-feasibility-query>
   </div>
   <div>

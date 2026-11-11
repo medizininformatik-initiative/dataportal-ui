@@ -1,0 +1,70 @@
+@use '@angular/material' as mat;
+@import '../functions/role-color';
+@import '../functions/foreground-background-color';
+
+/* base */
+@import './base/color-variables.themed';
+@import './base/text-color-variables.themed';
+@import './base/divider-classes.themed';
+@import './base/headings.themed';
+@import './base/links.themed';
+
+/* layout */
+@import './layout/app-layout.themed';
+@import './layout/header.themed';
+@import './layout/side-menu.component.themed';
+
+/* material */
+@import './material/mat-expansion-panel.themed';
+@import './material/mat-tooltip.themed';
+@import './material/mat-tab.themed';
+
+/* typography groups */
+@import './typography/breadcrumbs.themed';
+@import './typography/text-link.themed';
+@import './typography/button.themed';
+@import './typography/page-header.themed';
+@import './typography/section-name.themed';
+@import './typography/filter-hint.themed';
+@import './typography/search-bar.themed';
+@import './typography/table.themed';
+@import './typography/side-menu.themed';
+@import './typography/details-panel.themed';
+
+/* buttons */
+@import './button/buttons.themed';
+
+/* components */
+@import './components/checkbox.themed';
+@import './components/action-bar.themed';
+@import './components/filter-chips.themed';
+
+/* export themed mixins */
+@mixin custom-material_themed($theme) {
+  @include color-variables_themed($theme);
+  @include text-color-variables_themed($theme);
+  @include divider-classes_themed($theme);
+  @include app-layout_themed($theme);
+  @include side-menu-component_themed($theme);
+  @include header_themed($theme);
+  @include mat-tooltip_themed($theme);
+  @include mat.all-component-typographies(map-get($theme, num-typography));
+  @include headings_themed($theme);
+  @include links_themed($theme);
+  @include breadcrumbs_themed($theme);
+  @include text-link_themed($theme);
+  @include button_themed($theme);
+  @include page-header_themed($theme);
+  @include section-name_themed($theme);
+  @include filter-hint_themed($theme);
+  @include search-bar_themed($theme);
+  @include table_themed($theme);
+  @include side-menu_themed($theme);
+  @include details-panel_themed($theme);
+  @include mat-tab_themed($theme);
+  @include buttons($theme);
+  @include mat-expansion-panel_themed($theme);
+  @include checkbox_themed($theme);
+  @include action-bar_themed($theme);
+  @include filter-chips_themed($theme);
+}

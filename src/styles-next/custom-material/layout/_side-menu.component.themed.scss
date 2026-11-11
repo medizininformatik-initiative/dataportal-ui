@@ -1,0 +1,304 @@
+// No literal colours, sizes or fonts in here: everything comes from the theme
+// palettes/typography ($theme) or the global tokens in styles.scss (:root).
+@mixin side-menu-component_themed($theme) {
+  num-side-menu {
+    // Menu-local tokens, derived from the global spacing scale
+    --side-menu-line-x: calc(
+      var(--spacing-16) + var(--spacing-12) - var(--spacing-2) / 2
+    ); // centred under parent icon
+    --side-menu-pill-x: calc(var(--side-menu-line-x) + var(--spacing-12));
+    --side-menu-child-indent: calc(var(--side-menu-pill-x) + var(--spacing-24));
+    --side-menu-line-x2: calc(
+      var(--side-menu-child-indent) + var(--spacing-16)
+    ); // second rail (level 3)
+    --side-menu-grandchild-indent: calc(var(--side-menu-line-x2) + var(--spacing-24));
+
+    // Colours by role: hover = light grey, active = accent tint, focus = ring
+    --side-menu-bg: #{role-color($theme, neutral, 0)};
+    --side-menu-bg-hover: #{role-color($theme, neutral, 200)};
+    --side-menu-bg-active: var(--color-accent-bg);
+    --side-menu-text: var(--color-text-section);
+    --side-menu-text-active: #{role-color($theme, accent, 900)};
+    --side-menu-icon: #{role-color($theme, neutral, 900)};
+    --side-menu-icon-active: var(--color-accent);
+    --side-menu-line: var(--border-color);
+    --side-menu-line-hover: #{role-color($theme, neutral, 700)};
+    --side-menu-focus-ring: #{role-color($theme, accent, 900)};
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: var(--spacing-16) var(--spacing-12) 0;
+
+    .num-nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      min-width: 0; // let rows shrink to the menu width so labels can wrap
+      align-self: stretch; // the host's `logo-wrapper` class centres its children; a centred list moved with the longest label
+    }
+
+    // breathing room between groups only
+    .num-nav-group + .num-nav-group {
+      margin-top: var(--spacing-20);
+    }
+
+    // parent of the active child reads as the active section (icon + text tint, no pill)
+    .num-nav-group:has(.num-nav-link--child.num-nav-link--active) > .num-nav-link {
+      color: var(--side-menu-text-active);
+
+      fa-icon {
+        color: var(--side-menu-icon-active);
+      }
+    }
+
+    .num-nav-link {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--spacing-4);
+      padding: var(--spacing-6) var(--spacing-16);
+      margin-bottom: var(--spacing-2);
+      border-radius: var(--border-radius-card);
+      background: var(--side-menu-bg);
+      color: var(--side-menu-text);
+      font-family: var(--font-side-menu-parent-item-family);
+      font-size: var(--font-side-menu-parent-item-size);
+      line-height: var(--font-side-menu-parent-item-line);
+      font-weight: var(--font-side-menu-parent-item-weight);
+      text-decoration: none;
+      overflow-wrap: anywhere; // long German labels wrap instead of clipping (WCAG 1.4.10)
+      cursor: pointer;
+
+      &:hover {
+        background: var(--side-menu-bg-hover);
+      }
+
+      &:focus-visible {
+        outline: var(--spacing-2) solid var(--side-menu-focus-ring);
+        outline-offset: calc(var(--spacing-2) * -1);
+      }
+
+      &--active,
+      &--active:hover {
+        background: var(--side-menu-bg-active);
+        color: var(--side-menu-text-active);
+
+        .navItem-font {
+          color: var(--side-menu-text-active);
+        }
+
+        fa-icon {
+          color: var(--side-menu-icon-active);
+        }
+      }
+    }
+
+    .navItem-font {
+      padding-left: var(--spacing-4);
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    fa-icon {
+      color: var(--side-menu-icon);
+    }
+
+    .nav-svg-icon {
+      width: var(--spacing-32);
+      height: var(--spacing-32);
+      font-size: var(--spacing-32);
+      flex-shrink: 0;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    // ── Child items ──────────────────────────────────────────────
+    .navItem-font--child {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .num-nav-link.num-nav-link--child {
+      position: relative;
+      isolation: isolate; // keeps the ::before pill (z-index -1) above the row, below the text
+      padding: var(--spacing-6) var(--spacing-12) var(--spacing-6) var(--side-menu-child-indent);
+      margin-bottom: 0;
+      border-radius: 0;
+      background: transparent;
+      font-family: var(--font-side-menu-child-item-family);
+      font-size: var(--font-side-menu-child-item-size);
+      line-height: var(--font-side-menu-child-item-line);
+      font-weight: var(--font-side-menu-child-item-weight);
+
+      // highlight pill (hover + active), starts on the guide line so both share one left edge
+      &::before {
+        content: '';
+        position: absolute;
+        inset: var(--spacing-2) 0 var(--spacing-2) var(--side-menu-line-x); // 4px gap between pills
+        border-radius: 0; // square: rails + straight pill, no curves
+        background: var(--side-menu-bg-hover);
+        opacity: 0;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      &:hover::before,
+      &:focus-visible::before {
+        opacity: 1;
+      }
+
+      // ring is drawn on the inset pill instead of the full-width row
+      &:focus-visible {
+        outline: none;
+
+        &::before {
+          outline: var(--spacing-2) solid var(--side-menu-focus-ring);
+          outline-offset: calc(var(--spacing-2) * -1);
+        }
+      }
+
+      // rail segment of this row, drawn above the pill (the parent <ul> draws the full-height rail)
+      &::after {
+        content: '';
+        position: absolute;
+        left: var(--side-menu-line-x);
+        top: 0;
+        bottom: 0;
+        width: var(--spacing-2);
+        background: var(--side-menu-line);
+        pointer-events: none;
+      }
+
+      // rail segment sits above the pill and darkens with it
+      &:hover::after {
+        background: var(--side-menu-line-hover);
+      }
+
+      // focus ring already outlines the pill's left edge, so the rail must not cover it
+      &:focus-visible::after {
+        background: transparent;
+      }
+
+      &.num-nav-link--active {
+        background: transparent;
+
+        &::before {
+          opacity: 1;
+          background: var(--side-menu-bg-active);
+        }
+
+        &::after {
+          background: var(--side-menu-icon-active);
+        }
+
+        &:focus-visible::after {
+          background: transparent;
+        }
+
+        .navItem-font--child {
+          font-weight: var(--font-side-menu-child-item-active-weight);
+          color: var(--side-menu-text-active);
+        }
+      }
+    }
+
+    // grey rails: one per list level, running the full height of the list
+    .num-nav-list--children,
+    .num-nav-list--grandchildren {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: var(--side-menu-line-x);
+        width: var(--spacing-2);
+        background: var(--side-menu-line);
+        pointer-events: none;
+      }
+    }
+
+    .num-nav-list--grandchildren::before {
+      left: var(--side-menu-line-x2);
+    }
+
+    // third level: text, pill and accent segment sit on the second rail
+    .num-nav-link.num-nav-link--child.num-nav-link--grandchild {
+      padding-left: var(--side-menu-grandchild-indent);
+
+      &::after {
+        left: var(--side-menu-line-x2);
+      }
+
+      &::before {
+        left: var(--side-menu-line-x2);
+      }
+    }
+
+    // non-link group label (e.g. "Suche"): no hover/pointer
+    .num-nav-link.num-nav-link--child.num-nav-link--label {
+      cursor: default;
+
+      &:hover::before {
+        opacity: 0;
+      }
+
+      &:hover::after {
+        background: var(--side-menu-line);
+      }
+    }
+
+    // ── Collapsed: icon-only rail ────────────────────────────────
+    &.collapsed {
+      .num-nav-link {
+        justify-content: center;
+        padding-left: 0;
+        padding-right: 0;
+        gap: 0;
+      }
+
+      // icon-only: child rows have no text, so they only added uneven gaps and a highlight remnant.
+      // The parent still shows the active section through :has() on the hidden child.
+      .num-nav-list--children {
+        display: none;
+      }
+    }
+
+    .num-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: auto;
+      height: var(--spacing-48);
+    }
+
+    .num-toggle-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--spacing-40);
+      height: var(--spacing-40);
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--side-menu-icon);
+      cursor: pointer;
+
+      &:hover {
+        background: role-color($theme, accent, 200);
+        color: foreground-color($theme, text); // black, as the blue 200 contrast
+      }
+
+      &:focus-visible {
+        outline: var(--spacing-2) solid var(--side-menu-focus-ring);
+      }
+    }
+  }
+}

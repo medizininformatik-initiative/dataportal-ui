@@ -15,30 +15,17 @@
     border-right: 2px solid mat.m2-get-color-from-palette($primary, 100);
   }
 
-  // ── Sidenav container ──────────────────────────────────────────────────────
-  // Offset container + sidenav panel below the fixed header (108 px)
-  .sidenav-container {
-    z-index: unset;
+  // ── Body below the fixed header (108 px): nav + main side by side ─────────
+  .app-body {
+    position: fixed;
+    inset: 108px 0 0 0;
+    display: flex;
+    background-color: #ffffff;
 
-    &.mat-drawer-container {
-      top: 108px;
-      background-color: #ffffff;
-    }
-
-    .mat-drawer-side {
-      bottom: 0 !important;
-      border-right: none;
+    .sidenav {
+      flex: none;
       overflow: hidden;
 
-      .mat-drawer-inner-container {
-        overflow: hidden;
-      }
-    }
-    mat-sidenav.mat-drawer-side {
-      top: 108px !important;
-    }
-    // ── Sidenav panel sizing ───────────────────────────────────────────────
-    mat-sidenav {
       &.expanded {
         width: 320px;
       }
@@ -48,46 +35,22 @@
       }
     }
 
-    // ── Side menu slot ─────────────────────────────────────────────────────
     .side-menu {
       height: 100%;
       overflow: hidden;
     }
 
-    // ── Scrollable content area ────────────────────────────────────────────
-    mat-sidenav-content {
+    .main-content {
+      flex: 1 1 auto;
+      min-width: 0;
       overflow-x: hidden;
       overflow-y: auto;
-      z-index: unset;
-    }
-
-    // ── Row wrapper (direct child of mat-sidenav-content) ─────────────────
-    .content-row {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      min-height: 100%;
-      width: 100%;
-      height: 100%;
-    }
-
-    // ── Main page content ──────────────────────────────────────────────────
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      flex: 1 1 auto;
-      width: 95%;
-      max-width: 95%;
-      height: 100%;
       box-sizing: border-box;
-      overflow: auto;
     }
 
-    // ── Route animation host ───────────────────────────────────────────────
+    // 95% of the space right of the nav (a % on a flex child would count the nav too)
     .fullscreen {
-      width: 100%;
+      width: 95%;
       height: 100%;
     }
   }

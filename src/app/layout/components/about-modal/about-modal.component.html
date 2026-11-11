@@ -8,14 +8,15 @@
     <div class="info-section">
       <div class="section-header">{{ 'APPLAYOUT.HEADER.ABOUT_MODAL.UI' | translate }}</div>
 
-      <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION" [value]="aboutInfo?.ui?.version">
-      </num-info-tile>
+      <num-info-tile
+        label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION"
+        [value]="aboutInfo?.ui?.version"
+      ></num-info-tile>
 
       <num-info-tile
         label="APPLAYOUT.HEADER.ABOUT_MODAL.COPYRIGHT"
         [value]="aboutInfo?.ui?.copyright"
-      >
-      </num-info-tile>
+      ></num-info-tile>
 
       <num-info-tile label="APPLAYOUT.HEADER.ABOUT_MODAL.EMAIL">
         <a [href]="'mailto:' + aboutInfo?.ui?.email" target="_blank">{{ aboutInfo?.ui?.email }}</a>
@@ -29,20 +30,17 @@
       <num-info-tile
         label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION"
         [value]="aboutInfo?.backend?.version"
-      >
-      </num-info-tile>
+      ></num-info-tile>
 
       <num-info-tile
         label="APPLAYOUT.HEADER.ABOUT_MODAL.BUILD_TIME"
         [value]="aboutInfo?.backend?.buildTime"
-      >
-      </num-info-tile>
+      ></num-info-tile>
 
       <num-info-tile
         label="APPLAYOUT.HEADER.ABOUT_MODAL.COMMIT"
         [value]="aboutInfo?.backend?.commit"
-      >
-      </num-info-tile>
+      ></num-info-tile>
     </div>
 
     <!--Ontology-->
@@ -52,26 +50,21 @@
       <num-info-tile
         label="APPLAYOUT.HEADER.ABOUT_MODAL.VERSION"
         [value]="aboutInfo?.ontology?.version"
-      >
-      </num-info-tile>
+      ></num-info-tile>
     </div>
   </div>
 
   <!--Buttons-->
   <div class="action-buttons">
+    <num-button type="cancel" (click)="closeModal()">
+      {{ 'APPLAYOUT.HEADER.CLOSE' | translate }}
+    </num-button>
     <num-button
       [matTooltip]="'APPLAYOUT.HEADER.ABOUT_MODAL.DOWNLOAD' | translate"
-      type="blue"
+      type="green"
       (click)="downloadAboutInfo()"
     >
       {{ 'APPLAYOUT.HEADER.ABOUT_MODAL.DOWNLOAD' | translate }}
-    </num-button>
-    <num-button
-      [matTooltip]="'APPLAYOUT.HEADER.CLOSE' | translate"
-      type="blue"
-      (click)="closeModal()"
-    >
-      {{ 'APPLAYOUT.HEADER.CLOSE' | translate }}
     </num-button>
   </div>
 </num-modal-window>

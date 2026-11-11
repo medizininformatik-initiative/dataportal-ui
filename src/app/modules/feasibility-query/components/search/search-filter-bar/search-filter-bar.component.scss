@@ -1,7 +1,7 @@
 .filter-section {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 .filter-heading {
@@ -10,10 +10,13 @@
   gap: 0.4rem;
 
   &__label {
-    font-family: var(--font-body);
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-primary);
+    margin: 0;
+    font-family: var(--font-app-content-filter-hint-family);
+    font-weight: var(--font-app-content-filter-hint-weight);
+    font-size: var(--font-app-content-filter-hint-size);
+    line-height: var(--font-app-content-filter-hint-line);
+    letter-spacing: var(--font-app-content-filter-hint-letter-spacing);
+    color: var(--color-text-secondary);
   }
 
   &__info {
@@ -28,14 +31,8 @@
 
 .filter-container {
   display: flex;
-  align-content: space-around;
+  align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-.filter-container > num-button {
-  margin-top: var(--spacing-2);
-}
-::ng-deep .filter-container .num-button {
-  height: 38px;
 }

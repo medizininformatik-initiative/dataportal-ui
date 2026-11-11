@@ -28,7 +28,7 @@
     &:hover:not(.disabled) {
       background: mat.m2-get-color-from-palette($primary, 100);
       color: mat.m2-get-color-from-palette($accent, 400);
-      box-shadow: rgba(81, 112, 168, 0.13) 0 4px 16px;
+      box-shadow: rgba(mat.m2-get-color-from-palette($accent, 600), 0.13) 0 4px 16px;
     }
 
     &.cdk-keyboard-focused {

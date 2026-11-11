@@ -1,46 +1,8 @@
 /* No Selected Criteria Stage Styles */
-.no-selected-criteria-stage {
-  position: absolute;
-  width: 584.5px;
-  height: 70.28px;
-  left: 282.04px;
-  top: 1674.85px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.no-selected-criteria-box {
-  box-sizing: border-box;
-  position: absolute;
-  width: 584.5px;
-  height: 70.28px;
-  left: 282.04px;
-  top: 1674.85px;
-  opacity: 0.2;
-  border: 1px dashed var(--color-accent, #5a79af);
-  border-radius: var(--border-radius-card, 5px);
-  background: none;
-}
-
-.no-selected-criteria-text {
-  position: absolute;
-  width: 254.95px;
-  height: 28px;
-  left: 448.05px;
-  top: 1696.72px;
-  font-family: var(--font-body, 'Open Sans', sans-serif);
-  font-style: normal;
-  font-weight: var(--font-weight-normal);
-  font-size: var(--font-size-sm, 14px);
-  line-height: var(--line-height-sm, 19px);
-  display: flex;
-  align-items: center;
-  color: var(--color-accent, #5a79af);
-  background: none;
-}
 .container {
   width: 100%;
+  min-height: 96px; // same as the empty hint: while the only criterion is dragged away the CDK hides it and the list would collapse to 0px, so it could not take the criterion back
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -57,14 +19,21 @@
   }
 }
 
+// A dragged criterion is inserted by the CDK as a sibling after the empty-list hint; hiding the hint makes the criterion take its place
+.container.cdk-drop-list-dragging .no-selected-criteria {
+  display: none;
+}
+
 .no-selected-criteria {
   width: 100%;
   height: 96px;
-  border: 1px dotted var(--color-accent);
-  border-radius: var(--border-radius-sm);
+  // same look as num-placeholder-box (empty state); the thick dashed border is kept for drop targets
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius-card);
   font-weight: var(--font-weight-normal);
-  font-size: var(--font-size-md, 14px);
-  color: var(--color-accent);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-secondary);
   align-content: center;
   text-align: center;
 }

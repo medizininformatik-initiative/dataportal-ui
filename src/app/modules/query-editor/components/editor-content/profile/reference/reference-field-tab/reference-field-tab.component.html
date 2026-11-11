@@ -5,14 +5,13 @@
     <num-possible-references
       [posssibleReference]="possibleReference"
       (selectedProfileId)="updateSelectedPossibleReferences($event)"
-    >
-    </num-possible-references>
+    ></num-possible-references>
     } } @else {
-    <num-placeholder-box class="width-100 height-100">
+    <num-placeholder-box>
       {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.INFO' | translate }}
     </num-placeholder-box>
     } } @else {
-    <num-placeholder-box class="width-100 height-100">
+    <num-placeholder-box>
       {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.INFO' | translate }}
     </num-placeholder-box>
     }

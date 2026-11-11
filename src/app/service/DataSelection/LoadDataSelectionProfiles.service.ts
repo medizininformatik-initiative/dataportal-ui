@@ -1,4 +1,4 @@
-import { concatMap, map, Observable, tap, throwError } from 'rxjs'
+import { map, Observable, tap, throwError } from 'rxjs'
 import { DataSelectionApiService } from '../Backend/Api/DataSelectionApi.service'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileData } from 'src/app/model/Interface/DataSelectionProfileData'

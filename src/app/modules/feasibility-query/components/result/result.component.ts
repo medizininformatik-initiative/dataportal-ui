@@ -6,6 +6,7 @@ import { HeaderDescriptionComponent } from '../../../../shared/components/header
 import { SimpleResultComponent } from './simple-result/simple-result.component'
 import { DisplayFeasibilityQueryComponent } from '../editor/display/display.component'
 import { ResultActionBarComponent } from './action-bar/result-action-bar.component'
+import { SectionNameComponent } from '../../../../shared/components/section-name/section-name.component'
 import { TranslateModule } from '@ngx-translate/core'
 @Component({
   selector: 'num-feasibility-query-result',
@@ -13,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./result.component.scss'],
   standalone: true,
   imports: [
+    SectionNameComponent,
     HeaderComponent,
     HeaderDescriptionComponent,
     SimpleResultComponent,

@@ -1,30 +1,24 @@
 :host {
   display: flex;
   flex-direction: column;
+  gap: var(--spacing-16); // search bar, summary and list
   height: 100%;
   overflow: hidden;
 }
 
+// Search bar, then the time restriction under it (full-width row, controls wrap when they open)
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
 .container {
   flex: 1;
+  display: grid;
+  align-content: start;
+  row-gap: var(--spacing-16); // the one spacing between profiles
   overflow-y: auto;
-}
-
-.match-hint {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: var(--spacing-4) var(--spacing-8) var(--spacing-8);
-}
-
-.match-chip {
-  font-size: 11px;
-  padding: 2px var(--spacing-8);
-  border-radius: 12px;
-  background-color: var(--color-accent-bg);
-  color: var(--color-text-primary, #232323);
-  border: 1px solid var(--color-accent-border);
-  white-space: nowrap;
 }
 
 .search-summary {

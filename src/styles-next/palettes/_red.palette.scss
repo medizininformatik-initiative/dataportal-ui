@@ -1,0 +1,25 @@
+// Red ramp. 500 = #ff4545 (the old red button color), hue 0. 300 = #ff8383 (the old red hover color). Other shades generated at the same hue and saturation.
+$num-red-palette: (
+  50: #ffebeb,
+  100: #ffd2d2,
+  200: #ffb1b1,
+  300: #ff8383,
+  400: #ff6666,
+  500: #ff4545,
+  600: #ff1b1b,
+  700: #eb0000,
+  800: #ba0000,
+  900: #900000,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  ),
+);

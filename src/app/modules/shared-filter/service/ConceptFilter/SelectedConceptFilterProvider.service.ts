@@ -1,5 +1,5 @@
 import { Concept } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/Concept/Concept'
-import { inject, Injectable, Signal, signal } from '@angular/core'
+import { Injectable, Signal, signal } from '@angular/core'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 
 @Injectable({

@@ -1,0 +1,15 @@
+// Roles of "FDPG Light": what a color is for. Each role points to a palette (a hue).
+// No hex, no shade (mixins pick the shade). Names are placeholders (roles session).
+@import '../../palettes/blue.palette';
+@import '../../palettes/green.palette';
+@import '../../palettes/grey.palette';
+@import '../../palettes/red.palette';
+@import '../../palettes/yellow.palette';
+
+$fdpg-light-roles: (
+  accent: $num-blue-palette,
+  secondary: $num-green-palette,
+  neutral: $num-grey-palette,
+  danger: $num-red-palette,
+  warning: $num-yellow-palette,
+);

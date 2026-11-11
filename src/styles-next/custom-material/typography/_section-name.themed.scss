@@ -1,0 +1,9 @@
+@use '../../functions/type';
+
+/* Group "section-name": the heading of a block inside a page ("Suche verfeinern:", "Einschlusskriterien"), an <h2> under the page <h1>.
+   Writes the variables of its role. The values are in themes/fdpg-light/_type-roles.scss under the same name.
+   Parsed as: type.vars($theme, '<role>')  =  write family, weight, size, line (and letter-spacing if set) of that role as variables
+   (see functions/_type.scss). The component reads them: font-size: var(--font-app-content-section-name-size); */
+@mixin section-name_themed($theme) {
+  @include type.vars($theme, 'app-content-section-name');
+}
