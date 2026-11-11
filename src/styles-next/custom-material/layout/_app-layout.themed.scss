@@ -6,12 +6,12 @@
     justify-content: flex-start;
     height: 100%;
     flex-shrink: 0;
-    border-right: 2px solid role-color($theme, neutral, 100);
   }
 
   // ── App shell: one grid for header, side nav and main ─────────────────────
   // columns: nav | content    rows: header | body (rest of the viewport)
   .app-shell {
+    --nav-line-corner: 12px; // radius where the nav line turns into the header line
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: var(--header-height) minmax(0, 1fr);
@@ -26,6 +26,18 @@
     .sidenav {
       grid-column: 1;
       overflow: hidden;
+      position: relative;
+
+      // the nav's right line in brand blue, from the end of the header's rounded corner down
+      &::after {
+        content: '';
+        position: absolute;
+        top: var(--nav-line-corner);
+        bottom: 0;
+        right: 0;
+        width: 1px;
+        background: var(--num-color--primary-blue);
+      }
 
       &.expanded {
         width: var(--nav-width-expanded);
@@ -61,6 +73,18 @@
 
     &.no-nav .main-content {
       grid-column: 1 / -1;
+    }
+
+    // the header line follows the nav edge when the nav is collapsed
+    &:has(.sidenav.collapsed) {
+      --header-line-start: var(--nav-width-collapsed);
+    }
+
+    // no nav (editor pages): a plain line, no corner
+    &.no-nav num-dataportal-header mat-toolbar::after {
+      height: 1px;
+      border-left: 0;
+      border-top-left-radius: 0;
     }
 
     .fullscreen {
