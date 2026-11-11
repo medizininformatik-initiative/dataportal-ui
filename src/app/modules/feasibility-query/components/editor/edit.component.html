@@ -1,8 +1,22 @@
 <div cdkDropListGroup class="container">
   <div>
-    <num-header [showToggle]="true">
-      {{ 'FEASIBILITY.EDITOR.HEADER' | translate }}
-    </num-header>
+    <div class="title-row">
+      <num-header [showToggle]="true">
+        {{ 'FEASIBILITY.EDITOR.HEADER' | translate }}
+      </num-header>
+      <div class="title-actions">
+        <num-apply-time-restriction />
+        <button type="button" class="title-action" (click)="collapseService.toggleAll()">
+          <fa-icon [icon]="collapseService.collapsed() ? 'chevron-down' : 'chevron-up'"></fa-icon>
+          {{
+            (collapseService.collapsed()
+              ? 'FEASIBILITY.EDITOR.EXPAND_ALL'
+              : 'FEASIBILITY.EDITOR.COLLAPSE_ALL'
+            ) | translate
+          }}
+        </button>
+      </div>
+    </div>
     <num-header-description>
       {{ 'FEASIBILITY.EDITOR.HEADER_INFO' | translate }}
     </num-header-description>
@@ -12,9 +26,8 @@
       <num-consent-switches></num-consent-switches>
     </div>
     -->
-  <num-apply-time-restriction />
   <num-section-name>
-    {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }}
+    {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }} ({{ selectedCount() }})
   </num-section-name>
   <div class="margin-bottom-4 stage-container">
     <num-criteria-stage [isEditable]="true" #stage></num-criteria-stage>

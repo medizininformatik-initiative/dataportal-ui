@@ -1,6 +1,11 @@
 import { ApplyTimeRestrictionComponent } from './stage/apply-time-restriction/apply-time-restriction.component'
 import { CdkDropListGroup } from '@angular/cdk/drag-drop'
-import { Component, OnInit } from '@angular/core'
+import { StageProviderService } from 'src/app/service/Provider/StageProvider.service'
+import { map } from 'rxjs'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { Component, inject, OnInit } from '@angular/core'
+import { CriteriaBoxCollapseService } from 'src/app/service/Provider/CriteriaBoxCollapse.service'
 import { CriteriaStageComponent } from './stage/criteria-stage.component'
 import { DisplayFeasibilityQueryComponent } from './display/display.component'
 import { EditorActionBarComponent } from './action-bar/editor-action-bar.component'
@@ -23,10 +28,19 @@ import { TranslateModule } from '@ngx-translate/core'
     CriteriaStageComponent,
     DisplayFeasibilityQueryComponent,
     EditorActionBarComponent,
+    FontAwesomeModule,
     TranslateModule,
   ],
 })
 export class EditFeasibilityQueryComponent implements OnInit {
+  protected readonly collapseService = inject(CriteriaBoxCollapseService)
+  protected readonly selectedCount = toSignal(
+    inject(StageProviderService)
+      .getAll()
+      .pipe(map((uids) => uids.length)),
+    { initialValue: 0 }
+  )
+
   constructor() {}
 
   ngOnInit(): void {}

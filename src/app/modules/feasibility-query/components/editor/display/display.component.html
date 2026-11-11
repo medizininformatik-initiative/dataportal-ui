@@ -1,7 +1,7 @@
 <div class="display-row height-100 padding-bottom-3">
   <div class="display-col display-half">
     <num-section-name>
-      {{ 'FEASIBILITY.EDITOR.INCLUSION' | translate }}
+      {{ 'FEASIBILITY.EDITOR.INCLUSION' | translate }} ({{ inclusionCount() }})
     </num-section-name>
     <div class="inexclusion margin-right-2">
       <num-display-criteria
@@ -11,13 +11,12 @@
         numAppDropGroup
         groupType="Inclusion"
         [isEditable]="isEditable()"
-      >
-      </num-display-criteria>
+      ></num-display-criteria>
     </div>
   </div>
   <div class="display-col display-half">
     <num-section-name>
-      {{ 'FEASIBILITY.EDITOR.EXCLUSION' | translate }}
+      {{ 'FEASIBILITY.EDITOR.EXCLUSION' | translate }} ({{ exclusionCount() }})
     </num-section-name>
     <div class="inexclusion">
       <num-display-criteria
@@ -27,8 +26,7 @@
         numAppDropGroup
         groupType="Exclusion"
         [isEditable]="isEditable()"
-      >
-      </num-display-criteria>
+      ></num-display-criteria>
     </div>
   </div>
 </div>
