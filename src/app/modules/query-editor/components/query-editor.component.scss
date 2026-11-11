@@ -22,3 +22,20 @@
   box-shadow: var(--shadow-card);
   border-radius: var(--border-radius-sm);
 }
+
+// One pattern for every tab row inside the editors (criterion, feature, reference), below the main
+// FELDER / ZEITEINSCHRÄNKUNG row: 14px regular labels in the accent colour, a line under the bar.
+// Replaces per-component ::ng-deep rules (12px, 14px, 16px) that leaked into every tab group of the app.
+:host ::ng-deep .mat-mdc-tab-group {
+  .mdc-tab__text-label {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: var(--font-size-md);
+    color: var(--color-accent);
+  }
+
+  .mat-mdc-tab-header {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-8);
+  }
+}
