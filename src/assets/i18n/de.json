@@ -382,6 +382,8 @@
       "HEADER_TITLE": "Ausgewählte Kriterien",
       "COLLAPSE_ALL": "Alle einklappen",
       "EXPAND_ALL": "Alle ausklappen",
+      "COLLAPSE_SELECTED": "Ausgewählte Kriterien einklappen",
+      "EXPAND_SELECTED": "Ausgewählte Kriterien ausklappen",
       "INCLUSION": "Einschlusskriterien",
       "MODAL": {
         "ADD": "Hinzufügen",

@@ -4,7 +4,8 @@ import { StageProviderService } from 'src/app/service/Provider/StageProvider.ser
 import { map } from 'rxjs'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { Component, inject, OnInit } from '@angular/core'
+import { Component, inject, OnInit, signal } from '@angular/core'
+import { MatTooltip } from '@angular/material/tooltip'
 import { CriteriaBoxCollapseService } from 'src/app/service/Provider/CriteriaBoxCollapse.service'
 import { CriteriaStageComponent } from './stage/criteria-stage.component'
 import { DisplayFeasibilityQueryComponent } from './display/display.component'
@@ -29,11 +30,13 @@ import { TranslateModule } from '@ngx-translate/core'
     DisplayFeasibilityQueryComponent,
     EditorActionBarComponent,
     FontAwesomeModule,
+    MatTooltip,
     TranslateModule,
   ],
 })
 export class EditFeasibilityQueryComponent implements OnInit {
   protected readonly collapseService = inject(CriteriaBoxCollapseService)
+  protected readonly selectedOpen = signal(true)
   protected readonly selectedCount = toSignal(
     inject(StageProviderService)
       .getAll()

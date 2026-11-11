@@ -26,13 +26,37 @@
       <num-consent-switches></num-consent-switches>
     </div>
     -->
-  <num-section-name>
-    {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }} ({{ selectedCount() }})
-  </num-section-name>
-  <div class="margin-bottom-4 stage-container">
-    <num-criteria-stage [isEditable]="true" #stage></num-criteria-stage>
-  </div>
-  <div class="overflow-auto">
+  <div class="page-scroll">
+    <div class="section-head">
+      <button
+        type="button"
+        class="section-toggle"
+        [attr.aria-expanded]="selectedOpen()"
+        [attr.aria-label]="
+          (selectedOpen()
+            ? 'FEASIBILITY.EDITOR.COLLAPSE_SELECTED'
+            : 'FEASIBILITY.EDITOR.EXPAND_SELECTED'
+          ) | translate
+        "
+        [matTooltip]="
+          (selectedOpen()
+            ? 'FEASIBILITY.EDITOR.COLLAPSE_SELECTED'
+            : 'FEASIBILITY.EDITOR.EXPAND_SELECTED'
+          ) | translate
+        "
+        (click)="selectedOpen.set(!selectedOpen())"
+      >
+        <fa-icon [icon]="selectedOpen() ? 'chevron-down' : 'chevron-right'"></fa-icon>
+      </button>
+      <num-section-name>
+        {{ 'FEASIBILITY.EDITOR.HEADER_TITLE' | translate }} ({{ selectedCount() }})
+      </num-section-name>
+    </div>
+    @if (selectedOpen()) {
+    <div class="margin-bottom-4">
+      <num-criteria-stage [isEditable]="true" #stage></num-criteria-stage>
+    </div>
+    }
     <num-display-feasibility-query [isEditable]="true"></num-display-feasibility-query>
   </div>
   <div>
