@@ -571,6 +571,7 @@
   "SAVED_QUERIES": {
     "COMMENT": "Comment",
     "CREATED_AT": "Created at",
+    "DELETE": "Delete data definition",
     "HEADER": "Saved Data Definitions",
     "LOAD": "Load Data Definition",
     "PATIENTS": "Number of patients:",
@@ -608,7 +609,7 @@
       "CANCEL": "Cancel",
       "DELETE": "Delete",
       "HEADER": "Confirm deletion",
-      "TITLE": "Do you really want to delete the data query?"
+      "TITLE": "Do you really want to delete the data definition?"
     },
     "DISABLED": {
       "BULK_NOTHING_TO_ADD": "Run a search first and select the criteria found.",
@@ -702,7 +703,7 @@
       "COHORT_WARNING": "Cohort selection is required",
       "COMMENT": "Comment",
       "DOWNLOAD": "Download",
-      "HEADER": "Save query",
+      "HEADER": "Save data definition",
       "LABEL": "Title",
       "SAVE": "Save",
       "TITLE": "Title"
@@ -796,7 +797,7 @@
     },
     "SUCCESS": {
       "DOWNLOAD": "Data selection downloaded successfully.",
-      "SAVED_DATAQUERY": "Data query saved successfully."
+      "SAVED_DATAQUERY": "Data definition saved."
     }
   },
   "TAB_TITLE": {
@@ -822,7 +823,7 @@
     "QUERY_EDITOR_CRITERION": "Cohort Definition - Criterion Editor",
     "QUERY_EDITOR_FEATURE": "Feature Definition - Feature Editor",
     "QUERY_EDITOR_REFERENCE": "Cohort Definition - Reference Editor",
-    "SAVED_QUERIES": "Saved Queries"
+    "SAVED_QUERIES": "Saved Data Definitions"
   },
   "VALIDATION": {
     "10000": "invalid schema",

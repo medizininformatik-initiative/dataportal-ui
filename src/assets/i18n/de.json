@@ -560,6 +560,7 @@
   "SAVED_QUERIES": {
     "COMMENT": "Kommentar",
     "CREATED_AT": "Erstellt am",
+    "DELETE": "Datendefinition löschen",
     "HEADER": "Gespeicherte Datendefinitionen",
     "LOAD": "Datendefinition laden",
     "PATIENTS": "Anzahl der Patienten:",
@@ -597,7 +598,7 @@
       "CANCEL": "Abbrechen",
       "DELETE": "Löschen",
       "HEADER": "Löschung bestätigen",
-      "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?"
+      "TITLE": "Möchten Sie die Datendefinition wirklich löschen?"
     },
     "DISABLED": {
       "BULK_NOTHING_TO_ADD": "Führen Sie zuerst eine Suche aus und wählen Sie gefundene Kriterien aus.",
@@ -693,7 +694,7 @@
       "COHORT_WARNING": "Kohortenselektion ist erforderlich",
       "COMMENT": "Kommentar",
       "DOWNLOAD": "Herunterladen",
-      "HEADER": "Abfrage speichern",
+      "HEADER": "Datendefinition speichern",
       "LABEL": "Titel",
       "SAVE": "Speichern",
       "TITLE": "Titel"
@@ -787,7 +788,7 @@
     },
     "SUCCESS": {
       "DOWNLOAD": "Datenanfrage wurde heruntergeladen.",
-      "SAVED_DATAQUERY": "Datenanfrage wurde gespeichert."
+      "SAVED_DATAQUERY": "Datendefinition wurde gespeichert."
     }
   },
   "TAB_TITLE": {
@@ -813,7 +814,7 @@
     "QUERY_EDITOR_CRITERION": "Kohortendefinition - Kriterieneditor",
     "QUERY_EDITOR_FEATURE": "Merkmaldefinition - Merkmaleditor",
     "QUERY_EDITOR_REFERENCE": "Kohortendefinition - Referenzeditor",
-    "SAVED_QUERIES": "Gespeicherte Abfragen"
+    "SAVED_QUERIES": "Gespeicherte Datendefinitionen"
   },
   "VALIDATION": {
     "10000": "Schema ist ungültig",
