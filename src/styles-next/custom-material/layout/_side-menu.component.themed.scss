@@ -36,6 +36,7 @@
       margin: 0;
       padding: 0;
       min-width: 0; // let rows shrink to the menu width so labels can wrap
+      align-self: stretch; // the host's `logo-wrapper` class centres its children; a centred list moved with the longest label
     }
 
     // breathing room between groups only
@@ -262,9 +263,9 @@
         gap: 0;
       }
 
-      .num-nav-link--child::after,
-      .num-nav-list--children::before,
-      .num-nav-list--grandchildren::before {
+      // icon-only: child rows have no text, so they only added uneven gaps and a highlight remnant.
+      // The parent still shows the active section through :has() on the hidden child.
+      .num-nav-list--children {
         display: none;
       }
     }

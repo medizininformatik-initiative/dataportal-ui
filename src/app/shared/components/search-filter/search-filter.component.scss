@@ -1,5 +1,5 @@
 /* Text field wrapper */
-::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field {
+:host ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field {
   width: 100%;
   padding: 0;
   background-color: #fff;
@@ -14,7 +14,7 @@
 }
 
 /* Form field flex */
-::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
+:host ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
   border: 1px solid var(--color-text-secondary); // WCAG 1.4.11: control boundary needs 3:1
   padding: 0 var(--spacing-16);
   border-radius: var(--border-radius-card);
@@ -85,14 +85,15 @@
 }
 
 /* Hover: same as the searchbar */
-::ng-deep
+:host
+  ::ng-deep
   .mat-mdc-text-field-wrapper
   .mat-mdc-form-field-flex:hover:not(:has(mat-select:focus-visible)) {
   border-color: var(--border-color-hover);
 }
 
 /* Keyboard focus: same accent border as the searchbar (WCAG 2.4.7) */
-::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex:has(mat-select:focus-visible) {
+:host ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex:has(mat-select:focus-visible) {
   border-width: 2px;
   border-color: var(--color-accent);
 }
@@ -103,7 +104,7 @@
 }
 
 /* Remove default line ripple */
-::ng-deep .mat-mdc-text-field-wrapper .mdc-line-ripple {
+:host ::ng-deep .mat-mdc-text-field-wrapper .mdc-line-ripple {
   display: none;
   border: 0;
 }
@@ -156,7 +157,7 @@
 }
 
 /* Trigger: first value (ellipsis) + "+N" chip */
-::ng-deep mat-select-trigger {
+:host ::ng-deep mat-select-trigger {
   display: flex;
   align-items: center;
   gap: var(--spacing-8);
