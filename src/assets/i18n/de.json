@@ -517,6 +517,7 @@
     "DISCLOSURE": "Impressum"
   },
   "NAVIGATION": {
+    "PLAYGROUND": "Playground",
     "DASHBOARD": "Startseite",
     "DATAQUERY": "Datendefinition",
     "DATASELECTION": "Merkmalselektion",

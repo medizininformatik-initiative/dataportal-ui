@@ -2,9 +2,11 @@
   <span [innerHTML]="label() | displayTranslation | highlight : searchTerm()"></span>
   {{ labelNumber() }}
 </div>
-<div
+<button
+  type="button"
   class="num-pill"
   [class.expanded]="displayExpanded"
+  [attr.aria-expanded]="displayExpanded"
   (click)="displayExpanded = !displayExpanded"
   [innerHTML]="display() | highlight : searchTerm()"
-></div>
+></button>

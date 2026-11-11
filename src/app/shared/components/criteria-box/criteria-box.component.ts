@@ -26,7 +26,6 @@ import { TranslateModule } from '@ngx-translate/core'
 @Component({
   selector: 'num-criteria-box',
   templateUrl: './criteria-box.component.html',
-  styleUrls: ['./criteria-box.component.scss'],
   providers: [CriterionFilterChipService],
   standalone: true,
   imports: [
