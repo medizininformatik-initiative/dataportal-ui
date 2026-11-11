@@ -15,6 +15,8 @@ export class ButtonComponent {
   readonly icon = input<string>()
   readonly type = input<'blue' | 'green' | 'red' | 'cancel'>('blue')
   readonly isDisabled = input<boolean>(false)
+  /** secondary action: border and label only, so each action bar has one filled primary */
+  readonly outline = input<boolean>(false)
   readonly tooltip = input<string>(undefined)
   readonly ariaLabel = input<string>()
 }

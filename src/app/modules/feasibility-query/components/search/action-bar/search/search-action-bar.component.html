@@ -17,6 +17,7 @@
   <num-button
     icon="arrow-down"
     type="green"
+    [outline]="true"
     [isDisabled]="!canViewStage()"
     (click)="navigateToEditor()"
     [matBadge]="stageItems().length"

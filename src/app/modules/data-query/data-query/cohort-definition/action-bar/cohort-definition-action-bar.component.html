@@ -2,6 +2,7 @@
   <num-button
     (click)="createNewCohort()"
     type="green"
+    [outline]="true"
     tooltip="{{ 'DATAQUERY.COHORT.ACTION_BAR.NEW_COHORT_TOOLTIP' | translate }}"
   >
     {{ 'DATAQUERY.COHORT.ACTION_BAR.NEW_COHORT' | translate }}
@@ -22,6 +23,7 @@
     [icon]="'arrow-down'"
     (click)="navigatToDataQueryDataSelection()"
     type="green"
+    [outline]="true"
     tooltip="{{ 'DATAQUERY.COHORT.ACTION_BAR.JUMP_TO_DATASELECTION_TOOLTIP' | translate }}"
   >
     {{ 'DATAQUERY.COHORT.ACTION_BAR.JUMP_TO_DATASELECTION' | translate }}
