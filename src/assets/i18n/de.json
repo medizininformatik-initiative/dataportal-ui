@@ -805,6 +805,7 @@
       "SEARCH": "Merkmaldefinition - Merkmalsuche"
     },
     "FEASIBILITY_QUERY": {
+      "BULK_SEARCH": "Kohortendefinition - Bulksuche",
       "EDITOR": "Kohortendefinition - Kohortenselektion",
       "INDEX": "Kohortendefinition",
       "RESULT": "Kohortendefinition - Ergebnis",

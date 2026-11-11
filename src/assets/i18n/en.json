@@ -814,6 +814,7 @@
       "SEARCH": "Feature Definition - Feature Search"
     },
     "FEASIBILITY_QUERY": {
+      "BULK_SEARCH": "Cohort Definition - Bulk Search",
       "EDITOR": "Cohort Definition - Cohort Selection",
       "INDEX": "Cohort Definition",
       "RESULT": "Cohort Definition - Result",

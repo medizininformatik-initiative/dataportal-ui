@@ -21,7 +21,13 @@
       [multiple]="multiSelect()"
     >
       <mat-select-trigger>
-        <span class="trigger-text">{{ firstSelected() }}</span>
+        <span class="trigger-text">
+          @if (firstSelectedItem()?.display) {
+          {{ firstSelectedItem().display | displayTranslation }}
+          } @else {
+          {{ firstSelected() }}
+          }
+        </span>
         @if (selectedCount() > 1) {
         <span class="trigger-count">+{{ selectedCount() - 1 }}</span>
         }

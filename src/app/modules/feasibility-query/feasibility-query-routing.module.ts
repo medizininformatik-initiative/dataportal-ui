@@ -58,7 +58,7 @@ export const FEASIBILITY_QUERY_ROUTES: Routes = [
     },
     data: {
       animation: 'Feasibility_Bulk_Search',
-      title: 'TAB_TITLE.FEASIBILITY_QUERY.SEARCH',
+      title: 'TAB_TITLE.FEASIBILITY_QUERY.BULK_SEARCH',
       breadcrumb: 'BREADCRUMB.FEASIBILITY_QUERY_BULK_SEARCH',
     },
   },

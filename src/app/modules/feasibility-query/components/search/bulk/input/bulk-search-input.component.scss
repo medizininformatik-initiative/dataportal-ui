@@ -16,7 +16,7 @@
 
 .input-field-area {
   display: block; // no inline baseline gap above the summary
-  resize: none;
+  resize: vertical; // 4 rows by default so the results keep room at 720px height; drag to enlarge
   width: 100%;
   padding: 0.65rem 0.9rem;
   border: 1px solid var(--border-color);

@@ -64,6 +64,13 @@ export class SearchFilterComponent {
     return this.getCleanValue(Array.isArray(values) ? values[0] ?? '' : values)
   })
 
+  /** The option behind the first value: its display is shown instead of the value (e.g. a system URL) */
+  readonly firstSelectedItem = computed(() => {
+    const values = this.selectedValues()
+    const first = Array.isArray(values) ? values[0] : values
+    return this.filter()?.data?.find((item) => this.getOptionValue(item) === first)
+  })
+
   searchText = ''
 
   private readonly searchInput = viewChild<ElementRef<HTMLInputElement>>('searchInput')

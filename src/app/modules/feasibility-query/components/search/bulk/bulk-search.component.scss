@@ -3,7 +3,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto minmax(224px, 1fr) auto; // results keep room for about 3 rows; below that the page scrolls
   row-gap: var(--spacing-16); // the one vertical rhythm between the four rows
   overflow: auto;
 }
