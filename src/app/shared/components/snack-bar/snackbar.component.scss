@@ -1,7 +1,7 @@
-// Modern Snackbar Design
+// Bottom centre, above the action bar (80px bar + 16px margin + 16px gap), so the header stays visible and clickable
 .snackbar {
   position: fixed;
-  top: 20px;
+  bottom: 112px;
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 40px);
@@ -13,53 +13,37 @@
   padding: var(--spacing-12) var(--spacing-24);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: slideInDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 9999;
-
-  // Hover effect - adjusted for fixed positioning
-  &:hover {
-    transform: translateX(-50%) translateY(-2px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1);
-  }
 }
 
+// fills where white text reaches 4.5:1: green 800 (5.31:1), red 800 (6.80:1)
 .error-snackbar {
-  background: #ff5252;
+  background: #ba0000;
   color: white;
-  border-left: 4px solid #ff3d3d;
 }
 
 .info-snackbar {
-  background: #9bb823;
+  background: #607311;
   color: white;
-  border-left: 4px solid #8aa61f;
 }
 
-// Modern message styling
 .message-display {
-  font-size: 1.25em;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
+  line-height: 24px;
   margin: 0;
   padding: 0;
   color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-
-  // Ensure text is readable
   display: flex;
   align-items: center;
   flex: 1;
 }
 
-// Smooth animations - updated for top positioning
-@keyframes slideInDown {
+@keyframes slideInUp {
   from {
-    transform: translateX(-50%) translateY(-100%);
+    transform: translateX(-50%) translateY(100%);
     opacity: 0;
   }
   to {
@@ -68,91 +52,8 @@
   }
 }
 
-@keyframes slideOutUp {
-  from {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(-50%) translateY(-100%);
-    opacity: 0;
-  }
-}
-
-// Animation classes for entry/exit
-.snackbar-enter {
-  animation: slideInDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-// Responsive design
-@media (max-width: 768px) {
+@media (prefers-reduced-motion: reduce) {
   .snackbar {
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    width: auto;
-    transform: none;
-    padding: 16px var(--spacing-20);
-    border-radius: 16px;
-
-    // Mobile-specific animations
-    &.snackbar-enter {
-      animation: slideInDownMobile 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    &:hover {
-      transform: translateY(-2px);
-    }
-  }
-
-  .message-display {
-    font-size: var(--font-size-md);
-  }
-}
-
-// Mobile-specific animations
-@keyframes slideInDownMobile {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOutUpMobile {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-}
-
-// Dark mode support (if needed)
-@media (prefers-color-scheme: dark) {
-  .snackbar {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-
-    &::before {
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.05) 0%,
-        rgba(255, 255, 255, 0.02) 100%
-      );
-    }
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+    animation: none;
   }
 }
