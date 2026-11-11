@@ -146,7 +146,7 @@
       },
       "ERROR": {
         "DOWNLOAD": "No cohort defined; download not possible",
-        "UPLOAD": "Could not upload data definition"
+        "UPLOAD": "The file could not be read. Upload a data definition (CRTDL, .json) downloaded from the Dataportal."
       },
       "HEADER": "Feature Definition",
       "SAVE": {
@@ -622,6 +622,17 @@
       "SELECT_FEATURES_FIRST": "Select features in the table first.",
       "STAGE_EMPTY": "The cohort selection has no criteria yet.",
       "TITLE_REQUIRED": "Please enter a title first."
+    },
+    "ERROR_DISPLAY": {
+      "CLOSE": "Close",
+      "ERROR": "Error",
+      "NO_DETAILS": "No error details available",
+      "REQUEST_URL": "Request URL",
+      "TITLE": {
+        "FEASIBILITY_ERROR": "The feasibility query failed",
+        "GENERIC_ERROR": "An error occurred",
+        "VALIDATION_ERROR": "The data definition is not valid"
+      }
     },
     "FILTER": {
       "AVAILABILITY": "Availability",

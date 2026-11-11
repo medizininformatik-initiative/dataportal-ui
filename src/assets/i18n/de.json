@@ -146,7 +146,7 @@
       },
       "ERROR": {
         "DOWNLOAD": "Es wurde keine Kohorte definiert, Download nicht möglich.",
-        "UPLOAD": "Datendefinition konnte nicht hochgeladen werden"
+        "UPLOAD": "Die Datei konnte nicht gelesen werden. Laden Sie eine Datendefinition (CRTDL, .json) hoch, die aus dem Dataportal heruntergeladen wurde."
       },
       "HEADER": "Merkmaldefinition",
       "SAVE": {
@@ -595,6 +595,7 @@
     },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",
+      "DELETE": "Löschen",
       "HEADER": "Löschung bestätigen",
       "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?"
     },
@@ -610,6 +611,17 @@
       "SELECT_FEATURES_FIRST": "Wählen Sie zuerst Merkmale in der Tabelle aus.",
       "STAGE_EMPTY": "Die Kohortenselektion enthält noch keine Kriterien.",
       "TITLE_REQUIRED": "Bitte geben Sie zuerst einen Titel ein."
+    },
+    "ERROR_DISPLAY": {
+      "CLOSE": "Schließen",
+      "ERROR": "Fehler",
+      "NO_DETAILS": "Keine Fehlerdetails vorhanden",
+      "REQUEST_URL": "Anfrage-URL",
+      "TITLE": {
+        "FEASIBILITY_ERROR": "Die Machbarkeitsabfrage ist fehlgeschlagen",
+        "GENERIC_ERROR": "Ein Fehler ist aufgetreten",
+        "VALIDATION_ERROR": "Die Datendefinition ist ungültig"
+      }
     },
     "FILTER": {
       "AVAILABILITY": "Verfügbarkeit",
