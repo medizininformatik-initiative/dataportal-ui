@@ -25,33 +25,25 @@
       &::before {
         content: '';
         position: absolute;
-        left: var(--header-line-start, var(--nav-width-expanded));
+        left: var(--nav-width-expanded);
         right: 0;
         bottom: 0;
         box-shadow: 0 1px 2px rgba(16, 24, 40, 0.16);
       }
 
-      // The blue -> green header line turns down into the nav's blue line with a rounded corner.
-      // A box with only a top and a left border: the gradient fills the border box, white fills the
-      // padding box, so the border shows the gradient and keeps its radius (border-image would drop it).
-      // The nav's line (.sidenav::after in app-layout) starts where this 12px stub ends.
+      // a shadow has one color, so the gradient is a 1px line on top, from the logo divider to the right page gutter
       &::after {
         content: '';
         position: absolute;
-        left: calc(
-          var(--header-line-start, var(--nav-width-expanded)) - 1px
-        ); // on the nav's right edge
+        left: var(--nav-width-expanded); // starts at the divider next to the logo
         right: calc(var(--page-gutter) + var(--scrollbar-width));
-        top: calc(100% - 1px);
-        height: var(--nav-line-corner);
-        border: 1px solid transparent;
-        border-right: 0;
-        border-bottom: 0;
-        border-top-left-radius: var(--nav-line-corner);
-        background: linear-gradient(#fff, #fff) padding-box,
-          linear-gradient(90deg, var(--num-color--primary-blue), var(--num-color--primary-green))
-            border-box;
-        box-sizing: border-box;
+        bottom: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          var(--num-color--primary-blue),
+          var(--num-color--primary-green)
+        );
       }
     }
 
