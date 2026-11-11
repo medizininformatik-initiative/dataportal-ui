@@ -15,9 +15,8 @@ export class ConfirmDeleteService {
   constructor() {}
 
   public confirmDelete(): Observable<boolean> {
-    const dialogRef = this.dialog.open(ConfirmDeleteModalComponent, {
-      disableClose: true,
-    })
+    // Escape or a backdrop click closes it like "Cancel" (result undefined, nothing is deleted)
+    const dialogRef = this.dialog.open(ConfirmDeleteModalComponent)
     return dialogRef.afterClosed()
   }
 }

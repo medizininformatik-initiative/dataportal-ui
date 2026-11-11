@@ -41,7 +41,10 @@ export class ActionBarComponent {
   constructor() {}
 
   public upload(event: Event): void {
-    const file: File = (event.target as HTMLInputElement).files[0]
+    const input = event.target as HTMLInputElement
+    const file: File = input.files[0]
+    input.value = '' // the same file can be picked again after fixing it
+    ;(document.activeElement as HTMLElement)?.blur() // the focused upload button kept its tooltip open
 
     this.uploadService.uploadCRTDL(file)
   }

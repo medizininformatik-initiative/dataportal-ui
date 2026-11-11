@@ -1,26 +1,39 @@
 <div class="modal-content">
-  <button class="close-btn" (click)="doDiscard()" aria-label="Close">
+  <button
+    class="close-btn"
+    (click)="doDiscard()"
+    [attr.aria-label]="'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate"
+  >
     <fa-icon icon="times"></fa-icon>
   </button>
   <num-header>
     {{ 'SHARED_COMPONENTS.SAVE_MODAL.HEADER' | translate }}
   </num-header>
   <div class="save-query-box">
+    <label class="field-label" for="save-dialog-title">
+      {{ 'SAVED_QUERIES.TITLE' | translate }}
+    </label>
     <input
+      id="save-dialog-title"
       class="field-input"
       numDataCy="dialog-title-input"
       type="text"
       [(ngModel)]="title"
-      placeholder="{{ 'SAVED_QUERIES.TITLE' | translate }}"
     />
+    <label class="field-label" for="save-dialog-comment">
+      {{ 'SAVED_QUERIES.COMMENT' | translate }}
+    </label>
     <textarea
+      id="save-dialog-comment"
       class="field-input field-textarea"
       numDataCy="dialog-comment-input"
       [(ngModel)]="comment"
-      placeholder="{{ 'SAVED_QUERIES.COMMENT' | translate }}"
     ></textarea>
   </div>
   <div class="save-dialog-footer">
+    <num-button type="cancel" (click)="doDiscard()">
+      {{ 'SHARED_COMPONENTS.SAVE_MODAL.CANCEL' | translate }}
+    </num-button>
     <num-button
       type="green"
       [isDisabled]="title.length === 0"

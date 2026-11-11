@@ -24,7 +24,7 @@
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    color: var(--border-color);
+    color: var(--color-text-secondary); // the border grey was about 1.7:1
     transition: color 0.2s ease, background 0.2s ease;
 
     &:hover {

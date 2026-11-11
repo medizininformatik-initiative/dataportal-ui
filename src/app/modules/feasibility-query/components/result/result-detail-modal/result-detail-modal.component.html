@@ -1,5 +1,9 @@
 <div class="result-modal">
-  <button class="result-modal__close" (click)="doClose()" aria-label="Close">
+  <button
+    class="result-modal__close"
+    (click)="doClose()"
+    [attr.aria-label]="'SHARED_COMPONENTS.ERROR_DISPLAY.CLOSE' | translate"
+  >
     <fa-icon icon="times"></fa-icon>
   </button>
   <div class="result-modal__head">

@@ -170,7 +170,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   openDialogResultDetails(): void {
     this.modalSubscription?.unsubscribe()
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>()
-    dialogConfig.disableClose = true
     dialogConfig.autoFocus = 'dialog' // not the close button, it would show a focus ring on open
     const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig)
     this.modalSubscription = modal

@@ -41,6 +41,9 @@
       }
     </div>
     <div class="error-display-footer">
+      <num-button type="cancel" (click)="closeError()">
+        {{ 'SHARED_COMPONENTS.ERROR_DISPLAY.CLOSE' | translate }}
+      </num-button>
       <num-button type="green" class="action-button" (click)="downloadError()">
         <fa-icon size="lg" [icon]="'download'"></fa-icon>
         {{ 'SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate }}
