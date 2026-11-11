@@ -43,6 +43,19 @@
     .side-menu {
       height: 100%;
       overflow: hidden;
+      position: relative;
+      border-right: 0; // drawn by ::after instead, so the line can stop above the bottom
+
+      // continues the divider next to the logo straight down, ending 16px above the bottom edge
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: var(--spacing-16);
+        width: 2px;
+        background: role-color($theme, neutral, 100);
+      }
     }
 
     .main-content {
