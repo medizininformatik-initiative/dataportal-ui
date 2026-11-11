@@ -6,6 +6,11 @@
   grid-template-rows: minmax(0, 1fr) auto;
   row-gap: var(--spacing-16); // the one vertical rhythm between the rows
   overflow: auto;
+
+  // feature editor: the card keeps room for about 6 fields of the list; on a lower screen the page scrolls
+  &:has(num-edit-fields) {
+    grid-template-rows: minmax(620px, 1fr) auto;
+  }
 }
 
 .background {

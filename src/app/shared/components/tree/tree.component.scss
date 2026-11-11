@@ -34,9 +34,9 @@ li {
   -webkit-box-orient: vertical;
   font-style: normal;
   font-weight: 400;
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-sm);
-  color: #080707;
+  font-size: var(--font-size-md);
+  line-height: 20px;
+  color: var(--color-text-primary);
 }
 
 span:hover {
@@ -67,9 +67,9 @@ span:hover {
 /* Custom checkbox styling moved to global theme: _checkbox.themed.scss */
 
 .field-description {
-  color: grey;
-  font-size: 13px;
-  font-style: italic;
+  color: var(--color-text-secondary); // was grey italic 13px (3.95:1)
+  font-size: var(--font-size-sm);
+  line-height: 16px;
 }
 
 .width-100 {

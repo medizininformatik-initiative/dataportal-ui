@@ -32,9 +32,9 @@
   font-family: var(--font-body);
   font-style: normal;
   font-weight: 400;
-  font-size: var(--font-size-sm);
-  line-height: 12px;
-  color: #080707;
+  font-size: var(--font-size-md);
+  line-height: 20px;
+  color: var(--color-text-primary);
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -46,9 +46,9 @@
   font-family: var(--font-body);
   font-style: normal;
   font-weight: 400;
-  font-size: 10px;
-  line-height: 12px;
-  color: var(--color-text-section);
+  font-size: var(--font-size-sm); // 12px: the smallest size in the editor
+  line-height: 16px;
+  color: var(--color-text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
