@@ -662,6 +662,8 @@
       "DELETE": "Löschen",
       "DUPLICATE": "Duplizieren",
       "EDIT": "Konfigurieren",
+      "MOVE_TO_EXCLUSION": "Zu Ausschlusskriterien verschieben",
+      "MOVE_TO_INCLUSION": "Zu Einschlusskriterien verschieben",
       "OPTIONS": "Optionen",
       "REFERENCE": "Kriterien verknüpfen",
       "SEARCH": "Als Suchbegriff nutzen",

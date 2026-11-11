@@ -28,6 +28,18 @@ export class CriterionMenuItemsService extends AbstractMenuItemsService {
       },
       {
         disabled: false,
+        icon: 'arrow-right',
+        label: 'MOVE_TO_INCLUSION',
+        action: (id: string) => this.menuServiceCriterionFunctions.moveToInclusion(id),
+      },
+      {
+        disabled: false,
+        icon: 'arrow-right',
+        label: 'MOVE_TO_EXCLUSION',
+        action: (id: string) => this.menuServiceCriterionFunctions.moveToExclusion(id),
+      },
+      {
+        disabled: false,
         icon: 'trash',
         label: 'DELETE',
         action: (id: string) => this.menuServiceCriterionFunctions.deleteCriterion(id),
