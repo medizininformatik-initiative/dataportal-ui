@@ -673,8 +673,6 @@
       "DELETE": "Delete",
       "DUPLICATE": "Duplicate",
       "EDIT": "Configure",
-      "MOVE_TO_EXCLUSION": "Move to exclusion criteria",
-      "MOVE_TO_INCLUSION": "Move to inclusion criteria",
       "OPTIONS": "Options",
       "REFERENCE": "Link criteria",
       "SEARCH": "Use as search term",

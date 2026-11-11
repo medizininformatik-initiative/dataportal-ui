@@ -1,4 +1,3 @@
-import { take } from 'rxjs'
 import { CloneAbstractCriterion } from 'src/app/model/Utilities/CriterionCloner/CloneReferenceCriterion'
 import { CriterionProviderService } from 'src/app/service/Provider/CriterionProvider.service'
 import { FeasibilityQueryProviderService } from '../../../../service/Provider/FeasibilityQueryProvider.service'
@@ -58,31 +57,6 @@ export class CriterionMenuFunctionsService {
 
     this.criterionProviderService.setOne(clonedCriterion)
     this.stageProviderService.addOne(clonedCriterion.getId())
-  }
-
-  /** Keyboard alternative to dragging: appends the criterion as its own group to inclusion or exclusion */
-  public moveToInclusion(id: string): void {
-    this.moveToGroup(id, true)
-  }
-
-  public moveToExclusion(id: string): void {
-    this.moveToGroup(id, false)
-  }
-
-  private moveToGroup(id: string, inclusion: boolean): void {
-    this.stageProviderService.removeOne(id)
-    this.queryProviderService.deleteFromInclusion(id)
-    this.queryProviderService.deleteFromExclusion(id)
-    this.queryProviderService
-      .getActiveFeasibilityQuery()
-      .pipe(take(1))
-      .subscribe((query) => {
-        if (inclusion) {
-          this.queryProviderService.setInclusionCriteria([...query.getInclusionCriteria(), [id]])
-        } else {
-          this.queryProviderService.setExclusionCriteria([...query.getExclusionCriteria(), [id]])
-        }
-      })
   }
 
   public editCriterionFilter(id: string): void {
