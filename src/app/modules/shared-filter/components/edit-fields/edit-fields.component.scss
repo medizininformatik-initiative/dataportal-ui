@@ -97,13 +97,20 @@
 }
 
 // ── Tab bar ─────────────────────────────────────────────────────
-::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+// scoped to this component: unscoped, the rules reached every tab group in the app
+:host ::ng-deep .mat-mdc-tab .mdc-tab__text-label {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md); // 14px like the field names (was 12px between two 16/14px rows)
   color: var(--color-accent);
 }
 
-::ng-deep .mat-mdc-tab-label-container {
+:host ::ng-deep .mat-mdc-tab-label-container {
   background-color: white;
+}
+
+// a line under the inner tab bar separates it from the field list
+:host ::ng-deep .mat-mdc-tab-header {
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: var(--spacing-8);
 }
