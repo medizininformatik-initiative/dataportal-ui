@@ -24,7 +24,8 @@
 }
 
 // One pattern for every tab row inside the editors (criterion, feature, reference), below the main
-// FELDER / ZEITEINSCHRÄNKUNG row: 14px regular labels in the accent colour, a line under the bar.
+// FELDER / ZEITEINSCHRÄNKUNG row: 14px regular labels in the accent colour, a line under the bar that the
+// active indicator sits on.
 // Replaces per-component ::ng-deep rules (12px, 14px, 16px) that leaked into every tab group of the app.
 :host ::ng-deep .mat-mdc-tab-group {
   .mdc-tab__text-label {
@@ -35,7 +36,12 @@
   }
 
   .mat-mdc-tab-header {
-    border-bottom: 1px solid var(--border-color);
     margin-bottom: var(--spacing-8);
+  }
+
+  // the line sits in the same pixel row as the active indicator, which covers it under the active tab
+  // (a border on the header put the line 1px below the indicator: two lines stacked)
+  .mat-mdc-tab-label-container {
+    box-shadow: inset 0 -1px 0 var(--border-color);
   }
 }
