@@ -352,7 +352,7 @@
         "DATA_REQUEST": "Data definition",
         "RETRY_AFTER": "Please wait {{seconds}} seconds",
         "SAVE_DATAQUERY": "Save data definition",
-        "SEND_QUERY": "Send Feasibility query",
+        "SEND_QUERY": "Send feasibility query",
         "SEND_QUERY_TOOLTIP": "Execute the feasibility query"
       },
       "CONSENT": {

@@ -41,3 +41,14 @@
     min-height: 0;
   }
 }
+
+// the patient counts (last column) share one right edge, header included
+.result-modal__table ::ng-deep {
+  td:last-child .info-column {
+    text-align: right;
+  }
+
+  th:last-child .header-cell {
+    justify-content: flex-end;
+  }
+}

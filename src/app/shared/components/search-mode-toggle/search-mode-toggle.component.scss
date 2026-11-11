@@ -32,7 +32,7 @@
   font-family: var(--font-body);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
-  line-height: 1;
+  line-height: 16px; // was 1 (12px on 12px)
   transition: color 0.2s ease, background-color 0.2s ease, var(--transition-shadow);
 
   fa-icon {
