@@ -56,10 +56,7 @@ Feature: Data Selection Search
     When I click the "{{labels.references}}" tab
     And I click the "{{labels.partOf}}" tab
     Then I should see the placeholder
-    When I click to add a new reference
-    Then the reference modal should be displayed
     When I add a reference named "<reference>"
-    And I add the reference
     And I click on the button "{{labels.close}}"
 
     Examples: Selection Criteria

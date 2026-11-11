@@ -1,24 +1,56 @@
-<div class="container">
-  <div class="reference-container">
-    @if (possibleReferences$ | async; as possibleReferences) { @if (possibleReferences.length > 0) {
-    @for (possibleReference of possibleReferences; track possibleReference) {
-    <num-possible-references
-      [posssibleReference]="possibleReference"
-      (selectedProfileId)="updateSelectedPossibleReferences($event)"
-    ></num-possible-references>
-    } } @else {
-    <num-placeholder-box>
-      {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.INFO' | translate }}
-    </num-placeholder-box>
-    } } @else {
-    <num-placeholder-box>
-      {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.INFO' | translate }}
-    </num-placeholder-box>
-    }
-  </div>
-  <div class="button-footer">
-    <num-button type="blue" (click)="openReferenceModal()">
-      {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.ADD' | translate }}
-    </num-button>
-  </div>
+<div class="editor-columns">
+  <section class="editor-column linked-panel">
+    @let possibleReferences = (possibleReferences$ | async) ?? [];
+    <div class="editor-column-head">
+      <num-section-name>
+        {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.LINKED' | translate }}
+      </num-section-name>
+      @if (possibleReferences.length > 0) {
+      <span class="editor-column-count">
+        {{
+          'EDITOR.CONTENT.PROFILE.REFERENCE.LINKED_COUNT'
+            | translate
+              : { linked: countLinked(possibleReferences), total: possibleReferences.length }
+        }}
+      </span>
+      }
+    </div>
+    <p class="editor-column-hint">
+      {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.LINKED_HINT' | translate }}
+    </p>
+    <div class="editor-column-list reference-container">
+      @for (possibleReference of possibleReferences; track possibleReference) {
+      <num-possible-references
+        [posssibleReference]="possibleReference"
+        (selectedProfileId)="updateSelectedPossibleReferences($event)"
+      ></num-possible-references>
+      } @empty {
+      <div class="editor-column-empty panel-empty">
+        {{ 'EDITOR.CONTENT.PROFILE.REFERENCE.INFO' | translate }}
+      </div>
+      }
+    </div>
+  </section>
+  <section class="editor-column add-list">
+    <div class="editor-column-head">
+      <num-section-name>{{ 'EDITOR.CONTENT.PROFILE.REFERENCE.ADD' | translate }}</num-section-name>
+    </div>
+    <p class="editor-column-hint">{{ 'EDITOR.CONTENT.PROFILE.REFERENCE.ADD_HINT' | translate }}</p>
+    <div class="editor-column-list reference-container">
+      @for (type of referencedProfileTypes; track type.url) {
+      <button
+        type="button"
+        class="add-row"
+        [attr.data-cy]="type.name"
+        [attr.aria-label]="
+          ('EDITOR.CONTENT.PROFILE.REFERENCE.ADD_ONE' | translate) + ': ' + type.name
+        "
+        (click)="addReference(type.url)"
+      >
+        <fa-icon icon="plus" class="add-icon"></fa-icon>
+        <span class="add-name">{{ type.name }}</span>
+      </button>
+      }
+    </div>
+  </section>
 </div>

@@ -32,7 +32,8 @@ export type Hook = (typeof FIXED_HOOKS)[number] | `nav-${string}`
 /**
  * Elements whose `data-cy` is entity text (display name) from data, not fixed value.
  * `.container` criteria-box, `.selection-box` data selection box, `.block` filter chip block,
- * `.chip-container` filter chip, `.divider` tree node, `num-quantity` quantity filter panel.
+ * `.chip-container` filter chip, `.divider` tree node, `num-quantity` quantity filter panel,
+ * `.add-row` feature type of reference add list.
  * */
 export type Carrier =
   | '.container'
@@ -40,6 +41,7 @@ export type Carrier =
   | '.block'
   | '.chip-container'
   | '.divider'
+  | '.add-row'
   | 'num-quantity'
 
 /**

@@ -45,3 +45,94 @@
   color: var(--color-text-secondary);
   font-style: italic;
 }
+
+// ──────────────────────────────────────────────────────────────
+// Editor header (query editor: criterion-header, profile-header)
+//
+// Title on top, below it one row of groups. A group is a small label
+// followed by its chips; groups wrap when the row is too narrow.
+// ──────────────────────────────────────────────────────────────
+.editor-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding: var(--spacing-4) var(--spacing-8) 0;
+}
+
+.editor-header-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  min-width: 0;
+}
+
+// second line under the title: original name, or context · code · system
+.editor-header-meta {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--color-text-secondary);
+}
+
+.editor-header-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-8) var(--spacing-32);
+
+  .header-col {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--spacing-8);
+    flex: 1 1 280px;
+    padding: 0;
+  }
+
+  .header-col-label {
+    flex-shrink: 0;
+    font-size: var(--font-size-md);
+    line-height: 24px;
+    color: var(--color-text-secondary);
+  }
+
+  // The chip groups (block + its chips) flow side by side and wrap, so the width of the header is used
+  // before a second line starts. Before, every group took a full line.
+  .header-col-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4) var(--spacing-24);
+    min-width: 0;
+    padding-top: 0;
+  }
+
+  // .editor-header in front: the chip theme is nested in the theme class and would win otherwise
+  .editor-header & num-filter-chips {
+    display: contents;
+
+    .filter-wrapper {
+      width: auto;
+      max-width: 100%;
+    }
+
+    // The applied filters are the result of the editor: body text size, white chips, darker text
+    // (accent 500 on the tinted card measured about 3.9:1)
+    .chip-container {
+      max-width: min(320px, 100%); // never wider than its group
+      margin-bottom: 0;
+      font-size: var(--font-size-md);
+      color: var(--color-accent-strong);
+      background: #ffffff;
+      border-color: var(--color-accent-border);
+    }
+
+    .block {
+      max-width: 320px;
+      font-size: var(--font-size-sm);
+      letter-spacing: 0;
+    }
+  }
+
+  .empty-state {
+    margin-top: 0;
+    font-style: normal;
+    line-height: 24px;
+  }
+}

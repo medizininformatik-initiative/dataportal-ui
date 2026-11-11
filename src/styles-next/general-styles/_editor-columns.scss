@@ -1,0 +1,93 @@
+// ──────────────────────────────────────────────────────────────
+// Editor columns
+//
+// Two equal columns inside an editor tab: two white cards straight on the tinted editor surface, so the
+// two tasks read as two separate areas. Each card has the same build:
+// heading with a count on the right, one sentence, then a list that scrolls on its own.
+// Used by: edit-fields (Felder tab), reference-field-tab (Referenzen tab)
+// ──────────────────────────────────────────────────────────────
+.editor-columns {
+  height: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--spacing-16);
+}
+
+.editor-column {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-4) var(--spacing-16) 0; // the heading brings its own 12px top margin
+  background-color: #ffffff;
+  border-radius: var(--border-radius-card);
+  box-shadow: var(
+    --shadow-card-hover
+  ); // lifted above the tab bar, the content is what the user works in
+}
+
+// A tab that holds such columns splits the white card: the two tab rows stay one white bar across the full
+// width, then a gap, then the two column cards. Keyed on the tab components (present for every sub-tab,
+// Information too), so the surface does not jump between sub-tabs.
+// .container in front: beats .tab-content[_ngcontent] of the component
+num-filter-tabs .container .tab-content:has(num-edit-fields, num-profile-reference) {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+
+  // the sub-tab row closes the white bar under the main tab row
+  .mat-mdc-tab-group .mat-mdc-tab-header {
+    margin-bottom: var(--spacing-16);
+    padding: var(--spacing-8) var(--spacing-16);
+    background-color: #ffffff;
+    border-radius: 0 0 var(--border-radius-card) var(--border-radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  num-information-section {
+    display: block;
+    padding: var(--spacing-16);
+    background-color: #ffffff;
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+
+.editor-column-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-12);
+
+  num-section-name {
+    min-width: 0;
+  }
+}
+
+.editor-column-count {
+  flex-shrink: 0;
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+}
+
+.editor-column-hint {
+  margin: 0 0 var(--spacing-12);
+  font-size: var(--font-size-md);
+  line-height: 20px;
+  color: var(--color-text-secondary);
+}
+
+.editor-column-list {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  border-top: 1px solid var(--border-color);
+}
+
+.editor-column-empty {
+  padding: var(--spacing-16) 0;
+  font-size: var(--font-size-md);
+  line-height: 20px;
+  color: var(--color-text-secondary);
+}

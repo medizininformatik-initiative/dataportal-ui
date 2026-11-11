@@ -53,7 +53,7 @@ export class NumConceptFilter {
    * active tab body is only concept editor rendered.
    * */
   public openEditorTab(name: string) {
-    cy.contains('.tab', new RegExp(`^\\s*${escapeRegex(label(name))}\\s*$`, 'i')).click()
+    cy.contains('.tab-label', new RegExp(`^\\s*${escapeRegex(label(name))}\\s*$`, 'i')).click()
   }
 
   /**

@@ -3,16 +3,6 @@
   display: contents;
 }
 
-::ng-deep .mdc-tab {
-  max-width: fit-content;
-  padding: 0 var(--spacing-30);
-}
-
-.filter-tabs-container {
-  background: #ffffff;
-  border-radius: var(--border-radius-card);
-}
-
 .information-templates {
   display: flex;
   flex-direction: column;

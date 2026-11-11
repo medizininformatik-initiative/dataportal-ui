@@ -3,11 +3,6 @@
   display: contents;
 }
 
-::ng-deep .mdc-tab {
-  max-width: fit-content;
-  padding: 0 var(--spacing-30);
-}
-
 .background {
   background-color: var(--background);
   height: 100%;

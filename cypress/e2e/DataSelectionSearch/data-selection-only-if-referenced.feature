@@ -20,9 +20,7 @@ Feature: Data Selection - Only if referenced
     And I click on the menu item "{{labels.configure}}"
     And I click the "{{labels.references}}" tab
     And I click the "<tab>" tab
-    And I click to add a new reference
     And I add a reference named "<reference>"
-    And I add the reference
     Then a chip labeled "<referenceDisplay>" should appear in the "{{labels.selectedReference}}" section
     When I click on the button "{{labels.close}}"
     Then the data selection box "<referenceDisplay>" offers the "{{labels.onlyIfReferenced}}" option

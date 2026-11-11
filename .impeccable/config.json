@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/app/shared/components/snack-bar/snackbar.component.scss"
+        ],
+        "createdAt": "2026-11-11T09:59:56.628Z",
+        "reason": "Shah, 2026-11-11: the snackbar design cannot be changed; file restored to the original with its border-left accents"
+      }
+    ]
+  }
+}

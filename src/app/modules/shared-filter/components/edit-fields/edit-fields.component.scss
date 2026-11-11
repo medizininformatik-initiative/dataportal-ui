@@ -1,37 +1,19 @@
-.container {
-  padding: var(--spacing-16);
-  height: 100%;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-}
+// Layout: .editor-columns in general-styles/_editor-columns.scss, same as the Referenzen tab.
+// Left: all fields of the profile, a tick selects one. Right: the selected fields, a tick marks one as required.
 
-// ── Field row ──────────────────────────────────────────────────
+// same row height and line as a linked feature in the Referenzen tab
 .selected-filter-container {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  width: 100%;
-  min-height: 49px;
-  background-color: white;
-  border-bottom: 1px solid var(--border-color);
-  padding: var(--spacing-6) 0;
-  gap: 10px;
-}
-
-.display-part {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px;
-  flex: 1;
-  min-width: 0;
+  gap: var(--spacing-8);
+  min-height: 48px;
+  padding: var(--spacing-4) 0;
+  border-bottom: 1px solid var(--border-color-subtle);
 }
 
 .field-name {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 400;
+  flex: 1;
+  min-width: 0;
   font-size: var(--font-size-md);
   line-height: 20px;
   color: var(--color-text-primary);
@@ -42,61 +24,35 @@
   -webkit-box-orient: vertical;
 }
 
-.field-description {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 400;
-  font-size: var(--font-size-sm); // 12px: the smallest size in the editor
-  line-height: 16px;
-  color: var(--color-text-secondary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.required-tag {
+  flex-shrink: 0;
+  font-size: var(--font-size-md);
+  color: var(--color-accent-strong);
 }
 
 .delete-button {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  background: none;
   color: var(--color-text-secondary);
   cursor: pointer;
-  flex-shrink: 0;
-  margin-left: auto;
 
   &:hover {
-    color: var(--color-accent);
+    color: var(--color-text-primary);
+    background-color: var(--border-color-subtle);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-accent);
   }
 }
 
-// ── Layout ─────────────────────────────────────────────────────
-.selected-fields-box {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  height: 100%;
-  padding-right: var(--spacing-16);
-}
-
-.sidebar {
-  width: 30%;
-  border-left: 1px solid var(--border-color);
-  padding-left: var(--spacing-16);
-}
-
-.main-content-fields {
-  display: flex;
-  height: 100%;
-  overflow-y: hidden;
-}
-
+// num-tree pulls the first-level checkbox 10px to the left (calcMarginLeftCheckbox); give it that room back
+// so the checkbox lines up with the one in the right column
 .field-box {
-  padding-left: var(--spacing-16);
-  width: 70%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  min-height: 0;
-}
-
-// ── Tab bar ─────────────────────────────────────────────────────
-:host ::ng-deep .mat-mdc-tab-label-container {
-  background-color: white;
+  padding-left: var(--spacing-10);
 }

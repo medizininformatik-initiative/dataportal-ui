@@ -293,9 +293,10 @@ The box has an edit button with a "Configure" entry. The editor lets you:
 - use a **Code Filter**: search a concept by its code (for example the ATC code `A10BA02`)
   and select it, and a chip with its display text ("Metformin") appears under
   "Selected Filters";
-- open the **References** tab and its **"Part of"** sub-tab, which shows a placeholder until
-  you add a reference. Adding one opens a **reference modal**, where you name the reference
-  (for example "Procedure") and add it.
+- open the **References** tab and its **"Part of"** sub-tab. The left column lists the
+  features of the data selection that fit the reference (empty text until one fits); a tick links
+  one. The right column lists the feature types the reference allows (for example "Procedure").
+  One click on such a row adds the feature to the data selection and links it; there is no dialog.
 
 There is no "Save" button any more: edits **apply live**.
 

@@ -1,24 +1,12 @@
-// Row of the editor grid: the box sizes to its content, the row scrolls when it is capped
+// Row of the editor grid: the header sizes to its content, the row scrolls when it is capped.
+// Layout: .editor-header in general-styles/_header-card.scss
 :host {
   display: block;
   min-height: 0;
   overflow: auto;
 }
 
-// Layout Containers
-.display-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 0 1%;
-  color: var(--color-text-primary);
-  border-right: 1px solid var(--border-color);
-}
-
-.display-container > span {
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;
-  line-clamp: 6;
-  overflow: hidden;
+num-searchbar {
+  display: block;
+  max-width: 560px;
 }

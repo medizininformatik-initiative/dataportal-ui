@@ -7,7 +7,9 @@ import { ConceptFilter } from 'src/app/model/FeasibilityQuery/Criterion/Attribut
 import { Criterion } from 'src/app/model/FeasibilityQuery/Criterion/Criterion'
 import { EditCriterionService } from 'src/app/service/Criterion/Edit/EditCriterion.service'
 import { ReferenceCriterionProviderService } from 'src/app/service/Provider/ReferenceCriterionProvider.service'
+import { QuantityComparisonOption } from 'src/app/model/Utilities/Quantity/QuantityFilterOptions'
 import { Subscription } from 'rxjs'
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
 import { TerminologyCode } from 'src/app/model/Terminology/TerminologyCode'
 import { ValueFilter } from 'src/app/model/FeasibilityQuery/Criterion/AttributeFilter/ValueFilter'
 import {
@@ -149,19 +151,36 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
 
   private setTimeRestrictionTemplate(templates: any[]): void {
     if (this.criterion().getTimeRestriction()) {
-      templates.push({ template: this.timeRestrictionTemplate(), name: 'TIMERESTRICTION' })
+      templates.push({
+        template: this.timeRestrictionTemplate(),
+        name: 'TIMERESTRICTION',
+        count: () =>
+          this.criterion().getTimeRestriction().getType() === TimeRestrictionType.NONE ? 0 : 1,
+      })
     }
   }
 
   private setTermCodesTemplate(templates: any[]): void {
     if (this.criterion().getTermCodes().length > 1) {
-      templates.push({ template: this.termCodesTemplate(), name: 'TERMCODE' })
+      templates.push({
+        template: this.termCodesTemplate(),
+        name: 'TERMCODE',
+        count: () => this.criterion().getTermCodes().length,
+      })
     }
   }
 
   private setReferenceTemplate(templates: any[]): void {
     if (this.referenceFilter().length > 0) {
-      templates.push({ template: this.referenceTemplate(), name: 'REFERENCE' })
+      templates.push({
+        template: this.referenceTemplate(),
+        name: 'REFERENCE',
+        count: () =>
+          this.referenceFilter().reduce(
+            (sum, filter) => sum + filter.getReference().getSelectedReferenceIds().length,
+            0
+          ),
+      })
     }
   }
 
@@ -170,6 +189,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
       templates.push({
         template: this.quantityValueFilterTemplate(),
         display: this.quantityValueFilter()[0].getDisplay(),
+        count: () => this.countSetQuantities(this.quantityValueFilter()),
       })
     }
   }
@@ -179,6 +199,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
       templates.push({
         template: this.quantityAttributeFilterTemplate(),
         display: this.quantityAttributeFilter()[0].getDisplay(),
+        count: () => this.countSetQuantities(this.quantityAttributeFilter()),
       })
     }
   }
@@ -188,6 +209,7 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
       templates.push({
         template: this.conceptValueFiltersTemplate(),
         display: this.conceptValueFilter()[0].getDisplay(),
+        count: () => this.conceptValueFilter()[0].getConcept().getSelectedConcepts().length,
       })
     }
   }
@@ -198,8 +220,17 @@ export class CriterionComponent implements AfterViewInit, OnDestroy {
         template: this.conceptAttributeFiltersTemplate(),
         display: filter.getDisplay(),
         context: { $implicit: index },
+        count: () => filter.getConcept().getSelectedConcepts().length,
       })
     })
+  }
+
+  private countSetQuantities(filters: AbstractAttributeFilters[]): number {
+    return filters.filter(
+      (filter) =>
+        filter.isQuantitySet() &&
+        filter.getQuantity().getComparator() !== QuantityComparisonOption.NONE
+    ).length
   }
 
   public updateConceptAttributeFilter(

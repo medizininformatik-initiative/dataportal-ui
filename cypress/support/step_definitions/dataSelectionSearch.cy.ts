@@ -1,12 +1,8 @@
 import { dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
-import { numCheckbox } from '../component-objects/NumCheckbox'
 import { numMenu } from '../component-objects/NumMenu'
 import { Search } from './search.cy'
 import { t } from '../i18n'
-
-const NUM_MODAL_WINDOW = 'num-modal-window'
-const NUM_BUTTON = 'num-button'
 
 /**
  * Section is `{string}`, not literal pattern text: Cucumber matches pattern before
@@ -19,7 +15,7 @@ const CHIP_SECTIONS: Record<string, string> = {
 }
 
 /**
- * Steps for data selection search: tree, boxes, tabs, chips, reference modal.
+ * Steps for data selection search: tree, boxes, tabs, chips, reference add list.
  * */
 export class DataSelectionSearch {
   /**
@@ -112,46 +108,18 @@ export class DataSelectionSearch {
   }
 
   /**
-   * Assert placeholder box visible.
+   * Assert empty text of linked-features panel visible: no feature of data selection fits yet.
    * */
   public placeHolderBeVisible() {
-    cy.get('.placeholder-box').should('be.visible')
+    cy.get('.linked-panel .panel-empty').should('be.visible')
   }
 
   /**
-   * Click "Add new reference".
-   * */
-  public openReferenceModal() {
-    cy.get(NUM_BUTTON).contains(' Add new reference ').should('be.visible').click()
-  }
-
-  /**
-   * Assert reference modal visible.
-   * */
-  public getReferenceModal() {
-    cy.get(NUM_MODAL_WINDOW).should('be.visible')
-  }
-
-  /**
-   * Tick reference in modal.
+   * Add feature type as new reference: row of add list (`.add-row`, `data-cy` = type name) is
+   * button. One click loads profile, adds it to data selection, links it. No dialog.
    * */
   public addReference(name: string) {
-    cy.get(NUM_MODAL_WINDOW).within(() => {
-      cy.get(dataCyOf(name, '.divider'))
-        .should('be.visible')
-        .within(() => {
-          numCheckbox.toggle()
-        })
-    })
-  }
-
-  /**
-   * Confirm reference modal.
-   * */
-  public saveReference() {
-    cy.get(NUM_MODAL_WINDOW).within(() => {
-      cy.get(NUM_BUTTON).first().should('be.visible').click()
-    })
+    cy.get(dataCyOf(name, '.add-row')).should('be.visible').click()
   }
 }
 
@@ -180,12 +148,9 @@ defineStep('I enter {string} into the filter search field', (conceptName: string
   dataSelectionSearch.searchForConcept(conceptName)
 )
 defineStep('I should see the placeholder', () => dataSelectionSearch.placeHolderBeVisible())
-defineStep('I click to add a new reference', () => dataSelectionSearch.openReferenceModal())
-defineStep('the reference modal should be displayed', () => dataSelectionSearch.getReferenceModal())
 defineStep('I add a reference named {string}', (name: string) =>
   dataSelectionSearch.addReference(name)
 )
-defineStep('I add the reference', () => dataSelectionSearch.saveReference())
 defineStep(
   'a chip labeled {string} should appear in the {string} section',
   (chipName: string, section: string) =>

@@ -1,61 +1,53 @@
-<div class="selection-box">
-  <div class="criterion-display">
-    {{ criterion().getDisplay() | displayTranslation }}
-    <div class="information-display">
-      {{ criterion().getContext().getDisplay() }}
-      {{ criterion().getTermCodes()[0].getCode() }}
+<div class="editor-header">
+  <div class="editor-header-title">
+    <div class="criterion-display">{{ criterion().getDisplay() | displayTranslation }}</div>
+    <div class="editor-header-meta">
+      {{ criterion().getContext().getDisplay() }} · {{ criterion().getTermCodes()[0].getCode() }} ·
       {{ system() | displayTranslation }}
     </div>
   </div>
-
-  @if (termCodesFilterChips().length > 0) {
-  <div class="header-col border-right-1">
-    <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'EDITOR.CONTENT.CRITERION.HEADER.TERMCODES' | translate
-      }}</span>
-    </div>
-    <div class="header-col-chips">
-      <num-filter-chips [filterChips]="termCodesFilterChips()"></num-filter-chips>
-    </div>
-  </div>
-  }
-
-  <div class="header-col border-right-1">
-    <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'EDITOR.CONTENT.CRITERION.HEADER.FILTER' | translate
-      }}</span>
-    </div>
-    @if (timeRestrictionFilterChips().length > 0) {
-    <div>
-      <num-filter-chips [filterChips]="timeRestrictionFilterChips()"> </num-filter-chips>
-    </div>
-    } @if (conceptFilterChips().length > 0) {
-    <div>
-      <num-filter-chips [filterChips]="conceptFilterChips()"> </num-filter-chips>
+  <div class="editor-header-groups">
+    @if (termCodesFilterChips().length > 0) {
+    <div class="header-col">
+      <span class="header-col-label">
+        {{ 'EDITOR.CONTENT.CRITERION.HEADER.TERMCODES' | translate }}
+      </span>
+      <div class="header-col-chips">
+        <num-filter-chips [filterChips]="termCodesFilterChips()"></num-filter-chips>
+      </div>
     </div>
     }
-    <div class="header-col-chips">
-      @if (quantityFilterChips().length > 0) {
-      <num-filter-chips [filterChips]="quantityFilterChips()"></num-filter-chips>
-      } @if ( quantityFilterChips().length === 0 && conceptFilterChips().length === 0 &&
-      timeRestrictionFilterChips().length === 0 ) {
-      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
-      }
+    <div class="header-col">
+      <span class="header-col-label">
+        {{ 'EDITOR.CONTENT.CRITERION.HEADER.FILTER' | translate }}
+      </span>
+      <div class="header-col-chips">
+        @if (timeRestrictionFilterChips().length > 0) {
+        <num-filter-chips [filterChips]="timeRestrictionFilterChips()"></num-filter-chips>
+        } @if (conceptFilterChips().length > 0) {
+        <num-filter-chips [filterChips]="conceptFilterChips()"></num-filter-chips>
+        } @if (quantityFilterChips().length > 0) {
+        <num-filter-chips [filterChips]="quantityFilterChips()"></num-filter-chips>
+        } @if ( quantityFilterChips().length === 0 && conceptFilterChips().length === 0 &&
+        timeRestrictionFilterChips().length === 0 ) {
+        <span
+          class="empty-state"
+          aria-label="{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}"
+        >
+          –
+        </span>
+        }
+      </div>
     </div>
+    @if (refernceFilterChips().length > 0) {
+    <div class="header-col">
+      <span class="header-col-label">
+        {{ 'EDITOR.CONTENT.CRITERION.HEADER.REFERENCE' | translate }}
+      </span>
+      <div class="header-col-chips">
+        <num-filter-chips [filterChips]="refernceFilterChips()"></num-filter-chips>
+      </div>
+    </div>
+    }
   </div>
-
-  @if (refernceFilterChips().length > 0) {
-  <div class="header-col">
-    <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'EDITOR.CONTENT.CRITERION.HEADER.REFERENCE' | translate
-      }}</span>
-    </div>
-    <div class="header-col-chips">
-      <num-filter-chips [filterChips]="refernceFilterChips()"></num-filter-chips>
-    </div>
-  </div>
-  }
 </div>

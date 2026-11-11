@@ -241,12 +241,24 @@
       "PROFILE": {
         "FIELDS": {
           "HEADER": "Selektieren Sie Merkmale für ",
+          "NONE": "Noch kein Feld ausgewählt.",
+          "PICK": "Felder auswählen",
+          "PICK_HINT": "Alle Felder dieses Merkmals. Ein Häkchen nimmt das Feld in die Datenselektion auf.",
           "REQUIRED": "Als erforderlich setzen",
+          "REQUIRED_COUNT": "{{ required }} von {{ total }} erforderlich",
+          "REQUIRED_HINT": "Ein Häkchen setzt das Feld als erforderlich: nur Daten mit diesem Feld werden geliefert.",
+          "SELECTED": "Ausgewählte Felder",
+          "SELECTED_COUNT": "{{ selected }} von {{ total }} ausgewählt",
           "TITLE": "Felder"
         },
         "REFERENCE": {
           "ADD": "Neues Merkmal hinzufügen",
-          "INFO": "Klicken Sie auf „Neues Merkmal hinzufügen“, um ein neues Merkmal zu erstellen"
+          "ADD_HINT": "Ein Klick fügt das Merkmal der Datenselektion hinzu und verknüpft es.",
+          "ADD_ONE": "Hinzufügen",
+          "INFO": "Noch kein passendes Merkmal in der Datenselektion.",
+          "LINKED": "Vorhandene Merkmale verknüpfen",
+          "LINKED_COUNT": "{{ linked }} von {{ total }} verknüpft",
+          "LINKED_HINT": "Merkmale Ihrer Datenselektion, die zu dieser Referenz passen. Ein Häkchen verknüpft das Merkmal."
         },
         "SNACKBAR": {
           "SAVED": "Profil erfolgreich gespeichert",

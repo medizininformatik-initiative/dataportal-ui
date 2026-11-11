@@ -4,6 +4,7 @@
       [checked]="possibleReference().isSelected"
       (checkedChange)="checkboxSelected(possibleReference())"
     ></num-checkbox>
-    {{ label }} ( {{ display }} )
+    {{ label }}
+    @if (display !== label) { ( {{ display }} ) }
   </div>
 </div>

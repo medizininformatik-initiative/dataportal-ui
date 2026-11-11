@@ -23,25 +23,79 @@
   border-radius: var(--border-radius-sm);
 }
 
-// One pattern for every tab row inside the editors (criterion, feature, reference), below the main
-// FELDER / ZEITEINSCHRÄNKUNG row: 14px regular labels in the accent colour, a line under the bar that the
-// active indicator sits on.
-// Replaces per-component ::ng-deep rules (12px, 14px, 16px) that leaked into every tab group of the app.
+// Thin scrollbars without a track for every scroll area of the editor
+:host ::ng-deep * {
+  scrollbar-color: var(--border-color) transparent;
+}
+
+// One pattern for every second tab row inside the editors (criterion, feature, reference), below the main
+// FELDER / ZEITEINSCHRÄNKUNG row: pills instead of a second underlined row, so the two levels do not look alike.
+// The active pill is tinted, the others are plain text. The Information tab sits at the right end.
 :host ::ng-deep .mat-mdc-tab-group {
-  .mdc-tab__text-label {
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-size: var(--font-size-md);
-    color: var(--color-accent);
-  }
-
   .mat-mdc-tab-header {
-    margin-bottom: var(--spacing-8);
+    margin-bottom: var(--spacing-12);
   }
 
-  // the line sits in the same pixel row as the active indicator, which covers it under the active tab
-  // (a border on the header put the line 1px below the indicator: two lines stacked)
-  .mat-mdc-tab-label-container {
-    box-shadow: inset 0 -1px 0 var(--border-color);
+  .mat-mdc-tab-list {
+    flex-grow: 1;
+  }
+
+  .mat-mdc-tab-labels {
+    align-items: center;
+    gap: var(--spacing-4);
+  }
+
+  .mat-mdc-tab.mdc-tab {
+    flex-grow: 0;
+    height: 32px;
+    min-width: 0;
+    padding: 0 var(--spacing-12);
+    border-radius: var(--border-radius-sm); // same corner as chips, inputs and buttons
+  }
+
+  .mat-mdc-tab .mdc-tab__text-label {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
+  }
+
+  .mat-mdc-tab:hover .mdc-tab__text-label {
+    color: var(--color-text-primary);
+  }
+
+  .mat-mdc-tab.mdc-tab--active {
+    background-color: var(--color-accent-bg);
+
+    .mdc-tab__text-label {
+      color: var(--color-accent-strong);
+    }
+  }
+
+  // the pill is the active mark: no underline, no grey hover layer
+  .mdc-tab-indicator,
+  .mdc-tab__ripple,
+  .mat-mdc-tab-ripple {
+    display: none;
+  }
+
+  .mat-mdc-tab.mat-mdc-tab-disabled {
+    opacity: var(--opacity-disabled);
+  }
+
+  // Information tab: first in the DOM, shown last and pushed to the right.
+  // ponytail: arrow keys follow the DOM order, so Left on the first content tab jumps to the right end.
+  // Move the tab in the templates if that confuses keyboard users.
+  .mat-mdc-tab:first-child:has(.information-icon) {
+    order: 1;
+    margin-left: auto;
+
+    .information-icon {
+      margin-right: var(--spacing-8);
+    }
+
+    .mdc-tab__text-label {
+      font-weight: var(--font-weight-normal);
+    }
   }
 }

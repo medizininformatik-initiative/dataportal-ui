@@ -1,8 +1,8 @@
 import { CreateSelectedReferenceService } from 'src/app/service/CreateSelectedReference.service'
-import { filter, map, Observable, Subscription, switchMap, take, tap } from 'rxjs'
+import { filter, map, Observable, Subscription, take, tap } from 'rxjs'
 import { PossibleProfileReferenceData } from 'src/app/model/Interface/PossibleProfileReferenceData'
 import { PossibleReferencesService } from 'src/app/service/PossibleReferences.service'
-import { ProfileReferenceModalService } from 'src/app/service/DataSelection/Modal/ProfileReferenceModal.service'
+import { ProfileReferenceAdapter } from 'src/app/shared/models/TreeNode/Adapter/ProfileReferenceAdapter'
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import {
@@ -15,8 +15,8 @@ import {
   output,
 } from '@angular/core'
 import { PossibleReferencesComponent } from '../possible-references/possible-references.component'
-import { PlaceholderBoxComponent } from '../../../../../../../shared/components/placeholder-box/placeholder-box.component'
-import { ButtonComponent } from '../../../../../../../shared/components/button/button.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { SectionNameComponent } from '../../../../../../../shared/components/section-name/section-name.component'
 import { AsyncPipe } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -28,8 +28,8 @@ import { TranslateModule } from '@ngx-translate/core'
   standalone: true,
   imports: [
     PossibleReferencesComponent,
-    PlaceholderBoxComponent,
-    ButtonComponent,
+    FontAwesomeModule,
+    SectionNameComponent,
     AsyncPipe,
     TranslateModule,
   ],
@@ -37,7 +37,6 @@ import { TranslateModule } from '@ngx-translate/core'
 export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   private createSelectedReferenceService = inject(CreateSelectedReferenceService)
   private possibleReferencesService = inject(PossibleReferencesService)
-  private profileReferenceModalService = inject(ProfileReferenceModalService)
 
   readonly referenceField = input<ReferenceField>(undefined)
 
@@ -49,11 +48,11 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
 
   possibleReferences$: Observable<PossibleProfileReferenceData[]>
 
-  referencedProfileUrls: string[] = []
+  referencedProfileTypes: { url: string; name: string }[] = []
 
   elementId: string
 
-  openModalWindowSubscription: Subscription
+  addReferenceSubscription: Subscription
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -61,15 +60,16 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    this.referencedProfileUrls = this.referenceField()
+    this.referencedProfileTypes = this.referenceField()
       .getReferencedProfiles()
       .map((profile) => profile.getUrl())
+      .map((url) => ({ url, name: ProfileReferenceAdapter.normalizeRefrenceUrl(url) }))
     this.elementId = this.referenceField().getElementId()
     this.loadPossibleReferences()
   }
 
   ngOnDestroy(): void {
-    this.openModalWindowSubscription?.unsubscribe()
+    this.addReferenceSubscription?.unsubscribe()
   }
 
   private loadPossibleReferences(): void {
@@ -79,20 +79,22 @@ export class ReferenceFieldTabComponent implements OnInit, OnDestroy {
     )
   }
 
-  public openReferenceModal(): void {
-    this.openModalWindowSubscription?.unsubscribe()
-    this.openModalWindowSubscription = this.profileReferenceModalService
-      .openProfileReferenceModal(this.referencedProfileUrls, this.profileId())
-      .pipe(
-        take(1),
-        filter((urls) => urls.length > 0),
-        switchMap((urls: string[]) =>
-          this.possibleReferencesService.loadAndMapProfiles(urls, this.elementId, this.profileId())
-        )
-      )
+  /**
+   * Loads the profile of the type, adds it to the data selection as a new feature and links it.
+   * @param url - The profile URL of the feature type to add
+   */
+  public addReference(url: string): void {
+    this.addReferenceSubscription?.unsubscribe()
+    this.addReferenceSubscription = this.possibleReferencesService
+      .loadAndMapProfiles([url], this.elementId, this.profileId())
+      .pipe(take(1))
       .subscribe((possibleProfileReferenceData: PossibleProfileReferenceData[]) =>
         this.onReferencesConfirmed(possibleProfileReferenceData)
       )
+  }
+
+  public countLinked(possibleReferences: PossibleProfileReferenceData[]): number {
+    return possibleReferences.filter((reference) => reference.isSelected).length
   }
 
   private onReferencesConfirmed(selected: PossibleProfileReferenceData[]): void {

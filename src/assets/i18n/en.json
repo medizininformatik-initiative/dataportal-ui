@@ -241,12 +241,24 @@
       "PROFILE": {
         "FIELDS": {
           "HEADER": "Select features for ",
+          "NONE": "No field selected yet.",
+          "PICK": "Select fields",
+          "PICK_HINT": "All fields of this feature. A tick adds the field to the data selection.",
           "REQUIRED": "Mark as required",
+          "REQUIRED_COUNT": "{{ required }} of {{ total }} required",
+          "REQUIRED_HINT": "A tick marks the field as required: only data with this field is delivered.",
+          "SELECTED": "Selected fields",
+          "SELECTED_COUNT": "{{ selected }} of {{ total }} selected",
           "TITLE": "Fields"
         },
         "REFERENCE": {
-          "ADD": "Add new reference",
-          "INFO": "Click on 'Add new reference' to create a new reference"
+          "ADD": "Add a new feature",
+          "ADD_HINT": "One click adds the feature to the data selection and links it.",
+          "ADD_ONE": "Add",
+          "INFO": "No matching feature in the data selection yet.",
+          "LINKED": "Link existing features",
+          "LINKED_COUNT": "{{ linked }} of {{ total }} linked",
+          "LINKED_HINT": "Features of your data selection that fit this reference. A tick links the feature."
         },
         "SNACKBAR": {
           "SAVED": "Profile saved successfully",

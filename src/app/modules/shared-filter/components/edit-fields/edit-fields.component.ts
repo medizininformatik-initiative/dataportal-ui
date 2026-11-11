@@ -6,7 +6,7 @@ import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/B
 import { SelectedBasicFieldCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedFieldCloner'
 import { SelectedProfileFieldsService } from 'src/app/service/DataSelection/Selection/SelectedProfileFields.service'
 import { TreeNode } from 'src/app/shared/models/TreeNode/TreeNodeInterface'
-import { MatTabGroup, MatTab } from '@angular/material/tabs'
+import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { InformationSectionComponent } from '../../../../shared/components/information-section/information-section.component'
 import { TreeComponent } from '../../../../shared/components/tree/tree.component'
 import { SectionNameComponent } from '../../../../shared/components/section-name/section-name.component'
@@ -25,6 +25,7 @@ import { DisplayTranslationPipe } from '../../../../shared/pipes/DisplayTranslat
   imports: [
     MatTabGroup,
     MatTab,
+    MatTabLabel,
     InformationSectionComponent,
     TreeComponent,
     SectionNameComponent,
@@ -45,6 +46,7 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
   readonly updatedSelectedBasicFields = output<SelectedBasicField[]>()
 
   tree: TreeNode[] = []
+  fieldCount = 0
   deepCopyFieldsSubscription: Subscription
   private localFieldTree: BasicField[] = []
   public localSelectedBasicFields: SelectedBasicField[] = []
@@ -74,9 +76,18 @@ export class EditFieldsComponent implements OnInit, OnDestroy {
         map((profileFields: BasicField[]) => {
           this.setSelectedChildrenFields()
           this.tree = FieldsTreeAdapter.fromTree(profileFields)
+          this.fieldCount = this.countNodes(this.tree)
         })
       )
       .subscribe()
+  }
+
+  public countRequired(): number {
+    return this.localSelectedBasicFields.filter((field) => field.getMustHave()).length
+  }
+
+  private countNodes(nodes: TreeNode[] = []): number {
+    return nodes.reduce((sum, node) => sum + 1 + this.countNodes(node.children), 0)
   }
 
   public setSelectedChildrenFields() {

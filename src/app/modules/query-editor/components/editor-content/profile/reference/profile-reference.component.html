@@ -1,5 +1,10 @@
 <div class="full">
-  <mat-tab-group [selectedIndex]="selectedIndex()" animationDuration="0ms">
+  <mat-tab-group
+    [selectedIndex]="selectedIndex()"
+    animationDuration="0ms"
+    disableRipple="true"
+    mat-stretch-tabs="false"
+  >
     <mat-tab>
       <ng-template mat-tab-label>
         <fa-icon icon="info" class="information-icon"></fa-icon>

@@ -7,7 +7,6 @@ import { DisplayTranslationPipe } from '../../../../../../shared/pipes/DisplayTr
 import { FilterChipData } from 'src/app/shared/models/FilterChips/FilterChipData'
 import { FilterChipProfileRefrenceAdapter } from 'src/app/shared/models/FilterChips/Adapter/DataSelection/FilterChipProfileRefrenceAdapter'
 import { FilterChipsComponent } from '../../../../../../shared/components/filter-chips/filter-chips.component'
-import { NumPillExpandableDirective } from '../../../../../../shared/directives/num-pill-expandable.directive'
 import { Observable, of } from 'rxjs'
 import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider.service'
 import { ProfileReferenceGroup } from 'src/app/shared/models/FilterChips/ProfileReferenceChipData'
@@ -21,13 +20,7 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./profile-header.component.scss'],
   providers: [DataSelectionFieldsChipsService, DataSelectionFiltersFilterChips],
   standalone: true,
-  imports: [
-    SearchbarComponent,
-    NumPillExpandableDirective,
-    FilterChipsComponent,
-    AsyncPipe,
-    TranslateModule,
-  ],
+  imports: [SearchbarComponent, FilterChipsComponent, AsyncPipe, TranslateModule],
 })
 export class ProfileHeaderComponent implements OnInit {
   private profileProviderService = inject(ProfileProviderService)

@@ -92,7 +92,7 @@
             "polyfills": "src/polyfills.ts",
             "scripts": [],
             "styles": [
-              "src/styles/styles.scss"
+              "src/styles-next/styles.scss"
             ],
             "tsConfig": "tsconfig.app.json"
           }

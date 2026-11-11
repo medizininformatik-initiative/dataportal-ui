@@ -1,27 +1,13 @@
+// Layout: .editor-header in general-styles/_header-card.scss
 :host {
-  --primary-light: var(--color-accent-bg);
   display: block;
   min-height: 0;
   overflow: auto;
 }
 
 .criterion-display {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1 1 0;
-  min-width: 0;
-  gap: 8px;
-  padding: 0 1%;
+  font-size: var(--font-size-lg);
+  line-height: 28px;
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  overflow: hidden;
-  border-right: 4px solid var(--primary-light);
-}
-
-.information-display {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  color: var(--color-text-secondary);
-  font-size: 0.9em;
 }

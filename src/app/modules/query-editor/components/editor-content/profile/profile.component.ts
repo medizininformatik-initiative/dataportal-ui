@@ -14,6 +14,7 @@ import { SelectedBasicField } from 'src/app/model/DataSelection/Profile/Fields/B
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
 import { StagedProfileService } from 'src/app/service/StagedDataSelectionProfile.service'
 import { Subscription } from 'rxjs'
+import { TimeRestrictionType } from 'src/app/model/FeasibilityQuery/TimeRestriction'
 import { TokenFilterComponent } from './profile-filter/token-filter/token-filter.component'
 import { TranslateModule } from '@ngx-translate/core'
 import {
@@ -88,7 +89,12 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   possibleReferencesServiceSubscription: Subscription
 
-  templates: { template: TemplateRef<any>; name: string; active?: boolean }[] = []
+  templates: {
+    template: TemplateRef<any>
+    name: string
+    active?: boolean
+    count?: () => number
+  }[] = []
 
   readonly fieldsTemplate = viewChild('fields', { read: TemplateRef })
   readonly timeRestrictionTemplate = viewChild('timeRestriction', { read: TemplateRef })
@@ -129,20 +135,37 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   private setTimeRestrictionTemplate(): void {
     if (this.timeRestrictionFilters().length > 0) {
-      this.templates.push({ template: this.timeRestrictionTemplate(), name: 'TIMERESTRICTION' })
+      this.templates.push({
+        template: this.timeRestrictionTemplate(),
+        name: 'TIMERESTRICTION',
+        count: () =>
+          this.timeRestrictionFilters().filter(
+            (filter: ProfileTimeRestrictionFilter) =>
+              (filter.getTimeRestriction()?.getType() ?? TimeRestrictionType.NONE) !==
+              TimeRestrictionType.NONE
+          ).length,
+      })
     }
   }
 
   private setTokenFilterTemplate(): void {
     if (this.tokenFilter()) {
-      this.templates.push({ template: this.tokenFilterTemplate(), name: 'TOKEN' })
+      this.templates.push({
+        template: this.tokenFilterTemplate(),
+        name: 'TOKEN',
+        count: () => (this.tokenFilter() as ProfileTokenFilter).getSelectedTokens().length,
+      })
     }
   }
 
   private setFieldsTemplate(): void {
     const fields = this.profile().getProfileFields().getFieldTree()
     if (fields.length > 0) {
-      this.templates.push({ template: this.fieldsTemplate(), name: 'FIELD' })
+      this.templates.push({
+        template: this.fieldsTemplate(),
+        name: 'FIELD',
+        count: () => this.profile().getProfileFields().getSelectedBasicFields().length,
+      })
     }
   }
 
@@ -155,6 +178,11 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
         template: this.referenceTemplate(),
         name: 'REFERENCE',
         active: activeTab,
+        count: () =>
+          this.profile()
+            .getProfileFields()
+            .getSelectedReferenceFields()
+            .reduce((sum, field) => sum + field.getLinkedProfileIds().length, 0),
       })
     }
   }

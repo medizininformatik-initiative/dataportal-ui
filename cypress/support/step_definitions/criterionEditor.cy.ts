@@ -85,7 +85,7 @@ export class CriterionEditor {
    * Assert editor has tab, case-insensitive.
    * */
   public shouldHaveTab(tab: string) {
-    cy.contains(TAB, new RegExp(`^\\s*${label(tab)}\\s*$`, 'i')).should('exist')
+    cy.contains('.tab-label', new RegExp(`^\\s*${label(tab)}\\s*$`, 'i')).should('exist')
   }
 
   /**

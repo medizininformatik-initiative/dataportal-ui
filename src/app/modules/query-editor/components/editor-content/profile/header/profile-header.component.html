@@ -1,62 +1,70 @@
-<div class="num-card selection-box">
-  <div class="display-container border-right-1">
-    <div>
-      <div class="num-text-accent margin-bottom-2">
-        {{ 'DATASELECTION.EDITOR.DISPLAY.RENAME_FEATURE' | translate }}
+<div class="editor-header">
+  <div class="editor-header-title">
+    <span class="cdk-visually-hidden">
+      {{ 'DATASELECTION.EDITOR.DISPLAY.RENAME_FEATURE' | translate }}
+    </span>
+    <num-searchbar
+      icon="pencil-alt"
+      [label]="placeholder"
+      [minLength]="0"
+      [searchText]="label"
+      (searchTextChange)="setLabel($event)"
+    ></num-searchbar>
+    <div class="editor-header-meta">
+      {{ profile().getDisplay().getOriginal() }}
+    </div>
+  </div>
+  <div class="editor-header-groups">
+    <div class="header-col">
+      <span class="header-col-label">
+        {{ 'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate }}
+      </span>
+      <div class="header-col-chips">
+        @if ($fieldsFilterChips() | async; as chips) { @if (chips.length > 0) {
+        <num-filter-chips [filterChips]="chips"></num-filter-chips>
+        } @else {
+        <span
+          class="empty-state"
+          aria-label="{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}"
+        >
+          –
+        </span>
+        } }
       </div>
-      <num-searchbar
-        icon="pencil-alt"
-        [label]="placeholder"
-        [minLength]="0"
-        [searchText]="label"
-        (searchTextChange)="setLabel($event)"
-      >
-      </num-searchbar>
-      <div class="num-pill" numPillExpandable>
-        {{ profile().getDisplay().getOriginal() }}
+    </div>
+    <div class="header-col">
+      <span class="header-col-label">
+        {{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate }}
+      </span>
+      <div class="header-col-chips">
+        @if (filtersFilterChips$() | async; as chips) { @if (chips.length > 0) {
+        <num-filter-chips [filterChips]="chips"></num-filter-chips>
+        } @else {
+        <span
+          class="empty-state"
+          aria-label="{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}"
+        >
+          –
+        </span>
+        } }
       </div>
     </div>
-  </div>
-  <div class="header-col border-right-1">
-    <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'DATASELECTION.EDITOR.DISPLAY.SELECTED_FIELDS' | translate
-      }}</span>
-    </div>
-    <div class="header-col-chips">
-      @if ($fieldsFilterChips() | async; as chips) { @if (chips.length > 0) {
-      <num-filter-chips [filterChips]="chips"></num-filter-chips>
-      } @if (chips.length === 0) {
-      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
-      } }
-    </div>
-  </div>
-  <div class="header-col border-right-1">
-    <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'DATASELECTION.EDITOR.DISPLAY.APPLIED_FILTER' | translate
-      }}</span>
-    </div>
-    <div class="header-col-chips">
-      @if (filtersFilterChips$() | async; as chips) { @if (chips.length > 0) {
-      <num-filter-chips [filterChips]="chips"></num-filter-chips>
-      } @if (chips.length === 0) {
-      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
-      } }
-    </div>
-  </div>
-  <div class="header-col">
-    <div class="label-with-info">
-      <span class="num-text-accent">{{
-        'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate
-      }}</span>
-    </div>
-    <div class="header-col-chips">
-      @if (profileReferenceChips()?.length > 0) {
-      <num-filter-chips [filterChips]="profileReferenceChips()"></num-filter-chips>
-      } @if (!profileReferenceChips()?.length) {
-      <span class="empty-state">{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}</span>
-      }
+    <div class="header-col">
+      <span class="header-col-label">
+        {{ 'DATASELECTION.EDITOR.DISPLAY.APPLIED_REFERENCES' | translate }}
+      </span>
+      <div class="header-col-chips">
+        @if (profileReferenceChips()?.length > 0) {
+        <num-filter-chips [filterChips]="profileReferenceChips()"></num-filter-chips>
+        } @else {
+        <span
+          class="empty-state"
+          aria-label="{{ 'DATASELECTION.EDITOR.DISPLAY.NO_FILTERS' | translate }}"
+        >
+          –
+        </span>
+        }
+      </div>
     </div>
   </div>
 </div>

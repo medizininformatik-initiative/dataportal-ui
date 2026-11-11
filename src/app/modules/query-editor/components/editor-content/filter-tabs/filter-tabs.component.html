@@ -10,10 +10,15 @@
       [attr.aria-selected]="selectedIndex === i"
       (click)="selectedIndex = i"
     >
-      @if (item.display) {
-      {{ item.display | displayTranslation }}
-      } @else {
-      {{ 'EDITOR.CONTENT.TAB_LABEL.' + item.name | translate }}
+      <span class="tab-label">
+        @if (item.display) {
+        {{ item.display | displayTranslation }}
+        } @else {
+        {{ 'EDITOR.CONTENT.TAB_LABEL.' + item.name | translate }}
+        }
+      </span>
+      @if (item.count?.(); as count) {
+      <span class="tab-count">({{ count }})</span>
       }
     </button>
     }

@@ -5,7 +5,11 @@
   mat-stretch-tabs="false"
   [selectedIndex]="1"
 >
-  <mat-tab label="{{ 'INFORMATION.FIELD.TITLE' | translate }}">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <fa-icon icon="info" class="information-icon"></fa-icon>
+      {{ 'INFORMATION.FIELD.TITLE' | translate }}
+    </ng-template>
     <num-information-section>
       <span slot="title">{{ 'INFORMATION.FIELD.TITLE' | translate }}</span>
       {{ 'INFORMATION.FIELD.DESCRIPTION' | translate }}
@@ -13,62 +17,91 @@
   </mat-tab>
 
   <mat-tab label="{{ 'EDITOR.CONTENT.PROFILE.FIELDS.TITLE' | translate }}">
-    <div class="container">
-      <div class="main-content-fields">
-        <div class="field-box">
+    <div class="editor-columns">
+      <section class="editor-column">
+        <div class="editor-column-head">
+          <num-section-name>
+            {{ 'EDITOR.CONTENT.PROFILE.FIELDS.PICK' | translate }}
+          </num-section-name>
+          <span class="editor-column-count" aria-live="polite">
+            {{
+              'EDITOR.CONTENT.PROFILE.FIELDS.SELECTED_COUNT'
+                | translate : { selected: localSelectedBasicFields.length, total: fieldCount }
+            }}
+          </span>
+        </div>
+        <p class="editor-column-hint">
+          {{ 'EDITOR.CONTENT.PROFILE.FIELDS.PICK_HINT' | translate }}
+        </p>
+        <div class="editor-column-list field-box">
           @for (singleTree of tree; track singleTree) {
-          <div>
-            <num-tree
-              [treeData]="singleTree"
-              (selectedCheckbox)="setSelectedFieldElement($event)"
-            ></num-tree>
+          <num-tree
+            [treeData]="singleTree"
+            (selectedCheckbox)="setSelectedFieldElement($event)"
+          ></num-tree>
+          }
+        </div>
+      </section>
+      @if (selectedBasicFields()) {
+      <section class="editor-column">
+        <div class="editor-column-head">
+          <num-section-name>
+            {{ 'EDITOR.CONTENT.PROFILE.FIELDS.SELECTED' | translate }}
+          </num-section-name>
+          @if (localSelectedBasicFields.length > 0) {
+          <span class="editor-column-count">
+            {{
+              'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED_COUNT'
+                | translate : { required: countRequired(), total: localSelectedBasicFields.length }
+            }}
+          </span>
+          }
+        </div>
+        <p class="editor-column-hint">
+          {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED_HINT' | translate }}
+        </p>
+        <div class="editor-column-list selected-fields-box">
+          @for (selectedField of localSelectedBasicFields; track selectedField.getElementId()) {
+          <div class="selected-filter-container">
+            <num-checkbox
+              [checked]="selectedField.getMustHave()"
+              (checkedChange)="setFieldAsRequired(selectedField)"
+            ></num-checkbox>
+            <span
+              class="field-name"
+              matTooltipPosition="below"
+              matTooltipShowDelay="300"
+              [matTooltip]="selectedField.getDisplay() | displayTranslation"
+            >
+              {{ selectedField.getDisplay() | displayTranslation }}
+            </span>
+            @if (selectedField.getMustHave()) {
+            <span class="required-tag">
+              {{ 'DATASELECTION.EDITOR.DISPLAY.REQUIRED' | translate }}
+            </span>
+            } @if (!selectedField.getIsRequired()) {
+            <button
+              type="button"
+              class="delete-button"
+              [attr.aria-label]="
+                ('FEASIBILITY.EDITOR.MODAL.REMOVE' | translate) +
+                ': ' +
+                (selectedField.getDisplay() | displayTranslation)
+              "
+              (click)="removeSelectedField(selectedField)"
+            >
+              <fa-icon [icon]="'times'" size="1x"></fa-icon>
+            </button>
+            }
+          </div>
+          } @empty {
+          <div class="editor-column-empty">
+            {{ 'EDITOR.CONTENT.PROFILE.FIELDS.NONE' | translate }}
           </div>
           }
         </div>
-        @if (selectedBasicFields()) {
-        <div class="sidebar">
-          <num-section-name>
-            {{ 'EDITOR.CONTENT.PROFILE.FIELDS.REQUIRED' | translate }}
-          </num-section-name>
-          <div class="selected-fields-box">
-            @for (selectedField of localSelectedBasicFields; track selectedField.getElementId(); let
-            index = $index) {
-            <div class="selected-filter-container">
-              <div>
-                <num-checkbox
-                  [checked]="selectedField.getMustHave()"
-                  (checkedChange)="setFieldAsRequired(selectedField)"
-                ></num-checkbox>
-              </div>
-              <div class="display-part">
-                <span
-                  class="field-name"
-                  matTooltipPosition="below"
-                  matTooltipShowDelay="300"
-                  [matTooltip]="selectedField.getDisplay() | displayTranslation"
-                >
-                  {{ selectedField.getDisplay() | displayTranslation }}
-                </span>
-                @if (selectedField.getDescription() | displayTranslation) {
-                <span class="field-description">
-                  {{ selectedField.getDescription() | displayTranslation }}
-                </span>
-                }
-              </div>
-              @if (!selectedField.getIsRequired()) {
-              <fa-icon
-                [icon]="'times'"
-                size="1x"
-                (click)="removeSelectedField(selectedField)"
-                class="delete-button"
-              ></fa-icon>
-              }
-            </div>
-            }
-          </div>
-        </div>
-        }
-      </div>
+      </section>
+      }
     </div>
   </mat-tab>
 </mat-tab-group>

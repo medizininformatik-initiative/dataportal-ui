@@ -19,6 +19,7 @@ export class FilterTabsComponent implements OnInit {
       context?: any
       display?: Display
       active?: boolean
+      count?: () => number // how many are selected in the tab, shown as "(n)" after the label
     }[]
   >()
 
