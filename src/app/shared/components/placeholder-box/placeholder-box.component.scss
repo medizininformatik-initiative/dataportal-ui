@@ -11,6 +11,7 @@
   text-align: center;
   padding: var(--spacing-20);
   box-sizing: border-box;
+  min-height: 160px; // icon + two text lines + padding; a shorter parent cropped the icon and text into the border
 }
 
 .placeholder-icon {
@@ -19,7 +20,8 @@
 }
 
 .placeholder-content {
-  font-size: 24px;
+  font-size: 16px;
+  line-height: 24px;
   color: var(--color-text-secondary);
   text-align: center;
 }
