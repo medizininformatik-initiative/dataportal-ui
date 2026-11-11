@@ -9,7 +9,7 @@ import { TextCellComponent } from '../cells/text-cell/text-cell.component'
 import { CheckboxCellComponent } from '../cells/checkbox-cell/checkbox-cell.component'
 import { TableCellKind } from '../../../models/TableData/Cells/TableCellKind'
 import { TableCellUnion } from '../../../models/TableData/Cells/TableCellUnion'
-import { getColumnWidthPercent } from '../table-column-width.util'
+import { getColumnWidth } from '../table-column-width.util'
 
 /* eslint-disable @angular-eslint/component-selector */
 
@@ -68,8 +68,8 @@ export class TableBodyComponent {
     this.rowClicked.emit(row)
   }
 
-  public getWidth(cells: TableCellUnion[], index: number): number | undefined {
-    return getColumnWidthPercent(cells, index)
+  public getWidth(cells: TableCellUnion[], index: number): string | undefined {
+    return getColumnWidth(cells, index)
   }
 
   public onCheckboxSelect(row: TableRowData): void {

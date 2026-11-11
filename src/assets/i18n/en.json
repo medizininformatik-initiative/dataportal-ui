@@ -764,7 +764,7 @@
       "SELECT_CHECKBOX_ALL": "Select All",
       "SITE": "Location",
       "STATUS": "Status",
-      "TERMCODE": "Terminology code",
+      "TERMCODE": "Code",
       "TERMINOLOGY_CODE": "Terminology",
       "WHAT_IS_MISSING": "What is missing"
     }

@@ -1,6 +1,10 @@
+// one rule for every secondary column: secondary colour, one line, ellipsis (the tooltip has the full text)
 .info-column {
   font-weight: var(--font-table-cell-weight);
   font-size: var(--font-table-cell-size);
   line-height: var(--font-table-cell-line);
   color: #6a7483;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

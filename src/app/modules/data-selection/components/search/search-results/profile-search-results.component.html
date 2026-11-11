@@ -1,6 +1,6 @@
 <div class="container">
-  <mat-drawer-container class="results-container">
-    <mat-drawer #drawer position="end" mode="side" class="details-drawer">
+  <mat-drawer-container class="results-container" [hasBackdrop]="false">
+    <mat-drawer #drawer position="end" mode="over" class="details-drawer">
       @if (adaptedDetailsData(); as data) {
       <div class="details-wrapper">
         <div class="button-align-right">

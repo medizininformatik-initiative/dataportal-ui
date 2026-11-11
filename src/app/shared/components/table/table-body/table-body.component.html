@@ -7,7 +7,7 @@
   class="table-border table-row-hover"
 >
   @for (cell of row.cells; track j; let j = $index) {
-  <td role="cell" (click)="onRowClick(row)" [style.width.%]="getWidth(row.cells, j)">
+  <td role="cell" (click)="onRowClick(row)" [style.width]="getWidth(row.cells, j)">
     <div class="row-container">
       @switch (cell.type) { @case (TableCellKind.CHECKBOX) {
       <num-checkbox-cell [cell]="cell" (checkboxChange)="onCheckboxSelect(row)"></num-checkbox-cell>

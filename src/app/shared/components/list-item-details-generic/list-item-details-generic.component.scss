@@ -54,18 +54,20 @@
 }
 
 // Rows holding a nested Parents/Children list size to their own content
-// (so a single relative doesn't stretch and leave a blank gap), but are
-// still allowed to shrink and cap out via .relatives-value below when the
-// list is long, so it scrolls internally instead of pushing other rows down.
+// (so a single relative doesn't stretch and leave a blank gap) and cap out via
+// .relatives-value below when the list is long, so it scrolls internally.
+// No shrinking: at 720px height the row shrank to 17px and its card was hidden;
+// .tab-content scrolls instead.
 .detail-row.relatives-row {
-  flex-shrink: 1;
+  flex-shrink: 0;
   min-height: 0;
   align-items: stretch;
 }
 
 .detail-label {
-  min-width: 190px;
-  max-width: 190px;
+  // 140px: in the ~340px drawer 190px left the relative cards too narrow for their name
+  min-width: 140px;
+  max-width: 140px;
   padding-right: var(--spacing-16);
   font-family: var(--font-details-panel-label-family);
   font-weight: var(--font-details-panel-label-weight);
@@ -120,4 +122,11 @@
   --mat-tab-header-label-text-size: var(--font-details-panel-tab-size);
   --mat-tab-header-label-text-line-height: var(--font-details-panel-tab-line);
   --mat-tab-header-label-text-tracking: var(--font-details-panel-tab-letter-spacing);
+}
+
+// Material pads each tab 24px on both sides; in the ~340px drawer the third tab ("Kindelement (0)")
+// fell behind a pager arrow. 8px fits all three.
+.details-tab-group ::ng-deep .mat-mdc-tab {
+  padding: 0 var(--spacing-8);
+  min-width: 0;
 }

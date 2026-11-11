@@ -2,6 +2,14 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  min-width: 0;
+
+  // narrow columns (details panel open) cut the label with an ellipsis instead of running into the next one
+  > span:not(.visually-hidden) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 /* label for screen readers only (icon column header) */

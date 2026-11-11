@@ -1,5 +1,5 @@
 import { AbstractTableAdapter } from './AbstractTableAdapter'
-import { DisplayCellData } from '../Cells/Data/DisplayCellData'
+import { TextCellData } from '../Cells/Data/TextCellData'
 import { ProfileListEntry } from 'src/app/model/Search/ListEntries/ProfileListEntry'
 import { TableCellBuilder } from '../Cells/TableCellBuilder'
 import { TableCellContext } from '../Cells/TableCellContext'
@@ -67,11 +67,11 @@ export class ProfileEntryAdapter extends AbstractTableAdapter<ProfileListEntry> 
     return TableCellBuilder.withAvailability(entry.getAvailabilityStatus())
   }
 
-  private moduleCell(entry: ProfileListEntry): any {
-    return TableCellBuilder.withDisplay(entry.getModule())
+  private moduleCell(entry: ProfileListEntry): TextCellData {
+    return TableCellBuilder.withText(entry.getModule())
   }
 
-  private ressourceTypeCell(entry: ProfileListEntry): DisplayCellData {
-    return TableCellBuilder.withDisplay(entry.getRessourceType())
+  private ressourceTypeCell(entry: ProfileListEntry): TextCellData {
+    return TableCellBuilder.withText(entry.getRessourceType())
   }
 }
