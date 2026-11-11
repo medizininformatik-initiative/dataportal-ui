@@ -941,8 +941,7 @@ export class TypeGuard {
       TypeGuard.isObject(d) &&
       TypeGuard.isString(d.name) &&
       TypeGuard.isString(d.type) &&
-      TypeGuard.isString(d.start) &&
-      TypeGuard.isString(d.end)
+      (TypeGuard.isOptionalString(d.start) || TypeGuard.isOptionalString(d.end))
     )
   }
 
