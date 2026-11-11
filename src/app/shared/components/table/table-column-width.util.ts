@@ -8,7 +8,7 @@ import { TableCellUnion } from '../../models/TableData/Cells/TableCellUnion'
 const FIXED_WIDTH_PX: Partial<Record<TableCellKind, number>> = {
   [TableCellKind.ICON]: 40,
   [TableCellKind.CHECKBOX]: 40,
-  [TableCellKind.AVAILABILITY]: 128,
+  [TableCellKind.AVAILABILITY]: 152, // the 130px status bar + 8px cell padding + room before the next column
 }
 
 /**
