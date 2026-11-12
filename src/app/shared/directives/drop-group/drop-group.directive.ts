@@ -178,7 +178,7 @@ export class DropGroupDirective implements OnInit {
     currentIndex: number
   ): void {
     const position = this.getPosition(criteria, currentIndex)
-    if (currentIndex >= criteria.length) {
+    if (currentIndex >= criteria.reduce((count, group) => count + group.length, 0)) {
       this.criteria.push([criterionID])
     } else if (criteria[position[0]]?.length > 1) {
       this.criteria[position[0]].splice(position[1], 0, criterionID)
