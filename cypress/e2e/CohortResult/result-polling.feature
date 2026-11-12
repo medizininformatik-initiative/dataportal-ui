@@ -212,3 +212,23 @@ Feature: Cohort result polling
     Then I see the result
     And I see no error dialog
     And the query was sent 2 times
+
+  @component:feasibility-result @behavior:report-backend-error
+  Scenario: Details after a summary below the privacy threshold show the message
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And the backend answers every result poll with the issue "{{resultPolling.belowThreshold}}"
+    And the backend answers every detail request with the issue "{{resultPolling.belowThreshold}}"
+    And I watch the result details dialog
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the message "{{resultPolling.belowThresholdText}}"
+    And the details button is enabled
+    When I open the result details 1 time
+    Then I see the message "{{resultPolling.belowThresholdText}}"
+    And the result details dialog never opened
+    And I see no error dialog

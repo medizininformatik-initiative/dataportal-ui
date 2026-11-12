@@ -79,6 +79,42 @@ describe('FeasibilityQueryResultService detail errors', () => {
     jest.useRealTimers()
   })
 
+  it('counts the send block from the deadline, so a throttled timer does not lag', () => {
+    jest.useFakeTimers().setSystemTime(0)
+    const polling = TestBed.inject(PollingManagerService) as any
+    polling.getPollingResult = () => throwError(() => ({ retryAfterSeconds: 30 }))
+    service.doSendQueryRequest().subscribe({ error: () => {} })
+    jest.setSystemTime(20_000) // 20 s passed, but the interval fired only once
+    jest.advanceTimersByTime(1000)
+    expect(service.sendBlockedSeconds()).toBe(9)
+    jest.useRealTimers()
+  })
+
+  it('allows a retry of an unknown error after a short time, not forever', () => {
+    jest.useFakeTimers().setSystemTime(0)
+    obfuscated.getDetailedObfuscatedResult.mockReturnValue(throwError(() => new Error('x')))
+    service.getDetailedObfuscatedResult('r4').subscribe({ error: () => {} })
+    service.getDetailedObfuscatedResult('r4').subscribe({ error: () => {} })
+    expect(obfuscated.getDetailedObfuscatedResult).toHaveBeenCalledTimes(1)
+    jest.setSystemTime(11_000)
+    service.getDetailedObfuscatedResult('r4').subscribe({ error: () => {} })
+    expect(obfuscated.getDetailedObfuscatedResult).toHaveBeenCalledTimes(2)
+    jest.useRealTimers()
+  })
+
+  it('requests the details when no result is stored for the id (summary below threshold)', () => {
+    const provider = TestBed.inject(ResultProviderService) as any
+    provider.getOne = () => {
+      throw new Error('Entity with id r5 not found.')
+    }
+    obfuscated.getDetailedObfuscatedResult.mockReturnValue(
+      throwError(() => ({ payload: [{ code: 'FEAS-10004' }] }))
+    )
+    let err
+    service.getDetailedObfuscatedResult('r5').subscribe({ error: (e) => (err = e) })
+    expect(err.code).toBe('FEAS-10004')
+  })
+
   it('falls back to RESULT_FAILED for unknown errors', () => {
     obfuscated.getDetailedObfuscatedResult.mockReturnValue(throwError(() => new Error('x')))
     let code

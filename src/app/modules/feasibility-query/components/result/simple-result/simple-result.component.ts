@@ -227,8 +227,11 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: () => this.feasibilityQueryResultService.refreshResultRateLimit(),
-        error: ({ code, retryAfterSeconds }: DetailError) => {
-          this.snackbarService.displayErrorMessage(code, retryAfterSeconds)
+        error: (error: Partial<DetailError>) => {
+          this.snackbarService.displayErrorMessage(
+            error?.code ?? 'RESULT_FAILED',
+            error?.retryAfterSeconds
+          )
           this.feasibilityQueryResultService.refreshResultRateLimit()
         },
       })

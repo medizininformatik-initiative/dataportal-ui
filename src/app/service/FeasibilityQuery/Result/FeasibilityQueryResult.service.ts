@@ -9,6 +9,8 @@ import { QueryResult } from '../../../model/Result/QueryResult'
 import { QueryResultRateLimit } from '../../../model/Result/QueryResultRateLimit'
 import { ResultProviderService } from '../../Provider/ResultProvider.service'
 
+const UNKNOWN_ERROR_BLOCK_MS = 10_000
+
 export interface DetailError {
   code: string
   retryAfterSeconds?: number
@@ -66,16 +68,18 @@ export class FeasibilityQueryResultService {
   private startSendBlock(seconds: number): void {
     clearInterval(this.sendBlockTimer)
     this.sendBlockedSeconds.set(seconds)
+    // From the deadline, not by counting ticks: timers of background tabs are throttled.
+    const until = Date.now() + seconds * 1000
     this.sendBlockTimer = setInterval(() => {
-      this.sendBlockedSeconds.update((left) => left - 1)
-      if (this.sendBlockedSeconds() <= 0) {
+      this.sendBlockedSeconds.set(Math.max(0, Math.ceil((until - Date.now()) / 1000)))
+      if (this.sendBlockedSeconds() === 0) {
         clearInterval(this.sendBlockTimer)
       }
     }, 1000)
   }
 
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<QueryResult> {
-    const received = this.resultProvider.getOne(feasibilityQueryResultId)
+    const received = this.storedResult(feasibilityQueryResultId)
     if (received?.getDetailsReceived()) {
       return of(received)
     }
@@ -95,13 +99,30 @@ export class FeasibilityQueryResultService {
       catchError((error) => {
         const code = error?.payload?.[0]?.code ?? error?.issues?.[0]?.code ?? 'RESULT_FAILED'
         const retryAfterSeconds: number | undefined = error?.retryAfterSeconds
-        // Rate limit (429) only blocks for the time the backend names, other errors stay blocked.
-        const until = retryAfterSeconds ? Date.now() + retryAfterSeconds * 1000 : Infinity
+        // A rate limit (429) blocks for the time the backend names, an unknown error (network,
+        // 5xx) may be temporary and blocks briefly, an issue from the backend stays blocked.
+        const until = retryAfterSeconds
+          ? Date.now() + retryAfterSeconds * 1000
+          : code === 'RESULT_FAILED'
+          ? Date.now() + UNKNOWN_ERROR_BLOCK_MS
+          : Infinity
         const detailError = { code, retryAfterSeconds, until }
         this.failedDetails.set(feasibilityQueryResultId, detailError)
         return throwError(() => detailError)
       })
     )
+  }
+
+  /**
+   * `getOne` throws for an unknown id: nothing is stored when the summary was below the privacy
+   * threshold.
+   */
+  private storedResult(id: string): QueryResult | undefined {
+    try {
+      return this.resultProvider.getOne(id)
+    } catch {
+      return undefined
+    }
   }
 
   private setProvider(result: Observable<QueryResult>): Observable<QueryResult> {
