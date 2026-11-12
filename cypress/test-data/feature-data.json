@@ -111,5 +111,39 @@
     "failed": "The result could not be loaded",
     "tooManyQueries": "You have made too many queries",
     "issueCode": "FEAS-10002"
+  },
+  "criteriaGroups": {
+    "a": "18-oxidase deficiency",
+    "b": "Glycogenosis due to hepatic phosphorylase deficiency",
+    "c": "GSD [glycogen storage disease] due to aldolase A deficiency",
+    "d": "Glycogen storage disease due to myophosphorylase deficiency",
+    "andChain": "Criteria_And_Chain",
+    "orGroup": "Criteria_Or_Group",
+    "mixed": "Criteria_Mixed",
+    "bothLists": "Criteria_Inclusion_And_Exclusion",
+    "layout": {
+      "a_b": "18-oxidase deficiency | Glycogenosis due to hepatic phosphorylase deficiency",
+      "a_b_c": "18-oxidase deficiency | Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "a_bc": "18-oxidase deficiency | Glycogenosis due to hepatic phosphorylase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency",
+      "a_c": "18-oxidase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "a_c_d": "18-oxidase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency | Glycogen storage disease due to myophosphorylase deficiency",
+      "ab": "18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency",
+      "ab_c": "18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "ab_d": "18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency | Glycogen storage disease due to myophosphorylase deficiency",
+      "abc": "18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency",
+      "ac": "18-oxidase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency",
+      "acd": "18-oxidase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency + Glycogen storage disease due to myophosphorylase deficiency",
+      "adb_c": "18-oxidase deficiency + Glycogen storage disease due to myophosphorylase deficiency + Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "b_c": "Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "b_c_a": "Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency | 18-oxidase deficiency",
+      "b_c_d": "Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency | Glycogen storage disease due to myophosphorylase deficiency",
+      "b_cad": "Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency + 18-oxidase deficiency + Glycogen storage disease due to myophosphorylase deficiency",
+      "bc": "Glycogenosis due to hepatic phosphorylase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency",
+      "bca": "Glycogenosis due to hepatic phosphorylase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency + 18-oxidase deficiency",
+      "c_a_b": "GSD [glycogen storage disease] due to aldolase A deficiency | 18-oxidase deficiency | Glycogenosis due to hepatic phosphorylase deficiency",
+      "c_d": "GSD [glycogen storage disease] due to aldolase A deficiency | Glycogen storage disease due to myophosphorylase deficiency",
+      "cab": "GSD [glycogen storage disease] due to aldolase A deficiency + 18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency",
+      "cda": "GSD [glycogen storage disease] due to aldolase A deficiency + Glycogen storage disease due to myophosphorylase deficiency + 18-oxidase deficiency"
+    }
   }
 }

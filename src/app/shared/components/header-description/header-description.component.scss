@@ -9,11 +9,12 @@
   color: #325a7e;
   overflow: hidden;
   max-height: 200px;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
   opacity: 1;
 
   &.hidden {
     max-height: 0;
     opacity: 0;
+    margin-block: 0 !important; // no gap left behind; the global h2 margin is !important
   }
 }

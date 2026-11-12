@@ -1,0 +1,282 @@
+@mixin criteria_themed($theme) {
+  // Card grid: the actions column spans the full box height; title block and filters stack beside it.
+  // Nothing is absolutely positioned, so long titles and many filter rows can never overlap the icons.
+  // Scoped to the box's own container through .criteria-box (nested num-reference-criteria-box has its
+  // own .container without it). Not through the num-criteria-box element: while dragging, the CDK
+  // appends a copy of the container to <body>, outside of num-criteria-box, and the copy keeps
+  // its classes, so it gets the same design.
+  // Surface, edge shadow and hover come from .num-card .num-card--raised (_ui-classes.scss);
+  // no box-shadow here, or the global :hover would be outranked.
+  .container.criteria-box {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'toggle content actions'
+      '. filters actions';
+    column-gap: var(--spacing-8);
+    width: 448px;
+    max-width: 100%;
+    padding: var(--spacing-16);
+    cursor: grab;
+    --num-card-tint: 0.1; // original 10% tint, overrides the 15% of .num-card--raised
+
+    // Chevron on the left folds the box to title + type · code on one line each.
+    .collapse-toggle {
+      grid-area: toggle;
+      align-self: start; // same row as the title line
+      height: var(--line-height-md);
+      width: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      border-radius: var(--border-radius-sm);
+      background: transparent;
+      color: var(--color-text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background: var(--color-accent-border);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 1px;
+      }
+    }
+
+    .content {
+      grid-area: content;
+      align-self: start;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-4);
+      cursor: grab;
+    }
+
+    // Long names are capped at 3 lines; the full name is in the tooltip.
+    .title-section {
+      font-family: var(--font-body);
+      font-style: normal;
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-md);
+      color: var(--color-text-title);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+    }
+
+    // --color-text-section instead of --color-text-secondary: AA on the tint
+    .info-section {
+      color: var(--color-text-section);
+      overflow-wrap: anywhere;
+    }
+
+    // Drag handle + options menu as a compact icon toolbar (24px targets),
+    // matching num-menu's appearance="icon" trigger, separated from the text by a divider.
+    .handle-icons {
+      grid-area: actions;
+      align-self: stretch; // full box height: the actions area spans both grid rows
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; // menu on top, drag handle at the bottom
+      align-items: center;
+      gap: var(--spacing-4);
+      // negative block margin cancels the box padding, so the divider reaches the top and bottom edge
+      margin: calc(-1 * var(--spacing-16)) 0 calc(-1 * var(--spacing-16)) var(--spacing-12);
+      padding: var(--spacing-16) 0 var(--spacing-16) var(--spacing-12);
+      border-left: 1px solid var(--color-accent-border); // divider between text and actions
+
+      num-menu {
+        display: flex;
+        order: -1; // before the drag handle in the DOM
+      }
+
+      .menu-trigger-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+      }
+    }
+
+    .drag-handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: var(--border-radius-sm);
+      color: var(--color-accent-strong);
+      font-size: 14px;
+      cursor: grab;
+      transition: background-color 0.15s ease, color 0.15s ease;
+
+      fa-icon {
+        display: flex;
+        transform: rotateZ(45deg);
+      }
+
+      &:hover {
+        background: var(--color-accent-border);
+        color: var(--num-color--accent-400, #345396);
+      }
+    }
+
+    // Full-width filter section; num-filter-chips aligns one row per filter type.
+    .filter-chips-container {
+      grid-area: filters;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-8);
+      margin-top: var(--spacing-12);
+      padding-top: var(--spacing-12);
+      border-top: 1px solid var(--color-accent-border);
+      cursor: grab;
+    }
+
+    // Collapsed: compact padding, one line each, the actions side by side.
+    &.collapsed {
+      padding: var(--spacing-8);
+
+      .title-section {
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+      }
+
+      .info-section {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .handle-icons {
+        flex-direction: row;
+        justify-content: center;
+        margin-block: calc(-1 * var(--spacing-8));
+        padding-block: 0;
+      }
+
+      .filter-chips-container {
+        margin-top: var(--spacing-8);
+        padding-top: var(--spacing-8);
+      }
+    }
+
+    // Filters as a table: grey label column on the left, one value pill per line on the right.
+    // The label column is as wide as the longest label (at most 116px) and shared by all filters,
+    // so every value starts at the same x position. Each .filter-wrapper joins the grid of
+    // num-filter-chips through a subgrid. Same markup and behaviour as num-filter-chips.
+    num-filter-chips {
+      display: grid;
+      grid-template-columns: fit-content(116px) minmax(0, 1fr);
+      column-gap: var(--spacing-8);
+      row-gap: var(--spacing-8);
+
+      .filter-wrapper {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: subgrid;
+        row-gap: var(--spacing-4);
+        align-items: start;
+        min-height: 22px;
+      }
+
+      .block-triangle {
+        display: none;
+      }
+
+      .block {
+        grid-column: 1;
+        grid-row: 1;
+        width: auto;
+        max-width: 116px;
+        min-width: 0;
+        margin: 0;
+        height: auto;
+        min-height: 22px;
+        padding: 0;
+        display: block; // text-overflow: ellipsis does not work on the inline-flex of the base style
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: var(--color-text-section);
+        font-family: var(--font-body);
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 22px;
+        letter-spacing: normal;
+        text-transform: none;
+
+        &.expanded {
+          width: auto;
+          min-width: 0;
+          max-width: 116px;
+          white-space: normal;
+          overflow-wrap: anywhere;
+          padding-right: 0;
+        }
+      }
+
+      .chip-container {
+        grid-column: 2;
+        justify-self: start;
+        max-width: 100%;
+        height: 22px;
+        margin: 0;
+        padding: 0 8px;
+        // white with a thin accent edge: the old pale blue fill was nearly invisible on the tile tint
+        border: 1px solid var(--color-accent-border);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--color-text-primary);
+        font-family: var(--font-body);
+        font-size: 13px;
+        line-height: 20px;
+        font-variant-numeric: tabular-nums;
+
+        &.expanded {
+          height: auto;
+          min-height: 22px;
+          min-width: 0;
+          padding-right: 8px;
+        }
+
+        &.count-badge {
+          background: #fff;
+          color: var(--color-accent-strong);
+          font-weight: 600;
+        }
+      }
+    }
+
+    .img-layout {
+      height: 24px; /* multiple of 4 */
+      width: 32px; /* multiple of 4 */
+      margin-right: var(--spacing-8);
+    }
+  }
+
+  // Reference box: menu trigger as a plain icon, same size as in num-criteria-box.
+  num-reference-criteria-box .handle-icons .menu-trigger-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .mat-mdc-menu-panel {
+    background-color: #fff;
+    width: 100%; /* responsive instead of fixed */
+    max-width: 960px; /* multiple of 8 */
+    border-radius: var(--border-radius-sm); /* matches container */
+    box-shadow: var(--shadow-menu);
+  }
+}

@@ -1,9 +1,25 @@
+@let filterChips = $filterChips | async;
 <div
   cdkDrag
   [cdkDragData]="criterion().getId()"
   [numDataCy]="criterion().getDisplay() | displayTranslation"
-  class="container margin-bottom-2 margin-right-2"
+  class="container num-card num-card--raised criteria-box margin-bottom-2 margin-right-2"
+  [class.collapsed]="collapsed()"
 >
+  <button
+    type="button"
+    class="collapse-toggle"
+    [attr.aria-expanded]="!collapsed()"
+    [attr.aria-label]="
+      (collapsed()
+        ? 'SHARED_COMPONENTS.CRITERIA_BOX.EXPAND_LABEL'
+        : 'SHARED_COMPONENTS.CRITERIA_BOX.COLLAPSE_LABEL'
+      ) | translate
+    "
+    (click)="toggleCollapsed()"
+  >
+    <fa-icon [icon]="collapsed() ? faChevronRight : faChevronDown"></fa-icon>
+  </button>
   <div class="content" numDataCy="criterion-content" cdkDragHandle>
     <div
       matTooltipPosition="below"
@@ -12,40 +28,38 @@
     >
       {{ criterion().getDisplay() | displayTranslation }}
     </div>
-    <div class="info-section">
-      <div class="num-info-item">
-        {{ criterion().getContext().getDisplay() }}, {{ criterion().getTermCodes()[0].getCode() }},
-        {{ system() | displayTranslation }}
-      </div>
-    </div>
-    <div class="filter-chips-container">
-      @if (isFilterRequired()) {
-      <num-missing-filter>
-        <span message (click)="navigateToEditPage()">
-          {{ 'FEASIBILITY.EDITOR.REQUIRED_FILTER' | translate }}
-        </span>
-        <img icon [src]="warningSignUrl" class="img-layout" />
-      </num-missing-filter>
-      }
-      <num-filter-chips [filterChips]="$filterChips | async"></num-filter-chips>
+    <div class="num-info-item info-section">
+      {{ criterion().getContext().getDisplay() }}, {{ criterion().getTermCodes()[0].getCode() }}@if
+      (!collapsed()) {, {{ system() | displayTranslation }}}
     </div>
   </div>
+  @if (isEditable()) {
   <div class="handle-icons">
-    @if (isEditable()) {
-    <num-menu [menuItems]="menuItems" [id]="criterion().getId()"></num-menu>
-    } @if (isEditable()) {
-    <div class="menu-icon" cdkDragHandle>
-      <fa-icon
-        [matTooltip]="'SHARED_COMPONENTS.CRITERIA_BOX.DRAG_ICON_LABEL' | translate"
-        class="icon drag-handle"
-        size="m"
-        icon="expand-arrows-alt"
-      ></fa-icon>
+    <div
+      class="drag-handle"
+      cdkDragHandle
+      [matTooltip]="'SHARED_COMPONENTS.CRITERIA_BOX.DRAG_ICON_LABEL' | translate"
+    >
+      <fa-icon icon="expand-arrows-alt"></fa-icon>
     </div>
-    }
+    <num-menu appearance="icon" [menuItems]="menuItems" [id]="criterion().getId()"></num-menu>
   </div>
+  } @if (isFilterRequired() || (collapsed() ? referenceChips.length : filterChips?.length)) {
+  <div class="filter-chips-container" cdkDragHandle>
+    @if (isFilterRequired()) {
+    <num-missing-filter>
+      <span message (click)="navigateToEditPage()">
+        {{ 'FEASIBILITY.EDITOR.REQUIRED_FILTER' | translate }}
+      </span>
+      <img icon [src]="warningSignUrl" alt="" aria-hidden="true" class="img-layout" />
+    </num-missing-filter>
+    }
+    <num-filter-chips [filterChips]="collapsed() ? referenceChips : filterChips"></num-filter-chips>
+  </div>
+  }
 </div>
-@for (attributeFilter of criterion().getAttributeFilters(); track attributeFilter) {
+@if (!collapsed()) { @for (attributeFilter of criterion().getAttributeFilters(); track
+attributeFilter) {
 <div class="padding-left-7">
   @if (attributeFilter?.isReferenceSet()) {
   <div>
@@ -60,4 +74,4 @@
   </div>
   }
 </div>
-}
+} }

@@ -382,6 +382,10 @@
       "HEADER": "Kriterieneditor",
       "HEADER_INFO": "Editieren Sie hier Ihre Kriterien und stellen Sie Ihre Kohortenselektion zusammen. Die Kohortenselektion kann verwendet werden, um direkt eine standortübergreifende Machbarkeitsabfrage zu stellen.",
       "HEADER_TITLE": "Ausgewählte Kriterien",
+      "COLLAPSE_ALL": "Alle einklappen",
+      "EXPAND_ALL": "Alle ausklappen",
+      "COLLAPSE_SELECTED": "Ausgewählte Kriterien einklappen",
+      "EXPAND_SELECTED": "Ausgewählte Kriterien ausklappen",
       "INCLUSION": "Einschlusskriterien",
       "MODAL": {
         "ADD": "Hinzufügen",
@@ -519,6 +523,7 @@
     "DISCLOSURE": "Impressum"
   },
   "NAVIGATION": {
+    "PLAYGROUND": "Playground",
     "DASHBOARD": "Startseite",
     "DATAQUERY": "Datendefinition",
     "DATASELECTION": "Merkmalselektion",
@@ -561,7 +566,10 @@
       "TIMERESTRICTION": "Zeiteinschränkung"
     },
     "CRITERIA_BOX": {
-      "DRAG_ICON_LABEL": "Kriterium in Einschluss- oder Ausschlussgruppe verschieben (Drag & Drop)"
+      "DRAG_ICON_LABEL": "Kriterium in Einschluss- oder Ausschlussgruppe verschieben (Drag & Drop)",
+      "COLLAPSE_LABEL": "Kriterium einklappen",
+      "EXPAND_LABEL": "Kriterium ausklappen",
+      "REFERENCES": "Referenzen"
     },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",

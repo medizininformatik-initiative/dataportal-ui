@@ -69,13 +69,13 @@ export class DropGroupDirective implements OnInit {
   // ─── Inclusion / Exclusion mutations → all go through facade ────────────────
 
   private addToInclusion(droppedCriterion: string, currentIndex: number): void {
-    this.criteria = this.feasibilityQuery.getInclusionCriteria()
+    this.criteria = this.copyOf(this.feasibilityQuery.getInclusionCriteria())
     this.addCriterionToInnerArray(this.criteria, droppedCriterion, currentIndex)
     this.feasibilityQueryProviderService.setInclusionCriteria(this.criteria)
   }
 
   private addToExclusion(droppedCriterion: string, currentIndex: number): void {
-    this.criteria = this.feasibilityQuery.getExclusionCriteria()
+    this.criteria = this.copyOf(this.feasibilityQuery.getExclusionCriteria())
     this.addCriterionToInnerArray(this.criteria, droppedCriterion, currentIndex)
     this.feasibilityQueryProviderService.setExclusionCriteria(this.criteria)
   }
@@ -101,7 +101,7 @@ export class DropGroupDirective implements OnInit {
     previousIndex: number,
     currentIndex: number
   ): void {
-    this.criteria = this.feasibilityQuery.getInclusionCriteria()
+    this.criteria = this.copyOf(this.feasibilityQuery.getInclusionCriteria())
     this.moveCriterion(criterionID, previousIndex, currentIndex)
     this.feasibilityQueryProviderService.setInclusionCriteria(this.criteria)
   }
@@ -111,14 +111,23 @@ export class DropGroupDirective implements OnInit {
     previousIndex: number,
     currentIndex: number
   ): void {
-    this.criteria = this.feasibilityQuery.getExclusionCriteria()
+    this.criteria = this.copyOf(this.feasibilityQuery.getExclusionCriteria())
     this.moveCriterion(criterionID, previousIndex, currentIndex)
     this.feasibilityQueryProviderService.setExclusionCriteria(this.criteria)
   }
 
   // ─── Pure logic — untouched ──────────────────────────────────────────────────
 
+  /**
+   * Group arrays must be new objects after every change: the display tracks groups by identity,
+   * an in-place edit leaves the view stale.
+   */
+  private copyOf(criteria: string[][]): string[][] {
+    return criteria.map((group) => [...group])
+  }
+
   private deleteCriterion(inexclusion: string[][], criterionID: string): string[][] {
+    inexclusion = this.copyOf(inexclusion)
     inexclusion.every((idArray) => {
       const index = idArray.indexOf(criterionID)
       if (index > -1) {
@@ -169,10 +178,10 @@ export class DropGroupDirective implements OnInit {
     currentIndex: number
   ): void {
     const position = this.getPosition(criteria, currentIndex)
-    if (currentIndex >= criteria.length) {
+    if (currentIndex >= criteria.reduce((count, group) => count + group.length, 0)) {
       this.criteria.push([criterionID])
     } else if (criteria[position[0]]?.length > 1) {
-      this.criteria[0].splice(position[1], 0, criterionID)
+      this.criteria[position[0]].splice(position[1], 0, criterionID)
     } else {
       this.criteria.splice(position[0], 0, [criterionID])
     }

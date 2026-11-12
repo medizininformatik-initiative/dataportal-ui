@@ -1,4 +1,7 @@
-<div class="num-card selection-box" [attr.data-cy]="profile()?.getLabel() | displayTranslation">
+<div
+  class="num-card num-card--raised selection-box"
+  [attr.data-cy]="profile()?.getLabel() | displayTranslation"
+>
   <div class="card-col">
     <num-label-col [profile]="profile()" [searchTerm]="searchTerm()"></num-label-col>
   </div>
@@ -26,16 +29,20 @@
   </div>
   <div class="arrow-container">
     <button
+      type="button"
       class="arrow-btn"
       [disabled]="!canMoveUp()"
+      [attr.aria-label]="'DATASELECTION.EDITOR.DISPLAY.MOVE_UP' | translate"
       [matTooltip]="'DATASELECTION.EDITOR.DISPLAY.MOVE_UP' | translate"
       (click)="moveProfileUp()"
     >
       <fa-icon size="lg" icon="arrow-up"></fa-icon>
     </button>
     <button
+      type="button"
       class="arrow-btn"
       [disabled]="!canMoveDown()"
+      [attr.aria-label]="'DATASELECTION.EDITOR.DISPLAY.MOVE_DOWN' | translate"
       [matTooltip]="'DATASELECTION.EDITOR.DISPLAY.MOVE_DOWN' | translate"
       (click)="moveProfileDown()"
     >

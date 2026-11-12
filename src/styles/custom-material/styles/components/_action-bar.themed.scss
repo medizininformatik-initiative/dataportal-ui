@@ -25,7 +25,7 @@
         position: absolute;
         inset: 0;
         background: mat.m2-get-color-from-palette($primary, 'green');
-        opacity: 0.1;
+        opacity: 0.15;
         border-radius: 5px;
         pointer-events: none;
       }
@@ -51,13 +51,13 @@
       height: 21px;
       padding: 0 4px;
       background: mat.m2-get-color-from-palette($primary, 'white');
-      border: 2px solid mat.m2-get-color-from-palette($primary, 'green');
+      border: 2px solid mat.m2-get-color-from-palette($primary, 'green-dark');
       border-radius: 5px;
       font-family: 'Open Sans', sans-serif;
       font-weight: 700;
       font-size: 12px;
       line-height: 12px;
-      color: mat.m2-get-color-from-palette($primary, 'green');
+      color: mat.m2-get-color-from-palette($primary, 'green-dark');
     }
 
     .right {

@@ -2,20 +2,20 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  width: 500px;
-  min-height: 130px;
+  width: 448px; // same width as num-criteria-box
+  max-width: 100%;
   background-color: rgba(0, 0, 0, 0.02);
   border-radius: var(--border-radius-card);
   position: relative;
-  padding: var(--spacing-20);
-  gap: 1.5rem;
+  padding: var(--spacing-16);
+  gap: var(--spacing-12);
 }
 
 .criteria-box-main {
   flex: 1 1 80%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--spacing-4);
 }
 
 .criteria-box-info {
@@ -24,7 +24,6 @@
   flex-wrap: wrap;
   align-items: center;
   width: 100%;
-  margin-bottom: var(--spacing-5);
 }
 
 .criteria-box-menu {
@@ -37,9 +36,13 @@
 }
 
 .title-section {
-  font-size: 18px;
+  // same type as the title in num-criteria-box
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
   width: 100%;
-  color: var(--color-text-primary);
+  color: var(--color-text-title);
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* number of lines to show */
@@ -48,9 +51,9 @@
 }
 
 .info-item {
-  padding-right: 5%;
-  padding-left: var(--spacing-20);
-  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--color-text-section);
 }
 
 .menu-icon {
@@ -58,8 +61,7 @@
 }
 
 .filter-chips-container {
-  padding-right: 5%;
-  padding-left: var(--spacing-20);
+  margin-top: var(--spacing-8);
 }
 
 .menu-icon:hover {

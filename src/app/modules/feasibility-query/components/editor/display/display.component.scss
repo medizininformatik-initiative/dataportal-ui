@@ -1,7 +1,12 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .display-row {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch; // columns as tall as the row, so the lists inside can scroll
   gap: 1rem;
 }
 
@@ -9,6 +14,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  min-height: 0;
 }
 
 .display-half {
@@ -17,9 +23,9 @@
 }
 
 .inexclusion {
-  flex: 1 1 auto;
+  flex: 1 1 auto; // content height, but shrinks and scrolls when the space is limited
+  min-height: 0;
   width: 100%;
-  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
