@@ -97,5 +97,13 @@
     "logOut": "Log Out",
     "aboutThePortal": "About the Portal",
     "log": "Log"
+  },
+  "upgradeDateFilter": {
+    "fixture": "Upgrade_Start_Only_Date_Filter",
+    "logText": "The filter has been updated",
+    "group": "Diagnosis",
+    "oldName": "onset-date",
+    "newName": "recorded-date",
+    "start": "2026-11-02"
   }
 }

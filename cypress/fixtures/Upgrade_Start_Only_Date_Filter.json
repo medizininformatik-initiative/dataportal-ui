@@ -1,0 +1,89 @@
+{
+    "version": "http://json-schema.org/to-be-done/schema#",
+    "display": "",
+    "cohortDefinition":  {
+        "version": "http://to_be_decided.com/draft-1/schema#",
+        "display": "Ausgewählte Merkmale",
+        "inclusionCriteria": [
+            [
+                {
+                    "termCodes": [
+                        {
+                            "code": "6-001.hs",
+                            "display": "Applikation von Medikamenten, Liste 1: Rituximab, intravenös: 7.650 mg bis unter 8.450 mg",
+                            "system": "http://fhir.de/CodeSystem/bfarm/ops",
+                            "version": "2026"
+                        }
+                    ],
+                    "context": {
+                        "code": "Procedure",
+                        "display": "Prozedur",
+                        "system": "fdpg.mii.cds",
+                        "version": "1.0.0"
+                    },
+                    "timeRestriction": {
+                        "afterDate": "2019-01-01"
+                    }
+                }
+            ]
+        ]
+    },
+    "dataExtraction": {
+        "attributeGroups": [
+            {
+                "attributes": [
+                    {
+                        "attributeRef": "Patient.deceased[x]",
+                        "mustHave": false
+                    },
+                    {
+                        "attributeRef": "Patient.identifier",
+                        "mustHave": false
+                    }
+                ],
+                "id": "216e6a82-07e6-467b-88ff-8c3a02ad7e25",
+                "groupReference": "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert",
+                "name": "MII PR Person Patient (Pseudonymisiert)"
+            },
+            {
+                "attributes": [
+                    {
+                        "attributeRef": "Condition.abatement[x]",
+                        "mustHave": false
+                    },
+                    {
+                        "attributeRef": "Condition.clinicalStatus",
+                        "mustHave": false
+                    },
+                    {
+                        "attributeRef": "Condition.code",
+                        "mustHave": false
+                    },
+                    {
+                        "attributeRef": "Condition.onset[x]",
+                        "mustHave": false
+                    },
+                    {
+                        "attributeRef": "Condition.recordedDate",
+                        "mustHave": false
+                    },
+                    {
+                        "attributeRef": "Condition.verificationStatus",
+                        "mustHave": false
+                    }
+                ],
+                "id": "e544e99b-7752-469a-b6ee-bfafb8849090",
+                "filter": [
+                    {
+                        "type": "date",
+                        "name": "onset-date",
+                        "start": "2026-11-02"
+
+                    }
+                ],
+                "groupReference": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
+                "name": "Diagnosis"
+            }
+        ]
+    }
+}
