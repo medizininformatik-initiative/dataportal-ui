@@ -9,6 +9,10 @@ export class DownloadFile {
    * Open download modal, type file name, save, wait for file on disk.
    * */
   public downloadFile(fileName: string): void {
+    /**
+     * Scenarios reuse one file name. Delete old file first, else readFile returns stale content.
+     * */
+    cy.task('removeDownload', fileName)
     cy.get(dataCy('download-crtdl-button')).click()
     cy.get(dataCy('download-modal')).should('be.visible')
     /**
