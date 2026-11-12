@@ -101,3 +101,114 @@ Feature: Cohort result polling
     Then I should arrive on the "{{pages.feasibilityResult}}" page
     Then the details button is enabled
     And the details button is disabled
+
+  @component:feasibility-result @behavior:report-backend-error
+  Scenario Outline: Details below the privacy threshold show their message, not the generic error
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And the backend answers every detail request with the issue "<code>"
+    And I watch the result details dialog
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the result
+    And the details button is enabled
+    When I open the result details 1 time
+    Then I see the message "<message>"
+    And the result details dialog never opened
+    And I see no error dialog
+
+    Examples:
+      | code                             | message                              |
+      | {{resultPolling.belowThreshold}} | {{resultPolling.belowThresholdText}} |
+      | {{resultPolling.fewSites}}       | {{resultPolling.fewSitesText}}       |
+
+  @component:feasibility-result @behavior:report-backend-error
+  Scenario: A failed details request is not repeated on further clicks
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And the backend answers every detail request with the issue "{{resultPolling.belowThreshold}}"
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the result
+    And the details button is enabled
+    When I open the result details 3 times
+    Then I see the message "{{resultPolling.belowThresholdText}}"
+    And the details were requested 1 time
+
+  @component:feasibility-result @behavior:report-backend-error
+  Scenario: A rate limited details request shows the seconds to wait
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And the backend answers every detail request with the issue "{{resultPolling.rateLimited}}" and retry after 4 seconds
+    And I watch the result details dialog
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the result
+    When I open the result details 1 time
+    Then I see the message "{{resultPolling.retryAfter4}}"
+    And the result details dialog never opened
+    And I see no error dialog
+
+  @component:feasibility-result @behavior:show
+  Scenario: Details of a finished result open once and are not requested again
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And I watch the detail requests
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the result
+    And the details button is enabled
+    When I open the result details 1 time
+    Then I see the result details dialog with sites
+    And the details were requested 1 time
+
+  @component:feasibility-result @behavior:report-backend-error
+  Scenario: A rate limited query send shows the seconds to wait and counts down on the send button
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And the backend answers sending the query with the issue "{{resultPolling.issueCode}}" and retry after 3 seconds
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the message "{{resultPolling.retryAfter3}}"
+    When I click on the button "{{labels.editCohortSelection}}"
+    Then the send button counts down
+    And the send button is enabled again
+
+  @component:feasibility-result @behavior:show
+  Scenario: Returning to the result with unchanged criteria shows it again without sending the query
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And I watch the requests that send the query
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the result
+    When I click on the button "{{labels.editCohortSelection}}"
+    And I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the result
+    And I see no error dialog
+    And the query was sent 1 time

@@ -3,20 +3,8 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter'
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../model/Search/ListEntries/FeasibilityQueryResultDetailstListEntry'
-import {
-  DetailError,
-  FeasibilityQueryResultService,
-} from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
-import {
-  catchError,
-  distinctUntilChanged,
-  EMPTY,
-  filter,
-  map,
-  of,
-  Subscription,
-  switchMap,
-} from 'rxjs'
+import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
+import { distinctUntilChanged, filter, map, of, Subscription, switchMap } from 'rxjs'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { QueryResult } from '../../../../../model/Result/QueryResult'
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
@@ -26,7 +14,6 @@ import { HeaderComponent } from '../../../../../shared/components/header/header.
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { HeaderDescriptionComponent } from '../../../../../shared/components/header-description/header-description.component'
 import { TableComponent } from '../../../../../shared/components/table/table.component'
-import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
 import { TranslateModule } from '@ngx-translate/core'
 
 export class ResultDetailsModalComponentData {}
@@ -51,7 +38,6 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
   backend = inject(BackendService)
   private feasibilityQueryResultService = inject(FeasibilityQueryResultService)
   private resultProviderService = inject(ResultProviderService)
-  private snackbarService = inject(SnackbarService)
 
   adaptedData: TableData
   providerSubscription: Subscription
@@ -80,17 +66,7 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
           const latestResult = this.resultProviderService.getOne(latestResultId)
           return latestResult?.getDetailsReceived()
             ? of(latestResult)
-            : this.feasibilityQueryResultService.getDetailedObfuscatedResult(latestResultId).pipe(
-                // Known error code (e.g. FEAS-10004) -> snackbar message instead of the generic error dialog
-                catchError(({ code, retryAfterSeconds }: DetailError) => {
-                  // Remembered errors arrive synchronously inside change detection (NG0100), so defer.
-                  queueMicrotask(() => {
-                    this.snackbarService.displayErrorMessage(code, retryAfterSeconds)
-                    this.doClose()
-                  })
-                  return EMPTY
-                })
-              )
+            : this.feasibilityQueryResultService.getDetailedObfuscatedResult(latestResultId)
         })
       )
       .subscribe((result) => this.setActiveResultIdAndAdaptedData(result))

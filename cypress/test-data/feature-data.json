@@ -110,7 +110,14 @@
     "timeout": "The result could not be determined in time",
     "failed": "The result could not be loaded",
     "tooManyQueries": "You have made too many queries",
-    "issueCode": "FEAS-10002"
+    "issueCode": "FEAS-10002",
+    "belowThreshold": "FEAS-10004",
+    "belowThresholdText": "Patient number too low for detailed results",
+    "fewSites": "FEAS-10005",
+    "fewSitesText": "The number of responding locations is too small",
+    "rateLimited": "FEAS-10003",
+    "retryAfter3": "Please wait 3 seconds",
+    "retryAfter4": "Please wait 4 seconds"
   },
   "criteriaGroups": {
     "a": "18-oxidase deficiency",

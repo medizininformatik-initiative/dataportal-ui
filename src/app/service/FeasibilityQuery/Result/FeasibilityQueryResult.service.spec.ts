@@ -1,3 +1,4 @@
+import { AppSettingsProviderService } from '../../Config/AppSettingsProvider.service'
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryResultService } from './FeasibilityQueryResult.service'
 import { ObfuscatedResultService } from './Obfuscate/ObfuscatedResult.service'
@@ -9,6 +10,14 @@ import { TestBed } from '@angular/core/testing'
 
 describe('FeasibilityQueryResultService detail errors', () => {
   const obfuscated = { getDetailedObfuscatedResult: jest.fn() }
+  const query = {
+    getId: () => 'q1',
+    inclusion: [['a']] as unknown[],
+    getInclusionCriteria() {
+      return this.inclusion
+    },
+    getExclusionCriteria: () => [] as unknown[],
+  }
   let service: FeasibilityQueryResultService
 
   beforeEach(() => {
@@ -17,11 +26,15 @@ describe('FeasibilityQueryResultService detail errors', () => {
       providers: [
         { provide: ObfuscatedResultService, useValue: obfuscated },
         { provide: PollingManagerService, useValue: {} },
-        { provide: ResultProviderService, useValue: {} },
+        {
+          provide: AppSettingsProviderService,
+          useValue: { getQueryResultExpiry: () => 60 },
+        },
+        { provide: ResultProviderService, useValue: { getOne: () => undefined, setOne: () => {} } },
         { provide: ObfuscatedResultRateLimitService, useValue: { refreshRateLimit: () => {} } },
         {
           provide: FeasibilityQueryProviderService,
-          useValue: { getActiveFeasibilityQuery: () => of({ getId: () => 'q1' }) },
+          useValue: { getActiveFeasibilityQuery: () => of(query) },
         },
       ],
     })
@@ -69,6 +82,54 @@ describe('FeasibilityQueryResultService detail errors', () => {
     jest.advanceTimersByTime(5000)
     expect(service.sendBlockedSeconds()).toBe(0)
     jest.useRealTimers()
+  })
+
+  describe('result reuse on return to the result page', () => {
+    const result = { getIssues: () => [], getTotalNumberOfPatients: () => 5 }
+    const polling = () => TestBed.inject(PollingManagerService) as any
+
+    beforeEach(() => {
+      query.inclusion = [['a']]
+      polling().getPollingResult = jest.fn(() => of(result, null))
+    })
+
+    const send = () => {
+      const seen: unknown[] = []
+      service.doSendQueryRequest().subscribe((r) => seen.push(r))
+      return seen
+    }
+
+    it('shows the finished result again with unchanged criteria, without sending', async () => {
+      send()
+      const seen = send()
+      expect(seen).toEqual([]) // deferred out of change detection (NG0100)
+      await Promise.resolve()
+      expect(polling().getPollingResult).toHaveBeenCalledTimes(1)
+      expect(seen).toEqual([result, null])
+    })
+
+    it('sends again when the criteria changed', () => {
+      send()
+      query.inclusion = [['a'], ['b']]
+      send()
+      expect(polling().getPollingResult).toHaveBeenCalledTimes(2)
+    })
+
+    it('sends again after the result expired', () => {
+      jest.useFakeTimers().setSystemTime(0)
+      send()
+      jest.setSystemTime(61_000)
+      send()
+      expect(polling().getPollingResult).toHaveBeenCalledTimes(2)
+      jest.useRealTimers()
+    })
+
+    it('sends again when leaving before the poll finished', () => {
+      polling().getPollingResult = jest.fn(() => of(result))
+      send()
+      send()
+      expect(polling().getPollingResult).toHaveBeenCalledTimes(2)
+    })
   })
 
   it('falls back to RESULT_FAILED for unknown errors', () => {

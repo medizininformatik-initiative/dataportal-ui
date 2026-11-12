@@ -1,8 +1,21 @@
 import { Component, OnDestroy, OnInit, inject, output } from '@angular/core'
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service'
-import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
-import { distinctUntilChanged, filter, Observable, pairwise, Subject, Subscription } from 'rxjs'
+import {
+  DetailError,
+  FeasibilityQueryResultService,
+} from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  Observable,
+  pairwise,
+  Subject,
+  Subscription,
+  switchMap,
+  take,
+} from 'rxjs'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { QueryResult } from 'src/app/model/Result/QueryResult'
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit'
@@ -190,15 +203,35 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Requests the details first and opens the modal only on success, so a failed request
+   * (e.g. below privacy threshold) shows its message and never flashes an empty modal.
+   */
   openDialogResultDetails(): void {
     this.modalSubscription?.unsubscribe()
     const dialogConfig = new MatDialogConfig<ResultDetailsModalComponentData>()
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
-    const modal = this.dialog.open(ResultDetailModalComponent, dialogConfig)
-    this.modalSubscription = modal
-      .afterClosed()
-      .subscribe(() => this.feasibilityQueryResultService.refreshResultRateLimit())
+    this.modalSubscription = this.queryProviderService
+      .getActiveFeasibilityQuery()
+      .pipe(
+        take(1),
+        map((feasibilityQuery) => {
+          const resultIds = feasibilityQuery.getResultIds()
+          return resultIds[resultIds.length - 1]
+        }),
+        switchMap((latestResultId) =>
+          this.feasibilityQueryResultService.getDetailedObfuscatedResult(latestResultId)
+        ),
+        switchMap(() => this.dialog.open(ResultDetailModalComponent, dialogConfig).afterClosed())
+      )
+      .subscribe({
+        next: () => this.feasibilityQueryResultService.refreshResultRateLimit(),
+        error: ({ code, retryAfterSeconds }: DetailError) => {
+          this.snackbarService.displayErrorMessage(code, retryAfterSeconds)
+          this.feasibilityQueryResultService.refreshResultRateLimit()
+        },
+      })
   }
 
   private initializeState(): void {
@@ -214,7 +247,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     if (!this.receivedResult) {
       this.receivedResult = true
       // Backend result expires from its first result on, not from sending the query.
-      this.startExpirationTimer(this.appSettingsProviderService.getQueryResultExpiry() * 1000)
+      this.startExpirationTimer(this.feasibilityQueryResultService.remainingExpiryMs())
     }
     this.totalNumberOfPatients = result.getTotalNumberOfPatients()
     this.setPatientCount(result.getTotalNumberOfPatients())

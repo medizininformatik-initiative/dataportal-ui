@@ -2,8 +2,12 @@ import { defineStep } from '../defineStep'
 
 const SUMMARY_RESULT = '**/query/feasibility/*/summary-result'
 const SEND_QUERY = '**/query/feasibility'
+const DETAILED_RESULT = '**/query/feasibility/*/detailed-obfuscated-result'
 const SNACKBAR = 'num-snackbar [role="alert"]'
 const DETAILS_BUTTON = 'num-simple-result button'
+const DETAILS_DIALOG = 'num-result-detail-modal'
+const ERROR_DIALOG = 'num-error-display .error-display-overlay'
+const SEND_BUTTON = 'num-editor-action-bar button'
 const LONG_TIMEOUT = 20000
 
 /**
@@ -14,6 +18,7 @@ const LONG_TIMEOUT = 20000
 export class ResultPolling {
   private inFlight = 0
   private maxInFlight = 0
+  private dialogSeen = false
 
   /**
    * Shorten polling window, poll interval and result expiry from backend `.settings`.
@@ -108,6 +113,69 @@ export class ResultPolling {
   }
 
   /**
+   * Answer every detail request with issue `code` and HTTP 200, as backend does below privacy
+   * threshold.
+   * */
+  public answerDetailsWithIssue(code: string) {
+    cy.intercept('GET', DETAILED_RESULT, {
+      statusCode: 200,
+      body: { issues: [{ code, message: code, type: 'busy', severity: 'error' }] },
+    }).as('detailRequest')
+  }
+
+  /**
+   * Answer every detail request with HTTP 429, issue `code` and retry header `seconds`.
+   * */
+  public rateLimitDetails(code: string, seconds: number) {
+    cy.intercept('GET', DETAILED_RESULT, {
+      statusCode: 429,
+      headers: { 'X-Rate-Limit-Retry-After-Seconds': String(seconds) },
+      body: { issues: [{ code, message: code, type: 'busy', severity: 'error' }] },
+    }).as('detailRequest')
+  }
+
+  /**
+   * Answer query send with HTTP 429, issue `code` and `Retry-After` header `seconds`.
+   * */
+  public rateLimitSendQuery(code: string, seconds: number) {
+    cy.intercept('POST', SEND_QUERY, {
+      statusCode: 429,
+      headers: { 'Retry-After': String(seconds) },
+      body: { issues: [{ code, message: code, type: 'busy', severity: 'error' }] },
+    })
+  }
+
+  /**
+   * Count detail requests that reach real backend.
+   * */
+  public watchDetailRequests() {
+    cy.intercept('GET', DETAILED_RESULT).as('detailRequest')
+  }
+
+  /**
+   * Remember if details dialog ever appears in page, even briefly.
+   * */
+  public watchDetailsDialog() {
+    this.dialogSeen = false
+    cy.document().then((doc) =>
+      new MutationObserver(() => {
+        if (doc.querySelector(DETAILS_DIALOG)) {
+          this.dialogSeen = true
+        }
+      }).observe(doc.body, { childList: true, subtree: true })
+    )
+  }
+
+  /**
+   * Click details button `times` times, back to back.
+   * */
+  public openDetails(times: number) {
+    for (let i = 0; i < times; i++) {
+      cy.contains(DETAILS_BUTTON, 'Details').click()
+    }
+  }
+
+  /**
    * Assert message in snackbar.
    * */
   public shouldShowMessage(text: string) {
@@ -126,6 +194,49 @@ export class ResultPolling {
    * */
   public shouldNotOverlapPolls(limit: number) {
     cy.then(() => expect(this.maxInFlight).to.be.within(1, limit))
+  }
+
+  /**
+   * Assert details dialog never opened, not even briefly.
+   * */
+  public detailsDialogShouldNeverOpen() {
+    cy.then(() => expect(this.dialogSeen).to.equal(false))
+    cy.get(DETAILS_DIALOG).should('not.exist')
+  }
+
+  /**
+   * Assert details dialog lists sites with patient counts.
+   * */
+  public detailsDialogShouldListSites() {
+    cy.get(DETAILS_DIALOG, { timeout: LONG_TIMEOUT }).find('tr').should('have.length.above', 1)
+  }
+
+  /**
+   * Assert generic error dialog is not shown.
+   * */
+  public shouldShowNoErrorDialog() {
+    cy.get(ERROR_DIALOG).should('not.exist')
+  }
+
+  /**
+   * Assert detail requests that reached backend or stub.
+   * */
+  public shouldHaveRequestedDetails(times: number) {
+    cy.get('@detailRequest.all').should('have.length', times)
+  }
+
+  /**
+   * Assert send button is disabled and shows wait countdown.
+   * */
+  public sendShouldCountDown() {
+    cy.contains(SEND_BUTTON, 'Please wait').should('be.disabled')
+  }
+
+  /**
+   * Assert send button is enabled again with its normal label.
+   * */
+  public sendShouldBeEnabledAgain() {
+    cy.contains(SEND_BUTTON, 'Feasibility', { timeout: LONG_TIMEOUT }).should('not.be.disabled')
   }
 
   /**
@@ -176,3 +287,31 @@ defineStep('at most {int} result poll ran at a time', (limit: number) =>
 )
 defineStep('the details button is enabled', () => resultPolling.detailsShouldBeEnabled())
 defineStep('the details button is disabled', () => resultPolling.detailsShouldBeDisabled())
+defineStep('the backend answers every detail request with the issue {string}', (code: string) =>
+  resultPolling.answerDetailsWithIssue(code)
+)
+defineStep(
+  'the backend answers every detail request with the issue {string} and retry after {int} seconds',
+  (code: string, seconds: number) => resultPolling.rateLimitDetails(code, seconds)
+)
+defineStep(
+  'the backend answers sending the query with the issue {string} and retry after {int} seconds',
+  (code: string, seconds: number) => resultPolling.rateLimitSendQuery(code, seconds)
+)
+defineStep('I watch the detail requests', () => resultPolling.watchDetailRequests())
+defineStep('I watch the result details dialog', () => resultPolling.watchDetailsDialog())
+defineStep('I open the result details {int} time(s)', (times: number) =>
+  resultPolling.openDetails(times)
+)
+defineStep('the result details dialog never opened', () =>
+  resultPolling.detailsDialogShouldNeverOpen()
+)
+defineStep('I see the result details dialog with sites', () =>
+  resultPolling.detailsDialogShouldListSites()
+)
+defineStep('I see no error dialog', () => resultPolling.shouldShowNoErrorDialog())
+defineStep('the details were requested {int} time(s)', (times: number) =>
+  resultPolling.shouldHaveRequestedDetails(times)
+)
+defineStep('the send button counts down', () => resultPolling.sendShouldCountDown())
+defineStep('the send button is enabled again', () => resultPolling.sendShouldBeEnabledAgain())
