@@ -4,7 +4,7 @@ import { FeasibilityQueryProviderService } from 'src/app/service/Provider/Feasib
 import { FeasibilityQueryResultDetailsListAdapter } from '../../../../../shared/models/TableData/Adapter/FeasibilityQueryResultDetailsListAdapter'
 import { FeasibilityQueryResultDetailstListEntry } from '../../../../../model/Search/ListEntries/FeasibilityQueryResultDetailstListEntry'
 import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
-import { map, Subscription } from 'rxjs'
+import { distinctUntilChanged, filter, map, of, Subscription, switchMap } from 'rxjs'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { QueryResult } from '../../../../../model/Result/QueryResult'
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
@@ -41,7 +41,6 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
 
   adaptedData: TableData
   providerSubscription: Subscription
-  resultServiceSubscription: Subscription
   activeResultID: string
 
   /** Inserted by Angular inject() migration for backwards compatibility */
@@ -57,21 +56,20 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
       .getActiveFeasibilityQuery()
       .pipe(
         map((feasibilityQuery) => {
-          const resultIdsArray = feasibilityQuery.getResultIds()
-          const latestResultId = resultIdsArray[resultIdsArray.length - 1]
+          const resultIds = feasibilityQuery.getResultIds()
+          return resultIds[resultIds.length - 1]
+        }),
+        distinctUntilChanged(),
+        filter((latestResultId) => !!latestResultId),
+        // switchMap: one detail request per result id, a new emission cancels the pending one.
+        switchMap((latestResultId) => {
           const latestResult = this.resultProviderService.getOne(latestResultId)
-          if (latestResult.getDetailsReceived()) {
-            this.setActiveResultIdAndAdaptedData(latestResult)
-          } else {
-            this.resultServiceSubscription = this.feasibilityQueryResultService
-              .getDetailedObfuscatedResult(latestResultId)
-              .subscribe((result) => {
-                this.setActiveResultIdAndAdaptedData(result)
-              })
-          }
+          return latestResult?.getDetailsReceived()
+            ? of(latestResult)
+            : this.feasibilityQueryResultService.getDetailedObfuscatedResult(latestResultId)
         })
       )
-      .subscribe()
+      .subscribe((result) => this.setActiveResultIdAndAdaptedData(result))
   }
 
   private setActiveResultIdAndAdaptedData(result: QueryResult): void {
@@ -81,7 +79,6 @@ export class ResultDetailModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.providerSubscription?.unsubscribe()
-    this.resultServiceSubscription?.unsubscribe()
   }
 
   doClose(): void {

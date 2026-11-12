@@ -1,8 +1,7 @@
-import { AppSettingsProviderService } from '../../Config/AppSettingsProvider.service'
 import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from '../../Provider/FeasibilityQueryProvider.service'
 import { Injectable, inject } from '@angular/core'
-import { map, Observable, switchMap } from 'rxjs'
+import { map, Observable, switchMap, take } from 'rxjs'
 import { ObfuscatedResultRateLimitService } from './Obfuscate/ObfuscatedResultRateLimit.service'
 import { ObfuscatedResultService } from './Obfuscate/ObfuscatedResult.service'
 import { PollingManagerService } from './Polling/PollingManager.service'
@@ -14,7 +13,6 @@ import { ResultProviderService } from '../../Provider/ResultProvider.service'
   providedIn: 'root',
 })
 export class FeasibilityQueryResultService {
-  private appSettingsProviderService = inject(AppSettingsProviderService)
   private queryProviderService = inject(FeasibilityQueryProviderService)
   private pollingManagerService = inject(PollingManagerService)
   private resultProvider = inject(ResultProviderService)
@@ -35,10 +33,10 @@ export class FeasibilityQueryResultService {
   }
 
   public doSendQueryRequest(): Observable<QueryResult> {
-    this.appSettingsProviderService.getPollingTimeUi()
     this.obfuscatedResultRateLimitService.refreshRateLimit()
 
     return this.activeFeasibilityQuery().pipe(
+      take(1),
       switchMap((feasibilityQuery) => {
         const result = this.pollingManagerService.getPollingResult(feasibilityQuery)
         return this.setProvider(result)
@@ -48,6 +46,7 @@ export class FeasibilityQueryResultService {
 
   public getDetailedObfuscatedResult(feasibilityQueryResultId: string): Observable<QueryResult> {
     return this.activeFeasibilityQuery().pipe(
+      take(1),
       switchMap((feasibilityQuery: FeasibilityQuery) => {
         const result = this.obfuscatedResultService.getDetailedObfuscatedResult(
           feasibilityQueryResultId,
@@ -77,9 +76,5 @@ export class FeasibilityQueryResultService {
 
   private setQueryResultProvider(queryResult: QueryResult): void {
     this.resultProvider.setOne(queryResult)
-  }
-
-  public stopPolling(): void {
-    this.pollingManagerService.stopPolling()
   }
 }

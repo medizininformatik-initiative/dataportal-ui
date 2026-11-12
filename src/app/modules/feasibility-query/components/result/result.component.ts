@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
+import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
@@ -21,9 +20,7 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule,
   ],
 })
-export class ResultComponent implements OnInit, OnDestroy {
-  private feasibilityQueryResultService = inject(FeasibilityQueryResultService)
-
+export class ResultComponent implements OnInit {
   resultLoaded = false
   hasQueryResult: Observable<boolean>
 
@@ -32,10 +29,6 @@ export class ResultComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {}
-
-  ngOnDestroy() {
-    this.feasibilityQueryResultService.stopPolling()
-  }
 
   public setResultLoaded(value: boolean) {
     this.resultLoaded = value

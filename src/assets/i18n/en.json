@@ -285,6 +285,8 @@
     }
   },
   "ERROR": {
+    "RESULT_FAILED": "The result could not be loaded. Please try again.",
+    "RESULT_TIMEOUT": "The result could not be determined in time. Please try again.",
     "404": "Location not found",
     "DSE-10001": "A selected field could not be loaded",
     "FEAS-10001": "Your account has been locked due to too many queries. Please contact info@research-for-health.de",

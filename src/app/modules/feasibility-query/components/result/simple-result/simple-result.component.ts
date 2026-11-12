@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, inject, output } from '@angular/core'
 import { FeasibilityQuery } from '../../../../../model/FeasibilityQuery/FeasibilityQuery'
 import { FeasibilityQueryProviderService } from '../../../../../service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryResultService } from '../../../../../service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
-import { filter, Observable, pairwise, Subject, Subscription } from 'rxjs'
+import { distinctUntilChanged, filter, Observable, pairwise, Subject, Subscription } from 'rxjs'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { QueryResult } from 'src/app/model/Result/QueryResult'
 import { QueryResultRateLimit } from 'src/app/model/Result/QueryResultRateLimit'
@@ -50,7 +50,8 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
 
   public isQueryExpired = false
   private timeoutId: ReturnType<typeof setTimeout> | null = null
-  private expTime: number
+  private receivedResult = false
+  private receivedError = false
 
   queryResultRateLimit$: Observable<QueryResultRateLimit>
   loadedResult = false
@@ -78,7 +79,15 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.activeFeasibilityQuerySusbscription?.unsubscribe()
     this.activeFeasibilityQuerySusbscription = this.queryProviderService
       .getActiveFeasibilityQuery()
-      .pipe(filter((feasibilityQuery) => feasibilityQuery.getInclusionCriteria().length > 0))
+      .pipe(
+        filter((feasibilityQuery) => feasibilityQuery.getInclusionCriteria().length > 0),
+        // Provider emits on every change of the query map: send again only if the criteria changed.
+        distinctUntilChanged(
+          (a, b) =>
+            JSON.stringify([a.getInclusionCriteria(), a.getExclusionCriteria()]) ===
+            JSON.stringify([b.getInclusionCriteria(), b.getExclusionCriteria()])
+        )
+      )
       .subscribe({
         next: () => this.doSend(),
         error: (err) => console.error('Error fetching feasibility query', err),
@@ -89,6 +98,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.activeFeasibilityQuerySusbscription?.unsubscribe()
     this.doSendSusbscription?.unsubscribe()
     this.modalSubscription?.unsubscribe()
+    this.clearExpirationTimer()
     this.destroy$.next()
     this.destroy$.complete()
   }
@@ -97,8 +107,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.initializeState()
     this.doSendSusbscription?.unsubscribe()
 
-    const expirationTime = this.appSettingsProviderService.getQueryResultExpiry()
-    this.startExpirationTimer(expirationTime * 1000)
     const obs = this.feasibilityQueryResultService.doSendQueryRequest()
 
     this.doSendSusbscription = this.createDoSendSubscription(obs)
@@ -111,7 +119,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     return obs.pipe(pairwise()).subscribe({
       next: ([prev, current]) => this.handleQueryResults(prev, current),
       error: (error) => this.handleQueryError(error),
-      complete: () => this.finalize(),
+      complete: () => this.handleComplete(),
     })
   }
 
@@ -124,6 +132,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
       this.handleResult(prev as QueryResult)
     } else if (this.shouldHandleError(prev, current)) {
       console.error('Received an error result:', prev)
+      this.receivedError = true
       this.snackbarService.displayErrorMessage(prev?.getIssues()?.[0]?.getCode())
       this.showSpinner = false
     } else if (this.shouldHandleValidResult(current)) {
@@ -165,6 +174,17 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private handleQueryError(error: any): void {
     console.error('Error fetching query result', error)
     this.showSpinner = false
+    this.snackbarService.displayErrorMessage('RESULT_FAILED')
+  }
+
+  /**
+   * Polling time is over. Without any result, tell the user instead of showing empty digits.
+   */
+  private handleComplete(): void {
+    this.finalize()
+    if (!this.receivedResult && !this.receivedError) {
+      this.snackbarService.displayErrorMessage('RESULT_TIMEOUT')
+    }
   }
 
   openDialogResultDetails(): void {
@@ -181,10 +201,18 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private initializeState(): void {
     this.loadedResult = false
     this.showSpinner = true
-    this.expTime = this.appSettingsProviderService.getQueryResultExpiry()
+    this.receivedResult = false
+    this.receivedError = false
+    this.isQueryExpired = false
+    this.clearExpirationTimer()
   }
 
   private handleResult(result: QueryResult): void {
+    if (!this.receivedResult) {
+      this.receivedResult = true
+      // Backend result expires from its first result on, not from sending the query.
+      this.startExpirationTimer(this.appSettingsProviderService.getQueryResultExpiry() * 1000)
+    }
     this.totalNumberOfPatients = result.getTotalNumberOfPatients()
     this.setPatientCount(result.getTotalNumberOfPatients())
     this.resultLoaded.emit(this.loadedResult)
@@ -194,7 +222,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
    * If the result array has fewer than 10 digits, pad it with leading '0' digits until its length is 10
    */
   private setPatientCount(totalNumberOfPatients: number): void {
-    const patientCountArray = totalNumberOfPatients?.toString()?.split('')
+    const patientCountArray = totalNumberOfPatients?.toString()?.split('') ?? []
     const lengthOfDigitFields = 8
     while (patientCountArray.length < lengthOfDigitFields) {
       patientCountArray.unshift('0')
@@ -205,6 +233,13 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private finalize(): void {
     this.loadedResult = true
     this.showSpinner = false
+  }
+
+  private clearExpirationTimer(): void {
+    if (this.timeoutId !== null) {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
+    }
   }
 
   private startExpirationTimer(durationMs: number) {

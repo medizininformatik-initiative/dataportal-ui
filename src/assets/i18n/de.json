@@ -274,6 +274,8 @@
     }
   },
   "ERROR": {
+    "RESULT_FAILED": "Das Ergebnis konnte nicht geladen werden, bitte versuchen Sie es erneut.",
+    "RESULT_TIMEOUT": "Das Ergebnis konnte nicht rechtzeitig ermittelt werden, bitte versuchen Sie es erneut.",
     "404": "Standort wurde nicht gefunden",
     "DSE-10001": "Ein ausgewähltes Feld konnte nicht geladen werden",
     "FEAS-10001": "Ihr Account wurde wegen zu vieler Abfragen gesperrt, bitte wenden Sie sich an info@forschen-fuer-gesundheit.de",
