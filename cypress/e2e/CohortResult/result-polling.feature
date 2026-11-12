@@ -232,3 +232,21 @@ Feature: Cohort result polling
     Then I see the message "{{resultPolling.belowThresholdText}}"
     And the result details dialog never opened
     And I see no error dialog
+
+  @component:feasibility-result @behavior:report-backend-error
+  Scenario: A locked account shows its message with the seconds to wait and counts down on the send button
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And the backend answers sending the query with the issue "{{resultPolling.locked}}" and retry after 3 seconds
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the message "{{resultPolling.lockedText}}"
+    And I see the message "{{resultPolling.retryAfter3}}"
+    When I click on the button "{{labels.editCohortSelection}}"
+    Then the send button counts down
+    And the send button is enabled again
+

@@ -115,6 +115,8 @@
     "belowThresholdText": "Patient number too low for detailed results",
     "fewSites": "FEAS-10005",
     "fewSitesText": "The number of responding locations is too small",
+    "locked": "FEAS-10001",
+    "lockedText": "Your account has been locked",
     "rateLimited": "FEAS-10003",
     "retryAfter3": "Please wait 3 seconds",
     "retryAfter4": "Please wait 4 seconds"
