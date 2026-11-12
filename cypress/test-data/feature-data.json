@@ -105,5 +105,11 @@
     "oldName": "onset-date",
     "newName": "recorded-date",
     "start": "2026-11-02"
+  },
+  "resultPolling": {
+    "timeout": "The result could not be determined in time",
+    "failed": "The result could not be loaded",
+    "tooManyQueries": "You have made too many queries",
+    "issueCode": "FEAS-10002"
   }
 }
