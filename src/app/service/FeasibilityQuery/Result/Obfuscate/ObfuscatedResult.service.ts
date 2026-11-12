@@ -1,7 +1,7 @@
 import { FeasibilityQueryResultApiService } from '../../../Backend/Api/FeasibilityQueryResultApi.service'
 import { Injectable, inject } from '@angular/core'
-import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs'
+import { mergeMap } from 'rxjs/operators'
+import { Observable, throwError } from 'rxjs'
 import { QueryResult } from 'src/app/model/Result/QueryResult'
 import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service'
 
@@ -23,7 +23,14 @@ export class ObfuscatedResultService {
   ): Observable<QueryResult> {
     return this.feasibilityQueryResultApiService
       .getDetailedObfuscatedResult(feasibilityQueryResultId)
-      .pipe(map((result) => this.mapQueryResult(result, feasibilityQueryId)))
+      .pipe(
+        // The backend answers 200 with only `issues` (e.g. FEAS-10004, below privacy threshold)
+        mergeMap((result) =>
+          result?.issues?.length
+            ? throwError(() => ({ payload: result.issues }))
+            : [this.mapQueryResult(result, feasibilityQueryId)]
+        )
+      )
   }
 
   private mapQueryResult(result, feasibilityQueryId: string): QueryResult {

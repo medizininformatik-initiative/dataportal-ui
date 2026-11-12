@@ -174,7 +174,10 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   private handleQueryError(error: any): void {
     console.error('Error fetching query result', error)
     this.showSpinner = false
-    this.snackbarService.displayErrorMessage('RESULT_FAILED')
+    this.snackbarService.displayErrorMessage(
+      error?.payload?.[0]?.code ?? 'RESULT_FAILED',
+      error?.retryAfterSeconds
+    )
   }
 
   /**

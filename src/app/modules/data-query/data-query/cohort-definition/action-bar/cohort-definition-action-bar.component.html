@@ -8,11 +8,15 @@
   </num-button>
   <num-button
     type="green"
-    [isDisabled]="!isFeasibilityQueryValid()"
+    [isDisabled]="!isFeasibilityQueryValid() || sendBlockedSeconds() > 0"
     (click)="sendQuery()"
     tooltip="{{ 'DATAQUERY.COHORT.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate }}"
   >
-    {{ 'DATAQUERY.COHORT.ACTION_BAR.SEND_QUERY' | translate }}
+    @if (sendBlockedSeconds() > 0) {
+    {{
+      'FEASIBILITY.EDITOR.ACTION_BAR.RETRY_AFTER' | translate : { seconds: sendBlockedSeconds() }
+    }}
+    } @else { {{ 'DATAQUERY.COHORT.ACTION_BAR.SEND_QUERY' | translate }} }
   </num-button>
   <num-button
     [icon]="'arrow-down'"

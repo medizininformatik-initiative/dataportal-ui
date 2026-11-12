@@ -11,11 +11,15 @@
 
   <num-button
     type="green"
-    [isDisabled]="!isFeasibilityQueryValid()"
+    [isDisabled]="!isFeasibilityQueryValid() || sendBlockedSeconds() > 0"
     (click)="sendRequest()"
     [matTooltip]="'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY_TOOLTIP' | translate"
   >
-    {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY' | translate }}
+    @if (sendBlockedSeconds() > 0) {
+    {{
+      'FEASIBILITY.EDITOR.ACTION_BAR.RETRY_AFTER' | translate : { seconds: sendBlockedSeconds() }
+    }}
+    } @else { {{ 'FEASIBILITY.EDITOR.ACTION_BAR.SEND_QUERY' | translate }} }
   </num-button>
 
   <num-button

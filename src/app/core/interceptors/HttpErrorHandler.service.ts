@@ -11,7 +11,7 @@ import { TypeGuard } from 'src/app/service/TypeGuard/TypeGuard'
 export class HttpErrorHandlerService {
   private dataportalErrorHandler = inject(DataportalErrorHandlerService)
 
-  private static readonly DEFAULT_RETRY_AFTER_HEADER = 'Retry-After'
+  private static readonly RETRY_AFTER_HEADERS = ['Retry-After', 'X-Rate-Limit-Retry-After-Seconds']
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -90,7 +90,9 @@ export class HttpErrorHandlerService {
    * @returns The number of seconds to wait before retrying, or undefined
    */
   private extractRetryAfterSeconds(error: HttpErrorResponse): number | undefined {
-    const retryAfterHeader = error.headers.get(HttpErrorHandlerService.DEFAULT_RETRY_AFTER_HEADER)
+    const retryAfterHeader = HttpErrorHandlerService.RETRY_AFTER_HEADERS.map((name) =>
+      error.headers.get(name)
+    ).find(Boolean)
     return retryAfterHeader ? parseInt(retryAfterHeader, 10) : undefined
   }
 

@@ -22,7 +22,6 @@ export class QueryResultMapperService {
     return new ErrorQueryResult(feasibilityQueryId, issues)
   }
 
-  /*@TODO Issue #631 - Generic Error message dev on feasibility details*/
   public createQueryResult(
     detailedReceived: boolean,
     result: QueryResultData,
@@ -33,7 +32,7 @@ export class QueryResultMapperService {
       feasibilityQueryId,
       result.totalNumberOfPatients,
       result.queryId?.toString(),
-      this.createResultLines(result.resultLines),
+      this.createResultLines(result.resultLines ?? []),
       (result.issues || []).map((issue: IssueData) => Issue.fromJson(issue))
     )
   }
