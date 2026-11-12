@@ -46,6 +46,15 @@ export default defineConfig({
         });
       });
 
+      // Downloads share one file name across scenarios: delete it before each download so
+      // readFile can never return the previous scenario's file.
+      on('task', {
+        removeDownload(fileName: string) {
+          fs.removeSync(path.join(__dirname, 'cypress', 'downloads', `${fileName}.json`));
+          return null;
+        },
+      });
+
       await addCucumberPreprocessorPlugin(on, config);
       on(
         "file:preprocessor",

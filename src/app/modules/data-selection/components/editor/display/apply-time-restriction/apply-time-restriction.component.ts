@@ -1,6 +1,6 @@
 import { AbstractTimeRestriction } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/AbstractTimeRestriction'
 import { BetweenFilter } from 'src/app/model/FeasibilityQuery/Criterion/TimeRestriction/BetweenFilter'
-import { ButtonComponent } from 'src/app/shared/components/shared-components.module'
+import { ButtonComponent } from 'src/app/shared/components/button/button.component'
 import { Component, computed, inject, signal } from '@angular/core'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { SnackbarMessageService } from 'src/app/service/SnackbarMessage.service'
