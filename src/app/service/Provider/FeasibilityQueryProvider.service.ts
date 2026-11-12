@@ -156,7 +156,6 @@ export class FeasibilityQueryProviderService {
    * @returns {string[][]} - The updated array of criteria arrays.
    */
   private deleteCriterion(inexclusion: string[][], criterionID: string): string[][] {
-    inexclusion = inexclusion.map((idArray) => [...idArray])
     inexclusion.forEach((idArray) => {
       const index = idArray.indexOf(criterionID)
       if (index > -1) {
