@@ -247,7 +247,7 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     if (!this.receivedResult) {
       this.receivedResult = true
       // Backend result expires from its first result on, not from sending the query.
-      this.startExpirationTimer(this.feasibilityQueryResultService.remainingExpiryMs())
+      this.startExpirationTimer(this.appSettingsProviderService.getQueryResultExpiry() * 1000)
     }
     this.totalNumberOfPatients = result.getTotalNumberOfPatients()
     this.setPatientCount(result.getTotalNumberOfPatients())

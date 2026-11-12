@@ -279,7 +279,7 @@ defineStep('the backend answers every result poll only after {int} seconds', (se
 )
 defineStep('I watch the requests that send the query', () => resultPolling.watchSendQuery())
 defineStep('I see the message {string}', (text: string) => resultPolling.shouldShowMessage(text))
-defineStep('the query was sent {int} time', (times: number) =>
+defineStep('the query was sent {int} time(s)', (times: number) =>
   resultPolling.shouldHaveSentQuery(times)
 )
 defineStep('at most {int} result poll ran at a time', (limit: number) =>

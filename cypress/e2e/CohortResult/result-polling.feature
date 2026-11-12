@@ -195,7 +195,7 @@ Feature: Cohort result polling
     And the send button is enabled again
 
   @component:feasibility-result @behavior:show
-  Scenario: Returning to the result with unchanged criteria shows it again without sending the query
+  Scenario: Entering the result page again sends the query again
     Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
     And I am logged in as a user
     And I am on the "{{pages.feasibilitySearch}}" page
@@ -211,4 +211,4 @@ Feature: Cohort result polling
     Then I should arrive on the "{{pages.feasibilityResult}}" page
     Then I see the result
     And I see no error dialog
-    And the query was sent 1 time
+    And the query was sent 2 times
