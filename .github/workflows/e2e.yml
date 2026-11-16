@@ -10,11 +10,14 @@ jobs:
 
   cypress-run:
     runs-on: ubuntu-24.04
-    env:
-      ONTOLOGY_GIT_TAG: v5.0.1 # Or dynamically set it
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Resolve latest ontology release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: echo "ONTOLOGY_GIT_TAG=$(gh release view --repo medizininformatik-initiative/fhir-ontology-generator --json tagName -q .tagName)" >> "$GITHUB_ENV"
 
       - name: Prepare ontology files
         run: |
@@ -26,7 +29,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: cypress/docker/es-data
-          key: es-data-${{ hashFiles('cypress/docker/docker-compose.yml') }}
+          key: es-data-${{ env.ONTOLOGY_GIT_TAG }}-${{ hashFiles('cypress/docker/docker-compose.yml') }}
 
       - name: Prepare Elasticsearch data folder
         run: |
@@ -77,7 +80,7 @@ jobs:
 
       - name: Check docker containers
         run: docker ps -a
-        
+
       - name: Wait for Keycloak
         run: .github/scripts/wait-for-url.sh  http://localhost:9003/health
 
@@ -87,7 +90,7 @@ jobs:
 
       - name: Create Test User in Keycloak
         run: .github/scripts/create-keycloak-user.sh
-      
+
 
       - name: Wait for dev server
         run: .github/scripts/wait-for-url.sh http://localhost:4200 || { cat ng-serve.log; exit 1; }
