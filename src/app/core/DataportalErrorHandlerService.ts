@@ -2,6 +2,7 @@ import { DataportalErrorPayloadType } from './model/DataportalErrorPayloadType'
 import { DataportalErrorType } from './model/DataportalErrorTypes'
 import { ErrorDisplayService } from '../shared/service/ErrorDisplay/error-display.service'
 import { ErrorHandler, Injectable, NgZone, inject } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
 import { IssueData } from './model/Feasibility/IssueData'
 import { Observable, throwError } from 'rxjs'
 import { ValidationIssueData } from './model/Validation/ValidationIssueData'
@@ -82,11 +83,24 @@ export class DataportalErrorHandlerService implements ErrorHandler {
   }
 
   /**
-   * @todod Needs to be define
-   * @returns
+   * Throws a generic error object that keeps status, message and URL of a failed request
+   * @param error - The HTTP error response
+   * @param url - The URL of the failed request, including query parameters
+   * @returns Observable that throws a generic error
    */
-  public throwInternalServerErrorObject(): Observable<never> {
-    return this.throwErrorObject('GENERIC_ERROR', undefined, '')
+  public throwHttpErrorObject(error: HttpErrorResponse, url: string): Observable<never> {
+    const body = error.error
+    const backendMessage =
+      typeof body === 'string' ? body : body?.message || body?.detail || body?.error
+    const payload: IssueData[] = [
+      {
+        message: backendMessage || error.message,
+        type: 'HttpError',
+        code: String(error.status),
+        severity: 'ERROR',
+      },
+    ]
+    return this.throwErrorObject('GENERIC_ERROR', payload, url)
   }
 
   /**

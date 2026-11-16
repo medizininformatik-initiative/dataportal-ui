@@ -1,8 +1,7 @@
 # Negative paths of the search pages: nothing found, a slow backend, and a failing backend.
 # The error dialog (`num-error-display`) is shown for every non-validation HTTP error, so these
-# scenarios check that it appears, can be closed, and leaves the page usable. How its content
-# reads is covered by the @pending scenarios below: they describe the behaviour a user should
-# get, and fail today (see the comments).
+# scenarios check that it appears, can be closed, and leaves the page usable, and that its
+# content reads as words. The @pending scenario below describes behaviour that fails today.
 @area:feasibility-query
 Feature: Search - nothing found and backend failures
 
@@ -60,24 +59,37 @@ Feature: Search - nothing found and backend failures
       | term                         | endpoint                                  |
       | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} |
 
-  # DEFECT: a network failure and a 504 render `Error 1: [object Object]`, because the raw
-  # HttpErrorResponse is stringified (`DataportalErrorHandlerService`, non-validation branch).
   @component:criteria-search @behavior:report-backend-error
-  @pending
   Scenario Outline: A failed request is described in words, not as an object
     Given the backend cannot be reached for requests to "<endpoint>"
     When I type "<term>" in the search input field
     Then an error dialog is shown
     And the error dialog does not show "<text>"
+    And the error dialog shows "<reason>"
+    And the error dialog shows "<request>"
 
     Examples:
-      | term                         | endpoint                                  | text                            |
-      | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} | {{searchFailures.objectObject}} |
+      | term                         | endpoint                                  | text                            | reason                          | request                                |
+      | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} | {{searchFailures.objectObject}} | {{searchFailures.unknownError}} | {{searchFailures.searchtermPneumonia}} |
 
-  # DEFECT: the dialog title is the raw error type `GENERIC_ERROR` (hard-coded, untranslated),
-  # and the 500 body says "No error details available".
   @component:criteria-search @behavior:report-backend-error
-  @pending
+  Scenario Outline: The error dialog names status, backend message and request of a failed search
+    Given the backend answers requests to "<endpoint>" with status <status> and message "<message>"
+    When I type "<term>" in the search input field
+    Then an error dialog is shown
+    And the error dialog is titled "<title>"
+    And the error dialog shows "<code>"
+    And the error dialog shows "<message>"
+    And the error dialog shows "<request>"
+
+    Examples:
+      | term                         | endpoint                                  | status | message                                     | title                                 | code                       | request                                |
+      | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} | 400    | {{searchFailures.invalidSearchTerm}}        | {{searchFailures.somethingWentWrong}} | {{searchFailures.code400}} | {{searchFailures.searchtermPneumonia}} |
+      | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} | 404    | {{searchFailures.noSuchEndpoint}}           | {{searchFailures.somethingWentWrong}} | {{searchFailures.code404}} | {{searchFailures.searchtermPneumonia}} |
+      | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} | 500    | {{searchFailures.elasticsearchUnavailable}} | {{searchFailures.somethingWentWrong}} | {{searchFailures.code500}} | {{searchFailures.searchtermPneumonia}} |
+      | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} | 504    | {{searchFailures.gatewayTimeout}}           | {{searchFailures.somethingWentWrong}} | {{searchFailures.code504}} | {{searchFailures.searchtermPneumonia}} |
+
+  @component:criteria-search @behavior:report-backend-error
   Scenario Outline: The error dialog has a readable title
     Given the backend answers requests to "<endpoint>" with status 500
     When I type "<term>" in the search input field
@@ -88,8 +100,8 @@ Feature: Search - nothing found and backend failures
       | term                         | endpoint                                  | text                            |
       | {{searchFailures.pneumonia}} | {{searchFailures.terminologyEntrySearch}} | {{searchFailures.gENERICERROR}} |
 
-  # DEFECT: `HttpErrorHandlerService` handles 401 as "Not implemented", so an API answering
-  # "unauthorised" (revoked token, restarted backend) shows the generic error dialog instead
+  # DEFECT: `HttpErrorHandlerService` has no own 401 handling, so an API answering
+  # "unauthorised" (revoked token, restarted backend) shows an error dialog with code 401 instead
   # of sending the user back to the sign-in page.
   @component:criteria-search @behavior:report-backend-error
   @pending
