@@ -75,7 +75,7 @@ jobs:
           build: npm run build -- --configuration=deploy
 
       - name: Save build folder
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build
           if-no-files-found: error
@@ -93,7 +93,7 @@ jobs:
 
       - name: Upload Cypress screenshots
         if: failure() # only upload on test failure (optional)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-screenshots
           path: cypress/screenshots
