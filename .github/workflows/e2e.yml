@@ -14,7 +14,7 @@ jobs:
       ONTOLOGY_GIT_TAG: v5.0.1 # Or dynamically set it
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Prepare ontology files
         run: |
