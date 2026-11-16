@@ -10,7 +10,6 @@ import {
   filter,
   map,
   Observable,
-  pairwise,
   Subject,
   Subscription,
   switchMap,
@@ -126,59 +125,46 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handles the subscription logic separately.
+   * Shows each result as soon as it arrives. `null` marks the end of polling: the last value
+   * before it decides between a final result and an error.
    */
   private createDoSendSubscription(obs: Observable<QueryResponseType>): Subscription {
-    return obs.pipe(pairwise()).subscribe({
-      next: ([prev, current]) => this.handleQueryResults(prev, current),
+    // Last poll answer (result or error), kept until the end marker arrives.
+    let last: QueryResponseType = null
+    return obs.subscribe({
+      next: (current: QueryResponseType) => {
+        if (current !== null) {
+          // A poll answered: remember it, show the patient count right away if it is a result.
+          last = current
+          if (this.isQueryResult(current)) {
+            this.handleResult(current)
+          }
+        } else if (last !== null && this.isQueryResult(last)) {
+          // Polling ended after a result: stop the spinner, enable Details, emit loaded.
+          this.finalize()
+          this.handleResult(last)
+        } else if (last !== null) {
+          // Polling ended after an error answer (issue from backend): show its message.
+          console.error('Received an error result:', last)
+          this.receivedError = true
+          this.snackbarService.displayErrorMessage(last.getIssues()?.[0]?.getCode())
+          this.showSpinner = false
+        }
+        // Polling ended with no answer at all: handled in `complete` (timeout message).
+      },
+      // Sending the query failed (e.g. 429, no location header).
       error: (error) => this.handleQueryError(error),
+      // Stream ended: finalize, show timeout message if nothing arrived.
       complete: () => this.handleComplete(),
     })
   }
 
   /**
-   * Handles the logic for processing the query results.
+   * True for a result with a patient count, false for an error result or `null`. Not a type
+   * guard: `ErrorQueryResult` extends `QueryResult`, so the false branch would narrow to `never`.
    */
-  private handleQueryResults(prev: QueryResponseType, current: QueryResponseType): void {
-    if (this.shouldFinalize(prev, current)) {
-      this.finalize()
-      this.handleResult(prev as QueryResult)
-    } else if (this.shouldHandleError(prev, current)) {
-      console.error('Received an error result:', prev)
-      this.receivedError = true
-      this.snackbarService.displayErrorMessage(prev?.getIssues()?.[0]?.getCode())
-      this.showSpinner = false
-    } else if (this.shouldHandleValidResult(current)) {
-      this.handleResult(current as QueryResult)
-    }
-  }
-
-  /**
-   * Checks if we should finalize the process.
-   */
-  private shouldFinalize(prev: QueryResponseType, current: QueryResponseType): boolean {
-    return this.isQueryResult(prev) && current === null
-  }
-
-  /**
-   * Checks if we should handle an error result.
-   */
-  private shouldHandleError(prev: QueryResponseType, current: QueryResponseType): boolean {
-    return !this.isQueryResult(prev) && current === null
-  }
-
-  /**
-   * Checks if we should handle a valid query result.
-   */
-  private shouldHandleValidResult(current: QueryResponseType): boolean {
-    return this.isQueryResult(current)
-  }
-
-  /**
-   * Type guard to check if an object is a QueryResult.
-   */
-  private isQueryResult(result: QueryResponseType): result is QueryResult {
-    return result?.getTotalNumberOfPatients() !== null
+  private isQueryResult(result: QueryResponseType): boolean {
+    return result !== null && result.getTotalNumberOfPatients() !== null
   }
 
   /**

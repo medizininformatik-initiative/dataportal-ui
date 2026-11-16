@@ -2,7 +2,7 @@ import { AppSettingsProviderService } from 'src/app/service/Config/AppSettingsPr
 import { FeasibilityQueryProviderService } from 'src/app/service/Provider/FeasibilityQueryProvider.service'
 import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
 import { MatDialog } from '@angular/material/dialog'
-import { of, throwError } from 'rxjs'
+import { of, Subject, throwError } from 'rxjs'
 import { SimpleResultComponent } from './simple-result.component'
 import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
 import { TestBed } from '@angular/core/testing'
@@ -14,6 +14,7 @@ describe('SimpleResultComponent details (#631)', () => {
     getDetailedResultRateLimit: () => of(),
     refreshResultRateLimit: jest.fn(),
     getDetailedObfuscatedResult: jest.fn(),
+    doSendQueryRequest: jest.fn(),
   }
   let component: SimpleResultComponent
 
@@ -25,7 +26,10 @@ describe('SimpleResultComponent details (#631)', () => {
         { provide: MatDialog, useValue: dialog },
         { provide: SnackbarService, useValue: snackbar },
         { provide: FeasibilityQueryResultService, useValue: resultService },
-        { provide: AppSettingsProviderService, useValue: { getPollingTimeUi: () => 1 } },
+        {
+          provide: AppSettingsProviderService,
+          useValue: { getPollingTimeUi: () => 1, getQueryResultExpiry: () => 60 },
+        },
         {
           provide: FeasibilityQueryProviderService,
           useValue: { getActiveFeasibilityQuery: () => of({ getResultIds: () => ['r1'] }) },
@@ -42,6 +46,18 @@ describe('SimpleResultComponent details (#631)', () => {
     component.openDialogResultDetails()
     expect(snackbar.displayErrorMessage).toHaveBeenCalledWith('FEAS-10005', undefined)
     expect(dialog.open).not.toHaveBeenCalled()
+  })
+
+  it('shows the first poll result at once, not with the next poll', () => {
+    const polls = new Subject<any>()
+    resultService.doSendQueryRequest.mockReturnValue(polls)
+    ;(component as any).doSend()
+    polls.next({ getTotalNumberOfPatients: () => 42 })
+    expect(component.totalNumberOfPatients).toBe(42)
+    expect(component.showSpinner).toBe(true)
+    polls.next(null)
+    expect(component.showSpinner).toBe(false)
+    expect(component.loadedResult).toBe(true)
   })
 
   it('opens the modal once the details are there', () => {
