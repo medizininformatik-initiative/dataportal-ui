@@ -61,7 +61,7 @@
     "@angular-eslint/schematics": "^19.8.1",
     "@angular-eslint/template-parser": "^19.8.1",
     "@angular/cli": "^19.2.26",
-    "@angular/compiler-cli": "^19.2.24",
+    "@angular/compiler-cli": "^22.2.6",
     "@badeball/cypress-cucumber-preprocessor": "^22.2.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
     "@cucumber/cucumber": "^11.3.0",
