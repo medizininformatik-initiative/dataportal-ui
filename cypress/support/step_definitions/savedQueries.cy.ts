@@ -3,6 +3,7 @@ import { defineStep } from '../defineStep'
 import { numButton } from '../component-objects/NumButton'
 
 const TILE = '.saved-query-tile'
+const SAVED_QUERIES_API = 'http://localhost:8090/api/v6/query/data'
 
 /**
  * Steps for saved-query tiles.
@@ -40,6 +41,24 @@ export class SavedQueries {
      * */
     numButton.clickByText('body', 'Delete')
   }
+
+  /**
+   * Delete every saved query titled `title` via backend API. Scenario that fails before its own
+   * delete step leaves its query behind; next run then sees two tiles with same title.
+   * Needs logged-in app: reuses its access token from session storage.
+   * */
+  public deleteLeftovers(title: string) {
+    cy.window().then((win) => {
+      const headers = { Authorization: `Bearer ${win.sessionStorage.getItem('access_token')}` }
+      cy.request({ url: SAVED_QUERIES_API, headers }).then(({ body }) => {
+        body
+          .filter((query: { label: string }) => query.label === title)
+          .forEach((query: { id: number }) =>
+            cy.request({ method: 'DELETE', url: `${SAVED_QUERIES_API}/${query.id}`, headers })
+          )
+      })
+    })
+  }
 }
 
 export const savedQueries = new SavedQueries()
@@ -52,3 +71,4 @@ defineStep('I should not see the saved query {string} in the list', (title: stri
 )
 defineStep('I load the saved query {string}', (title: string) => savedQueries.load(title))
 defineStep('I delete the saved query {string}', (title: string) => savedQueries.delete(title))
+defineStep('no saved query {string} exists', (title: string) => savedQueries.deleteLeftovers(title))
