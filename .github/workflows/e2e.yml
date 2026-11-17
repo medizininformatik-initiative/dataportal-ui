@@ -10,14 +10,13 @@ jobs:
 
   cypress-run:
     runs-on: ubuntu-24.04
+    env:
+      # Must match `ontology-tag` in dataportal-backend pom.xml: the backend image ships its own
+      # ontology, so Elasticsearch on another version breaks concept searches (value set URLs differ).
+      ONTOLOGY_GIT_TAG: v5.1.0
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Resolve latest ontology release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: echo "ONTOLOGY_GIT_TAG=$(gh release view --repo medizininformatik-initiative/fhir-ontology-generator --json tagName -q .tagName)" >> "$GITHUB_ENV"
 
       - name: Prepare ontology files
         run: |
