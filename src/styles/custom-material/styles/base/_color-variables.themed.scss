@@ -29,6 +29,14 @@
   // Used by: searchbar (validation error colour)
   --num-color--warn: #{mat.m2-get-color-from-palette($warn)};
 
+  // Form-control borders (checkbox) on white: 3.5:1, WCAG 1.4.11 needs 3:1.
+  // Used by: checkbox
+  --num-color--control-border: #{mat.m2-get-color-from-palette($primary, 700)};
+
+  // Checked checkbox fill, white tick on it. 'green-3' is 3.06:1 (3:1 needed, WCAG 1.4.11).
+  // Used by: checkbox
+  --num-color--checkbox-checked: #{mat.m2-get-color-from-palette($primary, 'green-3')};
+
   // Used by: searchbar (fallback when --num-color--warn is unavailable)
   --num-color--red: #{mat.m2-get-color-from-palette($primary, 'red')};
 }

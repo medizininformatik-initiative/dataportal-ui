@@ -26,6 +26,9 @@ export class LanguageComponent implements OnInit {
     translate.addLangs(this.languages)
     translate.setDefaultLang('de')
 
+    // screen readers pick their voice from <html lang>; subscribed before use(), so the first language counts too
+    translate.onLangChange.subscribe(({ lang }) => (document.documentElement.lang = lang))
+
     const browserLang = translate.getBrowserLang()
     translate.use(this.languages.includes(browserLang) ? browserLang : 'de')
   }

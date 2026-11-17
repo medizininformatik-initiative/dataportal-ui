@@ -21,19 +21,20 @@
 
     &:hover:not(.disabled) {
       color: white !important;
-      background: mat.m2-get-color-from-palette($primary, 'blue-hover') !important;
+      background: mat.m2-get-color-from-palette($primary, 'blue-600') !important;
       box-shadow: $raised-shadow;
     }
 
     &.cdk-keyboard-focused {
-      background: mat.m2-get-color-from-palette($primary, 'blue-hover');
+      background: mat.m2-get-color-from-palette($primary, 'blue-700');
     }
 
     &.disabled {
-      background-color: mat.m2-get-color-from-palette($primary, 50);
+      // white, not grey: on the tinted action bar it must read as a white button
+      background-color: mat.m2-get-color-from-palette($primary, 'white');
       color: mat.m2-get-color-from-palette($accent, 500);
       box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($accent, 500);
-      cursor: unset;
+      cursor: not-allowed;
     }
 
     &.icon {
@@ -49,7 +50,7 @@
       }
 
       &.disabled {
-        background-color: mat.m2-get-color-from-palette($primary, 50);
+        background-color: mat.m2-get-color-from-palette($primary, 'white');
         color: mat.m2-get-color-from-palette($accent, 500);
         box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($accent, 500);
         cursor: not-allowed;

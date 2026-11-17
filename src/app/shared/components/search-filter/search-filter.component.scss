@@ -41,8 +41,7 @@
   pointer-events: auto !important;
   opacity: 1 !important;
 
-  .mat-pseudo-checkbox,
-  .mdc-checkbox {
+  .mat-pseudo-checkbox {
     display: none !important;
   }
 
@@ -112,28 +111,6 @@
 
   .mat-mdc-optgroup-label {
     display: none;
-  }
-}
-
-::ng-deep .mat-pseudo-checkbox-full {
-  width: 15px !important;
-  height: 15px !important;
-  background: #ffffff !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: 3px !important;
-
-  &::after {
-    color: var(--color-accent) !important;
-  }
-}
-
-::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked,
-::ng-deep .mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate {
-  background: #ffffff !important;
-  border-color: var(--border-color) !important;
-
-  &::after {
-    color: var(--color-accent) !important;
   }
 }
 
