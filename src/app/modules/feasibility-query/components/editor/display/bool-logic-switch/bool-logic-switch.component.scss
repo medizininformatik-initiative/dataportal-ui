@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   width: 170px;
-  height: 29px;
+  height: 24px;
   background: #ffffff;
   border-radius: 10px;
   padding: 0 var(--spacing-6);
@@ -15,12 +15,12 @@
 
   &.is-outer {
     height: 22px;
-    top: 0px;
+    top: -4px;
   }
 
   &.is-inner {
     //height: 0px;
-    top: -18px;
+    top: -16px;
   }
 }
 
@@ -28,7 +28,7 @@
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   line-height: var(--line-height-md);
   color: var(--border-color);
   z-index: 1;

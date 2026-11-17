@@ -37,7 +37,12 @@ export class CohortResult {
      * Scope to `num-patient-count`: unscoped `div` lookup also matched tooltip description
      * element (`cdk-describedby-message`), and chained `.contains` kept default 4s timeout.
      * */
-    cy.contains('num-patient-count', 'Number of patients', { timeout: 70000 }).should('be.visible')
+    cy.get('num-spinner', { timeout: 70000 }).should('not.exist')
+    cy.get('div', { timeout: 70000 }).contains('Number of patients').should('be.visible')
+    /**
+     * Spinner also disappears on error or timeout: header proves result arrived.
+     * */
+    cy.contains('num-header', 'Query completed').should('be.visible')
   }
 
   /**
