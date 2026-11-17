@@ -111,6 +111,23 @@ Feature: Data Selection Editor - references
       | feature                            | target                            | reference                        |
       | {{dataSelection.conditionFeature}} | {{dataSelection.oncologyFeature}} | {{dataSelection.referenceField}} |
 
+  @component:data-selection-editor @behavior:select
+  Scenario Outline: The "Required" option of a linked reference survives being switched on and off repeatedly
+    When I click the unresolved reference warning of the data selection box "<feature>"
+    And I link the reference to the feature "<target>"
+    And I click on the button "{{labels.close}}"
+    And I toggle the required option of the reference "<reference>" in the data selection box "<feature>"
+    And I toggle the required option of the reference "<reference>" in the data selection box "<feature>"
+    And I toggle the required option of the reference "<reference>" in the data selection box "<feature>"
+    Then the required option of the reference "<reference>" in the data selection box "<feature>" is enabled
+    When I toggle the required option of the reference "<reference>" in the data selection box "<feature>"
+    Then the required option of the reference "<reference>" in the data selection box "<feature>" is disabled
+    And I should arrive on the "{{pages.dataSelectionEditor}}" page
+
+    Examples:
+      | feature                            | target                            | reference                        |
+      | {{dataSelection.conditionFeature}} | {{dataSelection.oncologyFeature}} | {{dataSelection.referenceField}} |
+
   @component:data-selection-editor @behavior:show
   Scenario Outline: The warning is shown in German
     When I set the language to German
