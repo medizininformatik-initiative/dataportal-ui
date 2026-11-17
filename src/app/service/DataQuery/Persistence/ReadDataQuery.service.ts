@@ -57,7 +57,7 @@ export class ReadDataQueryService {
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
       map((data: SavedDataQueryData) => {
-        data.content = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDLAsSavedData(data.content)
+        data.content = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDL(data.content)
         return data
       }),
       concatMap((data: any) => {

@@ -21,18 +21,6 @@ export class CheckAndUpgradeCCDLService {
   constructor() {}
 
   /**
-   * Checks and upgrades CCDL data if necessary for saved data.
-   * @param data - The data to check and upgrade
-   * @returns The upgraded data if it was in the old format, otherwise returns the original data
-   */
-  public checkAndUpgradeCCDLAsSavedData(data: any): any {
-    if (TypeGuard.isStructuredQueryData(data)) {
-      return { content: this.checkAndUpgradeCCDL(data) }
-    }
-    return data
-  }
-
-  /**
    * Checks and upgrades CCDL data if necessary.
    * @param data - The data to check and upgrade
    * @returns The upgraded data if it was in the old format, otherwise returns the original data
