@@ -36,6 +36,8 @@ export class SnackbarService {
   private colorSubject = new Subject<string>()
   public color$ = this.colorSubject.asObservable()
 
+  private hideTimer?: ReturnType<typeof setTimeout>
+
   constructor() {}
 
   /**
@@ -66,7 +68,9 @@ export class SnackbarService {
     this.visibilitySubject.next(true)
     this.messageSubject.next(message)
     this.colorSubject.next(color)
-    setTimeout(() => this.deactivateSnackbar(), 5000)
+    // Restart the timer: the previous message's timer would hide this one early.
+    clearTimeout(this.hideTimer)
+    this.hideTimer = setTimeout(() => this.deactivateSnackbar(), 5000)
   }
 
   private setSnackbarTimeOut(timeout: number = 5000) {

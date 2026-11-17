@@ -139,11 +139,15 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
           if (this.isQueryResult(current)) {
             this.handleResult(current)
           }
-        } else if (last !== null && this.isQueryResult(last)) {
+          return
+        }
+        // End marker. Two separate ifs, no else: see the type guards below.
+        if (this.isQueryResult(last)) {
           // Polling ended after a result: stop the spinner, enable Details, emit loaded.
           this.finalize()
           this.handleResult(last)
-        } else if (last !== null) {
+        }
+        if (this.isErrorResult(last)) {
           // Polling ended after an error answer (issue from backend): show its message.
           console.error('Received an error result:', last)
           this.receivedError = true
@@ -160,11 +164,19 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * True for a result with a patient count, false for an error result or `null`. Not a type
-   * guard: `ErrorQueryResult` extends `QueryResult`, so the false branch would narrow to `never`.
+   * A result with a patient count. Use only the true branch: without `strictNullChecks`
+   * `ErrorQueryResult` and `QueryResult` are structurally the same type, so an `else` after
+   * either guard narrows to `never`.
    */
-  private isQueryResult(result: QueryResponseType): boolean {
+  private isQueryResult(result: QueryResponseType): result is QueryResult {
     return result !== null && result.getTotalNumberOfPatients() !== null
+  }
+
+  /**
+   * An answer without patient count (backend sent issues). Same caveat as `isQueryResult`.
+   */
+  private isErrorResult(result: QueryResponseType): result is ErrorQueryResult {
+    return result !== null && result.getTotalNumberOfPatients() === null
   }
 
   /**

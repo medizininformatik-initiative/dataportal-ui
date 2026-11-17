@@ -33,6 +33,20 @@ Feature: Cohort result polling
     Then I see the result
     And the details button is enabled
 
+  @component:feasibility-result @behavior:show
+  Scenario: The first poll result is shown at once, not when polling ends
+    Given the result polling takes 20 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And the backend answers every result poll after the first with status 500
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the patient count while the query is still polling
+    And I see the result
+
   @component:feasibility-result @behavior:report-backend-error
   Scenario: An issue in the poll answer is shown
     Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds

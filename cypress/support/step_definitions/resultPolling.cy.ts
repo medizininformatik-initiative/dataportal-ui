@@ -4,7 +4,8 @@ const SUMMARY_RESULT = '**/query/feasibility/*/summary-result'
 const SEND_QUERY = '**/query/feasibility'
 const DETAILED_RESULT = '**/query/feasibility/*/detailed-obfuscated-result'
 const SNACKBAR = 'num-snackbar [role="alert"]'
-const DETAILS_BUTTON = 'num-simple-result button'
+const SIMPLE_RESULT = 'num-simple-result'
+const DETAILS_BUTTON = `${SIMPLE_RESULT} button`
 const DETAILS_DIALOG = 'num-result-detail-modal'
 const ERROR_DIALOG = 'num-error-display .error-display-overlay'
 const SEND_BUTTON = 'num-editor-action-bar button'
@@ -59,6 +60,21 @@ export class ResultPolling {
         req.reply({ statusCode: status, body: {} })
       } else {
         req.continue()
+      }
+    })
+  }
+
+  /**
+   * Let first poll reach real backend, answer every later poll with HTTP `status`.
+   * */
+  public failPollsAfterFirst(status: number) {
+    let seen = 0
+    cy.intercept('GET', SUMMARY_RESULT, (req) => {
+      seen += 1
+      if (seen === 1) {
+        req.continue()
+      } else {
+        req.reply({ statusCode: status, body: {} })
       }
     })
   }
@@ -247,6 +263,16 @@ export class ResultPolling {
   }
 
   /**
+   * Assert non-zero patient count while spinner still runs, so result shows before polling ends.
+   * */
+  public countShouldShowWhilePolling() {
+    cy.get(SIMPLE_RESULT, { timeout: LONG_TIMEOUT }).should(($result) => {
+      expect($result.find('num-spinner')).to.have.length(1)
+      expect($result.find('.digit').text().replace(/\s/g, '')).not.to.match(/^0*$/)
+    })
+  }
+
+  /**
    * Assert details button disabled after result expired.
    * */
   public detailsShouldBeDisabled() {
@@ -267,6 +293,13 @@ defineStep('the backend answers every result poll with status {int}', (status: n
 defineStep(
   'the backend answers the first {int} result polls with status {int}',
   (count: number, status: number) => resultPolling.failFirstPolls(count, status)
+)
+defineStep(
+  'the backend answers every result poll after the first with status {int}',
+  (status: number) => resultPolling.failPollsAfterFirst(status)
+)
+defineStep('I see the patient count while the query is still polling', () =>
+  resultPolling.countShouldShowWhilePolling()
 )
 defineStep('the backend answers every result poll with the issue {string}', (code: string) =>
   resultPolling.answerWithIssue(code)

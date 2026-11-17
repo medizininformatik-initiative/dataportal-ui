@@ -41,6 +41,10 @@ export class CohortResult {
      * */
     cy.get('num-spinner', { timeout: 70000 }).should('not.exist')
     cy.get('div', { timeout: 70000 }).contains('Number of patients').should('be.visible')
+    /**
+     * Spinner also disappears on error or timeout: header proves result arrived.
+     * */
+    cy.contains('num-header', 'Query completed').should('be.visible')
   }
 
   /**
