@@ -1,5 +1,6 @@
 import { dataCy } from '../dataCy'
 import { defineStep } from '../defineStep'
+import { t } from '../i18n'
 
 type Filter = { name: string; start?: string }
 type Download = { dataExtraction: { attributeGroups: { name: string; filter?: Filter[] }[] } }
@@ -14,6 +15,13 @@ export class CrtdlUpgrade {
    * */
   public uploadOutdated(fixture: string) {
     cy.get(dataCy('upload-crtdl')).selectFile(`cypress/fixtures/${fixture}.json`, { force: true })
+  }
+
+  /**
+   * Assert upload success snackbar.
+   * */
+  public shouldShowUploadSuccess() {
+    cy.contains('num-snackbar', t('DATAQUERY.DATASELECTION.SUCCESS.UPLOAD')).should('exist')
   }
 
   /**
@@ -49,6 +57,7 @@ export const crtdlUpgrade = new CrtdlUpgrade()
 defineStep('I upload the outdated data definition {string}', (fixture: string) =>
   crtdlUpgrade.uploadOutdated(fixture)
 )
+defineStep('the upload success message is shown', () => crtdlUpgrade.shouldShowUploadSuccess())
 defineStep(
   'the filter {string} starting {string} is in group {string} of the downloaded file {string}',
   (name: string, start: string, group: string, file: string) =>
