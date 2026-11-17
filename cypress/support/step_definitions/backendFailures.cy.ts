@@ -19,6 +19,15 @@ export class BackendFailures {
   }
 
   /**
+   * Answer requests to `path` with HTTP `status` and Spring-style body carrying `message`.
+   * */
+  public answerWithStatusAndMessage(path: string, status: number, message: string) {
+    cy.intercept(apiPattern(path), { statusCode: status, body: { status, message } }).as(
+      `fail-${path}`
+    )
+  }
+
+  /**
    * Fail requests to `path` with network error.
    * */
   public cannotBeReached(path: string) {
@@ -51,6 +60,11 @@ export const backendFailures = new BackendFailures()
 defineStep(
   'the backend answers requests to {string} with status {int}',
   (path: string, status: number) => backendFailures.answerWithStatus(path, status)
+)
+defineStep(
+  'the backend answers requests to {string} with status {int} and message {string}',
+  (path: string, status: number, message: string) =>
+    backendFailures.answerWithStatusAndMessage(path, status, message)
 )
 defineStep('the backend cannot be reached for requests to {string}', (path: string) =>
   backendFailures.cannotBeReached(path)

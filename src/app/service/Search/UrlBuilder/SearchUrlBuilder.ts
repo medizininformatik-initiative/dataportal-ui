@@ -69,7 +69,7 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
   }
 
   public withFiltertUrl(path: string, criteriaSetUrl: string): this {
-    this.queryParams.set(path, encodeURI(criteriaSetUrl))
+    this.queryParams.set(path, criteriaSetUrl)
     return this
   }
 
@@ -107,7 +107,7 @@ export class SearchUrlBuilder implements InterfaceUrlBuilder {
   public buildUrl(): string {
     const queryParamsArray: string[] = []
     this.queryParams.forEach((value, key) => {
-      queryParamsArray.push(`${key}=${value}`)
+      queryParamsArray.push(`${key}=${encodeURIComponent(value)}`)
     })
     const queryParamsString = queryParamsArray.join('&')
     return `${this.baseUrl}?${queryParamsString}`

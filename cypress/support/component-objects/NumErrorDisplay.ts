@@ -1,9 +1,8 @@
 const NUM_ERROR_DISPLAY_ERROR_DISPLAY_CONTAINER = 'num-error-display .error-display-container'
 /**
  * Query and interaction helper for `num-error-display`: overlay opened by global error handler
- * for failed requests and uncaught errors. Title is raw error type. Labels ("Request URL",
- * "Error 1", "No error details available") are hard-coded English: assert own text, not
- * translation keys.
+ * for failed requests and uncaught errors. Title and labels ("Request URL", "Error 1") are
+ * translated from `SHARED_COMPONENTS.ERROR_DISPLAY`: assert text of current language.
  * */
 export class NumErrorDisplay {
   /**
@@ -31,7 +30,7 @@ export class NumErrorDisplay {
    * Assert overlay title.
    * */
   public shouldHaveTitle(title: string) {
-    this.container().find('.error-title').should('have.text', title)
+    this.container().find('.error-title').invoke('text').invoke('trim').should('eq', title)
   }
 
   /**

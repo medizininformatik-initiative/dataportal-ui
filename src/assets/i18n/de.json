@@ -573,8 +573,17 @@
     },
     "DELETE_MODAL": {
       "CANCEL": "Abbrechen",
+      "DELETE": "Löschen",
       "HEADER": "Löschung bestätigen",
       "TITLE": "Möchten Sie die Datenabfrage wirklich löschen?"
+    },
+    "ERROR_DISPLAY": {
+      "ERROR": "Fehler",
+      "FEASIBILITY_ERROR": "Machbarkeitsabfrage fehlgeschlagen",
+      "GENERIC_ERROR": "Etwas ist schiefgelaufen",
+      "NO_DETAILS": "Keine Fehlerdetails verfügbar",
+      "REQUEST_URL": "Anfrage-URL",
+      "VALIDATION_ERROR": "Datendefinition ist ungültig"
     },
     "FILTER": {
       "AVAILABILITY": "Verfügbarkeit",
@@ -689,6 +698,7 @@
         "NOT_SELECTABLE": "Merkmal kann nicht ausgewählt werden",
         "SELECT_CHECKBOX": "Merkmal auswählen"
       },
+      "ICON": "Verwandte Kriterien anzeigen",
       "MODULE": "Modul",
       "NAME": "Name",
       "NOT_SELECTABLE": "Kriterium kann nicht ausgewählt werden",
@@ -706,7 +716,7 @@
       "SELECT_CHECKBOX_ALL": "Alles auswählen",
       "SITE": "Standort",
       "STATUS": "Status",
-      "TERMCODE": "Terminology Code",
+      "TERMCODE": "Terminologie-Code",
       "TERMINOLOGY_CODE": "Terminologie",
       "WHAT_IS_MISSING": "Was fehlt?"
     }

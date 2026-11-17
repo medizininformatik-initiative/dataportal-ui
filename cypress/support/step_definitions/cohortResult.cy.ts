@@ -32,12 +32,10 @@ export class CohortResult {
    * completion signal: needs same long timeout as "Number of patients" check, not default ~4s.
    * */
   public resultIsVisible() {
+    cy.get('num-spinner', { timeout: 70000 }).should('not.exist')
     /**
-     * Wait for feasibility result. Computation time varies with backend load, so use long retry
-     * timeout, no fixed sleep. Timeout bound by backend `.settings` (`passthroughPollingTimeUi`,
-     * `queryResultExpiry`, both PT1M here, from `GET /.settings`, no auth): result arrives or
-     * query expires within ~60s, so 70s = full cycle plus slack. Spinner disappearing IS
-     * completion signal: needs same long timeout as "Number of patients" check, not default ~4s.
+     * Scope to `num-patient-count`: unscoped `div` lookup also matched tooltip description
+     * element (`cdk-describedby-message`), and chained `.contains` kept default 4s timeout.
      * */
     cy.get('num-spinner', { timeout: 70000 }).should('not.exist')
     cy.get('div', { timeout: 70000 }).contains('Number of patients').should('be.visible')
