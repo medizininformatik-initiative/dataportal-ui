@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core'
-import { Observable } from 'rxjs'
+import { DisplayFeasibilityQueryComponent } from '../editor/display/display.component'
 import { HeaderComponent } from '../../../../shared/components/header/header.component'
 import { HeaderDescriptionComponent } from '../../../../shared/components/header-description/header-description.component'
-import { SimpleResultComponent } from './simple-result/simple-result.component'
-import { DisplayFeasibilityQueryComponent } from '../editor/display/display.component'
+import { Observable } from 'rxjs'
 import { ResultActionBarComponent } from './action-bar/result-action-bar.component'
+import { SimpleResultComponent } from './simple-result/simple-result.component'
 import { TranslateModule } from '@ngx-translate/core'
 @Component({
   selector: 'num-feasibility-query-result',

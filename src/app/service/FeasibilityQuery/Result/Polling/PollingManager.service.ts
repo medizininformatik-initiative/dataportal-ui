@@ -3,6 +3,7 @@ import { FeasibilityQuery } from 'src/app/model/FeasibilityQuery/FeasibilityQuer
 import { Injectable, inject } from '@angular/core'
 import { PollingService } from './Polling.service'
 import { QueryResult } from 'src/app/model/Result/QueryResult'
+import { QueryResultData } from 'src/app/model/Interface/QueryResultData'
 import { QueryResultMapperService } from '../Mapping/QueryResultMapper.service'
 import {
   EMPTY,
@@ -23,11 +24,6 @@ import {
 export class PollingManagerService {
   private pollingService = inject(PollingService)
   private queryResultMapperService = inject(QueryResultMapperService)
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {}
 
   /**
    * Initiates polling for the feasibility query. Unsubscribing stops the polling.
@@ -64,8 +60,8 @@ export class PollingManagerService {
       takeUntil(timer(this.pollingService.getPollingTime() + 200)),
       exhaustMap(() =>
         this.pollingService.requestSummaryResult(resultId).pipe(
-          map((result) =>
-            result?.issues
+          map((result: QueryResultData) =>
+            result?.issues?.length
               ? this.queryResultMapperService.createErrorQueryResult(
                   result.issues,
                   feasibilityQueryId

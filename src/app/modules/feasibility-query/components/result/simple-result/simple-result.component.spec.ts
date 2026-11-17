@@ -60,6 +60,16 @@ describe('SimpleResultComponent details (#631)', () => {
     expect(component.loadedResult).toBe(true)
   })
 
+  it('keeps details disabled when polling ends without a result', () => {
+    const polls = new Subject<any>()
+    resultService.doSendQueryRequest.mockReturnValue(polls)
+    ;(component as any).doSend()
+    polls.next(null)
+    polls.complete()
+    expect(snackbar.displayErrorMessage).toHaveBeenCalledWith('RESULT_TIMEOUT')
+    expect(component.loadedResult).toBe(false)
+  })
+
   it('opens the modal once the details are there', () => {
     resultService.getDetailedObfuscatedResult.mockReturnValue(of({}))
     component.openDialogResultDetails()

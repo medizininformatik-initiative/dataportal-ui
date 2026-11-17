@@ -93,7 +93,6 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
       .getActiveFeasibilityQuery()
       .pipe(
         filter((feasibilityQuery) => feasibilityQuery.getInclusionCriteria().length > 0),
-        // Provider emits on every change of the query map: send again only if the criteria changed.
         distinctUntilChanged(
           (a, b) =>
             JSON.stringify([a.getInclusionCriteria(), a.getExclusionCriteria()]) ===
@@ -129,36 +128,28 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
    * before it decides between a final result and an error.
    */
   private createDoSendSubscription(obs: Observable<QueryResponseType>): Subscription {
-    // Last poll answer (result or error), kept until the end marker arrives.
     let last: QueryResponseType = null
     return obs.subscribe({
       next: (current: QueryResponseType) => {
         if (current !== null) {
-          // A poll answered: remember it, show the patient count right away if it is a result.
           last = current
           if (this.isQueryResult(current)) {
             this.handleResult(current)
           }
           return
         }
-        // End marker. Two separate ifs, no else: see the type guards below.
         if (this.isQueryResult(last)) {
-          // Polling ended after a result: stop the spinner, enable Details, emit loaded.
           this.finalize()
           this.handleResult(last)
         }
         if (this.isErrorResult(last)) {
-          // Polling ended after an error answer (issue from backend): show its message.
           console.error('Received an error result:', last)
           this.receivedError = true
           this.snackbarService.displayErrorMessage(last.getIssues()?.[0]?.getCode())
           this.showSpinner = false
         }
-        // Polling ended with no answer at all: handled in `complete` (timeout message).
       },
-      // Sending the query failed (e.g. 429, no location header).
       error: (error) => this.handleQueryError(error),
-      // Stream ended: finalize, show timeout message if nothing arrived.
       complete: () => this.handleComplete(),
     })
   }
@@ -267,8 +258,11 @@ export class SimpleResultComponent implements OnInit, OnDestroy {
     this.patientCountArray = patientCountArray
   }
 
+  /**
+   * Details need a count: without a result (timeout, only issues) the button stays disabled.
+   */
   private finalize(): void {
-    this.loadedResult = true
+    this.loadedResult = this.receivedResult
     this.showSpinner = false
   }
 

@@ -19,6 +19,20 @@ Feature: Cohort result polling
     Then I see the message "{{resultPolling.timeout}}"
     And I see the spinner is not visible
 
+  @component:feasibility-result @behavior:report-backend-error
+  Scenario: Details stay disabled when polling got no result
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And the backend answers every result poll with status 500
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the message "{{resultPolling.timeout}}"
+    And the details button is disabled
+
   @component:feasibility-result @behavior:tolerate-slow-backend
   Scenario: A failed poll in between does not stop polling
     Given the result polling takes 20 seconds, polls every 1 seconds and expires after 60 seconds
@@ -56,6 +70,22 @@ Feature: Cohort result polling
     And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
     And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
     And the backend answers every result poll with the issue "{{resultPolling.issueCode}}"
+    When I click on the button "{{labels.feasibility}}"
+    Then I should arrive on the "{{pages.feasibilityResult}}" page
+    Then I see the message "{{resultPolling.tooManyQueries}}"
+    And I see the spinner is not visible
+
+  # Known defect: PollingManager drops every failed poll (catchError -> EMPTY), so a 429 with
+  # FEAS-10003 is never shown: the timeout message appears instead, count stays 0.
+  @component:feasibility-result @behavior:report-backend-error @pending
+  Scenario: A rate limited poll shows the rate limit message
+    Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
+    And I am logged in as a user
+    And I am on the "{{pages.feasibilitySearch}}" page
+    And I set the language to English
+    And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
+    And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
+    And the backend answers every result poll with status 429 and the issue "{{resultPolling.rateLimited}}"
     When I click on the button "{{labels.feasibility}}"
     Then I should arrive on the "{{pages.feasibilityResult}}" page
     Then I see the message "{{resultPolling.tooManyQueries}}"
@@ -228,7 +258,7 @@ Feature: Cohort result polling
     And the query was sent 2 times
 
   @component:feasibility-result @behavior:report-backend-error
-  Scenario: Details after a summary below the privacy threshold show the message
+  Scenario: A summary below the privacy threshold shows the message and disables details
     Given the result polling takes 6 seconds, polls every 1 seconds and expires after 60 seconds
     And I am logged in as a user
     And I am on the "{{pages.feasibilitySearch}}" page
@@ -236,15 +266,12 @@ Feature: Cohort result polling
     And I add the criterium "{{labAge.criterium}}" via code "{{labAge.code}}" to the editor
     And I drag "{{labAge.criterium}}" criterium to the "{{labels.inclusion}}" list
     And the backend answers every result poll with the issue "{{resultPolling.belowThreshold}}"
-    And the backend answers every detail request with the issue "{{resultPolling.belowThreshold}}"
-    And I watch the result details dialog
+    And I watch the detail requests
     When I click on the button "{{labels.feasibility}}"
     Then I should arrive on the "{{pages.feasibilityResult}}" page
     Then I see the message "{{resultPolling.belowThresholdText}}"
-    And the details button is enabled
-    When I open the result details 1 time
-    Then I see the message "{{resultPolling.belowThresholdText}}"
-    And the result details dialog never opened
+    And the details button is disabled
+    And the details were requested 0 times
     And I see no error dialog
 
   @component:feasibility-result @behavior:report-backend-error

@@ -9,7 +9,7 @@ const DETAILS_BUTTON = `${SIMPLE_RESULT} button`
 const DETAILS_DIALOG = 'num-result-detail-modal'
 const ERROR_DIALOG = 'num-error-display .error-display-overlay'
 const SEND_BUTTON = 'num-editor-action-bar button'
-const LONG_TIMEOUT = 20000
+const TIMEOUT_SLACK_SECONDS = 10
 
 /**
  * Faults for feasibility result polling. Real backend cannot fail on demand, so each method
@@ -20,11 +20,14 @@ export class ResultPolling {
   private inFlight = 0
   private maxInFlight = 0
   private dialogSeen = false
+  private longTimeout = 20000
 
   /**
-   * Shorten polling window, poll interval and result expiry from backend `.settings`.
+   * Shorten polling window, poll interval and result expiry from backend `.settings`. Long
+   * assertions wait for longer of window and expiry, plus slack.
    * */
   public setTimes(pollingSeconds: number, intervalSeconds: number, expirySeconds: number) {
+    this.longTimeout = (Math.max(pollingSeconds, expirySeconds) + TIMEOUT_SLACK_SECONDS) * 1000
     /**
      * Static reply, no upstream callback: app start navigates (login redirect) and aborts
      * pending settings request. Callback on it fails test with BrowserConnectionClosedError.
@@ -86,6 +89,16 @@ export class ResultPolling {
     cy.intercept('GET', SUMMARY_RESULT, {
       statusCode: 200,
       body: { issues: [{ code, message: code, type: 'ERROR', severity: 'ERROR' }] },
+    })
+  }
+
+  /**
+   * Answer every poll with HTTP `status` and issue `code`, as backend does on summary read quota.
+   * */
+  public failEveryPollWithIssue(status: number, code: string) {
+    cy.intercept('GET', SUMMARY_RESULT, {
+      statusCode: status,
+      body: { issues: [{ code, message: code, type: 'busy', severity: 'error' }] },
     })
   }
 
@@ -195,7 +208,7 @@ export class ResultPolling {
    * Assert message in snackbar.
    * */
   public shouldShowMessage(text: string) {
-    cy.get(SNACKBAR, { timeout: LONG_TIMEOUT }).should('contain.text', text)
+    cy.get(SNACKBAR, { timeout: this.longTimeout }).should('contain.text', text)
   }
 
   /**
@@ -224,7 +237,7 @@ export class ResultPolling {
    * Assert details dialog lists sites with patient counts.
    * */
   public detailsDialogShouldListSites() {
-    cy.get(DETAILS_DIALOG, { timeout: LONG_TIMEOUT }).find('tr').should('have.length.above', 1)
+    cy.get(DETAILS_DIALOG, { timeout: this.longTimeout }).find('tr').should('have.length.above', 1)
   }
 
   /**
@@ -252,21 +265,21 @@ export class ResultPolling {
    * Assert send button is enabled again with its normal label.
    * */
   public sendShouldBeEnabledAgain() {
-    cy.contains(SEND_BUTTON, 'Feasibility', { timeout: LONG_TIMEOUT }).should('not.be.disabled')
+    cy.contains(SEND_BUTTON, 'Feasibility', { timeout: this.longTimeout }).should('not.be.disabled')
   }
 
   /**
    * Assert details button enabled once result is complete.
    * */
   public detailsShouldBeEnabled() {
-    cy.contains(DETAILS_BUTTON, 'Details', { timeout: LONG_TIMEOUT }).should('not.be.disabled')
+    cy.contains(DETAILS_BUTTON, 'Details', { timeout: this.longTimeout }).should('not.be.disabled')
   }
 
   /**
    * Assert non-zero patient count while spinner still runs, so result shows before polling ends.
    * */
   public countShouldShowWhilePolling() {
-    cy.get(SIMPLE_RESULT, { timeout: LONG_TIMEOUT }).should(($result) => {
+    cy.get(SIMPLE_RESULT, { timeout: this.longTimeout }).should(($result) => {
       expect($result.find('num-spinner')).to.have.length(1)
       expect($result.find('.digit').text().replace(/\s/g, '')).not.to.match(/^0*$/)
     })
@@ -276,7 +289,7 @@ export class ResultPolling {
    * Assert details button disabled after result expired.
    * */
   public detailsShouldBeDisabled() {
-    cy.contains(DETAILS_BUTTON, 'Details', { timeout: LONG_TIMEOUT }).should('be.disabled')
+    cy.contains(DETAILS_BUTTON, 'Details', { timeout: this.longTimeout }).should('be.disabled')
   }
 }
 
@@ -303,6 +316,10 @@ defineStep('I see the patient count while the query is still polling', () =>
 )
 defineStep('the backend answers every result poll with the issue {string}', (code: string) =>
   resultPolling.answerWithIssue(code)
+)
+defineStep(
+  'the backend answers every result poll with status {int} and the issue {string}',
+  (status: number, code: string) => resultPolling.failEveryPollWithIssue(status, code)
 )
 defineStep('the backend answers sending the query without a location header', () =>
   resultPolling.dropLocationHeader()
