@@ -578,6 +578,14 @@
       "HEADER": "Confirm deletion",
       "TITLE": "Do you really want to delete the data query?"
     },
+    "ERROR_DISPLAY": {
+      "ERROR": "Error",
+      "FEASIBILITY_ERROR": "Feasibility query failed",
+      "GENERIC_ERROR": "Something went wrong",
+      "NO_DETAILS": "No error details available",
+      "REQUEST_URL": "Request URL",
+      "VALIDATION_ERROR": "Data definition is invalid"
+    },
     "FILTER": {
       "AVAILABILITY": "Availability",
       "CATEGORY": "Category",

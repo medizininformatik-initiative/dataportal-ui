@@ -70,7 +70,18 @@
     "pneumonia": "pneumonia",
     "gENERICERROR": "GENERIC_ERROR",
     "terminologyEntrySearch": "terminology/entry/search",
-    "objectObject": "[object Object]"
+    "objectObject": "[object Object]",
+    "somethingWentWrong": "Something went wrong",
+    "searchtermPneumonia": "searchterm=pneumonia",
+    "unknownError": "0 Unknown Error",
+    "invalidSearchTerm": "Invalid search term",
+    "noSuchEndpoint": "No such endpoint",
+    "elasticsearchUnavailable": "Elasticsearch unavailable",
+    "gatewayTimeout": "Gateway timeout",
+    "code400": "Code: 400",
+    "code404": "Code: 404",
+    "code500": "Code: 500",
+    "code504": "Code: 504"
   },
   "session": {
     "savedQueries": "saved-queries",

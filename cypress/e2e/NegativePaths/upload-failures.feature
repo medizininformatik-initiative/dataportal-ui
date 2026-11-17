@@ -37,10 +37,9 @@ Feature: Upload - invalid files
       | {{uploadFailures.emptyObjectJson}} | {{uploadFailures.value}}              | {{uploadFailures.requiredPropertyCohortDefinitionNotFound}} | {{files.singleInclusionCriterium}} |
       | {{uploadFailures.unknownPropJson}} | {{uploadFailures.inclusionCriteria1}} | {{uploadFailures.isNotDefinedInTheSchema}}                  | {{files.singleInclusionCriterium}} |
 
-  # DEFECT: the dialog for a non-JSON file is titled `GENERIC_ERROR` and shows the raw
-  # SyntaxError text. Expected: a translated title and a sentence naming the file.
+  # The dialog title is translated. The body still shows the raw SyntaxError text; a sentence
+  # naming the file would be better.
   @component:upload @behavior:reject-invalid-file
-  @pending
   Scenario Outline: A file that is not JSON gets a readable message
     When I upload a file named "<fileName>" containing "<contents>"
     Then an error dialog is shown

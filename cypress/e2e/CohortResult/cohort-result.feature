@@ -8,6 +8,7 @@ Feature: Cohort Result
 
   @component:feasibility-result @behavior:save
   Scenario Outline: A criterium is saved as a cohort, its feasibility result is shown and the saved cohort is deleted
+    Given no saved query "<title>" exists
     When I add the criterium "<criterium>" via code "<code>" to the editor
     Then I should see the criterium "<criterium>" in the editor
     When I drag "<criterium>" criterium to the "{{labels.inclusion}}" list
