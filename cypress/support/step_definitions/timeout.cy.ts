@@ -1,12 +1,17 @@
-import { defineStep } from "@badeball/cypress-cucumber-preprocessor"
+import { defineStep } from '../defineStep'
 
+/**
+ * Fixed wait step for rare unavoidable sleeps.
+ * */
 export class Timeout {
-    public waitFor(seconds: number) {
-        cy.wait(seconds * 1000, { log: true })
-    }
+  /**
+   * Wait `seconds`.
+   * */
+  public waitFor(seconds: number) {
+    cy.wait(seconds * 1000, { log: true })
+  }
 }
 
 export const timeout = new Timeout()
-defineStep('I wait for {int} seconds', (seconds: number) => {
-    timeout.waitFor(seconds)
-})
+
+defineStep('I wait for {int} seconds', (seconds: number) => timeout.waitFor(seconds))

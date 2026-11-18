@@ -4,6 +4,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
 import { HeaderComponent } from '../header/header.component'
 import { MatDialogRef } from '@angular/material/dialog'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
 import { SaveDataModal } from '../../models/SaveDataModal/SaveDataModal'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -12,7 +13,14 @@ import { TranslateModule } from '@ngx-translate/core'
   templateUrl: './save-dataquery-modal.component.html',
   styleUrls: ['./save-dataquery-modal.component.scss'],
   standalone: true,
-  imports: [FontAwesomeModule, HeaderComponent, FormsModule, ButtonComponent, TranslateModule],
+  imports: [
+    FontAwesomeModule,
+    HeaderComponent,
+    FormsModule,
+    ButtonComponent,
+    TranslateModule,
+    NumDataCyDirective,
+  ],
 })
 export class SaveDataQueryModalComponent implements OnInit {
   private dialogRef = inject<MatDialogRef<SaveDataQueryModalComponent>>(MatDialogRef)

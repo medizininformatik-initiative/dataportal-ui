@@ -42,7 +42,6 @@ export class ReferenceCriteriaListEntry extends AbstractListEntry {
    * @returns A new instance of ReferenceCriteriaListEntry.
    */
   public static fromJson(json: ReferenceCriteriaListEntryData): ReferenceCriteriaListEntry {
-    console.log(json)
     return new ReferenceCriteriaListEntry(
       Display.fromJson(json.display),
       json.system,

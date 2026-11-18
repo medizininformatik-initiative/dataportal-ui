@@ -1,4 +1,4 @@
-<mat-form-field class="language-select" [attr.data-cy]="'language-select'">
+<mat-form-field class="language-select" numDataCy="language-select">
   @if (translate.currentLang === 'de') {
   <span class="fi fi-de" matPrefix></span>
   } @if (translate.currentLang === 'en') {
@@ -15,11 +15,11 @@
     "
     (selectionChange)="changeLanguage($event.value)"
   >
-    <mat-option value="de" [attr.data-cy]="'language-option-de'">
+    <mat-option value="de" numDataCy="language-option-de">
       <span style="margin-right: 10px" class="fi fi-de option-layout"></span>
       {{ 'LANGUAGE.GERMAN' | translate }}
     </mat-option>
-    <mat-option value="en" [attr.data-cy]="'language-option-en'">
+    <mat-option value="en" numDataCy="language-option-en">
       <span style="margin-right: 10px" class="fi fi-gb option-layout"></span>
       {{ 'LANGUAGE.ENGLISH' | translate }}
     </mat-option>

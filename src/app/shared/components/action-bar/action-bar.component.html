@@ -1,7 +1,7 @@
 <div class="container padding-left-right-5px">
   @if (showUpload()) {
   <input
-    [attr.data-cy]="'upload-crtdl'"
+    numDataCy="upload-crtdl"
     type="file"
     class="file-input"
     (change)="upload($event)"
@@ -14,6 +14,7 @@
         ? ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD_DISABLED' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate)
     "
+    [attr.aria-label]="'SHARED_COMPONENTS.ACTION_BAR.UPLOAD' | translate"
     type="button"
     class="num-button green icon"
     [class.disabled]="uploadDisabled"
@@ -24,11 +25,13 @@
   } @if (showDownload()) {
   <button
     (click)="downloadCRTDL()"
+    numDataCy="download-crtdl-button"
     [matTooltip]="
       isDataDefinitionValid()
         ? ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
     "
+    [attr.aria-label]="'SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD' | translate"
     type="button"
     class="num-button green icon"
     [class.disabled]="!isDataDefinitionValid()"
@@ -39,11 +42,13 @@
   } @if (showSave()) {
   <button
     (click)="onSaveDataQuery()"
+    numDataCy="save-cohort-button"
     [matTooltip]="
       isDataDefinitionValid()
         ? ('SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate)
         : ('SHARED_COMPONENTS.ACTION_BAR.DOWNLOAD_DISABLED' | translate)
     "
+    [attr.aria-label]="'SHARED_COMPONENTS.ACTION_BAR.SAVE' | translate"
     type="button"
     class="num-button green icon"
     [class.disabled]="!isDataDefinitionValid()"

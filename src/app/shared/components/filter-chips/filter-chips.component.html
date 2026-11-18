@@ -2,7 +2,7 @@
 <div class="filter-wrapper">
   @if (displayBlockTriangle()) {
   <div
-    data-cy="{{ filterChip.type | displayTranslation }}"
+    [numDataCy]="filterChip.type | displayTranslation"
     class="block"
     (click)="toggleTypeExpanded(filterChip)"
     [ngClass]="{ expanded: filterChip.typeExpanded, twoLine: filterChip.twoLineDisplay }"
@@ -13,7 +13,7 @@
   } @for (chip of filterChip.data; track chip; let i = $index) { @if (showAll() || i < maxVisible())
   {
   <div
-    [attr.data-cy]="chip.text | displayTranslation"
+    [numDataCy]="chip.text | displayTranslation"
     class="chip-container margin-left-1"
     [ngClass]="{ expanded: chip.expanded }"
     (click)="toggleExpanded(chip)"

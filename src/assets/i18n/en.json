@@ -285,6 +285,8 @@
     }
   },
   "ERROR": {
+    "RESULT_FAILED": "The result could not be loaded. Please try again.",
+    "RESULT_TIMEOUT": "The result could not be determined in time. Please try again.",
     "404": "Location not found",
     "DSE-10001": "A selected field could not be loaded",
     "FEAS-10001": "Your account has been locked due to too many queries. Please contact info@research-for-health.de",
@@ -391,6 +393,10 @@
       "HEADER": "Criteria editor",
       "HEADER_INFO": "Edit your criteria here and compile your cohort selection. The cohort selection can be used to directly submit a cross-location feasibility query.",
       "HEADER_TITLE": "Selected criteria",
+      "COLLAPSE_ALL": "Collapse all",
+      "EXPAND_ALL": "Expand all",
+      "COLLAPSE_SELECTED": "Collapse selected criteria",
+      "EXPAND_SELECTED": "Expand selected criteria",
       "INCLUSION": "Inclusion criteria",
       "MODAL": {
         "ADD": "Add",
@@ -528,6 +534,7 @@
     "DISCLOSURE": "Imprint"
   },
   "NAVIGATION": {
+    "PLAYGROUND": "Playground",
     "DASHBOARD": "Home",
     "DATAQUERY": "Data Definition",
     "DATASELECTION": "Feature Selection",
@@ -570,13 +577,24 @@
       "TIMERESTRICTION": "Time Restriction"
     },
     "CRITERIA_BOX": {
-      "DRAG_ICON_LABEL": "Drag criterion to inclusion or exclusion group (Drag & Drop)"
+      "DRAG_ICON_LABEL": "Drag criterion to inclusion or exclusion group (Drag & Drop)",
+      "COLLAPSE_LABEL": "Collapse criterion",
+      "EXPAND_LABEL": "Expand criterion",
+      "REFERENCES": "References"
     },
     "DELETE_MODAL": {
       "CANCEL": "Cancel",
       "DELETE": "Delete",
       "HEADER": "Confirm deletion",
       "TITLE": "Do you really want to delete the data query?"
+    },
+    "ERROR_DISPLAY": {
+      "ERROR": "Error",
+      "FEASIBILITY_ERROR": "Feasibility query failed",
+      "GENERIC_ERROR": "Something went wrong",
+      "NO_DETAILS": "No error details available",
+      "REQUEST_URL": "Request URL",
+      "VALIDATION_ERROR": "Data definition is invalid"
     },
     "FILTER": {
       "AVAILABILITY": "Availability",
@@ -787,6 +805,7 @@
     "2000005": "Linked group is missing for an attribute of type reference.",
     "2000006": "Linked group was not found in CRTDL.",
     "2000007": "The end date must be after the start date.",
+    "2000008": "Filter name was not found in the ontology profile of the attribute group.",
     "00001": "JSON could not be processed."
   }
 }

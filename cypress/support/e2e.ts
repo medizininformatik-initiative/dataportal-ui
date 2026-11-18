@@ -1,20 +1,13 @@
-// ***********************************************************
-// This example support/e2e.ts is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+/**
+ * Global support file, loaded automatically before every spec. Put global configuration and
+ * Cypress behavior changes here. Docs: https://on.cypress.io/configuration (`supportFile`
+ * option).
+ * */
 
-// Import commands.js using ES2015 syntax:
+/**
+ * Import custom commands.
+ * */
 import './commands'
-export { BasePaths } from '../../src/app/app-paths';
-export { PathSegments } from '../../src/app/app-paths';
-export { UrlPaths } from '../../src/app/app-paths';
+export { BasePaths } from '../../src/app/app-paths'
+export { PathSegments } from '../../src/app/app-paths'
+export { UrlPaths } from '../../src/app/app-paths'

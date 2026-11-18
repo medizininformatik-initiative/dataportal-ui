@@ -7,8 +7,19 @@ import path from "path";
 
 export default defineConfig({
   env: {
+    // Sensitive - read via cy.env() only, never exposed to the browser context.
     username: 'testuser',
     password: 'testpassword',
+  },
+  expose: {
+    // UI language the suite runs in: 'en' (default) or 'de'. Override per run with
+    // `npx cypress run --expose language=de`. See cypress/support/i18n.ts.
+    language: 'en',
+    // Scenarios tagged @pending document known defects and fail. Run them with
+    // `--expose tags=@pending`. See cypress/TESTING.md.
+    tags: 'not @pending',
+    // Non-sensitive - safe for synchronous Cypress.expose() access, including
+    // as cy.origin()'s plain string URL argument.
     homeUrl: 'http://localhost:4200/data-query/cohort-definition',
     redirectUrl: 'http://localhost:8080',
   },
@@ -33,6 +44,15 @@ export default defineConfig({
             console.log(`ℹ️ Folder not found: ${folder}`);
           }
         });
+      });
+
+      // Downloads share one file name across scenarios: delete it before each download so
+      // readFile can never return the previous scenario's file.
+      on('task', {
+        removeDownload(fileName: string) {
+          fs.removeSync(path.join(__dirname, 'cypress', 'downloads', `${fileName}.json`));
+          return null;
+        },
       });
 
       await addCucumberPreprocessorPlugin(on, config);

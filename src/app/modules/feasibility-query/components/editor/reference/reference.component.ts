@@ -17,10 +17,8 @@ import { TableComponent } from '../../../../../shared/components/table/table.com
 import { TableData } from 'src/app/shared/models/TableData/TableData'
 import { TableRowData } from 'src/app/shared/models/TableData/TableRowData'
 import { TranslateModule } from '@ngx-translate/core'
-import {
-  DisplayTranslationPipe,
-  SectionNameComponent,
-} from 'src/app/shared/components/shared-components.module'
+import { DisplayTranslationPipe } from 'src/app/shared/pipes/DisplayTranslationPipe'
+import { SectionNameComponent } from 'src/app/shared/components/section-name/section-name.component'
 
 interface selectedItem {
   id: string

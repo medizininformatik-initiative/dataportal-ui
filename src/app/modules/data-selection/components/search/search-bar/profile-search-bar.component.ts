@@ -9,11 +9,9 @@ import { ProfileSearchService } from 'src/app/service/Search/SearchTypes/Profile
 import { SearchbarComponent } from 'src/app/shared/components/search/searchbar.component'
 import { SearchFilterData } from 'src/app/shared/models/SearchFilter/SearchFilterData'
 import { ElasticSearchFilterTypes } from 'src/app/model/Utilities/ElasticSearchFilterTypes'
-import {
-  InfoTooltipDirective,
-  SearchFilterComponent,
-  SectionNameComponent,
-} from 'src/app/shared/components/shared-components.module'
+import { InfoTooltipDirective } from 'src/app/shared/directives/info-tooltip.directive'
+import { SearchFilterComponent } from 'src/app/shared/components/search-filter/search-filter.component'
+import { SectionNameComponent } from 'src/app/shared/components/section-name/section-name.component'
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
 import { TranslateModule } from '@ngx-translate/core'
 

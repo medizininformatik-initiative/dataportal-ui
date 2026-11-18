@@ -1,6 +1,7 @@
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
+import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
-import { Component, inject } from '@angular/core'
+import { Component, computed, inject } from '@angular/core'
 import { FeasibilityQueryFactoryService } from 'src/app/service/FeasibilityQueryFactory.service'
 import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { NavigationHelperService } from 'src/app/service/NavigationHelper.service'
@@ -19,8 +20,11 @@ export class CohortDefinitionActionBarComponent {
   private feasibilityQueryFactoryService = inject(FeasibilityQueryFactoryService)
   private feasibilityQueryValidationService = inject(FeasibilityQueryValidationService)
 
-  readonly isFeasibilityQueryValid =
-    this.feasibilityQueryValidationService.validationState().isValid
+  readonly sendBlockedSeconds = inject(FeasibilityQueryResultService).sendBlockedSeconds
+
+  readonly isFeasibilityQueryValid = computed(
+    () => this.feasibilityQueryValidationService.validationState().isValid
+  )
 
   public sendQuery(): void {
     this.routerHelperService.navigateToFeasibilityQueryResult()

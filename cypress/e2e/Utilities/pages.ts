@@ -1,6 +1,7 @@
 export enum Page {
   FeasibilityEditor = 'Feasibility Editor',
   FeasibilitySearch = 'Feasibility Search',
+  FeasibilityBulkSearch = 'Feasibility Bulk Search',
   FeasibilityResult = 'Feasibility Result',
   DataSelectionEditor = 'Data Selection Editor',
   DataSelectionSearch = 'Data Selection Search',

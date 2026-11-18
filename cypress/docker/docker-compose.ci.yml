@@ -1,0 +1,10 @@
+# CI only, merged over docker-compose.yml: Elasticsearch keeps its data in a bind mount that the
+# workflow caches per ontology tag, so the ontology is loaded once, not on every run. With data
+# present the init container sees an equal version and exits without reinstalling.
+services:
+  dataportal-elastic:
+    volumes:
+      - ./es-data:/usr/share/elasticsearch/data
+  elastic-search-init:
+    environment:
+      FORCE_REINSTALL: 'false'

@@ -8,12 +8,14 @@
   <div class="save-query-box">
     <input
       class="field-input"
+      numDataCy="dialog-title-input"
       type="text"
       [(ngModel)]="title"
       placeholder="{{ 'SAVED_QUERIES.TITLE' | translate }}"
     />
     <textarea
       class="field-input field-textarea"
+      numDataCy="dialog-comment-input"
       [(ngModel)]="comment"
       placeholder="{{ 'SAVED_QUERIES.COMMENT' | translate }}"
     ></textarea>

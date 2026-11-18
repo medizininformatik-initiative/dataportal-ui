@@ -1,0 +1,169 @@
+{
+  "bulkSearch": {
+    "oneUnknown": "E11, ZZZ99",
+    "newlineSeparated": "E10\nE11\nE66",
+    "spaceSeparated": "E10 E11 E66",
+    "commaSeparated": "E10,E11,E66"
+  },
+  "attributeConceptSameCodeDifferentSystem": {
+    "alphaID": "Alpha-ID",
+    "icd10gm": "ICD-10-GM",
+    "i26": "I26",
+    "diagnosis": "Diagnosis"
+  },
+  "attributeConceptUiSync": {
+    "sepsis": "Sepsis"
+  },
+  "timeRestriction": {
+    "theStartDateMustBeEarlier": "The start date must be earlier than the end date",
+    "v04042045": "04.04.2045",
+    "v01012045": "01.01.2045",
+    "from01012045To04": "From 01.01.2045 to 04.04.2045",
+    "from04042045To01": "From 04.04.2045 to 01.01.2045",
+    "from04042045To04": "From 04.04.2045 to 04.04.2045"
+  },
+  "quantityComparatorUpdateChip": {
+    "v5A": "> 5 a",
+    "greater": "greater",
+    "noFilter": "No filter"
+  },
+  "quantityRangeInvalid": {
+    "noFilterEqualLessThanGreater": "No filter, equal, less than, greater than, between",
+    "theMinimumValueMustBeLess": "The minimum value must be less than the maximum value"
+  },
+  "criteriumActions": {
+    "delete": "Delete",
+    "duplicate": "Duplicate"
+  },
+  "cohortSearch": {
+    "showCohortSelection": "Show cohort selection",
+    "diabetes": "Diabetes"
+  },
+  "cohortResult": {
+    "title": "Cohort result test",
+    "comment": "Saved by the cohort result scenario"
+  },
+  "cohortDefinitionEmpty": {
+    "newCohort": "New Cohort",
+    "feasibilityQuery": "Feasibility Query"
+  },
+  "dataSelectionSearch": {
+    "note": "Note"
+  },
+  "languageSwitch": {
+    "merkmalselektion": "Merkmalselektion",
+    "dataSelection": "Data Selection",
+    "german": "German",
+    "savedDataDefinitions": "Saved data definitions",
+    "cohortSelection": "Cohort Selection",
+    "english": "English",
+    "gespeicherteDatendefinitionen": "Gespeicherte Datendefinitionen",
+    "kohortenselektion": "Kohortenselektion"
+  },
+  "sideNavigation": {
+    "featureSelection": "Feature Selection"
+  },
+  "dataSelectionSearchFailures": {
+    "zzzqqqxxx": "zzzqqqxxx"
+  },
+  "searchFailures": {
+    "pneumonia": "pneumonia",
+    "gENERICERROR": "GENERIC_ERROR",
+    "terminologyEntrySearch": "terminology/entry/search",
+    "objectObject": "[object Object]",
+    "somethingWentWrong": "Something went wrong",
+    "searchtermPneumonia": "searchterm=pneumonia",
+    "unknownError": "0 Unknown Error",
+    "invalidSearchTerm": "Invalid search term",
+    "noSuchEndpoint": "No such endpoint",
+    "elasticsearchUnavailable": "Elasticsearch unavailable",
+    "gatewayTimeout": "Gateway timeout",
+    "code400": "Code: 400",
+    "code404": "Code: 404",
+    "code500": "Code: 500",
+    "code504": "Code: 504"
+  },
+  "session": {
+    "savedQueries": "saved-queries",
+    "feasibilityQuerySearch": "feasibility-query/search",
+    "dataQueryCohortDefinition": "data-query/cohort-definition"
+  },
+  "uploadFailures": {
+    "thisIsNotJson": "this is not json",
+    "notJsonJson": "not-json.json",
+    "isNotDefinedInTheSchema": "is not defined in the schema",
+    "inclusionCriteria1": "{\"inclusionCriteria\":1}",
+    "unknownPropJson": "unknown-prop.json",
+    "requiredPropertyCohortDefinitionNotFound": "required property 'cohortDefinition' not found",
+    "value": "{}",
+    "emptyObjectJson": "empty-object.json",
+    "isNotValidJSON": "is not valid JSON"
+  },
+  "savedQueries": {
+    "aTestCohort": "A test cohort",
+    "queryToDelete": "Query To Delete",
+    "testQuery": "Test Query"
+  },
+  "userMenu": {
+    "logOut": "Log Out",
+    "aboutThePortal": "About the Portal",
+    "log": "Log"
+  },
+  "upgradeDateFilter": {
+    "fixture": "Upgrade_Start_Only_Date_Filter",
+    "logText": "The filter has been updated",
+    "group": "Diagnosis",
+    "oldName": "onset-date",
+    "newName": "recorded-date",
+    "start": "2026-11-02"
+  },
+  "resultPolling": {
+    "timeout": "The result could not be determined in time",
+    "failed": "The result could not be loaded",
+    "tooManyQueries": "You have made too many queries",
+    "issueCode": "FEAS-10002",
+    "belowThreshold": "FEAS-10004",
+    "belowThresholdText": "Patient number too low for detailed results",
+    "fewSites": "FEAS-10005",
+    "fewSitesText": "The number of responding locations is too small",
+    "locked": "FEAS-10001",
+    "lockedText": "Your account has been locked",
+    "rateLimited": "FEAS-10003",
+    "retryAfter3": "Please wait 3 seconds",
+    "retryAfter4": "Please wait 4 seconds"
+  },
+  "criteriaGroups": {
+    "a": "18-oxidase deficiency",
+    "b": "Glycogenosis due to hepatic phosphorylase deficiency",
+    "c": "GSD [glycogen storage disease] due to aldolase A deficiency",
+    "d": "Glycogen storage disease due to myophosphorylase deficiency",
+    "andChain": "Criteria_And_Chain",
+    "orGroup": "Criteria_Or_Group",
+    "mixed": "Criteria_Mixed",
+    "bothLists": "Criteria_Inclusion_And_Exclusion",
+    "layout": {
+      "a_b": "18-oxidase deficiency | Glycogenosis due to hepatic phosphorylase deficiency",
+      "a_b_c": "18-oxidase deficiency | Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "a_bc": "18-oxidase deficiency | Glycogenosis due to hepatic phosphorylase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency",
+      "a_c": "18-oxidase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "a_c_d": "18-oxidase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency | Glycogen storage disease due to myophosphorylase deficiency",
+      "ab": "18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency",
+      "ab_c": "18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "ab_d": "18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency | Glycogen storage disease due to myophosphorylase deficiency",
+      "abc": "18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency",
+      "ac": "18-oxidase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency",
+      "acd": "18-oxidase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency + Glycogen storage disease due to myophosphorylase deficiency",
+      "adb_c": "18-oxidase deficiency + Glycogen storage disease due to myophosphorylase deficiency + Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "b_c": "Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency",
+      "b_c_a": "Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency | 18-oxidase deficiency",
+      "b_c_d": "Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency | Glycogen storage disease due to myophosphorylase deficiency",
+      "b_cad": "Glycogenosis due to hepatic phosphorylase deficiency | GSD [glycogen storage disease] due to aldolase A deficiency + 18-oxidase deficiency + Glycogen storage disease due to myophosphorylase deficiency",
+      "bc": "Glycogenosis due to hepatic phosphorylase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency",
+      "bca": "Glycogenosis due to hepatic phosphorylase deficiency + GSD [glycogen storage disease] due to aldolase A deficiency + 18-oxidase deficiency",
+      "c_a_b": "GSD [glycogen storage disease] due to aldolase A deficiency | 18-oxidase deficiency | Glycogenosis due to hepatic phosphorylase deficiency",
+      "c_d": "GSD [glycogen storage disease] due to aldolase A deficiency | Glycogen storage disease due to myophosphorylase deficiency",
+      "cab": "GSD [glycogen storage disease] due to aldolase A deficiency + 18-oxidase deficiency + Glycogenosis due to hepatic phosphorylase deficiency",
+      "cda": "GSD [glycogen storage disease] due to aldolase A deficiency + Glycogen storage disease due to myophosphorylase deficiency + 18-oxidase deficiency"
+    }
+  }
+}

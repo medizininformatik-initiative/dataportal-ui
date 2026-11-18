@@ -1,0 +1,101 @@
+{
+  "display": "",
+  "version": "http://json-schema.org/to-be-done/schema#",
+  "cohortDefinition": {
+    "version": "http://to_be_decided.com/draft-1/schema#",
+    "display": "Ausgew\u00e4hlte Merkmale",
+    "inclusionCriteria": [
+      [
+        {
+          "termCodes": [
+            {
+              "code": "I118347",
+              "display": "18-Oxydase-Mangel",
+              "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
+              "version": "2025"
+            }
+          ],
+          "context": {
+            "code": "Diagnose",
+            "display": "Diagnose",
+            "system": "fdpg.mii.cds",
+            "version": "1.0.0"
+          }
+        }
+      ],
+      [
+        {
+          "termCodes": [
+            {
+              "code": "I118348",
+              "display": "18-Oxydase-Mangel",
+              "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
+              "version": "2025"
+            }
+          ],
+          "context": {
+            "code": "Diagnose",
+            "display": "Diagnose",
+            "system": "fdpg.mii.cds",
+            "version": "1.0.0"
+          }
+        }
+      ]
+    ],
+    "exclusionCriteria": [
+      [
+        {
+          "termCodes": [
+            {
+              "code": "I118349",
+              "display": "18-Oxydase-Mangel",
+              "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
+              "version": "2025"
+            }
+          ],
+          "context": {
+            "code": "Diagnose",
+            "display": "Diagnose",
+            "system": "fdpg.mii.cds",
+            "version": "1.0.0"
+          }
+        },
+        {
+          "termCodes": [
+            {
+              "code": "I118350",
+              "display": "18-Oxydase-Mangel",
+              "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
+              "version": "2025"
+            }
+          ],
+          "context": {
+            "code": "Diagnose",
+            "display": "Diagnose",
+            "system": "fdpg.mii.cds",
+            "version": "1.0.0"
+          }
+        }
+      ]
+    ]
+  },
+  "dataExtraction": {
+    "attributeGroups": [
+      {
+        "attributes": [
+          {
+            "attributeRef": "Patient.active",
+            "mustHave": false
+          },
+          {
+            "attributeRef": "Patient.deceased[x]",
+            "mustHave": false
+          }
+        ],
+        "id": "351352f6-4816-40ec-b0d4-ed167f84fe52",
+        "groupReference": "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert",
+        "name": "MII PR Person Patient (Pseudonymisiert)"
+      }
+    ]
+  }
+}

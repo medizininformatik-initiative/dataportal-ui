@@ -1,5 +1,5 @@
 <div class="container">
-  @for (digit of patientCountArray; track digit) {
+  @for (digit of patientCountArray; track $index) {
   <div class="number-of-patients">
     <div class="digit">
       {{ digit }}

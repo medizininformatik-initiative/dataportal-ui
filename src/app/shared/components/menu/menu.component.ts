@@ -4,6 +4,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { NgClass } from '@angular/common'
+import { NumDataCyDirective } from '../../directives/num-data-cy.directive'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -19,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatMenuItem,
     NgClass,
     TranslateModule,
+    NumDataCyDirective,
   ],
 })
 export class MenuComponent implements OnInit {
@@ -27,6 +29,9 @@ export class MenuComponent implements OnInit {
   readonly menuItems = input<MenuItemInterface[]>([])
 
   readonly args = input<Record<string, unknown>>({})
+
+  /** 'button' = filled blue num-button (default), 'icon' = compact ghost icon button for dense cards */
+  readonly appearance = input<'button' | 'icon'>('button')
 
   constructor() {}
 
