@@ -5,8 +5,12 @@ import { Criterion, CriterionModifier, Json } from './types'
  * Build criterion by name, then apply modifiers in order: `criterion('age', withValue(...))`.
  * */
 export function criterion(name: CriterionName, ...modifiers: CriterionModifier[]): Criterion {
-  const { system, code, display, context: contextCode } = CRITERIA[name]
-  const base: Criterion = { termCodes: [{ code, system, display }], context: context(contextCode) }
+  const entry: (typeof CRITERIA)[CriterionName] & { contextDisplay?: string } = CRITERIA[name]
+  const { system, code, display, context: contextCode, contextDisplay } = entry
+  const base: Criterion = {
+    termCodes: [{ code, system, display }],
+    context: context(contextCode, contextDisplay),
+  }
   return modifiers.reduce((current, modify) => modify(current), base)
 }
 

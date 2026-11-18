@@ -10,6 +10,9 @@ const CRITERION_LABELS: Record<CriterionName, string> = {
   causeOfDeath: 'Cause of death',
   age: 'Age',
   gender: 'Gender',
+  specimen: 'Specimen',
+  cervixCancer: 'Cervix cancer',
+  breastCancerInFamily: 'Breast cancer in family',
 }
 
 const PROFILE_LABELS: Record<ProfileName, string> = {
@@ -78,7 +81,11 @@ function describeCriterion(criterion: Criterion): string {
   const parts = [name ? CRITERION_LABELS[name] : String(criterion.termCodes[0].display)]
   if (criterion.valueFilter) parts.push(describeValue(criterion.valueFilter))
   for (const filter of criterion.attributeFilters ?? []) {
-    parts.push(`with ${asJson(filter.attributeCode).display} ${codes(filter.selectedConcepts)}`)
+    const target =
+      filter.type === 'reference'
+        ? `(${(filter.criteria as Criterion[]).map(describeCriterion).join(' or ')})`
+        : codes(filter.selectedConcepts)
+    parts.push(`with ${asJson(filter.attributeCode).display} ${target}`)
   }
   if (criterion.timeRestriction) parts.push(describeTime(criterion.timeRestriction))
   return parts.join(' ')

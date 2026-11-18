@@ -51,6 +51,18 @@ Feature: CRTDL upload and download roundtrip
       | linked feature with must have              |
       | linked feature included only if referenced |
 
+    # Referenced criteria carry no `attributeFilters` key: the UI's own export leaves it out
+    # when empty (test_defekt_cohorte_ref.json).
+    Examples: Reference filters
+      | case                             |
+      | reference to one diagnosis       |
+      | reference to several diagnoses   |
+      | reference to diagnosis with time |
+      | reference and topography         |
+      | reference in exclusion           |
+      | reference as alternative         |
+      | reference as reported            |
+
     Examples: Everything combined
       | case               |
       | everything at once |
