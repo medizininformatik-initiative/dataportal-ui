@@ -1,5 +1,36 @@
 # Changelog
 
+## v7.3.4 (2026-11-18)
+
+### Features
+* Publish Docker images for `linux/arm64` in addition to `linux/amd64` [#687](https://github.com/medizininformatik-initiative/dataportal-ui/issues/687)
+* Enforce unique machine-readable feature names and add a display label [#602](https://github.com/medizininformatik-initiative/dataportal-ui/issues/602)
+* Handle the new CRTDL validation error code 2000008 (filter name not found in ontology profile) [#656](https://github.com/medizininformatik-initiative/dataportal-ui/issues/656)
+
+### Fixed
+* Settings request no longer sends `Authorization: Bearer null` before login, which caused a 401 and "CoreInitService failed" [#686](https://github.com/medizininformatik-initiative/dataportal-ui/issues/686)
+* Result page: rate-limited polls now show the correct message, and Details is only clickable once a result exists [#681](https://github.com/medizininformatik-initiative/dataportal-ui/issues/681)
+* HTTP errors now show status, message and URL instead of `[object Object]` [#678](https://github.com/medizininformatik-initiative/dataportal-ui/issues/678)
+* Fixed failed auto upgrade of a date filter with only a start date [#665](https://github.com/medizininformatik-initiative/dataportal-ui/issues/665)
+* Upload on the data definition page now updates the page [#664](https://github.com/medizininformatik-initiative/dataportal-ui/issues/664)
+* Reloading the page no longer triggers an error [#663](https://github.com/medizininformatik-initiative/dataportal-ui/issues/663)
+* Logging out now shows the "log back in" notification instead of follow-up errors [#657](https://github.com/medizininformatik-initiative/dataportal-ui/issues/657)
+* `Retry-After` header value is now shown in the error snackbar [#429](https://github.com/medizininformatik-initiative/dataportal-ui/issues/429)
+* Search parameters are now URL-encoded (e.g. `^`) [#323](https://github.com/medizininformatik-initiative/dataportal-ui/issues/323)
+* Hardened cohort result polling, timeout and expiry handling; a new query is sent on every entry to the result page [#680](https://github.com/medizininformatik-initiative/dataportal-ui/pull/680)
+* Fixed dropping and deleting criteria groups in the cohort editor so the list view refreshes [#680](https://github.com/medizininformatik-initiative/dataportal-ui/pull/680)
+* Bulk search lists found entries in the order of the entered codes [#661](https://github.com/medizininformatik-initiative/dataportal-ui/pull/661)
+* Data selection profile stores stay in sync: "Only if referenced" no longer resets when "Required" is toggled, deleted profiles no longer return via "Apply time period to all", removing the last link clears "Only if referenced" [#691](https://github.com/medizininformatik-initiative/dataportal-ui/pull/691)
+* Uploading a CRTDL with a reference filter no longer crashes when the referenced criteria have no attribute filters [#691](https://github.com/medizininformatik-initiative/dataportal-ui/pull/691)
+
+### Changed
+* Refreshed the published UI runtime image (Alpine/Nginx) and removed unused language and MIME type config files [#666](https://github.com/medizininformatik-initiative/dataportal-ui/issues/666)
+* Adjusted the portal for lower screen resolutions [#658](https://github.com/medizininformatik-initiative/dataportal-ui/issues/658)
+* Improved criteria box and filter chips: collapsible criteria tiles with collapse-all, counts in section titles, filters shown as a table [#640](https://github.com/medizininformatik-initiative/dataportal-ui/issues/640)
+* Refactored and extended the Cypress e2e tests (class-based step definitions, new coverage for upload, result polling and AND/OR groups) [#655](https://github.com/medizininformatik-initiative/dataportal-ui/pull/655), [#667](https://github.com/medizininformatik-initiative/dataportal-ui/pull/667)
+
+
+
 ## v7.3.3 (2026-10-14)
 
 ### Fixed
