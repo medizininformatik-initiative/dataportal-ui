@@ -103,9 +103,9 @@ export class ApplyTimeRestrictionComponent {
           timeRestrictionFilter[0].getType(),
           restriction
         )
-        profile.setFilter(profileDateFilter)
         const clonedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
-        this.dataSelectionProvider.setActiveProfile(clonedProfile, 'SET')
+        clonedProfile.setFilter(profileDateFilter)
+        this.dataSelectionProvider.setActiveProfile(clonedProfile)
       }
     })
     this.snackbarMessageService.displayTimeRestrictionAppliedToAll()
