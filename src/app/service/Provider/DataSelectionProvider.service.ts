@@ -1,6 +1,7 @@
 import { ActiveDataSelectionService } from 'src/app/service/Provider/ActiveDataSelection.service'
 import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs'
 import { DataSelection } from 'src/app/model/DataSelection/DataSelection'
+import { DataSelectionProfileCloner } from 'src/app/model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 import { DataSelectionProfile } from 'src/app/model/DataSelection/Profile/DataSelectionProfile'
 import { Injectable, inject } from '@angular/core'
 import { v4 as uuidv4 } from 'uuid'
@@ -51,17 +52,18 @@ export class DataSelectionProviderService {
     const id: string = this.activeDataSelection.getActiveDataSelectionId()
     const dataSelection = this.selectionMap.get(id)
     if (dataSelection) {
-      const currentProfiles = dataSelection.getProfiles()
+      const currentProfiles = [...dataSelection.getProfiles()]
       for (const profile of profiles) {
         this.upsertProfile(currentProfiles, profile)
       }
       this.commitDataSelection(currentProfiles, id)
+      this.profileProviderService.setMany(profiles)
     }
   }
 
-  public setActiveProfile(profile: DataSelectionProfile, profileProvider?: 'ADD' | 'SET'): void {
+  public setActiveProfile(profile: DataSelectionProfile): void {
     const id: string = this.activeDataSelection.getActiveDataSelectionId()
-    this.setProfileInDataSelection(id, profile, profileProvider)
+    this.setProfileInDataSelection(id, profile)
   }
 
   public setDataSelection(
@@ -91,27 +93,49 @@ export class DataSelectionProviderService {
         .getProfiles()
         .filter((profile: DataSelectionProfile) => profile.getId() !== profileId)
       this.commitDataSelection(updatedElements, dataSelectionId)
+      this.profileProviderService.removeOne(profileId)
     }
   }
 
-  public setProfileInDataSelection(
-    dataSelectionId: string,
-    profile: DataSelectionProfile,
-    profileProvider?: 'ADD' | 'SET'
-  ): void {
+  /**
+   * Upserts the profile into the data selection and the ProfileProviderService, so both stores
+   * always hold the same instance. A new array is committed so signal consumers see the change.
+   */
+  public setProfileInDataSelection(dataSelectionId: string, profile: DataSelectionProfile): void {
     const dataSelection = this.selectionMap.get(dataSelectionId)
     if (dataSelection) {
-      const profiles = dataSelection.getProfiles()
+      const profiles = [...dataSelection.getProfiles()]
       this.upsertProfile(profiles, profile)
       this.commitDataSelection(profiles, dataSelectionId)
-
-      if (profileProvider === 'ADD') {
-        this.profileProviderService.addOne(profile)
-      }
-      if (profileProvider === 'SET') {
-        this.profileProviderService.setOne(profile)
-      }
+      this.profileProviderService.setOne(profile)
     }
+  }
+
+  /**
+   * Clears "only if referenced" on the given profiles when no profile links them anymore.
+   * Call with the ids that just lost a link; the option is hidden then and could not be unset.
+   */
+  public resetUnlinkedReferences(profileIds: string[]): void {
+    const dataSelection = this.selectionMap.get(this.activeDataSelection.getActiveDataSelectionId())
+    if (!dataSelection) return
+    const profiles = dataSelection.getProfiles()
+    const linkedIds = new Set(
+      profiles
+        .map((profile) => profile.getProfileFields().getLinkedProfileIds())
+        .reduce((acc, ids) => acc.concat(ids), [])
+    )
+    profiles
+      .filter(
+        (profile) =>
+          profileIds.includes(profile.getId()) &&
+          !linkedIds.has(profile.getId()) &&
+          profile.getReference().getIsReferenceSet()
+      )
+      .forEach((profile) => {
+        const cloned = DataSelectionProfileCloner.deepCopyProfile(profile)
+        cloned.getReference().setIsReferenceSet(false)
+        this.setActiveProfile(cloned)
+      })
   }
 
   private upsertProfile(profiles: DataSelectionProfile[], profile: DataSelectionProfile): void {
@@ -132,10 +156,6 @@ export class DataSelectionProviderService {
     const id = this.activeDataSelection.getActiveDataSelectionId()
     const updatedDataSelection = new DataSelection(profiles, id)
     this.setDataSelection(updatedDataSelection.getId(), updatedDataSelection, true)
-  }
-
-  public resetSelectionMap(): void {
-    this.selectionMapSubject.next(new Map())
   }
 
   public clearDataSelection(): void {

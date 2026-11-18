@@ -15,10 +15,8 @@ import { ProfileProviderService } from 'src/app/service/Provider/ProfileProvider
 import { ProfileReferenceChipData } from '../../models/FilterChips/ProfileReferenceChipData'
 import { ProfileReferenceChipsService } from '../../service/FilterChips/DataSelection/ProfileReferenceChips.service'
 import { ProfileReferenceMenuFunctionsService } from '../../service/Menu/ProfileReference/ProfileReferenceMenuFunctionsService.service'
-import { ProfileReferenceMenuService } from '../../service/Menu/ProfileReference/ProfileReferenceMenuService.service'
 import { ReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/ReferenceField'
 import { SelectedReferenceField } from 'src/app/model/DataSelection/Profile/Fields/RefrenceFields/SelectedReferenceField'
-import { SelectedReferenceFieldsCloner } from 'src/app/model/Utilities/DataSelecionCloner/ProfileFields/SelectedReferenceFieldsCloner'
 import { TranslateModule } from '@ngx-translate/core'
 @Component({
   selector: 'num-profile-reference-tile',
@@ -41,7 +39,6 @@ export class ProfileReferenceTileComponent implements OnInit {
   private dataSelectionProviderService = inject(DataSelectionProviderService)
   private profileProviderService = inject(ProfileProviderService)
   private profileReferenceChipsService = inject(ProfileReferenceChipsService)
-  private profileReferenceMenuService = inject(ProfileReferenceMenuService)
   private menuServiceDataSelectionFunctions = inject(ProfileReferenceMenuFunctionsService)
 
   readonly referenceField = input<SelectedReferenceField>()
@@ -59,17 +56,9 @@ export class ProfileReferenceTileComponent implements OnInit {
   display: Signal<Display> = computed(() => this.field()?.getDisplay())
   elementId: Signal<string> = computed(() => this.field()?.getElementId() ?? undefined)
 
-  readonly menuItems: Signal<ReturnType<ProfileReferenceMenuService['getMenuItems']>> = computed(
-    () => {
-      const idToUse = this.parentId() ?? ''
-      return this.profileReferenceMenuService.getMenuItems(idToUse, { elementId: this.elementId() })
-    }
-  )
-
   constructor() {}
 
   ngOnInit(): void {
-    this.profileReferenceMenuService.getMenuItems(this.parentId(), { elementId: this.elementId() })
     this.initializeDisplayDataFilterChips()
   }
 
@@ -82,36 +71,25 @@ export class ProfileReferenceTileComponent implements OnInit {
   }
 
   public setMustHave(checked: boolean) {
-    if (this.referenceField()) {
-      this.referenceField().setMustHave(checked)
-      this.updateReferenceField()
+    const profile = this.cloneParentProfile()
+    const field = profile
+      .getProfileFields()
+      .getSelectedReferenceFields()
+      .find((selected) => selected.getElementId() === this.referenceField()?.getElementId())
+    if (field) {
+      field.setMustHave(checked)
+      this.dataSelectionProviderService.setActiveProfile(profile)
     }
   }
 
-  private updateReferenceField(): void {
-    const profile = this.profileProviderService.getOne(this.parentId())
-    const selectedReferences = profile.getProfileFields().getSelectedReferenceFields()
-    const index = this.getIndexOfSelectedReferenceField(selectedReferences)
-
-    if (index !== -1) {
-      selectedReferences[index] = SelectedReferenceFieldsCloner.deepCopySelectedReferenceField(
-        this.referenceField()
-      )
-      this.updateProfile(profile)
-    }
-  }
-
-  private updateProfile(profile: DataSelectionProfile): void {
-    const updatedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
-    this.dataSelectionProviderService.setActiveProfile(updatedProfile, 'SET')
-  }
-
-  private getIndexOfSelectedReferenceField(selectedReferences: SelectedReferenceField[]): number {
-    const index = selectedReferences.findIndex(
-      (field: SelectedReferenceField) =>
-        field.getElementId() === this.referenceField().getElementId()
+  /**
+   * Edits go to a clone: the stored profile is shared by both providers and must not change
+   * before setActiveProfile publishes the new version.
+   */
+  private cloneParentProfile(): DataSelectionProfile {
+    return DataSelectionProfileCloner.deepCopyProfile(
+      this.profileProviderService.getOne(this.parentId())
     )
-    return index
   }
 
   navigateToReferenceField(): void {
@@ -121,24 +99,31 @@ export class ProfileReferenceTileComponent implements OnInit {
   }
 
   public deleteReferenceLink(): void {
-    const profile = this.profileProviderService.getOne(this.parentId())
+    const profile = this.cloneParentProfile()
     if (this.unlinkedRequiredOrRecommendedReferences()) {
-      const profileFields = profile.getProfileFields().getReferenceFields()
-      const foundField = profileFields.find(
-        (field: ReferenceField) =>
-          field.getElementId() === this.unlinkedRequiredOrRecommendedReferences().getElementId()
-      )
+      const foundField = profile
+        .getProfileFields()
+        .getReferenceFields()
+        .find(
+          (field: ReferenceField) =>
+            field.getElementId() === this.unlinkedRequiredOrRecommendedReferences().getElementId()
+        )
       if (foundField) {
         foundField.setRecommended(false)
-        this.updateProfile(profile)
+        this.dataSelectionProviderService.setActiveProfile(profile)
       }
     } else if (this.referenceField()) {
       const selectedReferences = profile.getProfileFields().getSelectedReferenceFields()
-      const index = this.getIndexOfSelectedReferenceField(selectedReferences)
-
+      const index = selectedReferences.findIndex(
+        (field: SelectedReferenceField) =>
+          field.getElementId() === this.referenceField().getElementId()
+      )
       if (index !== -1) {
         selectedReferences.splice(index, 1)
-        this.updateProfile(profile)
+        this.dataSelectionProviderService.setActiveProfile(profile)
+        this.dataSelectionProviderService.resetUnlinkedReferences(
+          this.referenceField().getLinkedProfileIds()
+        )
       }
     }
     this.deleteTrigger.emit(true)
