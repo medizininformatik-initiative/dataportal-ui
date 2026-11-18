@@ -7,13 +7,12 @@ on:
     branches: [develop, main]
 
 jobs:
-
   cypress-run:
     runs-on: ubuntu-24.04
     env:
       # Must match `ontology-tag` in dataportal-backend pom.xml: the backend image ships its own
       # ontology, so Elasticsearch on another version breaks concept searches (value set URLs differ).
-      ONTOLOGY_GIT_TAG: v5.1.0
+      ONTOLOGY_GIT_TAG: v5.2.2
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -83,13 +82,11 @@ jobs:
       - name: Wait for Keycloak
         run: .github/scripts/wait-for-url.sh  http://localhost:9003/health
 
-
       - name: Wait for localhost:8080
         run: .github/scripts/wait-for-url.sh  http://localhost:8080/realms/master/.well-known/openid-configuration
 
       - name: Create Test User in Keycloak
         run: .github/scripts/create-keycloak-user.sh
-
 
       - name: Wait for dev server
         run: .github/scripts/wait-for-url.sh http://localhost:4200 || { cat ng-serve.log; exit 1; }
