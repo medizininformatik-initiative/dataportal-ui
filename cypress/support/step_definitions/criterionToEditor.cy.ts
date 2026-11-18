@@ -51,10 +51,11 @@ export class CriterionToEditor {
   }
 
   /**
-   * Drag first draggable criterium into `type` list.
+   * Drag first draggable criterium into `type` list. Grab move icon, not box center: filter chips
+   * make box taller, center then misses drag handle.
    * */
   public dragCriteriumRightBy200px(type = 'Inclusion') {
-    const draggableSelector = '.cdk-drag'
+    const draggableSelector = '.cdk-drag .drag-handle'
     /**
      * Wait for UI ready.
      * */
