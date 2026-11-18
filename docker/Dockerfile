@@ -1,5 +1,5 @@
 ### STAGE 1: Build ###
-FROM --platform=$BUILDPLATFORM node:lts AS build
+FROM node:lts AS build
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install
