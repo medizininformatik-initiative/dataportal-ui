@@ -1,13 +1,7 @@
-import { Injectable, inject } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { Observable } from 'rxjs'
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpContext,
-} from '@angular/common/http'
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http'
 
 /**
  * HTTP interceptor that automatically adds OAuth bearer tokens to outgoing requests.
@@ -28,18 +22,13 @@ export class AuthTokenInterceptor implements HttpInterceptor {
    */
   private readonly excludedUrlsRegEx = this.excludedUrls.map((url) => new RegExp('^' + url, 'i'))
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[])
-
-  constructor() {}
-
   /**
    * Intercepts HTTP requests and conditionally adds Authorization header with bearer token.
    * @param req - The outgoing HTTP request to potentially modify
    * @param next - The next handler in the interceptor chain
-   * @returns Observable of HTTP events from the modified or original request
+   * @returns {Observable<HttpEvent<unknown>>} Observable of HTTP events from the modified or original request
    */
-  public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  public intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const shouldExclude = this.excludedUrlsRegEx.some((regex) => regex.test(req.url))
     if (shouldExclude) {
       return next.handle(req)
@@ -52,12 +41,11 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   /**
    * Creates a cloned request with Authorization header when token exists.
    * @param req - The original HTTP request
-   * @returns Modified request with token or original request if no token available
+   * @returns {HttpRequest<unknown>} Modified request with token or original request if no token available
    */
-  private attachTokenIfAvailable(req: HttpRequest<any>): HttpRequest<any> {
+  private attachTokenIfAvailable(req: HttpRequest<unknown>): HttpRequest<unknown> {
     const token = this.getValidToken()
     if (!token) {
-      console.warn('No valid token found, request will no have Authorization header')
       return req
     }
     const header = `Bearer ${token}`
@@ -68,12 +56,11 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
   /**
    * Retrieves a valid, non-empty access token from the OAuth service.
-   * @returns Access token string if valid, otherwise null
+   * @returns {string | null} Access token string if valid, otherwise null
    */
   private getValidToken(): string | null {
     const token = this.oauthService.getAccessToken()
-
-    if (token && typeof token === 'string' && this.oauthService.hasValidAccessToken()) {
+    if (token && this.oauthService.hasValidAccessToken()) {
       return token
     }
     return null
