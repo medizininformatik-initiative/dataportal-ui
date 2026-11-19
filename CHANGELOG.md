@@ -1,5 +1,11 @@
 # Changelog
 
+## v7.3.5 (2026-11-19)
+
+### Changed
+* Docker image now uses `ghcr.io/nginx/nginx-unprivileged:1.31.9-alpine` instead of `nginxinc/nginx-unprivileged:1.30.6-alpine` [#695](https://github.com/medizininformatik-initiative/dataportal-ui/issues/695)
+* Faster multi-arch Docker build: Angular assets are built once on the runner's native platform instead of under QEMU for `linux/arm64` [#694](https://github.com/medizininformatik-initiative/dataportal-ui/issues/694)
+
 ## v7.3.4 (2026-11-18)
 
 ### Features
