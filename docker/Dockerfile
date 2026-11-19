@@ -1,5 +1,5 @@
 ### STAGE 1: Build ###
-FROM node:22-alpine AS build
+FROM --platform=$BUILDPLATFORM node:22-alpine AS build
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install
