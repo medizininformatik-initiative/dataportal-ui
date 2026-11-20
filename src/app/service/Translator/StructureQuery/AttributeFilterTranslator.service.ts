@@ -160,7 +160,7 @@ export class AttributeFilterTranslatorService {
     sq: AttributeFilterData[],
     attributeCode: TerminologyCodeBaseData
   ): AttributeFilterData | undefined {
-    return sq.find((attributeDefinition: AttributeFilterData) => {
+    return sq?.find((attributeDefinition: AttributeFilterData) => {
       const attributeCodeData = attributeDefinition.attributeCode
       return (
         attributeCode.code === attributeCodeData.code &&

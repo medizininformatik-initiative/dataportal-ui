@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core'
 import { DataSelectionProviderService } from './Provider/DataSelectionProvider.service'
-import { ProfileProviderService } from './Provider/ProfileProvider.service'
-import { map, take } from 'rxjs'
+import { take } from 'rxjs'
 import { DataSelectionProfile } from '../model/DataSelection/Profile/DataSelectionProfile'
 import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionCloner/DataSelectionProfileCloner'
 
@@ -10,7 +9,6 @@ import { DataSelectionProfileCloner } from '../model/Utilities/DataSelecionClone
 })
 export class RemoveReferenceService {
   private dataSelectionProviderService = inject(DataSelectionProviderService)
-  private profileProviderService = inject(ProfileProviderService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -20,30 +18,35 @@ export class RemoveReferenceService {
   public delete(profileIdToBeDeleted: string): void {
     this.dataSelectionProviderService
       .getActiveDataSelection()
-      .pipe(
-        take(1),
-        map((dataSelection) => {
-          dataSelection.getProfiles().map((profile) => {
-            const updatedProfile = this.removeReferenceFromProfile(profile, profileIdToBeDeleted)
-            this.dataSelectionProviderService.setActiveProfile(updatedProfile, 'SET')
-          })
-          //this.profileProviderService.removeProfileById(profileIdToBeDeleted);
-          return dataSelection
-        })
-      )
-      .subscribe((dataSelection) =>
+      .pipe(take(1))
+      .subscribe((dataSelection) => {
+        const profiles = dataSelection.getProfiles()
+        const unlinkedIds =
+          profiles
+            .find((profile) => profile.getId() === profileIdToBeDeleted)
+            ?.getProfileFields()
+            .getLinkedProfileIds() ?? []
+        profiles
+          .filter((profile) => profile.getId() !== profileIdToBeDeleted)
+          .forEach((profile) =>
+            this.dataSelectionProviderService.setActiveProfile(
+              this.removeReferenceFromProfile(profile, profileIdToBeDeleted)
+            )
+          )
         this.dataSelectionProviderService.removeProfileFromDataSelection(
           dataSelection.getId(),
           profileIdToBeDeleted
         )
-      )
+        this.dataSelectionProviderService.resetUnlinkedReferences(unlinkedIds)
+      })
   }
 
   public removeReferenceFromProfile(
     profile: DataSelectionProfile,
     profileIdToBeDeleted: string
   ): DataSelectionProfile {
-    const selectedReferenceFields = profile.getProfileFields().getSelectedReferenceFields()
+    const clonedProfile = DataSelectionProfileCloner.deepCopyProfile(profile)
+    const selectedReferenceFields = clonedProfile.getProfileFields().getSelectedReferenceFields()
 
     for (let i = selectedReferenceFields.length - 1; i >= 0; i--) {
       const field = selectedReferenceFields[i]
@@ -58,6 +61,6 @@ export class RemoveReferenceService {
       }
     }
 
-    return DataSelectionProfileCloner.deepCopyProfile(profile)
+    return clonedProfile
   }
 }

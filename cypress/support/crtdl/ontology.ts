@@ -17,9 +17,9 @@ export const SYSTEMS = {
 
 const CONTEXT = { system: 'fdpg.mii.cds', version: '1.0.0' }
 /**
- * Build context object for code.
+ * Build context object for code. Display defaults to code: true for `Diagnose`, `Patient`, ...
  * */
-export const context = (code: string): Json => ({ ...CONTEXT, code, display: code })
+export const context = (code: string, display = code): Json => ({ ...CONTEXT, code, display })
 
 /**
  * Criteria scenario can name. `profile` = ui-profile deciding which filters criterion has.
@@ -53,6 +53,30 @@ export const CRITERIA = {
     context: 'Patient',
     profile: 'concept value filter',
   },
+  specimen: {
+    system: SYSTEMS.snomed,
+    code: '277201000087107',
+    display: 'Combined specimen from swab of anterior naris and groin and throat',
+    context: 'Specimen',
+    contextDisplay: 'Bioprobe',
+    profile: 'reference to MII_Onkologie_Diagnose, ICD-O-3 topography concept, time restriction',
+  },
+  cervixCancer: {
+    system: SYSTEMS.icd10gm,
+    code: 'C53',
+    display: 'Bösartige Neubildung der Cervix uteri',
+    context: 'MII_Onkologie_Diagnose',
+    contextDisplay: 'MII Onkologie Diagnose',
+    profile: 'referenced by specimen',
+  },
+  breastCancerInFamily: {
+    system: SYSTEMS.icd10gm,
+    code: 'Z80.3',
+    display: 'Bösartige Neubildung der Brustdrüse [Mamma] in der Familienanamnese',
+    context: 'MII_Onkologie_Diagnose',
+    contextDisplay: 'MII Onkologie Diagnose',
+    profile: 'referenced by specimen',
+  },
 } as const
 export type CriterionName = keyof typeof CRITERIA
 
@@ -84,6 +108,30 @@ export const ICD_ATTRIBUTE_CODE = {
   code: 'icd10-who',
   system: 'http://hl7.org/fhir/StructureDefinition',
   display: 'ICD-10-WHO',
+}
+
+/**
+ * Reference attribute of `specimen`: points to criteria of set
+ * `http://fdpg.mii.cds/CriteriaSet/MII_Onkologie_Diagnose/icd-10-gm`.
+ * */
+export const DIAGNOSIS_REFERENCE_CODE = {
+  code: 'festgestellteDiagnose',
+  system: 'http://hl7.org/fhir/StructureDefinition',
+  display: 'Festgestellte Diagnose',
+}
+
+/**
+ * Concept attribute of `specimen` with ICD-O-3 topography concept.
+ * */
+export const ICD_O_3_ATTRIBUTE_CODE = {
+  code: 'icd-o-3',
+  system: 'http://hl7.org/fhir/StructureDefinition',
+  display: 'Code defined by a terminology system',
+}
+export const VULVA_TOPOGRAPHY = {
+  system: 'http://terminology.hl7.org/CodeSystem/icd-o-3',
+  code: 'C51.8',
+  display: 'Vulva, mehrere Teilbereiche überlappend',
 }
 
 /**

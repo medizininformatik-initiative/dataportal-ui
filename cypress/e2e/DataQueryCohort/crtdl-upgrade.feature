@@ -10,7 +10,9 @@ Feature: CRTDL upload with upgrade
     And I am on the "{{pages.dataQueryCohortDefinition}}" page
     And I set the language to English
 
-  @component:crtdl @behavior:upload @filter:attribute-filter
+  # Backend 9.1.0 answers POST /validation/crtdl with 200 for this fixture, so the UI never calls
+  # the upgrade endpoint and no error log opens. /upgrade/crtdl itself still replaces the filter.
+  @component:crtdl @behavior:upload @filter:attribute-filter @pending
   Scenario: An outdated date filter with only a start date is upgraded on upload
     When I upload the outdated data definition "{{upgradeDateFilter.fixture}}"
     Then the error log dialog is open

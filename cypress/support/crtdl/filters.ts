@@ -1,4 +1,4 @@
-import { Json } from './types'
+import { Criterion, Json } from './types'
 
 /**
  * Constructors for every filter shape in CRTDL. Take values, know nothing of ontology: filter
@@ -27,6 +27,15 @@ export const conceptAttribute = (attributeCode: Coded, concepts: readonly Coded[
   type: 'concept',
   attributeCode,
   selectedConcepts: concepts,
+})
+
+/**
+ * Reference filter on criterion attribute: links to other criteria.
+ * */
+export const referenceAttribute = (attributeCode: Coded, criteria: readonly Criterion[]): Json => ({
+  type: 'reference',
+  attributeCode,
+  criteria,
 })
 
 /**

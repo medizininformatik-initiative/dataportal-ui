@@ -3,7 +3,7 @@
 services:
   dataportal-backend:
     container_name: dataportal-backend
-    image: ghcr.io/medizininformatik-initiative/dataportal-backend:latest
+    image: ghcr.io/medizininformatik-initiative/dataportal-backend:9.5.1
     ports:
       - '8090:8090'
     depends_on:

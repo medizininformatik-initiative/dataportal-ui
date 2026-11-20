@@ -1,4 +1,5 @@
 import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component'
+import { FeasibilityQueryResultService } from 'src/app/service/FeasibilityQuery/Result/FeasibilityQueryResult.service'
 import { ButtonComponent } from '../../../../../shared/components/button/button.component'
 import { FeasibilityQueryValidationService } from 'src/app/service/Validation/Internal/FeasibilityQueryValidationService.service'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -15,6 +16,8 @@ import { Component, computed, inject, OnInit } from '@angular/core'
 export class EditorActionBarComponent implements OnInit {
   private readonly validationService = inject(FeasibilityQueryValidationService)
   private readonly navigation = inject(NavigationHelperService)
+
+  readonly sendBlockedSeconds = inject(FeasibilityQueryResultService).sendBlockedSeconds
 
   readonly isFeasibilityQueryValid = computed(
     () => this.validationService.validationState().isValid

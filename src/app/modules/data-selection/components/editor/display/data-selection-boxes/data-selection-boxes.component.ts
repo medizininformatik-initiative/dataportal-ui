@@ -111,8 +111,8 @@ export class DataSelectionBoxesComponent {
   }
 
   public onReferenceSetChange(isReferenceSet: boolean): void {
-    this.profile().getReference().setIsReferenceSet(isReferenceSet)
     const clonedProfile = DataSelectionProfileCloner.deepCopyProfile(this.profile())
+    clonedProfile.getReference().setIsReferenceSet(isReferenceSet)
     this.dataSelectionProvider.setActiveProfile(clonedProfile)
   }
 
