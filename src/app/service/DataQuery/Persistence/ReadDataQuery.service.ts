@@ -57,7 +57,9 @@ export class ReadDataQueryService {
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
       map((data: SavedDataQueryData) => {
-        data.content = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDL(data.content)
+        data.content = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDL(
+          this.unwrapCcdlOnly(data.content)
+        )
         return data
       }),
       concatMap((data: any) => {
@@ -69,6 +71,17 @@ export class ReadDataQueryService {
         return throwError(() => new Error('Saved query content is neither CRTDL nor CCDL'))
       })
     )
+  }
+
+  /**
+   * Backend returns a CCDL-only entry as `{ cohortDefinition }`, without version and data extraction.
+   * @param content - The saved query content
+   * @returns The bare CCDL for such an entry, otherwise the content unchanged
+   */
+  private unwrapCcdlOnly(content: any): any {
+    return content?.cohortDefinition !== undefined && content.dataExtraction === undefined
+      ? content.cohortDefinition
+      : content
   }
 
   /**

@@ -29,13 +29,16 @@ const legacyStructuredQuery = {
 
 describe('ReadDataQueryService', () => {
   const process = jest.fn().mockReturnValue(EMPTY)
+  let content: unknown
 
   beforeEach(() => {
+    process.mockClear()
+    content = legacyStructuredQuery
     TestBed.configureTestingModule({
       providers: [
         {
           provide: DataQueryApiService,
-          useValue: { getDataQueryById: () => of({ id: 1, content: legacyStructuredQuery }) },
+          useValue: { getDataQueryById: () => of({ id: 1, content }) },
         },
         { provide: CrtdlProcessingPipelineService, useValue: { process } },
         { provide: CRTDLValidationService, useValue: {} },
@@ -58,5 +61,15 @@ describe('ReadDataQueryService', () => {
     expect(crtdl.content).toBeUndefined()
     expect(crtdl.cohortDefinition).toEqual(legacyStructuredQuery)
     expect(crtdl.dataExtraction).toEqual({ attributeGroups: [] })
+  })
+
+  it('upgrades a CCDL-only entry wrapped by the backend as { cohortDefinition }', () => {
+    content = { cohortDefinition: legacyStructuredQuery }
+    TestBed.inject(ReadDataQueryService).readDataQueryById(1).subscribe()
+
+    const crtdl = process.mock.calls[0][0]
+    expect(crtdl.cohortDefinition).toEqual(legacyStructuredQuery)
+    expect(crtdl.dataExtraction).toEqual({ attributeGroups: [] })
+    expect(crtdl.version).toBeDefined()
   })
 })
