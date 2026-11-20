@@ -1,5 +1,7 @@
 # Feasibility GUI
 
+[![Docs](https://img.shields.io/badge/Docs-blue)](docs/index.md)
+
 An Angular application for building, editing, running, and reviewing feasibility queries and defining data selections. It provides a modern, terminology-aware UI with structured query authoring, profile-based selections, and a resilient results workflow.
 
 ## Table of Contents
