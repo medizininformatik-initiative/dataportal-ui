@@ -1,13 +1,14 @@
 import { defineConfig } from 'vitepress'
 export default defineConfig({
-  title: "Dataportal GUI",
-  description: "Documentation for Dataportal GUI",
+  title: "Dataportal UI",
+  description: "Documentation for the FDPG Dataportal UI",
   themeConfig: {
     search: {
       provider: 'local'
     },
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Usage', link: '/usage/overview' },
     ],
     outline: {
       level: [2, 3],
@@ -24,21 +25,25 @@ export default defineConfig({
       {
         text: 'Usage',
         items: [
-          { text: 'Feasibility', link: '/usage/feasibility' },
-          { text: 'Data Selection', link: '/usage/data-selection' },
-
+          { text: 'Overview', link: '/usage/overview' },
+          { text: 'Cohort Selection (Feasibility)', link: '/usage/feasibility' },
+          { text: 'Feature Selection', link: '/usage/data-selection' },
+          { text: 'Data Definition', link: '/usage/data-definition' },
+          { text: 'Saved Data Definitions', link: '/usage/saved-queries' },
+          { text: 'Errors and Messages', link: '/usage/errors' },
         ]
       },
       {
         text: 'Reference',
         items: [
+          { text: 'Behaviour Specification (Gherkin)', link: '/testing' },
           { text: 'FAQ', link: '/faq' },
         ]
       }
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/medizininformatik-initiative/feasibility-gui' }
+      { icon: 'github', link: 'https://github.com/medizininformatik-initiative/dataportal-ui' }
     ]
   }
 })
