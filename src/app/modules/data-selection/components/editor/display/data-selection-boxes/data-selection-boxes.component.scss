@@ -1,12 +1,13 @@
 .selection-box {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr) auto;
+  display: flex;
+  --num-card-tint: 0.1;
   align-items: stretch;
   min-height: 104px;
   margin-bottom: var(--spacing-16);
 }
 
 .card-col {
+  flex: 1 1 0;
   min-width: 0;
   padding: var(--spacing-12) var(--spacing-16);
   font-size: var(--font-size-md);
@@ -18,7 +19,7 @@
 }
 
 .menu-box {
-  grid-column: 5;
+  flex: none;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
@@ -26,6 +27,7 @@
 }
 
 .arrow-container {
+  flex: none;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -48,6 +50,11 @@
 
   &:hover:not(:disabled) {
     background: var(--color-accent-bg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
   }
 
   &:disabled {

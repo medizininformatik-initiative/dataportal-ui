@@ -1,3 +1,4 @@
+import { cdkDragDrop } from '../component-objects/CdkDragDrop'
 import { dataCyOf } from '../dataCy'
 import { defineStep } from '../defineStep'
 import { resolve } from '../testData'
@@ -16,10 +17,7 @@ export class CriterionToEditor {
     criterionSearchInstance.selectCriterion(criterium)
     criterionSearchInstance.selectActioBarButton('Add')
     criterionSearchInstance.selectActioBarButton('Show')
-    /**
-     * Wait for editor to load.
-     * */
-    cy.wait(1000)
+    criterionSearchInstance.shouldHaveLeftSearchPage()
   }
 
   /**
@@ -35,10 +33,7 @@ export class CriterionToEditor {
     criterionSearchInstance.selectCriterion(expectedDisplayText)
     criterionSearchInstance.selectActioBarButton('Add')
     criterionSearchInstance.selectActioBarButton('Show')
-    /**
-     * Wait for editor to load.
-     * */
-    cy.wait(1000)
+    criterionSearchInstance.shouldHaveLeftSearchPage()
   }
 
   /**
@@ -51,15 +46,13 @@ export class CriterionToEditor {
   }
 
   /**
-   * Drag first draggable criterium into `type` list.
+   * Drag first draggable criterium into `type` list. Grab move icon, not box center: filter chips
+   * make box taller, center then misses drag handle. `trigger` waits until handle is
+   * actionable, so no wait before.
    * */
   public dragCriteriumRightBy200px(type = 'Inclusion') {
-    const draggableSelector = '.cdk-drag'
-    /**
-     * Wait for UI ready.
-     * */
-    cy.wait(1000)
-    cy.get(draggableSelector).trigger('mousedown', {
+    const draggableSelector = '.cdk-drag .drag-handle'
+    cy.get(draggableSelector, { timeout: 10000 }).trigger('mousedown', {
       button: 0,
       timeout: 10000,
     })
@@ -69,7 +62,7 @@ export class CriterionToEditor {
         waitForAnimations: true,
       })
       .click()
-    cy.wait(1000)
+    cdkDragDrop.dropShouldBeSettled()
   }
 }
 

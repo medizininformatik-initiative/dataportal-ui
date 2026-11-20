@@ -7,18 +7,22 @@ import {
   dateFilter,
   quantityComparator,
   quantityRange,
+  referenceAttribute,
   timeRestriction,
   tokenFilter,
 } from './filters'
 import {
   COMPARATORS,
+  DIAGNOSIS_REFERENCE_CODE,
   EXTRACTION_FILTERS,
   GENDER_CONCEPTS,
   ICD_ATTRIBUTE_CODE,
   ICD_CONCEPTS,
+  DEATH_CAUSE_ATTRIBUTE_CODE,
+  CERVIX_CANCER_CONCEPT,
   UNITS,
 } from './ontology'
-import { Crtdl, Criterion, CriterionModifier } from './types'
+import { Crtdl, Criterion, CriterionModifier, Json } from './types'
 
 /**
  * Named CRTDLs for `crtdl-roundtrip.feature`: case name in Examples table picks one. File only
@@ -78,6 +82,27 @@ const pneumoniaAt = (restriction: ReturnType<typeof timeRestriction.before>) =>
 const DEATH_BY_J13 = deathBy(['J13'])
 const OLDER_THAN_FIVE_CRITERION = criterion('age', withValue(OLDER_THAN_FIVE))
 const WORKING_AGE_CRITERION = criterion('age', withValue(WORKING_AGE_RANGE))
+
+/**
+ * Cancer death whose `focus` references given criteria, plus any other modifier.
+ * */
+const cancerDeathOf = (referenced: Criterion[], ...modifiers: CriterionModifier[]) =>
+  criterion(
+    'oncoDeath',
+    withAttribute(referenceAttribute(DIAGNOSIS_REFERENCE_CODE, referenced)),
+    ...modifiers
+  )
+const CERVIX_CANCER = criterion('cervixCancer')
+const DEATH_OF_CERVIX_CANCER = cancerDeathOf([CERVIX_CANCER])
+/**
+ * Shape of defect report `test_defekt_cohorte_ref.json`: reference, concept, time. Report used
+ * specimen; its reference set has no criteria in ontology v5.2.2, so cancer death stands in.
+ * */
+const DEATH_AS_REPORTED = cancerDeathOf(
+  [CERVIX_CANCER, criterion('breastCancerInFamily')],
+  withAttribute(conceptAttribute(DEATH_CAUSE_ATTRIBUTE_CODE, [CERVIX_CANCER_CONCEPT])),
+  atTime(TIMES.between)
+)
 
 /**
  * Build Condition feature with options.
@@ -180,6 +205,21 @@ export const CASES: Cases = {
   ),
   'feature with code filter': withFeatures(conditionFeature({ filters: [CONDITION_FILTERS.code] })),
 
+  'reference to one diagnosis': included(DEATH_OF_CERVIX_CANCER),
+  'reference to several diagnoses': included(
+    cancerDeathOf([CERVIX_CANCER, criterion('breastCancerInFamily')])
+  ),
+  'reference to diagnosis with time': included(
+    cancerDeathOf([criterion('cervixCancer', atTime(TIMES.before))])
+  ),
+  'reference and concept': included(DEATH_AS_REPORTED),
+  'reference in exclusion': crtdl({ exclusion: [[DEATH_OF_CERVIX_CANCER]] }),
+  'reference as alternative': included(PNEUMONIA, DEATH_OF_CERVIX_CANCER),
+  'reference as reported': crtdl({
+    inclusion: [[DEATH_AS_REPORTED], [OLDER_THAN_FIVE_CRITERION]],
+    exclusion: [[DEATH_AS_REPORTED]],
+  }),
+
   'linked feature': crtdl({ groups: linkedFeatures({ mustHave: false, referenceOnly: false }) }),
   'linked feature with must have': crtdl({
     groups: linkedFeatures({ mustHave: true, referenceOnly: false }),
@@ -202,11 +242,37 @@ export const CASES: Cases = {
 }
 
 /**
- * Return named case. Throw on unknown name.
+ * Broken CRTDLs: one wrong detail each. Backend must reject every one (`npm run
+ * crtdl:validate` checks), UI must show error log, not crash or load half.
+ * */
+const brokenReference = (filter: Json) => included(criterion('oncoDeath', withAttribute(filter)))
+
+export const MUTANTS: Cases = {
+  'reference to criterion outside criteria set': included(cancerDeathOf([PNEUMONIA])),
+  'reference to unknown diagnosis code': included(
+    cancerDeathOf([
+      { ...CERVIX_CANCER, termCodes: [{ ...CERVIX_CANCER.termCodes[0], code: 'C99.99' }] },
+    ])
+  ),
+  'reference without criteria': included(cancerDeathOf([])),
+  'reference with unknown attribute code': brokenReference(
+    referenceAttribute({ ...DIAGNOSIS_REFERENCE_CODE, code: 'unbekannt' }, [CERVIX_CANCER])
+  ),
+  'reference with concepts instead of criteria': brokenReference({
+    type: 'reference',
+    attributeCode: DIAGNOSIS_REFERENCE_CODE,
+    selectedConcepts: [CERVIX_CANCER.termCodes[0]],
+  }),
+}
+
+/**
+ * Return named case or mutant. Throw on unknown name.
  * */
 export function caseNamed(name: string): Crtdl {
-  const found = CASES[name]
+  const found = CASES[name] ?? MUTANTS[name]
   if (!found)
-    throw new Error(`No CRTDL case named "${name}". Known: ${Object.keys(CASES).join(', ')}`)
+    throw new Error(
+      `No CRTDL case named "${name}". Known: ${Object.keys({ ...CASES, ...MUTANTS }).join(', ')}`
+    )
   return found
 }

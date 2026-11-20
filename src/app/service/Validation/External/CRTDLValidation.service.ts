@@ -12,7 +12,6 @@ import { ValidationIssueData } from 'src/app/core/model/Validation/ValidationIss
 import { ValidationIssue } from 'src/app/model/Validation/ValidationIssue'
 import { ValidationIssueMapperService } from './ValidationIssueMapper.service'
 import { TypeGuard } from '../../TypeGuard/TypeGuard'
-import { SnackbarMessageService } from '../../SnackbarMessage.service'
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +21,6 @@ export class CRTDLValidationService {
   private readonly errorLogProvider = inject(ErrorLogProviderService)
   private readonly validationIssueMapper = inject(ValidationIssueMapperService)
   private matDialog = inject(MatDialog)
-  private snackbarMessageService = inject(SnackbarMessageService)
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[])
@@ -46,7 +44,6 @@ export class CRTDLValidationService {
       this.errorLogProvider.setValidationResponseData(payload)
       this.errorLogProvider.setValidationResult(validationReport)
       this.opeValidationReportModal(validationReport)
-      this.snackbarMessageService.dataDefinitionUploadError()
       return of(false)
     }
     return throwError(() => error)

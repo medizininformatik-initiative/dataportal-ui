@@ -32,12 +32,17 @@ export class CohortResult {
    * completion signal: needs same long timeout as "Number of patients" check, not default ~4s.
    * */
   public resultIsVisible() {
-    cy.get('num-spinner', { timeout: 70000 }).should('not.exist')
     /**
      * Scope to `num-patient-count`: unscoped `div` lookup also matched tooltip description
      * element (`cdk-describedby-message`), and chained `.contains` kept default 4s timeout.
      * */
-    cy.contains('num-patient-count', 'Number of patients', { timeout: 70000 }).should('be.visible')
+    cy.get('num-spinner', { timeout: 70000 }).should('not.exist')
+    cy.get('div', { timeout: 70000 }).contains('Number of patients').should('be.visible')
+    /**
+     * Spinner also disappears on error or timeout: header proves result arrived. Same long
+     * timeout: on second visit spinner check can pass before new spinner renders.
+     * */
+    cy.contains('num-header', 'Query completed', { timeout: 70000 }).should('be.visible')
   }
 
   /**
@@ -73,7 +78,13 @@ export class CohortResult {
    * Click "Save" in save dialog.
    * */
   public saveCohort() {
+    cy.intercept('POST', '**/query/data').as('saveQuery')
     numButton.clickByText('num-save-dataquery-modal', 'Save')
+    /**
+     * Wait for backend answer: next step may open saved list, whose GET otherwise can run before
+     * save is stored and return empty list.
+     * */
+    cy.wait('@saveQuery')
   }
 
   /**

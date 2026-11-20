@@ -7,13 +7,17 @@ on:
     branches: [develop, main]
 
 jobs:
-
   cypress-run:
     runs-on: ubuntu-24.04
+    strategy:
+      # Each shard runs its own stack and about a quarter of the specs (cypress/scripts/shard-specs.mjs).
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     env:
       # Must match `ontology-tag` in dataportal-backend pom.xml: the backend image ships its own
       # ontology, so Elasticsearch on another version breaks concept searches (value set URLs differ).
-      ONTOLOGY_GIT_TAG: v5.1.0
+      ONTOLOGY_GIT_TAG: v5.2.2
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -83,28 +87,31 @@ jobs:
       - name: Wait for Keycloak
         run: .github/scripts/wait-for-url.sh  http://localhost:9003/health
 
-
       - name: Wait for localhost:8080
         run: .github/scripts/wait-for-url.sh  http://localhost:8080/realms/master/.well-known/openid-configuration
 
       - name: Create Test User in Keycloak
         run: .github/scripts/create-keycloak-user.sh
 
-
       - name: Wait for dev server
         run: .github/scripts/wait-for-url.sh http://localhost:4200 || { cat ng-serve.log; exit 1; }
+
+      - name: Pick specs of this shard
+        id: shard
+        run: echo "spec=$(node cypress/scripts/shard-specs.mjs ${{ matrix.shard }} ${{ strategy.job-total }})" >> "$GITHUB_OUTPUT"
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           install: false
           browser: chrome
+          spec: ${{ steps.shard.outputs.spec }}
 
       - name: Upload Cypress screenshots
         if: failure() # only upload on test failure (optional)
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-${{ matrix.shard }}
           path: |
             cypress/screenshots
             ng-serve.log

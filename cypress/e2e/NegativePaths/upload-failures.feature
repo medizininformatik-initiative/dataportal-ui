@@ -48,3 +48,27 @@ Feature: Upload - invalid files
     Examples:
       | fileName                       | contents                         | text                            |
       | {{uploadFailures.notJsonJson}} | {{uploadFailures.thisIsNotJson}} | {{searchFailures.gENERICERROR}} |
+
+  # Generated mutants (`MUTANTS` in cypress/support/crtdl/cases.ts): one wrong detail in a
+  # reference filter each.
+  @component:upload @behavior:reject-invalid-file @filter:attribute-filter @type:reference
+  Scenario Outline: A data definition with a broken reference filter is rejected (<case>)
+    When I upload the generated data definition "<case>"
+    Then the error log dialog is open
+    When I close the error log dialog
+    Then I should see "<kept>" in the cohort definition editor
+
+    Examples:
+      | case                                        | kept                               |
+      | reference to criterion outside criteria set | {{files.singleInclusionCriterium}} |
+      | reference to unknown diagnosis code         | {{files.singleInclusionCriterium}} |
+      | reference without criteria                  | {{files.singleInclusionCriterium}} |
+      | reference with concepts instead of criteria | {{files.singleInclusionCriterium}} |
+
+    # DEFECT: `validation/crtdl` accepts a reference filter whose attribute code the profile
+    # does not have (200), and the upload drops the filter silently - widening the cohort.
+    # Expected: rejected like the rows above.
+    @pending
+    Examples: Accepted by the backend
+      | case                                  | kept                               |
+      | reference with unknown attribute code | {{files.singleInclusionCriterium}} |

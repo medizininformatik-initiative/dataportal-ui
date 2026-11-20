@@ -7,18 +7,14 @@ knowing before touching a `.feature` file or its step definitions, not just a
 reference table (see `TEST_DATA.md` for that — which criteria to use, from which
 ontology context, and how to re-verify one).
 
-## Step-definition files are resolved by exact basename match
+## Step definitions load only from `support/step_definitions/`
 
-`package.json`'s `cypress-cucumber-preprocessor.stepDefinitions` glob resolves a
-`.feature` file's steps from either (a) a `.ts` file with the **exact same
-basename**, in the same directory (`CohortSearch/cohort-search.ts` ↔
-`CohortSearch/cohort-search.feature`), or (b) anything under
-`cypress/support/step_definitions/` (loaded globally, for every feature).
-There's no third option — placing new steps in an unrelated same-folder file
-(e.g. adding a new feature's steps into an existing sibling's `.ts`) silently
-fails to load them. New, feature-specific steps need a matching-basename file;
-new, reusable steps belong in `support/step_definitions/` (or
-`support/component-objects/`, see below).
+`package.json`'s `cypress-cucumber-preprocessor.stepDefinitions` also lists
+`cypress/e2e/[filepath].{js,ts}`, but `[filepath]` already contains the folder
+prefix, so a same-basename `.ts` next to a `.feature` never loads: CI
+reports "Step implementation missing". Put every step file under
+`cypress/support/step_definitions/` (`<name>.cy.ts`, loaded for every feature).
+`CohortSearch/cohort-search.ts` holds only a page object, no steps.
 
 ## The `numDataCy` directive and its registry
 

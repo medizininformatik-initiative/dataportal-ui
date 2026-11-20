@@ -3,7 +3,7 @@
 services:
   dataportal-backend:
     container_name: dataportal-backend
-    image: ghcr.io/medizininformatik-initiative/dataportal-backend:latest
+    image: ghcr.io/medizininformatik-initiative/dataportal-backend:9.5.1
     ports:
       - '8090:8090'
     depends_on:
@@ -46,9 +46,10 @@ services:
       FLARE_WEBSERVICE_BASE_URL: 'http://flare:8080'
       CQL_SERVER_BASE_URL: 'http://blaze:8080/fhir'
       # ---- privacy
-      PRIVACY_QUOTA_SOFT_CREATE_AMOUNT: 3
+      # High create quotas: the suite sends many queries back to back; rate limits are stubbed per scenario.
+      PRIVACY_QUOTA_SOFT_CREATE_AMOUNT: 1000
       PRIVACY_QUOTA_SOFT_CREATE_INTERVAL: PT1M
-      PRIVACY_QUOTA_HARD_CREATE_AMOUNT: 50
+      PRIVACY_QUOTA_HARD_CREATE_AMOUNT: 10000
       PRIVACY_QUOTA_HARD_CREATE_INTERVAL: P7D
       PRIVACY_QUOTA_READ_SUMMARY_POLLINGINTERVAL: PT10S
       PRIVACY_QUOTA_READ_DETAILED_OBFUSCATED_POLLINGINTERVAL: PT10S

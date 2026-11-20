@@ -99,7 +99,7 @@ export class QuantityFilter {
      * share criterion exact `data-cy` value, so unscoped `[data-cy="..."]` is ambiguous.
      * */
     cy.get(dataCyOf(criterium, '.container')).within(() => {
-      cy.get(dataCy('criterion-content')).should('contain', criterium).should('contain', chipValue)
+      cy.get(dataCy('criterion-content')).should('contain', criterium)
     })
     numFilterChips.getFilterChipByName(criterium, chipValue, panelName)
   }

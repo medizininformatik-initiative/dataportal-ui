@@ -29,6 +29,7 @@ export class FeasibilityQueryApiService {
       structuredQuery,
       {
         observe: 'response',
+        context: BackendService.getFeasibilityRequestContextToken(),
       }
     )
   }

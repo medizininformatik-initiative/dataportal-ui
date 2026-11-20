@@ -29,7 +29,7 @@ export class DataSelectionMenuFunctionsService {
     const profile = this.profileProvider.getOne(id)
     const copiedProfile = DataSelectionProfileCloner.deepCopyProfile(profile, uuidv4())
     const dataSelectionId = this.activeDataSelectionService.getActiveDataSelectionId()
-    this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile, 'ADD')
+    this.dataSelectionProvider.setProfileInDataSelection(dataSelectionId, copiedProfile)
   }
 
   public deleteDataSelectionObject(id: string) {

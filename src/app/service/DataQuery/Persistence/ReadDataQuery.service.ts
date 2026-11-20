@@ -1,5 +1,5 @@
 import { CheckAndUpgradeCCDLService } from '../../Upgrade/CheckAndUpgradeCCDL.service'
-import { concatMap, map, Observable, switchMap } from 'rxjs'
+import { concatMap, map, Observable, switchMap, throwError } from 'rxjs'
 import { CrtdlProcessingPipelineService } from '../../CrtdlProcessingPipeline.service'
 import { CRTDLValidationService } from '../../Validation/External/CRTDLValidation.service'
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
@@ -57,7 +57,9 @@ export class ReadDataQueryService {
   public readDataQueryById(id: number): Observable<SavedDataQuery> {
     return this.dataQueryApiService.getDataQueryById(id).pipe(
       map((data: SavedDataQueryData) => {
-        data.content = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDLAsSavedData(data.content)
+        data.content = this.checkAndUpgradeCCDLService.checkAndUpgradeCCDL(
+          this.unwrapCcdlOnly(data.content)
+        )
         return data
       }),
       concatMap((data: any) => {
@@ -66,8 +68,20 @@ export class ReadDataQueryService {
             .process(data.content)
             .pipe(map((crtdl) => SavedDataQuery.fromJson(data, crtdl)))
         }
+        return throwError(() => new Error('Saved query content is neither CRTDL nor CCDL'))
       })
     )
+  }
+
+  /**
+   * Backend returns a CCDL-only entry as `{ cohortDefinition }`, without version and data extraction.
+   * @param content - The saved query content
+   * @returns The bare CCDL for such an entry, otherwise the content unchanged
+   */
+  private unwrapCcdlOnly(content: any): any {
+    return content?.cohortDefinition !== undefined && content.dataExtraction === undefined
+      ? content.cohortDefinition
+      : content
   }
 
   /**
