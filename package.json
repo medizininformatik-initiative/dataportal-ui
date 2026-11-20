@@ -16,7 +16,10 @@
     "gherkin:align": "node cypress/scripts/align-tables.cjs",
     "cypress:lint": "eslint --rulesdir cypress/eslint-rules cypress --ext .ts",
     "gherkin:lint": "node cypress/scripts/lint-features.mjs",
-    "coverage:features": "node cypress/scripts/feature-coverage.mjs"
+    "coverage:features": "node cypress/scripts/feature-coverage.mjs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "private": true,
   "dependencies": {
@@ -98,7 +101,8 @@
     "ts-jest": "^29.4.11",
     "ts-node": "~10.4.0",
     "typescript": "~5.8.3",
-    "uuid": "~9.0.0"
+    "uuid": "~9.0.0",
+    "vitepress": "^2.0.0-alpha.15"
   },
   "husky": {
     "hooks": {
