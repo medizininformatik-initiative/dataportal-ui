@@ -1,5 +1,5 @@
 import { CheckAndUpgradeCCDLService } from '../../Upgrade/CheckAndUpgradeCCDL.service'
-import { concatMap, map, Observable, switchMap } from 'rxjs'
+import { concatMap, map, Observable, switchMap, throwError } from 'rxjs'
 import { CrtdlProcessingPipelineService } from '../../CrtdlProcessingPipeline.service'
 import { CRTDLValidationService } from '../../Validation/External/CRTDLValidation.service'
 import { DataQueryApiService } from '../../Backend/Api/DataQueryApi.service'
@@ -66,6 +66,7 @@ export class ReadDataQueryService {
             .process(data.content)
             .pipe(map((crtdl) => SavedDataQuery.fromJson(data, crtdl)))
         }
+        return throwError(() => new Error('Saved query content is neither CRTDL nor CCDL'))
       })
     )
   }

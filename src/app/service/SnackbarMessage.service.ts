@@ -63,14 +63,6 @@ export class SnackbarMessageService {
   }
 
   /**
-   * Displays error message for data definition upload failure
-   * @returns
-   */
-  public dataDefinitionUploadError(): void {
-    this.snackbarService.displayErrorMessageWithNoCode('DATAQUERY.DATASELECTION.ERROR.UPLOAD')
-  }
-
-  /**
    * Displays error message for CRTDL validation failure
    * @returns
    */
