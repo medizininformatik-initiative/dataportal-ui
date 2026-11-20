@@ -1,6 +1,6 @@
-import { dataCyOf } from '../../support/dataCy'
-import { defineStep } from '../../support/defineStep'
-import { t } from '../../support/i18n'
+import { dataCyOf } from '../dataCy'
+import { defineStep } from '../defineStep'
+import { t } from '../i18n'
 
 const APPLY_TIME_RESTRICTION = '.apply-time-restriction'
 

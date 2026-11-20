@@ -1,4 +1,5 @@
 import { dataCy, dataCyOf } from '../dataCy'
+import { cdkDragDrop } from '../component-objects/CdkDragDrop'
 import { defineStep } from '../defineStep'
 
 const CRITERION = '.container'
@@ -85,7 +86,7 @@ export class CriteriaGroups {
       cy.wrap($other).trigger('mousemove', 20, y).trigger('mousemove', 20, y)
       cy.wrap($other).trigger('mouseup', 20, y)
     })
-    cy.wait(500)
+    cdkDragDrop.dropShouldBeSettled()
   }
 
   /**
@@ -120,7 +121,7 @@ export class CriteriaGroups {
     cy.get(dataCyOf(criterium, CRITERION)).trigger('mousedown', { button: 0 })
     target.trigger('mousemove', position).trigger('mousemove', position)
     target.trigger('mouseup', position)
-    cy.wait(500)
+    cdkDragDrop.dropShouldBeSettled()
   }
 }
 

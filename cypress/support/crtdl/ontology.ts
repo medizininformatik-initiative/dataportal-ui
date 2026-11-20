@@ -53,13 +53,13 @@ export const CRITERIA = {
     context: 'Patient',
     profile: 'concept value filter',
   },
-  specimen: {
+  oncoDeath: {
     system: SYSTEMS.snomed,
-    code: '277201000087107',
-    display: 'Combined specimen from swab of anterior naris and groin and throat',
-    context: 'Specimen',
-    contextDisplay: 'Bioprobe',
-    profile: 'reference to MII_Onkologie_Diagnose, ICD-O-3 topography concept, time restriction',
+    code: '184305005',
+    display: 'Cause of death',
+    context: 'MII_Onkologie_Tod',
+    contextDisplay: 'MII Onkologie Tod',
+    profile: 'reference to MII_Onkologie_Diagnose, ICD-10-GM concept, time restriction',
   },
   cervixCancer: {
     system: SYSTEMS.icd10gm,
@@ -67,7 +67,7 @@ export const CRITERIA = {
     display: 'Bösartige Neubildung der Cervix uteri',
     context: 'MII_Onkologie_Diagnose',
     contextDisplay: 'MII Onkologie Diagnose',
-    profile: 'referenced by specimen',
+    profile: 'referenced by oncoDeath',
   },
   breastCancerInFamily: {
     system: SYSTEMS.icd10gm,
@@ -75,7 +75,7 @@ export const CRITERIA = {
     display: 'Bösartige Neubildung der Brustdrüse [Mamma] in der Familienanamnese',
     context: 'MII_Onkologie_Diagnose',
     contextDisplay: 'MII Onkologie Diagnose',
-    profile: 'referenced by specimen',
+    profile: 'referenced by oncoDeath',
   },
 } as const
 export type CriterionName = keyof typeof CRITERIA
@@ -111,27 +111,28 @@ export const ICD_ATTRIBUTE_CODE = {
 }
 
 /**
- * Reference attribute of `specimen`: points to criteria of set
+ * Reference attribute of `oncoDeath`: points to criteria of set
  * `http://fdpg.mii.cds/CriteriaSet/MII_Onkologie_Diagnose/icd-10-gm`.
  * */
 export const DIAGNOSIS_REFERENCE_CODE = {
-  code: 'festgestellteDiagnose',
+  code: 'focus',
   system: 'http://hl7.org/fhir/StructureDefinition',
-  display: 'Festgestellte Diagnose',
+  display: 'What the observation is about, when it is not about the subject of record',
 }
 
 /**
- * Concept attribute of `specimen` with ICD-O-3 topography concept.
+ * Concept attribute of `oncoDeath` with ICD-10-GM concept (value set
+ * `http://fhir.de/ValueSet/bfarm/icd-10-gm`).
  * */
-export const ICD_O_3_ATTRIBUTE_CODE = {
-  code: 'icd-o-3',
+export const DEATH_CAUSE_ATTRIBUTE_CODE = {
+  code: 'value[x]',
   system: 'http://hl7.org/fhir/StructureDefinition',
-  display: 'Code defined by a terminology system',
+  display: 'Actual result',
 }
-export const VULVA_TOPOGRAPHY = {
-  system: 'http://terminology.hl7.org/CodeSystem/icd-o-3',
-  code: 'C51.8',
-  display: 'Vulva, mehrere Teilbereiche überlappend',
+export const CERVIX_CANCER_CONCEPT = {
+  system: SYSTEMS.icd10gm,
+  code: 'C53',
+  display: 'Bösartige Neubildung der Cervix uteri',
 }
 
 /**

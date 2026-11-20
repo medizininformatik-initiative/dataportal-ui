@@ -18,9 +18,9 @@ import {
   GENDER_CONCEPTS,
   ICD_ATTRIBUTE_CODE,
   ICD_CONCEPTS,
-  ICD_O_3_ATTRIBUTE_CODE,
+  DEATH_CAUSE_ATTRIBUTE_CODE,
+  CERVIX_CANCER_CONCEPT,
   UNITS,
-  VULVA_TOPOGRAPHY,
 } from './ontology'
 import { Crtdl, Criterion, CriterionModifier, Json } from './types'
 
@@ -84,22 +84,23 @@ const OLDER_THAN_FIVE_CRITERION = criterion('age', withValue(OLDER_THAN_FIVE))
 const WORKING_AGE_CRITERION = criterion('age', withValue(WORKING_AGE_RANGE))
 
 /**
- * Specimen whose `festgestellteDiagnose` references given criteria, plus any other modifier.
+ * Cancer death whose `focus` references given criteria, plus any other modifier.
  * */
-const specimenOf = (referenced: Criterion[], ...modifiers: CriterionModifier[]) =>
+const cancerDeathOf = (referenced: Criterion[], ...modifiers: CriterionModifier[]) =>
   criterion(
-    'specimen',
+    'oncoDeath',
     withAttribute(referenceAttribute(DIAGNOSIS_REFERENCE_CODE, referenced)),
     ...modifiers
   )
 const CERVIX_CANCER = criterion('cervixCancer')
-const SPECIMEN_OF_CERVIX_CANCER = specimenOf([CERVIX_CANCER])
+const DEATH_OF_CERVIX_CANCER = cancerDeathOf([CERVIX_CANCER])
 /**
- * Shape of defect report `test_defekt_cohorte_ref.json`: reference, topography, time.
+ * Shape of defect report `test_defekt_cohorte_ref.json`: reference, concept, time. Report used
+ * specimen; its reference set has no criteria in ontology v5.2.2, so cancer death stands in.
  * */
-const SPECIMEN_AS_REPORTED = specimenOf(
+const DEATH_AS_REPORTED = cancerDeathOf(
   [CERVIX_CANCER, criterion('breastCancerInFamily')],
-  withAttribute(conceptAttribute(ICD_O_3_ATTRIBUTE_CODE, [VULVA_TOPOGRAPHY])),
+  withAttribute(conceptAttribute(DEATH_CAUSE_ATTRIBUTE_CODE, [CERVIX_CANCER_CONCEPT])),
   atTime(TIMES.between)
 )
 
@@ -204,19 +205,19 @@ export const CASES: Cases = {
   ),
   'feature with code filter': withFeatures(conditionFeature({ filters: [CONDITION_FILTERS.code] })),
 
-  'reference to one diagnosis': included(SPECIMEN_OF_CERVIX_CANCER),
+  'reference to one diagnosis': included(DEATH_OF_CERVIX_CANCER),
   'reference to several diagnoses': included(
-    specimenOf([CERVIX_CANCER, criterion('breastCancerInFamily')])
+    cancerDeathOf([CERVIX_CANCER, criterion('breastCancerInFamily')])
   ),
   'reference to diagnosis with time': included(
-    specimenOf([criterion('cervixCancer', atTime(TIMES.before))])
+    cancerDeathOf([criterion('cervixCancer', atTime(TIMES.before))])
   ),
-  'reference and topography': included(SPECIMEN_AS_REPORTED),
-  'reference in exclusion': crtdl({ exclusion: [[SPECIMEN_OF_CERVIX_CANCER]] }),
-  'reference as alternative': included(PNEUMONIA, SPECIMEN_OF_CERVIX_CANCER),
+  'reference and concept': included(DEATH_AS_REPORTED),
+  'reference in exclusion': crtdl({ exclusion: [[DEATH_OF_CERVIX_CANCER]] }),
+  'reference as alternative': included(PNEUMONIA, DEATH_OF_CERVIX_CANCER),
   'reference as reported': crtdl({
-    inclusion: [[SPECIMEN_AS_REPORTED], [OLDER_THAN_FIVE_CRITERION]],
-    exclusion: [[SPECIMEN_AS_REPORTED]],
+    inclusion: [[DEATH_AS_REPORTED], [OLDER_THAN_FIVE_CRITERION]],
+    exclusion: [[DEATH_AS_REPORTED]],
   }),
 
   'linked feature': crtdl({ groups: linkedFeatures({ mustHave: false, referenceOnly: false }) }),
@@ -244,16 +245,16 @@ export const CASES: Cases = {
  * Broken CRTDLs: one wrong detail each. Backend must reject every one (`npm run
  * crtdl:validate` checks), UI must show error log, not crash or load half.
  * */
-const brokenReference = (filter: Json) => included(criterion('specimen', withAttribute(filter)))
+const brokenReference = (filter: Json) => included(criterion('oncoDeath', withAttribute(filter)))
 
 export const MUTANTS: Cases = {
-  'reference to criterion outside criteria set': included(specimenOf([PNEUMONIA])),
+  'reference to criterion outside criteria set': included(cancerDeathOf([PNEUMONIA])),
   'reference to unknown diagnosis code': included(
-    specimenOf([
+    cancerDeathOf([
       { ...CERVIX_CANCER, termCodes: [{ ...CERVIX_CANCER.termCodes[0], code: 'C99.99' }] },
     ])
   ),
-  'reference without criteria': included(specimenOf([])),
+  'reference without criteria': included(cancerDeathOf([])),
   'reference with unknown attribute code': brokenReference(
     referenceAttribute({ ...DIAGNOSIS_REFERENCE_CODE, code: 'unbekannt' }, [CERVIX_CANCER])
   ),
