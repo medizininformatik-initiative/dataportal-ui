@@ -17,6 +17,7 @@ export class CriterionToEditor {
     criterionSearchInstance.selectCriterion(criterium)
     criterionSearchInstance.selectActioBarButton('Add')
     criterionSearchInstance.selectActioBarButton('Show')
+    criterionSearchInstance.shouldHaveLeftSearchPage()
   }
 
   /**
@@ -32,6 +33,7 @@ export class CriterionToEditor {
     criterionSearchInstance.selectCriterion(expectedDisplayText)
     criterionSearchInstance.selectActioBarButton('Add')
     criterionSearchInstance.selectActioBarButton('Show')
+    criterionSearchInstance.shouldHaveLeftSearchPage()
   }
 
   /**
