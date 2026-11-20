@@ -13,6 +13,7 @@
         "UI": "UI",
         "VERSION": "Version"
       },
+      "BREADCRUMBS": "Breadcrumb",
       "CLOSE": "Close",
       "ERROR_LOG": {
         "LABEL": "Log",

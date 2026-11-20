@@ -40,7 +40,7 @@
       color: mat.m2-get-color-from-palette($primary, 400);
       border-color: mat.m2-get-color-from-palette($primary, 300);
       box-shadow: none;
-      cursor: unset;
+      cursor: not-allowed;
     }
   }
 }

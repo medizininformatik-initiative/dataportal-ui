@@ -112,7 +112,6 @@
   },
   "upgradeDateFilter": {
     "fixture": "Upgrade_Start_Only_Date_Filter",
-    "logText": "The filter has been updated",
     "group": "Diagnosis",
     "oldName": "onset-date",
     "newName": "recorded-date",

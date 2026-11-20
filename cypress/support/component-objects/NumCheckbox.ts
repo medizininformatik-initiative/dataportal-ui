@@ -1,9 +1,8 @@
 import { dataCy } from '../dataCy'
 /**
- * Query and interaction helper for `num-checkbox` shared component: `<span role="checkbox">`
- * with click handler, never real `<input>`. `cy.check()` / `input[type="checkbox"]` cannot
- * work. Wraps real clickable element via `data-cy="checkbox"` (see checkbox.component.html,
- * cypress/CLAUDE.md registry).
+ * Query and interaction helper for `num-checkbox` shared component: native
+ * `<input type="checkbox">` carrying `data-cy="checkbox"`. Read state with `be.checked`.
+ * See checkbox.component.html and cypress/CLAUDE.md registry.
  * */
 export class NumCheckbox {
   /**

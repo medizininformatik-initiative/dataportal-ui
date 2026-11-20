@@ -3,45 +3,52 @@
   align-items: center;
   flex-wrap: nowrap;
   width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .breadcrumb-item {
   display: flex;
   align-items: center;
-  font-size: var(--font-size-md);
+  /* the current page (last item) shrinks and shows an ellipsis */
+  &:last-child {
+    min-width: 0;
+  }
 }
 
-.breadcrumb-item a {
+.breadcrumb-link {
+  font-size: 16px;
+  line-height: 24px;
+  color: #49689c; // accent 600 of the palette branch, 5.3:1 on white
   text-decoration: none;
-  color: var(--color-accent);
-  cursor: pointer;
-}
 
-.breadcrumb-item.active {
-  gap: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  &:hover {
+    text-decoration: underline;
+  }
 
-.breadcrumb-item.active span {
-  font-weight: bold;
-  color: var(--color-text-secondary);
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
 }
 
 .breadcrumb-separator {
-  display: flex;
-  align-items: center;
-  align-self: stretch;
-  font-size: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
   color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-4);
   padding: 0 var(--spacing-8);
 }
 
-.last-breadcrumb {
-  gap: 4px;
+.breadcrumb-current {
+  font-weight: var(--font-weight-bold);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 }

@@ -13,6 +13,7 @@
         "UI": "UI",
         "VERSION": "Version"
       },
+      "BREADCRUMBS": "Brotkrümelnavigation",
       "CLOSE": "Schließen",
       "ERROR_LOG": {
         "LABEL": "Protokoll",

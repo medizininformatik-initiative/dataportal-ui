@@ -60,6 +60,13 @@ export class ErrorDialog {
   }
 
   /**
+   * Assert error log dialog absent.
+   * */
+  public logShouldBeClosed() {
+    cy.get(NUM_ERROR_LOG_MODAL).should('not.exist')
+  }
+
+  /**
    * Assert error log shows text.
    * */
   public logShouldShow(text: string) {
@@ -88,5 +95,6 @@ defineStep('the error dialog does not show {string}', (text: string) =>
 )
 defineStep('I close the error dialog', () => errorDialog.close())
 defineStep('the error log dialog is open', () => errorDialog.logShouldBeOpen())
+defineStep('no error log dialog is shown', () => errorDialog.logShouldBeClosed())
 defineStep('the error log shows {string}', (text: string) => errorDialog.logShouldShow(text))
 defineStep('I close the error log dialog', () => errorDialog.closeLog())

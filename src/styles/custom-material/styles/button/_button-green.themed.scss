@@ -20,19 +20,21 @@
 
     &:hover:not(.disabled) {
       color: mat.m2-get-color-from-palette($primary, 'white') !important;
-      background-color: mat.m2-get-color-from-palette($primary, 'green-hover') !important;
+      background-color: mat.m2-get-color-from-palette($primary, 'green-600') !important;
       box-shadow: $raised-shadow;
     }
 
     &.cdk-keyboard-focused {
-      background: mat.m2-get-color-from-palette($primary, 'green-hover');
+      background: mat.m2-get-color-from-palette($primary, 'green-700');
     }
 
     &.disabled {
-      background-color: mat.m2-get-color-from-palette($primary, 50);
-      color: mat.m2-get-color-from-palette($primary, 'green');
-      box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($primary, 'green');
-      cursor: unset;
+      // white, not grey: on the tinted action bar it must read as a white button
+      background-color: mat.m2-get-color-from-palette($primary, 'white');
+      // label and ring in a darker green: the 500 green is too faint on white
+      color: mat.m2-get-color-from-palette($primary, 'green-600');
+      box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($primary, 'green-600');
+      cursor: not-allowed;
     }
 
     /**
@@ -55,7 +57,7 @@
         color: rgba(mat.m2-get-color-from-palette($primary, 'green'), 0.4);
         background-color: transparent;
         box-shadow: none;
-        cursor: unset;
+        cursor: not-allowed;
       }
     }
 
@@ -75,9 +77,9 @@
       }
 
       &.disabled {
-        background-color: mat.m2-get-color-from-palette($primary, 50);
-        color: mat.m2-get-color-from-palette($primary, 'green');
-        box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($primary, 'green');
+        background-color: mat.m2-get-color-from-palette($primary, 'white');
+        color: mat.m2-get-color-from-palette($primary, 'green-600');
+        box-shadow: 0px 0px 1px 1px mat.m2-get-color-from-palette($primary, 'green-600');
         cursor: not-allowed;
       }
     }
