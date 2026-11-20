@@ -3,6 +3,7 @@ import { numTable } from '../../support/component-objects/NumTable'
 import { Table } from '../../support/step_definitions/table.cy'
 
 const NUM_SEARCHBAR_INPUT = 'num-searchbar input'
+const SEARCH_PAGE = 'num-feasibility-query-search'
 
 /**
  * Criterion search page object: search input, result select, action bar.
@@ -37,5 +38,13 @@ export class CriterionSearch {
    * */
   public selectActioBarButton(buttonName: string) {
     numButton.clickByText('num-action-bar', buttonName, false)
+  }
+
+  /**
+   * Wait until search page left DOM. Route animation keeps leaving search page and entering
+   * editor in DOM together, so editor elements like `num-action-bar` match twice until then.
+   * */
+  public shouldHaveLeftSearchPage() {
+    cy.get(SEARCH_PAGE).should('not.exist')
   }
 }

@@ -10,8 +10,10 @@ import { QueryResult } from 'src/app/model/Result/QueryResult'
 import { ResultProviderService } from 'src/app/service/Provider/ResultProvider.service'
 import { SavedDataQuery } from 'src/app/model/SavedDataQuery/SavedDataQuery'
 import { v4 as uuidv4 } from 'uuid'
+import { SnackbarService } from 'src/app/shared/service/Snackbar/Snackbar.service'
 import { SavedQueryTileComponent } from '../../../../shared/components/saved-query-tile/saved-query-tile.component'
 import { AsyncPipe } from '@angular/common'
+import { MatDialog } from '@angular/material/dialog'
 
 @Component({
   selector: 'num-feasibility',
@@ -25,6 +27,8 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
   private navigationHelperService = inject(NavigationHelperService)
   private resultProviderService = inject(ResultProviderService)
   private consentService = inject(ConsentService)
+  private snackbarService = inject(SnackbarService)
+  private matDialog = inject(MatDialog)
 
   savedQueries$: Observable<InterfaceSavedQueryTile[]>
   loadSubscription: Subscription
@@ -79,7 +83,14 @@ export class FeasibilityComponent implements OnInit, OnDestroy {
           this.resultProviderService.setOne(queryResult)
         })
       )
-      .subscribe(() => this.navigate())
+      .subscribe({
+        next: () => this.navigate(),
+        error: (error: Error) => {
+          if (!this.matDialog.openDialogs.length) {
+            this.snackbarService.displayErrorMessageWithNoCode(error.message)
+          }
+        },
+      })
   }
 
   private extractFeasibilityQuery(savedQuery: SavedDataQuery): FeasibilityQuery {

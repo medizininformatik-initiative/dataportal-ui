@@ -4,6 +4,7 @@ const { compilerOptions } = require('./tsconfig');
 module.exports = {
   preset: 'jest-preset-angular',
   roots: ['<rootDir>/src/'],
+  moduleDirectories: ['node_modules', '<rootDir>'],
   testMatch: ['**/+(*.)+(spec).+(ts)'],
   setupFilesAfterEnv: ['<rootDir>/src/test.ts'],
 

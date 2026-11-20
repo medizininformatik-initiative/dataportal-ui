@@ -58,7 +58,7 @@ Feature: CRTDL upload and download roundtrip
       | reference to one diagnosis       |
       | reference to several diagnoses   |
       | reference to diagnosis with time |
-      | reference and topography         |
+      | reference and concept            |
       | reference in exclusion           |
       | reference as alternative         |
       | reference as reported            |
