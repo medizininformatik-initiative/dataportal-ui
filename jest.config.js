@@ -30,6 +30,8 @@ module.exports = {
 
   coverageDirectory: '<rootDir>/coverage',
 
+  moduleDirectories: ['node_modules', '<rootDir>'],
+
   moduleNameMapper: {
     ...pathsToModuleNameMapper(compilerOptions.paths || {}, {
       prefix: '<rootDir>/',
