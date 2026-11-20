@@ -1,4 +1,4 @@
-import { defineStep } from '../../support/defineStep'
+import { defineStep } from '../defineStep'
 
 /**
  * Steps for saved queries stored in pre-CRTDL format.

@@ -10,7 +10,7 @@ const CRITERION_LABELS: Record<CriterionName, string> = {
   causeOfDeath: 'Cause of death',
   age: 'Age',
   gender: 'Gender',
-  specimen: 'Specimen',
+  oncoDeath: 'Cancer death',
   cervixCancer: 'Cervix cancer',
   breastCancerInFamily: 'Breast cancer in family',
 }
