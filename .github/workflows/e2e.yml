@@ -38,7 +38,7 @@ jobs:
         run: docker compose -f cypress/docker/docker-compose.yml -f cypress/docker/docker-compose.ci.yml up -d
 
       - name: Cypress install
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           # Disable running of tests within install job
           runTests: false
@@ -92,7 +92,7 @@ jobs:
         run: .github/scripts/wait-for-url.sh http://localhost:4200 || { cat ng-serve.log; exit 1; }
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           install: false
           browser: chrome
