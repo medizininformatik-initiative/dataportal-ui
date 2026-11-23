@@ -41,7 +41,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "@types/file-saver": "^2.0.5",
     "@types/jasmine": "^4.3.0",
-    "angular-oauth2-oidc": "^16.0.0",
+    "angular-oauth2-oidc": "^22.0.2",
     "file-saver": "^2.0.5",
     "file-saver-es": "^2.0.5",
     "flag-icons": "^7.2.3",
