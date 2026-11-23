@@ -21,7 +21,7 @@
   "private": true,
   "dependencies": {
     "@angular-devkit/build-angular": "^19.2.26",
-    "@angular-devkit/core": "^19.2.26",
+    "@angular-devkit/core": "^22.3.0",
     "@angular-devkit/schematics": "^19.2.26",
     "@angular/animations": "^19.2.24",
     "@angular/cdk": "^19.2.19",
